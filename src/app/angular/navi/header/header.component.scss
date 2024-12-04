@@ -1,0 +1,75 @@
+@import "mixin";
+
+a {
+  text-decoration: none;
+  color: #fff;
+}
+
+nav {
+  .nav {
+    display: grid;
+    gap: 10px;
+    text-align: end;
+  }
+
+  a {
+    padding: 10px;
+
+    &:not([href]) {
+      color: #fff;
+    }
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.site-header {
+  border-bottom: 1px solid #ccc;
+  padding: .5em 1em;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(3, 1fr);
+  justify-content: space-between;
+
+  @include breakpoint(xs) {
+    grid-template-columns: 1fr;
+  }
+
+  .site-auth {
+    display: flex;
+    justify-content: space-between;
+    grid-column: 1 / -1;
+    justify-items: end;
+  }
+}
+
+.site-identity h1 {
+  font-size: 1.5em;
+  margin: .6em 0;
+  display: inline-block;
+}
+
+.site-navigation {
+  grid-column: 3/3;
+
+  @include breakpoint(xs) {
+    grid-column: 1;
+  }
+}
+
+.site-navigation ul,
+.site-navigation li {
+  margin: 0;
+  padding: 0;
+}
+
+.site-navigation li {
+  display: inline-block;
+  margin: 1.4em 1em 1em 1em;
+}
+
+.active {
+  color: #5baeff;
+}

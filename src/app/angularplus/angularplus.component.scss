@@ -1,0 +1,45 @@
+.trash {
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  border: 2px solid red;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+
+  &:before {
+    position: absolute;
+    content: '';
+    top: 50%;
+    left: 50%;
+    width: 2px;
+    height: 100%;
+    display: block;
+    background: red;
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+  &:after {
+    position: absolute;
+    content: '';
+    top: 50%;
+    left: 50%;
+    width: 2px;
+    height: 100%;
+    display: block;
+    background: red;
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+}
+
+table,
+th,
+td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 10px;
+}

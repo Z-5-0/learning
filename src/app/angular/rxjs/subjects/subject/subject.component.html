@@ -1,0 +1,143 @@
+<div *ngIf="tempSwitcher === 'observable'" class="rounded-border">
+    <div>Observer 1 value: {{observer1}}</div>
+    <div>Observer 2 value: {{observer2}}</div>
+    <button class="btn btn-secondary" (click)="onSubscribeObservable()">Subscribe obervers</button>
+</div>
+
+<div *ngIf="tempSwitcher === 'subject'" class="rounded-border">
+    <div>Subject subscriber 1 value: {{sub1}}</div>
+    <div>Subject subscriber 2 value: {{sub2}}</div>
+    <button class="btn btn-secondary" (click)="onSubscribeSubject()">Subject subscription</button>
+</div>
+
+<div *ngIf="tempSwitcher === 'observable2'" class="rounded-border">
+    <button class="btn btn-secondary" (click)="onAjaxCallWith3Subscribers()">AJAX call with 3 Subscribers</button>
+    <div *ngFor="let status of ajaxStatuses">
+        {{status}}
+    </div>
+</div>
+
+<div *ngIf="tempSwitcher === 'subject2'" class="rounded-border">
+    <button class="btn btn-secondary" (click)="onAjaxCallWith3Subscribers2()">AJAX call with 3 Subscribers</button>
+    <div *ngFor="let status of ajaxStatuses">
+        {{status}}
+    </div>
+</div>
+
+<div *ngIf="tempSwitcher === 'behaviorSubject'" class="rounded-border">
+    <button class="btn btn-secondary" (click)="onTestBehaviorSubject()">Test BehaviorSubject</button>
+    <div>
+        <pre>{{behaviorStatuses | json}}</pre>
+    </div>
+    <button *ngIf="(behaviorStatuses | json) !== '{}'" class="btn btn-secondary" (click)="newValueForBehaviorSubject()">
+        New value for BehaviorSubject
+    </button>
+</div>
+
+<div *ngIf="tempSwitcher === 'replaySubject'" class="rounded-border">
+    <button class="btn btn-secondary" (click)="onTestReplaySubject()" [disabled]="(replayStatuses | json) !== '{}'">
+        Test RelaySubject
+    </button>
+    <div>
+        <pre>{{replayStatuses | json}}</pre>
+    </div>
+    <input #replayInput type="number" placeholder="new value">
+    <button class="btn btn-secondary" (click)="addNewReplaySubjectValue(replayInput.value); replayInput.value = ''">Add
+    </button>
+</div>
+
+<div *ngIf="tempSwitcher === 'replaySubject2'" class="rounded-border">
+    <button class="btn btn-secondary" (click)="onTestReplaySubject2()" [disabled]="(replayStatuses2 | json) !== '{}'">
+        Test RelaySubject (bufferSize: 2)
+    </button>
+    <div>
+        <pre>{{replayStatuses2 | json}}</pre>
+    </div>
+</div>
+
+<div *ngIf="tempSwitcher === 'replaySubject3'" class="rounded-border">
+    <div>
+        <button class="btn btn-secondary" (click)="onSubscribeReplaySubject()">Subscribe to MessageService</button>
+        <br>
+        <div>Subscription status: {{replaySubjectSubscriptionIsDone ? 'active' : 'inactive'}}</div>
+        <br>
+        <input [(ngModel)]="newReplaySubjectMessage" placeholder="Type something..." />
+        <button (click)="sendReplaySubjectMessage()">Send</button>
+        <br>
+        <div>Messages from the last 5 secs:</div>
+        <br>
+        <ul>
+            <li *ngFor="let message of replaySubjectMessages">{{ message }}</li>
+        </ul>
+    </div>
+</div>
+
+<div *ngIf="tempSwitcher === 'asyncSubject'" class="rounded-border">
+    <div>
+        <input #asyncInput1 type="text" value="333">
+    </div>
+    <div>
+        <input #asyncInput2 type="text" value="444">
+    </div>
+    <div>
+        <input #asyncInput3 type="text" value="555">
+    </div>
+    <button class="btn btn-secondary"
+        (click)="onTestAsyncSubject(asyncInput1.value, asyncInput2.value, asyncInput3.value)">
+        Test AsyncSubject
+    </button>
+    <br>
+    <div>Latest: {{ asyncSubValue }}</div>
+    <br>
+    <button class="btn btn-secondary" (click)="onSubscribeOnAsyncSubjectLater()">
+        Another Subscription
+    </button>
+    <br>
+    <div>Value sent to the second subscriber: {{ asyncSubValue2 }}</div>
+</div>
+
+<div *ngIf="tempSwitcher === 'promisevsobservable'" class="rounded-border">
+    <div>Promise: {{ promiseCalledText }}</div>
+    <div>Observable: {{ observableCalledText }}</div>
+    <button type="button" class="btn btn-secondary" (click)="subToObs()">Subscribe to Observable</button>
+</div>
+
+<div *ngIf="tempSwitcher === 'promisevsobservable2'" class="rounded-border">
+    <div>Promise:
+        <ul *ngFor="let promText of promiseGetText">
+            <li>{{ promText }}</li>
+        </ul>
+    </div>
+    <div>Observable:
+        <ul *ngFor="let obsText of observableGetText">
+            <li>{{ obsText }}</li>
+        </ul>
+    </div>
+    <button type="button" class="btn btn-secondary" (click)="getDataFromPromiseAndObservable()">
+        Get Promise and Observable data
+    </button>
+    <button type="button" class="btn btn-danger" (click)="promiseGetText = []; observableGetText = []">
+        Clear given data
+    </button>
+</div>
+
+<div *ngIf="tempSwitcher === 'unsubscribe'" class="rounded-border">
+    Subscription 1:
+    <div>
+        <span *ngFor="let val of counterValues1" style="padding-right: 5px;">
+            {{val}}
+        </span>
+    </div>
+    <br>
+    Subscription 2:
+    <div>
+        <span *ngFor="let val of counterValues2" style="padding-right: 5px;">
+            {{val}}
+        </span>
+    </div>
+    <br>
+    <button class="btn btn-secondary" (click)="subscribeOnCounter()">Subscribe</button>
+    <button class="btn btn-danger" (click)="unsubscribeOnCounter1()">Unsubscibe 1</button>
+    <button class="btn btn-danger" (click)="unsubscribeOnCounter2()">Unsubscibe 2</button>
+    <button class="btn btn-warning" (click)="counterValues1 = []; counterValues2 = []">Clear</button>
+</div>

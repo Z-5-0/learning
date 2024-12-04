@@ -1,0 +1,253 @@
+<h1>React</h1>
+
+<div class="anchor-navi-container">
+  <div *ngFor="let mainButton of anchorButtons" class="btn-group">
+    <button type="button" class="btn btn-primary btn-sm anchor" (click)="scrollToAnchor(mainButton?.anchor)">
+      {{ mainButton.title }}
+    </button>
+    <button *ngIf="mainButton?.subtitles?.length" type="button"
+      class="btn btn-primary dropdown-toggle dropdown-toggle-split btn-sm anchor" data-bs-toggle="dropdown"
+      aria-expanded="false">
+    </button>
+    <ul *ngIf="mainButton.subtitles?.length" class="dropdown-menu dropdown-menu-dark">
+      <li>
+        <button *ngFor="let subButton of mainButton?.subtitles" class="dropdown-item"
+          (click)="scrollToAnchor(subButton?.anchor)">
+          {{ subButton?.title }}
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div>
+  <h3 #howitworks data-anchor="howitworks">How it works?</h3>
+  <ul>
+    <li>Böngészőben működő Javascript alkalmazások működése
+      <ul>
+        <li>UI / User Interface
+          <ul>
+            <li>Az a felület, amivel a felhasználó találkozik, interakcióba lép</li>
+            <li>Amikor a felhasználó valamilyen elemmel interakcióba lép, az alkalmazás állapotát fogja
+              manipulálni
+            </li>
+          </ul>
+        </li>
+        <li>State
+          <ul>
+            <li>State / Alkalmazás állapot
+              <ul>
+                <li>Adatstruktúra, amit az alkalmazás futása során folyamatosan a memóriában tartunk</li>
+                <li>A legminimálisabb módon leírja a UI-on megjelenő elemeket
+                  <ul>
+                    <li>Tehát minden információt tartalmaz, ami ahhoz szükséges, hogy az interface
+                      kirajzolódhasson
+                    </li>
+                  </ul>
+                </li>
+                <li>A UI-on dinamikusan változó dolgok azok a State-nek a leképeződései</li>
+                <li>Bármilyen adatstruktúra lehet</li>
+                <li>Nem statikus adatstruktúra, hanem futási időben a memóriában folyamatosan felülíródik, ahogy
+                  különféle események végbemennek a UI-on
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>Eseménykezelők
+          <ul>
+            <li>Az az egység, amit megírtunk annak érdekében, hogy leírjuk, hogy a felhasználói interakció hatására
+              miképp menjen végbe az értékváltozás az alkalmazás állapotában
+            </li>
+          </ul>
+        </li>
+        <li>Controller
+          <ul>
+            <li>A State és az eseménykezelők egysége</li>
+            <li>Definiált állapot, amit eseménykezelő függvények bizonyos események hatására megváltoztatnak</li>
+          </ul>
+        </li>
+        <li>Template / Sablon
+          <ul>
+            <li>Az adatstruktúrából konkrét elemeket készít</li>
+            <li>HTML elemekből áll, amik a UI statikus részét képzik</li>
+            <li>A statikus elemeket időközönként megszakítják a State-ből kiolvasott dinamikus értékek
+              <ul>
+                <li>String interpolációnak nevezik (amikor beleírjuk a State-ből a sablon dinamikus részébe)
+                </li>
+              </ul>
+            </li>
+            <li>A sablonban lehetnek egyszerű kontroll struktúrák
+              <ul>
+                <li>if-else</li>
+                <li>for</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>Render / Renderelés
+          <ul>
+            <li>A folyamat, amely során alapul vesszük a State-et, dinamikus adatokat, - és akár -
+              kontroll struktúrákat használunk fel, és összeollózunk egy sablont
+            </li>
+          </ul>
+        </li>
+        <li>Component / Komponens
+          <ul>
+            <li>A Controller és a sablon logika összefoglaló neve</li>
+            <li>React esetében a komponenst egyetlen egy fájlban kell definiálni</li>
+            <li>Angular esetében két külön fájlban definiált</li>
+          </ul>
+        </li>
+        <br>
+        <li>A folyamat:
+          <ul>
+            <li>Ha végfelhasználóként letöltöd az oldalt, és elindul a Javascriptes alkalmazás, az első, hogy az
+              alkalmazásnak van egy kiinduló állapota, ehhez jön hozzá a meghatározott statikus sablon, és ezek
+              alapján megtörténik az első renderelés, megjelenik a User Interface-en a tartalom
+            </li>
+            <li>Ezután a felhasználó valamilyen action-t hajt végre, ami állapotmódosítást eredményez az általunk
+              megírt eseménykezelők szerint
+            </li>
+            <li>Az állapotmódosítást renderelés követi a frissített adatokkal, aminek következtében a UI-on frissül
+              a tartalom
+            </li>
+          </ul>
+        </li>
+        <img src="assets/imgs/process.png" style="width: 100%;">
+        <li>A folyamat bővebben:
+          <ol>
+            <li>index.html betöltése
+              <ul>
+                <li>A bőngésző betölti az index.html</li>
+                <li>Az oldalon szerepelnek stílusfájlok, és JS fájlok</li>
+              </ul>
+            </li>
+            <li>JavaScript fájlok letöltése és futtatása
+              <ul>
+                <li>A hivatlkozott JS fájlokat letölti a böngésző, és futtatja</li>
+              </ul>
+            </li>
+            <li>Angular indítása (Bootstrap)
+              <ul>
+                <li>Az Angular alkalmazás belépési pontja az main.ts fájl (az angular.json fájlban van meghatározva -->
+                  'main'), amely bootstrappel elindítja az Angular alkalmazást
+                </li>
+                <li>Ez a fájl inicializálja az Angular keretrendszert, és meghívja az alapértelmezett root modul-t
+                  (AppModule)
+                </li>
+              </ul>
+            </li>
+            <li>Root modul betöltése (AppModule)
+              <ul>
+                <li>Az Angular betölti a root modul-t, ami az alkalmazás legfelsőbb modulja</li>
+                <li>Az app.module.ts-ben van meghatározva az AppComponent betöltése
+                  <pre>
+                    ...
+                    bootstrap: [AppComponent]
+                    ...
+                  </pre>
+                </li>
+              </ul>
+            </li>
+            <li>Komponensek inicializálása
+              <ul>
+                <li>Miután az AppModule betöltődött, az Angular elindítja az AppComponent-et, amely az alkalmazás elsődleges
+                  komponense
+                </li>
+                <li>Az Angular létrehozza a komponens template-jét</li>
+              </ul>
+            </li>
+            <li>DOM renderelés
+              <ul>
+                <li>Az Angular change detection rendszere gondoskodik a megfelelő HTML elemek megjelenítéséről</li>
+                <li>A DOM struktúra frissül az adatok alapján, és az Angular kirendereli az alkalmazást a böngészőben</li>
+              </ul>
+            </li>
+            <li>Routing, interakció, adatkezelés
+              <ul>
+                <li>Route váltáskor, felhasználói interakciókat követően, vagy szerverről való adatbetöltés után az Angular
+                  (tehát változásokkor a Change Detection) újrarendereli a DOM-ot
+                </li>
+              </ul>
+            </li>
+          </ol>
+        </li>
+      </ul>
+    </li>
+    <li>Hogyan könnyíthetik meg a különféle kliens oldali könyvtárak és keretrendszerek (framework) a User Interface-ek
+      készítését?
+      <ul>
+        <li>React / Angular / Vue</li>
+        <li>React és Angular esetén a renderelés teljesen automatikus (amint valamilyen State változás
+          történik), amíg vanilla Javascript esetén a renderelő mechanizmust a fejlesztőnek kell manuálisan
+          működésbe léptetni a State változás után
+        </li>
+        <li>A felhasználói felület külön részegységekre bontható a segítségükkel
+          <ul>
+            <li>Egy interaktív részleg helyett létre lehet hozni többet</li>
+            <li>Mindegyikért a saját, dedikált kontrollere és template-je, azaz komponense lesz felelőt</li>
+            <li>Az összes komponensnek meg van a saját állapota, template-je, és action-jei
+              <ul>
+                <li>Ilyen módon két komponens egymástól teljesen függetlenül tud működni</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>A React és Angular alkalmazásoknak egyetlen belépési pontja van
+          <ul>
+            <li>Létezik az egész alkalmazást összefogó, és az egész User Interface-ért felelős
+              app.component
+            </li>
+            <li>Teljesen ugyanúgy működik, mint az összes többi</li>
+            <li>A különbség, hogy szülő elem a többi komponenshez képest</li>
+            <li>A sablon logikájában van hivatkozás a gyerek komponensekre</li>
+            <li>Tehát egy-egy komponens a többitől elkülönülve le tudja írni saját maga működését, és ezt a
+              szülő
+              elem akárhányszor felhasználhatja
+            </li>
+            <li>A különböző komponensek közötti adatáramlás is könnyen manadzselhető</li>
+            <li>Természetesen a gyerekeknek is lehetnek gyerekeik, így egy fa struktúra épül fel</li>
+            <li>Egy komponens a szülő elemétől mindig kaphat kívülről adatot, és azt tovább tudja passzolni
+              a saját gyerekének, gyerekeinek
+            </li>
+            <li>A gyermek elemek is tudnak a szülőnek adatot küldeni</li>
+            <li>A komponensek más irányba is tud(hat)nak kommunikálni, például AJAX kérést küldhetnek,
+              adatot tölthet fel, vagy szerezhet
+            </li>
+            <li>A komponensek a localstorage-dzsal is kapcsolatot teremthetnek (írás, olvasás)</li>
+            <li>Az alkalmazások engedik, hogy létrehozzunk kliens oldali útvonal választót
+              <ul>
+                <li>Ez csak az SPA (Single Page App) kapcsán releváns
+                  <ul>
+                    <li>Olyan rendszer, amiben a felhasználó, ha rákattint egy linkre, akkor nem
+                      történik tényleges oldalletöltés az oldalon, hanem mindezt virtuálisan
+                      idézzük elő
+                    </li>
+                  </ul>
+                </li>
+                <li>Az útvonalválasztóban van eldöntve, hogy melyik komponens legyen aktív</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #react data-anchor="react">React</h3>
+  <ul>
+    <li></li>
+  </ul>
+</div>
+
+<div>
+  <h3 #todo data-anchor="todo">TODO</h3>
+  <ul>
+    <li></li>
+  </ul>
+</div>
+
+A szülőnek adott CSS-t a gyermek komponensek is megöröklik.

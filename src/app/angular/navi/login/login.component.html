@@ -1,0 +1,10 @@
+<h6>Login</h6>
+
+<div class="input-group">
+    <span class="input-group-text">Username and password</span>
+    <input #username type="text" aria-label="username" class="form-control" placeholder="username" required>
+    <input #password type="text" aria-label="password" class="form-control" placeholder="password" required>
+    <button class="btn btn-outline-primary" type="submit" id="button-addon2" (click)="onLogin()">Login</button>
+</div>
+
+<div style="text-align: center;">{{message}}</div>

@@ -1,0 +1,134 @@
+<ng-container *ngIf="tempSwitcher === 'of'">
+    <div class="rounded-border">
+        <div>
+            <span style="padding-right: 5px;">Data 1 (without spread operator):</span>
+            <span *ngFor="let d of data" style="padding-right: 5px;">
+                {{d}}
+            </span>
+        </div>
+        <div>
+            <span style="padding-right: 5px;">Data 2 (with spread operator):</span>
+            <span *ngFor="let d of data2" style="padding-right: 5px;">
+                {{d}}
+            </span>
+        </div>
+
+        <button class="btn btn-secondary" (click)="ofClicked()">OF</button>
+        <button class="btn btn-danger" (click)="data = []; data2 = []">Clear data</button>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="tempSwitcher === 'of3'">
+    <div class="rounded-border">
+        <div>
+            <span style="padding-right: 5px;">Data 3:</span>
+            <span *ngFor="let d of data3" style="padding-right: 5px;">
+                {{d}}
+            </span>
+        </div>
+
+        <button class="btn btn-secondary" (click)="ofClicked3()">OF</button>
+        <button class="btn btn-danger" (click)="data3 = []">Clear data</button>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="tempSwitcher === 'from'">
+    <div class="rounded-border">
+        <div>
+            <span style="padding-right: 5px;">Data 4:</span>
+            <span *ngFor="let d of data4" style="padding-right: 5px;">
+                {{d}}
+            </span>
+        </div>
+
+        <button class="btn btn-secondary" (click)="fromClicked4()">FROM</button>
+        <button class="btn btn-danger" (click)="data4 = []">Clear data</button>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="tempSwitcher === 'promise'">
+    <div class="rounded-border">
+        <div>
+            <span style="padding-right: 5px;">Data 5:</span>
+            <span *ngFor="let d of data5" style="padding-right: 5px;">
+                {{d}}
+            </span>
+        </div>
+        <div>
+            <span style="padding-right: 5px;">Data 6:</span>
+            <span *ngFor="let d of data6" style="padding-right: 5px;">
+                {{d}}
+            </span>
+        </div>
+        <div>
+            <span style="padding-right: 5px;">Data 7:</span>
+            <span *ngFor="let d of data7" style="padding-right: 5px;">
+                {{d}}
+            </span>
+        </div>
+
+        <button class="btn btn-secondary" (click)="fromClicked5()">FROM (Promise)</button>
+        <button class="btn btn-danger" (click)="data5 = []; data6 = []">Clear data</button>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="tempSwitcher === 'fromevent'">
+    <div class="rounded-border">
+        <div #itemContainer class="item-container"></div>
+
+        <button #createbutton class="btn btn-secondary">Create new item</button>
+        <!--button class="btn btn-danger" (click)="data5 = []; data6 = []">Clear data</!button-->
+    </div>
+</ng-container>
+
+<ng-container *ngIf="tempSwitcher === 'map'">
+    <div class="rounded-border">
+        <div>
+            <span style="padding-right: 5px;">Data 8+:</span>
+            <div></div>
+            <span *ngFor="let d of data8" style="padding-right: 5px;">
+                {{d}}
+            </span>
+            <div></div>
+            <span *ngFor="let d of data8_trans" style="padding-right: 5px;">
+                {{d}}
+            </span>
+        </div>
+
+        <button class="btn btn-secondary" (click)="fromClicked8()">FROM + MAP</button>
+        <button class="btn btn-danger" (click)="data8 = []; data8_trans = []">Clear data</button>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="tempSwitcher === 'filter'">
+    <div class="rounded-border">
+        <div>
+            <span style="padding-right: 5px;">Data 9+:</span>
+            <div></div>
+            <span *ngFor="let d of data9" style="padding-right: 5px;">
+                {{d}}
+            </span>
+            <div></div>
+            <span *ngFor="let d of data9_filtered" style="padding-right: 5px;">
+                {{d}}
+            </span>
+        </div>
+
+        <button class="btn btn-secondary" (click)="fromClicked9()">FROM + FILTER</button>
+        <button class="btn btn-danger" (click)="data9 = []; data9_filtered = []">Clear data</button>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="tempSwitcher === 'mapfilter'">
+    <div class="rounded-border">
+        <div>
+            <span style="padding-right: 5px;">Data 10:</span>
+            <span *ngFor="let d of data10" style="padding-right: 5px;">
+                {{d}}
+            </span>
+        </div>
+
+        <button class="btn btn-secondary" (click)="fromClicked10()">FROM + MAP +FILTER</button>
+        <button class="btn btn-danger" (click)="data10 = [];">Clear data</button>
+    </div>
+</ng-container>

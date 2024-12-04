@@ -1,0 +1,49 @@
+@import "mixin";
+
+.feed-heading {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+
+    i {
+        font-size: 30px;
+    }
+}
+
+.news {
+    font-size: 32px;
+
+    @include breakpoint(lg) {
+        font-size: 48px;
+    }
+
+    .news-heading {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 60px;
+
+        @include breakpoint(lg) {
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        img {
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        .news-heading-text {
+            align-content: center;
+            justify-self: center;
+            // adding: 32px;
+
+            h2 {
+                font-size: 48px;
+
+                @include breakpoint(lg) {
+                    font-size: 72px;
+                }
+            }
+        }
+    }
+}

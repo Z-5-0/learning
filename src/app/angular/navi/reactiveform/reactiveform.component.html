@@ -1,0 +1,240 @@
+<ng-container *ngIf="testFunction('Reaktív', 'form') as obj">
+  <h1>{{ obj.variable1 }} {{ obj.variable2 }}</h1>
+</ng-container>
+
+<div class="row">
+  <form [formGroup]="profileForm" class="" (ngSubmit)="onSubmit()">
+    <h3>Alapadatok</h3>
+    <label class="">Keresztnév:
+      <input type="text" [formControlName]="'firstName'"/>
+      <small *ngIf="getError('firstName', 'required')" style="color: #9d2626">
+        Keresztnév megadása kötelező.
+      </small>
+      <small *ngIf="getError('firstName', 'maxlength') as err" style="color: #9d2626">
+        Max karakterszám {{ err.requiredLength }}, a beírt: {{ err.actualLength }}
+      </small>
+    </label>
+
+    <label class="">
+      Vezetéknév:
+      <input type="text" [formControlName]="'lastName'"/>
+      <small *ngIf="profileForm.get('lastName')?.errors?.['required'] && profileForm.get('lastName')?.touched"
+             style="color: #9d2626">
+        Vezetéknév megadása kötelező.
+      </small>
+      <small
+        *ngIf="profileForm.get('lastName')?.touched && profileForm.get('lastName')?.errors?.['maxlength']"
+        style="color: #9d2626">
+        Max karakterszám {{ profileForm.get('lastName')?.errors?.['maxlength']?.['requiredLength'] }}, a
+        beírt: {{ profileForm.get('lastName')?.errors?.['maxlength']?.['actualLength'] }}
+      </small>
+    </label>
+
+    <label class="">
+      Életkor:
+      <input type="number" [formControlName]="'age'"/>
+      <small *ngIf="profileForm.get('age')?.errors?.['required'] && profileForm.get('age')?.touched"
+             style="color: #9d2626">
+        Életkor megadása kötelező.
+      </small>
+      <small
+        *ngIf="profileForm.get('age')?.errors?.['range'] && !profileForm.get('age')?.errors?.['required']"
+        style="color: #9d2626">
+        Minimum {{ profileForm.get('age')?.errors?.['range']?.['min'] }},
+        maximum {{ profileForm.get('age')?.errors?.['range']?.['max'] }}!
+        Aktuális: {{ profileForm.get('age')?.errors?.['range']?.['actual'] }}
+      </small>
+      <div style="padding-left: 30px">profileForm.get('age')?.errors: {{ profileForm.get('age')?.errors | json }}</div>
+    </label>
+
+    <label class="">
+      Email:
+      <input type="text" [formControlName]="'mail'"/>
+      <small *ngIf="profileForm.get('mail')?.errors?.['reserved']" style="color: #9d2626">Foglalt email cím!</small>
+      <small *ngIf="profileForm.get('mail')?.errors?.['required'] && profileForm.get('mail')?.touched"
+             style="color: #9d2626">
+        Kötelező mező!
+      </small>
+      <div>teszt@invalid.com</div>
+      <div>profileForm.get('mail')?.errors | json: {{ profileForm.get('mail')?.errors | json }}</div>
+    </label>
+
+    <label style="display: flex; align-items: center; gap: 5px; padding: 10px 0">
+      Beosztás:
+      <select *ngIf="positionOptions$ | async as ops; else loading" style="margin-bottom: 0"
+              [formControlName]="'position'">
+        <option *ngFor="let op of ops" [value]="op.id">{{ op.name }}</option>
+      </select>
+      <small *ngIf="profileForm.get('position')?.errors" style="color: #9d2626">Helytelen érték</small>
+      <ng-template #loading>
+        <div class="loader"></div>
+      </ng-template>
+      <small>Csak az ID = 2 elfogadott: {{ profileForm.get('position')?.errors | json }}</small>
+    </label>
+
+    <div>
+      Biológiai nem:
+      <br>
+      <label class="">
+        Nő
+        <input type="radio" [value]="'female'" [formControlName]="'gender'"/>
+      </label>
+      <label class="">
+        Férfi
+        <input type="radio" [value]="'male'" [formControlName]="'gender'"/>
+      </label>
+      <label class="">
+        Nem bináris
+        <input type="radio" [value]="'nonbi'" [formControlName]="'gender'"/>
+      </label>
+      <small *ngIf="profileForm.get('gender')?.errors"
+             style="color: #9d2626">
+        {{ profileForm.get('gender')?.errors?.['errorText'] }}
+      </small>
+    </div>
+
+    <div [formGroupName]="'address'">
+      <h3>Cím</h3>
+
+      <label class="">
+        Utca:
+        <input type="text" [formControlName]="'street'"/>
+        <small
+          *ngIf="profileForm.get('address.street')?.touched && profileForm.get('address.street')?.errors?.['required']"
+          style="color: #9d2626">Kötelező mező!</small>
+      </label>
+
+      <label class="">
+        Város:
+        <input type="text" [formControlName]="'city'"/>
+        <small *ngIf="profileForm.get('address.city')?.touched && profileForm.get('address.city')?.errors?.['required']"
+               style="color: #9d2626">Kötelező mező!</small>
+      </label>
+
+      <label class="">
+        Irányítószám:
+        <input type="number" [formControlName]="'zip'"/>
+        <small *ngIf="profileForm.get('address.zip')?.touched && profileForm.get('address.zip')?.errors?.['required']"
+               style="color: #9d2626">Kötelező mező!</small>
+        <div>
+          <small
+            *ngIf="profileForm.get('address.zip')?.errors?.['range'] && !profileForm.get('address.zip')?.errors?.['required']"
+            style="color: #9d2626">
+            Minimum: {{ profileForm.get('address.zip')?.errors?.['range']?.['min'] }} /
+            Maximum: {{ profileForm.get('address.zip')?.errors?.['range']?.['max'] }} /
+            Aktuális: {{ profileForm.get('address.zip')?.errors?.['range']?.['actual'] }}
+          </small>
+        </div>
+        <div>profileForm.get('address.zip')?.errors:</div>
+        <div>{{ profileForm.get('address.zip')?.errors | json }}</div>
+      </label>
+    </div>
+
+    <div>
+      <h3>Készségek</h3>
+      <button type="button" (click)="addNewSkill()">+ Új hozzáadása</button>
+
+      <div [formArrayName]="'skills'" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px">
+        <div>
+          <div>Függvény nélkül
+            <span class="info"
+                  (click)="popup.style.visibility = 'visible'; title.style.display = 'block'; pre.style.display = 'block'">
+              &#8505;
+            </span>
+          </div>
+          <div *ngFor="let skill of skillsArray; let i = index;">
+            {{ i + 1 }}: <input [value]="skill?.value" [formControlName]="i">
+            <span (click)="deleteSkill(i)" style="cursor: pointer">&#x274c;</span>
+            <div>
+              <small *ngIf="skill.errors?.['required'] && skill.touched" style="color: #9d2626">Kötelező mező!</small>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div>Függvénnyel
+            <span class="info"
+                  (click)="popup.style.visibility = 'visible'; titleF.style.display = 'block'; preF.style.display = 'block'">
+              &#8505;
+            </span>
+          </div>
+          <div *ngFor="let skill of getSkills(); let i = index;">
+            {{ i + 1 }}: <input [value]="skill?.value" [formControlName]="i">
+            <span (click)="deleteSkill(i)" style="cursor: pointer">&#x274c;</span>
+            <div>
+              <small *ngIf="skill.errors?.['required'] && skill.touched" style="color: #9d2626">Kötelező mező!</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div #popup class="popup" [@fade]="popup.style.visibility === 'visible'">
+      <span style="position: absolute; top: 10px; right: 10px; cursor: pointer;"
+            (click)="popup.style.visibility = 'unset'; title.style.visibility = 'unset'; pre.style.visibility = 'unset'; titleF.style.visibility = 'unset'; preF.style.visibility = 'unset'">
+          &#x274c;
+        </span>
+      <div #title style="display: none">Függvény nélkül</div>
+      <div #titleF style="display: none">Függvénnyel</div>
+      <br>
+
+      <div style="position: relative; overflow: auto; height: 100%">
+        <pre #pre style="display: none">
+        &#60;div [formArrayName]="'skills'">
+          &#60;div *ngFor="let skill of skillsArray; let i = index;">
+            &#123; &#123; i + 1 }}: &#60;input [value]="skill?.value" [formControlName]="i">
+            &#60;span (click)="deleteSkill(i)">&#60;/span>
+            &#60;div>
+              &#60;small *ngIf="skill.errors?.['required'] && skill.touched">Kötelező mező!&#60;/small>
+            &#60;/div>
+          &#60;/div>
+        &#60;/div>
+
+        addNewSkill() &#123;
+          (this.profileForm.get('skills') as FormArray).push(new FormControl('', Validators.required));
+        }
+
+        deleteSkill(index: number) &#123;
+          // ((this.profileForm.get('skills') as FormArray).controls as FormControl[]).splice(index); // Ugyanazt csinálja.
+          (this.profileForm.get('skills') as FormArray).removeAt(index);
+        }
+      </pre>
+
+        <pre #preF style="display: none">
+        &#60;div [formArrayName]="'skills'">
+          &#60;div *ngFor="let skill of getSkills(); let i = index;">
+            &#123; &#123; i + 1 }}: &#60;input [value]="skill?.value" [formControlName]="i">
+            &#60;span (click)="deleteSkill(i)">&#60;/span>
+            &#60;div>
+              &#60;small *ngIf="skill.errors?.['required'] && skill.touched">Kötelező mező!&#60;/small>
+            &#60;/div>
+          &#60;/div>
+        &#60;/div>
+
+        getSkills() &#123;
+          return (this.profileForm.get('skills') as FormArray).controls as FormControl[];
+        }
+
+        addNewSkill() &#123;
+          (this.profileForm.get('skills') as FormArray).push(new FormControl('', Validators.required));
+        }
+
+        deleteSkill(index: number) &#123;
+          // ((this.profileForm.get('skills') as FormArray).controls as FormControl[]).splice(index); // Ugyanazt csinálja.
+          (this.profileForm.get('skills') as FormArray).removeAt(index);
+        }
+      </pre>
+      </div>
+    </div>
+
+    <label class="">
+      Az adatok a valóságnak megfelelnek:
+      <input type="checkbox" [formControlName]="'isAccepted'"/>
+    </label>
+
+    <button type="submit">Küldés</button>
+  </form>
+
+  <div class="" style="position: sticky; top: 0; align-self: start;">
+    <pre>{{ profileForm.value | json }}</pre>
+  </div>
+</div>

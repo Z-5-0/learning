@@ -1,0 +1,26 @@
+<div class="feed-heading">
+    <h1>News feed</h1>
+    <button type="button" class="btn btn-success btn-lg" (click)="refreshNews()">
+        <i class="bi bi-arrow-clockwise"></i>
+    </button>
+</div>
+
+<ng-container *ngIf="news$ | async as news">
+    <div *ngFor="let article of news" class="news rounded-border mt-5 mb-5">
+        <div class="news-heading">
+            <div>
+                <img [src]="article.image_url ? article.image_url : 'https://fakeimg.pl/600x400?text=no+image'">
+                <div>{{ article.source_name }}</div>
+                <div>{{ article.pubDate }}</div>
+            </div>
+            <div class="news-heading-text">
+                <h2>{{ article.title }}</h2>
+                <hr>
+                <div>{{ article.description }}</div>
+            </div>
+        </div>
+
+        <!--pre>{{ article | json }}</!--pre-->
+        <br><br>
+    </div>
+</ng-container>

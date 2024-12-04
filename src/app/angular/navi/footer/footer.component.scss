@@ -1,0 +1,52 @@
+  .footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    margin-bottom: 1em;
+    text-align: center;
+  
+    .footer-content {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+  
+      .footer-links {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 10px;
+  
+        a {
+          color: #fff;
+          text-decoration: none;
+          font-weight: bold;
+  
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+  
+      .footer-text {
+        margin: 10px 0;
+        font-size: 0.9rem;
+      }
+  
+      .footer-icons {
+        display: flex;
+        gap: 10px;
+  
+        i {
+          font-size: 24px;
+          color: #fff;
+          transition: transform 0.3s ease, color 0.3s ease;
+  
+          &:hover {
+            transform: scale(1.1);
+            color: #0d6efd; // Bootstrap primer szín (kék) hover effektusra
+          }
+        }
+      }
+    }
+  }

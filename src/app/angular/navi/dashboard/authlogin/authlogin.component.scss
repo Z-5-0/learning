@@ -1,0 +1,12 @@
+.toast-container {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    .toast-style {
+        background-color: #9d2626;
+        border-radius: 5px;
+        color: black;
+    }
+}

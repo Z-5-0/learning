@@ -1,0 +1,68 @@
+<ng-container *ngIf="cycleSelector === 'onchanges'">
+  <div>Message: {{ onChangesMessage }}</div>
+  <div>First change of message property: <span
+    [attr.color]="simpleChangeFirstChange ? '#9d2626' : '#208020'">{{ simpleChangeFirstChange }}</span></div>
+  <div>Number of changes: {{ simpleChangeCounter }}</div>
+</ng-container>
+
+<ng-container *ngIf="cycleSelector === 'oninit'">
+  <div class="rounded-border">
+    <div #oninitmessage *ngFor="let message of onInitMessages">
+      {{ message }}
+    </div>
+    <div>Number of changes: {{ simpleChangeCounter2 }}</div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="cycleSelector === 'oninit2'">
+  <div class="rounded-border">
+    <pre>
+      {{ onInitObject |json }}
+    </pre>
+    <div>Number of changes: {{ simpleChangeCounter3 }}</div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="cycleSelector === 'docheck'">
+  <div class="rounded-border">
+    <pre>
+      {{ onInitObject2 |json }}
+    </pre>
+    <div>Number of changes: {{ changeCounter }}</div>
+    <div>Number of doChecks: {{ doCheckCounter }}</div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="cycleSelector === 'aftercontentinit'">
+  <div class="rounded-border">
+    <ng-content></ng-content>
+    <br>
+    <div>Projection during ngOnInit: {{ projectionDuringOnInit }}</div>
+    <br>
+    <div>Projection during ngAfterContentInit: {{ projectionDuringAfterContentInit | json }}</div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="cycleSelector === 'aftercontentchecked'">
+  <div class="rounded-border">
+    <ng-content></ng-content>
+    <br>
+    <div>ngAfterContentChecked run counter: {{ afterContentCheckedInputChangeCounter }}</div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="cycleSelector === 'afterviewinit'">
+  <ng-content></ng-content>
+</ng-container>
+
+<ng-container *ngIf="cycleSelector === 'afterviewchecked'">
+  <ng-content></ng-content>
+</ng-container>
+
+<ng-container *ngIf="cycleSelector === 'ondestroy'">
+  <div class="rounded-border">
+    <div>// Child component</div>
+    <ng-content></ng-content>
+  </div>
+</ng-container>
+

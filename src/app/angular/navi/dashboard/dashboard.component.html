@@ -1,0 +1,179 @@
+<header>
+    <div class="title">My Website</div>
+    <nav [ngSwitch]="firebaseUserIsLoggedIn">
+        <ng-container *ngSwitchCase="false">
+            <button [routerLink]="['/', 'angular']" (click)="naviHelper = false">Home</button>
+            <button [routerLink]="[{ outlets: { auth: ['dashboard', 'contact'] } }]"
+                (click)="naviHelper ? null : naviHelper = !naviHelper">Contact</button>
+            <button [routerLink]="[{ outlets: { auth: ['dashboard', 'login'] } }]"
+                (click)="naviHelper ? null : naviHelper = !naviHelper">Login</button>
+        </ng-container>
+        <ng-container *ngSwitchCase="true">
+            <button (click)="logout()">Logout</button>
+        </ng-container>
+    </nav>
+</header>
+
+<main>
+    <router-outlet *ngIf="naviHelper" name="auth"></router-outlet>
+    <div class="dashboard-content rounded-border">
+        <div class="top mb-3 text-end">
+            <div class="refresh">
+                <i *ngIf="!isLoading" class="bi bi-arrow-clockwise fs-3" (click)="getTasks()"></i>
+                <div *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status"
+                    style="width: 26.5px; height: 26.5px;">
+                    <span class="sr-only"></span>
+                </div>
+            </div>
+            <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button collapsed" [ngClass]="{'collapsed': isCollapsed}" type="button"
+                            (click)="collapse.toggle()">
+                            {{ isEdit ? 'Update task (PUT)' : 'New task (POST)' }}
+                        </button>
+                    </h2>
+                    <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed" id="collapseTwo"
+                        class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                        data-bs-parent="#accordionExample" data-bs-parent="#accordionExample">
+                        <form #taskForm="ngForm" class="accordion-body"
+                            (ngSubmit)="isEdit ? updateTask(taskForm.value) :  createTask(taskForm.value)">
+                            <input type="hidden" class="form-control" name="id" ngModel>
+
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Task name</span>
+                                </div>
+                                <input type="text" class="form-control" name="name" ngModel>
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Description</span>
+                                </div>
+                                <textarea class="form-control" name="description" ngModel></textarea>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Assigned to</span>
+                                        </div>
+                                        <input type="text" class="form-control" name="user" ngModel>
+                                    </div>
+                                    <div>
+                                        <button class="btn btn-secondary dropdown-toggle dark" type="button" id="status"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            {{priorityAndDropdownValues?.priority || 'Priority'}}
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="priority">
+                                            <li>
+                                                <a class="dropdown-item"
+                                                    (click)="onDropdownChange('priority', 'low')">Low</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item"
+                                                    (click)="onDropdownChange('priority', 'medium')">Medium</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item"
+                                                    (click)="onDropdownChange('priority', 'high')">High</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item"
+                                                    (click)="onDropdownChange('priority', 'critical')">Critical</a>
+                                            </li>
+                                        </ul>
+                                        <input type="hidden" class="form-control" name="priority" ngModel>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Created at</span>
+                                        </div>
+                                        <input type="text" class="form-control" name="date" ngModel>
+                                    </div>
+                                    <div>
+                                        <button class="btn btn-secondary dropdown-toggle dark" type="button" id="status"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            {{priorityAndDropdownValues?.status || 'Status'}}
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="status">
+                                            <li>
+                                                <a class="dropdown-item"
+                                                    (click)="onDropdownChange('status', 'open')">Open</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item"
+                                                    (click)="onDropdownChange('status', 'in progress')">In
+                                                    progress</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item"
+                                                    (click)="onDropdownChange('status', 'completed')">Completed</a>
+                                            </li>
+                                        </ul>
+                                        <input type="hidden" class="form-control" name="status" ngModel>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col mt-3">
+                                    <button *ngIf="isEdit" class="btn btn-warning ms-3" type="button"
+                                        (click)="onSetDefaultState()">Cancel</button>
+                                    <button class="btn btn-primary ms-3" type="submit">Save</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cards mb-3">
+            <div *ngIf="!firebaseTasks.length">No tasks</div>
+            <div *ngFor="let task of firebaseTasks" class="card" [ngClass]="'priority-' + task.priority">
+                <div class="card-body">
+                    <router-outlet *ngIf="selectedTaskDetailsID && selectedTaskDetailsID == task.id" name="http">
+                    </router-outlet>
+                    <ng-container *ngIf="selectedTaskDetailsID != task.id">
+                        <h5 class="card-title">{{ task.name }}</h5>
+                        <div class="card-text">
+                            <div>User: {{ task.user }}</div>
+                            <div>Priority: {{ task.priority }}</div>
+                            <div>Status: {{ task.status }}</div>
+                        </div>
+                        <div class="actions mt-3">
+                            <div>
+                                <div class="form-check">
+                                    <input #checkbox class="form-check-input" type="checkbox" value=""
+                                        [id]="'select' + task?.id" (change)="onChangeSelectedCards($event, task.id)">
+                                    <label class="form-check-label" [for]="'select' + task?.id">
+                                        {{checkbox.checked ? 'Selected' : 'Select'}}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="icons">
+                                <i class="bi bi-info-circle"
+                                    [routerLink]="[{ outlets: { http: ['dashboard', task.id] } }]"></i>
+                                <i class="bi bi-pencil-square" (click)="onEditTask(task)"></i>
+                                <i class="bi bi-trash" (click)="deleteTask(task.id)"></i>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+        <button *ngIf="selectedTaskIDs.length" class="btn btn-danger" (click)="deleteAllSelectedTask()">
+            Delete all selected card
+        </button>
+    </div>
+</main>
+<footer>
+    <p>&copy; 2024 My Website. All rights reserved.</p>
+</footer>
+
+<div *ngIf="showToast" class="toast-container">
+    <ngb-toast [autohide]="true" [delay]="5000" (hidden)="showToast = false" [class]="'toast-style'">
+        {{ errorMessage }}
+    </ngb-toast>
+</div>

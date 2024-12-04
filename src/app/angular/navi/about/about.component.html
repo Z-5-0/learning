@@ -1,0 +1,52 @@
+<div *ngIf="typeSwitcher == 'navi-outlet'" class="rounded-border">
+    // path: about - outlet: navi
+</div>
+
+<div *ngIf="typeSwitcher == 'test-outlet'" class="rounded-border">
+    // path: about - outlet: test
+</div>
+
+<div *ngIf="typeSwitcher == 'secondary-outlet'">
+    // path: about - outlet: secondary
+</div>
+
+<div *ngIf="typeSwitcher == 'default'" class="rounded-border">
+    <h6>About</h6>
+    <br>
+    <button [routerLink]="['..']" type="button" class="btn btn-secondary">
+        Home
+    </button>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-3 col-xxl-3">
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">
+                    <span *ngIf="!searchLoading">Search</span>
+                    <div *ngIf="searchLoading" class="spinner-border spinner-border-sm text-warning" role="status">
+                        <span class="sr-only"></span>
+                    </div>
+                </span>
+                <input type="text" class="form-control" placeholder="Query string" aria-label="Query string"
+                    [(ngModel)]="searchString" (keyup)="onFilterChange()">
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <ng-container *ngIf="aboutData.length; else listloading">
+        <div *ngFor="let data of aboutData">
+            <button [routerLink]="['/', 'angular', 'about', data.id]" [state]="data"
+            [routerLinkActive]="'btn-danger'" type="button" class="btn btn-secondary">
+                #{{data.id}} {{data.label}}
+            </button>
+        </div>
+        <router-outlet></router-outlet>
+    </ng-container>
+</div>
+
+<ng-template #listloading>
+    <br>
+    <span *ngIf="searchLoading">Loading...</span>
+    <span *ngIf="searchString && !searchLoading">No results...</span>
+</ng-template>

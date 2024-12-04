@@ -1,0 +1,106 @@
+// OUTDATED ! NEED TO BE UPDATED !
+
+<pre>
+    <b>// index.html</b>
+    &#60;!doctype html>
+    &#60;html lang="en">
+    &#60;head>
+        ...
+    &#60;/head>
+    &#60;body>
+    &#60;app-root>&#60;/app-root> // a gyökér (root) komponens szelektora, innen indul az Angular alkalmazás
+    &#60;/body>
+    &#60;/html>
+
+    <b>// app.component.ts</b>
+    @Component(&#123;
+        template: `
+            ...
+              &#60;router-outlet>&#60;/router-outlet> // az aktuális útvonalhoz tartozó komponens tartalmát jelenítjük meg
+            ...
+        `
+      })
+
+    <b>// app.module.ts</b>
+    imports: &#123;
+    ...
+        NaviModule, // tartalmazza az AboutComponent-et, ContactComponent-et, CodeComponent-et, stb.
+    ],
+
+    <b>// app-routing.module.ts</b>
+    const routes: Routes = [
+      ...
+      &#123;
+        path: 'angular',
+        component: AngularComponent,
+        loadChildren: () => import('./angular/navi/navi.module').then(m => m.NaviModule), // Lazy load
+      },
+    ]
+
+    <b>// navi.module.ts</b>
+    @NgModule(&#123;
+        declarations: [
+          NaviComponent,
+          HeaderComponent,
+          FooterComponent,
+          AboutComponent,
+          ContactComponent,
+          CodeComponent,
+        ],
+        imports: [
+          CommonModule,
+          NaviRoutingModule
+        ],
+        exports: [
+          NaviComponent // így lesz elérhető az app-angular komponensben az app-navi szelektor
+        ]
+      })
+
+    <b>// navi-routing.module.ts</b>
+    const routes: Routes = [
+      &#123; path: '', component: HomeComponent },
+      &#123; path: 'home', component: HomeComponent },
+      &#123; path: 'about', component: AboutComponent },
+      &#123; path: 'about/:id', component: AboutDetailsComponent },
+      &#123; path: 'contact', component: ContactComponent },
+      &#123; path: 'about', component: AboutComponent, outlet: 'navi', data: &#123; typeSwitcher: 'navi-outlet' } },
+      &#123; path: 'contact', component: ContactComponent, outlet: 'navi', data: &#123; typeSwitcher: 'navi-outlet' } },
+      &#123; path: 'about', component: AboutComponent, outlet: 'test', data: &#123; typeSwitcher: 'test-outlet' } },
+      &#123; path: 'contact', component: ContactComponent, outlet: 'test', data: &#123; typeSwitcher: 'test-outlet' } },
+      &#123; path: 'about', component: AboutComponent, outlet: 'secondary', data: &#123; typeSwitcher: 'secondary-outlet' } },
+      &#123; path: 'code', component: CodeComponent, outlet: 'navi' },
+    ];
+
+    <b>// navi.component.html</b>
+    &#60;router-outlet name="navi">&#60;/router-outlet>
+    &#60;router-outlet name="test">&#60;/router-outlet>
+    &#60;router-outlet>&#60;/router-outlet>
+
+    <b>// header.component.html</b>
+    &#60;h1>&#60;a (click)="onNavigate('')" role="button">Angular&#60;/a>&#60;/h1>
+    &#60;div>
+      [routerLink]="[&#123; outlets: &#123; navi: ['route'] } }]"
+      &#60;a [routerLink]="[&#123; outlets: &#123; navi: ['about'] } }]">About&#60;/a>
+      &#60;a [routerLink]="[&#123; outlets: &#123; navi: ['contact'] } }]">Contact&#60;/a>
+    &#60;/div>
+    &#60;div>
+      [routerLink]="[&#123; outlets: &#123; test: ['route'] } }]"
+      &#60;a [routerLink]="[&#123; outlets: &#123; test: ['about'] } }]">About&#60;/a>
+      &#60;a [routerLink]="[&#123; outlets: &#123; test: ['contact'] } }]">Contact&#60;/a>
+    &#60;/div>
+    &#60;div>
+      this.router.navigateByUrl(`/angular/$&#123;route}`);
+      &#60;a (click)="onNavigate('about')" role="button">About&#60;/a>
+      &#60;a (click)="onNavigate('contact')" role="button">Contact&#60;/a>
+    &#60;/div>
+
+    <b>// header.component.ts</b>
+    onNavigate(route: string) &#123;
+      this.router.navigateByUrl(`/angular$&#123;route ? '/' + route : ''}`);
+    }
+
+    <b>// footer.component.ts</b>
+    &#60;a [routerLink]="[&#123; outlets: &#123; navi: ['about'] } }]">About&#60;/a>
+    &#60;a [routerLink]="[&#123; outlets: &#123; navi: ['contact'] } }]">Contact&#60;/a>
+    &#60;a [routerLink]="[&#123; outlets: &#123; navi: ['code'] } }]">Outlet code&#60;/a>
+</pre>

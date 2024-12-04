@@ -1,0 +1,25 @@
+<div class="rounded-border">
+    Data from parent component [state]
+    <br>
+    {{dataFromRoute | json}}
+    <br>
+    <br>
+    <ng-container *ngIf="aboutData.id; else noData">
+        <h6>#{{aboutData.id}} - {{aboutData.title}}</h6>
+        <p>{{aboutData.text}}</p>
+        <br>
+    </ng-container>
+    <button [routerLink]="['/', 'angular', 'about', (aboutData.id - 1)]" class="btn btn-secondary"
+        [disabled]="aboutData.id === 1">
+        Previous ({{aboutData.id - 1}})
+    </button>
+    <button [routerLink]="['..']" class="btn btn-secondary">Go to angular route</button>
+    <button [routerLink]="['/', 'angular', 'about', (aboutData.id + 1)]" class="btn btn-secondary"
+        [disabled]="aboutData.id > 4">
+        Next ({{aboutData.id + 1}})
+    </button>
+</div>
+
+<ng-template #noData>
+    <p>Non-existent data</p>
+</ng-template>

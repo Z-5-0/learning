@@ -1,0 +1,12 @@
+<div style="display: grid; height: 100%;">
+    <div style="display: grid;">
+        <small><b>Name: </b>{{taskDetails.name}}</small>
+        <small><b>User: </b>{{taskDetails.user}}</small>
+        <small><b>Date: </b>{{taskDetails.date}}</small>
+        <small><b>Priority: </b>{{taskDetails.priority}}</small>
+        <small><b>Status: </b>{{taskDetails.status}}</small>
+    </div>
+    <div style="text-align: right;">
+        <button [routerLink]="['/', 'angular']" class="btn btn-sm btn-dark">Back</button>
+    </div>
+</div>

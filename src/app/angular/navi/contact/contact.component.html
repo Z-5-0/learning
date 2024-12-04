@@ -1,0 +1,36 @@
+<div *ngIf="typeSwitcher == 'navi-outlet'" class="rounded-border">
+    // path: contact - outlet: navi
+</div>
+
+<div *ngIf="typeSwitcher == 'test-outlet'" class="rounded-border">
+    // path: contact - outlet: test
+</div>
+
+<div *ngIf="typeSwitcher == 'default'" class="rounded-border">
+    <h6>Contact</h6>
+    <br>
+
+    <div class="row">
+        <div class="col-12 col-lg-4">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="First name" aria-label="Username"
+                    aria-describedby="basic-addon1" [(ngModel)]="firstName">
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-4">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Last name" aria-label="Username"
+                    aria-describedby="basic-addon1" [(ngModel)]="lastName">
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-4">
+            <textarea class="form-control" aria-label="With textarea" placeholder="Message"
+                [(ngModel)]="message"></textarea>
+        </div>
+    </div>
+
+    <br>
+    <input type="submit" class="btn btn-primary" value="Submit" (click)="onSubmit()">
+</div>

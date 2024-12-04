@@ -1,0 +1,29 @@
+.confirm-overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5);
+
+    .confirm-box {
+        display: grid;
+        gap: 50px;
+        background-color: #212121;
+        padding: 20px;
+        border-radius: 5px;
+
+        .confirm-text {
+            text-align: center;
+        }
+
+        .confirm-button-container {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+    }
+}

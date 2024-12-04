@@ -1,0 +1,157 @@
+<h1>Bootstrap</h1>
+
+<div class="anchor-navi-container">
+  <div *ngFor="let mainButton of anchorButtons" class="btn-group">
+    <button type="button" class="btn btn-primary btn-sm anchor" (click)="scrollToAnchor(mainButton?.anchor)">
+      {{ mainButton.title }}
+    </button>
+    <button *ngIf="mainButton?.subtitles?.length" type="button"
+      class="btn btn-primary dropdown-toggle dropdown-toggle-split btn-sm anchor" data-bs-toggle="dropdown"
+      aria-expanded="false">
+    </button>
+    <ul *ngIf="mainButton.subtitles?.length" class="dropdown-menu dropdown-menu-dark">
+      <li>
+        <button *ngFor="let subButton of mainButton?.subtitles" class="dropdown-item"
+          (click)="scrollToAnchor(subButton?.anchor)">
+          {{ subButton?.title }}
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div>
+  <h3 #bootstrap data-anchor="bootstrap">Bootstrap</h3>
+  <ul>
+    <li>Reszponzív mobile-first CSS framework.</li>
+    <li>Beépített SAS változókkal, grid rendszerrel, mixin-ekkel, komponensekkel rendelkező Javascript plugin.</li>
+    <li>Néhány CSS és JS file-ból áll.</li>
+    <li>jQuery és properjs függőségei is vannak.</li>
+  </ul>
+</div>
+
+<div>
+  <h3 #angularintegration data-anchor="angularintegration">Angular integration</h3>
+  <ul>
+    <li>CDN URL-lel beimportálható.
+      <ul>
+        <li>CDN
+          <ul>
+            <li>A CDN egy földrajzilag elosztott szerverhálózat, amely a weboldalak és alkalmazások statikus tartalmait
+              (például képeket, CSS fájlokat, JavaScript fájlokat, videókat) gyorsítótárazza, és ezekhez a felhasználók
+              számára legközelebbi szerverről biztosít hozzáférést.
+            </li>
+          </ul>
+        </li>
+        <li>CDN URL
+          <ul>
+            <li>A CDN URL egy olyan hivatkozás, amely egy erőforrást (pl. egy JavaScript könyvtárat, képet vagy
+              stíluslapot) a CDN-en keresztül ér el.
+            </li>
+          </ul>
+        </li>
+        <li>Előnyei:
+          <ol>
+            <li>Gyors betöltés
+              <ul>
+                <li>Mivel a tartalom a felhasználóhoz legközelebbi szerverről érkezik, csökken a válaszidő.</li>
+              </ul>
+            </li>
+            <li>Kisebb szerverterhelés
+              <ul>
+                <li>Az alkalmazás szervere kevésbé lesz terhelve, mert a statikus tartalmakat a CDN szolgáltatja.</li>
+              </ul>
+            </li>
+            <li>Hatékonyabb cache-elés
+              <ul>
+                <li>A gyakran használt erőforrások (pl. jQuery, Bootstrap) már lehet, hogy cache-elve vannak a
+                  felhasználó böngészőjében más webhelyek miatt, így nem szükséges újra letölteni őket.
+                </li>
+              </ul>
+            </li>
+          </ol>
+        </li>
+      </ul>
+    </li>
+    <li>Egy másik importálási opció, ha felinstalláljuk.
+      <ul>
+        <li>npm i bootstrap
+          <ul>
+            <li>A node_modules mappába telepítődik.</li>
+            <li>A min CSS-t a node_modules/bootstrap/dist/css/dist/bootstrap.min.css lokáción található.</li>
+            <li>Két módon használhatjuk ezt a CSS fájlt
+              <ol>
+                <li>Az angular.json styles tömbjéhez hozzáadhatjuk (elegánsabb).
+                  <pre>
+                    "styles": [
+                      "node_modules/bootstrap/dist/css/dist/bootstrap.min.css",
+                      "src/styles.scss"
+                    ],
+                  </pre>
+                </li>
+                <li>A styles.css fájlba importálás.
+                  <pre>
+                    @import "../node_modules/bootstrap/dist/css/dist/bootstrap.min.css";
+                  </pre>
+                </li>
+              </ol>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+
+<div>
+  <h3 #buttons data-anchor="buttons">Buttons</h3>
+  <ul>
+    <li>Az Bootstrap Angularba intergrálását, és egy újrafordítást követően már használhatjuk is a különféle elemeket
+      <pre>
+        &#60;button type="button" class="btn btn-info">Info Button&#60;/button>
+        &#60;button type="button" class="btn btn-primary">Primary Button&#60;/button>
+      </pre>
+      <button type="button" class="btn btn-info">Info Button</button>
+      <br>
+      <br>
+      <button class="btn btn-primary">Primary Button</button>
+    </li>
+  </ul>
+</div>
+
+
+<div>
+  <h3 #icons data-anchor="icons">Icons</h3>
+  <ul>
+    <li>Az ikonokat első lépésben fel kell telepíteni</li>
+    <pre>
+      npm i bootstrap-icons
+    </pre>
+    <li>Ez után pedig best practice szerint be szükséges illeszteni az angular.json fájl styles tömbjébe a megfelelő CSS
+      fájlt</li>
+    <pre>
+      "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/bootstrap-icons/font/bootstrap-icons.css",
+              "src/styles.scss"
+            ],
+    </pre>
+    <li>Újrafordítás után már használhatóak is az ikonok</li>
+    <br>
+    <i class="bi bi-eye"></i>
+    <br>
+    <i class="bi bi-alarm"></i>
+    <pre>
+      &#60;i class="bi bi-eye">&#60;/i>
+      &#60;i class="bi bi-alarm">&#60;/i>
+    </pre>
+  </ul>
+</div>
+
+<div>
+  <h3 #todo data-anchor="todo">TODO</h3>
+  <ul>
+    <li>todo</li>
+  </ul>
+</div>

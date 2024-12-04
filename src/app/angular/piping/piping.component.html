@@ -1,0 +1,73 @@
+<div class="rounded-border">
+    <header>
+        <div style="display: flex; justify-content: space-between; gap: 20px;">
+            <h1>Students</h1>
+            <div>Total students: {{ totalStudents | async }}</div>
+        </div>
+        <div class="filter">
+            <div class="filter-dropdown">
+                <button class="btn btn-secondary dropdown-toggle dark" type="button" id="filter1"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    Pipe filter: {{ filterLabel }}
+                </button>
+                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="filter1">
+                    <li *ngFor="let fd of filterDropdown; let index = index">
+                        <a class="dropdown-item" [ngClass]="{'active': fd.active}" (click)="onFilterChange(index)">
+                            {{fd.label}}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <br>
+            <div class="filter-dropdown">
+                <button class="btn btn-secondary dropdown-toggle dark" type="button" id="filter2"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    Service filter: {{ filterLabel }}
+                </button>
+                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="filter2">
+                    <li *ngFor="let fd of filterDropdown; let index = index">
+                        <a class="dropdown-item" [ngClass]="{'active': fd.active}" (click)="onFilterChange2(index)">
+                            {{fd.label}}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <div class="student-content">
+        <table class="table table-dark table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Gender</th>
+                    <th scope="col">Birth</th>
+                    <th scope="col">Course</th>
+                    <th scope="col">Marks</th>
+                    <th scope="col">Percentage</th>
+                    <th scope="col">Fees</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let student of students | filter: filterLabel">
+                    <td>{{ student.id }}</td>
+                    <td>{{ student.name }}</td>
+                    <td>{{ student.gender }}</td>
+                    <td>{{ student.birth | date: 'yyyy-MM-dd': undefined: undefined }}</td>
+                    <td>{{ student.course | uppercase }}</td>
+                    <td>{{ student.marks }}</td>
+                    <td>{{ student.marks | procent: [totalMarks, 2] }}</td>
+                    <td>{{ student.fees | currency: 'INR': 'symbol': '2.2-3': 'en-US' }}</td>
+                </tr>
+                <tr>
+            </tbody>
+        </table>
+        <div class="no-table">Sorry, but table do not show on mobile view</div>
+        <div style="text-align: right;">
+            <button class="btn btn-secondary" (click)="createNewUser()">New static student<i class="bi bi-plus"></i></button>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2024 My Students. All rights reserved.</p>
+    </footer>
+</div>

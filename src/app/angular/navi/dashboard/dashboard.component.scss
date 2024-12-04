@@ -1,0 +1,124 @@
+@import "mixin";
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: #333;
+    color: white;
+}
+
+header .title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+header nav button {
+    background: none;
+    border: 1px solid white;
+    color: white;
+    padding: 0.5rem 1rem;
+    margin-left: 0.5rem;
+    cursor: pointer;
+}
+
+header nav button:hover {
+    background-color: white;
+    color: #333;
+}
+
+main {
+    flex: 1;
+    padding: 2rem;
+    background-color: #f4f4f4;
+
+    .dashboard-content {
+        .top {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 20px;
+        }
+
+        .refresh {
+            align-content: center;
+            cursor: pointer;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+
+            @include breakpoint(md) {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .card {
+                border-left: 5px solid rgba(0, 0, 0, 0.176);
+
+                &.priority-low {
+                    border-left-color: rgb(20, 175, 0);
+                }
+
+                &.priority-medium {
+                    border-left-color: rgb(218, 231, 49);
+                }
+
+                &.priority-high {
+                    border-left-color: rgb(222, 115, 0);
+                }
+
+                &.priority-critical {
+                    border-left-color: rgb(193, 3, 3);
+                }
+
+                .actions {
+                    display: flex;
+                    gap: 10px;
+                    justify-content: space-between;
+
+                    .icons {
+                        display: flex;
+                        gap: 5px;
+
+                        i {
+                            cursor: pointer;
+                            transition: transform .3s;
+
+
+                            &:hover {
+                                transform: scale(1.1);
+                                transition: transform .3s;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #333;
+    color: white;
+}
+
+.hide-start {
+    display: none;
+}
+
+.toast-container {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    .toast-style {
+        background-color: #9d2626;
+        border-radius: 5px;
+        color: black;
+    }
+}

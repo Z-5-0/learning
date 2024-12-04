@@ -1,0 +1,36 @@
+<header class="site-header">
+  <div class="site-identity">
+    <h1><a (click)="onNavigate('')" role="button">Angular</a></h1>
+  </div>
+  <nav class="site-navigation">
+    <div class="nav">
+      <div class="rounded-border">
+        [&#123; outlets: &#123; navi: ['route'] } }
+        <a [routerLink]="[{ outlets: { navi: ['about'] } }]" [routerLinkActive]="'active'">About</a>
+        <a [routerLink]="[{ outlets: { navi: ['contact'] } }]" [routerLinkActive]="'active'">Contact</a>
+      </div>
+      <div class="rounded-border">
+        [&#123; outlets: &#123; test: ['route'] } }
+        <a [routerLink]="[{ outlets: { test: ['about'] } }]" [routerLinkActive]="'active'">About</a>
+        <a [routerLink]="[{ outlets: { test: ['contact'] } }]" [routerLinkActive]="'active'">Contact</a>
+      </div>
+      <div class="rounded-border">
+        navigateByUrl
+        <a (click)="onNavigate('about')" role="button">About</a>
+        <a (click)="onNavigate('contact')" role="button">Contact</a>
+      </div>
+    </div>
+  </nav>
+  <div class="site-auth">
+    <div>
+      <button class="btn btn-primary"><a [routerLink]="['/', 'angular', 'login']">Login</a></button>
+      <small>cath123/123</small>
+    </div>
+    <div>
+      isLoggedIn: {{isLoggedIn}}
+      <button class="btn btn-primary"><a [routerLink]="['/', 'angular', 'login']"
+          [queryParams]="{logout: true}">Logout</a></button>
+    </div>
+
+  </div>
+</header>

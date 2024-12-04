@@ -1,0 +1,59 @@
+@import "mixin";
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+
+  @include breakpoint(md) {
+    grid-template-columns: 2fr 1fr;
+  }
+}
+
+.loader {
+  width: 40px;
+  height: 40px;
+  border: 5px solid #3D90D7;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.info {
+  border: 1px solid white;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  display: inline-flex;
+  vertical-align: text-bottom;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 25px;
+}
+
+.popup {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 600px;
+  height: 400px;
+  background-color: black;
+  z-index: -1;
+  padding: 10px;
+  border-left: 1px solid #9d2626;
+  border-top: 1px solid #9d2626;
+  border-radius: 5px;
+}

@@ -1,0 +1,35 @@
+@import "mixin";
+
+header {
+    padding-bottom: 30px;
+
+    .filter {
+        text-align: right;
+    }
+}
+
+.student-content {
+    table {
+        display: none;
+
+        @include breakpoint(md) {
+            display: table;
+        }
+    }
+
+    .no-table {
+        display: block;
+        color: #9d2626;
+        font-size: 22px;
+        padding-bottom: 30px;
+
+        @include breakpoint(md) {
+            display: none;
+        }
+    }
+}
+
+footer {
+    padding-top: 30px;
+    text-align: center;
+}

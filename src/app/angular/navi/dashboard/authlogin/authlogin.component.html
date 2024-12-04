@@ -1,0 +1,36 @@
+<div class="rounded-border" style="margin-bottom: 30px;">
+    // authentication
+    <div style="text-align: right;">
+        <div class="btn-group">
+            <button class="btn btn-primary" [class.active]="userSignedUp" (click)="userSignedUp = !userSignedUp">
+                Sign in</button>
+            <button class="btn btn-primary" [class.active]="!userSignedUp" (click)="userSignedUp = !userSignedUp">
+                Sign up</button>
+        </div>
+    </div>
+
+    <form #loginForm="ngForm" [loading]="isLoading" (ngSubmit)="submitForm(loginForm)">
+        <h5>{{userSignedUp ? 'Sign in' : 'Sign up'}}</h5>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Username</span>
+            <input type="text" class="form-control" name="email" aria-label="Email address"
+                aria-describedby="basic-addon1" ngModel email required>
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon2">Password</span>
+            <input type="text" class="form-control" name="password" aria-label="Password"
+                aria-describedby="basic-addon2" ngModel minlength="8" required>
+        </div>
+        <div style="text-align: right;">
+            <button type="button" class="btn btn-outline-primary" [disabled]="loginForm.invalid" type="submit">
+                {{userSignedUp ? 'Login' : 'Register'}}
+            </button>
+        </div>
+    </form>
+
+    <div *ngIf="showToast" class="toast-container">
+        <ngb-toast [autohide]="true" [delay]="5000" (hidden)="showToast = false" [class]="'toast-style'">
+            {{ errorMessage }}
+        </ngb-toast>
+    </div>
+</div>

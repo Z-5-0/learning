@@ -1,0 +1,38 @@
+<table style="table-layout: fixed">
+    <tr>
+        <th>Name</th>
+        <th>Gender</th>
+        <th>Sub type</th>
+        <th>Status</th>
+        <th>
+            <button class="btn btn-dark" (click)="onUserDetailChange(null, 0)">
+                <i class="bi" [ngClass]="activeButton === 0 ? 'bi-toggle-on' : 'bi-toggle-off'"></i>
+            </button>
+        </th>
+    </tr>
+    <tr *ngFor="let user of userList; let index = index">
+        <td>{{user.name}}</td>
+        <td>{{user.gender}}</td>
+        <td>{{user.subType}}</td>
+        <td>{{user.status}}</td>
+        <td *ngIf="type ===  'interaction'">
+            <button class="btn btn-dark" (click)="onUserDetailChange(user, (index+1))">
+                <i class="bi" [ngClass]="activeButton === (index + 1) ? 'bi-toggle-on' : 'bi-toggle-off'"></i>
+            </button>
+        </td>
+    </tr>
+</table>
+
+<style>
+    table,
+    th,
+    td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+
+    th,
+    td {
+        padding: 10px;
+    }
+</style>

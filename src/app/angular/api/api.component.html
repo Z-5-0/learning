@@ -1,0 +1,57 @@
+<div *ngIf="tempSwitcher === 'api'" class="rounded-border">
+    // Példa API hívásra 1
+    <br>
+    <br>
+    <div *ngIf="fetchCompleted; else loading">
+        <ng-container *ngIf="posts.length; else error">
+            <div *ngFor="let p of posts; let last = last" [ngStyle]="{
+            'padding-bottom': !last ? '10px' : '0',
+            'margin-bottom': !last ? '10px' : '0',
+            'border-bottom': !last ? '1px solid #9d2626' : 'none'}">
+                <small style="display: block;"><b>ID: </b>{{p.id}}</small>
+                <small style="display: block;"><b>UserID: </b>{{p.userId}}</small>
+                <small style="display: block;"><b>Title: </b>{{p.title}}</small>
+                <small style="display: block;"><b>Body: </b>{{p.body}}</small>
+            </div>
+        </ng-container>
+        <br>
+        <div>{{fetchCompleted ? 'Fetch was successful' : 'Error'}}</div>
+    </div>
+
+    <ng-template #loading>
+        Loading posts...
+    </ng-template>
+
+    <ng-template #error>
+        Error
+    </ng-template>
+</div>
+
+<div *ngIf="tempSwitcher === 'api2'" class="rounded-border">
+    // Példa API hívásra 2
+    <br>
+    <br>
+    <div *ngIf="posts$ | async as posts2; else loading">
+        <ng-container *ngIf="posts2.length; else error">
+            <div *ngFor="let p of posts2; let last = last" [ngStyle]="{
+            'padding-bottom': !last ? '10px' : '0',
+            'margin-bottom': !last ? '10px' : '0',
+            'border-bottom': !last ? '1px solid #9d2626' : 'none'}">
+                <small style="display: block;"><b>ID: </b>{{p.id}}</small>
+                <small style="display: block;"><b>UserID: </b>{{p.userId}}</small>
+                <small style="display: block;"><b>Title: </b>{{p.title}}</small>
+                <small style="display: block;"><b>Body: </b>{{p.body}}</small>
+            </div>
+        </ng-container>
+        <br>
+        <div>{{fetchCompleted ? 'Fetch was successful' : 'Error'}}</div>
+    </div>
+
+    <ng-template #loading>
+        Loading posts...
+    </ng-template>
+
+    <ng-template #error>
+        Error
+    </ng-template>
+</div>

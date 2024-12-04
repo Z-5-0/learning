@@ -1,0 +1,46 @@
+@import "mixin";
+
+.page {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 2rem;
+  @include breakpoint(xs) {
+    grid-template-columns: 55px 1fr;
+    gap: 5px;
+  }
+  @include breakpoint(md) {
+    grid-template-columns: 145px 1fr;
+    gap: 20px;
+  }
+
+  .menu {
+    bottom: 0;
+    top: 0;
+    gap: 5px;
+    width: 150px;
+    padding: 10px;
+    overflow-y: auto;
+    @include breakpoint(xs) {
+      display: none;
+    }
+    @include breakpoint(md) {
+      display: grid;
+    }
+  }
+
+  .content {
+    overflow: auto;
+    height: 100vh;
+    color: #b2b1bc;
+    width: 100%;
+    @include breakpoint(xs) {
+      padding: 20px 10px 20px 0;
+    }
+
+    @include breakpoint(md) {
+      padding: 60px 30px 60px 0;
+    }
+  }
+}
+

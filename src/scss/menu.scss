@@ -1,0 +1,44 @@
+@import "mixin";
+
+.dropdow-menu {
+  @include breakpoint(md) {
+    display: none;
+  }
+
+  .dropdown-menu-icon {
+    display: inline-block;
+    padding: 10px;
+    cursor: pointer;
+
+
+    &:after {
+      content: none;
+    }
+
+    .line {
+      width: 35px;
+      height: 5px;
+      background-color: #333;
+      margin: 6px 0;
+      transition: 0.4s;
+      pointer-events: none;
+
+      &.opened:first-child {
+        transform: translate(0, 11px) rotate(-45deg);
+      }
+
+      &.opened:nth-child(2) {
+        opacity: 0;
+      }
+
+      &.opened:last-child {
+        transform: translate(0, -11px) rotate(45deg);
+      }
+    }
+  }
+
+  .dropdown-menu {
+    max-height: calc(100vh - 61px);
+    overflow: scroll;
+  }
+}

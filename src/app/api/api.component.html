@@ -1,0 +1,260 @@
+<h1>API</h1>
+
+<div class="anchor-navi-container">
+    <div *ngFor="let mainButton of anchorButtons" class="btn-group">
+        <button type="button" class="btn btn-primary btn-sm anchor" (click)="scrollToAnchor(mainButton?.anchor)">
+            {{ mainButton.title }}
+        </button>
+        <button *ngIf="mainButton?.subtitles?.length" type="button"
+            class="btn btn-primary dropdown-toggle dropdown-toggle-split btn-sm anchor" data-bs-toggle="dropdown"
+            aria-expanded="false">
+        </button>
+        <ul *ngIf="mainButton.subtitles?.length" class="dropdown-menu dropdown-menu-dark">
+            <li>
+                <button *ngFor="let subButton of mainButton?.subtitles" class="dropdown-item"
+                    (click)="scrollToAnchor(subButton?.anchor)">
+                    {{ subButton?.title }}
+                </button>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div>
+    <ul>
+        <li>Az API-k (Application Programming Interfaces) különböző típusokban érhetők el, attól függően, hogy milyen
+            technológiát, szabványt vagy protokollt használnak</li>
+        <li>API készítéséhez server-side nyelveket használunk
+            <ol>
+                <li>Python</li>
+                <li>NodeJS</li>
+                <li>PHP</li>
+                <li>etc.</li>
+            </ol>
+        </li>
+        <h4>TODO +</h4>
+    </ul>
+</div>
+
+<div>
+    <h3 #webapi data-anchor="webapi">WebAPI</h3>
+    <ul>
+        <li>Általános kifejezés, nem egy konkrét API típus; gyűjtőfogalom</li>
+        <li>A webes technológiákon alapuló API-kat jelenti, amelyek HTTP protokollt használnak a szerver és a kliens
+            közötti kommunikációhoz</li>
+        <li>A RESTful API-kra gyakran használják a Web API kifejezést, mivel ezek a legelterjedtebbek a webes
+            alkalmazásokban.</li>
+        <li>Példák:
+            <ol>
+                <li>RestAPI</li>
+                <li>GraphQL</li>
+                <li>SOAP</li>
+            </ol>
+        </li>
+    </ul>
+</div>
+
+<div>
+    <h3 #restapi data-anchor="restapi">RestfulAPI</h3>
+    <ul>
+        <li>Representational State Transfer</li>
+        <li>Legelterjedtebb API-típus a modern webalkalmazásokban</li>
+        <li>HTTP protokollt használ</li>
+        <li>Gyakran JSON vagy XML formátumban küldi az adatokat</li>
+        <li>Állapotmentes (stateless), minden kérés tartalmazza a szükséges adatokat</li>
+        <li>Erőforrásokat tesz elérhetővé HTTP-n keresztül
+            <ul>
+                <li>Pl.: GET /users, POST /orders</li>
+            </ul>
+        </li>
+        <li>Skalázható és könnyen implementálható</li>
+        <li>Webes, mobilalkalmazások fejlesztésénél, CRUD (Create, Read, Update, Delete) elvű alkalmazásoknál</li>
+        <pre>
+            GET https://api.example.com/users
+        </pre>
+        <li>Tekinthetünk úgy rá, mint egy web applikációra
+            <ul>
+                <li>Rendelkezik URL-rel</li>
+                <li>URL-rel fordulhatunk hozzá, és attól függően, hogy mi az URL, küld választ</li>
+            </ul>
+        </li>
+        <li>HTTP request
+            <ol>
+                <li>URL
+                    <ul>
+                        <li>Ide küldjük a request-et</li>
+                        <li>API esetében API endpointnak is nevezzük</li>
+                        <pre>
+                    https://domain.com/api/users/id
+                  </pre>
+                        <li>Nem HTML-t fog visszaadni, hanem - leggyakrabban - JSON-t</li>
+                        <li>Ahhoz, hogy kérést küldjünk, ismernünk kell az API endpoint URL-jét</li>
+                    </ul>
+                </li>
+                <li>HTTP method
+                    <ul>
+                        <li>Nem csak az URL fontos része a HTTP kérésnek</li>
+                        <li>A HTTP-protokoll egy része</li>
+                        <li>A metódus definiálja, hogy milyen típusú kérést szeretnénk intézni az endpoint felé</li>
+                        <li>Példák
+                            <ul>
+                                <li>GET
+                                    <ul>
+                                        <li>Adat lekérés adatbázisból</li>
+                                        <li>Idempotens, azaz ugyanaz a kérés ugyanazt az eredményt adja</li>
+                                        <li>Nem módosít adatot a szerveren (adatbázisban)</li>
+                                    </ul>
+                                </li>
+                                <li>POST
+                                    <ul>
+                                        <li>Új rekord az adatbázisban</li>
+                                        <li>Body-t is küldünk, ami tartalmazza az adatot, amit létre szeretnénk hozni
+                                        </li>
+                                        <li>Nem idempotens, avagy többszöri végrehajtás többszörös erőforrás létrehozást
+                                            eredményez(het)
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>PUT
+                                    <ul>
+                                        <li>Adatbázis rekord frissítés</li>
+                                        <li>Általában idempotens</li>
+                                    </ul>
+                                </li>
+                                <li>DELETE
+                                    <ul>
+                                        <li>Rekord törlése adatbázisból</li>
+                                        <li>Nem feltétlenül idempotens</li>
+                                    </ul>
+                                </li>
+                                <li>PATCH
+                                    <ul>
+                                        <li>Adatbázis rekord frissítés</li>
+                                        <li>Általában idempotens</li>
+                                    </ul>
+                                </li>
+                                <li>HEAD
+                                    <ul>
+                                        <li>Csak az erőforrás metaadatait kéri le</li>
+                                        <li>Ha például csak azt szeretnéd ellenőrizni, hogy egy erőforrás létezik-e</li>
+                                        <li>Hasonló a GET-hez, de a válaszban nincs törzs</li>
+                                    </ul>
+                                </li>
+                                <li>OPTIONS
+                                    <ul>
+                                        <li>Lekéri, hogy egy adott erőforráson milyen műveletek / metódusok érhetők el
+                                        </li>
+                                        <li>API ellenőrzése kiváló</li>
+                                    </ul>
+                                </li>
+                                <li>TRACE
+                                    <ul>
+                                        <li>A HTTP-kérés útvonalának nyomkövetése, gyakran hibakeresési célra</li>
+                                    </ul>
+                                </li>
+                                <li>CONNECT
+                                    <ul>
+                                        <li>Egy TCP-alagút létrehozása, például HTTPS forgalomhoz proxykon keresztül
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>Kiegészítő metaadat
+                    <ul>
+                        <li>Header-nek nevezik</li>
+                        <li>A legtöbb esetben a kliens oldalon állítjuk be / elő
+                            <ul>
+                                <li>Általában nem szükséges explicit módon megadni</li>
+                                <li>Amennyiben a kérést böngészőből küldjük a szerver felé, akkor a böngésző a kliens,
+                                    és ő állítja elő
+                                    a header-üket</li>
+                                <li>Angularban manuálisan előállítható</li>
+                            </ul>
+                        </li>
+                        <li></li>
+                    </ul>
+                </li>
+            </ol>
+        </li>
+        <h4>TODO +</h4>
+    </ul>
+</div>
+
+<div>
+    <h3 #openapi data-anchor="openapi">OpenAPI / Swagger</h3>
+    <ul>
+        <li>Nem egy API típus</li>
+        <li>Egy szabvány a REST API-k dokumentációjára és tervezésére</li>
+        <li>Segít az API-k specifikációjának megírásában</li>
+        <li>Automatikusan generál kódot vagy interaktív dokumentációt</li>
+        <h4>TODO +</h4>
+    </ul>
+</div>
+
+<div>
+    <h3 #soapapi data-anchor="soapapi">SOAP API</h3>
+    <ul>
+        <li>Simple Object Access Protocol</li>
+        <li>Egy régebbi, szigorú szabványon alapuló API-típus</li>
+        <li>XML-t használ adatcsere-formátumként</li>
+        <li>Erősen szabványosított, támogatja az állapotos tranzakciókat</li>
+        <li>Szolgáltatásorientált architektúrát (SOA) használ</li>
+        <li>Komplex üzleti folyamatoknál használatos, vagy ahol nagyobb biztonság szükséges</li>
+        <li>Nagyon biztonságos, ezért banki rendszerekben népszerű</li>
+        <pre>
+            &#60;soap:Envelope>
+                &#60;soap:Body>
+                    &#60;GetUser>
+                        &#60;UserId>123&#60;/UserId>
+                    &#60;/GetUser>
+                &#60;/soap:Body>
+            &#60;/soap:Envelope>
+        </pre>
+        <h4>TODO +</h4>
+    </ul>
+</div>
+
+<div>
+    <h3 #websocketapi data-anchor="websocketapi">WebSocket API</h3>
+    <ul>
+        <li>Állandó, kétirányú kapcsolatot biztosító API-típus</li>
+        <li>Valós idejű kommunikációra alkalmas</li>
+        <li>Egyedi TCP kapcsolatot hoz létre</li>
+        <li>Ideális valós idejű adatfrissítésekhez
+            <ul>
+                <li>chat</li>
+                <li>élő statisztikák</li>
+            </ul>
+        </li>
+        <pre>
+            ws://example.com/socket
+        </pre>
+        <h4>TODO +</h4>
+    </ul>
+</div>
+
+<div>
+    <h3 #graphqlapi data-anchor="graphqlapi">GraphQL API</h3>
+    <ul>
+        <li>Modern API-típus</li>
+        <li>A Facebook fejlesztett ki</li>
+        <li>Ahelyett, hogy fix erőforrásokat kérnénk, a kliens pontosan meghatározhatja, hogy milyen adatokat szeretne
+        </li>
+        <li>Egyetlen végpont (/graphql) van</li>
+        <li>Az adatok strukturált kérdésekkel (query) érhetők el</li>
+        <li>Csökkenti a szükségtelen adatlekérdezést</li>
+        <li>Mobilalkalmazásoknál használatos, ahol minimalizálni kell a hálózati terhelést</li>
+        <pre>
+            query &#123;
+                user(id: 123) &#123;
+                  name
+                  email
+                }
+              }              
+        </pre>
+        <h4>TODO +</h4>
+    </ul>
+</div>

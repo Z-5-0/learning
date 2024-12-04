@@ -1,0 +1,10 @@
+<div class="rounded-border">
+    <div style="text-align: right;">
+        <button [routerLink]="['/', 'angular']" class="btn btn-dark">Home</button>
+        <button [routerLink]="['/', 'angular', { outlets: { module: ['moduling', 'list'] } }]"
+            class="btn btn-dark">List</button>
+        <button [routerLink]="['/', 'angular', { outlets: { module: ['moduling', 'overview'] } }]"
+            class="btn btn-dark">Overview</button>
+    </div>
+    <router-outlet name="module"></router-outlet>
+</div>

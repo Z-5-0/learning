@@ -1,0 +1,40 @@
+<div class="user-content">
+    <table class="table table-dark table-striped table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Subscription</th>
+                <th scope="col">Status</th>
+                <th scope="col"><small>1</small></th>
+                <th scope="col"><small>2</small></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of userList">
+                <td>{{ user.name }}</td>
+                <td>{{ user.gender }}</td>
+                <td>{{ user.subType }}</td>
+                <td>{{ user.status }}</td>
+                <td>
+                    <button class="btn btn-warning" (click)="deleteUser(user)">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </td>
+                <td>
+                    <button class="btn btn-danger" (click)="showConfirmDelete(user)">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+        </tbody>
+    </table>
+</div>
+
+<app-confirm-delete #confirmDelete *ngIf="showConfirmDeleteComponent" [user]="selectedUser"
+    (showDeleteConfirmWindow)="showConfirmDeleteComponent = $event"></app-confirm-delete>
+
+<div appContainer>
+    <!-- app-confirm-delete component-->
+</div>

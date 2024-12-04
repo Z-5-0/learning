@@ -1,0 +1,61 @@
+<h1>Database</h1>
+
+<div class="anchor-navi-container">
+    <div *ngFor="let mainButton of anchorButtons" class="btn-group">
+        <button type="button" class="btn btn-primary btn-sm anchor" (click)="scrollToAnchor(mainButton?.anchor)">
+            {{ mainButton.title }}
+        </button>
+        <button *ngIf="mainButton?.subtitles?.length" type="button"
+            class="btn btn-primary dropdown-toggle dropdown-toggle-split btn-sm anchor" data-bs-toggle="dropdown"
+            aria-expanded="false">
+        </button>
+        <ul *ngIf="mainButton.subtitles?.length" class="dropdown-menu dropdown-menu-dark">
+            <li>
+                <button *ngFor="let subButton of mainButton?.subtitles" class="dropdown-item"
+                    (click)="scrollToAnchor(subButton?.anchor)">
+                    {{ subButton?.title }}
+                </button>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div>
+    <ul>
+        <h4>TODO +</h4>
+    </ul>
+</div>
+
+<div>
+    <h3 #relational data-anchor="relational">Relational database</h3>
+    <ul>
+        <li></li>
+        <h4>TODO +</h4>
+    </ul>
+</div>
+
+<div>
+    <h3 #nonrelational data-anchor="nonrelational">Non-relational database</h3>
+    <ul>
+        <li></li>
+        <h4>TODO +</h4>
+    </ul>
+</div>
+
+<div>
+    <h3 #comparison data-anchor="comparison">Comparison</h3>
+    <ul>
+        <img src="https://www.ml4devs.com/images/illustrations/sql-vs-nosql-comparision.webp" alt=""
+            style="max-width: 768px; width: 100%;">
+        <li></li>
+        <h4>TODO +</h4>
+    </ul>
+</div>
+
+<div>
+    <h3 #todo data-anchor="todo">TODO</h3>
+    <ul>
+        <li></li>
+        <h4>TODO +</h4>
+    </ul>
+</div>

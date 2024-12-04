@@ -1,0 +1,47 @@
+<ng-container *ngIf="tempSwitcher == 'default'">
+    <app-header></app-header>
+    <div class="navi">
+        <div class="navi-content">
+            <router-outlet></router-outlet>
+            <router-outlet name="navi"></router-outlet>
+            <router-outlet name="test"></router-outlet>
+        </div>
+        <div *ngIf="showLoader" class="navi-overlay">
+            <div class="navi-loader">
+                <div class="spinner-border text-warning" style="width: 5rem; height: 5rem;" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-footer></app-footer>
+</ng-container>
+
+<ng-container *ngIf="tempSwitcher == 'relativeabsolute'">
+    <router-outlet name="secondary"></router-outlet>
+</ng-container>
+
+<ng-container *ngIf="tempSwitcher == 'spa'">
+    <h5>SPA</h5>
+    <br>
+    <button class="btn btn-outline-info" [routerLink]="[{ outlets: { spa: ['list'] } }]">Open List</button>
+    <button class="btn btn-outline-info ms-2" [routerLink]="[{ outlets: { spa: ['reactiveform'] } }]">
+        Open Reactive Form</button>
+    <button class="btn btn-outline-info ms-2" [routerLink]="[{ outlets: { spa: ['templatedrivenform'] } }]">
+        Open Template Driven Form</button>
+    <br>
+    <br>
+    <router-outlet name="spa"></router-outlet>
+</ng-container>
+
+<ng-container *ngIf="tempSwitcher == 'http'">
+    <br>
+    <app-home [tempSwitcher]="'http'"></app-home>
+    <br>
+</ng-container>
+
+<ng-container *ngIf="tempSwitcher == 'module'">
+    <br>
+    <app-home-module></app-home-module>
+    <br>
+</ng-container>

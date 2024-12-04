@@ -1,0 +1,12 @@
+<div class="confirm-overlay">
+    <div class="confirm-box">
+        <div class="confirm-text">
+            <h6>{{ user.name }}</h6>
+            <div>Do you want to delete the user?</div>
+        </div>
+        <div class="confirm-button-container">
+            <button class="btn btn-danger" (click)="confirmDelete()">Confirm</button>
+            <button class="btn btn-secondary" (click)="cancelDelete()">Cancel</button>
+        </div>
+    </div>
+</div>

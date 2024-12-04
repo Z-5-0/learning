@@ -1,0 +1,83 @@
+<ng-container *ngIf="tempSwitcher === 'array'">
+    <div class="rounded-border">
+        <div>Elements of data array:</div>
+        <div>
+            <span *ngFor="let d of data" style="padding-right: 5px;">
+                {{d}}
+            </span>
+        </div>
+
+        <button class="btn btn-secondary" (click)="getAsyncDataByClick()">Get data</button>
+        <button class="btn btn-danger" (click)="data = []">Clear data</button>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="tempSwitcher === 'arrayStream'">
+    <div class="rounded-border">
+        <div>Elements of data2 array:</div>
+        <div>
+            <span *ngFor="let d of data2" style="padding-right: 5px;">
+                {{d}}
+            </span>
+        </div>
+
+        <button class="btn btn-secondary" (click)="getAsyncDataByClick2()">Get data 2</button>
+        <button class="btn btn-danger" (click)="data2 = []">Clear data 2</button>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="tempSwitcher === 'arraySteamWithTimeOut'">
+    <div class="rounded-border">
+        <div>Elements of data3 array:</div>
+        <div>
+            <span *ngFor="let d of data3" style="padding-right: 5px;">
+                {{d}}
+            </span>
+        </div>
+
+        <button class="btn btn-secondary" (click)="getAsyncDataByClick3()">Get data 3</button>
+        <button class="btn btn-danger" (click)="data3 = []">Clear data 3</button>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="tempSwitcher === 'error'">
+    <div class="rounded-border">
+        <div>Elements of data4 array:</div>
+        <div>
+            <span *ngFor="let d of data4" style="padding-right: 5px;">
+                {{d}}
+            </span>
+        </div>
+
+        <button class="btn btn-secondary" (click)="getAsyncDataByClick4()">Get data 4</button>
+        <button class="btn btn-danger" (click)="data4 = []">Clear data 4</button>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="tempSwitcher === 'complete'">
+    <div class="rounded-border">
+        <div>Elements of data5 array:</div>
+        <div>
+            <span *ngFor="let d of data5" style="padding-right: 5px;">
+                {{d}}
+            </span>
+        </div>
+
+        <button class="btn btn-secondary" (click)="getAsyncDataByClick5()">Get data 5</button>
+        <button class="btn btn-danger" (click)="data5 = []">Clear data 5</button>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="tempSwitcher === 'depricated'">
+    <div class="rounded-border">
+        <div>Elements of data6 array:</div>
+        <div>
+            <span *ngFor="let d of data6" style="padding-right: 5px;">
+                {{d}}
+            </span>
+        </div>
+
+        <button class="btn btn-secondary" (click)="getAsyncDataByClick6()">Get data 6</button>
+        <button class="btn btn-danger" (click)="data6 = []">Clear data 6</button>
+    </div>
+</ng-container>

@@ -1,0 +1,14 @@
+<div #box class="box"
+     [ngClass]="isBoxGrabbed ? 'grabbed' : 'not-grabbed'"
+     [ngStyle]="{
+      'position': 'absolute',
+      'left.px': xPosition,
+      'top.px': yPosition,
+      'border': '1px solid black'
+    }"
+     [style.background-color]="color"
+     (mousedown)="toggleGrab($event)"
+     (mouseup)="toggleGrab($event)"
+     (mousemove)="isGrabbed($event)">
+  <h3 style="text-align: center">grab-it</h3>
+</div>

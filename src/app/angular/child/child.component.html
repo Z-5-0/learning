@@ -1,0 +1,79 @@
+<div *ngIf="shownData === 'labels'">{{ inputData.label }}</div>
+
+<ng-container *ngIf="shownData === 'radios'">
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" [value]="'all'"
+           [(ngModel)]="selectedRadio">
+    <label class="form-check-label" for="flexRadioDefault1">
+      All {{ '(' + typeCount.all + ')' }}
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" [value]="'motor'"
+           [(ngModel)]="selectedRadio">
+    <label class="form-check-label" for="flexRadioDefault2">
+      Motor {{ '(' + typeCount.motor + ')' }}
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" [value]="'car'"
+           [(ngModel)]="selectedRadio">
+    <label class="form-check-label" for="flexRadioDefault3">
+      Car {{ '(' + typeCount.car + ')' }}
+    </label>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="shownData === 'radios2'">
+  <div>
+    <input id="all" type="radio" [value]="'all'"
+           [ngModel]="selectedRadio" (ngModelChange)="selectedRadioChange.emit($event)">
+    <label for="all">All {{ '(' + typeCount.all + ')' }}</label>
+  </div>
+  <div>
+    <input id="motor" type="radio" [value]="'motor'"
+           [ngModel]="selectedRadio" (ngModelChange)="selectedRadioChange.emit($event)">
+    <label for="motor">Motor {{ '(' + typeCount.motor + ')' }}</label>
+  </div>
+  <div>
+    <input id="car" type="radio" [value]="'car'"
+           [ngModel]="selectedRadio" (ngModelChange)="selectedRadioChange.emit($event)">
+    <label for="car">Car {{ '(' + typeCount.car + ')' }}</label>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="shownData === 'projectComponent'">
+  The name of the secret agent is <span style="color: #9d2626">{{ nameOfProjection }}</span>
+  // app-child komponensben van
+</ng-container>
+
+<ng-container *ngIf="shownData === 'projectMultiComponent'">
+  <div>Color is {{ color }} // app-child komponensben van</div>
+</ng-container>
+
+<ng-container *ngIf="shownData==='binding'">
+  <div class="rounded-border">
+    <div>// Child content</div>
+    <input sample type="text" [value]="textValue"> // Property binding
+    <div>
+      <button class="btn btn-secondary">Useless button</button>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="shownData==='listener'">
+  <div class="rounded-border">
+    <div>// Child content</div>
+    <input type="text" [value]="textValue" (focus)="onTextInputFocus($event)">
+    <div>
+      <button class="btn btn-secondary">Useless button</button>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="shownData==='listener2'">
+  <div class="rounded-border">
+    <div>// Child content</div>
+    <input sample type="text" [value]="textValue" (textInputFocusEventOutput)="onTextInputFocusFromDirective($event)">
+  </div>
+</ng-container>

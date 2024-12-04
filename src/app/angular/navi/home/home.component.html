@@ -1,0 +1,21 @@
+<div class="rounded-border" *ngIf="tempSwitcher !== 'http'">
+    <h6>Home</h6>
+    <br>
+    <div class="row">
+        <div class="col-12">
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">Search/Filter buttons on About page</span>
+                <input #querystring type="text" class="form-control" placeholder="Query string"
+                    [(ngModel)]="queryString">
+                <button [routerLink]="'about'" [queryParams]="{search: queryString}" class="btn btn-outline-primary"
+                    type="button" id="button-addon2">
+                    Search
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="rounded-border" *ngIf="tempSwitcher === 'http'">
+    <app-dashboard></app-dashboard>
+</div>

@@ -1,0 +1,127 @@
+<div *ngIf="ngType === 'template'" class="rounded-border">
+  <ng-template #ngtemplateexample>
+    <h6>Ez egy template.</h6>
+    <p>Template paragráfus.</p>
+  </ng-template>
+
+  <div *ngTemplateOutlet="ngtemplateexample"></div>
+</div>
+
+<div *ngIf="ngType === 'template2'" class="rounded-border">
+  <h6>Template 2</h6>
+  <div *ngIf="isAvailable; else ngtemplateelseexample">
+    Available
+  </div>
+
+  <ng-template #ngtemplateelseexample>
+    Not available
+  </ng-template>
+</div>
+
+<div *ngIf="ngType === 'container'" class="rounded-border">
+  <ng-template #ngtemplateexample>
+    <h6>Ez egy template.</h6>
+    <p>Template paragráfus.</p>
+  </ng-template>
+
+  <ng-container *ngTemplateOutlet="ngtemplateexample"></ng-container>
+</div>
+
+<div *ngIf="ngType === 'content'" class="rounded-border">
+  Child content
+</div>
+
+<div *ngIf="ngType === 'content2'">
+  <div class="rounded-border">
+    <div>Text before ng-content</div>
+    <ul>
+      <li>
+        <span style="color: #9d2626">
+          <ng-content></ng-content>
+        </span>
+        <small> (ng-content)</small>
+      </li>
+    </ul>
+    <div>Text after ng-content</div>
+  </div>
+</div>
+
+
+<div *ngIf="ngType === 'content3'">
+  <div class="rounded-border">
+    <div>Text before ng-content</div>
+    <ul>
+      <li>
+        <span style="color: #9d2626">
+          <ng-content select=".text"></ng-content>
+        </span>
+        <small> (ng-content select=".text")</small>
+      </li>
+    </ul>
+    <div>Text after ng-content</div>
+    <ng-content select=".btn-secondary"></ng-content>
+    <small> (ng-content select=".btn-secondary")</small>
+  </div>
+</div>
+
+<div *ngIf="ngType === 'contentchild'">
+  <div class="rounded-border">
+    <ng-content></ng-content>
+    <button type="button" class="btn btn-light" (click)="getProjectedContentReference()">Click to get reference
+    </button>
+    <br>
+    <br>
+    <div>someTextElement.nativeElement.innerText: <span style="color: #9d2626">{{ someTextInnerText }}</span></div>
+  </div>
+</div>
+
+<div *ngIf="ngType === 'contentchild2'">
+  <div class="rounded-border">
+    <ng-content></ng-content>
+    <br>
+    <br>
+    <div class="rounded-border">
+      <div>
+        <div style="margin-top: -8px;margin-left: -10px;">
+          <b
+            style="padding: 5px; border-right: 1px solid #4b4b4b; border-bottom: 1px solid #4b4b4b; border-radius: 5px;">
+            // app-ng-hyphen komponensben van
+          </b>
+        </div>
+        <br>
+        <button type="button" class="btn btn-light" (click)="getProjectedComponentReference()">
+          Click to get reference of component
+        </button>
+      </div>
+      <span>Child component projected name: </span>
+      <small style="color: #9d2626">{{ childComponentProjectedName }}</small>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="ngType === 'contentchildren'">
+  <div class="rounded-border">
+    <div>// ng-content starts</div>
+    <ng-content select=".content1"></ng-content>
+    <div>// ng-content ends</div>
+    <br>
+    <div>// child content</div>
+    Number of projected elements: {{ projectedChildrenRef.length }}
+    <br>
+    <button type="button" class="btn btn-secondary" (click)="getProjectedMultiContentReference()">
+      Get content children
+    </button>
+    <pre>
+      // ContentChildren tartalma (gombra frissül):
+      {{ childrenContentProjection | json }}
+    </pre>
+  </div>
+</div>
+
+<div *ngIf="ngType === 'contentchildren2'">
+  <div class="rounded-border">
+    <div>// ng-content starts</div>
+    <ng-content select=".content2"></ng-content>
+    <div>// ng-content ends</div>
+  </div>
+</div>

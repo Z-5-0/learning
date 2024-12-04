@@ -1,0 +1,22 @@
+<h1>Album {{ albumID }}</h1>
+
+<div style="display: inline-block">
+  <ng-container *ngFor="let p of photos">
+    <a [href]="p.url" [target]="'_blank'" style="display: inline-block; margin: 0 5px 5px 0; line-height: 0">
+      <img [src]="p.thumbnailUrl" alt="" width="100px" height="100px">
+    </a>
+  </ng-container>
+</div>
+
+<h3>Debug adatok:</h3>
+<div>
+  <pre style="max-height: 200px">{{ photos | json }}</pre>
+</div>
+
+<a [routerLink]="['..']">
+  Vissza a listára...
+</a>
+
+<div *ngIf="isDownloaded" @fadeOut (@fadeOut.done)="onFadeOutDone()" class="popup-message">
+  Download completed
+</div>
