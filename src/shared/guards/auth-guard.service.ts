@@ -1,5 +1,5 @@
 import { inject, Injectable } from "@angular/core";
-import { ActivatedRoute, ActivatedRouteSnapshot, CanActivate, CanActivateChild, CanDeactivate, Resolve, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
+import { ActivatedRoute, ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
 import { Observable } from "rxjs";
 import { AuthService } from "../services/auth.service";
 import { ContactComponent } from "src/app/angular/navi/contact/contact.component";
@@ -13,7 +13,7 @@ export interface DeactivateComponent {
     providedIn: 'root'
 })
 
-export class AuthGuardService implements CanActivate, CanActivateChild, CanDeactivate<DeactivateComponent>, Resolve<any[]> { // any[] helyett lehetne Detail[]
+export class AuthGuardService  { // any[] helyett lehetne Detail[]
     authService: AuthService = inject(AuthService);
     router: Router = inject(Router);
     activeRoute: ActivatedRoute = inject(ActivatedRoute);
