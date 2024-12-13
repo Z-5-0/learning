@@ -1,11 +1,11 @@
-@import "mixin";
+@use 'src/scss/mixin' as mixin;
 
 .row {
   display: grid;
   grid-template-columns: 1fr;
   gap: 10px;
 
-  @include breakpoint(md) {
+  @include mixin.breakpoint(md) {
     grid-template-columns: 2fr 1fr;
   }
 }

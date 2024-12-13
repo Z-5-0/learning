@@ -1,4 +1,4 @@
-@import "mixin";
+@use 'src/scss/mixin' as mixin;
 
 a {
   text-decoration: none;
@@ -33,7 +33,7 @@ nav {
   grid-template-columns: repeat(3, 1fr);
   justify-content: space-between;
 
-  @include breakpoint(xs) {
+  @include mixin.breakpoint(xs) {
     grid-template-columns: 1fr;
   }
 
@@ -54,7 +54,7 @@ nav {
 .site-navigation {
   grid-column: 3/3;
 
-  @include breakpoint(xs) {
+  @include mixin.breakpoint(xs) {
     grid-column: 1;
   }
 }

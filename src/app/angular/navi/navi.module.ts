@@ -28,6 +28,7 @@ import { AuthcontactComponent } from './dashboard/authcontact/authcontact.compon
 import { OverviewComponent } from './moduling/overview/overview.component';
 import { HomeComponent as HomeModuleComponent } from './moduling/home/home.component';
 import { ListComponent as ListModuleComponent } from './moduling/list/list.component';
+import { StandaloneComponent } from './standalone/standalone.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { ListComponent as ListModuleComponent } from './moduling/list/list.compo
     HomeModuleComponent,
     OverviewComponent,
     ListModuleComponent,
+    StandaloneComponent,
   ],
   imports: [
     CommonModule,

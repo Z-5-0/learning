@@ -8,7 +8,7 @@ import { AuthFirebaseService } from 'src/shared/services/auth-firebase.service';
   styleUrls: ['./navi.component.scss']
 })
 export class NaviComponent implements OnInit {
-  @Input() tempSwitcher: 'default' | 'relativeabsolute' | 'spa' | 'http' | 'module' = 'default';
+  @Input() tempSwitcher: 'default' | 'relativeabsolute' | 'spa' | 'http' | 'module' | 'standalone' = 'default';
 
   private _router: Router = inject(Router);
   showLoader: boolean = false;

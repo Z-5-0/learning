@@ -1,0 +1,21 @@
+<p>This is a test home component</p>
+
+<button class="btn btn-danger" disabled>Submit</button>
+
+<img src="https://placehold.co/300x200">
+
+<h3 class="title">{{ title }}</h3>
+
+<button class="btn btn-primary subscribe" (click)="subscribe()" [disabled]="isSubscribed">{{ subscribeText }}</button>
+
+<button *ngIf="!isSubscribed" class="conditional-sub" (click)="subscribe()">Subscribe</button>
+<button *ngIf="isSubscribed" class="conditional-sub" disabled>Subscribed</button>
+
+<button *ngIf="!isApiSubscribed" class="conditional-sub-api" (click)="apiSubcribe()">Subscribe</button>
+<button *ngIf="isApiSubscribed" class="conditional-sub-api" disabled>Subscribed</button>
+
+<div *ngFor="let mark of marks" [mark]="mark" appGrade>{{ mark | grade }}</div>
+
+<a [routerLink]="['/infotest']">Info</a>
+
+<router-outlet></router-outlet>

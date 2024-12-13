@@ -21,4 +21,3 @@ describe('BoxComponent', () => {
     expect(component).toBeTruthy();
   });
 });
-s

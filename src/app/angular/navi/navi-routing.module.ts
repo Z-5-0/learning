@@ -22,6 +22,8 @@ import { AuthcontactComponent } from './dashboard/authcontact/authcontact.compon
 import { AuthFirebaseGuard } from 'src/shared/guards/auth-firebase-guard';
 import { ListComponent as ListModuleComponent } from './moduling/list/list.component';
 import { OverviewComponent } from './moduling/overview/overview.component';
+import { StandaloneComponent } from './standalone/standalone.component';
+import { DetailsComponent } from './standalone/details/details.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -53,6 +55,10 @@ const routes: Routes = [
       { path: 'overview', component: OverviewComponent },
     ]
   },
+
+  { path: 'standalone', component: StandaloneComponent, outlet: 'standalone' },
+  { path: 'details', component: DetailsComponent, outlet: 'standalone' },
+
 
   { path: 'list', component: ListComponent, outlet: 'spa' },
   { path: 'list/:id', component: ItemComponent, outlet: 'spa' },

@@ -55,6 +55,8 @@ import { DatabaseComponent } from './database/database.component';
 import { CoreModule } from './core.module';
 import { NgrxComponent } from './angular/ngrx/ngrx.component';
 import { SignalsComponent } from './angular/signals/signals.component';
+import { UnittestComponent } from './angular/unittest/unittest.component';
+import { TestsModule } from 'src/tests/tests.module';
 
 @NgModule({
   declarations: [
@@ -103,6 +105,7 @@ import { SignalsComponent } from './angular/signals/signals.component';
     DatabaseComponent,
     NgrxComponent,
     SignalsComponent,
+    UnittestComponent,
   ],
   imports: [
     BrowserModule,
@@ -114,7 +117,8 @@ import { SignalsComponent } from './angular/signals/signals.component';
     NgbModule,
     ObservableModule,
     NaviModule,
-    CoreModule
+    CoreModule,
+    TestsModule
   ],
   providers: [
 

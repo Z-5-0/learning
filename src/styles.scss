@@ -1,7 +1,7 @@
-@import "mixin";
-@import "bootstrap",
-"menu",
-"layout";
+@use "./scss/mixin.scss";
+@use "bootstrap";
+@use "./scss/layout.scss";
+@use "./scss/menu.scss";
 
 $bluish-color: #3d90d7;
 $bluish-hover-color: #5baeff;

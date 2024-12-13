@@ -1,0 +1,14 @@
+<div style="display: flex; gap: 10px;">
+    <button [routerLink]="['/', 'angular']" class="btn btn-secondary">Home</button>
+    <button [routerLink]="[{ outlets: { standalone: ['details'] } }]" class="btn btn-secondary">Details</button>
+</div>
+<br>
+<p>
+    Lorem ipsum odor amet, consectetuer adipiscing elit. Ac eleifend neque etiam consectetur urna. Nec efficitur
+    consectetur pretium interdum litora hendrerit. Interdum duis praesent elit vestibulum montes rhoncus feugiat elit.
+    Nec fringilla sagittis sem facilisis pharetra fames; in penatibus porttitor. Libero congue cubilia aliquet ipsum
+    egestas condimentum. Nec sed donec molestie fusce lacinia.
+</p>
+<div>
+    <button class="btn btn-success" (click)="changeAction()">{{ action }}</button>
+</div>

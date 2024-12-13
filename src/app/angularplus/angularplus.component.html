@@ -1032,6 +1032,102 @@
 </div>
 
 <div>
+  <h3 #mutablevsimmutable data-anchor="mutablevsimmutable">Mutable vs immutable type</h3>
+  <ul>
+    <li>Az objektumok és adatok kezelésére vonatkoznak a programozásban</li>
+    <li></li>
+    <br>
+    <li>Mutable (módosítható)
+      <ul>
+        <li>Az objektum tartalma módosítható, ami hatással van az eredeti példányra</li>
+        <li>Értéke közvetlenül módosítható; az eredeti objektum maga módosul</li>
+        <li>Ilyenek például a tömbök vagy objektumok a JavaScript-ben</li>
+        <li>Példa
+          <ul>
+            <li>Tömbök: Egy tömbhöz új elemeket adhatunk hozzá anélkül, hogy új tömböt hoznánk létre</li>
+            <li>Objektumok: Egy objektum kulcsait vagy értékeit módosíthatjuk anélkül, hogy új példányt hoznánk
+              létre</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li>Immutable (nem módosítható)
+      <ul>
+        <li>Olyan objektumokat jelentenek, amelyek értéke nem módosítható</li>
+        <li>A módosítások mindig új objektumot hoznak létre, az eredeti érintetlen marad</li>
+        <li>Tehát, ha mondjuk egy szám értékét 5-ről 6-ra változtatjuk, akkor az 5 kitörlődik a memóriából, és új
+          címen létrejön a 6-os szám, amire mutat a változó</li>
+        <li>Példa
+          <ul>
+            <li>Primitív típusok: Mint például a számok, stringek, logikai értékek, amelyek mind immutable típusok
+              JavaScript-ben</li>
+            <li>Immutable könyvtárak: Ilyen például az Immutable.js, amely segít biztosítani az adatstruktúrák
+              immutable jellegét</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <br>
+    <table style="width:100%; table-layout: fixed;">
+      <thead>
+        <tr>
+          <th>Tulajdonság</th>
+          <th>Mutable</th>
+          <th>Immutable</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Jelentés</td>
+          <td>Az érték <strong>módosítható</strong></td>
+          <td>Az érték <strong>nem módosítható</strong>, csak új hozható létre</td>
+        </tr>
+        <tr>
+          <td>Módosítás</td>
+          <td>Az eredeti objektum módosítható</td>
+          <td>Minden módosítás új objektumot eredményez</td>
+        </tr>
+        <tr>
+          <td>Példák</td>
+          <td>JavaScript objektumok, tömbök (<code>Array</code>, <code>Object</code>)</td>
+          <td>JavaScript primitívek (<code>String</code>, <code>Number</code>, <code>Boolean</code>), és olyan
+            könyvtárak, mint az <code>Immutable.js</code>
+          </td>
+        </tr>
+        <tr>
+          <td>Előnyök</td>
+          <td>Gyorsabb változtatás (nincs új példány)</td>
+          <td>Biztonságosabb, könnyebb hibakeresés</td>
+        </tr>
+        <tr>
+          <td>Hátrányok</td>
+          <td>Könnyebb hibázni, nehéz követni a változásokat</td>
+          <td>Több memóriát használhat, lassabb másolás</td>
+        </tr>
+        <tr>
+          <td>Példa kódban</td>
+          <td>
+            <ul>
+              <li>const mutableArray = [1, 2, 3];</li>
+              <li>mutableArray.push(4); // Az eredeti tömb módosul</li>
+              <li>console.log(mutableArray); // [1, 2, 3, 4]</li>
+            </ul>
+          </td>
+          <td>
+            <ul>
+              <li>const immutableArray = [1, 2, 3];</li>
+              <li>const newArray = [...immutableArray, 4]; // Új tömböt hozunk létre</li>
+              <li>console.log(immutableArray); // [1, 2, 3] (változatlan marad)</li>
+              <li>console.log(newArray); // [1, 2, 3, 4]</li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </ul>
+</div>
+
+<div>
   <h3 #todo data-anchor="todo">TODO</h3>
   <ul>
     <li></li>
@@ -1071,10 +1167,38 @@
     <li>Bundles: vendorjs, polyfillsjs, stylescss-stylesjs, mainjs, runtimejs</li>
     <li>ng start / ng build / ng watch / ng test</li>
     <li>ViewEncapsulation</li>
+    <li>CI/CD pipeline</li>
+    <li>async / await
+      <ul>
+        <li>Amikor egy függvény async kulcsszóval van deklarálva, az azt jelenti, hogy a függvény mindig egy Promise-t
+          ad vissza</li>
+        <li>Az await kulcsszó a Promise-ok aszinkron kezelésére szolgál, megállítja a futást addig, amíg a Promise nem
+          teljesül (vagy hibát nem dob)</li>
+        <pre>
+            async function testFunction() &#123;
+              let result = await someAsyncFunction();
+              console.log(result); // csak akkor fut le, ha a someAsyncFunction() Promise teljesült
+          }
+        </pre>
+        <li>A then() egy Promise metódus, amely lehetővé teszi, hogy egy callback függvényt adjunk hozzá a Promise
+          befejezéséhez, és ha a Promise teljesült, a then() által meghívott függvény lefut</li>
+        <pre>
+            someAsyncFunction().then(result => &#123;
+              console.log(result); // akkor fut le, ha a someAsyncFunction() Promise teljesült
+          });
+        </pre>
+        <li>Az async/await és a then() egymással kompatibilis, mivel mindkettő Promise-okkal dolgozik</li>
+        <li>Ha az await egy Promise-t vár, akkor a Promise teljesülése után a futás folytatódik, és az eredmény
+          közvetlenül visszatér (ez a Promise eredménye)</li>
+        <li>Ha await-et használunk, akkor nem szükséges then()-t használni, de az is működni fog, mert az await egy
+          befejezett Promise értéket ad vissza, amit a then() callback-eként is kezelhetünk</li>
+      </ul>
+    </li>
     <li>aria-label / aria-hidden / aria-expanded / aria-control (accessibility attributes)</li>
     <li>angularjson / stylePreprocessorOptions</li>
     <li>@Input() set changeToGreen(condition: boolean) &#123; }</li>
     <li>ngOnChanges</li>
+    <li>Generic type</li>
     <li>eventpreventDefault() --> Az alapértelmezett HTML működést írja felül + eventstopPropogation()</li>
     <li>Angular v12-től v17-ig mik az újítások? (Signal)</li>
     <li>Design patterns (tervezési minták a szoftverfejlesztésben)
@@ -1135,11 +1259,13 @@
     <li>Tabulátor sorrend</li>
     <li>providedIn: 'platform' / 'any'</li>
     <li>Array destruction</li>
+    <li>stylePreprocessorOptions</li>
     <li>Mikor fut le a change detection cycle? (lehetőleg az összes eset)</li>
     <li>@Injectable(&#123;providedIn: 'root'})</li>
     <li>Type guard</li>
     <li>import &#123; Observable as Obs } from 'rxjs';</li>
     <li>imports: [RouterModule.forChild(routes)] / imports: [RouterModule.forRoot(routes)]</li>
+    <li>Lazy load components</li>
     <li>Name conventions and cases
       <ul>
         <li>Property: propertyExample</li>

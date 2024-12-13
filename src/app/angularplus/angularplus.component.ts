@@ -26,6 +26,7 @@ export class AngularplusComponent implements OnInit, AfterViewInit, OnDestroy {
     authenticationandauthorization,
     throwerror,
     angularperformanceincrease,
+    mutablevsimmutable,
     todo
     `) sections!: QueryList<ElementRef>;
 
@@ -46,6 +47,7 @@ export class AngularplusComponent implements OnInit, AfterViewInit, OnDestroy {
     { title: 'Authentication & authorization', anchor: 'authenticationandauthorization', subtitles: [] },
     { title: 'throwError', anchor: 'throwerror', subtitles: [] },
     { title: 'Angular performance increase', anchor: 'angularperformanceincrease', subtitles: [] },
+    { title: 'Mutable vs immutable type', anchor: 'mutablevsimmutable', subtitles: [] },
     { title: 'TODO', anchor: 'todo', subtitles: [] }
   ];
 

@@ -1,4 +1,4 @@
-@import "mixin";
+@use 'src/scss/mixin' as mixin;
 
 header {
     display: flex;
@@ -50,7 +50,7 @@ main {
             grid-template-columns: 1fr;
             gap: 10px;
 
-            @include breakpoint(md) {
+            @include mixin.breakpoint(md) {
                 grid-template-columns: repeat(3, 1fr);
             }
 

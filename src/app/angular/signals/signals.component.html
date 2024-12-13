@@ -1,18 +1,75 @@
-<div class="rounded-border" style="display: grid; gap: 20px;">
-    <div style="display: flex; gap: 20px; align-items: center;">
-        <button class="btn btn-light" (click)="decreaseCounter()">-</button>
-        <span>{{ counter }}</span>
-        <button class="btn btn-light" (click)="increaseCounter()">+</button>
-        <button class="btn btn-warning" (click)="0">Click event only</button>
-    </div>
+<ng-container *ngIf="tempSwitcher == 'default'">
+    <div class="rounded-border" style="display: grid; gap: 20px;">
+        <div style="display: flex; gap: 20px; align-items: center;">
+            <button class="btn btn-light" (click)="decreaseCounter()">-</button>
+            <span>{{ counter }}</span>
+            <button class="btn btn-light" (click)="increaseCounter()">+</button>
+            <button class="btn btn-warning" (click)="0">Click event only</button>
+        </div>
 
-    <div>
-        <button class="btn btn-danger" (click)="messages = []">Clear messages</button>
-    </div>
+        <div>
+            <button class="btn btn-danger" (click)="messages = []">Clear messages</button>
+        </div>
 
-    <div style="max-height: 200px; overflow: auto;">
-        <div *ngFor="let m of messages; let i = index">
-            {{i + 1}}. {{ m }}
+        <div style="max-height: 200px; overflow: auto;">
+            <div *ngFor="let m of messages; let i = index">
+                {{i + 1}}. {{ m }}
+            </div>
         </div>
     </div>
-</div>
+</ng-container>
+
+<ng-container *ngIf="tempSwitcher == 'numberSignal'">
+    <div class="rounded-border" style="display: grid; gap: 20px;">
+        <div style="display: flex; gap: 20px; align-items: center;">
+            <button class="btn btn-light" (click)="decreaseCounter2()">-</button>
+            <span>{{ counter2() }}</span>
+            <button class="btn btn-light" (click)="increaseCounter2()">+</button>
+            <button class="btn btn-warning" (click)="0">Click event only</button>
+        </div>
+
+        <div>
+            <button class="btn btn-danger" (click)="messages = []">Clear messages</button>
+        </div>
+
+        <div style="max-height: 200px; overflow: auto;">
+            <div *ngFor="let m of messages; let i = index">
+                {{i + 1}}. {{ m }}
+            </div>
+        </div>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="tempSwitcher == 'arraySignal'">
+    <div class="rounded-border" style="display: grid; gap: 20px;">
+        <div style="display: flex; gap: 20px; align-items: center;">
+            <button class="btn btn-light" (click)="decreaseCounter2()">-</button>
+            <span>{{ counter2() }}</span>
+            <button class="btn btn-light" (click)="increaseCounter2()">+</button>
+        </div>
+
+        <div>
+            <button class="btn btn-danger" (click)="clearMessage2()">Clear messages</button>
+        </div>
+
+        <div style="max-height: 200px; overflow: auto;">
+            <div *ngFor="let m of messages2(); let i = index">
+                {{i + 1}}. {{ m }}
+            </div>
+        </div>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="tempSwitcher == 'computed'">
+    <div class="rounded-border" style="display: grid; gap: 20px;">
+        <div style="display: flex; gap: 20px; align-items: center;">
+            <button class="btn btn-light" (click)="decreaseCounter2()">-</button>
+            <span>{{ counter2() }}</span>
+            <button class="btn btn-light" (click)="increaseCounter2()">+</button>
+        </div>
+
+        <div>
+            Computed value: {{ doubleCounter() }}
+        </div>
+    </div>
+</ng-container>

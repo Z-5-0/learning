@@ -105,7 +105,7 @@ export class AngularComponent implements OnDestroy {
   unsubscribefromobservable,
   signal,
   creatingandusingsignals,
-
+  computedvalueandeffect,
   routingandguards,
   routerlink,
   activerouterlink,
@@ -163,8 +163,28 @@ export class AngularComponent implements OnDestroy {
   authenticationexample,
   simpleapp,
   spa,
-  test,
-  deploying
+  unittest,
+  jasminekarma,
+  spy,
+  testbed,
+  testinghttpservice,
+  componenttesting,
+  dominteraction,
+  asynchronoustest,
+  promiseandobservable,
+  testingpipes,
+  testingdirectives,
+  testingrouting,
+  codecoverage,
+  jasminejest,
+
+  deploying,
+  standalonecomponents,
+  creatingstandalonecomponents,
+  creatingstandalonedirective,
+  standalonerootcomponent,
+  servicesinstandalonecomponents,
+  routingandlazyloadingwithstandalonecomponents
   `) sections!: QueryList<ElementRef>;
 
   anchorButtons: any[] = [
@@ -299,7 +319,7 @@ export class AngularComponent implements OnDestroy {
     {
       title: 'Signal', anchor: 'signal', subtitles: [
         { title: 'Creating and using signals', anchor: 'creatingandusingsignals' },
-        { title: 'next', anchor: 'next' },
+        { title: 'Computed value and effect', anchor: 'computedvalueandeffect' },
       ]
     },
     {
@@ -375,14 +395,38 @@ export class AngularComponent implements OnDestroy {
     { title: 'Template Driven Form', anchor: 'templatedrivenform' },
     { title: 'Simple app', anchor: 'simpleapp' },
     { title: 'SPA', anchor: 'spa' },
-    { title: 'Unit test', anchor: 'unittest' },
+    {
+      title: 'Unit test', anchor: 'unittest', subtitles: [
+        { title: 'Jasmine / Karma', anchor: 'jasminekarma' },
+        { title: 'Spy', anchor: 'spy' },
+        { title: 'TestBed', anchor: 'testbed' },
+        { title: 'Testing HTTP service', anchor: 'testinghttpservice' },
+        { title: 'Component', anchor: 'componenttesting' },
+        { title: 'DOM interaction', anchor: 'dominteraction' },
+        { title: 'Asynchronous test', anchor: 'asynchronoustest' },
+        { title: 'Promise and Observable', anchor: 'promiseandobservable' },
+        { title: 'Pipes', anchor: 'testingpipes' },
+        { title: 'Directives', anchor: 'testingdirectives' },
+        { title: 'Routing', anchor: 'testingrouting' },
+        { title: 'Code coverage', anchor: 'codecoverage' },
+        { title: 'Jasmine / Jest', anchor: 'jasminejest' },
+      ]
+    },
     {
       title: 'Deploying', anchor: 'deploying', subtitles: [
         { title: 'Environment variables', anchor: 'environmentvariables' },
-        { title: 'Generate bundles for production', anchor: 'generatebundlesforproduction' },
+        { title: 'Generate bundles for production', anchor: 'generatebundlesforproduction' }
       ]
     },
-    { title: 'TODO', anchor: 'todo' },
+    {
+      title: 'Standalone components', anchor: 'standalonecomponents', subtitles: [
+        { title: 'Creating standalone components', anchor: 'creatingstandalonecomponents' },
+        { title: 'Creating standalone directive', anchor: 'creatingstandalonedirective' },
+        { title: 'Standalone root component', anchor: 'standalonerootcomponent' },
+        { title: 'Services in standalone components', anchor: 'servicesinstandalonecomponents' },
+        { title: 'Routing and lazy loading with standalone components', anchor: 'routingandlazyloadingwithstandalonecomponents' }
+      ]
+    },
   ];
 
   example: string = 'Ez csak egy példa';

@@ -45,3 +45,12 @@
     <app-home-module></app-home-module>
     <br>
 </ng-container>
+
+<ng-container *ngIf="tempSwitcher == 'standalone'">
+    <br>
+    <div class="rounded-border">
+        <app-standalone></app-standalone>
+        <router-outlet name="standalone"></router-outlet>
+    </div>
+    <br>
+</ng-container>

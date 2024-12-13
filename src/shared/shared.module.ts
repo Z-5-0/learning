@@ -73,7 +73,7 @@ export const USER_TOKEN = new InjectionToken<UserService>('USER_SERVICE');
     AboutDetailsService,
     UserService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: LoggingInterceptorService, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: LoggingInterceptorService, multi: true },
   ]
 })
 export class SharedModule {
