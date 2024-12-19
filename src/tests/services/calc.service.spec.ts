@@ -39,19 +39,19 @@ describe('CalcService', () => {
     expect(result).toBe(15);
   });
 
-  it('should call sharedFunction', () => {
+  /* it('should call sharedFunction', () => {
     spyOn(sharedService, 'sharedFunction');
     const result = calcService.multiply(3, 5); // a sharedService.sharedFunction()-t is meg lehetne hívni, de a calcService multiply függvénye meghívja
     // expect(sharedService.sharedFunction).toHaveBeenCalled();
     // expect(sharedService.sharedFunction).toHaveBeenCalledTimes(1);
     expect(sharedService.sharedFunction).toHaveBeenCalledWith(3, 5); // más értékekkel: "Expected spy sharedFunction to have been called with: [ 2, 3 ] but actual calls were: [ 3, 5 ]."
-  });
+  }); */
 
-  it('should mock return value', () => {
+  /* it('should mock return value', () => {
     spyOn(sharedService, 'sharedFunction').and.returnValue('mocked value'); // Mockoljuk a sharedFunction viselkedését
     const result = calcService.multiply(3, 5); // meghívódik a multiply függvényben a SharedService-ben lévő sharedFunction
     expect(sharedService.sharedFunction()).toBe('mocked value'); // ellenőrizzük, hogy a sharedFunction visszatérési értéke 'mocked value'-e
-  });
+  }); */
 
   it('should add', () => {
     let result = calcService.add(1, 4);

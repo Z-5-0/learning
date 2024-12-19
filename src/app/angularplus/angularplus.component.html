@@ -1201,6 +1201,39 @@
     <li>Generic type</li>
     <li>eventpreventDefault() --> Az alapértelmezett HTML működést írja felül + eventstopPropogation()</li>
     <li>Angular v12-től v17-ig mik az újítások? (Signal)</li>
+    <li>package.json scripts
+      <ul>
+        <pre>
+          "scripts": &#123;
+            "&#60;kulcs>": "&#60;parancs>"
+          }
+        </pre>
+        <li>A &#60;kulcs> az a név, amit használni fogunk az npm run után</li>
+        <li>Az &#60;parancs> az a tényleges parancs, amit futtatni szeretnénk</li>
+      </ul>
+      <pre>
+        "scripts": &#60;
+          ...
+          "hello": "echo 'Hello, world!'" // a terminálba kiírjuk, hogy Hello, world! az npm run hello paranccsal
+        },
+      </pre>
+      <ul>
+        <li>npm
+          <ul>
+            <li>Node Package Manager</li>
+            <li>Az npm a Node.js csomagkezelője, és a scripts szekcióban meghatározott parancsokat tudja futtatni</li>
+          </ul>
+        </li>
+        <li>ng
+          <ul>
+            <li>Az ng parancsok az Angular CLI (Command Line Interface) által biztosított parancsok</li>
+            <li>Az Angular CLI telepítése után az ng parancsot használhatjuk különféle Angular-specifikus feladatokra
+            </li>
+            <li>Az ng parancsok önállóan is futtathatók a terminálban, feltéve, hogy az Angular CLI telepítve van</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
     <li>Design patterns (tervezési minták a szoftverfejlesztésben)
       <ul>
         <li>Singleton pattern
@@ -1263,7 +1296,167 @@
     <li>Mikor fut le a change detection cycle? (lehetőleg az összes eset)</li>
     <li>@Injectable(&#123;providedIn: 'root'})</li>
     <li>Type guard</li>
-    <li>import &#123; Observable as Obs } from 'rxjs';</li>
+    <li>import / export
+      <ul>
+        <li>Az import és export kulcsszavak az ES6 (ECMAScript 2015) szintaxis részei, és a modern JavaScript-ben
+          elterjedt módszerek a modulok kezelésére</li>
+        <li>A default export akkor praktikus, ha csak egy fő elem van, amit exportálni szeretnénk, míg a named export
+          jobb, ha több, különböző elemet exportálunk</li>
+      </ul>
+      <ol>
+        <li>Named export-import
+          <ul>
+            <li>A fájlban több dolgot is exportálhatunk külön-külön</li>
+            <li>Az importáláskor minden egyes elemet név szerint importálunk</li>
+            <li>Importáláskor kapcsos zárójelbe kell tenni az exportált neveket</li>
+            <pre>
+              export const square = (num: number): number => &#123;
+                return num * num;
+              }
+
+              export const range = (start: number, end: number): number[] => &#123;
+                ...
+                return result;
+              }
+
+              import &#123; square, range } from './utils';
+            </pre>
+          </ul>
+        </li>
+        <li>Default export-import
+          <ul>
+            <li>Lehetővé teszi, hogy egy fájlból csak egyetlen dolgot exportáljunk</li>
+            <li>Nem kell pontosan ugyanazzal a névvel rendelkeznie</li>
+            <li>A default export egy bármilyen néven importálható elem</li>
+            <li>Nem lehet több default export egy fájlban, csak egy
+              <ul>
+                <li>Ellenkező esetben SyntaxError-t fogunk kapni</li>
+              </ul>
+            </li>
+            <pre>
+              export default function range(start: number, end: number): number[] &#123; // nem arrow function, így szükség van a 'function' szóra is
+                ...
+                return result;
+              }
+
+              import range from './utils';
+            </pre>
+          </ul>
+        </li>
+        <li>Alias
+          <ul>
+            <li>Ha szükség van arra, hogy átnevezzük az importált elemeket, használhatjuk az 'as' kulcsszót</li>
+            <li>Különösen akkor hasznos, ha több exportált elem közül az egyiket más néven kívánjuk használni a kódban
+            </li>
+            <pre>
+              export const square = (num: number): number => &#123;
+                return num * num;
+              }
+
+              export const range = (start: number, end: number): number[] => &#123;
+                ...
+                return result;
+              }
+
+              import &#123; square as mySquare, range as myRange } from './utils';
+            </pre>
+          </ul>
+        </li>
+        <li>Import all
+          <ul>
+            <li>Ha egy fájl összes exportált elemét importálni szeretnénk, akkor használhatjuk a '* as' szintaxist,
+              amely összesíti az összes exportált elemet egy objektumba</li>
+            <pre>
+                export const square = (num: number): number => &#123;
+                  return num * num;
+                };
+  
+                export const range = (start: number, end: number): number[] => &#123;
+                  ...
+                  return result;
+                }
+  
+                import * as utils from './utils';
+
+                const second = utils.square(2);
+            </pre>
+          </ul>
+        </li>
+        <li>Re-export
+          <ul>
+            <li>Az export és import kombinálása lehetővé teszi, hogy egy fájlban egy másik fájl exportált elemeit újra
+              exportáljuk</li>
+            <pre>
+              <b>// utils.ts</b>
+                export const square = (num: number): number => &#123;
+                  return num * num;
+                }
+  
+                export const range = (start: number, end: number): number[] => &#123;
+                  ...
+                  return result;
+                }
+  
+              <b>// index.ts</b>
+                export &#123; range } from './utils';
+
+              <b>// file.ts</b>
+                import &#123; range } from './index';
+            </pre>
+          </ul>
+        </li>
+        <li>Import all - Select one
+          <ul>
+            <li>Ha az egész modult importáljuk, de csak egy részt használjuk belőle, használhatjuk a destructuring-ot
+            </li>
+            <pre>
+              import * as utils from './utils';
+
+              const &#123; range } = utils;
+            </pre>
+          </ul>
+        </li>
+      </ol>
+    </li>
+
+    <li>Function declarations
+      <ol>
+        <li>Normál függvény deklaráció
+          <ul>
+            <pre>
+              export function square(num: number): number &#123;
+                return num * num;
+              }
+
+              export default function range(start: number, end: number): number[] => &#123;
+                ...
+                return result;
+              }
+
+              import range, &#123; square } from './utils';
+            </pre>
+          </ul>
+        </li>
+        <li>Anonym függvény deklaráció (arrow function)
+          <ul>
+            <pre>
+              export const square = (num: number): number => &#123;
+                return num * num;
+              }
+
+              const range = (start: number, end: number): number[] => &#123;
+                ...
+                return result;
+              }
+
+              export default range;
+
+              import range, &#123; square } from './utils';
+            </pre>
+          </ul>
+        </li>
+      </ol>
+    </li>
     <li>imports: [RouterModule.forChild(routes)] / imports: [RouterModule.forRoot(routes)]</li>
     <li>Lazy load components</li>
     <li>Name conventions and cases

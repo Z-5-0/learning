@@ -152,7 +152,8 @@
             </li>
             <li>Komponensek inicializálása
               <ul>
-                <li>Miután az AppModule betöltődött, az Angular elindítja az AppComponent-et, amely az alkalmazás elsődleges
+                <li>Miután az AppModule betöltődött, az Angular elindítja az AppComponent-et, amely az alkalmazás
+                  elsődleges
                   komponense
                 </li>
                 <li>Az Angular létrehozza a komponens template-jét</li>
@@ -161,12 +162,14 @@
             <li>DOM renderelés
               <ul>
                 <li>Az Angular change detection rendszere gondoskodik a megfelelő HTML elemek megjelenítéséről</li>
-                <li>A DOM struktúra frissül az adatok alapján, és az Angular kirendereli az alkalmazást a böngészőben</li>
+                <li>A DOM struktúra frissül az adatok alapján, és az Angular kirendereli az alkalmazást a böngészőben
+                </li>
               </ul>
             </li>
             <li>Routing, interakció, adatkezelés
               <ul>
-                <li>Route váltáskor, felhasználói interakciókat követően, vagy szerverről való adatbetöltés után az Angular
+                <li>Route váltáskor, felhasználói interakciókat követően, vagy szerverről való adatbetöltés után az
+                  Angular
                   (tehát változásokkor a Change Detection) újrarendereli a DOM-ot
                 </li>
               </ul>
@@ -239,12 +242,659 @@
 <div>
   <h3 #react data-anchor="react">React</h3>
   <ul>
+    <li>Javascript könyvtár kliens oldali applikációk készítéséhez
+      <ul>
+        <li>A Facebook fejlesztette ki 2011-ben</li>
+        <li>Reaktív felületek készítéséhez készült</li>
+        <li>Nem framework, library</li>
+      </ul>
+    </li>
+    <li>Leginkább SPA készítésére használjuk</li>
+    <li>Deklaratív, hatásos, rugalmas</li>
+    <li>HTML-lel és CSS-sel együtt használjuk</li>
+    <li>A kódot a böngésző futtatja</li>
+    <li>Komponenseket használunk UI fejlesztéshez</li>
+    <li>Egyetlen HTML fájlunk van, és ez a fájl nem cserélődik, csak a tartalma</li>
+    <li>Sok third party könyvtárat mellőz
+      <ul>
+        <li>Nincs beépített routing a React-ban, ha szükség van rá, telepítésre szorul</li>
+        <li>Plusz feature-ök telepítés útján érhetők el</li>
+      </ul>
+    </li>
+    <br>
+    <li>Imperatív eszköztár
+      <ul>
+        <li>A natív Javascript-ben a HTML elemeket reprezentáló JS objektumokon módosításokat kell végrehajtani
+          bármiféle hatás érdekében</li>
+        <li>Ezért közvetlen módosítást kellett végrehajtani a DOM-on</li>
+        <li>A procedurális lépések szerepelnek a kódban</li>
+        <pre>
+            const btn = document.createElement('button');
+
+            btn.onClick = function() &#123;
+              alert('Click');
+            }
+
+            btn.innerText = 'Button';
+
+            document.getElementById('sample-button-container').appendChild('btn'); // közvetlen módosítás a DOM-on
+        </pre>
+      </ul>
+    </li>
+    <li>Deklaratív eszköztárral rendelkezik
+      <ul>
+        <li>A React esetében nem végzünk közvetlenül ilyen módosításokat a document object modelen
+          <ul>
+            <li>A React a motorhátető alatt megcsinálja</li>
+            <li>Leírjuk, mi legyen a dokumentum felépítése, és a könyvtár bizonyosodik meg róla, hogy elő tudja-e
+              állítani ezt az állapotot</li>
+            <li>A könyvtár ennek elérésére egy virtuális DOM nevű eszközt vet be
+              <ul>
+                <li>Ez azt jelenti, hogy a React a natív document object elemei helyett saját, könnyebb
+                  adatstruktúrával, a virtuális DOM-mal reprezentálja a dokumentum elemeit, és a futása során
+                  folyamatosan szinkronban tartja az igazi DOM-mal</li>
+                <li>A natív object elemekkel nem is kell interakcióba lépnünk</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <pre>
+          ReactDOM.render(React.createElement(
+            'button',
+            &#123;
+              onClick: function () &#123;
+                alert('Click');
+              }
+            },
+            'Gomb'
+          ), document.getElementById('button-element'));
+        </pre>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #reactcomparison data-anchor="reactcomparison">React comparison</h3>
+  <h5 #reactvsjs data-anchor="reactvsjs">React vs JS</h5>
+  <ul>
+    <li>Minimál demonstráció
+      <ul>
+        <li>Létrehoztunk 2 fájl
+          <ol>
+            <li>index.html
+              <ul>
+                <pre>
+                  &#60;!DOCTYPE html>
+                  &#60;html lang="en">
+
+                  &#60;head>
+                      &#60;meta charset="UTF-8">
+                      &#60;meta name="viewport" content="width=device-width, initial-scale=1.0">
+                      &#60;title>Document&#60;/title>
+
+                      // A defer attribútum biztosítja a scriptnek, hogy csak a teljes HTML betöltése után fusson le, hasonlóan ahhoz, mintha a &#60;body> végén helyezted volna el
+                      &#60;script defer src="./app.js">&#60;/script>
+                  &#60;/head>
+
+                  &#60;body>
+                      &#60;h6>Natív &#60;small>(imperatív)&#60;/small>&#60;/h6>
+                      &#60;div id="native-button-container">&#60;/div> // interaktív elem belépési pontja (natív)
+                      &#60;h6>React &#60;small>(deklaratív)&#60;/small>&#60;/h6>
+                      &#60;div id="react-button-container">&#60;/div> // interaktív elem belépési pontja (React)
+
+                      // A szkriptek body végére helyezésének oka az, hogy a böngésző lineárisan dolgozza fel a HTML dokumentumot, vagyis felülről lefelé halad
+                      // A DOM elemek már elérhetők és manipulálhatók a szkriptek által
+                      // behívjuk a React fejlesztőeszközeit
+                      &#60;script crossorigin src="https://unpkg.com/react@18/umd/react.development.js">&#60;/script>
+                      &#60;script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js">&#60;/script>
+                  &#60;/body>
+
+                  &#60;/html>
+                </pre>
+              </ul>
+            </li>
+            <li>app.js
+              <ul>
+                <pre>
+                  // natív JS
+
+                    const btn = document.createElement('button');
+
+                    btn.onclick = function () &#123;
+                        alert('Button');
+                    };
+
+                    btn.innerText = 'Gomb';
+
+                    document.getElementById('native-button-container').appendChild(btn);
+
+                    // React
+
+                    const gomb = React.createElement( // 3 paramétert vár
+                        'button',
+                        &#123;
+                            onClick: function () &#123;
+                                alert('Button');
+                            }
+                        },
+                        'Gomb'
+                    )
+
+                    ReactDOM.render( // 2 paramétert vár
+                        gomb,
+                        document.getElementById('react-button-container')
+                    ); 
+                </pre>
+              </ul>
+            </li>
+          </ol>
+        </li>
+        <li>A React kitalált egy speciális szintaxist
+          <ul>
+            <li>JSX</li>
+            <li>Nem valid JS</li>
+            <li>HTML-nek kinéző markup-ként leírhatóak az egyes elemek</li>
+            <li>A transpiler átfordítja a fentebbi kódra</li>
+            <pre>
+              ReactDOM.render(
+                  &#60;button
+                      onClick=&#123;() => &#123;
+                          alert('Gomb')
+                      }}
+                      className="btn btn-dark"
+                  >
+                      Gomb
+                  &#60;/button>,
+                  document.getElementById('react-button-container-2')
+              );
+            </pre>
+            <li>Az app.js fájlban ez a kód hibát okoz, mivel ezt a szintaxist a böngésző nem tudja értelmezni
+              <ul>
+                <li>Először le kell fordítani szabványos JavaScript kódra, mielőtt a böngésző képes lesz futtatni</li>
+                <li>Build eszközök, amik erre képesek
+                  <ol>
+                    <li>Babel</li>
+                    <li>Vite</li>
+                    <li>Webpack</li>
+                  </ol>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>React v18-as verziótól az incializálás két lépcsőben történik, a createRoot függvény segítségével</li>
+        <pre>
+          const gomb = React.createElement( // 3 paramétert vár
+              'button',
+              &#123;
+                  onClick: function () &#123;
+                      alert('Button');
+                  }
+              },
+              'Gomb'
+          );
+
+          const root = ReactDOM.createRoot(document.getElementById('react-button-container'));
+          root.render(gomb);
+        </pre>
+      </ul>
+    </li>
+  </ul>
+  <br>
+  <h5 #reactvsangularvsvue data-anchor="reactvsangularvsvue">React vs Angular vs Vue</h5>
+  <ul>
+    <li>React
+      <ul>
+        <li>Jellemzők
+          <ul>
+            <li>Könyvtár, amelyet felhasználói felületek készítésére terveztek</li>
+            <li>Komponens alapú architektúra, egyszerű újrafelhasználhatóság</li>
+            <li>Virtuális DOM-ot használ a gyorsabb teljesítmény érdekében</li>
+            <li>JSX szintaxis: HTML-szerű JavaScript-ben</li>
+            <li>Flexibilis, de nem tartalmaz beépített routingot vagy állapotkezelést</li>
+            <li>Gyakran használt kiegészítők: React Router, Redux, Zustand</li>
+          </ul>
+        </li>
+        <li>Erősségei
+          <ul>
+            <li>Könnyen tanulható, JavaScript tudás esetében</li>
+            <li>Virtuális DOM miatt gyors</li>
+            <li>Szabadság a projektek felépítésében</li>
+          </ul>
+        </li>
+        <li>Gyengeségei
+          <ul>
+            <li>Nincs beépített routing vagy state management</li>
+            <li>Ökoszisztéma moduljainak kiválasztása kihívás lehet</li>
+          </ul>
+        </li>
+        <li>Használati esetek
+          <ul>
+            <li>Kisebb és közepes méretű alkalmazások</li>
+            <li>Gyors fejlesztés igénye</li>
+            <li>Olyan projektek, ahol nagy szabadságra van szükség</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li>Angular
+      <ul>
+        <li>Jellemzők
+          <ul>
+            <li>Teljes körű keretrendszer, amelyet a Google fejlesztett</li>
+            <li>Typescript alapú, strukturált fejlesztést biztosít</li>
+            <li>Komponens alapú architektúra és MVVM modell</li>
+            <li>Beépített eszközök, mint routing, HTTP kliens, dependency injection</li>
+            <li>Reactive programozás RxJS-sel</li>
+          </ul>
+        </li>
+        <li>Erősségei
+          <ul>
+            <li>Nagyvállalati szintű alkalmazásokhoz ideális</li>
+            <li>Könnyű fenntartani és bővíteni a projekteket</li>
+            <li>Beépített funkcionalitások</li>
+          </ul>
+        </li>
+        <li>Gyengeségei
+          <ul>
+            <li>Meredek tanulási görbe</li>
+            <li>Kisebb projektekhez nehézsúlyú megoldás</li>
+          </ul>
+        </li>
+        <li>Használati esetek
+          <ul>
+            <li>Nagyobb vállalati alkalmazások</li>
+            <li>Olyan projektek, ahol szigorú szabályozottság szükséges</li>
+            <li>Typescript kedvelők</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li>Vue
+      <ul>
+        <li>Jellemzők
+          <ul>
+            <li>Egy progresszív keretrendszer, amelyet Evan You hozott létre</li>
+            <li>Középutat képez az Angular és React között</li>
+            <li>Komponens alapú architektúra és reaktív adatkezelés</li>
+            <li>Egyszerű és könnyen tanulható, különösen kezdőknek</li>
+            <li>Beépített router és state management (Vue Router, Vuex/Pinia)</li>
+          </ul>
+        </li>
+        <li>Erősségei
+          <ul>
+            <li>Könnyű tanulni, kezdőknek ideális</li>
+            <li>Kicsi fájlméret, gyors betöltés</li>
+            <li>Beépített eszközök gyors fejlesztéshez</li>
+          </ul>
+        </li>
+        <li>Gyengeségei
+          <ul>
+            <li>Kevesebb nagyvállalati használat</li>
+            <li>Modulok kevésbé kiforrottak</li>
+          </ul>
+        </li>
+        <li>Használati esetek
+          <ul>
+            <li>Kis- és közepes méretű alkalmazások</li>
+            <li>Gyors prototípusok vagy MVP fejlesztése</li>
+            <li>Kezdő fejlesztők számára ajánlott</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <br>
+    <table style="width: 100%; table-layout: fixed">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Angular</th>
+          <th>React</th>
+          <th>Vue</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Típus</strong></td>
+          <td>Teljes keretrendszer</td>
+          <td>Könyvtár</td>
+          <td>Progresszív keretrendszer</td>
+        </tr>
+        <tr>
+          <td><strong>Nyelv</strong></td>
+          <td>Typescript</td>
+          <td>JavaScript + JSX</td>
+          <td>JavaScript + Templates</td>
+        </tr>
+        <tr>
+          <td><strong>Virtuális DOM</strong></td>
+          <td>Nem</td>
+          <td>Igen</td>
+          <td>Igen</td>
+        </tr>
+        <tr>
+          <td><strong>Állapotkezelés</strong></td>
+          <td>Beépített (RxJS)</td>
+          <td>Redux, Zustand, Context API</td>
+          <td>Vuex, Pinia</td>
+        </tr>
+        <tr>
+          <td><strong>Routing</strong></td>
+          <td>Beépített (RouterModule)</td>
+          <td>React Router (külső)</td>
+          <td>Beépített (Vue Router)</td>
+        </tr>
+        <tr>
+          <td><strong>Tanulási görbe</strong></td>
+          <td>Meredek</td>
+          <td>Mérsékelt</td>
+          <td>Alacsony</td>
+        </tr>
+        <tr>
+          <td><strong>Teljesítmény</strong></td>
+          <td>Lassabb (nagyobb méret)</td>
+          <td>Gyors</td>
+          <td>Gyors</td>
+        </tr>
+        <tr>
+          <td><strong>Mikor használjuk?</strong></td>
+          <td>Nagy, komplex alkalmazásokhoz</td>
+          <td>Sokoldalú projektekhez</td>
+          <td>Gyors prototípusokhoz</td>
+        </tr>
+      </tbody>
+    </table>
+  </ul>
+</div>
+
+<div>
+  <h3 #initialization data-anchor="initialization">Initialization</h3>
+  <ul>
+    <li>A React-et egyetlen oldalon több alkalmazás inicializálására is lehet használni</li>
+    <li>Három lehetséges konfiguráció (leggyakoribb használat)
+      <ol>
+        <li>
+          <ul>
+            <li>A React könyvtár egy olyan HTML node-ra kapcsolódik rá, ami egyéb HTML tartalommal van körülvéve (több
+              HTML dokumentumot szolgáltat), és a weboldal, ahol mindez történik, több HTML dokumentumot is szolgáltat
+            </li>
+            <li>Linkre kattintva mindig új oldalletöltés történik</li>
+            <li>Egy oldal HTML tartalomból, és a React által működtetett interaktív komponensből áll</li>
+            <pre>
+              &#60;!DOCTYPE html>
+              &#60;html lang="en">
+
+              &#60;head>
+                  &#60;meta charset="UTF-8">
+                  &#60;title>Document&#60;/title>
+              &#60;/head>
+
+              &#60;body>
+                  ---------- HTML ----------
+                  ---------- HTML ----------
+                  ---------- HTML ----------
+                  &#60;div id="react-app-container">&#60;/div>
+                  ---------- HTML ----------
+
+                  &#60;script>
+                    ReactDOM.render(App, document.getElementById('react-app-container'));
+                  &#60;/script>
+              &#60;/body>
+
+              &#60;/html>
+            </pre>
+          </ul>
+        </li>
+        <li>
+          <ul>
+            <li>Hasonló az előző pontban lévőhöz</li>
+            <li>A HTML tartalomban két belépési pont van két különálló React applikációba</li>
+            <li>Tipikus, amikor több egymástól teljesen független appot használ az oldal
+              <ul>
+                <li>Egymással belső állapotokat nem osztanak meg</li>
+                <li>Bármennyi, nem csak 2 app inicializálható</li>
+              </ul>
+            </li>
+            <li>Például az oldal tetején van egy weather widget, az alján pedig egy stock widget</li>
+            <li>Jellemző továbbá még az olyan oldalak esetén, ahhol folyamatosan állnak át a React használatára</li>
+            <pre>
+              &#60;!DOCTYPE html>
+              &#60;html lang="en">
+
+              &#60;head>
+                  &#60;meta charset="UTF-8">
+                  &#60;title>Document&#60;/title>
+              &#60;/head>
+
+              &#60;body>
+                  ---------- HTML ----------
+                  ---------- HTML ----------
+                  ---------- HTML ----------
+                  &#60;div id="weather-app-container">&#60;/div>
+                  ---------- HTML ----------
+                  &#60;div id="stock-app-container">&#60;/div>
+                  ---------- HTML ----------
+
+                  &#60;script>
+                    ReactDOM.render(WeatherApp, document.getElementById('weather-app-container'));
+                    ReactDOM.render(StockApp, document.getElementById('stock-app-container'));
+                  &#60;/script>
+              &#60;/body>
+
+              &#60;/html>
+            </pre>
+          </ul>
+        </li>
+        <li>
+          <ul>
+            <li>Egyetlen oldalletöltés történik, miután egyetlen React app fut a böngészőben, és generál ki minden HTML
+              tartalmat
+              <ul>
+                <li>Több oldalletöltés nem is történik</li>
+              </ul>
+            </li>
+            <li>A React app a navigálás illúzióját kelti</li>
+            <li>A további szerver oldali adatokat AJAX kérésekkel szerzi meg</li>
+            <li>SPA, azaz Single Page Application a neve</li>
+            <pre>
+              &#60;!DOCTYPE html>
+              &#60;html lang="en">
+
+              &#60;head>
+                  &#60;meta charset="UTF-8">
+                  &#60;title>Document&#60;/title>
+              &#60;/head>
+
+              &#60;body>
+                  &#60;div id="app-container">&#60;/div> // alkalmazás belépési pontja
+
+                  &#60;script>
+                    ReactDOM.render(WeatherApp, document.getElementById('app-container'));
+                  &#60;/script>
+              &#60;/body>
+
+              &#60;/html>
+            </pre>
+          </ul>
+        </li>
+      </ol>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #next data-anchor="next">Next</h3>
+  <ul>
     <li></li>
   </ul>
 </div>
 
 <div>
-  <h3 #todo data-anchor="todo">TODO</h3>
+  <h3 #component data-anchor="component">Component</h3>
+  <ul>
+    <li>Lehetővé teszik a felhasználói felület újrafelhasználható darabokra való felosztását</li>
+    <li>A komponensek egy fa struktúrát alkotnak, amiknek a gyökér eleme maga az app</li>
+    <li>A komponenst legegyszerűbben függvény formában lehet leírni
+      <ul>
+        <li>Kap egy bemenetet, ami az őt körülölelő szülő komponenstől érkezik</li>
+        <li>Visszatér egy React element-tel, amit a React kirenderel</li>
+        <pre>
+          function Komponens(props) &#123;
+            return React.createElement(
+              'div',
+              &#123;
+                className: 'border'
+              },
+              // további gyerek elemek és komponensek
+            )
+          }
+        </pre>
+        <li>A props egy objektum
+          <ul>
+            <li>Tetszőleges kulcs-érték párokból állhat</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li>Tehát a kódban egy függvényt deklarálunk, amit odaadunk a React-nak
+      <ul>
+        <li>Nem mi, a React fogja meghívni automatikusan, újrarendereléskor</li>
+      </ul>
+    </li>
+    <pre>
+      ReactDOM.render(
+        React.createElement(Komponens),
+        document.getElementById('app-container')
+      )
+    </pre>
+    <li>Példa
+      <ul>
+        <li>Hozzunk létre egy egyszerű alkalmazást</li>
+        <li>Két komponenst fogunk létrehozni</li>
+        <pre>
+          <b>// html</b>
+          &#60;!DOCTYPE html>
+          &#60;html lang="en">
+
+          &#60;head>
+              &#60;meta charset="UTF-8">
+              &#60;title>Document&#60;/title>
+
+              &#60;link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+          &#60;/head>
+
+          &#60;body>
+            &#60;div class="container">
+              &#60;div class="row m-5 border p-5">
+                &#60;div id="app-container">&#60;/div> // az alkalmazás belépési pontja
+              &#60;/div>
+            &#60;/div>
+
+              &#60;script crossorigin src="https://unpkg.com/react@18/umd/react.development.js">&#60;/script>
+              &#60;script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js">&#60;/script>
+          &#60;/body>
+
+          &#60;/html>
+
+          <b>// js</b>
+          function App() &#123;
+            return React.createElement(
+              'div',
+              &#123;
+                className: 'border'
+              },
+              'App', // text tartalom
+              React.createElement(BoxComponent, &#123;hatterSzin: 'red', felirat: 'piros'}), // gyermek elemek
+              React.createElement(BoxComponent, &#123;hatterSzin: 'blue', felirat: 'kék'}),
+              React.createElement(BoxComponent, &#123;hatterSzin: 'green', felirat: 'zöld'}),
+            )
+          }
+
+          function BoxComponent(props) &#123; // gyerek elem
+            return React.createElement(
+              'div',
+              &#123;
+                style: &#123;
+                  width: '200px',
+                  height: '200px',
+                  margin: '10px',
+                  backgroundColor: props.hatterSzin,
+                },
+                className: 'p-2 m5 rounded' // fontos, hogy className, és nem class
+              },
+              props: felirat
+            )
+          }
+
+          ReactDOM.render(
+            React.createElement(App),
+            document.getElementById('app-container')
+          );
+        </pre>
+        <li>A gyerek elem várja a props objektumot
+          <ul>
+            <li>Az app-nak természetesen nincsen szülő eleme</li>
+          </ul>
+        </li>
+        <li>A BoxComponent tudja használni az adatot
+          <ul>
+            <li>Mindig, amikor megváltozik az adat, a függvény újra meghívódik</li>
+            <li>Ebből a függvényből kell visszatérni azzal, amit meg akarunk jeleníteni</li>
+          </ul>
+        </li>
+        <li>A belépési pontunkra végül rácsatlakoztatjuk az App komponenst</li>
+        <li>A createElement függvény második paramétere egy objektum, különféle property-kkel
+          <ul>
+            <li>Tulajdonképpen bármilyen property-t oda lehet neki adni</li>
+            <li>Bármennyi lehet belőle</li>
+          </ul>
+        </li>
+        <br>
+        <img src="../../assets/imgs/simple_react_example.png" width="300px" height="500px">
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #state data-anchor="state">State</h3>
+  <ul>
+    <li>A belső állapot létfontosságú része a React applikádióknak</li>
+    <li>A komponens témakörében lévő alkalmazást írjuk át</li>
+    <li>Érdemes a React DevTools bővítményt feltelepíteni a böngészőbe</li>
+    <pre>
+
+    </pre>
+    <li>React.useState()
+      <ul>
+        <li>Ha komponensen belül meghívjuk, visszatér egy kételemű tömbbel</li>
+        <li>Első eleme: aktuális állapot</li>
+        <li>A tömb második eleme: függvény
+          <ul>
+            <li>Ha meghívjuk, és értéket adunk neki, úgy a következő állapotot állítjuk be</li>
+          </ul>
+        </li>
+        <li>A kételemű tömböt array destructuring-gal szokás két változóba bekötni</li>
+        <li>Lehetőség van rá, hogy inicializáljuk a belső állapotot
+          <ul>
+            <li>A useState függvénybe értéket kell adni hozzá</li>
+            <li>React.useState(1); // a kiindulási érték 1</li>
+          </ul>
+        </li>
+        <li>A state változtató függvény bemenetként függvényt is elfogad
+          <ul>
+            <li>Akkor lehet rá szükség, ha a kiindulási alapunk az előző állapot</li>
+            <li>Arrow function-t érdemes használni</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #next data-anchor="next">Next</h3>
   <ul>
     <li></li>
   </ul>

@@ -177,7 +177,12 @@ export class AngularComponent implements OnDestroy {
   testingrouting,
   codecoverage,
   jasminejest,
-
+  jestutilities,
+  jestwithservices,
+  jestwithmockandspy,
+  jestwithrxjsstream,
+  jestwithhttp,
+  jestwithhttperrors,
   deploying,
   standalonecomponents,
   creatingstandalonecomponents,
@@ -410,6 +415,12 @@ export class AngularComponent implements OnDestroy {
         { title: 'Routing', anchor: 'testingrouting' },
         { title: 'Code coverage', anchor: 'codecoverage' },
         { title: 'Jasmine / Jest', anchor: 'jasminejest' },
+        { title: 'Jest with utilities', anchor: 'jestwithutilities' },
+        { title: 'Jest with services', anchor: 'jestwithservices' },
+        { title: 'Jest with mock and spy', anchor: 'jestwithmockandspy' },
+        { title: 'Jest with RxJS stream', anchor: 'jestwithrxjsstream' },
+        { title: 'Jest with HTTP', anchor: 'jestwithhttp' },
+        { title: 'Jest with HTTP errors', anchor: 'jestwithhttperrors' },
       ]
     },
     {

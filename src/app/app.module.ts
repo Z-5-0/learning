@@ -118,7 +118,8 @@ import { TestsModule } from 'src/tests/tests.module';
     ObservableModule,
     NaviModule,
     CoreModule,
-    TestsModule
+    TestsModule,
+    AppRoutingModule
   ],
   providers: [
 

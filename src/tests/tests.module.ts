@@ -1,9 +1,9 @@
 import { NgModule } from "@angular/core";
 import { HometestComponent } from "./components/hometest/hometest.component";
-import { GradePipe } from "src/tests/pipes/grade.pipe";
 import { RouterModule, Routes } from "@angular/router";
 import { GradeDirective } from "./directives/grade.directive";
 import { InfotestComponent } from "./components/infotest/infotest.component";
+import { GradePipe } from "./pipes/grade.pipe";
 
 export const routes: Routes = [
     { path: '', redirectTo: 'hometest', pathMatch: 'full' },
@@ -19,7 +19,10 @@ export const routes: Routes = [
         GradeDirective
     ],
     imports: [
-        RouterModule.forChild(routes)
+        RouterModule.forChild(routes),
+    ],
+    exports: [
+        RouterModule
     ]
 })
 

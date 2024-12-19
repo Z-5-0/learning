@@ -1,12 +1,12 @@
-import { ComponentFixture, fakeAsync, flush, TestBed, tick, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 
 import { HometestComponent } from './hometest.component';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
-import { delay, Observable, of } from 'rxjs';
-import { GradePipe } from 'src/tests/pipes/grade.pipe';
+import { delay, of } from 'rxjs';
 import { GradeDirective } from 'src/tests/directives/grade.directive';
+import { GradePipe } from 'src/tests/pipes/grade.pipe';
 
 describe('HometestComponent', () => {
   let component: HometestComponent;

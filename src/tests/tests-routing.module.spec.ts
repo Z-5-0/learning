@@ -10,7 +10,7 @@ import { GradeDirective } from "./directives/grade.directive";
 import { DebugElement } from "@angular/core";
 import { By } from "@angular/platform-browser";
 
-fdescribe('TestsRouting', () => {
+describe('TestsRouting', () => {
     let router: Router;
     let location: Location;
     let fixture: ComponentFixture<HometestComponent>;

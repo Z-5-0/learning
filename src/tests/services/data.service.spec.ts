@@ -65,7 +65,6 @@ describe('DataService', () => {
     const mockUserChange = { name: 'Tom Denem' };
 
     service.updateUser(3, mockUserChange).subscribe((user: any) => {
-      console.log(user);
       expect(user.id).toBe(3);
       done();
     });
@@ -73,7 +72,7 @@ describe('DataService', () => {
     const mockRequest = httpTestingController.expectOne('https://jsonplaceholder.typicode.com/users/3');
     expect(mockRequest.request.method).toBe('PUT');
     expect(mockRequest.request.body).toBe(mockUserChange);
-    expect(mockRequest.request.body).toEqual({name: 'Tom Denem'});
+    expect(mockRequest.request.body).toEqual({ name: 'Tom Denem' });
     mockRequest.flush(mockUser);
   });
 });
