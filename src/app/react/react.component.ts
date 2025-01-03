@@ -11,10 +11,34 @@ export class ReactComponent implements OnInit {
     howitworks,
     react,
     reactvsjs,
+    reactvsangular,
     reactvsangularvsvue,
     initialization,
     gettingstarted,
+    projectstructure,
+    fromscratch,
+    jsx,
     component,
+    addingcss,
+    childcomponent,
+    bootstrap,
+    dynamiccontent,
+    jsxattributes,
+    dynamicclasses,
+    props,
+    splittingcomponents,
+    childrenprops,
+    jsxsyntax,
+    eventsandstates,
+    forms,
+    codereformatting,
+    skeleton,
+    eventlistener,
+    multiplestates,
+    formsubmission,
+    childtoparentcommunication,
+    renderinglist,
+
     state,
     todo,
     `) sections!: QueryList<ElementRef>;
@@ -25,13 +49,42 @@ export class ReactComponent implements OnInit {
     {
       title: 'React comparison', anchor: 'reactcomparison', subtitles: [
         { title: 'React vs JS', anchor: 'reactvsjs' },
+        { title: 'React vs Angular', anchor: 'reactvsangular' },
         { title: 'React vs Angular vs Vue', anchor: 'reactvsangularvsvue' },
       ]
     },
     { title: 'Initialization', anchor: 'initialization' },
     { title: 'Getting started', anchor: 'gettingstarted' },
-    { title: 'Component', anchor: 'component' },
-    { title: 'State', anchor: 'state' },
+    { title: 'Project structure', anchor: 'projectstructure' },
+    { title: 'From scratch', anchor: 'fromscratch' },
+    { title: 'JSX', anchor: 'jsx' },
+    {
+      title: 'Component', anchor: 'component', subtitles: [
+        { title: 'Adding CSS', anchor: 'addingcss' },
+        { title: 'Child component', anchor: 'childcomponent' },
+      ]
+    },
+    { title: 'Bootstrap', anchor: 'bootstrap' },
+    { title: 'Dynamic content', anchor: 'dynamiccontent' },
+    { title: 'JSX attributes', anchor: 'jsxattributes' },
+    { title: 'Dynamic classes', anchor: 'dynamicclasses' },
+    { title: 'Props', anchor: 'props' },
+    { title: 'Splitting components', anchor: 'splittingcomponents' },
+    { title: 'Children props', anchor: 'childrenprops' },
+    { title: 'JSX syntax', anchor: 'jsxsyntax' },
+    { title: 'Events and states', anchor: 'eventsandstates' },
+    {
+      title: 'Forms', anchor: 'forms', subtitles: [
+        { title: 'Code reformatting', anchor: 'codereformatting' },
+        { title: 'Skeleton', anchor: 'skeleton' },
+        { title: 'Event listener', anchor: 'eventlistener' },
+        { title: 'Multiple states', anchor: 'multiplestates' },
+        { title: 'Form submission', anchor: 'formsubmission' },
+      ]
+    },
+    { title: 'Child to parent communication', anchor: 'childtoparentcommunication' },
+    { title: 'Rendering list', anchor: 'renderinglist' },
+
     {
       title: 'TODO', anchor: 'todo', subtitles: [
         { title: 'TODO', anchor: 'todo' },

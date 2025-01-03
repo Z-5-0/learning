@@ -1,1 +1,171 @@
-<p>xml works!</p>
+<h1>XML</h1>
+
+<div class="anchor-navi-container">
+    <div *ngFor="let mainButton of anchorButtons" class="btn-group">
+        <button type="button" class="btn btn-primary btn-sm anchor" (click)="scrollToAnchor(mainButton?.anchor)">
+            {{ mainButton.title }}
+        </button>
+        <button *ngIf="mainButton?.subtitles?.length" type="button"
+            class="btn btn-primary dropdown-toggle dropdown-toggle-split btn-sm anchor" data-bs-toggle="dropdown"
+            aria-expanded="false">
+        </button>
+        <ul *ngIf="mainButton.subtitles?.length" class="dropdown-menu dropdown-menu-dark">
+            <li>
+                <button *ngFor="let subButton of mainButton?.subtitles" class="dropdown-item"
+                    (click)="scrollToAnchor(subButton?.anchor)">
+                    {{ subButton?.title }}
+                </button>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div>
+    <h3 #xml data-anchor="xml">XML</h3>
+    <ul>
+        <li>Extensible Markup Language</li>
+        <li>Általános célú jelölőnyelv (markup language), amelyet adatok leírására, tárolására, és szállítására
+            terveztek
+            <ul>
+                <li>Nem megjelenítésre</li>
+            </ul>
+        </li>
+        <li>Az elemek és attribútumok nevei tetszőlegesek lehetnek, nincs előre definiált készlet, mint a HTML-ben</li>
+        <li>Nagyon szigorú a szintaxisa
+            <ul>
+                <li>Minden tag-et le kell zárni</li>
+                <pre>
+                    &#60;tag>&#60;/tag>
+
+                    OR
+
+                    &#60;tag />
+                </pre>
+                <li>A tag-ek hierarchiája nem sérülhet</li>
+                <li>Az attribútumoknak mindig idézőjelek között kell lenniük</li>
+                <pre>
+                    id="value"
+                </pre>
+            </ul>
+        </li>
+        <li>Az elemek kis- és nagybetű érzékenyek
+            <ul>
+                <li>&#60;Name> és &#60;name> két különböző elem</li>
+            </ul>
+        </li>
+        <li>Az attribútumok értékei mindig idézőjelek között vannak
+            <ul>
+                <pre>
+                    &#60;item id="123">&#60;/item>
+                </pre>
+            </ul>
+        </li>
+        <li>A HTML lazább verziója az XML-nek, amelyet a weboldalakra optimalizáltak</li>
+        <li>A XHTML (Extensible HTML) a HTML egy XML-kompatibilis változata volt, de ma már ritkán használják</li>
+        <li>A JSON-hoz képest nehezebb feldolgozni, és általában lassabb is</li>
+        <li>Az XML-t sok esetben felváltotta a JSON, mert a JSON könnyebben olvasható és gyorsabb feldolgozást tesz
+            lehetővé, különösen JavaScript alapú környezetekben</li>
+        <li>Az XML-nek mindig csak egy gyökérelme lehet</li>
+        <li>Az ékezeteket, és speciális karaktereket karakterkódolni szükséges</li>
+        <br>
+        <table style="border-collapse: collapse; width: 100%;">
+            <thead>
+                <tr>
+                    <th>karakter</th>
+                    <th>entitás referencia</th>
+                    <th>jelentés</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>&lt;</td>
+                    <td>&amp;lt;</td>
+                    <td>kisebb mint jel</td>
+                </tr>
+                <tr>
+                    <td>&gt;</td>
+                    <td>&amp;gt;</td>
+                    <td>nagyobb mint jel</td>
+                </tr>
+                <tr>
+                    <td>&amp;</td>
+                    <td>&amp;amp;</td>
+                    <td>és jel (ampersand)</td>
+                </tr>
+                <tr>
+                    <td>'</td>
+                    <td>&amp;apos;</td>
+                    <td>egyszeres idézőjel (aposztróf)</td>
+                </tr>
+                <tr>
+                    <td>"</td>
+                    <td>&amp;quot;</td>
+                    <td>kettős idézőjel</td>
+                </tr>
+            </tbody>
+        </table>
+    </ul>
+</div>
+
+<div>
+    <h3 #comparison data-anchor="comparison">Comparison</h3>
+    <ul>
+        <table style="border-collapse: collapse; width: 100%; text-align: left;">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>HTML</th>
+                    <th>JSX</th>
+                    <th>XML</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>záró tag-ek</td>
+                    <td>nem mindig kötelező</td>
+                    <td>kötelező</td>
+                    <td>kötelező</td>
+                </tr>
+                <tr>
+                    <td>attribútum szintaxis</td>
+                    <td>laza (id=value)</td>
+                    <td>szigorú (id="value")</td>
+                    <td>szigorú (id="value")</td>
+                </tr>
+                <tr>
+                    <td>hierarchia</td>
+                    <td>nem mindig szigorú</td>
+                    <td>szigorú</td>
+                    <td>szigorú</td>
+                </tr>
+            </tbody>
+        </table>
+    </ul>
+</div>
+
+<div>
+    <h3 #example data-anchor="example">Example</h3>
+    <ul>
+        <li>Időjárás API
+            <ul>
+                <pre>
+                    <b>// HTTP POST</b>
+                    POST /weather HTTP/1.1
+                    Content-Type: application/xml
+
+                    &#60;request>
+                    &#60;location>Budapest&#60;/location>
+                    &#60;date>2024-12-20&#60;/date>
+                    &#60;/request>
+
+                    <b>// response</b>
+                    &#60;weather>
+                        &#60;location>Budapest&#60;/location>
+                        &#60;temperature>5&#60;/temperature>
+                        &#60;condition>Sunny&#60;/condition>
+                    &#60;/weather>
+                </pre>
+            </ul>
+        </li>
+    </ul>
+</div>

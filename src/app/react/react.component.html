@@ -442,6 +442,61 @@
     </li>
   </ul>
   <br>
+  <h5 #reactvsangular data-anchor="reactvsangular">React vs Angular</h5>
+  <ul>
+    <table style="border-collapse: collapse; width: 100%;">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Angular</th>
+          <th>React</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>direktívák</td>
+          <td>igen (pl. ngIf, ngFor)</td>
+          <td>nem</td>
+        </tr>
+        <tr>
+          <td>pipe-ok</td>
+          <td>igen (pl. async, uppercase)</td>
+          <td>nem (de map(), filter() hasonló célra)</td>
+        </tr>
+        <tr>
+          <td>szervizek</td>
+          <td>igen (pl. szolgáltatásokat hozunk létre)</td>
+          <td>custom hooks, context api, redux</td>
+        </tr>
+        <tr>
+          <td>komponensek</td>
+          <td>igen (pl. @Component)</td>
+          <td>igen (komponens alapú struktúra)</td>
+        </tr>
+        <tr>
+          <td>adatbinding</td>
+          <td>igen (pl. kétirányú binding, [(ngModel)])</td>
+          <td>props és state kezelés, egyirányú adatáramlás</td>
+        </tr>
+        <tr>
+          <td>eventek kezelése</td>
+          <td>igen (pl. (click), ngModelChange)</td>
+          <td>igen (pl. onClick, onChange)</td>
+        </tr>
+        <tr>
+          <td>modulok</td>
+          <td>igen (pl. @NgModule)</td>
+          <td>nem (komponensek fájlokba szervezve)</td>
+        </tr>
+        <tr>
+          <td>routolás</td>
+          <td>igen (pl. @angular/router)</td>
+          <td>igen (pl. react-router-dom)</td>
+        </tr>
+      </tbody>
+    </table>
+  </ul>
+  <br>
   <h5 #reactvsangularvsvue data-anchor="reactvsangularvsvue">React vs Angular vs Vue</h5>
   <ul>
     <li>React
@@ -724,9 +779,434 @@
 </div>
 
 <div>
-  <h3 #next data-anchor="next">Next</h3>
+  <h3 #gettingstarted data-anchor="gettingstarted">Getting started</h3>
+  <ol>
+    <li>node.js telepítés
+      <ul>
+        <li>Mindig az LTS-t érdemes választani</li>
+        <li>'node -v' paranccsal ellenőrizhetjük a verziószámot </li>
+      </ul>
+    </li>
+    <li>A Create React App tool-lal készíthetünk React projektet
+      <ul>
+        <li>Tartalmaz néhány előre konfigurált, és alapvető fájlt</li>
+        <li>Remek környezetet biztosít a fejlsztéshez</li>
+        <li>Development web szerver futtatható, ami változás esetén frissíti a preview-t</li>
+        <li>Production-be állítás előtt optimalizál</li>
+        <pre>
+          npx create-react-app *PROJEKTNÉV*
+        </pre>
+        <li>A parancs az npm-et állítja be alapértelmezett package manager-nek</li>
+        <li>A legfrissebb verzió fog települni</li>
+      </ul>
+    </li>
+    <li>Indítsuk el a projektet</li>
+    <pre>
+      npm start
+    </pre>
+  </ol>
+</div>
+
+<div>
+  <h3 #projectstructure data-anchor="projectstructure">Project structure</h3>
   <ul>
-    <li></li>
+    <li>node_modules
+      <ul>
+        <li>A React, és minden third party könyvtár itt tárolódik</li>
+        <li>Nincs dolgunk ezzel a mappával</li>
+      </ul>
+    </li>
+    <li>public (mappa)
+      <ul>
+        <li>favicon.ico
+          <ul>
+            <li>A böngészőfülön megjelenő ikon</li>
+          </ul>
+        </li>
+        <li>index.html
+          <ul>
+            <li>Alap HTML fájl, amely a React alkalmazás "konténere lesz</li>
+            <li>A React alkalmazás a div#root elembe renderelődik</li>
+            <li>Itt találhatók a statikus metaadatok, a cím, a favikonok és a React alkalmazás számára szükséges egyéb
+              alapvető HTML szerkezetek</li>
+          </ul>
+        </li>
+        <li>manifest.json
+          <ul>
+            <li>Az app-pal kapcsolatos meta adatokat tartalmaz</li>
+          </ul>
+        </li>
+        <li>robots.txt
+          <ul>
+            <li>A keresőmotorok számára ad irányelveket, hogy mely oldalakat indexelhetnek és melyeket nem</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li>src (mappa)
+      <ul>
+        <li>Ebben a mappában található az alkalmazásunk forráskódja, logikája, komponensei</li>
+        <li>App.js
+          <ul>
+            <li>Az alkalmazás "szíve"</li>
+            <li>A főbb UI elemek itt találhatók</li>
+            <li>Tulajdonképpen az app komponens</li>
+            <li>Alapértelmezetten JSX markup-ot használ
+              <ul>
+                <li>Javascript XML rövidítése</li>
+                <li>Hasonlít a html-hez</li>
+                <li>Így írjuk le, miképp nézzen ki az appunk</li>
+                <li>A böngészők nem értik a JSX markup-ot
+                  <ul>
+                    <li>A Babel átfordítja JS kóddá
+                      <ul>
+                        <li>Modern JavaScript compiler</li>
+                        <li>A package.lock.json-ben láthatjuk, hogy jelen van a projektben</li>
+                        <li>A https://babeljs.io/ weboldalon kipróbálhatjuk, miképp fordul át a JSX kód JS kóddá</li>
+                        <img src="../../assets/imgs/jsxtojs.png" width="100%">
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>App.test.js
+          <ul>
+            <li>Az app komponens automatizált tesztjei írhatók itt meg</li>
+          </ul>
+        </li>
+        <li>reportWebVitals.js
+          <ul>
+            <li>A webes teljesítmény méréséhez szükséges</li>
+          </ul>
+        </li>
+        <li>App.css
+          <ul>
+            <li>Az App komponenshez tartozó alapértelmezett stílusokat tartalmazza</li>
+          </ul>
+        </li>
+        <li>index.css
+          <ul>
+            <li>Alapértelmezett globális stílusokat tartalmazza, amelyek minden React komponensre vonatkoznak</li>
+          </ul>
+        </li>
+        <li>index.js
+          <ul>
+            <li>A React alkalmazás belépési pontja</li>
+            <li>Importálja az App komponenst, és azt rendereli a root elembe, amely az index.html fájlban található</li>
+          </ul>
+        </li>
+        <li>logo.svg
+          <ul>
+            <li>SVG formátumú fájl, amely az alapértelmezett React logót tartalmazza</li>
+          </ul>
+        </li>
+        <li>setupTests.js
+          <ul>
+            <li>Tartalmazza a szükséges beállításokat a Jest és a React Testing Library számára</li>
+          </ul>
+        </li>
+        <li>assets (mappa)
+          <ul>
+            <li>Új projekt nem hozza létre, de az assets mappát itt szokás elhelyezni</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li>package.json
+      <ul>
+        <li>Az összes dependenciát tartalmazza</li>
+      </ul>
+    </li>
+    <br>
+    <li>SCSS is használható a projektekben
+      <ul>
+        <li>Ehhez telepítés szükséges</li>
+        <pre>npm install sass</pre>
+        <li>Ezután az src/App.css átnevezhető App.scss-re, valamint az src/index.css is lehet index.scss</li>
+        <li>Illetve az importálást is át szükséges írni</li>
+        <pre>
+          <b>// App.js</b>
+          import './App.css';
+
+          ↓↓↓↓↓
+
+          import './App.scss';
+
+          <b>// index.js</b>
+          import './index.css';
+
+          ↓↓↓↓↓
+
+          import './index.scss';
+        </pre>
+      </ul>
+    </li>
+    <br>
+    <li>Typescriptet is lehet használni a projektben
+      <ul>
+        <li>A React projektekben alapértelmezés szerint .js kiterjesztésű fájlok jönnek létre, és ezekbe nyugodtan
+          írhatunk JSX markup-ot</li>
+        <li>Ha TypeScript-et szeretnénk használni, akkor a fájloknak a .tsx kiterjesztést kell adni, mivel a TypeScript
+          szintaxis nem támogatja a JSX-t .ts fájlokban</li>
+        <li>A .tsx fájlban használhatod a JSX leíró nyelvet</li>
+        <li>A .tsx kiterjesztés biztosítja, hogy a fájl TypeScript-tel és JSX-sel is dolgozhat</li>
+        <li>A .tsx fájlok a React és TypeScript kombinációja, ahol a JSX-t TypeScript-kóddal használjuk</li>
+        <li>A .tsx fájlok lehetővé teszik a TypeScript típusellenőrzését és az erősebb típusbiztonságot, miközben
+          ugyanazokat az összetevőket és szintaxist használják, mint a hagyományos .js vagy .jsx fájlok</li>
+        <pre>
+            npm install typescript @types/node @types/react @types/react-dom @types/jest
+        </pre>
+        <li>Ezt követően minden .js fájlt (és importját) át lehet nevezni .tsx-re</li>
+        <li>Valamint a dev szerver újraindítást igényel</li>
+      </ul>
+    </li>
+    <pre>
+      /my-react-app
+      │
+      ├── /node_modules/                # Az összes telepített csomag, beleértve a React-ot és minden harmadik féltől származó könyvtárat
+      │   └── ...
+      │
+      ├── /public/                      # Statikus fájlok
+      │   ├── favicon.ico               # A böngésző fülnél megjelenő ikon
+      │   ├── index.html                # Az alap HTML fájl, amely a React alkalmazás "konténere"
+      │   │   └── <div id="root"></div> # Itt renderelődik a React alkalmazás
+      │   ├── manifest.json             # Az app-pal kapcsolatos metaadatok
+      │   └── robots.txt                # A keresőmotorok számára irányelvek a weboldalak indexelésére
+      │
+      ├── /src/                         # A forráskód, logika és komponensek
+      │   ├── assets/                   # Képek, statikus fájlok (ha szükséges)
+      │   ├── components/               # React komponensek
+      │   │   └── App.js                # A fő React komponens (App komponens), JSX markup-kal
+      │   ├── App.css                   # Alapértelmezett stílusok az App komponenshez
+      │   ├── App.test.js               # Automatizált tesztek az App komponenshez
+      │   ├── index.css                 # Globális stílusok minden komponenshez
+      │   ├── index.js                  # A React alkalmazás belépési pontja
+      │   ├── logo.svg                  # Az alapértelmezett React logó (SVG)
+      │   ├── reportWebVitals.js        # A webes teljesítmény méréséhez szükséges fájl
+      │   └── setupTests.js             # Beállítások a Jest és a React Testing Library számára
+      │
+      ├── package.json                  # A projekt függőségei és szkriptek
+      ├── package-lock.json             # A pontos függőségek verzióinak zárolása
+      ├── tsconfig.json                 # TypeScript konfigurációs fájl (ha TypeScript-et használsz)
+      └── .gitignore                    # Git által figyelmen kívül hagyott fájlok
+    </pre>
+  </ul>
+</div>
+
+<div>
+  <h3 #fromscratch data-anchor="fromscratch">From scratch</h3>
+  <ul>
+    <li>index.js
+      <ul>
+        <li>Belépési pont</li>
+        <li>A React module-ból szükséges importálnunk</li>
+        <li>A hot module reloading miatt újratöltődik a változtatásoknál az app</li>
+        <pre>
+          import React from 'react'; // a React könyvtár tartalmazza a szükséges eszközöket a JSX kód értelmezéséhez
+          import ReactDOM from 'react-dom'; // a React alkalmazásoknak a DOM-mal való kapcsolódásáért felelős objektum
+          import './index.scss'; // a globális stílusokat tartalmazza
+          import App from './App'; // importáljuk az App komponenst, amely a fő React komponens
+          import reportWebVitals from './reportWebVitals'; // a teljesítmény méréséhez az alapértelmezett kódban van egy példány, amely segít a mérési adatok naplózásában
+
+          ReactDOM.render( // rendereljük a React komponenst (jelen esetben az App komponenst) a valódi DOM-ba
+            &#60;React.StrictMode> // segédeszköz, amely segít a fejlesztésben, figyelmeztetéseket ad, ha a React alkalmazásban valamilyen hiba van
+              &#60;App />
+              &#60;/React.StrictMode>,
+            document.getElementById('root') // a root id-jú elembe renderelődik az app
+          );
+
+          reportWebVitals(); // mérési eredményeket ír ki a console-ba
+        </pre>
+        <li>Ha létrehozunk egy jsx elemet, és kilogoljuk, egy objektumot kapunk, különféle kulcs-érték párokkal
+          <ul>
+            <li>Ez a React elem / objektum része a virtuális DOM-nak</li>
+            <li>State változásnál a virtuális DOM frissül, a React megnézi, mi változott, majd hozzáfér a valódi
+              DOM-hoz, és befrissíti azt</li>
+            <li>A ReactDOM.render() egy elemet renderel a virtuális DOM-ból a valódi DOM-ba
+              <ul>
+                <li>Az első argomentum az az elem, amit renderelni szeretnénk
+                  <ul>
+                    <li>Ez az elem az app komponens</li>
+                    <li>Az app komponensnek lehetnek gyerekei</li>
+                  </ul>
+                </li>
+                <li>A másoodik argoumentum, hogy hova szeretnénk renderelni
+                  <ul>
+                    <li>Az index.html-ben (konténerben) lévő 'root' id-val rendelkező div-be kívánjuk renderelni</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>Minden React alkalmazás egy komponens fa
+          <ul>
+            <li>Ezek kombinációja tesz ki egy Ract alkalmazást</li>
+            <li>A komponens egy JS osztályként van implementálva
+              <ul>
+                <li>Állapottal, és render metódussal rendelkezik</li>
+                <pre>
+                  class App &#123;
+                    state; // adat, amit meg szeretnénk jeleníteni, amikor a komponens renderelésre kerül
+
+                    render() &#123; // a UI kinézetéért felelős
+
+                    }
+                  }
+                </pre>
+                <li>A render függvény kimenete egy React elem
+                  <ul>
+                    <li>JavaScript objektum, ami (virtuális) DOM elemhez kötött
+                      <ul>
+                        <li>Csak a memóriában reprezentálja a valódi DOM elemet</li>
+                        <li>A state változás után a DOM interakciókat a React automatikusan megoldja</li>
+                        <li>Először a virtuális DOM frissül, majd a valódi DOM azon része frissül, ahol történt változás
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <br>
+                <table>
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>Virtuális DOM</th>
+                      <th>Valódi DOM</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Meghatározás</td>
+                      <td>A valódi DOM egy könnyített másolata, amelyet hatékony frissítésekhez használnak</td>
+                      <td>A dokumentum tényleges struktúrája, amelyet a böngésző használ</td>
+                    </tr>
+                    <tr>
+                      <td>Gyorsaság</td>
+                      <td>Gyorsabb frissítések, mivel a változások először memóriában kerülnek kiszámításra.</td>
+                      <td>Lassabb frissítések, mivel minden változás közvetlenül a DOM-ot módosítja.</td>
+                    </tr>
+                    <tr>
+                      <td>Hatékonyság</td>
+                      <td>Csak a módosított részek kerülnek frissítésre.</td>
+                      <td>A teljes DOM-fa újrarenderelése szükséges minden változtatásnál.</td>
+                    </tr>
+                    <tr>
+                      <td>Használat</td>
+                      <td>Modern keretrendszerekben, mint például React és Vue.</td>
+                      <td>A böngészők által natívan használt DOM.</td>
+                    </tr>
+                    <tr>
+                      <td>Változtatás módja</td>
+                      <td>A változásokat egyben, csoportosan alkalmazza.</td>
+                      <td>A változásokat azonnal, egyenként alkalmazza.</td>
+                    </tr>
+                    <tr>
+                      <td>Teljesítmény</td>
+                      <td>Elkerüli a felesleges műveleteket, csökkenti a teljesítményproblémákat.</td>
+                      <td>Több művelet miatt teljesítménybeli problémák léphetnek fel gyakori frissítéseknél.</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <br>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #jsx data-anchor="jsx">JSX</h3>
+  <ul>
+    <li>Általánosságban elmondható, hogy HTML-t nem írhatunk JavaScript fájlba
+      <ul>
+        <li>Stringként szokás beleírni</li>
+        <li>React esetében kvázi megtehetjük, de valójában a HTML-nek kinéző kód nem HTML, hanem JSX</li>
+      </ul>
+    </li>
+    <li>A böngésző nem érti a JSX kódokat
+      <ul>
+        <li>Javascript kóddá szükséges átalakítani</li>
+        <li>Kompiláláskor ez a transzformáció megtörténik</li>
+        <li>Az átalakítást a Babel végzi, a böngészőben való renderelés előtt</li>
+        <li>Írhatunk Javascriptet is a .js fájlokba JSX helyett
+          <ul>
+            <pre>
+              <b>// app.js</b>
+              function App() &#123;
+                const p = document.createElement(p);
+                p.textContent = 'This is a paragraph';
+                return p;
+              }
+
+              export default App;
+
+              <b>// index.js</b>
+              let div = document.getElementById('root');
+              div.append(App());
+            </pre>
+            <li>Sokkal több kódot írtunk így, és komplexitástól függően igencsak megnehezedhet a dolgunk</li>
+          </ul>
+        </li>
+        <li>JSX esetében a HTML-be különféle kifejezéseket is írhatunk</li>
+        <pre>
+          function App() &#123;
+            return &#60;h1>This is the title &#123;10 + 5}&#60;/h1> // kapcsos zárójelbe JavaScript kifejezést írhetunk
+          }
+
+          function App() &#123;
+            let message = 'nice'
+            return &#60;h1>This is the &#123;message} title&#60;/h1>
+          }
+        </pre>
+        <li>A return mögött csak egy elem szerepelhet
+          <ul>
+            <pre>
+              return &#60;h1>This is the &#123;message} title&#60;/h1>&#60;h2>Subtitle&#60;/h2> // hibás
+            </pre>
+            <li>Egyetlen top level / konténer elemben szükséges elhelyzeni</li>
+            <pre>
+              return &#60;span>&#60;h1>This is the &#123;message} title&#60;/h1>&#60;h2>Subtitle&#60;/h2>&#60;/span> // ez így rendben van
+            </pre>
+          </ul>
+        </li>
+        <li>Jó gyakorlat sort törni, és zárójellel körbevenni a JXS kifejezést
+          <ul>
+            <pre>
+              function App() &#123;
+                let message = 'nice'
+                return (&#60;span>
+                  &#60;h1>This is the &#123;message} title&#60;/h1>
+                  &#60;h2>Subtitle&#60;/h2>
+                  &#60;/span>);
+              }
+            </pre>
+          </ul>
+        </li>
+        <li>A JSX XML szabályokat követ
+          <ul>
+            <li>Minden tag-et ennek megfelelően be kell zárni</li>
+            <li>Az egyébként self-closing tag-eket is, mint az 'img', vagy az 'input'</li>
+            <pre>
+              function App() &#123;
+                let message = 'nice'
+                return (&#60;span>
+                  &#60;h1>This is the &#123;message} title&#60;/h1>
+                  &#60;h2>Subtitle&#60;/h2>
+                  &#60;input type='text'>&#60;/input>
+                &#60;/span>);
+              }
+            </pre>
+          </ul>
+        </li>
+      </ul>
+    </li>
   </ul>
 </div>
 
@@ -768,6 +1248,90 @@
         document.getElementById('app-container')
       )
     </pre>
+    <li>Kétféleképpen készíthetünk komponenst
+      <ol>
+        <li>Funkcionális komponens (function)
+          <ul>
+            <pre>
+              import React from 'react';
+
+              const Greeting = () => &#123;
+                return &#60;h1>Helló, világ!&#60;/h1>;
+              };
+
+              export default Greeting;
+            </pre>
+          </ul>
+        </li>
+        <li>Osztály alapú komponens (class)
+          <ul>
+            <pre>
+              import React, &#123; Component } from 'react';
+
+              class Greeting extends Component &#123;
+                render() &#123;
+                  return &#60;h1>Helló, világ!&#60;/h1>;
+                }
+              }
+
+              export default Greeting;
+            </pre>
+          </ul>
+        </li>
+      </ol>
+    </li>
+    <pre>
+      function App() &#123;
+        &#60;h1>This is a component&#60;/h1>
+      }
+
+      export default App;
+    </pre>
+    <li>Ahhoz, hogy egy komponens más fájlokban elérhető legyen, exportálni szükséges
+      <ul>
+        <li>A default kulcsszó miatt szabadon elnevezhető az importálás</li>
+        <pre>
+          import HelloComponent from './Greeting';
+        </pre>
+        <li>Default nélkül pontos elnevezést kell megadni</li>
+        <pre>
+          import &#123; Greeting } from './Greeting';
+        </pre>
+      </ul>
+    </li>
+    <li>A 18-as verziótól a ReactDOM.render() deprecated
+      <ul>
+        <pre>
+          <b>// index.html (public mappában)</b>
+          &#60;!DOCTYPE html>
+          &#60;html lang="en">
+          &#60;head>
+            ...
+          &#60;/head>
+          &#60;body>
+            &#60;div id="root">&#60;/div>
+          &#60;/body>
+          &#60;/html>
+
+          <b>// index.js</b>
+          import React from 'react';
+          import ReactDOM from 'react-dom';
+          import App from './App';
+
+          const root = ReactDOM.createRoot(document.getElementById('root'));
+          // root.render(&#60;App>&#60;/App>); // így is leírható, de a következő sor rövidebb
+          root.render(&#60;App />);
+
+          <b>// App.js</b>
+          function App() &#123;
+            return &#60;h1>This is the title&#60;/h1> // a függvényből jsx kifejezéssel térünk vissza
+          }
+          
+          export default App;
+        </pre>
+        <li>A createRoot használatos helyette</li>
+      </ul>
+    </li>
     <li>Példa
       <ul>
         <li>Hozzunk létre egy egyszerű alkalmazást</li>
@@ -855,41 +1419,2073 @@
       </ul>
     </li>
   </ul>
-</div>
-
-<div>
-  <h3 #state data-anchor="state">State</h3>
+  <br>
+  <h5 #addingcss data-anchor="addingcss">Adding CSS</h5>
   <ul>
-    <li>A belső állapot létfontosságú része a React applikádióknak</li>
-    <li>A komponens témakörében lévő alkalmazást írjuk át</li>
-    <li>Érdemes a React DevTools bővítményt feltelepíteni a böngészőbe</li>
-    <pre>
-
-    </pre>
-    <li>React.useState()
+    <li>A class szó helyett a className kifejezést használjuk
       <ul>
-        <li>Ha komponensen belül meghívjuk, visszatér egy kételemű tömbbel</li>
-        <li>Első eleme: aktuális állapot</li>
-        <li>A tömb második eleme: függvény
+        <li>Mivel a JSX először Javascript-té konvertálódik, és a Javascript-ben a 'class' szócska foglalt</li>
+      </ul>
+    </li>
+    <pre>
+      <b>// App.js</b>
+      import './App.scss'; // be kell importálni a stílus fájlt
+
+      function App() &#123;
+        let message = 'nice'
+        return (&#60;span>
+          &#60;h1 className='my-header'>Title&#60;/h1>
+          &#60;p className="my-paragraph">This is the &#123;message} title&#60;/p>
+        &#60;/span>);
+      }
+
+      <b>// App.css / App.scss</b>
+      .my-header &#123;
+        color: rgb(170, 0, 255);
+      } 
+      
+      .my-paragraph &#123;
+        color: rgb(63, 63, 81);
+      }
+    </pre>
+  </ul>
+  <br>
+  <h5 #childcomponent data-anchor="childcomponent">Child component</h5>
+  <ul>
+    <li>Az app komponensben egyéb komponenseket használunk, mint az app komponens gyerekei
+      <ul>
+        <li>Ezért nevezzük root komponensnek</li>
+        <li>Az app komponenst pedig az index.js fájlban rendereljük
           <ul>
-            <li>Ha meghívjuk, és értéket adunk neki, úgy a következő állapotot állítjuk be</li>
-          </ul>
-        </li>
-        <li>A kételemű tömböt array destructuring-gal szokás két változóba bekötni</li>
-        <li>Lehetőség van rá, hogy inicializáljuk a belső állapotot
-          <ul>
-            <li>A useState függvénybe értéket kell adni hozzá</li>
-            <li>React.useState(1); // a kiindulási érték 1</li>
-          </ul>
-        </li>
-        <li>A state változtató függvény bemenetként függvényt is elfogad
-          <ul>
-            <li>Akkor lehet rá szükség, ha a kiindulási alapunk az előző állapot</li>
-            <li>Arrow function-t érdemes használni</li>
+            <li>Az index.js nem komponens, csak egy Javascript fájl</li>
           </ul>
         </li>
       </ul>
     </li>
+    <li>A gyerek komponenseket érdemes az src/components mappában tárolni</li>
+    <li>React konvenció, hogy a komponens fájlok neve nagy betűvel kezdődik
+      <ul>
+        <li>A komponens függvény is nagy betűvel kell, hogy kezdődjön (pascal case)</li>
+        <pre>
+          function Products() &#123; ... }
+
+          function ProductDetails() &#123; ... }
+        </pre>
+      </ul>
+    </li>
+    <li>Gyerek komponensből is JSX kóddal térünk vissza
+      <ul>
+        <pre>
+          <b>// Products.js</b>
+          function Products() &#123;
+            return &#60;div>All of the products&#60;/div>
+          }
+          
+          // export &#123; Products }; // named export
+          export default Products;
+
+          <b>// App.js</b>
+          import Products from './components/Products';
+
+          function App() &#123;
+            let message = 'nice'
+            return (&#60;span>
+              &#60;h1 className='my-header'>Title&#60;/h1>
+              &#60;p className="my-paragraph">This is the &#123;message} title&#60;/p>
+              &#60;Products />
+            &#60;/span>);
+          }
+
+          export default App;
+        </pre>
+        <li>Az App.js-be importáltuk a Products.js-t</li>
+        <li>Ha több függvényt is exportálunk, akkor named exportot szükséges használnunk</li>
+      </ul>
+    </li>
+    <li>A komponensben return esetében a színfalak mögött valójában egy React.createElement() függvény áll
+      <ul>
+        <li>Ezért nem működik, ha több elemet akarunk megjeleníteni, de nem wrappeljük, mert a createElement function
+          nem tudja, mit készítsen</li>
+        <pre>
+          return (
+              &#60;div> // wrappelés
+                  &#60;div>All of the products&#60;/div>
+                  &#60;div>This is product description&#60;/div>
+              &#60;/div>
+          )
+        </pre>
+        <li>Érdemes bezárójelezni a többsoros visszatéréseket
+          <ul>
+            <li>Implicit semicolon insertion
+              <ul>
+                <li>Egy JavaScript-specifikus nyelvi mechanizmus, amely lehetővé teszi, hogy bizonyos helyeken
+                  elhagyjuk a pontosvesszőt a kódból, mert a JavaScript automatikusan hozzáadja azokat a fordítás
+                  során</li>
+                <pre>
+                    function getValue() &#123;
+                      return; // az engine automatikusan ide tesz egy pontosvesszőt.
+                      &#123;
+                        value: 10
+                      }
+                    }                    
+                  </pre>
+              </ul>
+            </li>
+            <li>A zárójelben elhelyezett kód/logika egy kifejezésként értelmezendő, emiatt a Javascript csak a zárójel
+              után helyez el pontosvesszőt, amennyiben elhagytuk</li>
+          </ul>
+        </li>
+        <pre>
+          <b>// Products.js</b>
+          function Products() &#123;
+            return (
+                &#60;ul>
+                    &#60;li>
+                        &#60;div>
+                            &#60;div>
+                                &#60;h5>Fresh milk&#60;/h5>
+                                &#60;p>Donec quam felis, ultricies nec&#60;/p>
+                                &#60;div>
+                                    &#60;h6>499 HUF&#60;/h6>
+                                &#60;/div>
+                            &#60;/div>
+                            &#60;img src="" alt="" width="100px" />
+                        &#60;/div>
+                    &#60;/li>
+                    &#60;li>
+                        &#60;div>
+                            &#60;div>
+                                &#60;h5>Banana&#60;/h5>
+                                &#60;p>Nullam dictum felis eu pede&#60;/p>
+                                &#60;div>
+                                    &#60;h6>230 HUF&#60;/h6>
+                                &#60;/div>
+                            &#60;/div>
+                            &#60;img src="" alt="" width="100px" />
+                        &#60;/div>
+                    &#60;/li>
+                &#60;/ul>
+            )
+        }
+        
+        export default Products;
+        </pre>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #bootstrap data-anchor="bootstrap">Bootstrap</h3>
+  <ul>
+    <pre>
+      npm install bootstrap
+    </pre>
+    <li>A telepítés után importálnunk kell a csomagot
+      <ul>
+        <ol>Globális használat
+          <ul>
+            <li>Az index.js fájlban tesszük</li>
+            <pre>
+              <b>// index.js</b>
+              import 'bootstrap/dist/css/bootstrap.min.css';
+            </pre>
+            <li>Az index.scss fájlban tesszük</li>
+            <pre>
+              <b>// index.scss</b>
+              @import '~bootstrap/scss/bootstrap';
+            </pre>
+          </ul>
+        </ol>
+        <li>Komponens használat
+          <ul>
+            <li>Abban a komponensben helyezzük el az importot, ahol használni szeretnénk</li>
+            <li>Nem a leghatékonyabb, mert a komponens újrarenderelésekor újra importálásra kerül q csomag</li>
+            <pre>
+              import 'bootstrap/dist/css/bootstrap.min.css';
+            </pre>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <pre>
+      <b>// index.js</b>
+      import React from 'react';
+      import ReactDOM from 'react-dom/client';
+      import './index.scss';
+      import App from './App';
+      import reportWebVitals from './reportWebVitals';
+
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(&#60;App />);
+
+      <b>// index.scss</b>
+      @import '~bootstrap/scss/bootstrap';
+
+      body &#123;
+        background: #00b09b;
+        background: -webkit-linear-gradient(to right, #00b09b, #96c93d);
+        background: linear-gradient(to right, #00b09b, #96c93d);
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .text-gray &#123;
+        color: #aaa;
+      }
+
+      <b>// App.js</b>
+      import './App.scss';
+      import Products from './components/Products';
+
+      function App() &#123;
+        return (&#60;div className='row'>
+          &#60;div className='col-lg-8 mx-auto'>
+            &#60;Products />
+          &#60;/div>
+        &#60;/div>);
+      }
+
+      export default App;
+
+      <b>// Products.js</b>
+      function Products() &#123;
+        return (
+            &#60;ul className="list-group shadow">
+                &#60;li className="list-group-item">
+                    &#60;div className="media align-items-lg-center flex-column flex-lg-row p3">
+                        &#60;div className="media-body order-2 order-lg-1">
+                            &#60;h5 className="mt-0 font-weight-bold mb-2">Fresh milk&#60;/h5>
+                            &#60;p className="font-italic text-muted mb-0 small">Donec quam felis, ultricies nec&#60;/p>
+                            &#60;div className="d-flex align-items-center justified-content-between mt-1">
+                                &#60;h6 className="font-weight-bold my-2">499 HUF&#60;/h6>
+                            &#60;/div>
+                        &#60;/div>
+                        &#60;img src="https://picsum.photos/100/100?blur=2&random=1" alt="" width="100px" className="ml-lg-5 order-1 order-lg-2" />
+                    &#60;/div>
+                &#60;/li>
+                &#60;li className="list-group-item">
+                    &#60;div className="media align-items-lg-center flex-column flex-lg-row p3">
+                        &#60;div className="media-body order-2 order-lg-1">
+                            &#60;h5 className="mt-0 font-weight-bold mb-2">Banana&#60;/h5>
+                            &#60;p className="font-italic text-muted mb-0 small">Nullam dictum felis eu pede&#60;/p>
+                            &#60;div className="d-flex align-items-center justified-content-between mt-1">
+                                &#60;h6 className="font-weight-bold my-2">230 HUF&#60;/h6>
+                            &#60;/div>
+                        &#60;/div>
+                        &#60;img src="https://picsum.photos/100/100?blur=2&random=2" alt="" width="100px" className="ml-lg-5 order-1 order-lg-2" />
+                    &#60;/div>
+                &#60;/li>
+            &#60;/ul>
+        )
+    }
+    
+    export default Products;
+    </pre>
+    <img src="../../assets/imgs/react_bootstrap.png" alt="" style="max-width: 600px;">
+  </ul>
+</div>
+
+<div>
+  <h3 #dynamiccontent data-anchor="dynamiccontent">Dynamic content</h3>
+  <ul>
+    <li>A JSX kódban a kapcsos zárójelek közé ( &#123;} ) bármilyen Javascript kifejezés beírható
+      <ul>
+        <li>Használhatunk akár függvényt is
+          <ul>
+            <li>Sőt, a függvényből visszatérhetünk akár JSX kóddal is, hiszen kompilálva lesz React elemként</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <pre>
+      <b>// Products.js (className-ek kiszedve)</b>
+      let productCount1 = 0;
+      let productCount2 = 0;
+
+      function displayFormattedProductCount() &#123;
+          const returnValue = &#60;small>zero&#60;/small>; // változó is kaphat JSX kifejez
+          // return productCount1 > 0 ? productCount1 : 'Zero';
+          // return productCount1 > 0 ? productCount1 : &#60;small>zero&#60;/small>;
+          return productCount1 > 0 ? productCount1 : returnValue;
+      }
+
+      function Products() &#123;
+          return (
+              &#60;ul>
+                  &#60;li>
+                      &#60;div>
+                          &#60;div>
+                              &#60;h5>Fresh milk&#60;/h5>
+                              &#60;p>Donec quam felis, ultricies nec&#60;/p>
+                              &#60;div>
+                                  &#60;h6>499 HUF&#60;/h6>
+                                  &#60;button className="btn btn-primary">-&#60;/button>
+                                  &#60;span>&#123;displayFormattedProductCount()}&#60;/span>
+                                  &#60;button className="btn btn-primary">+&#60;/button>
+                              &#60;/div>
+                          &#60;/div>
+                          &#60;img src="https://picsum.photos/100/100?blur=2&random=1" alt="" width="100px" />
+                      &#60;/div>
+                  &#60;/li>
+                  &#60;li>
+                      &#60;div>
+                          &#60;div>
+                              &#60;h5>Banana&#60;/h5>
+                              &#60;p>Nullam dictum felis eu pede&#60;/p>
+                              &#60;div>
+                                  &#60;h6>230 HUF&#60;/h6>
+                                  &#60;button className="btn btn-primary">-&#60;/button>
+                                  &#60;span>&#123;productCount2}&#60;/span>
+                                  &#60;button className="btn btn-primary">+&#60;/button>
+                              &#60;/div>
+                          &#60;/div>
+                          &#60;img src="https://picsum.photos/100/100?blur=2&random=2" alt="" width="100px" />
+                      &#60;/div>
+                  &#60;/li>
+              &#60;/ul>
+          )
+        }
+
+        export default Products;
+    </pre>
+  </ul>
+</div>
+
+<div>
+  <h3 #jsxattributes data-anchor="jsxattributes">JSX attributes</h3>
+  <ul>
+    <li>Az attribútum egy XML elem property</li>
+    <li>A HTML, és a JSX nagyon hasonlít az XML leíró nyelvre
+      <ul>
+        <li>Mindháromnak lehetnek attribútumai</li>
+        <li>Ilyen attribútum JSX esetében például a className, az src, stb.</li>
+      </ul>
+    </li>
+    <li>A legtöbb esetben a JSX attribútum nagyon hasonló a HTML attribútumhoz
+      <ul>
+        <li>Akad néhány, ami nem úgy működik, mint a HTML-ben</li>
+      </ul>
+    </li>
+    <li>src
+      <ul>
+        <li>Külső hivatkozások tekintetében nincs változás</li>
+        <pre>
+          &#60;img src="https://picsum.photos/100/100?blur=2&random=1" alt="" width="100px" />
+        </pre>
+        <li>Ugyanakkor a megszokott módon a lokális képek beszúrása nem működik</li>
+        <pre>
+          &#60;img src="../../assets/imgs/process.png" style="width: 100%;"> // rossz
+        </pre>
+        <li>A require metódusnak szükséges átadni az image path-jét, és az egészet kapcsos zárójelbee tenni
+          <ul>
+            <li>Ilyenkor a Webpack kezeli a képet build során</li>
+          </ul>
+        </li>
+        <pre>
+          &#60;img src=&#123;require('../../assets/imgs/process.png')} alt="" width="100px" height="100px">&#60;/img>
+
+          OR
+
+          &#60;img src=&#123;require('../../assets/imgs/process.png')} alt="" width="100px" height="100px" /img>
+
+          OR
+
+          let imageUrl = require('../../assets/imgs/process.png');
+          ...
+          &#60;img src=&#123;imageUrl} alt="" width="100px" height="100px" /img>
+        </pre>
+        <li>Modernebb megközelítés az import használata</li>
+        <pre>
+          import processImg from './assets/imgs/process.png';
+          ...
+          &#60;img src=&#123;processImg} alt="Process" width="100px" height="100px" />
+        </pre>
+        <li>Ha a képet a public mappába helyeztük, akkor közvetlenül hivatkozhatunk rá
+          <ul>
+            <li>Érdemes itt létrehozni egy assets mappát a különféle file-oknak</li>
+            <li>React esetén ez közvetlenül a build gyökérhez kerül</li>
+            <li>Az útvonal az /public mappából indul</li>
+            <li>Nincs szükség require() vagy dinamikus importálásra</li>
+            <pre>
+              &#60;img src="/assets/imgs/process.png" alt="Process" width="100px" height="100px" />
+            </pre>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li>style
+      <ul>
+        <li>Objektumot vár
+          <ul>
+            <li>Ezért szükséges a dupla kapcsos zárójel, a külső, hogy JS kifejezést fogunk írni, a belső pedig az
+              objektum</li>
+          </ul>
+        </li>
+        <pre>
+          &#60;div style=&#123; &#123; fontSize: 30, padding: 100 }}>&#60;/div>
+
+          OR
+
+          let styles = &#123;
+            padding: '0px 20px',
+            margin: 20, // a React hozzáilleszti a px-t
+            'font-size': 30, // a kötőjeles css szabályok idézőjelben írandóak
+            fontWeight: isActive ? 'bold' : 'normal', // feltételes stílus
+          }
+
+          &#60;div style=&#123;styles}>&#60;/div>
+        </pre>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #dynamicclasses data-anchor="dynamicclasses">Dynamic classes</h3>
+  <ul>
+    <pre>
+      <b>// Products.js</b>
+      let isAvailable1 = 'Available';
+      let badgeClass1 = 'badge ';
+      badgeClass1 += isAvailable1 === 'Available' ? 'bg-success' : 'bg-danger';
+
+      let isAvailable2 = 'Unavailable';
+      let badgeClass2 = 'badge ';
+      badgeClass2 += isAvailable2 === 'Available' ? 'bg-success' : 'bg-danger';
+
+      function Products() &#123;
+        return (
+          ...
+          &#60;div className=&#123;badgeClass1}>&#123;isAvailable1}&#60;/div>
+          ...
+          &#60;div className=&#123;badgeClass2}>&#123;isAvailable2}&#60;/div>
+          ...
+        )
+      }
+
+      export default Products;
+    </pre>
+    <li>Az isAvailable1 változó 'Available' értéket kap, míg az isAvailable2 változó 'Unavailable' értéket</li>
+    <li>Az isAvailable1 és isAvailable2 értékei alapján a megfelelő háttérszínű osztályok (bg-success vagy bg-danger)
+      kerülnek hozzáadásra a badgeClass1 és badgeClass2 változókhoz</li>
+    <li>Az első div zöld színű badge-t fog tartalmazni (mivel isAvailable1 === 'Available'), és az Available szöveget
+      jeleníti meg</li>
+    <li>A második div piros színű badge-t tartalmaz (mivel isAvailable2 === 'Unavailable'), és az Unavailable szöveget
+      jeleníti meg</li>
+  </ul>
+  <img src="../../assets/imgs/react_available.png" style="max-width: 500px">
+
+</div>
+
+<div>
+  <h3 #props data-anchor="props">Props</h3>
+  <ul>
+    <li>A prop-okat arra használjuk, hogy adatot adjunk át az egyik komponenstől a másiknak
+      <ul>
+        <li>Pontosabban a szülő komponenstől a gyerek komponensnek</li>
+      </ul>
+    </li>
+    <li>A szülő komponensben többször meghívva a gyereket, újra felhasználhatjuk ugyanazt a komponenst
+      <ul>
+        <pre>
+          <b>// App.js</b>
+          function App() &#123;
+            return (&#60;div className='row'>
+              &#60;div className='col-lg-8 mx-auto'>
+                &#60;Products />
+                &#60;Products />
+                &#60;Products />
+              &#60;/div>
+            &#60;/div>);
+          }
+        </pre>
+        <li>Ezzel még csak azt értük el, hogy 3x ugyanazt jelenítjük meg</li>
+      </ul>
+    </li>
+    <li>A szülő (app) komponensben létrehozunk 3 darab terméket</li>
+    <pre>
+      let products = [
+        &#123;
+          id: 1,
+          name: 'Fresh milk',
+          desc: 'Lorem ipsum dolor sit amet',
+          isAvailable: true,
+          image: 'https://picsum.photos/100/100?blur=2&random=1',
+          price: 400
+        },
+        &#123;
+          id: 2,
+          name: 'Fresh milk',
+          desc: 'Curabitur gravida arcu ac turpis',
+          isAvailable: true,
+          image: 'https://picsum.photos/100/100?blur=2&random=2',
+          price: 230
+        },
+        &#123;
+          id: 3,
+          name: 'Fresh milk',
+          desc: 'Sed ut perspiciatis unde omnis',
+          isAvailable: false,
+          image: 'https://picsum.photos/100/100?blur=2&random=3',
+          price: 355
+        }
+      ]
+    </pre>
+    <li>A products komponenst úgy használjuk, mint egy HTML elemet
+      <ul>
+        <li>Tehát adható neki attribútum</li>
+        <li>Odaadhatunk neki egy általunk választott/elnevezett attribútumot</li>
+        <pre>
+          <b>// App.js</b>
+          &#60;Products 
+                    id=&#123;products[0].id} // ezek az attribútumok jelennek meg a data propertyben
+                    name=&#123;products[0].name}
+                    desc=&#123;products[0].desc} 
+                    isAvailable=&#123;products[0].isAvailable}
+                    image=&#123;products[0].image}
+                    price=&#123;0products[0].price}
+            />
+          &#60;Products />
+          &#60;Products />
+
+          <b>// Products.js</b>
+          function Products(data) &#123; ... }
+        </pre>
+        <li>A products komponens nem más, mint egy függvény</li>
+        <li>Alapértelmezés szerint minden komponens függvény alapértelmezetten kap egy paramétert
+          <ul>
+            <li>Erről a React gondoskodik</li>
+            <li>Ez a paraméter egy objektum, ami tartalmazza az átadott attribútumokat</li>
+          </ul>
+        </li>
+        <li>A gyerek komponensben a paraméter objektumban benne lesznek azok a kulcs-érték párok, amiket a szülő
+          komponensben átadunk a gyereknek</li>
+        <li>Konvenció alapján a property neve 'props'</li>
+        <li>A kommenteket a JSX-en belül
+          <ul>
+            <li>A // szintaxis nem működik JSX-en belül, csak a JavaScript kódokban</li>
+            <pre>
+              &#60;div className="first">First&#60;/div>
+              &#123;/* &#60;div className="second">Second&#60;/div> */}
+            </pre>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <pre>
+      <b>// App.js</b>
+      function App() &#123;
+        return (&#60;div className='row'>
+          &#60;div className='col-lg-8 mx-auto'>
+            &#60;Products
+              id=&#123;products[0].id}
+              name=&#123;products[0].name}
+              desc=&#123;products[0].desc}
+              isAvailable=&#123;products[0].isAvailable}
+              image=&#123;products[0].image}
+              price=&#123;products[0].price}
+            />
+            &#60;Products
+              ...attribútumok egyesével, csak products[1]
+            />
+            &#60;Products
+            ...attribútumok egyesével, csak products[2]
+            />
+          &#60;/div>
+        &#60;/div>);
+      }
+
+      VAGY EGY ELEGÁNSABB MÓD
+
+      function App() &#123;
+        return (&#60;div className='row'>
+          &#60;div className='col-lg-8 mx-auto'>
+              &#123;products.map(product => (
+                &#60;Products
+                  key=&#123;product.id}
+                  id=&#123;product.id}
+                  name=&#123;product.name}
+                  desc=&#123;product.desc}
+                  isAvailable=&#123;product.isAvailable}
+                  image=&#123;product.image}
+                  price=&#123;product.price}
+                />
+              ))}
+          &#60;/div>
+        &#60;/div>);
+      }
+    </pre>
+    <li>A map() iteráló függvény segítségével végigmegyünk a products tömbön
+      <ul>
+        <li>Minden tömbelemnél keletkezik egy új products komponens, a megfelelő attribútumokkal</li>
+        <li>Mivel a React listát generál, szükség van egy egyedi kulcsra, hogy a React jobban tudja kezelni a
+          komponensek újrarenderelését (key)</li>
+      </ul>
+    </li>
+    <pre>
+      function Products(props) &#123;
+        return (
+          &#60;div>
+            &#60;h2>&#123;props.name}&#60;/h2>
+            &#60;p>&#123;props.desc}&#60;/p>
+            &#60;div className=&#123;`badge $&#123;props.isAvailable ? 'bg-success' : 'bg-danger'}`}>
+                &#123;props.isAvailable ? 'Available' : 'Unavailable'}
+            &#60;/div>
+            &#60;img src=&#123;props.image} alt=&#123;props.name} />
+            &#60;p>&#123;props.price} HUF&#60;/p>
+          &#60;/div>
+        );
+      }
+
+      VAGY LOKÁLIS VÁLTOZÓKKAL
+
+      function Products(props) &#123;
+        let badgeClass = 'badge';
+        badgeClass += props.isAvailable ? 'bg-success' : 'bg-danger';
+
+        return (
+          &#60;div>
+            &#60;h2>&#123;props.name}&#60;/h2>
+            &#60;p>&#123;props.desc}&#60;/p>
+            &#60;div className=&#123;badgeClass}}>
+                &#123;props.isAvailable ? 'Available' : 'Unavailable'}
+            &#60;/div>
+            &#60;img src=&#123;props.image} alt=&#123;props.name} />
+            &#60;p>&#123;props.price} HUF&#60;/p>
+          &#60;/div>
+        );
+      }
+
+      VAGY DESTRUCTORING-ET ALKALMAZVA
+
+      function Products(&#123; id, name, desc, isAvailable, image, price }) &#123;
+        return (
+          &#60;div>
+            &#60;h2>&#123;name}&#60;/h2>
+            &#60;p>&#123;desc}&#60;/p>
+            &#60;div className=&#123;`badge $&#123;isAvailable ? 'bg-success' : 'bg-danger'}`}>
+                &#123;isAvailable ? 'Available' : 'Unavailable'}
+            &#60;/div>
+            &#60;img src=&#123;image} alt=&#123;name} />
+            &#60;p>&#123;price} HUF&#60;/p>
+          &#60;/div>
+        );
+      }
+    </pre>
+  </ul>
+</div>
+
+<div>
+  <h3 #splittingcomponents data-anchor="splittingcomponents">Splitting components</h3>
+  <ul>
+    <li>A komponensek lehetőséget biztosítanak arra, hogy kisebb blokkokra szedjük szét az applikációnkat</li>
+    <pre>
+      <b>// App.js</b>
+      function App() &#123;
+        return (&#60;div className='row'>
+          &#60;div className='col-lg-8 mx-auto'>
+            &#60;ul className="list-group shadow">
+              &#123;products.map(product => (
+                &#60;Products
+                  key=&#123;product.id}
+                  id=&#123;product.id}
+                  name=&#123;product.name}
+                  desc=&#123;product.desc}
+                  isAvailable=&#123;product.isAvailable}
+                  image=&#123;product.image}
+                  price=&#123;product.price}
+                />
+              ))}
+            &#60;/ul>
+          &#60;/div>
+        &#60;/div>);
+      }
+      
+      export default App;
+
+      <b>// Products.js</b>
+      function Products(props) &#123;
+        console.log(props);
+        return (
+            &#60;li className="list-group-item">
+                &#60;div className="media align-items-lg-center flex-column flex-lg-row p3 d-flex justify-content-between">
+                    &#60;div className="media-body order-2 order-lg-1">
+                        &#60;h5 className="mt-0 font-weight-bold mb-2">
+                            &#123;props.name}
+                        &#60;/h5>
+                        &#60;p className="font-italic text-muted mb-0 small">
+                            &#123;props.desc}
+                        &#60;/p>
+                        &#60;ProductDetails
+                            price=&#123;props.price}
+                        />
+                        &#60;div className=&#123;`badge $&#123;props.isAvailable ? 'bg-success' : 'bg-danger'}`}>
+                            &#123;props.isAvailable ? 'Available' : 'Unavailable'}
+                        &#60;/div>
+                    &#60;/div>
+                    &#60;img src=&#123;props.image} alt="" width="100px" className="ml-lg-5 order-1 order-lg-2" />
+                    &#123;/*&#60;img src=&#123;require('' + props.image)} alt="" width="100px" className="ml-lg-5 order-1 order-lg-2" /> külső url, ha az image any típusú, akkor így alakítható string-é  */}
+                &#60;/div>
+            &#60;/li>
+          )
+      }
+      
+      export default Products;
+      
+      <b>// ProductDetails.js</b>
+      function ProductDetails(props) &#123;
+        return (
+            &#60;div className="d-flex align-items-center justified-content-between mt-1">
+                &#60;h6 className="font-weight-bold my-2 pe-2">
+                    &#123;props.price} HUF
+                &#60;/h6>
+                &#60;button className="btn btn-primary">-&#60;/button>
+                &#60;span>&#123;displayFormattedProductCount()}&#60;/span>
+                &#60;button className="btn btn-primary">+&#60;/button>
+            &#60;/div>
+        )
+    }
+    
+    export default ProductDetails;
+    </pre>
+    <li>Elérhetjük így, hogy egy komponens kevesebb JSX kódot tartalmazzon, így pedig könnyebben karbantartható</li>
+    <li>Nincs ökölszabály, hogy mekkora kódrészletet tartalmazzon egyetlen komponens</li>
+    <li>A komponensek pedig újra felhasználhatóak más komponensekben</li>
+  </ul>
+</div>
+
+<div>
+  <h3 #childrenprops data-anchor="childrenprops">Children props</h3>
+  <ul>
+    <li>A props.children egy speciális property a React komponensekben, amely automatikusan elérhető, amikor egy másik
+      komponenst belső tartalommal hívunk meg
+      <ul>
+        <li>A JSX-ben egy komponens nyitó- és záró tag-jei közé helyezett tartalom a children property-ben érhető el
+        </li>
+        <li>Self-closing tag-et használva a props.children undefined</li>
+        <pre>
+          &#60;ProductDetails />
+        </pre>
+      </ul>
+      <ol>
+        <li>Ha stringet adunk át
+          <ul>
+            <li>A props.children egyszerű string lesz</li>
+          </ul>
+        </li>
+        <li>Ha JXS-et adunk át
+          <ul>
+            <li>A props.children egy JSX-objektum lesz</li>
+            <pre>
+              const reactElement = &#123;
+                $$typeof: Symbol('react.element'),
+                key: null,
+                props: &#123;
+                  children: 'Hello!',
+                },
+                ref: null,
+                type: 'p',
+                _owner: &#123;
+                  tag: 0,
+                  key: '3',
+                  stateNode: null,
+                  elementType: Function
+                  type: Function
+                },
+                _store: &#123;
+                  validated: true,
+                },
+                _self: undefined,
+                _source: &#123;
+                  fileName:
+                    '/Users/user/Downloads/angular/practice/alapok/src/react/react-app/course/src/components/Products.js',
+                  lineNumber: 21,
+                  columnNumber: 25,
+                },
+              };              
+            </pre>
+          </ul>
+        </li>
+        <li>Ha több JSX-et adunk át
+          <ul>
+            <li>A props.children egy tömb lesz, amely tartalmazza a JSX-objektumokat</li>
+            <pre>
+              const elements = [
+              &#123;
+                $$typeof: Symbol('react.element'),
+                key: null,
+                props: &#123;
+                  children: 'Hello!',
+                },
+                ref: null,
+                type: 'p',
+                _owner: &#123;
+                  tag: 0,
+                  key: '3',
+                  stateNode: null,
+                  elementType: Function, // itt egy funkció referenciája van
+                  type: Function,        // itt egy másik funkció referenciája van
+                  // ...egyéb FiberNode tulajdonságok
+                },
+                _store: &#123;
+                  validated: true,
+                },
+                _self: undefined,
+                _source: &#123;
+                  fileName:
+                    '/Users/user/Downloads/angular/practice/alapok/src/react/react-app/course/src/components/Products.js',
+                  lineNumber: 21,
+                  columnNumber: 25,
+                },
+              },
+              &#123;
+                $$typeof: Symbol('react.element'),
+                key: null,
+                props: &#123;
+                  children: 'Szia!',
+                },
+                ref: null,
+                type: 'p',
+                _owner: &#123;
+                  tag: 0,
+                  key: '3',
+                  stateNode: null,
+                  elementType: Function
+                  type: Function
+                },
+                _store: &#123;
+                  validated: true,
+                },
+                _self: undefined,
+                _source: &#123;
+                  fileName:
+                    '/Users/user/Downloads/angular/practice/alapok/src/react/react-app/course/src/components/Products.js',
+                  lineNumber: 22,
+                  columnNumber: 25,
+                },
+              },
+            ];
+            </pre>
+          </ul>
+        </li>
+      </ol>
+    </li>
+    <pre>
+      <b>// Products.js</b>
+      function ProductDetails(props) &#123;
+        console.log(props.children);
+        return (
+            &#60;div className="d-flex align-items-center justified-content-between mt-1">
+                &#60;h6 className="font-weight-bold my-2 pe-2">
+                    &#123;props.price} HUF
+                &#60;/h6>
+                &#60;Button>-&#60;/Button>
+                &#60;span>&#123;displayFormattedProductCount()}&#60;/span>
+                &#60;Button>+&#60;/Button>
+                &#123;props.children}
+            &#60;/div>
+        )
+    }
+    
+    export default ProductDetails;
+
+    <b>// Button.js</b>
+    function Button(props) &#123;
+      return &#60;button className="btn btn-primary">&#123;props.children}&#60;/button>
+    }
+    
+    export default Button;
+    </pre>
+    <li>Komponens attribútumnak megadhatjuk akár a children-t is
+      <ul>
+        <li>Nem kerül alkalmazásra, amennyiben a nyitó- és záró tag-ek közé kódot helyeztünk el</li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #jsxsyntax data-anchor="jsxsyntax">JSX syntax</h3>
+  <ul>
+    <li>A 2 fő package a package.json fájlban a react, és a react-dom
+      <ul>
+        <li>A React-ot és a ReactDOM-ot az index.js fájlban használjuk</li>
+        <pre>
+          import React from 'react'; // csak a korábbi React verziókban szükséges beimportálni
+          import ReactDOM from 'react-dom/client';
+
+          const root = ReactDOM.createRoot(document.getElementById('root'));
+          root.render(&#60;App />);
+        </pre>
+        <li>Az első sort ki is törölhetjük, nem használjuk, és nélküle is fog működni az alkalmazás</li>
+      </ul>
+    </li>
+    <li>A JSX kód a projekt kompilálásakor átkonvertálódik JavaScript kóddá
+      <ul>
+        <li>Ekkor meghívódik a createElement metódus, ami a React objektumban van jelen</li>
+        <pre>
+          function Numbers(props) &#123;
+            return (
+              &#60;ul>
+                &#60;li>One&#60;/li> 
+                &#60;li>Two&#60;/li> 
+              &#60;/ul>
+            )
+          }
+        </pre>
+        <li>A háttérben a React.createElement() hívódik meg
+          <ul>
+            <li>Direkt módon nem használjuk a React objektumot</li>
+            <li>Az újabb verziókba implicit módon be van importálva</li>
+            <li>Ezért láthatjuk minden korábbi verziójú komponens fájlban az importálást
+              <ul>
+                <li>import React from 'react';</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>Nézzük meg, hogy miképp lehetne egy komponenst átalakítani (JSX helyett Javascriptet használunk)</li>
+        <pre>
+          function ProductDetails(props) &#123;
+            return (
+                &#60;div className="d-flex align-items-center justified-content-between mt-1">
+                    &#60;h6 className="font-weight-bold my-2 pe-2">
+                      &#123;props.price} HUF
+                    &#60;/h6>
+                    &#60;Button>-&#60;/Button>
+                    &#60;span>&#123;displayFormattedProductCount()}&#60;/span>
+                    &#60;Button>+&#60;/Button>
+                    &#123;props.children}
+                &#60;/div>
+            )
+          }
+
+          function ProductDetails(props) &#123;
+              return React.createElement('div',  className: 'd-flex align-items-center justified-content-between mt-1' },
+                React.createElement('h6', &#123; className: 'font-weight-bold my-2 pe-2' }, props.price),
+                React.createElement(Button, &#123;}, '-'),
+                React.createElement('span', &#123;}, displayFormattedProductCount()),
+                React.createElement(Button, &#123;}, '+'),
+                props.children
+          }
+        </pre>
+        <li>A createElement első argomentuma a tag, a második a tag attribútumai, a harmadik pedig a tartalma, ami a
+          nyitó- és záró tag-ek között található</li>
+        <li>Itt is wrap-eltük az elemeket egy div-be
+          <ul>
+            <li>A return egy értéket tud visszaadni</li>
+          </ul>
+        </li>
+        <li>A JSX-et könnyebb megérteni, és használni</li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #eventsandstates data-anchor="eventsandstates">Events and states</h3>
+  <ul>
+    <li>Event handler attribútumot használunk</li>
+    <pre>
+      function btnEventHandler() &#123;
+        console.log('click');
+      }
+      
+      function Button(props) &#123;
+          return (
+              &#60;button onClick=&#123;btnEventHandler}
+                  onMouseOver=&#123;btnEventHandler}
+                  className="btn btn-primary">
+                  &#123;props.children}
+              &#60;/button>
+          )
+      }
+      
+      export default Button;
+    </pre>
+    <li>Camel case-t használunk, azaz az event-eknél az on mindig kisbetűs, a többi szó pedig nagybetűs</li>
+    <li>Bármikor esemény történik, a event attribútumba írt JavaScript kifejezés lefut
+      <ul>
+        <li>A Javascriptet kapcsos zárójelek közé írjuk</li>
+        <li>Amennyiben függvényt hívunk, nem rakunk mögé zárójelet, mert akkor azonnal meghívódik a függvény, ahogy
+          betöltődik az oldal
+          <ul>
+            <li>A kapcsos zárójelben csak referenciát adunk át</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li>Amennyiben custom komponensre rakunk event attribútumot, nem fog működni
+      <ul>
+        <li>Legalábbis nem, mint event handler</li>
+        <li>A komponens nem más, mint egy függvény</li>
+        <li>Amennyiben mégis megtesszük, úgy a props objektumban készítunk egy property-t</li>
+        <pre>
+          <b>// ProductDetails.js</b>
+          let productCount = 0;
+          
+          function ProductDetails(props) &#123;
+            let decrementCounter = function () &#123;
+              productCount--;
+            }
+            return (
+              &#60;Button onClick=&#123;decrementCounter}>-&#60;/Button>
+            )
+          }
+
+          <b>// Button.js</b>
+          function Button(props) &#123;
+            console.log(props);
+            return (
+                &#60;button
+                    onClick=&#123;btnEventHandler}
+                    className="btn btn-primary">
+                    &#123;props.children}
+                &#60;/button>
+            )
+         }
+
+         <b>// console.log()</b>
+         &#123;
+          "children": "-",
+          "onClick": &#123; // valóban itt van property-ként
+            "name": "decreaseCounter",
+            "length": 0,
+            "prototype": &#123;},
+            "location": "ProductDetails.js:13",
+            "scopes": [
+              &#123;
+                "type": "Closure",
+                ...
+              },
+              &#123;
+                "type": "Global",
+                ...
+              }
+            ]
+          }
+        }        
+        </pre>
+      </ul>
+    </li>
+    <li>Nézzük meg, hogy lehetne mégis megoldani, hogy a custom komponensnek legyen hatása a szülőre
+      <ul>
+        <pre>
+          <b>// ProductDetails.js</b>
+          let productCount = 0;
+
+          function displayFormattedProductCount() &#123;
+            const returnValue = &#60;small>zero&#60;/small>; // változó is kaphat JSX kifejez
+            return productCount > 0 ? productCount : returnValue;
+          }
+
+          function ProductDetails(props) &#123;
+            let decrementCounter = function () &#123; // callback function
+                productCount--;
+                console.log('decrease');
+            }
+        
+            let incrementCounter = function () &#123; // callback function
+                productCount++;
+                console.log('increase');
+            }
+        
+            return (
+                &#60;div className="d-flex align-items-center justified-content-between mt-1">
+                    &#60;h6 className="font-weight-bold my-2 pe-2">
+                        &#123;props.price} HUF
+                    &#60;/h6>
+                    &#60;Button eventHandler=&#123;decrementCounter}>-&#60;/Button>
+                    &#60;span>&#123;displayFormattedProductCount()}&#60;/span>
+                    &#60;Button eventHandler=&#123;incrementCounter}>+&#60;/Button>
+                    &#123;props.children}
+                &#60;/div>
+            )
+          }
+        </pre>
+        <li>Az eventHandler property bekerül a custom komponens props objektumába, és a decrementCounter függvény
+          referenciáját tartalmazza</li>
+        <li>Átadjuk az onClick event handler attribútumnak a szülőből a custom komponensbe a függvény referenciákat</li>
+        <li>Ezzel így a productCount komponensre glibális változót változtatjuk, és az összes + és - gomb egyetlen
+          értéket változtat</li>
+        <li>Ezért a ProductDetails függvényben kell deklarálnunk a productCount változót</li>
+        <pre>
+          function ProductDetails(props) &#123;
+            let productCount = 0;
+
+            function displayFormattedProductCount() &#123;
+              const returnValue = &#60;small>zero&#60;/small>; // változó is kaphat JSX kifejez
+              return productCount > 0 ? productCount : returnValue;
+            }
+
+            ...
+          }
+        </pre>
+        <li>Ezen a ponton még mindig zero jelenik meg a - és + gombok között a click eventek lefutásakor
+          <ul>
+            <li>A gombok nem fogják újra meghívni a ProductDetails komponenst/függvényt</li>
+            <li>A productCount változó megváltozik, de a JSX nem fog újra visszatérni</li>
+            <li>A counter-ek mindig zero állapotban maradnak</li>
+            <li>Alapértelmezetten a React ignorálja a változók megváltozását</li>
+          </ul>
+        </li>
+        <li>Ahhoz, hogy újrarenderelés történjen, a useState függvényt szükséges használnunk
+          <ul>
+            <li>React hook</li>
+            <li>Állapotot biztosít a funkcionális komponensekben
+              <ul>
+                <li>a React állapotot tartja fenn két új renderelés között</li>
+              </ul>
+            </li>
+            <li>Kizárólag komponens függvényben hívhatjuk meg</li>
+            <li>Érdemes a React DevTools bővítményt feltelepíteni a böngészőbe</li>
+            <li>Az osztályalapú komponensekben használt állapotkezelést váltja ki, így nincs szükség this.setState, vagy
+              más osztálymódszerek használatára</li>
+            <pre>
+              <b>// ProductDetails.js</b>
+              import React, &#123;useState} from 'react'; // named import
+
+              function ProductDetails(props) &#123;
+                useState(0);
+              }
+            </pre>
+            <li>A useState első argomentuma a kiindulási érték
+              <ul>
+                <li>A kezdőértéke lehet szám, string, objektum, vagy akár null</li>
+              </ul>
+            </li>
+            <li>Kételemű tömbbel tér vissza
+              <ul>
+                <li>Első elem: Az aktuális állapot</li>
+                <li>Máspodik elem: Egy függvény, amellyel frissíthetjük az állapotot</li>
+              </ul>
+            </li>
+            <li>A kételemű tömböt array destructuring-gal szokás két változóba bekötni</li>
+            <pre>
+              <b>// Products.js</b>
+              ...
+              function Products(props) &#123;
+                return (
+                  ...
+                  &#60;ProductDetails
+                        price=&#123;props.price}>
+                            ID: &#123;JSON.stringify(props.id)} // így lehet debugolni, ha már nincs json pipe
+                  &#60;/ProductDetails>
+                  ...
+                )
+              }
+
+              <b>// ProductDetails.js</b>
+              function ProductDetails(props) &#123;
+                let [productCount, updateCount] = useState(0);
+
+                ...
+
+                let decrementCount = function () &#123;
+                  updateCount(--productCount);
+                  // updateCount(productCount--); // post decrement operátor, a változáshoz két kattintás szükséges
+                }
+            
+                let incrementCount = function () &#123;
+                    updateCount(++productCount);
+                    // updateCount(productCount++); // post increment operátor, a változáshoz két kattintás szükséges
+                }
+
+                ...
+
+                return (
+                    ...
+                        &#60;h6 className="font-weight-bold my-2 pe-2">
+                            &#132;props.price} HUF
+                        &#60;/h6>
+                        &#60;Button eventHandler=&#123;decrementCount}>-&#60;/Button>
+                        &#60;span>&#123;displayFormattedProductCount()}&#60;/span>
+                        &#60;Button eventHandler=&#123;incrementCount}>+&#60;/Button>
+                        &#123;props.children} // itt jelenik meg a &#123;JSON.stringify(props.id)}
+                    ...
+                )
+              }
+            </pre>
+            <li>Bármikor, amikor megváltozik a productCount értéke, a komponens függvény újra lefut, és az UI frissül
+            </li>
+            <img src="assets/imgs/react_counter.png" style="width: 100%;">
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li>Tehát a useState állapotot/értéket regisztrál a komponensben
+      <ul>
+        <li>Pontosabban egy kifejezett komponens példányban</li>
+        <li>Frissítésre pedig természetesen csak az adott példány állapota változik meg</li>
+        <li>Az egyes state-ek teljesen függetlenek egymástól</li>
+        <li>Ugyan a komponens függvény újrainicializálódik, de a state kezdőértékét, amit mi adtunk meg, csak az első
+          alkalommal veszi figyelembe a React
+          <ul>
+            <li>Detektálja, hogy már korábban történt inicializálás, és a frissített értéket használja</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li>useState nélkül maximum statikus oldalt tudnánk létrehozni, holott a React-ot dinamikus weboldalak
+      készítésére találták ki</li>
+  </ul>
+</div>
+
+<div>
+  <h3 #forms data-anchor="forms">Forms</h3>
+  <h5 #codereformatting data-anchor="codereformatting">Code reformatting</h5>
+  <ul>
+    <li>Az összetartozó komponenseket az áttekinthetőség érdekében érdemes külön mappákban elhelyezni</li>
+    <li>Az app.js-t (komponenst) lehetőség szerint hagyjuk a lehető legüresebben</li>
+    <li>Alább látható az átformált, teljes eddigi kód</li>
+    <pre>
+      App.js
+      components/
+      ├── ProductList/
+          ├── Button.js
+          ├── ProductDetails.js
+          ├── ProductList.js
+          ├── Product.js
+
+      <b>// App.js</b>
+      function App() &#123;
+        return (
+          &#60;ProductList />
+        );
+      }
+      
+      export default App;
+
+      <b>// ProductList.js</b>
+      let products = [
+          &#123;
+              id: 1,
+              name: 'Fresh milk',
+              desc: 'Lorem ipsum dolor sit amet',
+              isAvailable: true,
+              image: 'https://picsum.photos/100/100?blur=2&random=1',
+              price: 400
+          },
+          &#123;
+              id: 2,
+              name: 'Banana',
+              desc: 'Curabitur gravida arcu ac turpis',
+              isAvailable: true,
+              image: 'https://picsum.photos/100/100?blur=2&random=2',
+              price: 230
+          },
+          &#123;
+              id: 3,
+              name: 'Onion',
+              desc: 'Sed ut perspiciatis unde omnis',
+              isAvailable: false,
+              image: 'https://picsum.photos/100/100?blur=2&random=3',
+              price: 355
+          }
+      ]
+
+      function ProductList(props) &#123;
+          return (
+              &#60;div className='row'>
+                  &#60;div className='col-lg-8 mx-auto'>
+                      &#60;ul className="list-group shadow">
+                          &#123;products.map(product => (
+                              &#60;Products
+                                  key=&#123;product.id}
+                                  id=&#123;product.id}
+                                  name=&#123;product.name}
+                                  desc=&#123;product.desc}
+                                  isAvailable=&#123;product.isAvailable}
+                                  image=&#123;product.image}
+                                  price=&#123;product.price}
+                              />
+                          ))}
+                      &#60;/ul>
+                  &#60;/div>
+              &#60;/div>
+          )
+      }
+
+      export default ProductList;
+
+      <b>// Product.js</b>
+      function Products(props) &#123;
+        return (
+            &#60;li className="list-group-item">
+                &#60;div className="media align-items-lg-center flex-column flex-lg-row p3 d-flex justify-content-between">
+                    &#60;div className="media-body order-2 order-lg-1">
+                        &#60;h5 className="mt-0 font-weight-bold mb-2">
+                            &#123;props.name}
+                        &#60;/h5>
+                        &#60;p className="font-italic text-muted mb-0 small">
+                            &#123;props.desc}
+                        &#60;/p>
+                        &#60;ProductDetails
+                            price=&#123;props.price}>
+                                ID: &#123;JSON.stringify(props.id)}
+                        &#60;/ProductDetails>
+                        &#60;div className=&#123;`badge $&#123;props.isAvailable ? 'bg-success' : 'bg-danger'}`}>
+                            &#123;props.isAvailable ? 'Available' : 'Unavailable'}
+                        &#60;/div>
+                    &#60;/div>
+                    &#60;img src=&#123;props.image} alt="" width="100px" className="ml-lg-5 order-1 order-lg-2" />
+                    &#123;/*&#60;img src=&#123;require('' + props.image)} alt="" width="100px" className="ml-lg-5 order-1 order-lg-2" /> külső url, ha az image any típusú, akkor így alakítható string-é  */}
+                &#60;/div>
+            &#60;/li>
+          )
+      }
+    
+      export default Products;
+
+      <b>// ProductDetails.js</b>
+      function ProductDetails(props) &#123;
+        let [productCount, updateCount] = useState(0);
+    
+        function displayFormattedProductCount() &#123;
+            const returnValue = &#60;small>zero&#60;/small>; // változó is kaphat JSX kifejez
+            // return productCount1 > 0 ? productCount1 : 'Zero';
+            // return productCount1 > 0 ? productCount1 : &#60;small>zero&#60;/small>;
+            return productCount > 0 ? productCount : returnValue;
+        }
+    
+        let decrementCount = function () &#123;
+            updateCount(--productCount);
+            // updateCount(productCount--); // post decrement operátor, a változáshoz két kattintás szükséges
+        }
+    
+        let incrementCount = function () &#123;
+            updateCount(++productCount);
+            // updateCount(productCount++); // post increment operátor, a változáshoz két kattintás szükséges
+        }
+    
+        return (
+            &#60;div className="d-flex align-items-center justified-content-between mt-1">
+                &#60;h6 className="font-weight-bold my-2 pe-2">
+                    &#123;props.price} HUF
+                &#60;/h6>
+                &#60;Button eventHandler=&#123;decrementCount}>-&#60;/Button>
+                &#60;span>&#123;displayFormattedProductCount()}&#60;/span>
+                &#60;Button eventHandler=&#123;incrementCount}>+&#60;/Button>
+                &#123;props.children}
+            &#60;/div>
+        )
+      }
+      
+      export default ProductDetails;
+
+      <b>// Button.js</b>
+      function Button(props) &#123;
+        return (
+            &#60;button
+                onClick=&#123;props.eventHandler}
+                className="btn btn-primary">
+                &#123;props.children}
+            &#60;/button>
+        )
+      }
+      
+      export default Button;
+    </pre>
+  </ul>
+  <br>
+  <h5 #skeleton data-anchor="skeleton">Skeleton</h5>
+  <ul>
+    <li>A termék hozzáadásának kezdeti lépései</li>
+    <pre>
+      App.js
+      components/
+      ├── ProductList/
+          ├── Button.js
+          ├── ProductDetails.js
+          ├── ProductList.js
+          ├── Product.js
+      ├── CreateProduct/
+          ├── CreateProduct.js
+          ├── ProductForm.js
+
+      <b>// App.js</b>
+      function App() &#123;
+        return (
+          &#60;div>
+            &#60;CreateProduct />
+            &#60;ProductList />
+          &#60;/div>
+        );
+      }
+
+      <b>// CreateProduct.js</b>
+      function CreateProduct(props) &#123;
+        return (
+            &#60;div className="row">
+                &#60;div className="col-lg-8 mx-auto list-group shadow" style=&#123; &#123; backgroundColor: 'white', marginBottom: '30px', padding: '10px' }}>
+                    &#60;Form />
+                &#60;/div>
+            &#60;/div>
+        )
+      }
+      
+      export default CreateProduct;
+      
+      <b>// ProductForm.js</b>
+      function ProductForm() &#123;
+        return (
+            &#60;form className="row g-3">
+                &#60;div className="col-md-6">
+                    &#60;label for="name">Product Name&#60;/label>
+                    &#60;input type="text"
+                        className="form-control"
+                        id="name"
+                        placeholder="Product Name" />
+                &#60;/div>
+                &#60;div className="col-md-6">
+                    &#60;label for="price">Product Price&#60;/label>
+                    &#60;input type="number"
+                        min="0.01" step="0.01"
+                        className="form-control"
+                        id="price"
+                        placeholder="Product Price" />
+                &#60;/div>
+    
+                &#60;div className="form-group">
+                    &#60;label for="description">Product Description&#60;/label>
+                    &#60;input type="text"
+                        className="form-control"
+                        id="description"
+                        placeholder="Product Description" />
+                &#60;/div>
+    
+                &#60;div class="form-check form-switch">
+                    &#60;input class="form-check-input" type="checkbox" role="switch" id="isAvailable" />
+                    &#60;label class="form-check-label" for="isAvailable">Is product available in stock?&#60;/label>
+                &#60;/div>
+    
+                &#60;div className="form-group">
+                    &#60;label for="select-image">Select product image&#60;/label>
+                    &#60;input type="file" className="form-control" id="select-image" />
+                &#60;/div>
+    
+    
+                &#60;button type="submit" className="btn btn-primary">Add Product&#60;/button>
+            &#60;/form>
+        )
+      }
+      
+      export default ProductForm;
+    </pre>
+    <img src="assets/imgs/react_form_basics.png" style="width: 100%;">
+    <br>
+    <li>Ezzel előállt egy váz, amivel elkezdhetünk dolgozni</li>
+    <li>JSX-ben a for attribútum helyett a htmlFor-t kell használni
+      <ul>
+        <li>A fenti kódban nem így szerepel</li>
+      </ul>
+    </li>
+  </ul>
+  <br>
+  <h5 #eventlistener data-anchor="eventlistener">Event listener</h5>
+  <ul>
+    <li>Ahhoz, hogy begyűjtsük a felhasználó által bevitt adatokat, az input elemekre event listener-eket szükséges
+      helyeznünk
+      <ul>
+        <li>onInput
+          <ul>
+            <li>Minden billentyűleütésnél lefut</li>
+            <li>Csak input elemeken használható</li>
+            <li>A natív input esemény React-beli megfelelője</li>
+            <pre>
+              &#60;input
+                  type="text"
+                  value=&#123;value}
+                  onInput=&#123;(e) => setValue(e.target.value)} // anonymous inlibe function
+              />
+            </pre>
+          </ul>
+        </li>
+        <li>onChange
+          <ul>
+            <li>Minden billentyűleütésnél lefut</li>
+            <li>Nem csak input elemeken használható
+              <ul>
+                <li>Dropdown, checkbox, rádiógomb, vagy egyéb más elemeken is működik</li>
+                <li>Más típusú inputoknál az esemény akkor váltódik ki, amikor az érték megváltozik</li>
+              </ul>
+            </li>
+            <pre>
+              &#60;input
+                type="text"
+                value=&#123;value}
+                onChange=&#123;(e) => setValue(e.target.value)} // anonymous inlibe function
+              />
+            </pre>
+          </ul>
+        </li>
+        <br>
+        <table style="border-collapse: collapse; width: 100%;">
+          <thead>
+            <tr>
+              <th></th>
+              <th>onChange</th>
+              <th>onInput</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Mikor fut le?</strong></td>
+              <td>A változás befejeztével (karakter hozzáadása után, React állapot frissítésekor)</td>
+              <td>Azonnal, amikor az érték változik</td>
+            </tr>
+            <tr>
+              <td><strong>Sebesség</strong></td>
+              <td>Lassabb, mert figyelni kell a React állapotát is</td>
+              <td>Gyorsabb, mert közvetlenül reagál az input eseményre</td>
+            </tr>
+            <tr>
+              <td><strong>Használat</strong></td>
+              <td>Leggyakrabban form-validációkhoz vagy állapot kezeléshez</td>
+              <td>Olyan esetekben, amikor azonnali visszacsatolás kell (pl. valós idejű keresőmező)</td>
+            </tr>
+          </tbody>
+        </table>
+      </ul>
+    </li>
+    <br>
+    <li>Event listenerrel pedig a következőképp dolgozhatunk</li>
+    <pre>
+      function ProductForm() &#123;
+
+        function nameInputHandler(event) &#123;
+          console.log("event: ", event);
+        }
+
+        return (
+          &#60;div className="col-md-6">
+            &#60;label htmlFor="name">Product Name&#60;/label>
+            &#60;input type="text"
+                className="form-control"
+                id="name"
+                placeholder="Product Name"
+                onChange=&#123;nameInputHandler}
+            />
+          &#60;/div>
+        )
+      }
+    </pre>
+    <li>Vanilla Javascript-et tekintve olyan, mintha kiszelektálnánk egy ID-t, és egy change event listenert
+      definiálnánk az input mezőnek</li>
+    <pre>
+      document.getElementById('name').addEventListener('change', (event) => &#123;
+        ...
+      });
+    </pre>
+    <li>Ahányszor lefut az onChange, a 'nameInputHandler' függvény megkapja az event objektumot argomentumként</li>
+  </ul>
+  <br>
+  <h5 #multiplestates data-anchor="multiplestates">Multiple states</h5>
+  <ul>
+    <li>Több állapotot is rögzíthetünk a komponensünkben</li>
+    <pre>
+      import React, &#123;useState} from 'react';
+
+      function ProductForm() &#123;
+          let [name, updateName] = useState('');
+          let [price, priceName] = useState('');
+          
+          function nameInputHandler(event) &#123;
+              updateName(event.target.value);
+          }
+
+          function priceInputHandler(event) &#123;
+              priceName(event.target.value);
+          }
+
+          /* function availableInputHandler(event) &#123;
+              priceName(event.target.checked); // value helyett checked 
+          } */
+
+          return (
+            &#60;form className="row g-3">
+              &#60;div className="col-md-6">
+                  &#60;label htmlFor="name">Product Name&#60;/label>
+                  &#60;input type="text"
+                      className="form-control"
+                      id="name"
+                      placeholder="Product Name"
+                      onChange=&#123;nameInputHandler}
+                  />
+              &#60;/div>
+              &#60;div className="col-md-6">
+                  &#60;label htmlFor="price">Product Price&#60;/label>
+                  &#60;input type="number"
+                      min="0.01" step="0.01"
+                      className="form-control"
+                      id="price"
+                      placeholder="Product Price"
+                      onChange=&#123;priceInputHandler}
+                      />
+              &#60;/div>
+            &#60;/form>
+          )
+      }
+    </pre>
+    <li>Így a két formban lévő input mező értékét eltároljuk valahol a memóriában, amiket később akár fel is tudunk
+      használni</li>
+    <li>A valóságban a külön szedett állapotokkal gyakrabban találkozni</li>
+    <li>Több state helyett egyetlen state-et is tudunk használni
+      <ul>
+        <li>A kezdő értéknek ebben az esetben mindenképp objektumnak kell lennie</li>
+        <pre>
+          let [states, updateStates] = useState(&#123;
+              name: '',
+              price: 0,
+              desc: '',
+              available: '',
+              url: ''
+          });
+
+          function priceInputHandler(event) &#123;
+            // updateStates(&#123; price: event.target.value }); // így még mindig biztosítani szükséges, hogy a többi kulcs-érték pár nem veszik el
+            updateStates(&#123;
+              ...states,
+              price: event.target.value
+            });
+          }
+
+          return (
+            &#60;form className="row g-3">
+                &#123;JSON.stringify(states)} &#123; /* debug-képp */}
+
+                &#60;div className="col-md-6">
+                    &#60;label htmlFor="name">Product Name&#60;/label>
+                    &#60;input type="text"
+                        className="form-control"
+                        id="name"
+                        placeholder="Product Name"
+                        onChange=&#123;nameInputHandler}
+                    />
+                &#60;/div>
+                &#60;div className="col-md-6">
+                    &#60;label htmlFor="price">Product Price&#60;/label>
+                    &#60;input type="number"
+                        min="0.01" step="0.01"
+                        className="form-control"
+                        id="price"
+                        placeholder="Product Price"
+                        onChange=&#123;priceInputHandler}
+                    />
+                &#60;/div>
+            &#60;/form>
+          )
+        </pre>
+        <li>Az event.target.value az input mező értékét jelöli</li>
+        <li>A spread operator (...) segítségével átmásoljuk a meglévő állapotot (states), és csak a price kulcsot
+          frissítjük az új értékkel
+          <ul>
+            <li>A spread operátor kibontja az objektumot</li>
+            <pre>
+              <b>// array</b>
+              const parts = ["shoulders", "knees"];
+              const lyrics = ["head", ...parts, "and", "toes"];
+
+              //  ["head", "shoulders", "knees", "and", "toes"]
+
+              <b>// object</b>
+              const person = &#123; name: 'John', age: 30 };
+              const updatedPerson = &#123; ...person, city: 'New York' };
+
+              // &#123; name: 'John', age: 30, city: 'New York' }
+            </pre>
+          </ul>
+        </li>
+        <li>Ilyen módon működik az update, de egyrészt nem best practice, másrészt akadnak esetek, amikor még sem a
+          kívánt eredményt kapjuk
+          <ul>
+            <li>Abból ered mindez, hogy az előző állapotra hagyatkozunk</li>
+            <li>A teljes objektumot frissítjük</li>
+            <pre>
+              updateStates(&#123;
+                ...states,
+                price: event.target.value
+              });
+            </pre>
+            <li>Holott csak a name property-t szeretnénk frissíteni</li>
+            <li>Ehelyett callback function-t is adhatunk az update függvényünknek
+              <ul>
+                <li>Argomentumként a frissítő függvényünk a korábbi state-et kapja meg</li>
+                <li>Majd visszatérhetünk a spread operátor segítségével a függvényből</li>
+                <pre>
+                  function priceInputHandler(event) &#123;
+                    updateStates((prevState) => &#123;
+                        return &#123; ...prevState, price: event.target.value }
+                    })
+                  }
+                </pre>
+                <li>Ezt a megközelítést szükséges használni, amennyiben függünk az előző állapottól</li>
+                <li>A React beidőzíti a state változásokat, és előfordulhat, sok state egyszerre változtatása esetén,
+                  hogy nem a megfelelő állapotra támaszkodunk, amennyiben nem callback függvénnyel használjuk a
+                  frissítést</li>
+                <li>Callback function használatakor a React garantálja, hogy a legutolsó érték kerül számításba</li>
+                <li>Mindez primitív értékek használatára is igaz, szóval amikor nem objektumbeli értéket frissítünk</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>Alább látható egy potenciális megoldás a különféle mezőtípusok egységesebb kezelésére
+          <ul>
+            <pre>
+              import React, &#123; useState } from 'react';
+
+              function ProductForm() &#123;
+                let [states, updateStates] = useState(&#123; // kezdeti állapot inicializálása
+                    name: '',
+                    price: 0,
+                    desc: '',
+                    available: false,
+                    imgUrl: ''
+                });
+
+                function handleChange(event) &#123;
+                  let change;
+                  let &#123; name, value, checked, type } = event.target;
+          
+                  switch (type) &#123;
+                      case 'text':
+                          change = value;
+                          break;
+                      case 'number':
+                          change = value;
+                          break;
+                      case 'checkbox':
+                          change = checked;
+                          break;
+                      case 'file':
+                          change = value;
+                          break;
+                      default: return;
+                  }
+                  
+                  updateStates((prevState) => &#123;
+                      return &#123; ...prevState, [name]: change }
+                  });
+                }
+
+                return (
+                  &#60;form>
+                          &#60;input
+                            type="text"
+                            name="name"
+                            id="name"
+                            onChange=&#123;handleChange} />
+
+                          &#60;input
+                            type="number"
+                            name="price"
+                            id="price"
+                            onChange=&#123;handleChange} />
+
+                          &#60;input
+                            type="text"
+                            name="desc"
+                            id="desc"
+                            onChange=&#123;handleChange} />
+
+                          &#60;input
+                            name="available" 
+                            type="checkbox" 
+                            role="switch" 
+                            id="available"
+                            onChange=&#123;handleChange} />
+
+                          &#60;input 
+                            type="file"
+                            name="imgUrl" 
+                            id="imgUrl" 
+                            onChange=&#123;handleChange} />
+
+                      &#60;button type="submit">Add Product&#60;/button>
+                  &#60;/form>
+                )
+              }
+
+              export default ProductForm;
+            </pre>
+            <li>Csak az inputok szerepelnek néhány attribútumokkal a JSX-ben</li>
+            <li>A handleChange függvény kezeli az összes mező változását
+              <ul>
+                <li>Az event.target dekonstruálásra kerül</li>
+                <li>A frissítéshez szükséges mezőket eltároljuk
+                  <ul>
+                    <li>name: Az aktuális beviteli mező neve</li>
+                    <li>value: Az input mező értéke</li>
+                    <li>checked: A jelölőnégyzet értéke</li>
+                    <li>type: A beviteli mező típusa</li>
+                  </ul>
+                </li>
+                <li>Type alapján eltárolunk egy értéket a change változóban
+                  <ul>
+                    <li>Ezzel frissítjük az objektumunk [name] kulcsát</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>Minden változásnál újrarenderelés történik</li>
+            <br>
+            <img src="assets/imgs/react_form_filled.png" style="width: 100%;">
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #formsubmission data-anchor="formsubmission">Form submission</h3>
+  <ul>
+    <li>A HTML rendelkezik egy alapértelmezett form submit viselkedéssel</li>
+    <li>Amennyiben egy form-on belül egy submit típusú gombra rányomunk, a teljes form submit-álásra kerül
+      <ul>
+        <li>Submit event-et emit-ál</li>
+      </ul>
+    </li>
+    <li>A form submit alapértelmezetten újratölti a teljes oldalt
+      <ul>
+        <li>A böngésző automatikusan kérést intéz a szerver felé</li>
+        <li>Esetünkben ez most a lokális develop szerver</li>
+        <li>Ezt a működést a preventDefault() függvénnyel meg tudjuk akadályozni annak érdekében, hogy a további logikát
+          mi kezeljük</li>
+      </ul>
+    </li>
+    <li>Amennyiben bármelyik értéket konvertálnánk, megtehetjük navít JavaScript-tel</li>
+    <pre>
+      function ProductForm() &#123;
+          let [states, updateStates] = useState(&#123;
+            name: '',
+            price: 0,
+            desc: '',
+            available: false,
+            imgUrl: ''
+          });
+
+          ...
+
+          function createProductEventHandler(event) &#123;
+            event.preventDefault();
+            let product = &#123;
+                id: 1,
+                name: states.name,
+                desc: states.desc,
+                isAvailable: states.available, // Boolean(states.available)
+                image: states.imgUrl,
+                price: Number(states.price) // natív JS konvertálás
+            }
+          }
+
+          return (
+            &#60;form onSubmit=&#123;createProductEventHandler}>
+              ...
+            &#60;/form>
+          )
+
+          export default ProductForm;
+      }
+    </pre>
+    <li>Használhatunk two-way data binding-ot annak érdekében, hogy a form a submit után reset-elődjön
+      <ul>
+        <li>A state biztosítja</li>
+        <li>Ha state-ek helyett globális változókat használnánk, akkor is működne a form
+          <ul>
+            <li>Viszont nem biztosítaná a komponens frissülését változáskor</li>
+          </ul>
+        </li>
+
+        <li>Első lépésként minden beviteli mező kapjon egy value attribútumot
+          <ul>
+            <li>A checkbox-nak checked attribútum szükséges</li>
+          </ul>
+        </li>
+        <li>A második lépés, hogy a submit event függvényünkben az összes mezőt alapértelmezett értékre állítjuk
+          <ul>
+            <li>Ehhez az alapértelmezett objektumunkból egy konstanst készítünk, és a benne lévő értékeket adjuk át a
+              useState-nek</li>
+            <pre>
+                const initalState = &#123;
+                  name: '',
+                  price: 0,
+                  desc: '',
+                  available: false,
+                  imgUrl: ''
+                }
+            
+                let [states, updateStates] = useState(initalState);
+              </pre>
+            <li>Majd a submit függvényünk végén visszaállítjuk a kezdeti értékeket</li>
+            <pre>
+              function createProductEventHandler(event) &#123;
+                event.preventDefault();
+                let product = &#123;
+                    id: 1,
+                    name: states.name,
+                    desc: states.desc,
+                    isAvailable: states.available,
+                    image: states.imgUrl,
+                    price: Number(states.price)
+                }
+        
+                updateStates(initalState); // itt a lényeg
+              }
+            </pre>
+            <li>A JSX-ben a value/checked megadása nélkül valóban nem működik a form reset</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #childtoparentcommunication data-anchor="childtoparentcommunication">Child to parent communication</h3>
+  <ul>
+    <li>Az előző témában tárgyalt formban kitöltött adatokkal szeretnénk bővíteni a termékek listát</li>
+    <li>A props segítségével a szülő irányából a gyerek kaphat adatot</li>
+    <li>A ProductForm komponensből szeretnénk a CreateProduct komponensnek adatot átadni</li>
+    <pre>
+      <b>// CreateProduct.js // parent</b>
+      import ProductForm from "./ProductForm";
+
+      function CreateProduct(props) &#123;
+          function onCreateProduct(product) &#123;
+              console.log('product: ', product);
+          }
+
+          return (
+              &#60;div className="row">
+                  &#60;div className="col-lg-8 mx-auto list-group shadow">
+                      &#60;ProductForm createProduct=&#123;onCreateProduct} />
+                  &#60;/div>
+              &#60;/div>
+          )
+      }
+
+      export default CreateProduct;
+
+      <b>// CreateProduct.js // child</b>
+      function ProductForm(props) &#123;
+        ...
+
+        function createProductEventHandler(event) &#123;
+          event.preventDefault();
+          let product = &#123;
+              id: 1,
+              name: states.name,
+              desc: states.desc,
+              isAvailable: states.available,
+              image: states.imgUrl,
+              price: Number(states.price)
+          }
+  
+          props.createProduct(product); // itt történik a szülő komponens függvényének meghívása
+  
+          updateStates(initalState);
+        }
+
+        ...
+      }
+    </pre>
+    <li>A szülő egy függvényt definiál, aminek egyetlen bemeneti paramétere van</li>
+    <li>A gyereknek a createProduct attribútum által átadjuk a függvény referenciáját</li>
+    <li>A gyerek komponensben a prop objektumon keresztül meg tudjuk hívni a szülőben lévő függvényt
+      <ul>
+        <li>Bemeneti paraméterként átadjuk a kitöltött form-ot / terméket</li>
+      </ul>
+    </li>
+    <li>Lifting state up
+      <ul>
+        <li>"Állapot felemelés"</li>
+        <li>React tervezési minta</li>
+        <li>Hasznos, ha több komponensnek is hozzáférésre van szüksége egy közös állapothoz</li>
+        <li>Ha több, egymással nem közvetlenül kapcsolódó komponens is használ egy state-et, akkor az állapotot a
+          legközelebbi közös ős komponensbe "fel kell emelni"</li>
+        <li>Az ős komponensből prop-okon keresztül tovább adható a gyerekeknek a state</li>
+        <pre>
+          App.js
+          ├── CreateProduct.js
+          │     └── ProductForm.js
+          └── ProductList.js
+        </pre>
+        <li>A ProductForm-ban adjuk meg az új termék adatait, amit első körben el akarunk juttatni a CreateProduct
+          komponensen keresztül az App-ba, majd továbbadni a listának</li>
+      </ul>
+    </li>
+    <pre>
+      <b>// ProductForm.js</b>
+          function ProductForm(props) &#123;
+          ...
+          function createProductEventHandler(event) &#123;
+            ...
+            let product = &#123;
+              id: 1,
+              name: states.name,
+              desc: states.desc,
+              isAvailable: states.available,
+              image: states.imgUrl,
+              price: Number(states.price)
+            }
+
+            props.createProduct(product); // a ProductForm meghívja a szülőjétől (CreateProduct) kapott createProduct callback függvényt, és továbbadja az új terméket
+            ...
+          }
+          ...
+      }
+
+      <b>// CreateProduct.js</b>
+      function CreateProduct(props) &#123;
+        function onCreateProduct(product) &#123; // ezt a függvényt hívjuk meg a ProductForm-ból
+            props.createProduct(product); // továbbadjuk az új product objektumot a CreateProduct szülőjében (App) lévő callback függvényének
+        }
+    
+        return (
+            &#60;div className="row">
+                &#60;div className="col-lg-8 mx-auto list-group shadow">
+                    &#60;ProductForm createProduct=&#123;onCreateProduct} />
+                &#60;/div>
+            &#60;/div>
+        )
+      }
+
+      <b>// App.js</b>
+      function App() &#123;
+        let [product, updateProduct] = useState(null); // state-ben tároljuk a legutóbb létrehozott új terméket
+      
+        function onCreateProduct(product) &#123;
+          updateProduct(product); // frissítjük a product állapotát az új product-tal
+        }
+      
+        return (
+          &#60;div>
+            &#60;CreateProduct createProduct=&#123;onCreateProduct} />
+            &#60;ProductList newProduct=&#123;product} /> // továbbadjuk az új terméket a listának (ProductList)
+          &#60;/div>
+        );
+      }
+
+      <b>// ProductList.js</b>
+      function ProductList(props) &#123;
+        console.log('props: ', props); // props-on keresztül megkapjuk az App komponensből érkező legutóbb hozzáadott terméket
+        return (
+          {JSON.stringify(props.newProduct)} // kilogoljuk az új terméket az UI-ra
+          ...
+        )
+      }
+    </pre>
+    <li>A listában megjelenik a props.newProduct objektumban az újonnan létrehozott termék</li>
+    <img src="assets/imgs/react_form_liftup.png" alt="">
+  </ul>
+</div>
+
+<div>
+  <h3 #renderinglist data-anchor="renderinglist">Rendering list</h3>
+  <ul>
+    <li></li>
   </ul>
 </div>
 
@@ -900,4 +3496,5 @@
   </ul>
 </div>
 
+// TODO
 A szülőnek adott CSS-t a gyermek komponensek is megöröklik.
