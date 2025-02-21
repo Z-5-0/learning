@@ -1,0 +1,4022 @@
+<h1>Extras</h1>
+
+<div class="anchor-navi-container">
+  <div *ngFor="let mainButton of anchorButtons" class="btn-group">
+    <button type="button" class="btn btn-primary btn-sm anchor" (click)="scrollToAnchor(mainButton?.anchor)">
+      {{ mainButton.title }}
+    </button>
+    <button *ngIf="mainButton?.subtitles?.length" type="button"
+      class="btn btn-primary dropdown-toggle dropdown-toggle-split btn-sm anchor" data-bs-toggle="dropdown"
+      aria-expanded="false">
+    </button>
+    <ul *ngIf="mainButton.subtitles?.length" class="dropdown-menu dropdown-menu-dark">
+      <li>
+        <button *ngFor="let subButton of mainButton?.subtitles" class="dropdown-item"
+          (click)="scrollToAnchor(subButton?.anchor)">
+          {{ subButton?.title }}
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div>
+  <h3 #scrollpositionrestoration data-anchor="scrollpositionrestoration">scrollPositionRestoration</h3>
+  <ul>
+    <li>Navigálás közben, ha nem akarjuk, hogy minden oldalon az oldal tetejére ugorjunk, akkor az
+      app-routingmodulets
+      fájlban szükséges a scrollPositionRestoration: 'enabled'-re állítani
+      <pre>
+  @NgModule(&#123;
+    imports: [RouterModuleforRoot(routes, &#123;
+      scrollPositionRestoration: 'enabled'
+    &#125;)],
+    exports: [RouterModule]
+  &#125;)
+      </pre>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #dependencyinjection data-anchor="dependencyinjection">Dependency Injection (private/public/protected)</h3>
+  <ul>
+    <li>Külső forrásból injektált objektum, amit az osztály használni tud</li>
+    <li>private/public/protected
+      <ul>
+        <li>private
+          <ul>
+            <li>Az injektált szolgáltatás csak az osztályon belül érhető el</li>
+            <li>Osztályon kívül, pl más osztályban, vagy a sablonban (html) nem elérhető</li>
+          </ul>
+        </li>
+        <li>public
+          <ul>
+            <li>Az injektált szolgáltatás nem csak az osztályon belül érhető el</li>
+            <li>Osztályon kívül, pl más osztályban, vagy a sablonban (html) is elérhető</li>
+          </ul>
+        </li>
+        <li>protected
+          <ul>
+            <li>Az injektált szolgáltatás az osztályon belül és az osztály leszármazottai (al-osztályok) számára
+              érhető el
+            </li>
+            <li>A sablonban (html), és más, nem leszármazott osztályokban nem elérhető</li>
+            <pre>
+  export class DerivedComponent extends BaseComponent implements OnInit &#123;
+  serviceMessage: string;
+
+  ngOnInit() &#123;
+      thisserviceMessage = thisgetServiceMessage();
+    &#125;
+  &#125;
+            </pre>
+          </ul>
+        </li>
+        <li>A fentieket egyébként access modifier-nek hívják</li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #modulewithrouting data-anchor="modulewithrouting">Create module with routing</h3>
+  <ul>
+    <li>ng g m module-name --routing</li>
+    <li>Route in parent module</li>
+    <pre>
+  &#123;
+    path: 'spa',
+    loadChildren: () => import('/single-page-app/single-page-appmodule')then(m => mSinglePageAppModule)
+  &#125;,
+    </pre>
+    <li>Route in new module</li>
+    <pre>
+  const routes: Routes = [
+      &#123;path: '', component: SinglePageAppComponent&#125;,
+  ];
+    </pre>
+  </ul>
+</div>
+
+<div>
+  <h3 #functioninputoutputtypes data-anchor="functioninputoutputtypes">Function input-output type declaration</h3>
+  <ul>
+    <li>
+      <pre>
+  scroll(target: HTMLElement): any &#123; // A zárójelben a bemeneti típus, utána a visszatérési érték típusa
+    consolelog(target);
+    return targetscrollIntoView(&#123;behavior: 'smooth'});
+  }
+      </pre>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #ngiffunctioncall data-anchor="ngiffunctioncall">ngIf function call</h3>
+  <ul>
+    <li>Ha feltételben meghívunk egy függvényt, aminek van visszatérési értéke, akkor az 'as &#60;variable> opcióval
+      kiírhatjuk a visszatérési értéket, értékeket</li>
+    <pre>
+  &#60;div *ngIf="testFunction('ABC', '123') as obj">
+    &#123; &#123; objvariable1 }} / &#123; &#123; objvariable2 }}
+  &#60;/div>
+
+  testFunction(variable1: string, variable2: string) &#123;
+    return &#123;variable1, variable2};
+  }
+      </pre>
+  </ul>
+</div>
+
+<div>
+  <h3 #trackby data-anchor="trackby">TrackBy TODO</h3>
+  <ul>
+    <li>A trackBy használatának célja, hogy Angular hatékonyabban kezelje a DOM elemeket, amikor a lista változik</li>
+    <li>Ha nem használunk trackBy-t, Angular újra rendereli az összes elemet, amikor a lista változik</li>
+    <li>trackBy segítségével Angular nyomon követheti, hogy mely elemek változtak, így csak a ténylegesen változott
+      elemeket rendereli újra
+    </li>
+    <pre>
+  &#60;div *ngFor="let phoneNumber of phoneNumbers; trackBy: tracker">
+
+  &#60;/div>
+
+  constructor() &#123;
+
+    tracker = (index: number, item: string) => index;
+  }
+    </pre>
+    <li>Az indexet adja vissza</li>
+    <li>TODO</li>
+  </ul>
+</div>
+
+<div>
+  <h3 #ngswitchnote data-anchor="ngswitchnote">ngSwitch note</h3>
+  <ul>
+    <li>Amennyiben az ngSwitch attribútum direktívának nem boolean mezőt adunk, úgy a lenti (helyes) működéshez át kell
+      alakítanunk boolean értékre:
+    </li>
+    <pre>
+  &#60;div [ngSwitch]="!!hasText">
+    &#60;div *ngSwitchCase="true">
+      A változó tartalmaz szöveget
+    &#60;/div>
+    &#60;div *ngSwitchCase="false">
+      A változó nem tartalmaz szöveget
+    &#60;/div>
+&#60;/div>
+    </pre>
+  </ul>
+</div>
+
+<div>
+  <h3 #prtoceduralvsreactivethinking data-anchor="prtoceduralvsreactivethinking">Procedural vs reactive thinking</h3>
+  <div
+    style="background-color: floralwhite; border: 2px solid saddlebrown; border-radius: 5px;color: black; padding: 10px; overflow: auto">
+    <small>Procedural</small>
+    <ng-container>
+      <div *ngIf="isLoading; else list"
+        style="background-color: rgba(100, 100, 100, 0.5);display: flex;align-items: center;justify-content: center">
+        LOADING
+      </div>
+      <ng-template #list>
+        <div style="display: flex; align-items: center; gap: 20px; justify-content: space-between">
+          <h4 *ngIf="elems.length > 0; else noElems">{{ elems.length }} elem(s) exist(s)</h4>
+          <span>
+            <button [disabled]="elemLocalDeletion" (click)="elemLocalDeletion = !elemLocalDeletion">
+              Local delete
+            </button>
+            <button [disabled]="!elemLocalDeletion" (click)="elemLocalDeletion = !elemLocalDeletion">
+              API delete
+            </button>
+          </span>
+        </div>
+
+        <div *ngFor=" let elem of elems; let last=last; let i=index" style="display: flex;gap: 10px;">
+          <span>
+            {{ i + 1 }}. {{ elem }}
+          </span>
+          <span class="trash" (click)="elemLocalDeletion ? removeElem(i) : removeAPIelem(i)"></span>
+          <hr *ngIf="!last">
+        </div>
+
+        <form *ngIf="elems.length < 5; else elemsLengthReachedMax"
+          (submit)="elemLocalDeletion ? newElem($event) : newAPIElem($event)">
+          <input #formInput name="title" value="" ngModel placeholder="New elem">
+          <button type="submit" [disabled]="formInput.value === ''">Send</button>
+        </form>
+
+      </ng-template>
+    </ng-container>
+  </div>
+
+  <ng-template #elemsLengthReachedMax>
+    <h5>Max length of elems reached!</h5>
+  </ng-template>
+
+  <ng-template #noElems>
+    <h4>Create an elem!</h4>
+  </ng-template>
+
+  <br>
+
+  <!--ng-container *ngIf="isLoadingReactive$ | async as isLoadingReactive"-->
+  <div *ngIf="elemsReactive$ | async as elemsReactive"
+    style="background-color: floralwhite; border: 2px solid saddlebrown; border-radius: 5px;color: black; padding: 10px; overflow: auto">
+    <small>Reactive</small>
+    <ng-container *ngIf="isLoadingReactive$ | async; else listAlt">
+      <div style="background-color: rgba(100, 100, 100, 0.5);display: flex;align-items: center;justify-content: center">
+        LOADING
+      </div>
+    </ng-container>
+
+    <ng-template #listAlt>
+      <div style="display: flex; align-items: center; gap: 20px; justify-content: space-between">
+        <h4 *ngIf="elemsReactive.length > 0; else noElemsReactive">
+          {{ elemsReactive.length }} elem(s) exist(s)
+        </h4>
+        <span>
+          <button [disabled]="true">
+            API delete
+          </button>
+        </span>
+      </div>
+
+      <div *ngFor="let elem of elemsReactive; let last=last; let i=index" style="display: flex;gap: 10px;">
+        <span>
+          {{ i + 1 }}. {{ elem }}
+        </span>
+        <span class="trash" (click)="removeElemReactive(i)"></span>
+        <hr *ngIf="!last">
+      </div>
+
+      <form *ngIf="elems.length < 5; else elemsLengthReachedMaxReactive" (submit)="newElemReactive($event)">
+        <input #formInput name="title" value="" ngModel placeholder="New elem">
+        <button type="submit" [disabled]="formInput.value === ''">Send</button>
+      </form>
+    </ng-template>
+  </div>
+  <!--/ng-container-->
+
+  <ng-template #elemsLengthReachedMaxReactive>
+    <h5>Max length of elems reached!</h5>
+  </ng-template>
+
+  <ng-template #noElemsReactive>
+    <h4>Create an elem!</h4>
+  </ng-template>
+
+  <br>
+
+  <h5>Procedural</h5>
+  <pre>
+  &#60;ng-container>
+    &#60;div *ngIf="isLoading; else list">
+      LOADING
+    &#60;/div>
+
+    &#60;ng-template #list>
+      &#60;div>
+        &#60;h4 *ngIf="elems.length > 0; else noElems">&#123; &#123; elems.length }} elem(s) exist(s)&#60;/h4>
+        &#60;span>
+          &#60;button [disabled]="elemLocalDeletion" (click)="elemLocalDeletion = !elemLocalDeletion">
+            Local delete
+          &#60;/button>
+          &#60;button [disabled]="!elemLocalDeletion" (click)="elemLocalDeletion = !elemLocalDeletion">
+            API delete
+          &#60;/button>
+        &#60;/span>
+      &#60;/div>
+
+      &#60;div *ngFor=" let elem of elems; let last=last; let i=index" style="display: flex;gap: 10px;">
+        &#60;span>
+          &#123; &#123; i + 1 }}. &#123; &#123; elem }}
+        &#60;/span>
+        &#60;span class="trash" (click)="elemLocalDeletion ? removeElem(i) : removeAPIelem(i)">&#60;/span>
+        &#60;hr *ngIf="!last">
+      &#60;/div>
+
+      &#60;form *ngIf="elems.length &#60; 5; else elemsLengthReachedMax"
+        (submit)="elemLocalDeletion ? newElem($event) : newAPIElem($event)">
+        &#60;input #formInput name="title" value="" ngModel placeholder="New elem">
+        &#60;button type="submit" [disabled]="formInput.value === ''">Send&#60;/button>
+      &#60;/form>
+    &#60;/ng-template>
+
+  &#60;/ng-container>
+
+  &#60;ng-template #elemsLengthReachedMaxReactive>
+    &#60;h5>Max length of elems reached!&#60;/h5>
+  &#60;/ng-template>
+
+  &#60;ng-template #noElemsReactive>
+    &#60;h4>Create an elem!&#60;/h4>
+  &#60;/ng-template>
+
+  elems: string[] = [];
+
+  ngOnInit() &#123;
+    this.getContent();
+  }
+
+  getContent() &#123;
+    this.isLoading = true;
+    fetch('https://kodbazis.hu/api/cimek')
+      .then(res => res)
+      .then(data => &#123;
+        console.log(data);
+        return data.json();
+      })
+      .then(content => &#123;
+        console.log(content);
+        this.elems = content;
+      })
+      .catch(error => &#123;
+        console.error('Hiba történt:', error);
+      })
+      .finally(() => &#123;
+        this.isLoading = false;
+      });
+  }
+
+  newElem(event: any) &#123;
+    event.preventDefault();
+    console.log(event.target.elements.title.value);
+    const newElem = event.target.elements.title.value;
+    this.elems.push(newElem);
+    event.target.reset();
+  }
+
+  newAPIElem(event: any) &#123;
+    event.preventDefault();
+    this.isLoading = true;
+    console.log(event.target.elements.title.value);
+    const newElem = event.target.elements.title.value;
+    fetch('https://kodbazis.hu/api/cimek', &#123;
+      method: 'POST',
+      body: JSON.stringify(&#123;cim: (newElem)})
+    })
+      .then(() => &#123;
+        this.getContent();
+      });
+    event.target.reset();
+  }
+
+  removeElem(index: number) &#123;
+    this.elems.splice(index, 1);
+  }
+
+  removeAPIelem(index: number) &#123;
+    this.isLoading = true;
+    fetch('https://kodbazis.hu/api/cimek/' + index, &#123;method: 'DELETE'})
+      .then(() => &#123;
+        this.getContent();
+      });
+  }
+</pre>
+
+  <br>
+
+  <h5>Reactive</h5>
+  <pre>
+  &#60;div *ngIf="elemsReactive$ | async as elemsReactive">
+    &#60;small>REAKTÍV&#60;/small>
+    &#60;ng-container *ngIf="isLoadingReactive$ | async; else listAlt">
+      &#60;div>
+        LOADING
+      &#60;/div>
+    &#60;/ng-container>
+
+    &#60;ng-template #listAlt>
+      &#60;div>
+        &#60;h4 *ngIf="elemsReactive.length > 0; else noElemsReactive">
+          &#123; &#123; elemsReactive.length }} elem(s) exist(s)
+        &#60;/h4>
+        &#60;span>
+          &#60;button [disabled]="true">
+            API delete
+          &#60;/button>
+        &#60;/span>
+      &#60;/div>
+
+      &#60;div *ngFor="let elem of elemsReactive; let last=last; let i=index">
+        &#60;span>
+          &#123; &#123; i + 1 }}. &#123; &#123; elem }}
+        &#60;/span>
+        &#60;span class="trash" (click)="removeElemReactive(i)">&#60;/span>
+        &#60;hr *ngIf="!last">
+      &#60;/div>
+
+      &#60;form *ngIf="elems.length &#60; 5; else elemsLengthReachedMaxReactive" (submit)="newElemReactive($event)">
+        &#60;input #formInput name="title" value="" ngModel placeholder="New elem">
+        &#60;button type="submit" [disabled]="formInput.value === ''">Send&#60;/button>
+      &#60;/form>
+    &#60;/ng-template>
+  &#60;/div>
+
+  &#60;ng-template #elemsLengthReachedMaxReactive>
+    &#60;h5>Max length of elems reached!&#60;/h5>
+  &#60;/ng-template>
+
+  &#60;ng-template #noElemsReactive>
+    &#60;h4>Create an elem!&#60;/h4>
+  &#60;/ng-template>
+
+  isLoadingReactive$ = new BehaviorSubject&#60;boolean>(true);
+
+  refresh$ = new Subject().pipe(
+    tap(() => &#123;
+      this.isLoadingReactive$.next(true);
+    }),
+    switchMap(() => this.http.get('https://kodbazis.hu/api/cimek')),
+    catchError((err) => of([])),
+    tap((response) => &#123;
+      this.isLoadingReactive$.next(false);
+      this.elemsReactive$.next(response as string[]);
+      console.log('http: ', response);
+    })
+  );
+
+  delete$ = new Subject().pipe(
+    tap(() => &#123;
+      this.isLoadingReactive$.next(true);
+    }),
+    switchMap(index => this.http.delete(`https://kodbazis.hu/api/cimek/$&#123;index}`)),
+    tap(() => &#123;
+        // @ts-ignore
+        this.refresh$.next("");
+      }
+    )
+  );
+
+  create$ = new Subject().pipe(
+    tap(() => &#123;
+      this.isLoadingReactive$.next(true);
+    }),
+    switchMap((input) => this.http.post(`https://kodbazis.hu/api/cimek`, &#123;cim: input})),
+    tap(() => &#123;
+        // @ts-ignore
+        this.refresh$.next("");
+      }
+    )
+  )
+
+  subscriptions: Subscription[] = [];
+
+  ngAfterViewInit() &#123; // ngOnInit helyett
+    const refreshSub = this.refresh$.subscribe();
+    const deleteSub = this.delete$.subscribe();
+    const createSub = this.create$.subscribe();
+    this.subscriptions = [...this.subscriptions, refreshSub, deleteSub, createSub];
+    // @ts-ignore
+    this.refresh$.next();
+  }
+
+  removeElemReactive(index: number) &#123;
+    // @ts-ignore
+    this.delete$.next(index);
+  }
+
+  newElemReactive(e: any) &#123;
+    e.preventDefault();
+    const newValue = e.target.elements.title.value;
+    // @ts-ignore
+    this.create$.next(newValue);
+  }
+
+  ngOnDestroy() &#123;
+    for (let subscription of this.subscriptions) &#123;
+      subscription.unsubscribe();
+    }
+  }
+</pre>
+</div>
+
+<div>
+  <h3 #locale data-anchor="locale">Locale</h3>
+  <ul>
+    <pre>
+  <b>// settings.service.ts</b>
+  @Injectable(&#123;
+    providedIn: 'root'
+  })
+  export class SettingsService &#123;
+  
+      setLocale(language: string) &#123;
+          localStorage.setItem('language', language);
+          window.location.reload();
+      }
+  
+      getLocale(): string &#123;
+          return localStorage.getItem('language') || 'hu-HU';
+      }
+  }
+
+  <b>// app.module.ts</b>
+  import localeHu from '@angular/common/locales/hu';
+
+  registerLocaleData(localeHu);
+
+  @NgModule(&#123;
+    ...
+    providers: [
+    &#123;
+        provide: LOCALE_ID,
+        deps: [SettingsService],
+        useFactory: (settingsService: SettingsService) => settingsService.getLocale()
+      }
+    ],
+  })
+    </pre>
+    <li>A LOCALE_ID-val központi locale-t állíthatunk be az egész alkalmazásra
+      <ul>
+        <li>Lokalizációs azonosító, ami a formátumok (dátum, számok, pénznemek stb.) helyi szabványainak beállítására
+          szolgál az alkalmazás szintjén.</li>
+        <li>A LOCALE_ID használatával az Angular megérti, hogy milyen lokalizációs beállításokat alkalmazzon az egész
+          alkalmazásban</li>
+        <li>a különböző formátumokat, például dátumokat, számokat és pénznemeket az adott LOCALE_ID alapján állítja be,
+          és az Angular pipe-ok(DatePipe, CurrencyPipe, stb.) automatikusan a megadott locale-nak megfelelő formátumot
+          fogják használni.</li>
+      </ul>
+    </li>
+    <li>A fenti példakódban egy szolgáltatáson keresztül határozzuk meg a locale értékét</li>
+    <li>Locale frissítéséhez újra kell tölteni az alkalmazást</li>
+    <li>Akkor érdemes használni, ha többnyelvű alkalmazást fejlesztünk
+      <ul>
+        <li>Vagy mondjuk csak simán a saját lokációnkra szeretnénk szabni a formázásokat</li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #restandspreadoperator data-anchor="restandspreadoperator">Rest operator</h3>
+  <ul>
+    <li>Ugyanúgy a ... szintaxissal használjuk őket, de eltérő módon</li>
+    <li>Rest operator
+      <ul>
+        <li>A rest operátor (...) több értéket gyűjt össze egyetlen tömbbe vagy objektumba
+          <ul>
+            <li>Egy függvénynek több paramétert adunk át, illetve amikor egy objektum vagy tömb elemeit szeretnénk egy
+              egységes struktúrába foglalni</li>
+            <li>Különösen akkor hasznos, ha nem tudjuk előre a paraméterek számát, vagy csak bizonyos elemeket akarunk
+              kiválasztani egy összetettebb struktúrából</li>
+          </ul>
+        </li>
+        <li>A rest operátort gyakran használják függvények paraméterlistájában, ahol a paraméterek fennmaradó részét egy
+          tömbbe gyűjti össze</li>
+        <pre>
+  function sum(...numbers) &#123;
+    return numbers.reduce((total, num) => total + num, 0);
+  }
+  
+  console.log(sum(1, 2, 3, 4)); // 10      
+        </pre>
+        <li>A rest operátorral objektumok és tömbök részeit különválaszthatjuk egy változónak, míg a többi elemet egy
+          másik
+          változóban gyűjtjük össze</li>
+        <pre>
+  <b>// object</b>
+  const person = &#123; name: "Alice", age: 30, city: "Paris" };
+  const &#123; name, ...rest } = person;
+
+  console.log(name); // "Alice"
+  console.log(rest); // &#123; age: 30, city: "Paris" }
+
+  <b>// array</b>
+  const numbers = [1, 2, 3, 4, 5];
+  const [first, second, ...rest] = numbers;
+
+  console.log(first);  // 1
+  console.log(second); // 2
+  console.log(rest);   // [3, 4, 5]
+        </pre>
+      </ul>
+    </li>
+    <li>Spread operator
+      <ul>
+        <li>Egy tömb vagy objektum elemeinek kiterjesztésére szolgál
+          <ul>
+            <li>egyes elemeket különálló elemekként "teríti ki"</li>
+          </ul>
+        </li>
+        <li>Másolatok készítéséhez, elemek összefűzéséhez használjuk</li>
+        <pre>
+  <b>// tömb egyesítés</b>
+  const array1 = [1, 2];
+  const array2 = [3, 4];
+  const combined = [...array1, ...array2];
+  console.log(combined); // [1, 2, 3, 4]
+
+  <b>// objektum másolás és egyesítés</b>
+  const obj1 = &#123; a: 1, b: 2 };
+  const obj2 = &#123; c: 3 };
+  const combinedObj = &#123; ...obj1, ...obj2 };
+  console.log(combinedObj); // &#123; a: 1, b: 2, c: 3 }
+        </pre>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #shallowanddeepcopy data-anchor="shallowanddeepcopy">Shallow and deep copy</h3>
+  <ul>
+    <li>Objektumok másolásának két különböző módja, amelyek abban különböznek, hogy milyen mélységig másolják le az
+      objektum struktúráját és annak beágyazott elemeit
+      <ul>
+        <li>A tömbök is objektumok JavaScript-ben</li>
+      </ul>
+    </li>
+  </ul>
+  <ol>
+    <li>Shallow copy
+      <ul>
+        <li>Egy objektum első szintjét másolja le, de nem hoz létre külön példányokat a beágyazott objektumokról vagy
+          tömbökről
+          <ul>
+            <li>Az eredeti objektum és a másolat is ugyanazokra a beágyazott objektumokra mutat</li>
+            <li>Ha a beágyazott objektumokat vagy tömböket módosítjuk, akkor ezek a változások mind az eredeti, mind a
+              másolatban megjelennek</li>
+          </ul>
+        </li>
+        <li>Az Object.assign() metódus, illetve a spread operátor (...), amikor csak az első szinten történik másolás
+        </li>
+        <pre>
+  const original = &#123; a: 1, b: &#123; c: 2 } };
+  const shallowCopy = &#123; ...original };
+
+  shallowCopy.b.c = 3;
+  console.log(original.b.c); // 3, mert a másolatban lévő `b` objektum az eredetire mutat
+        </pre>
+      </ul>
+    </li>
+    <li>Deep copy
+      <ul>
+        <li>Az objektum minden szintjét lemásolja, tehát az eredeti objektumtól független, teljesen új példányokat hoz
+          létre minden beágyazott objektumról és tömbről is
+          <ul>
+            <li>Az eredeti és a másolat egymástól teljesen függetlenek lesznek, így a másolat módosítása nem fogja
+              befolyásolni az eredeti objektumot</li>
+          </ul>
+        </li>
+        <li>Használhatjuk a structuredClone() metódust, illetve könyvtárakat, mint például a lodash (cloneDeep
+          metódus)</li>
+        <li>Alternatívaként JSON-alapú deep copy is használható</li>
+        <pre>
+  const original = &#123; a: 1, b: &#123; c: 2 } };
+  const deepCopy = JSON.parse(JSON.stringify(original)); // JSON-alapú deep copy
+
+  deepCopy.b.c = 3;
+  console.log(original.b.c); // 2, mert a deep copy független másolatot hozott létre
+        </pre>
+      </ul>
+    </li>
+  </ol>
+  <ul>
+    <li>Ha csak egy egyszerű, nem beágyazott objektumot másolunk, a shallow copy általában elegendő</li>
+  </ul>
+</div>
+
+<div>
+  <h3 #datamodel data-anchor="datamodel">Data model</h3>
+  <ul>
+    <li>Az alábbi két class lényegében ugyanaz
+      <ul>
+        <li>Mindkettő ugyanazokat a mezőket és konstruktorparamétereket definiálja</li>
+      </ul>
+    </li>
+    <pre>
+  <b>// Class 1</b>
+  export class Task &#123;
+    name: string = '';
+    description: string = '';
+    user: string = '';
+    date: string = '';
+    priority: string = '';
+    status: string = '';
+
+    constructor(name: string, description: string, user: string, date: string, priority: string, status: string) &#123;
+        this.name = name;
+        this.description = description;
+        this.user = user;
+        this.date = date;
+        this.priority = priority;
+        this.status = status;
+    }
+  }
+
+  <b>// Class 2</b>
+  export class Task &#123;
+    constructor(
+        public name: string,
+        public description: string,
+        public user: string,
+        public date: string,
+        public priority: string,
+        public status: string
+    ) &#123;}
+  }
+    </pre>
+    <li>Class 1
+      <ul>
+        <li>Külön deklarálja a property-ket az osztályon belül</li>
+        <li>A property-k alapértelmezett értékeket kapnak (üres string), mielőtt a konstruktorban felülírnánk őket</li>
+        <li>Hosszabb, de explicitebb, könnyebben érthető</li>
+        <li>Amennyiben szükséges alapértelmezett deklaráció, ezt érdemes használni</li>
+      </ul>
+    </li>
+    <li>Class 2
+      <ul>
+        <li>A public módosítóval a konstruktor paraméterei automatikusan az osztály property-jeivé válnak</li>
+        <li>Rövidebb</li>
+        <li>Kevésbé részletes, de kompaktabb, elegánsabb</li>
+        <li>Amennyiben nem szükséges alapértelmezett deklaráció, ezt érdemes használni</li>
+      </ul>
+    </li>
+    <li>Az osztály egyszerre szolgál típusként, és példányosítható konstrukcióként, az interfészt kizárólag
+      típusdefinícióként használjuk
+      <ul>
+        <li>Objektumokat hozhatunk létre a new kulcsszóval</li>
+        <pre>
+  const newTask = new Task(
+    'Example Task',
+    'This is a description.',
+    'John Doe',
+    '2024-12-01',
+    'high',
+    'open'
+  )
+        </pre>
+        <li>Típusellenőrzésre is alkalmazható</li>
+        <pre>
+  printTask(task: Task): void &#123;
+    console.log(task.name);
+  }
+        </pre>
+      </ul>
+    </li>
+    <li>Az interfészt csak típusdefinícióra használjuk
+      <ul>
+        <li>Nem példányosítható</li>
+        <pre>
+  interface Task &#123;
+    name: string;
+    description: string;
+    user: string;
+    date: string;
+    priority: string;
+    status: string;
+  }
+
+  function printTask(task: Task): void &#123;
+    console.log(task.name);
+  }
+        </pre>
+      </ul>
+    </li>
+    <li>Lehetőség szerint ne használjunk osztály abban az esetben, ha csak típusdefinícióra van szükségünk
+      <ul>
+        <li>A TypeScript fordító a JavaScript kimenetbe belegenerálja az osztályt</li>
+        <li>Interfész használatakor viszont ez nem történik meg</li>
+      </ul>
+    </li>
+    <li>Opcionális definiálhatóság</li>
+    <pre>
+  <b>// class</b>
+  export class Task &#123;
+    constructor(
+        public name: string,
+        public description: string,
+        public user: string,
+        public date: string,
+        public priority: string,
+        public status: string,
+        public id?: string) &#123; // az id opcionális
+    }
+  }
+
+  // Új példány létrehozása:
+  const task1 = new Task('New Task', 'This is a description', 'John Doe', '2024-12-01', 'high', 'open');
+  const task2 = new Task('Another Task', 'Another description', 'Jane Doe', '2024-12-02', 'medium', 'in progress', '12345');
+
+  <b>// interface</b>
+  export interface Task &#123;
+      id?: string; // opcionális
+      name: string;
+      description: string;
+      user: string;
+      date: string;
+      priority: string;
+      status: string;
+  }
+    </pre>
+  </ul>
+</div>
+
+<div>
+  <h3 #environment data-anchor="environment">Environment</h3>
+  <ul>
+    <li>Környezeti változók kezelésére szolgál</li>
+    <li>A környezeti beállításokat általában az alkalmazás különböző futtatási környezetekhez, például fejlesztési,
+      tesztelési vagy éles környezetekhez igazítják</li>
+    <li>Az Angular projektben az environment fájlok segítségével könnyen kezelhetjük ezeket a változókat</li>
+    <li>Az alapértelmezetten két környezeti fájl
+      <ol>
+        <li>environment.ts
+          <ul>
+            <li>Fejlesztési környezethez használatos fájl, amelyet a fejlesztési ciklus során használunk</li>
+            <pre>
+  export const environment = &#123;
+    production: false,
+    apiUrl: 'https://dev-api.page.com'
+  };              
+            </pre>
+          </ul>
+        </li>
+        <li>environment.prod.ts
+          <ul>
+            <li>Éles környezethez használatos fájl, amelyet a produkciós build során alkalmazunk</li>
+            <pre>
+  export const environment = &#123;
+    production: true,
+    apiUrl: 'https://api.page.com'
+  };              
+            </pre>
+          </ul>
+        </li>
+      </ol>
+    </li>
+    <li>A fájlok a src/environments/ mappában találhatóak</li>
+    <li>Használata
+      <ul>
+        <pre>
+  import &#123; environment } from '../environments/environment';
+
+  console.log(environment.apiUrl);
+        </pre>
+        <li>Fejlesztési környezetben 'https://dev-api.page.com', éles környezetben pedig 'https://api.example.com'</li>
+      </ul>
+    </li>
+    <li>Az Angular CLI automatikusan cseréli a környezeti fájlokat a build folyamat során
+      <ul>
+        <li>Prod build (ng build --prod) esetében az environment.prod.ts fájlt fogja használni az environment.ts helyett
+        </li>
+      </ul>
+    </li>
+    <li>Nem titkos adat, mivel a környezeti fájlok a végső JavaScript kódban is elérhetők lesznek
+      <ul>
+        <li>Az érzékeny adatokat backend oldalon tároljuk</li>
+      </ul>
+    </li>
+    <li>A környezeti fájlokban meg kell egyezniük a kulcsoknak (például production, apiUrl) az egyes fájlokban</li>
+  </ul>
+</div>
+
+<div>
+  <h3 #authenticationandauthorization data-anchor="authenticationandauthorization">Authentication & authorization</h3>
+  <ul>
+    <li>Authentication
+      <ul>
+        <li>Hitelesítés</li>
+        <li>Ellenőrzése, hogy valaki valóban az, akinek mondja magát</li>
+        <li>Az első lépés egy rendszerhez való hozzáférés biztosításakor</li>
+        <li>Pl. bejelentkezés egy weboldalra felhasználónévvel, és jelszóval</li>
+      </ul>
+    </li>
+    <li>Authorization
+      <ul>
+        <li>Engedélyezés</li>
+        <li>Célja annak meghatározása, hogy egy hitelesített felhasználónak milyen jogosultságai vannak az adott
+          rendszerben</li>
+        <li>Pl. a felhasználó hozzáférhet bizonyos oldalakhoz, másokhoz pedig nem</li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #throwerror data-anchor="throwerror">throwError</h3>
+  <ul>
+    <pre>
+  API.CALL
+  .pipe(
+    catchError((err) => &#123;
+      return throwError(() => 'Email address already registered.');
+    })
+  );
+
+  FUNCTION.CALL
+  .subscribe(&#123;
+    next: (val) => &#123; },
+    error: (err) => &#123;
+      console.log(err); // Email address already registered.
+    }
+  });
+    </pre>
+    <li>Közvetlenül egy string-et vagy más típusú értéket ad vissza</li>
+    <li>Abban az esetben jő megoldás, ha pl. stringet szeretnénk feldoolgozni</li>
+    <pre>
+  API.CALL
+  .pipe(
+    catchError((err) => &#123;
+      return throwError(() => new Error('Email address already registered.'));
+    })
+  );
+
+  FUNCTION.CALL
+  .subscribe(&#123;
+    next: (val) => &#123; },
+    error: (err) => &#123;
+      console.log(err); // Error: Email address already registered. at auth-firebase.service.ts:46:34
+      console.log(err.message); // Email address already registered.
+    }
+  });
+    </pre>
+    <li>Error objektumot hoz létre, amiben van egy message kulcs is</li>
+    <li>szabványosabb megoldás JavaScript-ben/TypeScript-ben, különösen akkor, ha a hiba továbbadása során az Error
+      objektumok mezőit (pl. name, stack, vagy message) szeretnénk használni</li>
+    <li>Az Error objektum segít az egyértelmű hibakezelésben, különösen komplex alkalmazásokban</li>
+  </ul>
+</div>
+
+<div>
+  <h3 #angularperformanceincrease data-anchor="angularperformanceincrease">Angular performance increase</h3>
+  <ol>
+    <li>Tree Shaking
+      <ul>
+        <li>Csak azokat a kódokat tartalmazza a build, amelyeket ténylegesen használnak</li>
+        <li>Az Angular CLI automatikusan támogatja a tree shaking-et, ha az alkalmazás modulárisan van felépítve
+        </li>
+        <li>Ne importáljunk teljes modulokat, ha csak egy részükre van szükség</li>
+        <pre>
+  // Rossz
+  import * as _ from 'lodash';
+
+  // Jó
+  import &#123; debounce } from 'lodash';
+        </pre>
+        <li>Érdemes a szükségtelen, le nem futó kódokat kiszedni</li>
+        <li>Csak azokat a könyvtárakat telepítsük és importáljuk, amelyekre ténylegesen szükség van</li>
+        <li>Ne húzzunk be nagy könyvtárakat, ha csak egy kis részüket használjuk</li>
+      </ul>
+    </li>
+    <li>Feature Module-ok használata
+      <ul>
+        <li>A nagyobb modulokat bontsd kisebb, funkcióalapú modulokra</li>
+      </ul>
+    </li>
+    <li>SharedModule helyes használata
+      <ul>
+        <li>Csak azokat a komponenseket, direktívákat és pipe-okat oszd meg, amelyek valóban szükségesek több helyen
+        </li>
+      </ul>
+    </li>
+    <li>OnPush Change Detection
+      <ul>
+        <li>Alapértelmezésben az Angular minden változásra lefuttatja a teljes change detection ciklust</li>
+        <li>Az ChangeDetectionStrategy.OnPush beállítása azt mondja az Angularnak, hogy csak akkor végezzen
+          változásfigyelést, ha az input értékei megváltoznak</li>
+      </ul>
+    </li>
+    <li>TrackBy használata *ngFor esetén
+      <ul>
+        <li>Nagy listák esetén az ngFor-hoz adjunk meg egy trackBy függvényt, hogy az Angular csak a változott
+          elemeket
+          renderelje újra</li>
+      </ul>
+    </li>
+    <li>Component-Level Lazy Loading
+      <ul>
+        <li>Nem csak modulokat, hanem egyes komponenseket is betölthetünk aszinkron módon a loadComponent
+          segítségével</li>
+        <pre>
+  @Component(&#123;
+    selector: 'app-root',
+    template: '&#60;ng-container *ngComponentOutlet="lazyComponent">&#60;/ng-container>',
+  })
+  export class AppComponent &#123;
+    lazyComponent = () => import('./lazy/lazy.component').then(m => m.LazyComponent);
+  }
+              </pre>
+      </ul>
+    </li>
+    <li>PreloadingStrategy használata
+      <ul>
+        <li>Az Angular PreloadAllModules vagy egyedi preload stratégiával előre betölthet modulokat alacsonyabb
+          prioritású háttérfolyamatként</li>
+      </ul>
+    </li>
+    <li>Service Workers
+      <ul>
+        <li>Használjunk Angular PWA támogatást, hogy az alkalmazás gyorsabbá váljon azáltal, hogy az erőforrásokat
+          előre cache-eli a böngészőben</li>
+      </ul>
+    </li>
+    <li>Lazy Loading képek és médiafájlok esetén
+      <ul>
+        <li>Használjunk loading="lazy" attribútumot az &#60;img> tageknél</li>
+      </ul>
+    </li>
+    <li>SVG helyett ikonkészlet használata
+      <ul>
+        <li>Inline SVG-k vagy harmadik fél által nyújtott ikonlibek gyorsítják az oldalak renderelését</li>
+      </ul>
+    </li>
+    <li>CSS és JS Minifikáció
+      <ul>
+        <li>Az Angular CLI automatikusan minifikálja a buildelt fájlokat, de érdemes ellenőrizni az alkalmazott
+          eszközök megfelelő konfigurációját</li>
+      </ul>
+    </li>
+    <li>RxJS és optimalizált adatfolyamok
+      <ul>
+        <li>Használjunk megfelelő operátorokat, például debounceTime, distinctUntilChanged, hogy csökkentsd a
+          felesleges API-hívásokat</li>
+      </ul>
+    </li>
+    <li>NgRx vagy egyéb state management használata
+      <ul>
+        <li>Csökkenti az állapotfrissítésekkel kapcsolatos overhead-et és tisztább kódot biztosít</li>
+      </ul>
+    </li>
+    <li>HTTP Caching
+      <ul>
+        <li>Az Angular HttpClient-et kombinálva cache-eléssel csökkenthetjük a hálózati kérések számát</li>
+      </ul>
+    </li>
+    <li>Lazy Loaded Fonts
+      <ul>
+        <li>Használjunk modern betűkészleteket, és lazy loadingot a betűkészletek betöltéséhez</li>
+      </ul>
+    </li>
+    <li>CDN használata
+      <ul>
+        <li>Tároljunk statikus erőforrásokat CDN-en keresztül a gyorsabb betöltés érdekében</li>
+      </ul>
+    </li>
+    <li>Angular DevTools
+      <ul>
+        <li>Használj eszközöket, mint az Angular DevTools, hogy diagnosztizáld az esetleges teljesítményproblémákat
+        </li>
+      </ul>
+    </li>
+  </ol>
+</div>
+
+<div>
+  <h3 #mutablevsimmutable data-anchor="mutablevsimmutable">Mutable vs immutable type</h3>
+  <ul>
+    <li>Az objektumok és adatok kezelésére vonatkoznak a programozásban</li>
+    <br>
+    <li>Mutable (módosítható)
+      <ul>
+        <li>Az objektum tartalma módosítható, ami hatással van az eredeti példányra</li>
+        <li>Értéke közvetlenül módosítható; az eredeti objektum maga módosul</li>
+        <li>Ilyenek például a tömbök vagy objektumok a JavaScript-ben</li>
+        <li>Példa
+          <ul>
+            <li>Tömbök: Egy tömbhöz új elemeket adhatunk hozzá anélkül, hogy új tömböt hoznánk létre</li>
+            <li>Objektumok: Egy objektum kulcsait vagy értékeit módosíthatjuk anélkül, hogy új példányt hoznánk
+              létre</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li>Immutable (nem módosítható)
+      <ul>
+        <li>Olyan objektumokat jelentenek, amelyek értéke nem módosítható</li>
+        <li>A módosítások mindig új objektumot hoznak létre, az eredeti érintetlen marad</li>
+        <li>Tehát, ha mondjuk egy szám értékét 5-ről 6-ra változtatjuk, akkor az 5 kitörlődik a memóriából, és új
+          címen létrejön a 6-os szám, amire mutat a változó</li>
+        <li>Példa
+          <ul>
+            <li>Primitív típusok: Mint például a számok, stringek, logikai értékek, amelyek mind immutable típusok
+              JavaScript-ben</li>
+            <li>Immutable könyvtárak: Ilyen például az Immutable.js, amely segít biztosítani az adatstruktúrák
+              immutable jellegét</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <br>
+    <table style="width:100%; table-layout: fixed;">
+      <thead>
+        <tr>
+          <th>Tulajdonság</th>
+          <th>Mutable</th>
+          <th>Immutable</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Jelentés</td>
+          <td>Az érték <strong>módosítható</strong></td>
+          <td>Az érték <strong>nem módosítható</strong>, csak új hozható létre</td>
+        </tr>
+        <tr>
+          <td>Módosítás</td>
+          <td>Az eredeti objektum módosítható</td>
+          <td>Minden módosítás új objektumot eredményez</td>
+        </tr>
+        <tr>
+          <td>Példák</td>
+          <td>JavaScript objektumok, tömbök (<code>Array</code>, <code>Object</code>)</td>
+          <td>JavaScript primitívek (<code>String</code>, <code>Number</code>, <code>Boolean</code>), és olyan
+            könyvtárak, mint az <code>Immutable.js</code>
+          </td>
+        </tr>
+        <tr>
+          <td>Előnyök</td>
+          <td>Gyorsabb változtatás (nincs új példány)</td>
+          <td>Biztonságosabb, könnyebb hibakeresés</td>
+        </tr>
+        <tr>
+          <td>Hátrányok</td>
+          <td>Könnyebb hibázni, nehéz követni a változásokat</td>
+          <td>Több memóriát használhat, lassabb másolás</td>
+        </tr>
+        <tr>
+          <td>Példa kódban</td>
+          <td>
+            <ul>
+              <li>const mutableArray = [1, 2, 3];</li>
+              <li>mutableArray.push(4); // Az eredeti tömb módosul</li>
+              <li>console.log(mutableArray); // [1, 2, 3, 4]</li>
+            </ul>
+          </td>
+          <td>
+            <ul>
+              <li>const immutableArray = [1, 2, 3];</li>
+              <li>const newArray = [...immutableArray, 4]; // Új tömböt hozunk létre</li>
+              <li>console.log(immutableArray); // [1, 2, 3] (változatlan marad)</li>
+              <li>console.log(newArray); // [1, 2, 3, 4]</li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </ul>
+</div>
+
+<div>
+  <h3 #arrayobjectdestructuring data-anchor="arrayobjectdestructuring">Array/Object destructuring</h3>
+  <h5 #arraydestructuring data-anchor="arraydestructuring">Array destructuring</h5>
+  <ul>
+    <li>Lehetővé teszi, hogy egy tömb elemeit egyszerű módon külön változókba bontsuk</li>
+    <pre>
+  const array = [1, 2, 3];
+
+  // Alapvető használat
+  const [a, b, c] = array;
+  console.log(a); // 1
+  console.log(b); // 2
+  console.log(c); // 3
+
+  // Értékek kihagyása
+  const [a, , b] = array;
+  console.log(a); // 1
+  console.log(b); // 3
+
+  // Alapértelmezett értékek
+  const array = [1];
+
+  const [a, b = 5] = array;
+  console.log(a); // 1
+  console.log(b); // 5
+
+  // Maradék elemek kezelése
+  const array = [1, 2, 3, 4, 5];
+
+  const [a, b, ...rest] = array;
+  console.log(a); // 1
+  console.log(b); // 2
+  console.log(rest); // [3, 4, 5]
+
+  // Tömbök beágyazása
+  const nestedArray = &#91; &#91;1, 2&#93;, &#91;3, 4&#93;, &#91;5, 6&#93; &#93;;
+  const &#91; &#91;first, second&#93;, &#91;third, fourth&#93; &#93; = nestedArray;
+
+  console.log(first);   // 1
+  console.log(second);  // 2
+  console.log(third);   // 3
+  console.log(fourth);  // 4
+    </pre>
+  </ul>
+  <br>
+  <h5 #objectdestructuring data-anchor="objectdestructuring">Object destructuring</h5>
+  <ul>
+    <li>Lehetővé teszi az objektumok tulajdonságainak egyszerű, és hatékony kinyerését és hozzárendelését változókhoz
+    </li>
+    <pre>
+  const user = &#123;
+      name: 'John Doe',
+      age: 30,
+      email: 'john.doe@example.com'
+  &#125;;
+
+  // Alapvető használat
+  const &#123; name, age, email &#125; = user;
+  console.log(name);  // John Doe
+  console.log(age);   // 30
+  console.log(email); // john.doe@example.com
+
+  // Átnevezés
+  const &#123; name: userName, age: userAge, email: userEmail &#125; = user;
+  console.log(userName);  // John Doe
+  console.log(userAge);   // 30
+  console.log(userEmail); // john.doe@example.com
+
+  // Alapértelmezett érték
+  const &#123; name, age, email, gender = 'male' &#125; = user;
+
+  // Beágyazott objektum
+  const user = &#123;
+      name: 'John Doe',
+      address: &#123;
+          city: 'New York',
+          country: 'USA'
+      &#125;
+  &#125;;
+  const &#123; name, address: &#123; city, country &#125; &#125; = user;
+
+  console.log(name);   // John Doe
+  console.log(city);   // New York
+  console.log(country); // USA
+    </pre>
+  </ul>
+</div>
+
+<div>
+  <h3 #consolecoloring data-anchor="consolecoloring">Console coloring</h3>
+  <ul>
+    <li>Console log színezés
+      <ul>
+        <li>Érdekesség, hogy a console.log képes a megadott színnel megjeleníteni a szöveget
+          <ul>
+            <pre>
+  console.log('%c ' + color, 'color: ' + color);
+            </pre>
+            <li>Az első rész a szöveg: '%c ' + color</li>
+            <li>A második rész a szín: 'color: ' + color</li>
+            <li>A fenti esetben maga a szín, és a szín neve megegyezik</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #nullishcoalescing data-anchor="nullishcoalescing">Nullish coalescing</h3>
+  <ul>
+    <li>Logikai operátor, ami a jobb oldalt adja vissza, ha a bal oldal értéke null, vagy undefined</li>
+    <pre>
+  let myValue = someVariable ?? "default value";
+    </pre>
+    <li>Abban különbözik a logikai vagy ( || ) operátortól, hogy ha a bal oldal 0, üres string, vagy false, akkor anem a
+      jobb oldal fog érvényesülni</li>
+  </ul>
+  <br>
+  <h5 #nullishcoalescingvsor data-anchor="nullishcoalescingvsor">Nullish Coalescing vs OR</h5>
+  <ul>
+    <pre>
+  const user = JSON.parse(localStorage.getItem('user') || 'null');
+  const user = JSON.parse(localStorage.getItem('user') ?? 'null');
+    </pre>
+    <ol>
+      <li>OR operator
+        <ul>
+          <li>||</li>
+          <li>Ha a localStorage.getItem('user') null, undefined, false, 0, vagy NaN, akkor az érték null lesz</li>
+          <li>A null fallback érték</li>
+        </ul>
+      </li>
+      <li>Nullish coalescing operator
+        <ul>
+          <li>??</li>
+          <li>Csak akkor alkalmazza a fallback értéket (null), ha az első operandus null, vagy undefined</li>
+        </ul>
+      </li>
+    </ol>
+    <li>Az || operátor többféle "falsy" értékre is reagál, míg a ?? operátor csakis kizárólag null és undefined esetén
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #voidtype data-anchor="voidtype">Void type</h3>
+  <ul>
+    <li>a TypeScript-ben egy speciális típus, amelyet általában függvények visszatérési értékeként használUNK, amikor a
+      függvény nem ad vissza semmilyen értéket</li>
+    <pre>
+  function logMessage(message: string): void &#123;
+    console.log(message);
+  }
+  
+  logMessage("Hello, World!"); // nincs visszatérési érték        
+      </pre>
+    <li>A void nem engedi meg, hogy bármilyen értéket visszaadjon a függvény</li>
+    <li>A null és az undefined, mint visszatérési érték különbözik tőle
+      <ul>
+        <li>A függvénynek ezeket az értékeket vissza kell adnia</li>
+        <pre>
+  function returnNull(): null &#123;
+    // logika
+    return null; // visszaadhatjuk a null-t
+  }
+  
+  function returnUndefined(): undefined &#123;
+    // logika
+    return undefined; // visszaadhatjuk az undefined-ot
+  }
+  
+  function noReturn(): void &#123;
+    // logika
+    // nem ad vissza semmit
+  }          
+        </pre>
+      </ul>
+    </li>
+    <li>Ha egy aszinkron függvény void típusú, akkor azt jelenti, hogy a függvény nem ad vissza semmilyen értéket a
+      Promise-on keresztül sem, és nem várunk tőle konkrét értéket sem</li>
+    <pre>
+  function doSomethingAsync(): Promise&#60;void> &#123;
+    return new Promise((resolve, reject) => &#123;
+      setTimeout(() => &#123;
+        console.log("Something done!");
+        resolve(); // a függvény nem ad vissza semmilyen értéket
+      }, 1000);
+    });
+  }
+  
+  doSomethingAsync();  // Nincs visszatérő érték
+    </pre>
+  </ul>
+</div>
+
+<div>
+  <h3 #asyncawait data-anchor="asyncawait">Async/Await</h3>
+  <ul>
+    <li>Amikor egy függvény async kulcsszóval van deklarálva, az azt jelenti, hogy a függvény mindig egy Promise-t
+      ad vissza
+      <ul>
+        <li>A kulcsszóval aszinkron működést viszünk véghez</li>
+      </ul>
+    </li>
+    <li>Az await kulcsszó a Promise-ok aszinkron kezelésére szolgál, megállítja a futást addig, amíg a Promise nem
+      teljesül
+      <ul>
+        <li>Vagy hibát nem dob</li>
+      </ul>
+    </li>
+    <li>A két kulcsszó kéz a kézben jár, együtt használandó
+      <ul>
+        <pre>
+          // async/await
+          let getCountryInfo1 = async function () &#123;
+            let response = await fetch('https://api.restful-api.dev/objects/1');
+            let data = await response.json();
+            console.log(data);
+          };
+          // A fetch és a response.json() hívások szinkron módon történnek, tehát a kód sorban végigfut, és a await megvárja, hogy a fetch és a JSON átalakítás befejeződjön, mielőtt továbbhaladna
+          
+          // then
+          let getCountryInfo2 = async function () &#123;
+            fetch('https://api.restful-api.dev/objects/1')
+              .then(resp => resp.json())
+              .then(obj => &#123;
+                console.log(obj);
+              });
+          };
+          // A then segítségével láncoljuk a két aszinkron műveletet
+          // A fetch visszaad egy Promise-ot, és a válasz objektumot (resp) a then láncolatban dolgozzuk fel 
+          
+          getCountryInfo1();
+          getCountryInfo2();
+      </pre>
+        <li>Tehát async-kel ellátott függvény esetében 2 dologban lehetünk biztosak
+          <ol>
+            <li>Aszinkron fut</li>
+            <li>Promise-szal tér vissza</li>
+          </ol>
+        </li>
+        <li>Async/await esetében a response változóba egy, resolved/rejected Promise-t szeretnénk tárolni
+          <ul>
+            <li>Ehhez meg kell várnunk a fetch API feloldását
+              <ul>
+                <li>Ezt az await kulcsszó használatával tudjuk megtenni</li>
+                <li>Az await blokkolja a következő kódsor futását</li>
+                <li>A fős szálat nem blokkolja, csak az async függvényen belüli kódsorokat</li>
+              </ul>
+            </li>
+            <li>Egyszerűbb a használata, mint a then metódusnak</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <pre>
+  async function testFunction() &#123;
+    let result = await someAsyncFunction();
+    console.log(result); // csak akkor fut le, ha a someAsyncFunction() Promise teljesült
+  }
+    </pre>
+    <li>A then() egy Promise metódus, amely lehetővé teszi, hogy egy callback függvényt adjunk hozzá a Promise
+      befejezéséhez, és ha a Promise teljesült, a then() által meghívott függvény lefut</li>
+    <pre>
+  someAsyncFunction().then(result => &#123;
+    console.log(result); // akkor fut le, ha a someAsyncFunction() Promise teljesült
+  });
+    </pre>
+    <li>Az async/await és a then() egymással kompatibilis, mivel mindkettő Promise-okkal dolgozik</li>
+    <li>Ha az await egy Promise-t vár, akkor a Promise teljesülése után a futás folytatódik, és az eredmény
+      közvetlenül visszatér (ez a Promise eredménye)</li>
+    <li>Ha await-et használunk, akkor nem szükséges then()-t használni, de az is működni fog, mert az await egy
+      befejezett Promise értéket ad vissza, amit a then() callback-eként is kezelhetünk</li>
+  </ul>
+</div>
+
+<div>
+  <h3 #generictype data-anchor="generictype">Generic type</h3>
+  <ul>
+    <li>Olyan típus, amelyet paraméterezni lehet más típusokkal</li>
+    <li>Azzal a céllal használjuk, hogy rugalmasabbá és újrahasználhatóbbá tegyük a kódot, anélkül, hogy konkrét
+      típusokat kellene előre meghatározni</li>
+    <li>Előnyei közé tartozik a típusbiztonság, és az újra felhasználhatóság</li>
+    <li>Generikus függvény
+      <ul>
+        <pre>
+  function identity&#60;T>(arg: T): T &#123;
+    return arg;
+  }
+  
+  let result1 = identity(42);       // result1: number
+  let result2 = identity("hello");  // result2: string
+        </pre>
+        <li> T egy generikus típusparaméter, amelyet a függvény használ</li>
+        <li>Amikor meghívjuk a identity függvényt, TypeScript automatikusan kitalálja a típusát a bemeneti értékek
+          alapján</li>
+      </ul>
+    </li>
+    <li>Generikus osztály
+      <ul>
+        <pre>
+  class Box&#60;T> &#123;
+    content: T;
+    
+    constructor(value: T) &#123;
+      this.content = value;
+    }
+    
+    getContent(): T &#123;
+      return this.content;
+    }
+  }
+  
+  let numberBox = new Box&#60;number>(123);  // Box típusa: number
+  let stringBox = new Box&#60;string>("hello"); // Box típusa: string          
+        </pre>
+        <li>A Box osztály generikus, és bármit tárolhat a content változóban (pl. számot vagy sztringet)</li>
+      </ul>
+    </li>
+    <li>Generikus interface
+      <ul>
+        <pre>
+  interface Pair&#60;T, U> &#123;
+    first: T;
+    second: U;
+  }
+  
+  let pair: Pair&#60;string, number> = &#123; first: "hello", second: 42 };
+        </pre>
+        <li>Két típusparamétert használ: T és U</li>
+        <li>Az első elem egy T típusú, a második elem pedig egy U típusú</li>
+      </ul>
+    </li>
+    <li>Típuskorlátozás
+      <ul>
+        <li>Type constraint segítségével érhető el</li>
+        <pre>
+  function merge&#60;T extends &#123; name: string }>(obj1: T, obj2: T): T &#123;
+    return &#123; ...obj1, ...obj2 };
+  }
+  
+  const result = merge(&#123; name: "Alice", age: 25 }, &#123; name: "Bob", age: 30 });
+  // A típus T itt olyan típus lesz, ami tartalmaz egy 'name' tulajdonságot.          
+        </pre>
+        <li>A T típus csak olyan típusokkal működik, amelyek rendelkeznek egy name nevű tulajdonsággal</li>
+      </ul>
+    </li>
+    <li>Type constraint
+      <ul>
+        <li>Avagy típus korlátozás</li>
+        <li>Biztosíthatja, hogy a generikus típus csak bizonyos típusokkal legyen használható, és hogy a
+          típusparaméterek megfeleljenek egy adott szerkezetnek, vagy tulajdonságoknak</li>
+        <li>A type constraint az extends kulcsszóval valósul meg TypeScript-ben</li>
+        <pre>
+  function logLength&#60;T extends &#123; length: number }>(item: T): void &#123;
+    console.log(item.length);
+  }
+  
+  logLength("Hello, World!");  // Működik, mivel a stringnek van 'length' tulajdonsága
+  logLength([1, 2, 3]);        // Működik, mivel az arraynek is van 'length' tulajdonsága
+  logLength(42);               // Hiba: Az 'number' típusnak nincs 'length' tulajdonsága          
+        </pre>
+        <li>A logLength függvény csak olyan típusokkal hívható meg, amelyek rendelkeznek length tulajdonsággal</li>
+        <li>Több típusra is lehetséges a korlátozás</li>
+        <pre>
+  function merge&#60;T extends &#123; name: string }, U extends &#123; age: number }>(obj1: T, obj2: U): T & U &#123;
+    return &#123; ...obj1, ...obj2 };
+  }
+  
+  const mergedObj = merge(&#123; name: "Alice" }, &#123; age: 30 });
+  // mergedObj típusa: &#123; name: string } & &#123; age: number }
+  
+  console.log(mergedObj);  // &#123; name: "Alice", age: 30 }          
+        </pre>
+        <li>A T típusú objektumnak rendelkeznie kell name, az U típusú objektumnak pedig age nevű tulajdonsággal</li>
+        <li>Alapértelmezett típuskorlátozás
+          <ul>
+            <pre>
+  interface Person &#123;
+    name: string;
+    age: number;
+  }
+  
+  function greet&#60;T extends Person>(person: T): string &#123; // a person: T egy T típusú bemeneti paraméter
+    return `Hello, $&#123;person.name}!`;
+  }
+  
+  const person = &#123; name: "John", age: 25 };
+  const message = greet(person);  // Hello, John!
+            </pre>
+            <li>A greet függvény olyan generikus típusparamétert használ, amely a Person interfészre van korlátozva</li>
+            <li>A függvény csak olyan típusokkal hívható meg, amelyek rendelkeznek name és age tulajdonságokkal</li>
+          </ul>
+        </li>
+        <li>Típuskorlátozás osztályokkal
+          <ul>
+            <pre>
+  class Animal &#123;
+    name: string;
+    constructor(name: string) &#123;
+      this.name = name;
+    }
+  }
+  
+  class Dog extends Animal &#123;
+    breed: string;
+    constructor(name: string, breed: string) &#123;
+      super(name);
+      this.breed = breed;
+    }
+  }
+  
+  function createAnimal&#60;T extends Animal>(animalClass: new (name: string) => T, name: string): T &#123;
+    return new animalClass(name);
+  }
+  
+  const dog = createAnimal(Dog, "Buddy");
+  console.log(dog.name);  // Buddy
+  console.log(dog.breed); // undefined (mivel a Dog típus nem lett teljesen inicializálva)
+            </pre>
+            <li>A createAnimal függvény olyan generikus típusparamétert használ, amely csak Animal típusú objektumokkal
+              működik, vagy azok leszármazottjaival (például Dog)</li>
+            <li>A Dog konstruktorában a name azért van jelen, mert a Dog osztály leszármazik az Animal osztályból</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #packagejsonscripts data-anchor="packagejsonscripts">package.json scripts</h3>
+  <ul>
+    <pre>
+  "scripts": &#123;
+    "&#60;kulcs>": "&#60;parancs>"
+  }
+    </pre>
+    <li>A &#60;kulcs> az a név, amit használni fogunk az npm run után</li>
+    <li>Az &#60;parancs> az a tényleges parancs, amit futtatni szeretnénk</li>
+    <pre>
+  "scripts": &#123;
+    ...
+    "hello": "echo 'Hello, world!'" // a terminálba kiírjuk, hogy Hello, world! az npm run hello paranccsal
+  },
+    </pre>
+    <ul>
+      <li>npm
+        <ul>
+          <li>Node Package Manager</li>
+          <li>Az npm a Node.js csomagkezelője, és a scripts szekcióban meghatározott parancsokat tudja futtatni</li>
+        </ul>
+      </li>
+      <li>ng
+        <ul>
+          <li>Az ng parancsok az Angular CLI (Command Line Interface) által biztosított parancsok</li>
+          <li>Az Angular CLI telepítése után az ng parancsot használhatjuk különféle Angular-specifikus feladatokra
+          </li>
+          <li>Az ng parancsok önállóan is futtathatók a terminálban, feltéve, hogy az Angular CLI telepítve van</li>
+        </ul>
+      </li>
+    </ul>
+  </ul>
+</div>
+
+<div>
+  <h3 #importexport data-anchor="importexport">import/export</h3>
+  <ul>
+    <li>Az import és export kulcsszavak az ES6 (ECMAScript 2015) szintaxis részei, és a modern JavaScript-ben
+      elterjedt módszerek a modulok kezelésére</li>
+    <li>A default export akkor praktikus, ha csak egy fő elem van, amit exportálni szeretnénk, míg a named export
+      jobb, ha több, különböző elemet exportálunk</li>
+  </ul>
+  <br>
+  <ol>
+    <li>Named export-import
+      <ul>
+        <li>A fájlban több dolgot is exportálhatunk külön-külön</li>
+        <li>Az importáláskor minden egyes elemet név szerint importálunk</li>
+        <li>Importáláskor kapcsos zárójelbe kell tenni az exportált neveket</li>
+        <pre>
+  export const square = (num: number): number => &#123;
+    return num * num;
+  }
+
+  export const range = (start: number, end: number): number[] => &#123;
+    ...
+    return result;
+  }
+
+  import &#123; square, range } from './utils';
+            </pre>
+      </ul>
+    </li>
+    <li>Default export-import
+      <ul>
+        <li>Lehetővé teszi, hogy egy fájlból csak egyetlen dolgot exportáljunk</li>
+        <li>Nem kell pontosan ugyanazzal a névvel rendelkeznie</li>
+        <li>A default export egy bármilyen néven importálható elem</li>
+        <li>Nem lehet több default export egy fájlban, csak egy
+          <ul>
+            <li>Ellenkező esetben SyntaxError-t fogunk kapni</li>
+          </ul>
+        </li>
+        <pre>
+  export default function range(start: number, end: number): number[] &#123; // nem arrow function, így szükség van a 'function' szóra is
+    ...
+    return result;
+  }
+
+  import range from './utils';
+            </pre>
+      </ul>
+    </li>
+    <br>
+    <table style="width: 100%; table-layout: fixed">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Kód</th>
+          <th>Jellemzők</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Első változat</td>
+          <td>
+            <pre>
+  class ParagraphDemo extends Component &#123;}
+  export default ParagraphDemo;
+                </pre>
+          </td>
+          <td>
+            <ul>
+              <li>Az osztály külön van definiálva</li>
+              <li>Az exportálás egy külön sorban történik</li>
+              <li>Hasznos, ha több dolgot szeretnél exportálni a fájlból</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td>Második változat</td>
+          <td>
+            <pre>
+  export default class ParagraphDemo extends Component &#123;}
+                </pre>
+          </td>
+          <td>
+            <ul>
+              <li>Tömörebb megoldá</li>
+              <li>Az osztály definiálása és exportálása egy lépésben történik</li>
+              <li>Egyszerűbb, ha csak egy dolgot exportálsz</li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <br>
+    <li>Alias
+      <ul>
+        <li>Ha szükség van arra, hogy átnevezzük az importált elemeket, használhatjuk az 'as' kulcsszót</li>
+        <li>Különösen akkor hasznos, ha több exportált elem közül az egyiket más néven kívánjuk használni a kódban
+        </li>
+        <pre>
+  export const square = (num: number): number => &#123;
+    return num * num;
+  }
+
+  export const range = (start: number, end: number): number[] => &#123;
+    ...
+    return result;
+  }
+
+  import &#123; square as mySquare, range as myRange } from './utils';
+            </pre>
+      </ul>
+    </li>
+    <li>Import all
+      <ul>
+        <li>Ha egy fájl összes exportált elemét importálni szeretnénk, akkor használhatjuk a '* as' szintaxist,
+          amely összesíti az összes exportált elemet egy objektumba</li>
+        <pre>
+  export const square = (num: number): number => &#123;
+    return num * num;
+  };
+
+  export const range = (start: number, end: number): number[] => &#123;
+    ...
+    return result;
+  }
+
+  import * as utils from './utils';
+
+  const second = utils.square(2);
+            </pre>
+      </ul>
+    </li>
+    <li>Re-export
+      <ul>
+        <li>Az export és import kombinálása lehetővé teszi, hogy egy fájlban egy másik fájl exportált elemeit újra
+          exportáljuk</li>
+        <pre>
+  <b>// utils.ts</b>
+    export const square = (num: number): number => &#123;
+      return num * num;
+    }
+
+    export const range = (start: number, end: number): number[] => &#123;
+      ...
+      return result;
+    }
+
+  <b>// index.ts</b>
+    export &#123; range } from './utils';
+
+  <b>// file.ts</b>
+    import &#123; range } from './index';
+            </pre>
+      </ul>
+    </li>
+    <li>Import all - Select one
+      <ul>
+        <li>Ha az egész modult importáljuk, de csak egy részt használjuk belőle, használhatjuk a destructuring-ot
+        </li>
+        <pre>
+  import * as utils from './utils';
+
+  const &#123; range } = utils;
+            </pre>
+      </ul>
+    </li>
+  </ol>
+</div>
+
+<div>
+  <h3 #optionalchainingoperator data-anchor="optionalchainingoperator">Optional chaining operator</h3>
+  <ul>
+    <li>Feltételes láncolás operátor / Null-szűrés operátor</li>
+    <li>Hasznos, ha egy objektum tulajdonságaihoz vagy mélyen beágyazott értékekhez szeretnénk hozzáférni, de nem
+      vagyunk biztosak benne, hogy az objektum (vagy annak egy része) létezik</li>
+    <li>Ha a bal oldali operandus null, vagy undefined, akkor az egész kifejezés undefined-dal ad vissza,
+      ahelyett, hogy hibát kapnánk</li>
+    <pre>
+  const user = &#123;
+    profile: &#123;
+      name: "John",
+    },
+  };
+  
+  console.log(user?.profile?.name); // "John"
+  console.log(user?.address?.city); // undefined, de nem dob hibát
+          </pre>
+  </ul>
+</div>
+
+<div>
+  <h3 #functiondeclarations data-anchor="functiondeclarations">Function declarations</h3>
+  <ol>
+    <li>Normál függvény deklaráció
+      <ul>
+        <pre>
+  export function square(num: number): number &#123;
+    return num * num;
+  }
+
+  export default function range(start: number, end: number): number[] => &#123;
+    ...
+    return result;
+  }
+
+  import range, &#123; square } from './utils';
+            </pre>
+      </ul>
+    </li>
+    <li>Anonym függvény deklaráció (arrow function)
+      <ul>
+        <pre>
+  export const square = (num: number): number => &#123;
+    return num * num;
+  }
+
+  const range = (start: number, end: number): number[] => &#123;
+    ...
+    return result;
+  }
+
+  export default range;
+
+  import range, &#123; square } from './utils';
+            </pre>
+      </ul>
+    </li>
+  </ol>
+</div>
+
+<div>
+  <h3 #functioninputs data-anchor="functioninputs">Function inputs</h3>
+  <ul>
+    <li>Paraméter
+      <ul>
+        <li>Helyfoglaló név</li>
+        <li>Változó, amit a függvény deklarációjában definiálunk</li>
+        <li>Jelzi, hogy a függvény vár valamilyen adatot, de a konkrét érték még nem ismert</li>
+        <pre>
+  function greet(name) &#123; // a name egy paraméter
+    console.log(`Hello, $&#123;name}!`);
+  }
+            </pre>
+      </ul>
+    </li>
+    <li>Argomentum
+      <ul>
+        <li>Konkrét érték</li>
+        <li>Érték, amit a függvény hívásakor átadunk a paraméternek</li>
+        <pre>
+  greet("John");
+        </pre>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #nameconventionsandcases data-anchor="nameconventionsandcases">Name conventions and cases</h3>
+  <ul>
+    <li>Property: propertyExample</li>
+    <li>Private property: _privatePropertyExample</li>
+    <li>Observable: observableExample$</li>
+    <li>Subject: subjectExample$</li>
+    <li>Function: exampleFunction()</li>
+    <li>Getter/Setter: get propertyName() / set propertyName(value)</li>
+    <li>Component / Service / Directive / Pipe: ExampleComponent / ExampleService / ExampleDirective / ExamplePipe
+    </li>
+    <li>Snake case: snake_case_example</li>
+    <li>Camel case: camelCaseExample</li>
+    <li>Pascal case: PascalCaseExample</li>
+    <li>Kebab-case: kebab-case-example</li>
+  </ul>
+</div>
+
+<div>
+  <h3 #anonymousobject data-anchor="anonymousobject">Anonymous object</h3>
+  <ul>
+    <li>Olyan objektum, amelyet nem rendelünk hozzá változóhoz, vagy nem adunk neki nevet</li>
+    <pre>
+  &#123;
+      name: 'Bob',
+      age: 30
+  }
+    </pre>
+  </ul>
+</div>
+
+<div>
+  <h3 #emptytype data-anchor="emptytype">Empty type</h3>
+  <ul>
+    <li>Üres típus</li>
+    <li>TypeScript-ben létező típus, amelyet a never típus képvisel</li>
+    <li>Az üres típus jellemzője, hogy semmilyen értéket nem vehet fel</li>
+    <li>A változó soha nem kap értéket, vagy egy függvény soha nem tér vissza</li>
+    <pre>
+  function throwError(message: string): never &#123;
+    throw new Error(message);
+  }      
+    </pre>
+    <li>A throwError függvény never típust ad vissza, mivel soha nem tér vissza, hanem egy hibát dob, és véget vet a
+      futásának</li>
+  </ul>
+</div>
+
+<div>
+  <h3 #jsonfunctions data-anchor="jsonfunctions">JSON functions</h3>
+  <ul>
+    <li>A JavaScript beépített metódusai, amelyek JSON adatokat kezelnek</li>
+    <li>
+      <ol>
+        <li>JSON.stringify()
+          <ul>
+            <li>JavaScript objektumot, vagy tömböt JSON formátumú szöveggé alakít</li>
+            <li>Például localStorage-ba mentéskor hasznos</li>
+            <pre>
+  const user = &#123; name: "John", age: 30 };
+  const jsonString = JSON.stringify(user);
+  console.log(jsonString); 
+
+  ↓↓↓↓↓
+
+  '&#123;"name":"John","age":30}'  // string típus
+            </pre>
+            <li>Három paramétert fogad
+              <ul>
+                <pre>
+  JSON.stringify(value, replacer, space);
+                </pre>
+                <li>A value kötelező, ez az az érték, amit szöveggé kívánunk alakítani</li>
+                <li>A replacer nem kötelező
+                  <ul>
+                    <li>Meghatározza, hogy mely kulcsokat tartsuk meg</li>
+                    <li>Lehet egy...
+                      <ol>
+                        <li>...tömb
+                          <ul>
+                            <pre>
+  const obj = &#123; name: "John", age: 30, city: "New York" };
+  console.log(JSON.stringify(obj, ["name", "city"]));
+
+  ↓↓↓↓↓
+
+  '&#123;"name":"John","city":"New York"}' // az age kimarad
+                            </pre>
+                          </ul>
+                        </li>
+                        <li>...függvény
+                          <ul>
+                            <pre>
+  const obj = &#123; name: "John", age: 30, city: "New York" };
+
+  function replacer(key, value) &#123;
+    if (typeof value === "number") return undefined; // a számokat kihagyjuk
+    return value;
+  }
+
+  console.log(JSON.stringify(obj, replacer));
+
+  ↓↓↓↓↓
+
+  '&#123;"name":"John","city":"New York"}' // az age így is kimarad
+                            </pre>
+                          </ul>
+                        </li>
+                      </ol>
+                    </li>
+                  </ul>
+                </li>
+                <li>A space szintén nem kötelező
+                  <ul>
+                    <li>Egy szám vagy string, amely formázza a JSON szöveget
+                      <ul>
+                        <li>A kulcsok előtti behúzást adatjuk meg</li>
+                      </ul>
+                    </li>
+                    <pre>
+  const obj = &#123; name: "John", age: 30, city: "New York" };
+  console.log(JSON.stringify(obj, null, '')); // a behúzás 0
+
+  ↓↓↓↓↓
+
+  &#123;"name":"John","age":30,"city":"New York"}
+                    </pre>
+                    <pre>
+  const obj = &#123; name: "John", age: 30, city: "New York" };
+  console.log(JSON.stringify(obj, null, 4)); // a behúzás 4
+
+  ↓↓↓↓↓
+
+  &#123;
+      "name": "John",
+      "age": 30,
+      "city": "New York"
+  ....                      // 4 karakter jönnek beljebb a kulcsok
+  }
+                    </pre>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>JSON.parse()
+          <ul>
+            <li>JSON formátumú szöveget JavaScript objektummá vagy tömbbé alakít</li>
+            <li>Hasznos például localStorage-ban tárolt szöveg kiolvasásakor</li>
+            <pre>
+  const jsonString = '&#123;"name":"John","age":30}';
+  const userObj = JSON.parse(jsonString);
+  console.log(userObj); 
+
+  ↓↓↓↓↓
+
+  &#123;name: "John", age: 30} // objektum
+            </pre>
+          </ul>
+        </li>
+      </ol>
+    </li>
+    <table style="border-collapse: collapse; width: 100%;">
+      <tr>
+        <th>Függvény</th>
+        <th>Mit csinál?</th>
+        <th>Példa input</th>
+        <th>Példa output</th>
+      </tr>
+      <tr>
+        <td>JSON.stringify()</td>
+        <td>Objektumot JSON szöveggé alakít</td>
+        <td>&#123; name: "John", age: 30 }</td>
+        <td>'&#123;"name":"John","age":30}'</td>
+      </tr>
+      <tr>
+        <td>JSON.parse()</td>
+        <td>JSON szöveget objektummá alakít</td>
+        <td>'&#123;"name":"John","age":30}'</td>
+        <td>&#123; name: "John", age: 30 }</td>
+      </tr>
+    </table>
+
+  </ul>
+</div>
+
+<div>
+  <h3 #angularpipes data-anchor="angularpipes">Angular pipes</h3>
+  <ul>
+    <li>Beépített pipe-ok</li>
+    <li>Az Angular beépített pipe-ok a CommonModule részei</li>
+    <br>
+    <li>Szöveg formázása
+      <table style="border-collapse: collapse; width: 100%;">
+        <tr>
+          <th></th>
+          <th>leírás</th>
+          <th>példa</th>
+        </tr>
+        <tr>
+          <td><b>uppercase</b></td>
+          <td>Nagybetűssé alakítja a szöveget</td>
+          <td>"hello" | uppercase → <b>"HELLO"</b></td>
+        </tr>
+        <tr>
+          <td><b>lowercase</b></td>
+          <td>Kisbetűssé alakítja a szöveget</td>
+          <td>"Hello" | lowercase → <b>"hello"</b></td>
+        </tr>
+        <tr>
+          <td><b>titlecase</b></td>
+          <td>Minden szó első betűjét nagybetűssé alakítja</td>
+          <td>"hello world" | titlecase → <b>"Hello World"</b></td>
+        </tr>
+        <tr>
+          <td><b>slice</b></td>
+          <td>Részstring kivágása</td>
+          <td>"Angular" | slice:1:4 → <b>"ngu"</b></td>
+        </tr>
+        <tr>
+          <td><b>json</b></td>
+          <td>Objektum JSON formátumba alakítása</td>
+          <td>&#123; name: "John", age: 30 } | json → <b>&#123;"name":"John","age":30}</b></td>
+        </tr>
+      </table>
+    </li>
+    <br>
+    <li>Számformázás
+      <table style="border-collapse: collapse; width: 100%;">
+        <tr>
+          <th></th>
+          <th>leírás</th>
+          <th>példa</th>
+        </tr>
+        <tr>
+          <td><b>number</b></td>
+          <td>Tizedesjegyek és elválasztók beállítása</td>
+          <td>1234.5 | number:'1.2-2' → <b>"1,234.50"</b></td>
+        </tr>
+        <tr>
+          <td><b>percent</b></td>
+          <td>Százalékos formátum</td>
+          <td>0.2543 | percent:'1.2-2' → <b>"25.43%"</b></td>
+        </tr>
+        <tr>
+          <td><b>currency</b></td>
+          <td>Pénznem formázása</td>
+          <td>1234.5 | currency:'EUR' → <b>"€1,234.50"</b></td>
+        </tr>
+      </table>
+    </li>
+    <br>
+    <li>Dátum formázás
+      <table style="border-collapse: collapse; width: 100%;">
+        <tr>
+          <th></th>
+          <th>leírás</th>
+          <th>példa</th>
+        </tr>
+        <tr>
+          <td><b>date</b></td>
+          <td>Dátum és idő formázása</td>
+          <td>today | date:'yyyy-MM-dd' → <b>"2024-01-31"</b></td>
+        </tr>
+        <tr>
+          <td><b>date</b></td>
+          <td>Rövidebb formátum</td>
+          <td>today | date:'short' → <b>"1/31/24, 12:00 AM"</b></td>
+        </tr>
+      </table>
+    </li>
+    <br>
+    <li> i18n (nemzetközi formázás)
+      <table style="border-collapse: collapse; width: 100%;">
+        <tr>
+          <th></th>
+          <th>leírás</th>
+          <th>példa</th>
+        </tr>
+        <tr>
+          <td><b>i18nPlural</b></td>
+          <td>Többes szám formázás</td>
+          <td>&#123;=0: 'nincs elem', =1: '1 elem', other: '&#123;} elem'}</td>
+        </tr>
+        <tr>
+          <td><b>i18nSelect</b></td>
+          <td>Feltételes szövegmegjelenítés</td>
+          <td>&#123;male: 'Mr.', female: 'Ms.', other: 'User'}</td>
+        </tr>
+      </table>
+    </li>
+    <br>
+    <li>Objektum és tömb
+      <table style="border-collapse: collapse; width: 100%;">
+        <tr>
+          <th></th>
+          <th>leírás</th>
+          <th>példa</th>
+        </tr>
+        <tr>
+          <td><b>keyvalue</b></td>
+          <td>Objektum kulcs-érték párjait listává alakítja</td>
+          <td>&#123;name: "John", age: 30} | keyvalue → <b>[&#123;key: "name", value: "John"}, &#123;key: "age", value:
+              30}]</b></td>
+        </tr>
+        <tr>
+          <td><b>async</b></td>
+          <td>Observable vagy Promise értékének kiolvasása</td>
+          <td>user$ | async</td>
+        </tr>
+      </table>
+    </li>
+    <pre>
+  <b>// keyvalue</b>
+  // Objektumok kulcs-érték párjait alakítja át egy tömbbé, ahol minden elem egy &#123; key, value } objektum
+
+  &#60;div *ngFor="let item of &#123;name: 'John', age: 30} | keyvalue">
+    &#60;p>&#123; &#123; item.key }}: &#123; &#123; item.value }}&#60;/p>
+  &#60;/div>
+
+  ↓↓↓↓↓
+
+  // 2 ciklus
+
+  &#60;div>
+    &#60;p>name: John&#60;/p>
+  &#60;/div>
+
+  &#60;div>
+    &#60;p>age: 30&#60;/p>
+  &#60;/div>
+    </pre>
+    <pre>
+  <b>// async</b>
+  // Observable, vagy Promise értékének kiolvasására szolgál
+
+
+  // Observable
+  import &#123; Component } from '@angular/core';
+  import &#123; Observable, of } from 'rxjs';
+
+  @Component(&#123;
+    selector: 'app-root',
+    template: `&#60;p>&#123; &#123; user$ | async }}&#60;/p>`
+  })
+  export class AppComponent &#123;
+    user$: Observable&#60;string> = of('Jack Smith');
+  }
+
+  // Amint az Observable kibocsátja az értéket, a kimenet Jack Smith lesz
+  // Az async pipe automatikusan előfizet (subscribe) az Observable-re és leiratkozik róla, amikor a komponens megszűnik
+
+
+
+  // Promise
+  import &#123; Component } from '@angular/core';
+
+  @Component(&#123;
+    selector: 'app-root',
+    template: `&#60;p>&#123; &#123; user | async }}&#60;/p>`
+  })
+  export class AppComponent &#123;
+    user = new Promise(resolve => setTimeout(() => resolve('Jack Smith'), 2000));
+  }
+
+  // 2 másodperc után megjelenik a Jack Smith
+    </pre>
+  </ul>
+</div>
+
+<div>
+  <h3 #valuevsreference data-anchor="valuevsreference">Value vs reference</h3>
+  <ul>
+    <li>JavaScript-ben az értékek két típusra oszthatók
+      <ol>
+        <li>Primitív típus / Value type</li>
+        <li>Objektum / Reference type</li>
+      </ol>
+    </li>
+    <li>Value type
+      <ul>
+        <li>A primitív típusok közvetlenül a memóriában tárolódnak</li>
+        <li>Ha egy változót másolunk, az érték másolatát kapjuk, így az eredeti változó nem módosul</li>
+        <li>Primitív típusok: number, string, boolean, null, undefined, symbol, BigInt</li>
+        <pre>
+  let a = 10;
+  let b = a;  // lemásoljuk
+
+  b = 20;  // b értékének módosítása nem változtatja meg az a értékét
+
+  console.log(a); // 10
+  console.log(b); // 20
+        </pre>
+      </ul>
+    </li>
+    <li>Reference type
+      <ul>
+        <li>A hivatkozás típusok az adatok memóriában lévő helyére mutató referenciát tárolnak
+          <ul>
+            <li>Magyarán memóriacímet tárolnak</li>
+          </ul>
+        </li>
+        <li>Ha egy ilyen változót másolunk, mindkét változó ugyanarra a memóriahelyre mutat, így a módosítás minden
+          helyen érvényes lesz</li>
+        <li>Objektum: object, array, function, Date</li>
+        <pre>
+  let obj1 = &#123; name: "John", age: 28 };
+  let obj2 = obj1;  // hivatkozást másolunk
+
+  obj2.name = "John";  // obj1 is módosul
+  console.log(obj1.name); // "John"
+  console.log(obj2.name); // "John"
+        </pre>
+        <img src="assets/imgs/js_ref_type.png" width="100%">
+        <br>
+        <br>
+        <li>A referencia alapú másolás elkerülhető
+          <ol>
+            <li>Array másolás
+              <ul>
+                <pre>
+  let arr1 = [1, 2, 3];
+  let arr2 = [...arr1]; // spread operátorral való másolás
+
+  arr2.push(4);
+
+  console.log(arr1); // [1, 2, 3]
+  console.log(arr2); // [1, 2, 3, 4]  // arr1 nem változott
+                </pre>
+              </ul>
+            </li>
+            <li>Object másolás
+              <ul>
+                <pre>
+  let obj1 = &#123; name: "Jack" };
+  let obj2 = &#123; ...obj1 }; // új objektum készül spread operátorral
+
+  obj2.name = "Joe";
+
+  console.log(obj1.name); // "Jack" // nem változott meg
+  console.log(obj2.name); // "Joe"
+                </pre>
+              </ul>
+            </li>
+            <li>Deep copy
+              <ul>
+                <pre>
+  let obj1 = &#123; name: "Jack", address: &#123; city: "NY" } };
+  let obj2 = JSON.parse(JSON.stringify(obj1)); // mély másolás
+
+  obj2.address.city = "LA";
+
+  console.log(obj1.address.city); // "NY" // aZ eredeti érték nem változott
+  console.log(obj2.address.city); // "LA"
+                </pre>
+              </ul>
+            </li>
+          </ol>
+        </li>
+      </ul>
+    </li>
+    <li>Amikor függvénynek paraméterként értéket adunk át, primitív típus esetén új változó jön létre egy másik címen,
+      ugyanazzal az értékkel, objektum esetében pedig ugyanarra a memóriacímre fog mutatni az új, függvénynek átadott
+      változónk
+      <ul>
+        <li>Ebből az következik, hogy ha a függvényen belül változtatjuk a primitív típus értékét, akkor az eredeti
+          változónk értéke marad a régi, objektum esetében viszont minden változónk ugyanarra a címre mutat, így
+          megváltoztatjuk a benne lévő értéket</li>
+        <pre>
+  let code = 'ABC123';
+
+  let person = &#123; name: 'Jill', age: 40 };
+
+  function checkIn(passenger, flightCode) &#123;
+    flightCode = 'QWE987'; // a code értéke változatlan marad
+
+    passenger.name = 'Sarah'; // a person értéke ettől a pillanattól kezdve &#123; name: 'Sarah', age: 40 }
+  }
+
+  checkIn(person, code);
+          </pre>
+      </ul>
+    </li>
+    <li>Egyenlőségek ellenőrzése
+      <ul>
+        <pre>
+  // primitív típusok
+
+  let x = 30;
+  let y = 30;
+
+  console.log(x === y); // true
+        </pre>
+        <li>A két különböző memóriacímen lévő érték ugyanaz</li>
+        <pre>
+  // referencia típusok
+
+  let obj1 = &#123; age: 25 };
+  let obj2 = &#123; age: 25 };
+
+  console.log(obj1 === obj2); // false
+        </pre>
+        <li>A két objektum más címen tárolja a referenciáját az objektumhoz, ezért nem egyenlő a kettő értéke
+          <ul>
+            <li>Más referencia értéket tárolnak</li>
+          </ul>
+        </li>
+        <pre>
+  // referencia típusok
+
+  let obj2 = &#123; age: 25 };
+  let obj3 = obj2; // 
+
+  console.log(obj2 === obj3); // true
+        </pre>
+        <li>Referencia másolódik, így mindkettő ugyanazt a referencia értéket fogja tárolni</li>
+        <pre>
+  let arr1 = [20, 10, 30];
+  let arr2 = arr1;
+
+  arr2.push(50, 40);
+
+  console.log(arr2); // [20, 10, 30, 50, 40]
+  console.log(arr1); // [20, 10, 30, 50, 40]
+        </pre>
+        <li>A két új elem arr1-hez is hozzáadódik, mert refeerencia típus</li>
+        <pre>
+  let arr1 = [20, 10, 30];
+  let arr2 = arr1;
+
+  arr1 = []; // arr1-nek új memóriacímet adunk
+  arr2.push(50, 40);
+
+  console.log(arr2); // [20, 10, 30, 50, 40]
+  console.log(arr1); // []
+        </pre>
+        <li>Az arr1-nek üres tömb átadásával tulajdonképpen egy új tömböt hoztunk létre, ami más memóriacímet kap, ezért
+          marad üres, arr2 pedig korábban megkapta arr1 referenciáját, ami egy három elemű tömb volt, és ahhoz adtunk
+          hozzá még kettőt</li>
+        <pre>
+  let age = 30;
+  let obj1 = &#123; age: 30 };
+
+  console.log(obj1.age === age); // true
+        </pre>
+        <li>Primitív típust hasonlítunk össze egy referencia típus egyik property-jével, egy olyan property-vel, aminek
+          típusa szintén primitív
+          <ul>
+            <li>Az objektum (obj1) referencia típusú, de a benne lévő property nem</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #implementsvsextends data-anchor="implementsvsextends">Implements vs extends</h3>
+  <ul>
+    <li>Alapvető objektumorientált programozási fogalmak</li>
+    <li>Gyakran előfordulnak TypeScript-ben is</li>
+  </ul>
+  <br>
+  <ol>
+    <li>extends (Öröklés)
+      <ul>
+        <li>Arra szolgál, hogy egy osztály (subclass) örököljön egy másik osztálytól (superclass)</li>
+        <li>A származtatott osztály (child class) megkapja az ősosztály (parent class) tulajdonságait és metódusait</li>
+        <li>JavaScript-ben az osztályok öröklésére szolgál, amelyet az ES6-ban vezettek be</li>
+        <pre>
+  <b>// superclass</b>
+  class Animal &#123;
+    name: string;
+  
+    constructor(name: string) &#123;
+      this.name = name;
+    }
+  
+    speak(): void &#123;
+      console.log(`$&#123;this.name} makes a sound`);
+    }
+  }
+
+  <b>// subclass</b>
+  class Dog extends Animal &#123;
+    breed: string;
+  
+    constructor(name: string, breed: string) &#123;
+      super(name);  // meghívja az ősosztály (Animal) konstruktorát
+      this.breed = breed;
+    }
+  
+    speak(): void &#123;
+      console.log(`$&#123;this.name} barks`);
+    }
+  }
+
+  -----
+
+  const dog = new Dog('Buddy', 'Golden Retriever');
+  dog.speak();
+
+  ↓↓↓↓↓
+
+  'Buddy barks' // felülírtuk az ősosztály metódusát a származtatott osztályéval
+        </pre>
+      </ul>
+    </li>
+    <li>implements (Interfész implementálása)
+      <ul>
+        <li>Egy interfész implementálására szolgál</li>
+        <li>Az interfész egy olyan "egyezmény", amely meghatározza, hogy egy osztálynak milyen metódusokat, és
+          tulajdonságokat kell biztosítania</li>
+        <li>Az implements biztosítja, hogy az osztály kötelezően implementálja az interfészben meghatározott metódusokat
+        </li>
+        <li>Az interfészek nem tartalmaznak logikát, csak a szükséges metódusokat és tulajdonságokat</li>
+        <li>Az osztály, amely az interfészt implementálja, biztosítja a metódusok tényleges működését</li>
+        <li>Kifejezetten TypeScript-ben lett bevezetve</li>
+        <pre>
+  <b>// interface</b>
+  interface Animal &#123;
+    name: string;
+    speak(): void;
+  }
+
+  // class
+  class Dog implements Animal &#123;
+    name: string;
+  
+    constructor(name: string) &#123;
+      this.name = name;
+    }
+  
+    speak(): void &#123; // a speak method létezik az osztályban
+      console.log(`$&#123;this.name} barks`);
+    }
+  }
+
+  -----
+
+  const dog = new Dog('Buddy');
+  dog.speak();
+
+  ↓↓↓↓↓
+
+  'Buddy barks'
+        </pre>
+      </ul>
+    </li>
+  </ol>
+</div>
+
+<div>
+  <h3 #oopexpressions data-anchor="oopexpressions">OOP expressions</h3>
+  <ul>
+    <li>Az extends, és implements kulcsszavakon kívül más fontos kifejezések is léteznek az objektumorientált
+      programozásban</li>
+  </ul>
+  <br>
+  <ol>
+    <li>static
+      <ul>
+        <li>A static kulcsszóval ellátott metódusok és tulajdonságok nem az osztály példányaihoz tartoznak, hanem
+          magához az osztályhoz</li>
+        <li>Ezeket a metódusokat a példányosítás előtt is elérhetjük az osztály nevén keresztül</li>
+        <pre>
+  class Calculator &#123;
+    static add(a: number, b: number): number &#123;
+      return a + b;
+    }
+  }
+
+  console.log(Calculator.add(2, 3));
+
+  ↓↓↓↓↓
+
+  5
+        </pre>
+        <li>Az add metódus statisztikus és az osztályon keresztül hívható, anélkül, hogy példányosítanánk</li>
+      </ul>
+    </li>
+    <li>abstract
+      <ul>
+        <li>Olyan osztályokat hozhatunk létre, amelyek nem példányosíthatók, de leszármazott osztályok számára
+          biztosítanak alapot</li>
+        <pre>
+  abstract class Animal &#123;
+    abstract sound(): void;  // absztrakt metódus, amelyet a származtatott osztályoknak kell implementálniuk
+  }
+  
+  class Dog extends Animal &#123;
+    sound() &#123;
+      console.log('Bark');
+    }
+  }
+  
+  const dog = new Dog();
+  dog.sound();  
+  
+  ↓↓↓↓↓
+
+  'Bark'
+        </pre>
+        <li>Az Animal osztály absztrakt, és nem példányosítható közvetlenül
+          <ul>
+            <li>A Dog osztály implementálja az abstract metódust</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li>interface
+      <ul>
+        <li>Az osztályok számára szabályokat (metódusok, tulajdonságok) ad, amelyeket az osztályoknak implementálniuk
+          kell</li>
+        <li>Az interfészek nem tartalmaznak implementációt, csak a szükséges struktúrát</li>
+        <pre>
+  interface Vehicle &#123;
+    wheels: number;
+    drive(): void;
+  }
+  
+  class Car implements Vehicle &#123;
+    wheels = 4;
+    drive() &#123;
+      console.log('Driving a car');
+    }
+  }          
+        </pre>
+        <li>Az interface egy struktúrát definiál, amelyet a Car osztály implementál</li>
+      </ul>
+    </li>
+    <li>constructor
+      <ul>
+        <li>Az osztály példányosításakor meghívott speciális metódus</li>
+        <li>A konstruktor az osztály példányosítása előtt fut le</li>
+        <pre>
+  class Person &#123;
+    name: string;
+    constructor(name: string) &#123;
+      this.name = name;
+    }
+  }
+  
+  const person = new Person('Joe');
+  console.log(person.name);
+  
+  ↓↓↓↓↓
+
+  'Joe'
+        </pre>
+      </ul>
+    </li>
+    <li>get/set
+      <ul>
+        <li>Lehetővé teszik, hogy az osztályon belül tulajdonságokat kezeljünk getter-ekkel és setter-ekkel, amelyeket
+          példányosításkor hívhatunk meg a szokásos tulajdonságok helyett</li>
+      </ul>
+      <pre>
+  class Person &#123;
+    private _name: string;
+    
+    constructor(name: string) &#123;
+      this._name = name;
+    }
+  
+    get name(): string &#123;
+      return this._name;
+    }
+  
+    set name(value: string) &#123;
+      if (value.length > 0) &#123;
+        this._name = value;
+      }
+    }
+  }
+  
+  const person = new Person('John');
+  console.log(person.name); 
+
+  ↓↓↓↓↓
+
+  'John'
+
+  person.name = 'Jane';  // setter hívása
+  console.log(person.name);
+  
+  ↓↓↓↓↓
+
+  'Jane'
+      </pre>
+    </li>
+    <li>readonly
+      <ul>
+        <li>
+          A kulcsszóval ellátott tulajdonságok csak olvashatók, azaz csak a konstruktorban, vagy az osztály
+          példányosításakor adhatóak meg értékeik, később nem módosíthatók</li>
+        <pre>
+  class Person &#123;
+    readonly name: string;
+    constructor(name: string) &#123;
+      this.name = name;
+    }
+  }
+  
+  const person = new Person('Sarah');
+  console.log(person.name);
+
+  ↓↓↓↓↓
+
+  'Sarah'
+
+  // person.name = 'Jane';  // hiba, mert a name readonly            
+          </pre>
+      </ul>
+    </li>
+    <li>type
+      <ul>
+        <li>Segítségével típusokat hozhatunk létre, amelyek változókat és objektumokat leíró típusokat tartalmaznak</li>
+        <pre>
+  type Point = &#123; x: number, y: number };
+
+  const point: Point = &#123; x: 10, y: 20 };
+        </pre>
+      </ul>
+    </li>
+    <li>tuple
+      <ul>
+        <li>A tuple típusok lehetővé teszik, hogy különböző típusú értékeket tároljunk egy változóban, meghatározott
+          sorrendben</li>
+        <pre>
+  let person: [string, number] = ['John', 25];
+          </pre>
+      </ul>
+    </li>
+    <li>typeof
+      <ul>
+        <li>A kulcsszó segítségével lekérhetjük egy változó típusát, amely statikusan meghatározható</li>
+        <pre>
+  let age = 30;
+  let typeOfAge = typeof age;
+
+  console.log(typeOfAge);
+
+  ↓↓↓↓↓
+
+  number
+        </pre>
+      </ul>
+    </li>
+    <li>in
+      <ul>
+        <li>Az in operátor az objektumok tulajdonságainak ellenőrzésére szolgál</li>
+        <pre>
+  let person = &#123; name: 'John', age: 25 };
+
+  console.log('name' in person);
+
+  ↓↓↓↓↓
+
+  true
+
+  console.log('address' in person);
+
+  ↓↓↓↓↓
+
+  false
+        </pre>
+      </ul>
+    </li>
+    <li>instanceof
+      <ul>
+        <li>Az instanceof operátor segítségével megállapíthatjuk, hogy egy objektum egy bizonyos osztály példánya-e</li>
+        <pre>
+  class Person &#123;
+    constructor(public name: string) &#123; }
+  }
+  
+  const person = new Person('John');
+
+  console.log(person instanceof Person);          
+
+  ↓↓↓↓↓
+
+  true
+        </pre>
+      </ul>
+    </li>
+  </ol>
+</div>
+
+<div>
+  <h3 #ngmodel data-anchor="ngmodel">ngModel</h3>
+  <ul>
+    <li>Az Angular FormsModule egyik kulcsfontosságú direktívája, amely lehetővé teszi a kéttirányú adat binding-ot
+      (two-way data binding) a template-ek és a komponens változói között</li>
+    <li>Biztosítja, hogy a hozzá kötött változó szinkronban maradjon, vagyis ha az egyik változik, a másik is
+      automatikusan frissül</li>
+    <pre>
+  // template
+  &#60;input type="text" [(ngModel)]="name">
+  &#60;p>Beírt név: &#123; &#123; name }}&#60;/p>
+
+  // class
+  import &#123; Component } from '@angular/core';
+
+  @Component(&#123;
+    selector: 'app-example',
+    templateUrl: './example.component.html'
+  })
+  export class ExampleComponent &#123;
+    name: string = '';
+  }
+    </pre>
+    <li>Egyirányú binding [ngModel]
+      <ul>
+        <li>Ha csak az érték beállítására van szükség használni az ngModel-t, akkor csak egyirányú bindingként kell
+          használni</li>
+        <pre>
+            &#60;input type="text" [ngModel]="name">
+        </pre>
+        <li>Ebben az esetben az input mező megkapja a name értékét, de ha a felhasználó módosítja az input mezőt, az nem
+          fogja megváltoztatni a name változót</li>
+      </ul>
+    </li>
+    <li>Eseménykezelés
+      <ul>
+        <li>Ha szeretnénk figyelni, mikor változik az input mező értéke, akkor az (ngModelChange) esemény segíthet</li>
+        <pre>
+  &#60;input type="text" [(ngModel)]="name" (ngModelChange)="onNameChange($event)">
+
+  onNameChange(newValue: string) &#123;
+    console.log('Name változás történt:', newValue);
+  }
+        </pre>
+        <li>Az (ngModelChange) akkor fut le, amikor az input mező értéke megváltozik</li>
+      </ul>
+    </li>
+    <li>Egyirányú binding és eseménykezelés
+      <ul>
+        <li>A kétirányú adatbinding ([(ngModel)]) valójában két különálló binding kombinációja</li>
+        <pre>
+  &#60;input type="text" [(ngModel)]="name">
+
+  // the same
+
+  &#60;input type="text" [ngModel]="name" (ngModelChange)="name = $event"> // az új értéket tartalmazza az $event
+        </pre>
+        <li>Az $event egy speciális változó Angularban, amely az eseménykezelő függvényekben elérhető, és mindig az
+          adott esemény objektumát tartalmazza</li>
+        <li>A dollár jel konvenció, elkülönítés véget</li>
+        <li>Az $event itt már maga a beírt érték, így nincs szükség .target.value-ra</li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #anonymousentities data-anchor="anonymousentities">Anonymous entities</h3>
+  <ul>
+    <li>Anonymous object
+      <ul>
+        <li>Névtelen objektum</li>
+        <li>Olyan objektum, amelyet közvetlenül létrehozunk anélkül, hogy külön változóba mentenénk</li>
+        <li>Általában paraméterként adjuk át egy függvénynek, vagy visszatérési értékként használjuk</li>
+        <li>Azonnal létrehozhatjuk, és használhatjuk, anélkül, hogy tárolnánk</li>
+        <li>Függvény paraméter
+          <ul>
+            <pre>
+  function printPerson(person: &#123; name: string; age: number }) &#123;
+    console.log(`$&#123;person.name} $&#123;person.age} éves`);
+  }
+  
+  printPerson(&#123; name: "John", age: 30 });              
+            </pre>
+          </ul>
+        </li>
+        <li>Visszatérési érték
+          <ul>
+            <pre>
+  function createUser(name: string, age: number) &#123;
+    return &#123; name, age };
+  }
+  
+  console.log(createUser("Anna", 25));    
+  
+  ↓↓↓↓↓
+
+  &#123; name: "Anna", age: 25 } 
+            </pre>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li>Anonymous function
+      <ul>
+        <li>Névtelen függvény</li>
+        <li>Egy névtelen függvény olyan függvény, amelynek nincs neve, és általában egy változóhoz rendeljük vagy
+          közvetlenül egy másik függvény paramétereként használjuk</li>
+        <pre>
+  const add = function (a: number, b: number) &#123;
+    return a + b;
+  };
+  console.log(add(3, 5)); // 8            
+        </pre>
+        <pre>
+  const multiply = (a: number, b: number) => a * b;
+  console.log(multiply(4, 2)); // 8
+        </pre>
+        <pre>
+  setTimeout(function () &#123;
+    console.log("Késleltetett üzenet");
+  }, 1000);          
+        </pre>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #stylepreprocessoroptions data-anchor="stylepreprocessoroptions">stylePreprocessorOptions</h3>
+  <ul>
+    <li>Angular konfigurációs beállítás, amelyet a angular.json fájlban lehet megadni</li>
+    <li>lehetővé teszi az Angular számára, hogy a stílus preprocesszorok (pl. SCSS, LESS) esetén rövidebb, relatív
+      elérési utakat használjunk az @import utasításokban</li>
+    <pre>
+  // SCSS importálás preprocesszálás nélkül
+
+  @import '../scss/variables.scss';
+
+  // SCSS importálás preprocesszálással
+
+  "stylePreprocessorOptions": &#123;
+    "includePaths": [
+      "src/scss"
+    ]
+  },
+
+  @import 'variables.scss';
+    </pre>
+    <li>Az Angular automatikusan az src/scss mappát fogja keresni az @import hivatkozásnál
+      <ul>
+        <li>Vagy más mappákat, amiket még megadunk a tömbben</li>
+      </ul>
+    </li>
+    <li>Az beállított elérési út minden SCSS fájl importálásakor érvényes lesz</li>
+  </ul>
+</div>
+
+<div>
+  <h3 #jsmethods data-anchor="jsmethods">Javascript methods</h3>
+  <ul>
+    <li>trim()
+      <ul>
+        <li>Eltávolítja a szöveg elejéről és végéről a felesleges szóközöket</li>
+        <pre>
+  let str = "  Hello World!  ";
+  console.log(str.trim());
+
+  ↓↓↓↓↓
+
+  "Hello World!"
+        </pre>
+      </ul>
+    </li>
+    <li>eval()
+      <ul>
+        <li>Futásidőben JavaScript kódot hajt végre, amit stringként kap</li>
+        <li>biztonsági kockázatot jelenthet</li>
+        <pre>
+  let code = "2 + 2";
+  console.log(eval(code));
+
+  ↓↓↓↓↓
+
+  4
+        </pre>
+      </ul>
+    </li>
+    <li>join()
+      <ul>
+        <li>Egy tömb elemeit összefűzi egy megadott szeparátorral</li>
+        <li>Hasznos, ha egy tömböt szeretnénk stringgé alakítani</li>
+        <pre>
+  let arr = ["Hello", "World"];
+  console.log(arr.join(" "));
+
+  ↓↓↓↓↓
+
+  "Hello World"
+        </pre>
+      </ul>
+    </li>
+    <li>slice()
+      <ul>
+        <li>Visszaadja a tömb, vagy string egészét, vagy egy részét</li>
+        <li>Az eredeti tömböt nem módosítja, hanem egy új tömböt hoz létre</li>
+        <li>Ha paraméter nélkül hívjuk meg, akkor egy teljes másolatot készít az eredeti tömbről</li>
+        <pre>
+  let arr = [1, 2, 3, 4];
+  let copy = arr.slice(); // másolat készítés
+  console.log(copy);
+
+  ↓↓↓↓↓
+
+  [1, 2, 3, 4]
+
+
+  let arr = [1, 2, 3, 4];
+  let part = arr.slice(1); // kizárólag start index-et megadva attól az indextől végig lemásolja az elemeket
+  console.log(part);
+
+  ↓↓↓↓↓
+
+  [2, 3, 4]
+
+
+  let arr = [1, 2, 3, 4, 5];
+  console.log(arr.slice(1, 4)); // A start indexnél kezdődik, és az end index előtti elemig másolja az elemeket
+
+  ↓↓↓↓↓
+
+  [2, 3, 4]
+        </pre>
+      </ul>
+    </li>
+    <li>splice()
+      <ul>
+        <li>Elemeket ad hozzá, töröl vagy cserél egy tömbben</li>
+        <li>A memóriában közvetlenül módosítja a tömb értékét</li>
+        <li>Egy indexet vár, és a törlendő elemek számát</li>
+        <li>Ha törlés nélkül szeretbénk beszúrni, a második paraméternek 0-át kell megadnunk</li>
+        <pre>
+  let arr = [1, 2, 3];
+  arr.splice(1, 1, 99); // töröl 1 elemet az 1-es index helyén, és a helyére 99-et rak
+  console.log(arr);
+
+  ↓↓↓↓↓
+
+  [1, 99, 3]
+
+
+  let arr = [1, 2, 3, 4];
+  arr.splice(2, 0, 99); // a 2-es indexre beszúrja a 99-et, törlés nélkül
+  console.log(arr);
+
+  ↓↓↓↓↓
+
+  [1, 2, 99, 3, 4]
+        </pre>
+      </ul>
+    </li>
+    <li>indexOf()
+      <ul>
+        <li>Visszaadja az adott elem első előfordulási helyét egy tömbben vagy stringben</li>
+        <pre>
+  let arr = [1, 2, 3, 4, 2];
+  console.log(arr.indexOf(2));
+
+  ↓↓↓↓↓
+
+  1
+        </pre>
+      </ul>
+    </li>
+    <li>findIndex()
+      <ul>
+        <li>Visszaadja az első elem indexét, amely megfelel egy feltételnek</li>
+        <pre>
+  let arr = [1, 2, 3, 4, 5];
+  let index = arr.findIndex((x) => x > 3);
+  console.log(index);
+
+  ↓↓↓↓↓
+
+  3 // a 4-es szám a 3-mas indexen már nagyobb, mint 3
+        </pre>
+      </ul>
+    </li>
+    <li>length()
+      <ul>
+        <li>Egy string vagy tömb hosszát adja vissza</li>
+        <li></li>
+        <pre>
+  let arr = [1, 2, 3];
+  console.log(arr.length);
+
+  ↓↓↓↓↓
+
+  3
+        </pre>
+      </ul>
+    </li>
+    <li>push()
+      <ul>
+        <li>A memóriában közvetlenül módosítja a tömb értékét</li>
+        <li>Új elemet ad a tömb végéhez</li>
+        <pre>
+  let arr = [1, 2];
+  arr.push(3);
+  console.log(arr);
+
+  ↓↓↓↓↓
+
+  [1, 2, 3]
+        </pre>
+      </ul>
+    </li>
+    <li>Object.keys()
+      <ul>
+        <li>Visszaadja az objektum összes kulcsát egy tömbben</li>
+        <pre>
+  let obj = &#123; a: 1, b: 2 };
+  console.log(Object.keys(obj));
+
+  ↓↓↓↓↓
+
+  ["a", "b"]
+        </pre>
+      </ul>
+    </li>
+    <li>Object.values()
+      <ul>
+        <li>Visszaadja az objektum összes értékét egy tömbben</li>
+        <pre>
+  let obj = &#123; a: 1, b: 2 };
+  console.log(Object.values(obj));
+
+  ↓↓↓↓↓
+
+  [1, 2]
+        </pre>
+      </ul>
+    </li>
+    <li>Object.hasOwn()
+      <ul>
+        <li>Ellenőrzi, hogy egy adott kulcs közvetlenül az objektumhoz tartozik-e</li>
+        <li>Kulcsok létezésének ellenőrzésére használjuk objektumokban</li>
+        <pre>
+  let obj = &#123; a: 1 };
+  console.log(Object.hasOwn(obj, 'a'));
+
+  ↓↓↓↓↓
+
+  true
+
+  console.log(Object.hasOwn(obj, 'b'));
+
+  ↓↓↓↓↓
+
+  false
+        </pre>
+      </ul>
+    </li>
+    <li>concat()
+      <ul>
+        <li>Két vagy több tömböt vagy stringet összefűz</li>
+        <li>Új tömbök vagy stringek létrehozásához használjuk</li>
+        <pre>
+  let arr1 = [1, 2];
+  let arr2 = [3, 4];
+  console.log(arr1.concat(arr2));
+
+  ↓↓↓↓↓
+
+  [1, 2, 3, 4]
+        </pre>
+      </ul>
+    </li>
+    <li>pop()
+      <ul>
+        <li>Eltávolítja és visszaadja a tömb utolsó elemét</li>
+        <pre>
+  let arr = [1, 2, 3];
+  console.log(arr.pop());
+
+  ↓↓↓↓↓
+
+  3
+
+
+  console.log(arr);
+
+  ↓↓↓↓↓
+
+  [1, 2]
+        </pre>
+      </ul>
+    </li>
+    <li>at()
+      <ul>
+        <li>A tömb, vagy string adott indexű elemét adja vissza, negatív index esetén a végéről számítva</li>
+        <li>Ha pozitív indexet adunk meg az at()-nek, akkor ugyanúgy működik, mint a hagyományos arr[index] szintaxis
+        </li>
+        <pre>
+  let test = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
+
+  console.log(test.at(5));
+
+  ↓↓↓↓↓
+
+  6
+
+
+  let test = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]; // a 13-mas érték a -1-es index
+
+  console.log(test.at(-5));
+
+  ↓↓↓↓↓
+
+  9
+        </pre>
+      </ul>
+    </li>
+    <li>reverse()
+      <ul>
+        <li>Megfordítja a tömb elemeinek sorrendjét</li>
+        <pre>
+  let arr = [1, 2, 3];
+  console.log(arr.reverse());
+
+  ↓↓↓↓↓
+
+  [3, 2, 1]
+        </pre>
+      </ul>
+    </li>
+    <li>flat()
+      <ul>
+        <li>Többdimenziós tömböt lapít egy szinttel</li>
+        <pre>
+  let arr = [1, [2, [3, 4]]];
+  console.log(arr.flat()); // 
+
+  ↓↓↓↓↓
+
+  [1, 2, [3, 4]]
+
+
+  console.log(arr.flat(1)); // 
+
+  ↓↓↓↓↓
+
+  [1, 2, [3, 4]]
+
+  
+  console.log(arr.flat(2)); // 
+
+  ↓↓↓↓↓
+
+  [1, 2, 3, 4]
+        </pre>
+      </ul>
+    </li>
+    <li>sort()
+      <ul>
+        <li>Sorba rendezi a tömb elemeit</li>
+        <pre>
+  let arr = [3, 1, 2];
+  console.log(arr.sort());
+
+  ↓↓↓↓↓
+
+  [1, 2, 3]
+        </pre>
+      </ul>
+    </li>
+    <li>toLowerCase()
+      <ul>
+        <li>A string összes betűjét kisbetűssé alakítja</li>
+        <li></li>
+        <pre>
+  let str = "HELLO";
+  console.log(str.toUpperCase());
+
+  ↓↓↓↓↓
+
+  "hello"
+        </pre>
+      </ul>
+    </li>
+    <li>toUpperCase()
+      <ul>
+        <li>A string összes betűjét nagybetűssé alakítja</li>
+        <pre>
+  let str = "hello";
+  console.log(str.toUpperCase());
+
+  ↓↓↓↓↓
+
+  "HELLO"
+        </pre>
+      </ul>
+    </li>
+    <li>flatMap()
+      <ul>
+        <li>Először egy függvény segítségével átalakítja a tömb elemeit, majd ellapítja az eredményt</li>
+        <pre>
+  const numbers = [1, 2, 3];
+
+  const result = numbers.flatMap(num => [num, num * 2]); // minden számhoz adjuk hozzá a szám és a szám dupláját
+
+  console.log(result); 
+
+  ↓↓↓↓↓
+
+  [1, 2, 2, 4, 3, 6]
+
+
+  const users = [
+    &#123; name: 'Alice', comments: ['Nice post!', 'Thanks!'] },
+    &#123; name: 'Bob', comments: ['Great article!', 'Very helpful.'] },
+    &#123; name: 'Charlie', comments: ['Loved it!', 'Keep it up!'] }
+  ];
+
+  // 
+  const allComments = users.flatMap(user => user.comments); // a flatMap segítségével egy lapos tömböt kapunk, ami tartalmazza az összes hozzászólást
+
+  console.log(allComments);
+
+  ↓↓↓↓↓
+
+  ["Nice post!", "Thanks!", "Great article!", "Very helpful.", "Loved it!", "Keep it up!"]
+
+        </pre>
+      </ul>
+    </li>
+    <li>reduce()
+      <ul>
+        <li>Az elemeket egyetlen értékké redukálja egy függvény alapján</li>
+        <li>Összegzéshez, szorzáshoz, vagy összetettebb aggregációkhoz használjuk</li>
+        <li>Az alapértelmezett viselkedése, hogy a tömb elemeit lépésről lépésre "összegyűjti", és visszaad egy végső
+          értéket</li>
+        <pre>
+  let arr = [1, 2, 3];
+  let sum = arr.reduce((acc, curr) => acc + curr, 0); // 0 a kezdő érték
+  console.log(sum);
+
+  ↓↓↓↓↓
+
+  6
+
+
+  const transactions = [
+    &#123; id: 1, amount: 100, category: 'Food' },
+    &#123; id: 2, amount: 50, category: 'Transport' },
+    &#123; id: 3, amount: 200, category: 'Food' },
+    &#123; id: 4, amount: 150, category: 'Entertainment' },
+    &#123; id: 5, amount: 120, category: 'Food' },
+    &#123; id: 6, amount: 90, category: 'Transport' }
+  ];
+
+  const summary = transactions.reduce((accumulator, transaction) => &#123; // összesítjük a tranzakciók összegét kategóriánként
+    
+    if (!accumulator[transaction.category]) &#123; // ha az adott kategória még nem létezik az accumulator-ben, akkor inicializáljuk
+      accumulator[transaction.category] = 0;
+    }
+
+    accumulator[transaction.category] += transaction.amount; // hozzáadjuk az aktuális tranzakció összegét a megfelelő kategóriához
+
+    return accumulator;
+  }, &#123;}); // a kezdő érték egy üres objektum
+
+  console.log(summary);
+
+  ↓↓↓↓↓
+
+  &#123; Food: 420, Transport: 140, Entertainment: 150 }
+        </pre>
+      </ul>
+    </li>
+    <li>some()
+      <ul>
+        <li>Ellenőrzi, hogy van-e legalább egy olyan elem a tömbben, amely megfelel egy feltételnek</li>
+        <pre>
+  let arr = [1, 2, 3];
+  console.log(arr.some(x => x > 2));
+
+  ↓↓↓↓↓
+
+  true
+
+
+  const transactions = [
+    &#123; id: 1, amount: 100 },
+    &#123; id: 2, amount: 250 },
+    &#123; id: 3, amount: 500 },
+    &#123; id: 4, amount: 1200 },
+    &#123; id: 5, amount: 600 }
+  ];
+
+  const hasLargeTransaction = transactions.some(transaction => transaction.amount > 1000); // ellenőrizzük, hogy van-e olyan tranzakció, ami meghaladja az 1000-et
+
+  console.log(hasLargeTransaction);
+
+  ↓↓↓↓↓
+
+  true
+        </pre>
+      </ul>
+    </li>
+    <li>find()
+      <ul>
+        <li>Visszaadja az első olyan elemet, amely megfelel egy feltételnek</li>
+        <li>Akkor használjuk, ha egy konkrét elem megtalálására van szükség</li>
+        <pre>
+  let arr = [1, 2, 3, 4];
+  console.log(arr.find(x => x > 2));
+
+  ↓↓↓↓↓
+
+  3
+
+
+  const texts = ['hi', 'hello', 'hello there'];
+
+  console.log(texts.find(f => f.length > 6));
+
+  ↓↓↓↓↓
+
+  'hello there'
+        </pre>
+      </ul>
+    </li>
+    <li>split()
+      <ul>
+        <li>Felosztja a stringet egy megadott karakter alapján, és egy tömböt ad vissza</li>
+        <pre>
+  let str = "a,b,c";
+  console.log(str.split(","));
+
+  ↓↓↓↓↓
+
+  ["a", "b", "c"]
+        </pre>
+      </ul>
+    </li>
+    <li>includes()
+      <ul>
+        <li>Ellenőrzi, hogy egy string, vagy tömb tartalmaz-e egy adott részletet, elemet</li>
+        <pre>
+  let str = "hello world";
+  console.log(str.includes("world"));
+
+  ↓↓↓↓↓
+
+  true
+
+
+  const arr = ['ok', 'nemok', 'kb'];
+
+  console.log(arr.includes('kb'));
+
+  ↓↓↓↓↓
+
+  true
+        </pre>
+      </ul>
+    </li>
+    <li>filter()
+      <ul>
+        <li>Új tömböt ad vissza a feltételnek megfelelő elemekkeL</li>
+        <pre>
+  let arr = [1, 2, 3, 4];
+  let filtered = arr.filter(x => x > 2);
+  console.log(filtered);
+
+  ↓↓↓↓↓
+
+  [3, 4]
+        </pre>
+      </ul>
+    </li>
+    <li>map()
+      <ul>
+        <li>Minden elemre alkalmaz egy függvényt, és az eredményeket egy új tömbben adja vissza</li>
+        <pre>
+  let arr = [1, 2, 3];
+  let doubled = arr.map(x => x * 2);
+  console.log(doubled);
+
+  ↓↓↓↓↓
+
+  [2, 4, 6]
+        </pre>
+      </ul>
+    </li>
+    <li>every()
+      <ul>
+        <li>Ellenőrzi, hogy minden elem megfelel-e egy feltételnek</li>
+        <pre>
+  let arr = [1, 2, 3];
+  console.log(arr.every(x => x > 0));
+
+  ↓↓↓↓↓
+
+  true
+        </pre>
+      </ul>
+    </li>
+    <li>Object.entries()
+      <ul>
+        <li>Visszaadja az objektum kulcs-érték párok tömbjét</li>
+        <pre>
+  let obj = &#123; a: 1, b: 2 };
+  console.log(Object.entries(obj));
+
+  ↓↓↓↓↓
+
+  [["a", 1], ["b", 2]]
+        </pre>
+      </ul>
+    </li>
+    <li>Object.assign()
+      <ul>
+        <li>Egy vagy több objektumot egy másik objektumba másol</li>
+        <pre>
+  let target = &#123; a: 1 };
+  let source = &#123; b: 2 };
+  Object.assign(target, source);
+  console.log(target);
+
+  ↓↓↓↓↓
+
+  &#123; a: 1, b: 2 }
+        </pre>
+      </ul>
+    </li>
+    <li>Object.fromEntries()
+      <ul>
+        <li>A kulcs-érték pár tömbből visszaalakítja az objektumot</li>
+        <pre>
+  const entries = [['name', 'Alice'], ['age', 30]];
+  const person = Object.fromEntries(entries);
+  console.log(person);
+
+  ↓↓↓↓↓
+
+  &#123; name: 'Alice', age: 30 }
+        </pre>
+      </ul>
+    </li>
+    <li>Math.random()
+      <ul>
+        <li>Visszaad egy véletlen számot 0 és 1 között</li>
+        <pre>
+          console.log(Math.random());
+
+          ↓↓↓↓↓
+
+          0.132947
+
+
+          const randomInt = Math.floor(Math.random() * 101); // 0 és 100 közötti véletlenszerű egész számot ad vissza
+          console.log(randomInt);
+
+          ↓↓↓↓↓
+
+          32
+        </pre>
+      </ul>
+    </li>
+    <li>Math.floor()
+      <ul>
+        <li>Lefelé kerekíti az értéket</li>
+        <pre>
+          const number = 4.7;
+          console.log(Math.floor(number));
+
+          ↓↓↓↓↓
+
+          4
+        </pre>
+      </ul>
+    </li>
+    <li>Math.ceil()
+      <ul>
+        <li>Felfelé kerekíti az értéket</li>
+        <pre>
+          const number = 4.7;
+          console.log(Math.floor(number));
+
+          ↓↓↓↓↓
+
+          5
+        </pre>
+      </ul>
+    </li>
+    <li>setTimeout()
+      <ul>
+        <li>Egyszeri késleltetett futtatást biztosít</li>
+        <pre>
+  console.log("A folyamat elkezdődött");
+
+  setTimeout(() => &#123;
+    console.log("Ez a üzenet 3 másodperc múlva jelenik meg");
+  }, 3000); // a 3000 milliszekundumban van megadva, ami 3 másodpercet jelent
+
+  console.log("A folyamat folytatódik...");
+
+  ↓↓↓↓↓
+
+  A folyamat elkezdődött
+  A folyamat folytatódik...
+  Ez a üzenet 3 másodperc múlva jelenik meg
+        </pre>
+      </ul>
+    </li>
+    <li>setInterval()
+      <ul>
+        <li>Egy függvényt ismétlődően hajt végre egy meghatározott időközönkén</li>
+        <li>A függvény minden időközönként lefut, amíg nem töröljük a clearInterval() segítségével</li>
+        <pre>
+  let count = 0;
+
+  const intervalId = setInterval(() => &#123;
+    console.log(`Ez az üzenet $&#123;++count} másodpercenként jelenik meg`);
+    
+    // Leállítjuk az intervallumot 5 ismétlés után
+    if (count === 5) &#123;
+      clearInterval(intervalId);
+      console.log("Az intervallum leállt");
+    }
+  }, 1000); // 1000 milliszekundum (1 másodperc)
+
+  ↓↓↓↓↓
+
+  Ez az üzenet 1 másodpercenként jelenik meg
+  Ez az üzenet 2 másodpercenként jelenik meg
+  Ez az üzenet 3 másodpercenként jelenik meg
+  Ez az üzenet 4 másodpercenként jelenik meg
+  Ez az üzenet 5 másodpercenként jelenik meg
+  Az intervallum leállt
+        </pre>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #ngrx data-anchor="ngrx">NgRx</h3>
+  <ul>
+    <li>Reactive State for Angular</li>
+    <li>Egy állapotkezelő könyvtár Angular alkalmazásokhoz, amely a Redux mintán alapul
+      <ul>
+        <li>A Redux minta egy olyan állapotkezelési megoldás, ahol az alkalmazás teljes állapota egy központi helyen van
+          tárolva, és az állapot csak jól meghatározott műveletek (actions) és azokhoz kapcsolódó állapotfrissítő
+          funkciók (reducers) segítségével változhat, ami átláthatóbbá, és könnyebben követhetővé teszi az állapot
+          változásait</li>
+      </ul>
+    </li>
+    <li>Az állapotot egy központi "store"-ban tartja, ami megkönnyíti az adatok előzményének követését, debuggolását és
+      tesztelését</li>
+    <li>Fogalmak
+      <ol>
+        <li>Store
+          <ul>
+            <li>A központi hely, ahol az alkalmazás állapotát tároljuk</li>
+          </ul>
+        </li>
+        <li>Actions
+          <ul>
+            <li>Az állapot módosítására vonatkozó események</li>
+          </ul>
+        </li>
+        <li>Reducers
+          <ul>
+            <li>Funkciók, amelyek meghatározzák, hogyan változik az állapot az egyes akciók hatására</li>
+          </ul>
+        </li>
+        <li>Effects
+          <ul>
+            <li>"Mellék" műveletek kezelése (pl. API hívások)</li>
+          </ul>
+        </li>
+        <li>Selectors
+          <ul>
+            <li>Az állapot különböző részeinek kinyerésére szolgálnak</li>
+          </ul>
+        </li>
+      </ol>
+    </li>
+    <br>
+    <li>Lifecycle
+      <ul>
+        <br>
+        <img src="assets/imgs/ngrx_flow.png" width="100%">
+        <br>
+        <br>
+        <li>A Store-ban tároljuk az App state-eket
+          <ul>
+            <li>Például egy számérték</li>
+          </ul>
+        </li>
+        <li>Az Action minden olyan interakció, kezdeményezés, ami state-e módosít
+          <ul>
+            <li>Ha például van három gombunk, egy +, egy -, és egy reset, amik a Stora-ban lévő számot hivatottak
+              módosítani</li>
+          </ul>
+        </li>
+        <li>A Reducer fogja a valós manipuláció végrehajtani
+          <ul>
+            <li>Az Action alapján hajt végre valamilyen logikát</li>
+            <li>Például, ha a - gombra kattintunk, akkor az jelenlegi state-ből kivon egyet</li>
+            <li>Ha lefuttt a logika, átadja az értéket a Store-nak</li>
+          </ul>
+        </li>
+        <li>A Component az az elem, ami megjelenik számunkra
+          <ul>
+            <li>Például kiírja a Store-ban tárolt aktuális számértéket</li>
+            <li>Tulajdonképpen a Component határozza meg az Action-t, hiszen benne jelennek meg azok az eszközök,
+              amikkel adatmanupulációt tudunk kezdeményezni</li>
+          </ul>
+        </li>
+        <li>Selector
+          <ul>
+            <li>Ahhoz, hogy a Component meg tudja jeleníteni a State-et, ki kell választanunk azt</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <br>
+    <li>Használat
+      <ul>
+        <pre>
+  ng add @ngrx/store@16
+        </pre>
+        <li>Hozzunk létre egy mappát (pl. state), és benne egy fájlt (app.state.ts) az állapotok kezeléséhez</li>
+        <pre>
+  state/
+  ├── app.state.ts              // a globális állapotok leírására szolgál
+  └── counter/
+      ├── counter.actions.ts
+      └── counter.reducer.ts
+      └── counter.selector.ts
+        </pre>
+        <li>Amennyiben egy egyszerű countert veszünk alapul, úgy készítsünk egy counter mappát, benne pedig egy
+          counter.actions.ts fájlt</li>
+        <pre>
+  <b>// counter.action.ts</b>
+  import &#123; createAction } from "@ngrx/store";
+
+  export const increment = createAction('[Counter Component] Increment');
+  export const decrement = createAction('[Counter Component] Decrement');
+  export const reset = createAction('[Counter Component] Reset');
+        </pre>
+        <li>Az Action-ök ezzel regisztrálva vannak a Store-ban</li>
+        <pre>
+  <b>// counter.reducer.ts</b>
+  import &#123; createReducer, on } from "@ngrx/store"
+  import &#123; decrement, increment, reset } from "./counter.actions";
+
+  export interface CounterState &#123;
+      count: number
+  }
+
+  export const initialCounterState: CounterState = &#123;
+      count: 0,
+      // cart: CartState
+      // ...
+  }
+
+  export const CounterReducer = createReducer(
+      initialCounterState,
+      on(increment, (state) => (&#123; ...state, count: state.count + 1 })), // counter.action.ts increment Action-je
+      on(decrement, (state) => (&#123; ...state, count: state.count - 1 })), // counter.action.ts decrement Action-je
+      on(reset, (state) => (&#123; ...state, count: 0})) // counter.action.ts reset Action-je
+  );
+        </pre>
+        <li>A Reducer ezzel kezeli a kiindulási State-et
+          <ul>
+            <li>Az állapot egyetlen count mezőt tartalmaz, amely number típusú</li>
+            <li>Az interface segít a típusbiztonság biztosításában</li>
+            <li>A típusosság révén az IDE (például a VS Code) is képes autocomplete, és hibajelzéseket adni</li>
+          </ul>
+        </li>
+        <pre>
+  <b>// counter.selector.ts</b>
+  import &#123; AppState } from "../app.state";
+
+  export const SelectCounterState = (state: AppState) => state.counter;
+
+  export const SelectCount = createSelector(
+    SelectCounterState, 
+    (state) => state.count // projektáló függvény
+  )
+        </pre>
+        <li>El kell készítenünk a Selector-t is
+          <ul>
+            <li>Az app.state.ts-ben készítjük el az App State-et / global State-et</li>
+            <li>Bármilyen érték is van az AppState-ben, mint counter, átadásra kerül a Selector-nak</li>
+            <li>A createSelector függvény első paramétere a Selector, a második egy projektáló függvény
+              <ul>
+                <li>A projektáló függvény azt mondja meg, hogy a CounterState állapotból pontosan melyik adatot kell
+                  kiválasztani</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>Ha ez a 3 fájlunk készen van (actions, reducer, selector), akkor a Component-ben már tudjuk használni a
+          State-ünket
+          <ul>
+            <li>A State-et regisztrálni szükséges az app.config.ts-ben / app.module.ts-ben</li>
+            <pre>
+  <b>// app.module.ts</b>
+  @NgModule(&#123;
+    ...
+    providers: [
+      provideStore(),
+      provideState('counter', CounterReducer), // a State nevét, és a Reducer-t kell definiálni
+    ],
+    ...
+  })
+            </pre>
+            <li>Akár egy state.config.ts-t is létrehozatunk, ha külön szeretnénk kezelni őket</li>
+            <pre>
+  <b>// state/state.config.ts</b>
+  import &#123; provideState } from '@ngrx/store';
+  import &#123; CounterReducer } from './counter/counter.reducer';
+
+  export const AppStateProviders = [
+    provideState('counter', CounterReducer)
+  ];
+
+  <b>// app.module.ts</b>
+  @NgModule(&#123;
+    ...
+    providers: [
+      ...AppStateProviders // spread operátort használunk, mivel tömb
+    ],
+    ...
+  })
+            </pre>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li>A megvalósított mini példa
+      <ul>
+        <app-ngrx></app-ngrx>
+        <pre>
+  <b>// ngrx.component.html</b>
+    &#60;div>
+      &#60;div>&#123; &#123; count$ | async }}&#60;/div>
+      &#60;div>
+          &#60;button class="btn btn-secondary" (click)="increment()">+&#60;/button>
+          &#60;button class="btn btn-secondary" (click)="reset()">reset&#60;/button>
+          &#60;button class="btn btn-secondary" (click)="decrement()">-&#60;/button>
+      &#60;/div>
+  &#60;/div>
+
+  <b>// ngrx.component.ts</b>
+  export class NgrxComponent &#123;
+    count$: Observable&#60;number>
+
+    constructor(private store: Store&#60;AppState>) &#123;
+      this.count$ = this.store.select(SelectCount);
+    }
+
+    increment() &#123;
+      this.store.dispatch(increment());
+    }
+
+    decrement() &#123;
+      this.store.dispatch(decrement());
+    }
+
+    reset() &#123;
+      this.store.dispatch(reset());
+    }
+  }
+        </pre>
+      </ul>
+    </li>
+  </ul>
+
+</div>
+
+<div>
+  <h3 #todo data-anchor="todo">TODO</h3>
+  <ul>
+    <li></li>
+  </ul>
+</div>
+
+<div>
+  <h3>+ témakörök</h3>
+  <ol>
+    <li>
+      Az Angular @if direktívája miatt a sablon frissül:
+
+      Az @if (firstNameAutofilled) &#123; &#60;mat-hint>Autofilled!&#60;/mat-hint> } szintaktika az Angular deferált if
+      kifejezése.
+      Ha az firstNameAutofilled értéke true-ra változik, az @if új DOM elemet hoz létre, így a „Autofilled!” üzenet
+      megjelenik.
+    </li>
+    <li>Angular animations</li>
+    <li>getter, setter</li>
+    <li>ElementRef (+nativeElement)</li>
+    <li>track vs trackBy</li>
+    <li>signal</li>
+    <li>orderBy (pipe)</li>
+    <li>ng start / ng build / ng watch / ng test</li>
+    <li>ViewEncapsulation</li>
+    <li>CI/CD pipeline</li>
+    <li>aria-label / aria-hidden / aria-expanded / aria-control (accessibility attributes)</li>
+    <li>angularjson / stylePreprocessorOptions</li>
+    <li>@Input() set changeToGreen(condition: boolean) &#123; }</li>
+    <li>eventpreventDefault() --> Az alapértelmezett HTML működést írja felül + eventstopPropogation()</li>
+    <li>Angular v12-től v17-ig mik az újítások? (Signal)</li>
+    <li>ES6</li>
+    <li>Salting</li>
+    <li>CORS error</li>
+    <li>Rekurzió</li>
+    <li>Mikor referencia az érték, és mikor nem?</li>
+    <li>Tabulátor sorrend</li>
+    <li>stylePreprocessorOptions</li>
+    <li>@Injectable(&#123;providedIn: 'root'})
+      <ul>
+        <li>providedIn: 'platform' / 'any'</li>
+      </ul>
+    </li>
+    <li>Type guard</li>
+    <li>Lazy load components</li>
+    <li>Attribute binding vs property binding vs event binding vs data binding (vs directive)</li>
+    <li>Class példányosítás</li>
+
+
+    --------------------------------------
+
+
+    <li>Design patterns (tervezési minták a szoftverfejlesztésben) (TODO)
+      <ul>
+        <li>Singleton pattern
+          <ul>
+            <li>Biztosítja, hogy egy adott osztályból csak egy példány létezzen a program futása során, és globális
+              hozzáférést biztosít ehhez a példányhoz</li>
+          </ul>
+        </li>
+        <li>Observer pattern
+          <ul>
+            <li>Arra használnak, hogy objektumok között létrehozzanak egy egyirányú kapcsolatot</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+
+    <li>callback function (TODO)
+      <ul>
+        <li>
+          A callback function egy olyan függvény, amelyet egy másik függvény paramétereként adunk át, és amelyet később,
+          a hívó függvény egy bizonyos pontján hívunk meg</li>
+        <li>A callback-ek különösen hasznosak aszinkron műveleteknél használjuk, vagy felhasználói interakcióknál</li>
+        <pre>
+  function greeting (name) &#123;
+  alert('Hello 1 + name);
+  }
+  function process UserInput (callback) &#123;
+            var name = prompt('Please enter your name');
+            callback(name);
+  }
+  processUserInput (greeting);
+        </pre>
+      </ul>
+    </li>
+
+
+    <li>RxJS (TODO)
+      <ul>
+        <li>exhaustMap()</li>
+        <li>switchMap()</li>
+        <li>mergeMap()</li>
+        <li>concatMap()</li>
+        <br>
+        <table cellpadding="8" style="border-collapse: collapse;">
+          <thead>
+            <tr>
+              <th>Operátor</th>
+              <th>Több kérés?</th>
+              <th>Megszakítja az előzőt?</th>
+              <th>Feldolgozási sorrend</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>exhaustMap</td>
+              <td>Nem</td>
+              <td>Igen</td>
+              <td>Nem számít</td>
+            </tr>
+            <tr>
+              <td>switchMap</td>
+              <td>Nem</td>
+              <td>Igen</td>
+              <td>Nem számít</td>
+            </tr>
+            <tr>
+              <td>mergeMap</td>
+              <td>Igen</td>
+              <td>Nem</td>
+              <td>Párhuzamos</td>
+            </tr>
+            <tr>
+              <td>concatMap</td>
+              <td>Nem</td>
+              <td>Nem</td>
+              <td>Sorrendben</td>
+            </tr>
+          </tbody>
+        </table>
+      </ul>
+    </li>
+
+
+    <li>Methodok (RxJS !)
+      <ul>
+        <ul>
+          <li>merge()
+            <ul>
+              <pre>
+                const mergedObj = merge(&#123; name: "Alice" }, &#123; age: 30 });
+                console.log(mergedObj);
+
+                ↓↓↓↓↓
+
+                &#123; name: "Alice", age: 30 }
+              </pre>
+            </ul>
+          </li>
+        </ul>
+      </ul>
+    </li>
+  </ol>
+</div>

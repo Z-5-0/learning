@@ -1,0 +1,5 @@
+@function light-complement($color) {
+    $complement: complement($color); // a $complement változó, a complement pedig beépített függvény, ami komplementer színt ad vissza
+    $light-complement: lighten($complement, 20%);
+    @return $light-complement;
+}

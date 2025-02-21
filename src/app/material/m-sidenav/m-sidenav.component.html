@@ -1,0 +1,68 @@
+<form [formGroup]="form">
+    <h6>Basic sidenav</h6>
+    <ul class="element">
+        <mat-drawer-container class="container" autosize>
+            <mat-drawer #drawer class="example-sidenav" mode="push" position="start">
+                <div style="padding: 20px;">Side menu</div>
+                <div style="text-align: center;">
+                    <div *ngIf="showExtraMenu">
+                        <div>
+                            <button mat-icon-button color="warn">
+                                <mat-icon>home></mat-icon>
+                            </button>
+                        </div>
+                        <div>
+                            <button mat-icon-button color="warn">
+                                <mat-icon>email></mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                    <button mat-icon-button color="primary" (click)="showExtraMenu = !showExtraMenu">
+                        <mat-icon>{{ showExtraMenu ? 'keyboard_arrow_up_icon' : 'keyboard_arrow_down_icon'
+                            }}></mat-icon>
+                    </button>
+                </div>
+            </mat-drawer>
+
+            <div class="example-sidenav-content">
+                <button mat-mini-fab color="primary" (click)="drawer.toggle()">
+                    <mat-icon>{{drawer.opened ? 'close' : 'menu'}}</mat-icon>
+                </button>
+            </div>
+
+        </mat-drawer-container>
+        <pre>
+    <b>// template</b>
+    &#60;mat-drawer-container class="container" autosize>
+        &#60;mat-drawer #drawer class="example-sidenav" mode="push" position="start">
+            &#60;div style="padding: 20px;">Side menu&#60;/div>
+            &#60;div style="text-align: center;">
+                &#60;div *ngIf="showExtraMenu">
+                    &#60;div>
+                        &#60;button mat-icon-button color="warn">
+                            &#60;mat-icon>home>&#60;/mat-icon>
+                        &#60;/button>
+                    &#60;/div>
+                    &#60;div>
+                        &#60;button mat-icon-button color="warn">
+                            &#60;mat-icon>email>&#60;/mat-icon>
+                        &#60;/button>
+                    &#60;/div>
+                &#60;/div>
+                &#60;button mat-icon-button color="primary" (click)="showExtraMenu = !showExtraMenu">
+                    &#60;mat-icon>&#123; &#123; showExtraMenu ? 'keyboard_arrow_up_icon' : 'keyboard_arrow_down_icon'
+                        }}>&#60;/mat-icon>
+                &#60;/button>
+            &#60;/div>
+        &#60;/mat-drawer>
+
+        &#60;div class="example-sidenav-content">
+            &#60;button mat-mini-fab color="primary" (click)="drawer.toggle()">
+                &#60;mat-icon>&#123; &#123;drawer.opened ? 'close' : 'menu'}}&#60;/mat-icon>
+            &#60;/button>
+        &#60;/div>
+
+    &#60;/mat-drawer-container>
+        </pre>
+    </ul>
+</form>

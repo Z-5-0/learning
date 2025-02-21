@@ -1,0 +1,44 @@
+@mixin btn($bg-color: brown) {
+    // a $bg-color egy paraméter
+    background-color: $bg-color;
+    padding: $base-padding;
+    border: 0;
+    margin: 5px;
+    border-radius: $base-border-radius;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+@each $key, $value in $colors {
+    .button-#{$key} {
+        @include btn($value); // a $value az argumentum, amit átadsz a mixin számára
+
+        &:hover {
+            background-color: lighten($value, 10%);
+        }
+    }
+
+    .button-outlined-#{$key} {
+        @include btn($value); // $value az argumentum, amit átadsz a mixin számára
+        border: $base-border-thickness solid mix(white, $value, 50%);
+
+        &:hover {
+            background-color: lighten($value, 10%);
+        }
+    }
+
+    .button-complement-#{$key} {
+        @include btn($value); // a $value az argumentum, amit átadsz a mixin számára
+        color: light-complement($value);
+
+        &:hover {
+            color: black;
+            background-color: light-complement($value);
+        }
+    }
+}
+
+.custom-button {
+    @include btn;
+    color: white;
+}

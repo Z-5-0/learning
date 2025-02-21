@@ -1,0 +1,32 @@
+@use 'sass:math';
+
+.card {
+    display: block;
+    padding: $base-padding;
+    border: $base-border-thickness solid #ddd; // a border-style és border-color hard-coded értékek
+    box-shadow: $base-box-shadow;
+
+    &.square {
+        // border-radius: $base-border-radius / 5;
+        border-radius: math.div($base-border-radius, 5); // a math objektumon meghívjuk a div függvényt
+    }
+
+    // nest-elt szabályok
+    .card-title {
+        font-size: $base-font-size;
+        padding: $base-padding;
+        font-weight: bold;
+
+        &.xl {
+            font-size: $font-size-xl;
+        }
+    }
+
+    .card-body {
+        font-size: $base-font-size;
+
+        a {
+            text-decoration: underline; // amennyiben reset-eltünk, vagy máshol megadtuk, hogy none
+        }
+    }
+}

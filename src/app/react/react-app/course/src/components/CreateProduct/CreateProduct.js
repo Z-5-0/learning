@@ -1,15 +1,24 @@
+import { useState } from "react";
 import ProductForm from "./ProductForm";
 
 function CreateProduct(props) {
-    function onCreateProduct(product) {
+    let [formIsVisible, updateFormVisibility] = useState(false)
+
+    const onCreateProduct = (product) => {
         props.createProduct(product);
+        toggleFormVisibility();
+    }
+
+    const toggleFormVisibility = () => {
+        updateFormVisibility(prev => !prev);
     }
 
     return (
-        <div className="row">
-            <div className="col-lg-8 mx-auto list-group shadow" style={{ backgroundColor: 'white', marginBottom: '30px', padding: '10px' }}>
-                <ProductForm createProduct={onCreateProduct} />
-            </div>
+        <div className="list-group shadow" style={{ backgroundColor: 'white', padding: '10px' }}>
+            {formIsVisible
+                ? (<ProductForm createProduct={onCreateProduct} cancelForm={toggleFormVisibility}/>)
+                : (<button className="btn btn-secondary" onClick={toggleFormVisibility}>Toggle form visibility</button>)
+            }
         </div>
     )
 }

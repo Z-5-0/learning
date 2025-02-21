@@ -1,0 +1,169 @@
+<form [formGroup]="form">
+    <h6>Single row toolbar</h6>
+    <ul class="element">
+        <mat-toolbar>
+            <span>My Application</span>
+        </mat-toolbar>
+        <pre>
+    &#60;mat-toolbar>
+        &#60;span>My Application&#60;/span>
+    &#60;/mat-toolbar>
+        </pre>
+    </ul>
+
+    <br>
+    <h6>Multi row toolbar</h6>
+    <ul class="element">
+        <mat-toolbar [color]="'primary'">
+            <mat-toolbar-row>
+                <button mat-icon-button>
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <span>Row 1</span>
+                <span style="flex: 1 1 auto;"></span>
+                <button mat-icon-button>
+                    <mat-icon>home</mat-icon>
+                </button>
+                <button mat-icon-button>
+                    <mat-icon>email</mat-icon>
+                </button>
+            </mat-toolbar-row>
+            <mat-toolbar-row>
+                <span>Row 2</span>
+            </mat-toolbar-row>
+        </mat-toolbar>
+        <pre>
+    &#60;mat-toolbar [color]="'primary'">
+        &#60;mat-toolbar-row>
+            &#60;button mat-icon-button>
+                &#60;mat-icon>menu&#60;/mat-icon>
+            &#60;/button>
+            &#60;span>Row 1&#60;/span>
+            &#60;span style="flex: 1 1 auto;">&#60;/span>
+            &#60;button mat-icon-button>
+                &#60;mat-icon>home&#60;/mat-icon>
+            &#60;/button>
+            &#60;button mat-icon-button>
+                &#60;mat-icon>email&#60;/mat-icon>
+            &#60;/button>
+        &#60;/mat-toolbar-row>
+        &#60;mat-toolbar-row>
+            &#60;span>Row 2&#60;/span>
+        &#60;/mat-toolbar-row>
+    &#60;/mat-toolbar>
+        </pre>
+    </ul>
+
+    <br>
+    <h6>Menu</h6>
+    <ul class="element">
+        <mat-toolbar>
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <span>App</span>
+            <mat-menu #menu="matMenu" [xPosition]="'after'" [yPosition]="'above'">
+                <button mat-menu-item>
+                    <mat-icon>home</mat-icon>
+                    <span>Home</span>
+                </button>
+                <button mat-menu-item>
+                    <mat-icon>email</mat-icon>
+                    <span>Contact</span>
+                </button>
+                <button mat-menu-item disabled>
+                    <mat-icon>announcement</mat-icon>
+                    <span>News</span>
+                </button>
+            </mat-menu>
+        </mat-toolbar>
+        <pre>
+    &#60;mat-toolbar>
+        &#60;button mat-icon-button [matMenuTriggerFor]="menu">
+            &#60;mat-icon>menu&#60;/mat-icon>
+        &#60;/button>
+        &#60;span>App&#60;/span>
+        &#60;mat-menu #menu="matMenu" [xPosition]="'after'" [yPosition]="'above'">
+            &#60;button mat-menu-item>
+                &#60;mat-icon>home&#60;/mat-icon>
+                &#60;span>Home&#60;/span>
+            &#60;/button>
+            &#60;button mat-menu-item>
+                &#60;mat-icon>email&#60;/mat-icon>
+                &#60;span>Contact&#60;/span>
+            &#60;/button>
+            &#60;button mat-menu-item disabled>
+                &#60;mat-icon>announcement&#60;/mat-icon>
+                &#60;span>News&#60;/span>
+            &#60;/button>
+        &#60;/mat-menu>
+    &#60;/mat-toolbar>
+        </pre>
+    </ul>
+
+    <br>
+    <h6>Nested menu</h6>
+    <ul class="element">
+        <button #triggernestedmenu="matMenuTrigger" mat-button [matMenuTriggerFor]="cpu" color="warn">CPU</button>
+        <mat-menu #cpu="matMenu">
+            <button mat-menu-item [matMenuTriggerFor]="intel">Intel</button>
+            <button mat-menu-item [matMenuTriggerFor]="amd">AMD</button>
+        </mat-menu>
+
+        <mat-menu #intel="matMenu">
+            <button mat-menu-item>
+                <mat-icon>memory</mat-icon>
+                <span>Core i5</span>
+            </button>
+            <button mat-menu-item>
+                <mat-icon>memory</mat-icon>
+                <span>Core i7</span>
+            </button>
+        </mat-menu>
+
+        <mat-menu #amd="matMenu">
+            <button mat-menu-item>
+                <mat-icon>memory</mat-icon>
+                <span>AMD Sempron</span>
+            </button>
+            <button mat-menu-item>
+                <mat-icon>memory</mat-icon>
+                <span>AMD Athlon</span>
+            </button>
+        </mat-menu>
+
+        <button class="btn btn-secondary" (click)="triggernestedmenu.openMenu()">Trigger open menu</button>
+        <pre>
+    <b>// template</b>
+    &#60;button #triggernestedmenu="matMenuTrigger" mat-button [matMenuTriggerFor]="cpu" color="warn">CPU&#60;/button>
+    &#60;mat-menu #cpu="matMenu">
+        &#60;button mat-menu-item [matMenuTriggerFor]="intel">Intel&#60;/button>
+        &#60;button mat-menu-item [matMenuTriggerFor]="amd">AMD&#60;/button>
+    &#60;/mat-menu>
+
+    &#60;mat-menu #intel="matMenu">
+        &#60;button mat-menu-item>
+            &#60;mat-icon>memory&#60;/mat-icon>
+            &#60;span>Core i5&#60;/span>
+        &#60;/button>
+        &#60;button mat-menu-item>
+            &#60;mat-icon>memory&#60;/mat-icon>
+            &#60;span>Core i7&#60;/span>
+        &#60;/button>
+    &#60;/mat-menu>
+
+    &#60;mat-menu #amd="matMenu">
+        &#60;button mat-menu-item>
+            &#60;mat-icon>memory&#60;/mat-icon>
+            &#60;span>AMD Sempron&#60;/span>
+        &#60;/button>
+        &#60;button mat-menu-item>
+            &#60;mat-icon>memory&#60;/mat-icon>
+            &#60;span>AMD Athlon&#60;/span>
+        &#60;/button>
+    &#60;/mat-menu>
+
+    &#60;button class="btn btn-secondary" (click)="triggernestedmenu.openMenu()">Trigger open menu&#60;/button>
+        </pre>
+    </ul>
+</form>

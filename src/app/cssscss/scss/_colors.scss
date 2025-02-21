@@ -1,0 +1,49 @@
+@each $key, $value in $colors {
+    .text-#{$key} {
+        color: #{$value};
+
+        &-hover {
+            &:hover {
+                color: mix(white, $value, 50%);
+                cursor: pointer;
+            }
+        }
+    }
+
+    .bg-#{$key} {
+        background-color: #{$value};
+    }
+
+    // light variations
+    @for $i from 1 through 9 {
+        .text-#{$key}-lighten-#{$i * 10} {
+            color: lighten($value, $i * 10%);
+        }
+
+        .text-#{$key}-white-mix-#{$i * 10} {
+            color: mix(white, $value, $i * 10%);
+        }
+
+        .text-#{$key}-black-mix-#{$i * 10} {
+            color: mix(black, $value, $i * 10%);
+        }
+    }
+}
+
+@each $key, $value in $colors {
+
+    // variations
+    @for $i from 1 through 9 {
+        @if(mix(white, $value, $i * 10%) !=white) {
+            .text-#{$key}-white-conditional-mix-#{$i * 10} {
+                color: lighten($value, $i * 10%);
+            }
+        }
+
+        @if(mix(white, $value, $i * 10%) !=black) {
+            .text-#{$key}-black-conditional-mix-#{$i * 10} {
+                color: mix(black, $value, $i * 10%);
+            }
+        }
+    }
+}

@@ -1,0 +1,96 @@
+<form [formGroup]="form">
+    <h6>Badge</h6>
+    <ul class="element">
+        <div>
+            <span [matBadge]="4" [matBadgeSize]="'small'" matBadgeOverlap="false"
+                [matBadgeHidden]="hidden.first">Badge</span>
+        </div>
+        <br>
+        <div>
+            <span [matBadge]="5" matBadgeColor="warn" matBadgeOverlap="true" matBadgePosition="before"
+                [matBadgeHidden]="hidden.second">
+                Overlapping badge</span>
+        </div>
+        <br>
+        <div>
+            <span [matBadge]="1" matBadgeColor="warn" matBadgeOverlap="true" [matBadgeHidden]="showBadge"
+                (click)="showBadge = !showBadge">
+                Click on me
+            </span>
+        </div>
+        <br>
+        <div>
+            <span>
+                <button [matMenuTriggerFor]="menu" mat-raised-button matBadge="7" matBadgeOverlap="false"
+                    [matBadgeHidden]="hidden.fourth">
+                    <mat-icon>menu</mat-icon>
+                    <span>Toggler</span>
+                </button>
+
+                <mat-menu #menu="matMenu" [xPosition]="'after'" [yPosition]="'below'">
+                    <button mat-menu-item (click)="hidden.first = !hidden.first">
+                        <span>First</span>
+                        <mat-icon>{{hidden.first ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                    <button mat-menu-item (click)="hidden.second = !hidden.second">
+                        <span>Second</span>
+                        <mat-icon>{{hidden.second ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                    <button mat-menu-item (click)="hidden.fourth = !hidden.fourth">
+                        <span>Fourth</span>
+                        <mat-icon>{{hidden.fourth ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                </mat-menu>
+            </span>
+        </div>
+        <pre>
+    <b>// template</b>
+    &#60;span [matBadge]="4" [matBadgeSize]="'small'" matBadgeOverlap="false"
+        [matBadgeHidden]="hidden.first">
+        Badge
+    &#60;/span>
+
+    &#60;span [matBadge]="5" matBadgeColor="warn" matBadgeOverlap="true" matBadgePosition="before"
+        [matBadgeHidden]="hidden.second">
+        Overlapping badge
+    &#60;/span>
+
+    &#60;span [matBadge]="1" matBadgeColor="warn" matBadgeOverlap="true" [matBadgeHidden]="showBadge"
+        (click)="showBadge = !showBadge">
+        Click on me
+    &#60;/span>
+
+    &#60;span>
+        &#60;button [matMenuTriggerFor]="menu" mat-raised-button matBadge="7" matBadgeOverlap="false"
+            [matBadgeHidden]="hidden.fourth">
+            &#60;mat-icon>menu&#60;/mat-icon>
+            &#60;span>Toggler&#60;/span>
+        &#60;/button>
+
+        &#60;mat-menu #menu="matMenu" [xPosition]="'after'" [yPosition]="'below'">
+            &#60;button mat-menu-item (click)="hidden.first = !hidden.first">
+                &#60;span>First&#60;/span>
+                &#60;mat-icon>&#123; &#123;hidden.first ? 'visibility_off' : 'visibility'}}&#60;/mat-icon>
+            &#60;/button>
+            &#60;button mat-menu-item (click)="hidden.second = !hidden.second">
+                &#60;span>Second&#60;/span>
+                &#60;mat-icon>&#123; &#123;hidden.second ? 'visibility_off' : 'visibility'}}&#60;/mat-icon>
+            &#60;/button>
+            &#60;button mat-menu-item (click)="hidden.fourth = !hidden.fourth">
+                &#60;span>Fourth&#60;/span>
+                &#60;mat-icon>&#123; &#123;hidden.fourth ? 'visibility_off' : 'visibility'}}&#60;/mat-icon>
+            &#60;/button>
+        &#60;/mat-menu>
+    &#60;/span>
+
+    <b>// class</b>
+    showBadge: boolean = true;
+
+    hidden = &#123;
+        first: false,
+        second: false,
+        fourth: false
+    };
+        </pre>
+    </ul>
+</form>

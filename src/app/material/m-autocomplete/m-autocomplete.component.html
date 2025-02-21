@@ -1,0 +1,306 @@
+<form [formGroup]="form">
+    <h6>Autocomplete</h6>
+    <ul class="element">
+        <mat-form-field>
+            <mat-label>Autocomplete</mat-label>
+            <input type="text" placeholder="Pick one" aria-label="Number" matInput [formControl]="myControl"
+                [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                    {{option}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+        <div>filteredOptions array: {{filteredOptions | async | json}}</div>
+        <br>
+        <div>// &#123; &#123; filteredOptions | async | json}}</div>
+        <pre>
+    <b>// template</b>
+    &#60;mat-form-field>
+        &#60;mat-label>Autocomplete&#60;/mat-label>
+        &#60;input type="text" placeholder="Pick one" aria-label="Number" matInput [formControl]="myControl"
+            [matAutocomplete]="auto">
+        &#60;mat-autocomplete #auto="matAutocomplete">
+            &#60;mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                &#123; &#123;option}}
+            &#60;/mat-option>
+        &#60;/mat-autocomplete>
+    &#60;/mat-form-field>
+
+    <b>// class</b>
+    export class MAutocompleteComponent implements OnInit &#123;
+        myControl = new FormControl('');
+        
+        options: any[] = [
+            'first',
+            'second',
+            'third',
+        ]
+        
+        filteredOptions: Observable&#60;string[]> = new Observable&#60;string[]>;
+        
+        ngOnInit() &#123;
+            this.filteredOptions = this.myControl.valueChanges.pipe(
+            startWith(''), // OnInit hookban azonnal történik egy értékkibocsátás, üres stringgel történik egy keresés
+            map(value => this._filter(value || '')), // meghívja a filter függvényt, ami kiszűri a megfelelő opciókat
+            );
+        }
+        
+        private _filter(value: string): string[] &#123;
+            const filterValue = value.toLowerCase();
+        
+            return this.options.filter(option => option.toLowerCase().includes(filterValue)); // kiszűri azokat a tömbelemeket, amik tartalmazzák a felhasználó által begépelt string-et
+        }
+    }
+        </pre>
+        <li>Egy kereshető legördülő listát biztosít a felhasználónak</li>
+        <li>A [matAutocomplete]="auto" direktíva az autocomplete listát az input mezőhöz csatolja</li>
+        <li>A &#60;mat-autocomplete> tartalmazza a szűrt mat-option elemeket, amelyek a filteredOptions aszinkron
+            adatfolyamból származnak</li>
+        <li>A filter függvénnyel végigmegyünk az options tömbön, minden elemét kisbetűsítjük, majd megnézzük
+            includes-al, hogy az input mezőbe begépelt string megtalálható-e az aktuális értékben
+            <ul>
+                <li>A filter() függvény végül visszaad egy tömböt, ami a true értékeket return-öli, és adja át a
+                    filteredOptions-nek</li>
+            </ul>
+        </li>
+    </ul>
+
+    <br>
+    <h6>Display values</h6>
+    <ul class="element">
+        <mat-form-field>
+            <mat-label>User</mat-label>
+            <input type="text" matInput [formControl]="userControl" [matAutocomplete]="user"
+                (blur)="onUserInputBlur($event)">
+            <mat-autocomplete #user="matAutocomplete" [displayWith]="displayFn"
+                (optionSelected)="onUserSelectionChange($event)">
+                <mat-option *ngFor="let option of filteredUserOptions | async" [value]="option">
+                    {{option.name}} | {{option.age}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+        <br>
+        <mat-slide-toggle [checked]="userControl.disabled"
+            (change)="userControl.disabled ? userControl.enable() : userControl.disable()">
+            <div style="color: white"> {{userControl.disabled ? 'Input disabled' : 'Input enabled'}}</div>
+        </mat-slide-toggle>
+        <br>
+        <div>&#123; &#123; userControl.value | json }}: {{userControl.value | json}}</div>
+        <br>
+        <div>&#123; &#123; filteredUserOptions | async | json }}: <br> {{filteredUserOptions | async | json}}</div>
+        <br>
+        <div>&#123; &#123; selectedUser | json }}: {{selectedUser | json}}</div>
+        <pre>
+    <b>// template</b>
+    &#60;mat-form-field>
+        &#60;mat-label>User&#60;/mat-label>
+        &#60;input type="text" matInput [formControl]="userControl" [matAutocomplete]="user" (blur)="onUserInputBlur($event)">
+        &#60;mat-autocomplete #user="matAutocomplete" [displayWith]="displayFn"
+            (optionSelected)="onUserSelectionChange($event)">
+            &#60;mat-option *ngFor="let option of filteredUserOptions | async" [value]="option">
+                &#123; &#123;option.name}} | &#123; &#123;option.age}}
+            &#60;/mat-option>
+        &#60;/mat-autocomplete>
+    &#60;/mat-form-field>
+
+    &#60;mat-slide-toggle [checked]="userControl.disabled"
+            (change)="userControl.disabled ? userControl.enable() : userControl.disable()">
+            &#60;div style="color: white"> &#123; &#123;userControl.disabled ? 'Input disabled' : 'Input enabled'}}&#60;/div>
+    &#60;/mat-slide-toggle>
+
+    <b>// class</b>
+    interface User &#123;
+        name: string,
+        nick: string,
+        age: number
+      }
+
+    export class MAutocompleteComponent implements OnInit &#123;
+        userControl = new FormControl('');
+
+    userOptions = [
+        &#123; name: 'Bob', nick: 'Bobby', age: 46 },
+        &#123; name: 'Jason', nick: 'J', age: 24 },
+        &#123; name: 'Clara', nick: 'Ciar', age: 29 },
+    ]
+    selectedUser: User = &#123;} as User;
+    filteredUserOptions: Observable&#60;User[]> = new Observable&#60;User[]>;
+        
+    ngOnInit() &#123;
+        this.filteredUserOptions = this.userControl.valueChanges.pipe(
+        startWith(''), // OnInit hookban azonnal történik egy értékkibocsátás, üres stringgel történik egy keresés
+        map((value: any) => &#123;
+            const name = typeof value === 'string' ? value : value?.name;
+            return name ? this._filterUser(name as string) : this.userOptions.slice();
+        }),
+        );
+    }
+
+    displayFn(user: User): string &#123;
+        return user && user.name ? user.nick : ''; // a nick nevet fogjuk visszaadni, és kiiratni az input mezőbe, de a dropdownban a name property jelenik meg
+    }
+
+    private _filterUser(name: string): User[] &#123;
+        const filterValue = name.toLowerCase();
+        return this.userOptions.filter(option => option.name.toLowerCase().includes(filterValue) || option.age.toString().includes(filterValue)); // név, és kor alapján is szűrhetünk
+    }
+
+    onUserSelectionChange(event: any) &#123;
+        this.selectedUser = event.option.value;
+    }
+
+    onUserInputBlur(event: any) &#123;
+        if (JSON.stringify(this.userControl.value) !== JSON.stringify(this.selectedUser)) &#123;
+        this.userControl.reset();
+        this.selectedUser = &#123;} as User;
+        }
+    }
+    }
+        </pre>
+        <li>A formControl a modell és az űrlap között tartja a kapcsolatot</li>
+        <li>A [matAutocomplete]="user" az input mezőt összekapcsolja az autocomplete komponenssel, amely user
+            néven van definiálva a #user="matAutocomplete" referenciával</li>
+        <li>A displayFn függvényt használja az option megjelenítésére a dropdown-ban, ez határozza meg, hogy mi
+            legyen
+            látható a legördülő listában</li>
+        <li>Az async pipe biztosítja, hogy az aszinkron adatokat megfelelően kezelje</li>
+        <li>Ha a felhasználó nem választott semmit, akkor az input mezőt visszaállítjuk üres értékre, és töröljük a
+            kiválasztott felhasználót</li>
+    </ul>
+
+    <br>
+    <h6>Autocomplete grouping</h6>
+    <ul class="element">
+        <mat-form-field>
+            <mat-label>States Group</mat-label>
+            <input #autocompleteInput type="text" matInput formControlName="stateGroup" required
+                [matAutocomplete]="group">
+            <mat-autocomplete #group="matAutocomplete" (optionSelected)="groupOptionSelected($event)">
+                <mat-optgroup *ngFor="let group of groupOptions | async" [label]="group.type">
+                    <mat-option *ngFor="let name of group.names" [value]="name">
+                        {{name}}
+                    </mat-option>
+                </mat-optgroup>
+            </mat-autocomplete>
+        </mat-form-field>
+        <span style="padding-left: 30px">group.isOpen: {{group.isOpen}}</span>
+        <button (click)="openAutoCompleteInputPanel()">Open autocomplete</button>
+        <div style="padding-left: 30px">groupOptionSelectedValue: {{groupOptionSelectedValue}}</div>
+        <pre>
+    <b>// template</b>
+    &#60;form [formGroup]="form">
+        &#60;mat-form-field>
+            &#60;mat-label>States Group&#60;/mat-label>
+            &#60;input type="text" matInput formControlName="stateGroup" required [matAutocomplete]="group">
+            &#60;mat-autocomplete #group="matAutocomplete">
+                &#60;mat-optgroup *ngFor="let group of groupOptions | async" [label]="group.type">
+                    &#60;mat-option *ngFor="let name of group.names" [value]="name">
+                        &#123; &#123;name}}
+                    &#60;/mat-option>
+                &#60;/mat-optgroup>
+            &#60;/mat-autocomplete>
+        &#60;/mat-form-field>
+    &#60;/form>
+
+    <b>// class</b>
+    export interface StateGroup &#123;
+        type: string;
+        names: string[];
+        }
+
+        form = this._formBuilder.group(&#123;
+        stateGroup: ['', Validators.required],
+        });
+    
+        groupVehicles: any[] = [
+        &#123;
+            type: 'Nissan',
+            names: ['GT-R', '400Z', 'Skyline'],
+        },
+        &#123;
+            type: 'Honda',
+            names: ['Supra', 'Celica', 'Arizona', 'Arkansas'],
+        },
+        &#123;
+            type: 'Toyota',
+            names: ['Honda NSX', 'S2000', 'Civic', 'Integra'],
+        },
+        ];
+    
+        groupOptions: Observable&#60;any> = new Observable&#60;any>;
+    
+        constructor(private _formBuilder: FormBuilder) &#123;
+    
+        }
+    
+        ngOnInit() &#123;
+        this.groupOptions = this.form.get('stateGroup')!.valueChanges.pipe( // ha a form-on [formGroup]="stateForm" van
+            startWith(''),
+            map(value => this._filterGroup(value || '')),
+            );
+        }
+
+        private _filterGroup(value: string): any[] &#123;
+        const filterValue = value.toLowerCase();
+    
+        return this.groupVehicles
+            .map(group => (&#123;
+            type: group.type,
+            names: group.names.filter((name: any) => name.toLowerCase().includes(filterValue))
+            }))
+            .filter(group => value ? group.names.length > 0 : this.groupVehicles);
+        }
+        </pre>
+        <li>Kiegészítés
+            <ul>
+                <li>Nézzünk meg néhány egyéb opciót</li>
+                <li>A fentebbi autocomplete-be már be vannak építve</li>
+                <pre>
+    <b>// template</b>
+    &#60;form [formGroup]="form">
+        &#60;mat-form-field>
+            &#60;mat-label>States Group&#60;/mat-label>
+            &#60;input #autocompleteInput type="text" matInput formControlName="stateGroup" required [matAutocomplete]="group">
+            &#60;mat-autocomplete #group="matAutocomplete" (optionSelected)="groupOptionSelected($event)">
+                &#60;mat-optgroup *ngFor="let group of groupOptions | async" [label]="group.type">
+                    &#60;mat-option *ngFor="let name of group.names" [value]="name">
+                        &#123; &#123;name}}
+                    &#60;/mat-option>
+                &#60;/mat-optgroup>
+            &#60;/mat-autocomplete>
+        &#60;/mat-form-field>
+    &#60;/form>
+    &#60;span>group.isOpen: &#123; &#123;group.isOpen}}&#60;/span>
+    &#60;span>groupOptionSelected: &#123; &#123;groupOptionSelected}}&#60;/span>
+
+    <b>// class</b>
+    @ViewChild('group') group!: MatAutocomplete;
+    @ViewChild('autocompleteInput', &#123; read: MatAutocompleteTrigger }) triggerAutocompleteInput!: MatAutocompleteTrigger;
+
+    groupOptionSelectedValue: string = '';
+
+    ngAfterViewInit(): void &#123;
+        console.log('group: ', this.group);
+        this.group.optionGroups.forEach(f => &#123; // az optionGroups egy QueryList
+            console.log(f); // a 3 db option group-ot listázza
+        });
+        setTimeout(() => &#123;
+            this.triggerAutocompleteInput.openPanel(); // kinyitja az autocomplete input mezőt
+            }, 5000); // kikerült a kódból, mert zavaró, helyette gomb, és "nyitófüggvény"
+        }
+
+        openAutoCompleteInputPanel() &#123;
+            setTimeout(() => &#123; // setTimeout nélkül nem nyílik ki
+              this.triggerAutocompleteInput.openPanel();
+            }, 0)
+        }
+
+        groupOptionSelected(event: any) &#123;
+        this.groupOptionSelectedValue = event.option.value;
+        }
+                </pre>
+            </ul>
+        </li>
+    </ul>
+</form>

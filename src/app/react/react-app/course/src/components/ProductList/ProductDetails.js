@@ -26,9 +26,9 @@ function ProductDetails(props) {
             <h6 className="font-weight-bold my-2 pe-2">
                 {props.price} HUF
             </h6>
-            <Button eventHandler={decrementCount}>-</Button>
+            <Button eventHandler={decrementCount} disable={productCount < 1}>-</Button>
             <span>{displayFormattedProductCount()}</span>
-            <Button eventHandler={incrementCount}>+</Button>
+            <Button eventHandler={incrementCount} disable={productCount >= props.stock}>+</Button>
             {props.children}
         </div>
     )

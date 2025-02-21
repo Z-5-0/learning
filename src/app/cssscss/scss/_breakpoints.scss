@@ -1,0 +1,86 @@
+$breakpoints: ( // map a breakpoint-oknak
+    xs: 0,
+    sm: 576px,
+    md: 768px,
+    lg: 992px,
+    xl: 1200px,
+    xxl: 1400px
+);
+
+@mixin xs { // a mixin-en belül használunk media query-t
+    @media (min-width: map-get($breakpoints, 'xs')) {
+        @content;
+    }
+}
+
+@mixin sm {
+    @media (min-width: map-get($breakpoints, 'sm')) {
+        @content;
+    }
+}
+
+@mixin md {
+    @media (min-width: map-get($breakpoints, 'md')) {
+        @content;
+    }
+}
+
+@mixin lg {
+    @media (min-width: map-get($breakpoints, 'lg')) {
+        @content;
+    }
+}
+
+@mixin xl {
+    @media (min-width: map-get($breakpoints, 'xl')) {
+        @content;
+    }
+}
+
+@mixin xxl {
+    @media (min-width: map-get($breakpoints, 'xxl')) {
+        @content;
+    }
+}
+
+/* @mixin breakpoint($min, $max) { // egyedi min és max méret megadására alkalmas
+    @media ((min-width: ($min + 'px')) and (max-width: ($max + 'px'))) {
+        @content;
+    }
+} */
+
+@mixin breakpoint($min) {
+    @media ((min-width: #{$min})) {
+        @content;
+    }
+}
+
+.responsive-test {
+    @include xs {
+        background-color: red;
+    }
+
+    @include sm {
+        background-color: blue;
+    }
+
+    @include md {
+        background-color: green;
+    }
+
+    @include lg {
+        background-color: yellow;
+    }
+
+    @include xl {
+        background-color: purple;
+    }
+
+    @include xxl {
+        background-color: brown;
+    }
+
+    /* @include breakpoint(1000, 1100) {
+        background-color: pink;
+    } */
+}

@@ -1,1 +1,135 @@
-<p>material works!</p>
+<h1>Angular Material</h1>
+
+<div class="anchor-navi-container">
+    <div *ngFor="let mainButton of anchorButtons" class="btn-group">
+        <button type="button" class="btn btn-primary btn-sm anchor" (click)="scrollToAnchor(mainButton?.anchor)">
+            {{ mainButton.title }}
+        </button>
+        <button *ngIf="mainButton?.subtitles?.length" type="button"
+            class="btn btn-primary dropdown-toggle dropdown-toggle-split btn-sm anchor" data-bs-toggle="dropdown"
+            aria-expanded="false">
+        </button>
+        <ul *ngIf="mainButton.subtitles?.length" class="dropdown-menu dropdown-menu-dark">
+            <li>
+                <button *ngFor="let subButton of mainButton?.subtitles" class="dropdown-item"
+                    (click)="scrollToAnchor(subButton?.anchor)">
+                    {{ subButton?.title }}
+                </button>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div>
+    <h3 #introduction data-anchor="introduction">Introduction</h3>
+    <ul>
+        <li>Az Angular Material a Material Design egy Angularhoz készült UI könyvtára</li>
+        <pre>
+    ng add @angular/material
+        </pre>
+        <li>Elvileg az alábbi lépések történnek meg a telepítéssel
+            <ol>
+                <li>Add project dependencies to package.json</li>
+                <li>Add the Roboto font to your index.html</li>
+                <li>Add the Material Design icon font to your index.html</li>
+                <li>Add a few global CSS styles to
+                    <ul>
+                        <li>Remove margins from body</li>
+                        <li>Set height: 100% on html and body</li>
+                        <li>Set Roboto as the default application font</li>
+                    </ul>
+                </li>
+            </ol>
+        </li>
+        <li>Nálam ezek valamiért nem történtek meg (leszámítva a package.json dependenciát), ezért az egyik stílust
+            behúztam az angular.json fájlba
+            <ul>
+                <li>Ha ez nem történne meg, adjuk hozzá manuálisan</li>
+                <pre>
+    "styles": [
+        "node_modules/bootstrap/dist/css/bootstrap.min.css",
+        "node_modules/bootstrap-icons/font/bootstrap-icons.css",
+        "node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css"
+        "src/styles.scss"
+    ],
+                </pre>
+            </ul>
+        </li>
+        <li>A material ikonok megjelenítéséhez szükséges az index.html-ben elhelyezni az alábbi
+            <pre>
+    &#60;link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+            </pre>
+        </li>
+    </ul>
+</div>
+
+
+<div>
+    <h3 #minput data-anchor="minput">Input</h3>
+    <ul>
+        <app-m-input></app-m-input>
+    </ul>
+</div>
+
+<div>
+    <h3 #mautocomplete data-anchor="mautocomplete">Autocomplete</h3>
+    <ul>
+        <app-m-autocomplete></app-m-autocomplete>
+    </ul>
+</div>
+
+<div>
+    <h3 #mmenuandtoolbar data-anchor="mmenuandtoolbar">Menu and toolbar</h3>
+    <ul>
+        <app-m-menu-toolbar></app-m-menu-toolbar>
+    </ul>
+</div>
+
+<div>
+    <h3 #mbadge data-anchor="mbadge">Badge</h3>
+    <ul>
+        <app-m-badge></app-m-badge>
+    </ul>
+</div>
+
+<div>
+    <h3 #msidenav data-anchor="msidenav">Sidenav</h3>
+    <ul>
+        <app-m-sidenav></app-m-sidenav>
+    </ul>
+</div>
+
+<div>
+    <h3 #mcard data-anchor="mcard">Card</h3>
+    <ul>
+        <app-m-card></app-m-card>
+    </ul>
+</div>
+
+<div>
+    <h3 #mslider data-anchor="mslider">Slider</h3>
+    <ul>
+        <app-m-slider></app-m-slider>
+    </ul>
+</div>
+
+<div>
+    <h3 #mtable data-anchor="mtable">Table</h3>
+    <ul>
+        <app-m-table></app-m-table>
+    </ul>
+</div>
+
+<div>
+    <h3 #mformcontrol data-anchor="mformcontrol">FormControl</h3>
+    <ul>
+        <app-m-form-control></app-m-form-control>
+    </ul>
+</div>
+
+<div>
+    <h3 #mdialog data-anchor="mdialog">Dialog</h3>
+    <ul>
+        <app-m-dialog></app-m-dialog>
+    </ul>
+</div>

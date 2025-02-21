@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {ajax} from "rxjs/ajax";
-import {forkJoin, map, Observable, of, switchMap} from "rxjs";
-import {ScrollingService} from "../../shared/services/scrolling.service";
+import { Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { ajax } from "rxjs/ajax";
+import { forkJoin, map, Observable, of, switchMap } from "rxjs";
+import { ScrollingService } from "../../shared/services/scrolling.service";
 
 interface Album {
   userID: number,
@@ -24,6 +24,48 @@ interface Photo {
 })
 
 export class TypescriptComponent implements OnInit {
+  @ViewChildren(`
+      ts,
+      typeinterface,
+      union,
+      literal,
+      array,
+      tuple,
+      object,
+      generictyping,
+      genericfunctions,
+      genericclasses,
+      genericinterface,
+      typeassertion,
+      promiseandasync,
+      optionalchaining,
+      typescriptandrxjs,
+      promisevsobservable,
+      albumswithpromise,
+      albumswithobservable
+      `) sections!: QueryList<ElementRef>;
+
+  anchorButtons: any[] = [
+    { title: 'Typescript', anchor: 'ts', subtitles: [] },
+    { title: 'Type inference', anchor: 'typeinterface', subtitles: [] },
+    { title: 'Union type', anchor: 'union', subtitles: [] },
+    { title: 'Literal type', anchor: 'literal', subtitles: [] },
+    { title: 'Array', anchor: 'array', subtitles: [] },
+    { title: 'Tuple', anchor: 'tuple', subtitles: [] },
+    { title: 'Object', anchor: 'object', subtitles: [] },
+    { title: 'Generic typing', anchor: 'generictyping', subtitles: [] },
+    { title: 'Generic functions', anchor: 'genericfunctions', subtitles: [] },
+    { title: 'Generic classes', anchor: 'genericclasses', subtitles: [] },
+    { title: 'Generic interface', anchor: 'genericinterface', subtitles: [] },
+    { title: 'Type assertion', anchor: 'typeassertion', subtitles: [] },
+    { title: 'Promise és Async', anchor: 'promiseandasync', subtitles: [] },
+    { title: 'Optional chaining', anchor: 'optionalchaining', subtitles: [] },
+    { title: 'TypeScript & RxJS', anchor: 'typescriptandrxjs', subtitles: [] },
+    { title: 'Promise vs Observable', anchor: 'promisevsobservable', subtitles: [] },
+    { title: 'Albums by Promise', anchor: 'albumswithpromise', subtitles: [] },
+    { title: 'Albums by Observable', anchor: 'albumswithobservable', subtitles: [] },
+  ];
+
   albums: Album[] = [];
   albumsAlter: Album[] = [];
 
@@ -75,7 +117,7 @@ export class TypescriptComponent implements OnInit {
 
     const allPhotos = await Promise.all(promisesOfAllPhotos); // Típusa egy tömb, amiben fotók tömbje sorakozik.
 
-    return albums.map((album, i) => ({...album, photos: allPhotos[i]}));
+    return albums.map((album, i) => ({ ...album, photos: allPhotos[i] }));
   }
 
   rendererFromPromise(albums: Album[]) {
@@ -113,7 +155,7 @@ export class TypescriptComponent implements OnInit {
         ))
       ])),
       map(([albums, ...allPhotos]) => {
-        return albums.map((album, index) => ({...album, photos: allPhotos[index]}))
+        return albums.map((album, index) => ({ ...album, photos: allPhotos[index] }))
       })
     );
 
@@ -147,8 +189,13 @@ export class TypescriptComponent implements OnInit {
     `;
   }
 
-  scrollToAnchor(target: HTMLElement) {
-    this.anchor.scrollTo(target);
+  scrollToAnchor(anchor: string) {
+    const sectionElement = this.sections.find(sec => sec.nativeElement.getAttribute('data-anchor') === anchor)?.nativeElement;
+    if (sectionElement) {
+      this.anchor.scrollTo(sectionElement);
+    } else {
+      alert('No anchor provided for this button!')
+    }
   }
 }
 

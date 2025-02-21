@@ -1,0 +1,71 @@
+// varables & functions
+@import './scss/functions';
+@import './scss/variables';
+
+// base & layout
+@import './scss/base';
+@import './scss/breakpoints';
+@import './scss/grid';
+
+// colors
+@import './scss/colors';
+
+// components
+@import './scss/component/card';
+@import './scss/component/button';
+@import './scss/component/navbar';
+@import './scss/component/badge';
+
+// utilities
+@import './scss/utilities';
+
+
+table,
+th,
+td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 10px;
+}
+
+.mini-card {
+    display: inline-block;
+    border: 1px solid white;
+    background-color: brown;
+}
+
+.content-box-example {
+    display: inline-block;
+    width: 200px;
+    padding: 20px;
+    border: 5px solid black;
+    box-sizing: content-box;
+    background-color: lightblue;
+    margin: 20px;
+}
+
+.border-box-example {
+    display: inline-block;
+    width: 200px;
+    padding: 20px;
+    border: 5px solid black;
+    box-sizing: border-box;
+    background-color: lightgreen;
+    margin: 20px;
+}
+
+.my-container-label {
+    color: white;
+    background: darkred;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+.display-f {
+    display: flex;
+}

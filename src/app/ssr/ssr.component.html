@@ -1,1 +1,33 @@
-<p>ssr works!</p>
+<h1>SSR</h1>
+
+<div class="anchor-navi-container">
+    <div *ngFor="let mainButton of anchorButtons" class="btn-group">
+        <button type="button" class="btn btn-primary btn-sm anchor" (click)="scrollToAnchor(mainButton?.anchor)">
+            {{ mainButton.title }}
+        </button>
+        <button *ngIf="mainButton?.subtitles?.length" type="button"
+            class="btn btn-primary dropdown-toggle dropdown-toggle-split btn-sm anchor" data-bs-toggle="dropdown"
+            aria-expanded="false">
+        </button>
+        <ul *ngIf="mainButton.subtitles?.length" class="dropdown-menu dropdown-menu-dark">
+            <li>
+                <button *ngFor="let subButton of mainButton?.subtitles" class="dropdown-item"
+                    (click)="scrollToAnchor(subButton?.anchor)">
+                    {{ subButton?.title }}
+                </button>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div>
+    <h3 #todo data-anchor="todo">TODO</h3>
+    <ul>
+        <li>todo</li>
+    </ul>
+    <br>
+    <h5 #todo data-anchor="todo">TODO</h5>
+    <ul>
+        <li>todo</li>
+    </ul>
+</div>

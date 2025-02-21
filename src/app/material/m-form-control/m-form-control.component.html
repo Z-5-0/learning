@@ -1,0 +1,293 @@
+<form [formGroup]="customerForm" (ngSubmit)="saveCustomer($event)">
+    <h6>Reaktív form</h6>
+    <ul class="element">
+        <mat-card>
+            <mat-card-content>
+
+                <div>
+                    <mat-form-field>
+                        <mat-label>Name</mat-label>
+                        <input matInput type="text" formControlName="name">
+                    </mat-form-field>
+                </div>
+
+                <div>
+                    <mat-form-field>
+                        <mat-label>Email</mat-label>
+                        <input matInput type="text" formControlName="email">
+                    </mat-form-field>
+                </div>
+
+                <div>
+                    <mat-form-field>
+                        <mat-label>Phone</mat-label>
+                        <input matInput type="text" formControlName="phone">
+                    </mat-form-field>
+                </div>
+
+                <div>
+                    <mat-form-field>
+                        <mat-label>Date of birth</mat-label>
+                        <input matInput [matDatepicker]="picker" [placeholder]="'YYYY/MM/DD'"
+                            formControlName="dateOfBirth">
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <mat-hint></mat-hint>
+                    </mat-form-field>
+                </div>
+
+                <div>
+                    <label>Gender</label>
+                    <mat-radio-group aria-label="Gender" color="primary" formControlName="gender">
+                        <mat-radio-button value="male">Male</mat-radio-button>
+                        <mat-radio-button value="female">Female</mat-radio-button>
+                    </mat-radio-group>
+                    <div>
+                        <mat-hint></mat-hint>
+                    </div>
+                </div>
+
+                <div>
+                    <mat-form-field>
+                        <mat-label>County</mat-label>
+                        <mat-select formControlName="country">
+                            <mat-option
+                                *ngFor="let country of ['Russia', 'Hungary', 'Brazil', 'Denmark', 'United Kingdom']"
+                                [value]="country">{{ country }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div>
+                    <mat-form-field>
+                        <mat-label>Address</mat-label>
+                        <textarea matInput formControlName="address"></textarea>
+                    </mat-form-field>
+                </div>
+
+                <div>
+                    <mat-form-field>
+                        <mat-label>Term</mat-label>
+                        <input matInput type="text" [matAutocomplete]="auto" formControlName="term">
+                        <mat-autocomplete #auto="matAutocomplete">
+                            <mat-option *ngFor="let term of filteredTermList | async" [value]="term">{{ term
+                                }}</mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+
+                <div>
+                    <section class="example-section">
+                        <mat-checkbox class="example-margin" formControlName="subsciption">Subscribe</mat-checkbox>
+                    </section>
+                </div>
+
+            </mat-card-content>
+            <mat-card-footer>
+                <div style="display: flex; justify-content: space-between; padding: 20px;">
+                    <div>
+                        <button mat-raised-button type="button" color="secondary" (click)="fillForm()">Fill
+                            form</button>
+                    </div>
+                    <div>
+                        <button mat-raised-button type="submit" color="primary">Save</button>
+                        <button mat-raised-button color="warn" (click)="clearForm()">Clear</button>
+                    </div>
+                </div>
+            </mat-card-footer>
+        </mat-card>
+
+        <pre style="min-height: 280px;"><b>Sent values:</b> {{sentValues | json}}</pre>
+        <pre>
+        <b>// template</b>
+        &#60;form [formGroup]="customerForm" (ngSubmit)="saveCustomer($event)">
+            &#60;h6>Reaktív form&#60;/h6>
+            &#60;ul class="element">
+                &#60;mat-card>
+                    &#60;mat-card-content>
+            
+                        &#60;div>
+                            &#60;mat-form-field>
+                                &#60;mat-label>Name&#60;/mat-label>
+                                &#60;input matInput type="text" formControlName="name">
+                            &#60;/mat-form-field>
+                        &#60;/div>
+            
+                        &#60;div>
+                            &#60;mat-form-field>
+                                &#60;mat-label>Email&#60;/mat-label>
+                                &#60;input matInput type="text" formControlName="email">
+                            &#60;/mat-form-field>
+                        &#60;/div>
+            
+                        &#60;div>
+                            &#60;mat-form-field>
+                                &#60;mat-label>Phone&#60;/mat-label>
+                                &#60;input matInput type="text" formControlName="phone">
+                            &#60;/mat-form-field>
+                        &#60;/div>
+            
+                        &#60;div>
+                            &#60;mat-form-field>
+                                &#60;mat-label>Date of birth&#60;/mat-label>
+                                &#60;input matInput [matDatepicker]="picker" [placeholder]="'YYYY/MM/DD'" formControlName="dateOfBirth">
+                                &#60;mat-datepicker-toggle matIconSuffix [for]="picker">&#60;/mat-datepicker-toggle>
+                                &#60;mat-datepicker #picker>&#60;/mat-datepicker>
+                                &#60;mat-hint>&#60;/mat-hint>
+                            &#60;/mat-form-field>
+                        &#60;/div>
+            
+                        &#60;div>
+                            &#60;label>Gender&#60;/label>
+                            &#60;mat-radio-group aria-label="Gender" color="primary" formControlName="gender">
+                                &#60;mat-radio-button value="male">Male&#60;/mat-radio-button>
+                                &#60;mat-radio-button value="female">Female&#60;/mat-radio-button>
+                            &#60;/mat-radio-group>
+                            &#60;div>
+                                &#60;mat-hint>&#60;/mat-hint>
+                            &#60;/div>
+                        &#60;/div>
+            
+                        &#60;div>
+                            &#60;mat-form-field>
+                                &#60;mat-label>County&#60;/mat-label>
+                                &#60;mat-select formControlName="country">
+                                    &#60;mat-option *ngFor="let country of ['Russia', 'Hungary', 'Brazil', 'Denmark', 'United Kingdom']"
+                                        [value]="country">&#123; &#123; country }}&#60;/mat-option>
+                                &#60;/mat-select>
+                            &#60;/mat-form-field>
+                        &#60;/div>
+            
+                        &#60;div>
+                            &#60;mat-form-field>
+                                &#60;mat-label>Address&#60;/mat-label>
+                                &#60;textarea matInput formControlName="address">&#60;/textarea>
+                            &#60;/mat-form-field>
+                        &#60;/div>
+            
+                        &#60;div>
+                            &#60;mat-form-field>
+                                &#60;mat-label>Term&#60;/mat-label>
+                                &#60;input matInput type="text" [matAutocomplete]="auto" formControlName="term">
+                                &#60;mat-autocomplete #auto="matAutocomplete">
+                                    &#60;mat-option *ngFor="let term of filteredTermList | async" [value]="term">&#123; &#123; term }}&#60;/mat-option>
+                                &#60;/mat-autocomplete>
+                            &#60;/mat-form-field>
+                        &#60;/div>
+            
+                        &#60;div>
+                            &#60;section class="example-section">
+                                &#60;mat-checkbox class="example-margin" formControlName="subsciption">Subscribe&#60;/mat-checkbox>
+                            &#60;/section>
+                        &#60;/div>
+            
+                    &#60;/mat-card-content>
+                    &#60;mat-card-footer>
+                        &#60;div style="display: flex; justify-content: space-between; padding: 20px;">
+                            &#60;div>
+                                &#60;button mat-raised-button type="button" color="secondary" (click)="fillForm()">Fill form&#60;/button>
+                            &#60;/div>
+                            &#60;div>
+                                &#60;button mat-raised-button type="submit" color="primary">Save&#60;/button>
+                                &#60;button mat-raised-button color="warn" (click)="clearForm()">Clear&#60;/button>
+                            &#60;/div>
+                        &#60;/div>
+                    &#60;/mat-card-footer>
+                &#60;/mat-card>
+                
+        <b>// class</b>
+        export class MFormControlComponent implements OnInit &#123;
+            termList: string[] = ['1 day', '3 days', '1 week', '1 month'];
+            filteredTermList: Observable&#60;string[]> = new Observable&#60;string[]>;
+            
+            customerForm = this._formBuilder.group(&#123;
+                name: this._formBuilder.control('', Validators.required),
+                email: this._formBuilder.control('', Validators.compose([Validators.required, Validators.email])),
+                phone: this._formBuilder.control('', Validators.required),
+                dateOfBirth: this._formBuilder.control(new Date(2000, 1, 1), Validators.required),
+                gender: this._formBuilder.control('male', Validators.required),
+                country: this._formBuilder.control('', Validators.required),
+                address: this._formBuilder.control('', Validators.required),
+                term: this._formBuilder.control('', Validators.required),
+                subsciption: this._formBuilder.control(false),
+            });
+            
+            sentValues: any = &#123;};
+            
+            constructor(private _formBuilder: FormBuilder) &#123;
+            
+            }
+            
+            ngOnInit(): void &#123;
+                this.filteredTermList = this.customerForm.get('term')!.valueChanges.pipe(
+                startWith(''), // OnInit hookban azonnal történik egy értékkibocsátás, üres stringgel történik egy keresés
+                map(value => this._filter(value || '')), // meghívja a filter függvényt, ami kiszűri a megfelelő opciókat
+                );
+            }
+            
+            private _filter(value: string): string[] &#123;
+                const filterValue = value.toLowerCase();
+            
+                return this.termList.filter(termList => termList.toLowerCase().includes(filterValue)); // kiszűri azokat a tömbelemeket, amik tartalmazzák a felhasználó által begépelt string-et
+            }
+            
+            saveCustomer(event: any) &#123;
+                event.preventDefault();
+                console.log(this.customerForm);
+                this.sentValues = this.customerForm.value;
+            }
+            
+            fillForm() &#123;
+                this.customerForm.setValue(&#123;
+                name: 'Joan McRoy',
+                email: 'jomro@loser.com',
+                phone: '+36501234567',
+                dateOfBirth: new Date(1995, 12, 2),
+                gender: 'female',
+                country: 'Denmark',
+                address: 'Gammel Byvej 94, 3000 Helsingør, Denmark',
+                term: '1 week',
+                subsciption: true,
+                })
+            }
+            
+            clearForm() &#123;
+                this.customerForm.reset();
+                /* this.customerForm.setValue(&#123; // ezen a módon pedig fixen beállíthatjuk a "reset" értékeket
+                name: '',
+                email: '',
+                phone: '',
+                dateOfBirth: new Date(1995, 12, 2),
+                gender: '',
+                country: '',
+                address: '',
+                term: '',
+                subsciption: false,
+                }) */
+            }
+        }
+        </pre>
+        <li></li>
+        <li>A Validators.compose lehetővé teszi több validátor kombinálását egyetlen validátorrá
+            <ul>
+                <li>Tömböt vár, ami a validátorokat tartalmazza</li>
+                <pre>
+        name: this._formBuilder.control('', Validators.compose([
+            Validators.required,
+            Validators.minLength(3),
+            Validators.pattern(/^[a-zA-Z ]+$/) // regex, nem tartalmazhat számokat
+        ]))
+                </pre>
+                <li>az Angular formokban a FormBuilder is lehetőséget biztosít arra, hogy egyszerre több validátort is
+                    átadjunk egy mezőnek anélkül, hogy compose-t kellene használni</li>
+                <pre>
+        name: this._formBuilder.control('', [
+            Validators.required,
+            Validators.minLength(3),
+            Validators.pattern(/^[a-zA-Z ]+$/)
+        ])
+                </pre>
+            </ul>
+        </li>
+    </ul>
+</form>

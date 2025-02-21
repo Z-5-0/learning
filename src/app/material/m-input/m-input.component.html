@@ -1,0 +1,256 @@
+<form>
+  <h6>Input</h6>
+  <ul class="element">
+    <mat-form-field>
+      <mat-label>Input</mat-label>
+      <input matInput placeholder="placeholder" value="Hi there!">
+    </mat-form-field>
+    <pre>
+  &#60;mat-form-field>
+    &#60;mat-label>Input&#60;/mat-label>
+    &#60;input matInput placeholder="Vehicle type" value="Hi there">
+  &#60;/mat-form-field>
+    </pre>
+  </ul>
+
+  <h6>Clearable input</h6>
+  <ul class="element">
+    <mat-form-field>
+      <mat-label>Clearable input</mat-label>
+      <input #input1 matInput type="text">
+      <button *ngIf="input1.value" matSuffix mat-icon-button aria-label="Clear" (click)="input1.value = ''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <pre>
+  &#60;mat-form-field>
+    &#60;mat-label>Clearable input&#60;/mat-label>
+    &#60;input #input1 matInput type="text">
+    &#60;button *ngIf="input1.value" matSuffix mat-icon-button aria-label="Clear" (click)="input1.value = ''">
+      &#60;mat-icon>close&#60;/mat-icon>
+    &#60;/button>
+  &#60;/mat-form-field>
+    </pre>
+    <li>Azért lesz szélesebb a mező az ikon megjelenésével, mert nincs beállítva szélesség a mat-form-field-nek</li>
+  </ul>
+
+  <br>
+  <h6>Input autofill</h6>
+  <ul class="element">
+    <mat-form-field>
+      <mat-label>First name</mat-label>
+      <input #first matInput (cdkAutofill)="firstNameAutofilled = $event.isAutofilled">
+      <mat-hint *ngIf="firstNameAutofilled">Autofilled!</mat-hint>
+      <!--@if (firstNameAutofilled) {
+      <mat-hint>Autofilled!</mat-hint>
+      }-->
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Last name</mat-label>
+      <input #last matInput (cdkAutofill)="onAutofillLastName($event)">
+      <!--@if (lastNameAutofilled) {
+      <mat-hint>Autofilled!</mat-hint>
+      }-->
+    </mat-form-field>
+    <pre>
+  <b>// template</b>
+  &#60;mat-form-field>
+    &#60;mat-label>First name&#60;/mat-label>
+    &#60;input #first matInput (cdkAutofill)="firstNameAutofilled = $event.isAutofilled">
+    &#60;mat-hint *ngIf="firstNameAutofilled">Autofilled!&#60;/mat-hint>
+    <!--@if (firstNameAutofilled) { // Angular 17-től...
+    <mat-hint>Autofilled!</mat-hint>
+    }-->
+  &#60;/mat-form-field>
+  &#60;mat-form-field>
+    &#60;mat-label>Last name&#60;/mat-label>
+    &#60;input #last matInput (cdkAutofill)="onAutofillLastName($event)">
+    &#60;mat-hint *ngIf="lastNameAutofilled">Autofilled!&#60;/mat-hint>
+    <!--@if (lastNameAutofilled) { // Angular 17-től...
+    <mat-hint>Autofilled!</mat-hint>
+    }-->
+  &#60;/mat-form-field>
+
+  <b>// class</b>
+  firstNameAutofilled: boolean;
+
+  onAutofillLastName(event: any) &#123;
+    // logika
+  }
+    </pre>
+    <li>Az autofill egy böngészőfunkció, amely automatikusan kitölti a mezőt korábban beírt vagy mentett adatokkal</li>
+    <li>Az Angular Material ehhez biztosít egy detektálási mechanizmust, amely észleli, ha az autofill esemény
+      megtörténik</li>
+    <li>A first és a last template reference változókon keresztül is lehet monitorozni, hogy történt-e autofill</li>
+    <pre>
+  private _autofill = inject(AutofillMonitor);
+
+  @ViewChild('first', &#123;read: ElementRef}) firstName: ElementRef&#60;HTMLElement>;
+  @ViewChild('last', &#123;read: ElementRef}) lastName: ElementRef&#60;HTMLElement>;
+  firstNameAutofilled: boolean;
+  lastNameAutofilled: boolean;
+
+  ngAfterViewInit() &#123;
+    this._autofill
+      .monitor(this.firstName)
+      .subscribe(e => (this.firstNameAutofilled = e.isAutofilled));
+    this._autofill
+      .monitor(this.lastName)
+      .subscribe(e => (this.lastNameAutofilled = e.isAutofilled));
+  }
+
+  ngOnDestroy() &#123;
+    this._autofill.stopMonitoring(this.firstName);
+    this._autofill.stopMonitoring(this.lastName);
+  }
+    </pre>
+  </ul>
+
+  <br>
+  <h6>Form control input</h6>
+  <ul class="element">
+    <mat-form-field class="example-full-width">
+      <mat-label>Email address</mat-label>
+      <input type="email" matInput placeholder="example@example.com" [formControl]="emailFormControl"
+        [errorStateMatcher]="matcher">
+      <mat-hint>Errors appear instantly!</mat-hint>
+      <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+        Please enter a valid email address!
+      </mat-error>
+      <mat-error *ngIf="emailFormControl.hasError('required')">
+        Email is <strong>required</strong>!
+      </mat-error>
+    </mat-form-field>
+  </ul>
+  <pre>
+  <b>// template</b>
+  &#60;mat-form-field class="example-full-width">
+    &#60;mat-label>Email address&#60;/mat-label>
+    &#60;input type="email" matInput placeholder="example@example.com" [formControl]="emailFormControl" [errorStateMatcher]="matcher">
+    &#60;mat-hint>Errors appear instantly!&#60;/mat-hint>
+    &#60;mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+      Please enter a valid email address!
+    &#60;/mat-error>
+    &#60;mat-error *ngIf="emailFormControl.hasError('required')">
+      Email is &#60;strong>required&#60;/strong>!
+    &#60;/mat-error>
+  &#60;/mat-form-field>
+
+  <b>// class</b>
+  export class MInputComponent&#123;
+    ...
+    emailFormControl = new FormControl('', [Validators.required, Validators.email]);
+    matcher = new ErrorStateMatcher();
+    ...
+  }
+  </pre>
+  <li>A formControl egy Reactive Forms vezérlő, amely az emailFormControl változóhoz kapcsolódik
+    <ul>
+      <li>A mező alapértelmezetten üres ('', ...)</li>
+      <li>Két validációs szabályt használunk (...[Validators.required, Validators.email])</li>
+    </ul>
+  </li>
+  <li>Az ErrorStateMatcher egy Material Design osztály, amely lehetővé teszi a testreszabott hibaállapot-kezelést
+    <ul>
+      <li>Alapértelmezés szerint az ErrorStateMatcher a mezőre fókuszálás után mutatja a hibákat.</li>
+      <li>Ha egyedi viselkedést szeretnél (pl. azonnal mutassa), akkor egy saját ErrorStateMatcher osztályt kellene
+        létrehozni</li>
+      <pre>
+        export class MyErrorStateMatcher implements ErrorStateMatcher &#123;
+          isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean &#123;
+            const isSubmitted = form && form.submitted;
+            return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+          }
+        }
+
+        export class MInputComponent&#123;
+          ...
+          matcher = new MyErrorStateMatcher(); // Az egyedi hibakezelő példányosítása
+          ...
+        }
+      </pre>
+      <li>A MyErrorStateMatcher osztályban 3 dolgot vizsgálunk
+        <ol>
+          <li>Érvénytelen-e a mező</li>
+          <li>A felhasználó interacióba lépett-e a mezővel</li>
+          <li>Elküldésre került-e a form</li>
+        </ol>
+      </li>
+      <li>Ha bármelyik a fenti feltételek közül teljesül, akkor a mező hibás állapotba kerül</li>
+      <li>Beállítható továbbá az egész modulra globális
+        <ul>
+          <pre>
+            @NgModule(&#123;
+              providers: [
+                &#123; provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }
+              ]
+            })            
+          </pre>
+          <li>ShowOnDirtyErrorStateMatcher az Angular Material beépített implementációja az ErrorStateMatcher-nek</li>
+          <li>Ez azt jelenti, hogy minden formázott mező az egész modulban csak akkor mutatja a hibát, ha a mező egyszer
+            már módosítva lett (dirty)</li>
+          <li>Egy kevésbé aggresszív ellenőrzést biztosít</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+
+  <br>
+  <h6>Textarea</h6>
+  <ul class="element">
+    <mat-form-field>
+      <mat-label>Textarea</mat-label>
+      <textarea matInput placeholder="placeholder"></textarea>
+    </mat-form-field>
+    <pre>
+  &#60;mat-form-field>
+    &#60;mat-label>Textarea&#60;/mat-label>
+    &#60;textarea matInput placeholder="placeholder">&#60;/textarea>
+  &#60;/mat-form-field>
+    </pre>
+  </ul>
+
+  <ul class="element">
+    <mat-form-field>
+      <mat-label>Textarea font size</mat-label>
+      <mat-select #fontSize [value]="'18px'" (selectionChange)="triggerResize()">
+        <mat-option value="10px">10px</mat-option>
+        <mat-option value="18px">18px</mat-option>
+        <mat-option value="26px">26px</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <span style="display: inline-block; width: 30px;"></span>
+    <mat-form-field>
+      <mat-label>Textarea</mat-label>
+      <textarea #autosize="cdkTextareaAutosize" matInput cdkTextareaAutosize cdkAutosizeMinRows="2"
+        cdkAutosizeMaxRows="5" placeholder="placeholder" [style.fontSize]="fontSize?.value"></textarea>
+    </mat-form-field>
+    <pre>
+      &#60;mat-form-field>
+        &#60;mat-label>Textarea font size&#60;/mat-label>
+        &#60;mat-select #fontSize [value]="'18px'" (selectionChange)="triggerResize()">
+          &#60;mat-option value="10px">10px&#60;/mat-option>
+          &#60;mat-option value="18px">18px&#60;/mat-option>
+          &#60;mat-option value="26px">26px&#60;/mat-option>
+        &#60;/mat-select>
+      &#60;/mat-form-field>
+      &#60;mat-form-field>
+        &#60;mat-label>Textarea&#60;/mat-label>
+        &#60;textarea #autosize="cdkTextareaAutosize" matInput cdkTextareaAutosize cdkAutosizeMinRows="2"
+          cdkAutosizeMaxRows="5" placeholder="placeholder" [style.fontSize]="fontSize.value">&#60;/textarea>
+      &#60;/mat-form-field>
+    </pre>
+    <li>Az afterNextRender() egy Deferred Rendering API, ami azt biztosítja, hogy a művelet csak akkor fusson le, amikor
+      a DOM teljesen frissült
+      <ul>
+        <li>Ez akkor lehet fontos, ha az adatokat aszinkron módon töltjük be, és a textarea méretének frissítését csak
+          azután akarjuk végrehajtani, hogy a tartalom valóban megjelent</li>
+      </ul>
+    </li>
+    <li>A cdkTextareaAutosize, és a hozzá kapcsolódó 2 attribútum engedélyezi, hogy képes legyen a mező automatikusan
+      nőni, ahogy sort törünk</li>
+    <li>A #autosize="cdkTextareaAutosize" biztosítja, hogy a template referencia változó (#autosize) ne magára a DOM
+      elemre (textarea), hanem a cdkTextareaAutosize direktívára mutasson, ezáltal elérhetővé válnak a
+      CdkTextareaAutosize osztály metódusai és attribútumai a komponensben</li>
+  </ul>
+</form>

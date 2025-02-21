@@ -1,0 +1,118 @@
+@use 'sass:math';
+
+$grid-columns: 12;
+$grid-gaps: (
+    0: 0,
+    1: 10px,
+    2: 20px,
+    3: 30px
+);
+$alignment-values: flex-start, flex-end, center, space-between, space-around; // list, értékek vesszővel elválasztva
+
+// base layout classes
+.my-container {
+    width: 100%;
+    max-width: 600px; // a gyakorlatban ez legalább dupla ennyi
+    margin: 0 auto; //középre helyezi a tartalmat
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.my-row {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+// column classes
+@each $key, $value in $breakpoints {
+    @include breakpoint($value) {
+        @for $i from 1 through $grid-columns {
+            .my-col-#{$key}-#{$i} {
+                flex-grow: 0;
+                width: math.div($i * 100%, $grid-columns);
+                box-sizing: border-box;
+            }
+        }
+    }
+}
+
+@include xs {
+    @for $i from 1 through $grid-columns {
+        .col-#{$i}-xs {
+            flex-grow: 0;
+            width: math.div($i * 100%, $grid-columns);
+            box-sizing: border-box;
+        }
+    }
+}
+
+@include sm {
+    @for $i from 1 through $grid-columns {
+        .col-#{$i}-sm {
+            flex-grow: 0;
+            width: math.div($i * 100%, $grid-columns);
+            box-sizing: border-box;
+        }
+    }
+}
+
+@include md {
+    @for $i from 1 through $grid-columns {
+        .col-#{$i}-md {
+            flex-grow: 0;
+            width: math.div($i * 100%, $grid-columns);
+            box-sizing: border-box;
+        }
+    }
+}
+
+@include lg {
+    @for $i from 1 through $grid-columns {
+        .col-#{$i}-lg {
+            flex-grow: 0;
+            width: math.div($i * 100%, $grid-columns);
+            box-sizing: border-box;
+        }
+    }
+}
+
+@include xl {
+    @for $i from 1 through $grid-columns {
+        .col-#{$i}-xl {
+            flex-grow: 0;
+            width: math.div($i * 100%, $grid-columns);
+            box-sizing: border-box;
+        }
+    }
+}
+
+@include xxl {
+    @for $i from 1 through $grid-columns {
+        .col-#{$i}-xxl {
+            flex-grow: 0;
+            width: math.div($i * 100%, $grid-columns);
+            box-sizing: border-box;
+        }
+    }
+}
+
+// grid gaps
+@each $key, $value in $grid-gaps {
+    .my-gap-#{$key}>* {
+        // minden gyerek elemre érvényes szabály
+        padding: $value;
+    }
+
+    .my-gap-#{$key} {
+        // a padding miatt az első és utolsó elem, valamint a containerünk széle között is rés lenne, így negatív margin-nal operálunk
+        margin-left: -$value;
+        margin-right: -$value;
+    }
+}
+
+// justify classes
+@each $value in $alignment-values { // mivel lista, nincs kulcs, csak érték
+    .justify-#{$value} {
+        justify-content: $value;
+    }
+}

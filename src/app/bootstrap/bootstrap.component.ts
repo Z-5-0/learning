@@ -10,17 +10,33 @@ export class BootstrapComponent {
   @ViewChildren(`
     bootstrap,
     angularintegration,
-    buttons,
+    grid,
+    typography,
     icons,
-    todo
+    buttons,
+    input,
+    select,
+    breakpoints,
+    navbar,
+    breadcrumb,
+    modal,
+    cards
     `) sections!: QueryList<ElementRef>;
 
   anchorButtons: any[] = [
     { title: 'Bootstrap', anchor: 'bootstrap', subtitle: [] },
     { title: 'Angular integration', anchor: 'angularintegration', subtitle: [] },
-    { title: 'Buttons', anchor: 'buttons', subtitle: [] },
+    { title: 'Grid', anchor: 'grid', subtitle: [] },
+    { title: 'Typography', anchor: 'typography', subtitle: [] },
     { title: 'Icons', anchor: 'icons', subtitle: [] },
-    { title: 'TODO', anchor: 'todo', subtitle: [] },
+    { title: 'Buttons', anchor: 'buttons', subtitle: [] },
+    { title: 'Input', anchor: 'input', subtitle: [] },
+    { title: 'Select', anchor: 'select', subtitle: [] },
+    { title: 'Breakpoints', anchor: 'breakpoints', subtitle: [] },
+    { title: 'Navbar', anchor: 'navbar', subtitle: [] },
+    { title: 'Breadcrumb', anchor: 'breadcrumb', subtitle: [] },
+    { title: 'Modal', anchor: 'modal', subtitle: [] },
+    { title: 'Cards', anchor: 'cards', subtitle: [] },
   ]
 
   constructor(private anchor: ScrollingService) {

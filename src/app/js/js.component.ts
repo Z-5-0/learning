@@ -1,4 +1,5 @@
-import { AfterContentInit, AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { ScrollingService } from 'src/shared/services/scrolling.service';
 
 @Component({
   selector: 'app-js',
@@ -6,6 +7,77 @@ import { AfterContentInit, AfterViewInit, Component, ElementRef, OnInit, ViewChi
   styleUrls: ['./js.component.scss']
 })
 export class JsComponent implements OnInit, AfterViewInit, AfterContentInit {
+  @ViewChildren(`
+      httpprotocol,
+      javascriptandconsole,
+      datatypes,
+      array,
+      object,
+      operators1,
+      operators2,
+      ticketbuyingapp,
+      loops,
+      conditionalstatements,
+      functions,
+      windowobject,
+      document,
+      httpprotocol,
+      uiflow,
+      boxes1,
+      templateliteral,
+      workshopproject,
+      callstack,
+      ajax1,
+      ajax2,
+      promise,
+      fetch,
+      asyncfunction,
+      movieproject,
+      paragigms,
+      objectdesign,
+      arrowfunction,
+      movieticketbooking,
+      boxes2
+      `) sections!: QueryList<ElementRef>;
+
+  anchorButtons: any[] = [
+    { title: 'HTTP protocol', anchor: 'httpprotocol', subtitles: [] },
+    { title: 'Javascript and Console', anchor: 'javascriptandconsole', subtitles: [] },
+    { title: 'Data types', anchor: 'datatypes', subtitles: [] },
+    { title: 'Array', anchor: 'array', subtitles: [] },
+    { title: 'Object', anchor: 'object', subtitles: [] },
+    { title: 'Operators I.', anchor: 'operators1', subtitles: [] },
+    { title: 'Operators II.', anchor: 'operators2', subtitles: [] },
+    { title: 'Ticket app', anchor: 'ticketbuyingapp', subtitles: [] },
+    { title: 'Loops', anchor: 'loops', subtitles: [] },
+    { title: 'Conditional statements', anchor: 'conditionalstatements', subtitles: [] },
+    { title: 'Functions', anchor: 'functions', subtitles: [] },
+    { title: 'Window object', anchor: 'windowobject', subtitles: [] },
+    {
+      title: 'Functions', anchor: 'functions', subtitles: [
+        { title: 'Document', anchor: 'document' }
+      ]
+    },
+    { title: 'Window object', anchor: 'windowobject', subtitles: [] },
+    { title: 'UI flow', anchor: 'uiflow', subtitles: [] },
+    { title: 'Boxes I', anchor: 'boxes1', subtitles: [] },
+    { title: 'Template literal', anchor: 'templateliteral', subtitles: [] },
+    { title: 'Workshop project', anchor: 'workshopproject', subtitles: [] },
+    { title: 'Call stack', anchor: 'callstack', subtitles: [] },
+    { title: 'AJAX I', anchor: 'ajax1', subtitles: [] },
+    { title: 'AJAX II', anchor: 'ajax2', subtitles: [] },
+    { title: 'Promise', anchor: 'promise', subtitles: [] },
+    { title: 'Fetch', anchor: 'fetch', subtitles: [] },
+    { title: 'Async function', anchor: 'asyncfunction', subtitles: [] },
+    { title: 'Movie project', anchor: 'movieproject', subtitles: [] },
+    { title: 'Paragigms', anchor: 'paragigms', subtitles: [] },
+    { title: 'Object design', anchor: 'objectdesign', subtitles: [] },
+    { title: 'Arrow function', anchor: 'arrowfunction', subtitles: [] },
+    { title: 'Try/Catch', anchor: 'trycatch', subtitles: [] },
+    { title: 'Movie ticket booking', anchor: 'movieticketbooking', subtitles: [] },
+    { title: 'Boxes II', anchor: 'boxes2', subtitles: [] },
+  ];
+
   @ViewChild('box') box!: ElementRef<HTMLDivElement>;
 
   isBoxGrabbed: boolean = false;
@@ -19,7 +91,16 @@ export class JsComponent implements OnInit, AfterViewInit, AfterContentInit {
   containerHeight = 800; // Konténer magassága
   color: string = 'red';
 
-  constructor() {
+  constructor(private anchor: ScrollingService) {
+  }
+
+  scrollToAnchor(anchor: string) {
+    const sectionElement = this.sections.find(sec => sec.nativeElement.getAttribute('data-anchor') === anchor)?.nativeElement;
+    if (sectionElement) {
+      this.anchor.scrollTo(sectionElement);
+    } else {
+      alert('No anchor provided for this button!')
+    }
   }
 
   ngOnInit() {

@@ -1,0 +1,167 @@
+<form [formGroup]="form">
+    <h6>Card with actions alignment</h6>
+    <ul class="element">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Header title</mat-card-title>
+                <mat-card-subtitle>Header subtitle</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-actions align="end">
+                <button mat-button>Action 1</button>
+                <button mat-button>Action 2</button>
+            </mat-card-actions>
+        </mat-card>
+        <pre>
+    &#60;mat-card>
+        &#60;mat-card-header>
+            &#60;mat-card-title>Header title&#60;/mat-card-title>
+            &#60;mat-card-subtitle>Header subtitle&#60;/mat-card-subtitle>
+        &#60;/mat-card-header>
+        &#60;mat-card-actions align="end">
+            &#60;button mat-button>Action 1&#60;/button>
+            &#60;button mat-button>Action 2&#60;/button>
+        &#60;/mat-card-actions>
+    &#60;/mat-card>
+        </pre>
+        <li>A mat-card-actions-nek 2 align bemeneti értéke lehet
+            <ol>
+                <li>start</li>
+                <li>end</li>
+            </ol>
+        </li>
+    </ul>
+
+    <br>
+    <h6>Multiple sections</h6>
+    <ul class="element">
+        <mat-card appearance="outlined">
+            <mat-card-header>
+                <img mat-card-avatar src="https://picsum.photos/50/50?grayscale">
+                <mat-card-title>Header title</mat-card-title>
+                <mat-card-subtitle>Header subtitle</mat-card-subtitle>
+            </mat-card-header>
+            <img mat-card-image src="https://picsum.photos/600/300?grayscale">
+            <mat-card-content>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                    cillum dolore eu fugiat nulla pariatur.
+                </p>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button>Action 1</button>
+                <button mat-button>Action 2</button>
+            </mat-card-actions>
+            <mat-card-footer>
+                Footer
+            </mat-card-footer>
+        </mat-card>
+        <pre>
+    &#60;mat-card appearance="outlined">
+        &#60;mat-card-header>
+            &#60;img mat-card-avatar src="https://picsum.photos/50/50?grayscale">
+            &#60;mat-card-title>Header title&#60;/mat-card-title>
+            &#60;mat-card-subtitle>Header subtitle&#60;/mat-card-subtitle>
+        &#60;/mat-card-header>
+        &#60;img mat-card-image src="https://picsum.photos/600/300?grayscale">
+        &#60;mat-card-content>
+            &#60;p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                cillum dolore eu fugiat nulla pariatur.
+            &#60;/p>
+        &#60;/mat-card-content>
+        &#60;mat-card-actions>
+            &#60;button mat-button>Action 1&#60;/button>
+            &#60;button mat-button>Action 2&#60;/button>
+        &#60;/mat-card-actions>
+        &#60;mat-card-footer>
+            Footer
+        &#60;/mat-card-footer>
+    &#60;/mat-card>
+        </pre>
+    </ul>
+
+    <br>
+    <h6>Title group and media size</h6>
+    <ul class="element">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title-group>
+                    <mat-card-title>Shiba Inu</mat-card-title>
+                    <mat-card-subtitle>Small</mat-card-subtitle>
+                    <img *ngIf="cardImgSize === 'small'" mat-card-sm-image
+                        src="https://picsum.photos/600/300?grayscale">
+                    <img *ngIf="cardImgSize === 'medium'" mat-card-md-image
+                        src="https://picsum.photos/600/300?grayscale">
+                    <img *ngIf="cardImgSize === 'large'" mat-card-lg-image
+                        src="https://picsum.photos/600/300?grayscale">
+                    <img *ngIf="cardImgSize === 'xlarge'" mat-card-xl-image
+                        src="https://picsum.photos/600/300?grayscale">
+                </mat-card-title-group>
+            </mat-card-header>
+            <mat-card-content>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                cillum dolore eu fugiat nulla pariatur.
+            </mat-card-content>
+            <mat-card-actions align="end">
+                <button mat-raised-button color="primary" (click)="cardImgSize = 'small'">Small</button>
+                <button mat-raised-button color="primary" (click)="cardImgSize = 'medium'">Medium</button>
+                <button mat-raised-button color="primary" (click)="cardImgSize = 'large'">Large</button>
+                <button mat-raised-button color="primary" (click)="cardImgSize = 'xlarge'">XLarge</button>
+            </mat-card-actions>
+        </mat-card>
+        <pre>
+    &#60;mat-card>
+        &#60;mat-card-header>
+            &#60;mat-card-title-group>
+                &#60;mat-card-title>Shiba Inu&#60;/mat-card-title>
+                &#60;mat-card-subtitle>Small&#60;/mat-card-subtitle>
+                &#60;img *ngIf="cardImgSize === 'small'" mat-card-sm-image
+                    src="https://picsum.photos/600/300?grayscale">
+                &#60;img *ngIf="cardImgSize === 'medium'" mat-card-md-image
+                    src="https://picsum.photos/600/300?grayscale">
+                &#60;img *ngIf="cardImgSize === 'large'" mat-card-lg-image
+                    src="https://picsum.photos/600/300?grayscale">
+                &#60;img *ngIf="cardImgSize === 'xlarge'" mat-card-xl-image
+                    src="https://picsum.photos/600/300?grayscale">
+            &#60;/mat-card-title-group>
+        &#60;/mat-card-header>
+        &#60;mat-card-content>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+            et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+            cillum dolore eu fugiat nulla pariatur.
+        &#60;/mat-card-content>
+        &#60;mat-card-actions align="end">
+            &#60;button mat-raised-button color="primary" (click)="cardImgSize = 'small'">Small&#60;/button>
+            &#60;button mat-raised-button color="primary" (click)="cardImgSize = 'medium'">Medium&#60;/button>
+            &#60;button mat-raised-button color="primary" (click)="cardImgSize = 'large'">Large&#60;/button>
+            &#60;button mat-raised-button color="primary" (click)="cardImgSize = 'xlarge'">XLarge&#60;/button>
+        &#60;/mat-card-actions>
+    &#60;/mat-card>
+        </pre>
+        <li>Kép méretek (direktívák)
+            <ol>
+                <li>mat-card-sm-image</li>
+                <li>mat-card-md-image</li>
+                <li>mat-card-lg-image</li>
+                <li>mat-card-xl-image</li>
+            </ol>
+        </li>
+        <li>appearance
+            <ol>
+                <li>outlined
+                    <ul>
+                        <li>A kártya köré border kerül</li>
+                    </ul>
+                </li>
+                <li>raised</li>
+            </ol>
+        </li>
+    </ul>
+</form>

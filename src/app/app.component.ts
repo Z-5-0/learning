@@ -10,7 +10,9 @@ import { ViewportScroller } from '@angular/common';
   template: `
     <div class="page">
       <div class="menu">
-        <button *ngFor="let menu of menus" [routerLink]="[menu.link]" class="btn btn-warning">{{ menu.label }}</button>
+        <button *ngFor="let menu of menus" [routerLink]="[menu.link]" class="btn btn-{{menu.buttonClass}}" [disabled]="menu.disabled">
+          {{ menu.label }}
+        </button>
       </div>
 
       <div class="dropdow-menu">
@@ -21,13 +23,17 @@ import { ViewportScroller } from '@angular/common';
         </div>
         <ul class="dropdown-menu dropdown-menu-dark">
           <li *ngFor="let menu of menus">
-            <a [routerLink]="menu.link" class="dropdown-item">{{ menu.label }}</a>
+            <a [routerLink]="menu.link" class="dropdown-item" [ngClass]="{'disabled': menu.disabled}">
+              {{ menu.label }}
+            </a>
           </li>
         </ul>
       </div>
 
-      <div id="content" class="content">
-        <router-outlet #outlet (activate)="onActivate($event, outlet)"></router-outlet>
+      <div id="content" class="content row">
+        <div class="col-12 col-xxl-8 mx-auto">
+          <router-outlet #outlet (activate)="onActivate($event)"></router-outlet>
+        </div>
         <div class="scroll-to-bottom" (click)="scrollToBottom(bottom)">
           <span></span>
         </div>
@@ -44,31 +50,37 @@ export class AppComponent {
   @ViewChild('menuDropdown') menuDropdown!: ElementRef;
   @ViewChild('lines') lines!: ElementRef;
   menus: any[] = [
-    { label: 'Javascript', link: 'js' },
-    { label: 'Typescript', link: 'typescript' },
-    { label: 'Angular', link: 'angular' },
-    { label: 'Angular+', link: 'angularplus' },
-    { label: 'React', link: 'react' },
-    { label: 'RxJS', link: 'rxjs' },
-    { label: 'NgRX', link: 'ngrx' },
-    { label: 'CSS/SCSS', link: 'cssscss' },
-    { label: '_lodash', link: 'lodash' },
-    { label: 'SSR', link: 'ssr' },
-    { label: 'Material', link: 'material' },
-    { label: 'Bootstrap', link: 'bootstrap' },
-    { label: 'Webpack', link: 'webpack' },
-    { label: 'Grunt', link: 'grunt' },
-    { label: 'Babel', link: 'babel' },
-    { label: 'JSON', link: 'json' },
-    { label: 'XML', link: 'xml' },
-    { label: 'Ionic', link: 'ionic' },
-    { label: 'SEO', link: 'seo' },
-    { label: 'API', link: 'api' },
-    { label: 'Database', link: 'database' },
-    { label: 'Git', link: 'git' },
-    { label: 'VS Code', link: 'vscode' },
-    { label: 'News feed', link: 'newsfeed' },
-  ]
+    { label: 'Javascript', link: 'js', buttonClass: 'warning', disabled: false },
+    { label: 'Typescript', link: 'typescript', buttonClass: 'warning', disabled: false },
+    { label: 'Extras', link: 'extras', buttonClass: 'warning', disabled: false },
+    { label: 'JSON', link: 'json', buttonClass: 'warning', disabled: false },
+    { label: 'XML', link: 'xml', buttonClass: 'warning', disabled: false },
+    { label: 'Angular', link: 'angular', buttonClass: 'warning', disabled: false },
+    { label: 'React', link: 'react', buttonClass: 'warning', disabled: false },
+    { label: 'Vue', link: 'vue', buttonClass: 'secondary', disabled: true },
+    { label: 'Ionic', link: 'ionic', buttonClass: 'warning', disabled: false },
+    { label: 'RxJS', link: 'rxjs', buttonClass: 'warning', disabled: false },
+    { label: 'Redux', link: 'redux', buttonClass: 'secondary', disabled: true },
+    { label: 'CSS/SCSS', link: 'cssscss', buttonClass: 'warning', disabled: false },
+    { label: 'Material', link: 'material', buttonClass: 'warning', disabled: false },
+    { label: 'Bootstrap', link: 'bootstrap', buttonClass: 'warning', disabled: false },
+    { label: 'Tailwind', link: 'tailwind', buttonClass: 'secondary', disabled: true }, 
+    { label: 'Webpack', link: 'webpack', buttonClass: 'warning', disabled: false },
+    { label: 'Grunt', link: 'grunt', buttonClass: 'secondary', disabled: true },
+    { label: 'Gulp', link: 'gulp', buttonClass: 'secondary', disabled: true },
+    { label: 'SSR', link: 'ssr', buttonClass: 'warning', disabled: false },
+    { label: 'SEO', link: 'seo', buttonClass: 'warning', disabled: false },
+    { label: 'Lodash', link: 'lodash', buttonClass: 'secondary', disabled: true },
+    { label: 'API', link: 'api', buttonClass: 'warning', disabled: false },
+    { label: 'Database', link: 'database', buttonClass: 'warning', disabled: false },
+    { label: 'Dart', link: 'dart', buttonClass: 'secondary', disabled: true },
+    { label: 'VS Code', link: 'vscode', buttonClass: 'warning', disabled: false },
+    { label: 'News feed', link: 'newsfeed', buttonClass: 'warning', disabled: false }
+  ];
+
+  later: any[] = [
+
+  ];
 
   clickOutsideListener: any;
 
@@ -92,7 +104,7 @@ export class AppComponent {
     });
   }
 
-  onActivate(event: any, outlet: any) {
+  onActivate(event: any) {
     const content = document.getElementById('content');
     content?.scrollTo(0, 0);
 

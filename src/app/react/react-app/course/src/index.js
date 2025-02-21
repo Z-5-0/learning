@@ -3,10 +3,15 @@ import ReactDOM from 'react-dom/client';
 import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { AuthContextProvider } from './components/Context/AuthContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 // root.render(<App></App>); // így is leírható, de a következő sor rövidebb
-root.render(<App />);
+root.render(
+  <AuthContextProvider>
+    <App />
+  </AuthContextProvider>
+);
 
 /* ReactDOM.render(
   <React.StrictMode>

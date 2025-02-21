@@ -17,7 +17,8 @@ function ProductForm(props) {
         price: 0,
         desc: '',
         available: false,
-        imgUrl: ''
+        imgUrl: '',
+        stock: 0
     }
 
     let [states, updateStates] = useState(initalState);
@@ -71,7 +72,8 @@ function ProductForm(props) {
             desc: states.desc,
             isAvailable: states.available,
             image: states.imgUrl,
-            price: Number(states.price)
+            price: Number(states.price),
+            stock: states.stock
         }
 
         props.createProduct(product);
@@ -79,9 +81,13 @@ function ProductForm(props) {
         updateStates(initalState);
     }
 
+    const onCancelForm = () => {
+        updateStates(initalState);
+        props.cancelForm();
+    }
+
     return (
         <form className="row g-3" onSubmit={createProductEventHandler}>
-            {JSON.stringify(states)} {/* debug-képp */}
             <div className="col-md-6">
                 <label htmlFor="name">Product Name</label>
                 <input type="text"
@@ -118,7 +124,7 @@ function ProductForm(props) {
                 />
             </div>
 
-            <div className="form-check form-switch">
+            <div className="form-check form-switch col-md-6">
                 <input className="form-check-input"
                     name="available"
                     type="checkbox"
@@ -127,6 +133,19 @@ function ProductForm(props) {
                     checked={states.available}
                     onChange={handleChange} />
                 <label className="form-check-label" htmlFor="isAvailable">Is product available in stock?</label>
+            </div>
+
+            <div className="col-md-6">
+                <label htmlFor="price">Product stock</label>
+                <input type="number"
+                    name="stock"
+                    min="0" step="1" max="20"
+                    className="form-control"
+                    id="stock"
+                    placeholder="Product stock"
+                    value={states.stock}
+                    onChange={handleChange}
+                />
             </div>
 
             <div className="form-group">
@@ -140,6 +159,7 @@ function ProductForm(props) {
             </div>
 
             <button type="submit" className="btn btn-primary">Add Product</button>
+            <button type="button" className="btn btn-danger" onClick={onCancelForm}>Cancel</button>
         </form>
     )
 }

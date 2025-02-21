@@ -1,0 +1,261 @@
+<form>
+    <h6>UserForm</h6>
+    <ul class="element">
+        <div style="text-align: right;">
+            <button mat-raised-button color="accent" (click)="openDialog()">New</button>
+        </div>
+        <br>
+        <div style="max-height: 400px; overflow: auto;">
+            <table mat-table [dataSource]="lessMovies" [fixedLayout]="false">
+                <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef> Position </th>
+                    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                    <td mat-footer-cell *matFooterCellDef> Position </td>
+                </ng-container>
+
+                <ng-container matColumnDef="title">
+                    <th mat-header-cell *matHeaderCellDef> Title </th>
+                    <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+                    <td mat-footer-cell *matFooterCellDef> Title </td>
+                </ng-container>
+
+                <ng-container matColumnDef="year">ng
+                    <th mat-header-cell *matHeaderCellDef> Year </th>
+                    <td mat-cell *matCellDef="let element"> {{element.year}} </td>
+                    <td mat-footer-cell *matFooterCellDef> Year </td>
+                </ng-container>
+
+                <ng-container matColumnDef="genre">
+                    <th mat-header-cell *matHeaderCellDef> Genre </th>
+                    <td mat-cell *matCellDef="let element"> {{element.genre}} </td>
+                    <td mat-footer-cell *matFooterCellDef> Genre </td>
+                </ng-container>
+
+                <ng-container matColumnDef="rating">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <mat-icon fontIcon="star"></mat-icon>
+                    </th>
+                    <td mat-cell *matCellDef="let element"> {{element.rating}} </td>
+                    <td mat-footer-cell *matFooterCellDef>
+                        <mat-icon fontIcon="star"></mat-icon>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let element">
+                        <button mat-raised-button color="accent" (click)="openDialog(element)">Edit</button>
+                    </td>
+                    <td mat-footer-cell *matFooterCellDef></td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="['position', 'title', 'year', 'genre', 'rating', 'action']"></tr>
+                <tr mat-row *matRowDef="let row; columns: ['position', 'title', 'year', 'genre', 'rating', 'action']">
+                </tr>
+                <tr mat-footer-row *matFooterRowDef="['position', 'title', 'year', 'genre', 'rating', 'action']"></tr>
+            </table>
+        </div>
+        <pre>
+            <b>// m-dialog html</b>
+            &#60;div style="text-align: right;">
+                &#60;button mat-raised-button color="accent" (click)="openDialog()">New&#60;/button>
+            &#60;/div>
+            &#60;br>
+            &#60;div style="max-height: 400px; overflow: auto;">
+                &#60;table mat-table [dataSource]="lessMovies" [fixedLayout]="false">
+                    &#60;ng-container matColumnDef="position">
+                        &#60;th mat-header-cell *matHeaderCellDef> Position &#60;/th>
+                        &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element.position}} &#60;/td>
+                        &#60;td mat-footer-cell *matFooterCellDef> Position &#60;/td>
+                    &#60;/ng-container>
+    
+                    &#60;ng-container matColumnDef="title">
+                        &#60;th mat-header-cell *matHeaderCellDef> Title &#60;/th>
+                        &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element.title}} &#60;/td>
+                        &#60;td mat-footer-cell *matFooterCellDef> Title &#60;/td>
+                    &#60;/ng-container>
+    
+                    &#60;ng-container matColumnDef="year">ng
+                        &#60;th mat-header-cell *matHeaderCellDef> Year &#60;/th>
+                        &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element.year}} &#60;/td>
+                        &#60;td mat-footer-cell *matFooterCellDef> Year &#60;/td>
+                    &#60;/ng-container>
+    
+                    &#60;ng-container matColumnDef="genre">
+                        &#60;th mat-header-cell *matHeaderCellDef> Genre &#60;/th>
+                        &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element.genre}} &#60;/td>
+                        &#60;td mat-footer-cell *matFooterCellDef> Genre &#60;/td>
+                    &#60;/ng-container>
+    
+                    &#60;ng-container matColumnDef="rating">
+                        &#60;th mat-header-cell *matHeaderCellDef>
+                            &#60;mat-icon fontIcon="star">&#60;/mat-icon>
+                        &#60;/th>
+                        &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element.rating}} &#60;/td>
+                        &#60;td mat-footer-cell *matFooterCellDef>
+                            &#60;mat-icon fontIcon="star">&#60;/mat-icon>
+                        &#60;/td>
+                    &#60;/ng-container>
+    
+                    &#60;ng-container matColumnDef="action">
+                        &#60;th mat-header-cell *matHeaderCellDef>&#60;/th>
+                        &#60;td mat-cell *matCellDef="let element">
+                            &#60;button mat-raised-button color="accent" (click)="openDialog(element)">Edit&#60;/button>
+                        &#60;/td>
+                        &#60;td mat-footer-cell *matFooterCellDef>&#60;/td>
+                    &#60;/ng-container>
+    
+                    &#60;tr mat-header-row *matHeaderRowDef="['position', 'title', 'year', 'genre', 'rating', 'action']">&#60;/tr>
+                    &#60;tr mat-row *matRowDef="let row; columns: ['position', 'title', 'year', 'genre', 'rating', 'action']">
+                    &#60;/tr>
+                    &#60;tr mat-footer-row *matFooterRowDef="['position', 'title', 'year', 'genre', 'rating', 'action']">&#60;/tr>
+                &#60;/table>
+            &#60;/div>
+            <b>// m-dialog ts</b>
+            export interface Movie &#123;
+                position: string;
+                title: string;
+                year: number;
+                genre: string;
+                rating: null;
+                plot: string
+            }
+
+            export class MDialogComponent &#123;
+                lessMovies: any[] = [
+                  &#123; position: 1, title: 'Inception', year: 2010, genre: 'Sci-Fi', rating: 8.8, plot: 'A csapat tudatos álmokban próbál információt ellopni.' },
+                  &#123; position: 2, title: 'The Dark Knight', year: 2008, genre: 'Action', rating: 9.0, plot: 'Batman szembeszáll Jokerrel Gotham megmentéséért.' },
+                  &#123; position: 3, title: 'Interstellar', year: 2014, genre: 'Sci-Fi', rating: 8.6, plot: 'Űrhajósok galaxisokon át utaznak a Föld megmentéséért.' },
+                ];
+              
+                constructor(public dialog: MatDialog) &#123;
+              
+                }
+              
+                openDialog(row: Movie = &#123;} as Movie): void &#123;
+                  const dialogRef = this.dialog.open(MPopupComponent, &#123;
+                    height: '90%',
+                    width: '50%',
+                    enterAnimationDuration: '500ms',
+                    exitAnimationDuration: '500ms',
+                    data: &#123;
+                      new: Object.keys(row).length === 0 ? true : false,
+                      label: Object.keys(row).length === 0 ? 'New movie' : 'Edit movie',
+                      row
+                      // row: JSON.parse(JSON.stringify(row)) // így lehetne másolatot készíteni a filmek tömbjéről
+                    },
+                  });
+              
+                  dialogRef.afterClosed().subscribe(result => &#123;
+                    console.log('afterClosed result: ', result);
+                    if (result?.new) &#123;
+                      this.lessMovies = [...this.lessMovies, result.row];
+                    }
+                  });
+                }
+            }
+
+            <b>// m-popup html</b>
+            &#60;h1 mat-dialog-title>&#123; &#123; data.label }}&#60;/h1>
+            &#60;form [formGroup]="userForm" (ngSubmit)="onSubmit($event)">
+
+                &#60;div mat-dialog-content>
+                    &#60;div>
+                        &#60;mat-form-field>
+                            &#60;mat-label>Position&#60;/mat-label>
+                            &#60;input matInput [(ngModel)]="data.row.position" formControlName="position">
+                        &#60;/mat-form-field>
+                    &#60;/div>
+                    &#60;div>
+                        &#60;mat-form-field>
+                            &#60;mat-label>Title&#60;/mat-label>
+                            &#60;input matInput [(ngModel)]="data.row.title" formControlName="title">
+                        &#60;/mat-form-field>
+                    &#60;/div>
+                    &#60;div>
+                        &#60;mat-form-field>
+                            &#60;mat-label>Year&#60;/mat-label>
+                            &#60;input matInput [(ngModel)]="data.row.year" formControlName="year">
+                        &#60;/mat-form-field>
+                    &#60;/div>
+                    &#60;div>
+                        &#60;mat-form-field>
+                            &#60;mat-label>Genre&#60;/mat-label>
+                            &#60;input matInput [(ngModel)]="data.row.genre" formControlName="genre">
+                        &#60;/mat-form-field>
+                    &#60;/div>
+                    &#60;div>
+                        &#60;mat-form-field>
+                            &#60;mat-label>Rating&#60;/mat-label>
+                            &#60;input #rating matInput type="number" min="0" max="10" step="0.1" [ngModel]="data.row.rating"
+                                (ngModelChange)="data.row.rating = ($event)" formControlName="rating">
+                        &#60;/mat-form-field>
+                    &#60;/div>
+                    &#60;div>
+                        &#60;mat-form-field>
+                            &#60;mat-label>Plot&#60;/mat-label>
+                            &#60;textarea matInput [(ngModel)]="data.row.plot" formControlName="plot">&#60;/textarea>
+                        &#60;/mat-form-field>
+                    &#60;/div>
+                &#60;/div>
+                &#60;div mat-dialog-actions>
+                    &#60;button mat-button (click)="dialogRef.close(); userForm.reset()">Cancel&#60;/button> &#60;!--button mat-button type="submit" [mat-dialog-close]="data" cdkFocusInitial>Save&#60;/button-->
+                    &#60;!-- a dialogRef.afterClosed() Observable megkapja a data értékét dialog bezárásakor -->
+                    &#60;button mat-button type="submit" cdkFocusInitial>Save&#60;/button>
+                &#60;/div>
+            &#60;/form>
+
+            <b>// m-popup ts</b>
+            export class MPopupComponent implements OnInit &#123;
+                userForm = this._formBuilder.group(&#123;
+                  position: this._formBuilder.control('', Validators.required),
+                  title: this._formBuilder.control('', Validators.required),
+                  year: this._formBuilder.control('', Validators.required),
+                  genre: this._formBuilder.control('', Validators.required),
+                  rating: this._formBuilder.control('', Validators.required),
+                  plot: this._formBuilder.control('', Validators.required)
+                });
+              
+                constructor(
+                  public dialogRef: MatDialogRef&#60;MPopupComponent>,
+                  @Inject(MAT_DIALOG_DATA) public data: &#123; label: string, row: Movie },
+                  private _formBuilder: FormBuilder
+                ) &#123; }
+              
+                ngOnInit(): void &#123;
+                  // console.log(this.data);
+                }
+              
+                onSubmit(event: any) &#123;
+                  event.preventDefault();
+                  if (!this.userForm.valid) &#123;
+                    return;
+                  }
+                  this.dialogRef.close(&#123; ...this.data, row: this.userForm.value }); // data: &#123;new: boolean, label: 'string, row}
+                  // a [mat-dialog-close]="data" ugyanezt adja át az afterClosed függvénynek
+                }
+              }
+        </pre>
+        <li>A táblázatban az "Edit" gomb megnyomásával a openDialog() függvény hívódik meg
+            <ul>
+                <li>A függvény nyitja meg a dialógus ablakot, amelyben a filmek adatai szerkeszthetők, vagy éppen új
+                    filmet hozhatunk létre annak függvényében, hogy egy element-et / filmet adunk át az openDialog
+                    függvénynek, vagy semmit</li>
+            </ul>
+        </li>
+        <li>Ha a felhasználó a dialógusban új film adatokat visz fel, és a "Save" gombra kattint, akkor a afterClosed()
+            subscriptionben az új film hozzáadásra kerül a lessMovies tömbhöz
+            <ul>
+                <li>Az egyes field-ekre validálás lép érvénybe</li>
+            </ul>
+        </li>
+        <li>Az openDialog-ban különféle adatokat is átadunk az MPopupComponent-nek</li>
+        <li>A filmek tömbjéről nem készül másolat, ezért a dialógus ablakban való szerkesztés jelenleg közvetlenül
+            módosítja a táblázat sorainak értékeit
+            <ul>
+                <li>Ez persze csak azért lehetséges, mert az ngModel-lel 2 way binding-ot valósítunk meg</li>
+                <li>Amennyiben csak "befelé" történne adat binding [ngModel], úgy sem módosulna egyből minden érték</li>
+            </ul>
+        </li>
+    </ul>
+</form>

@@ -1,0 +1,46 @@
+@import 'src/app/app.component.scss';
+
+.dev-icons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+    gap: 50px;
+
+    @include sm() {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    a {
+        text-decoration: none;
+        transition: .5s;
+
+        &:not(.colored) {
+            cursor: default;
+            pointer-events: none;
+        }
+
+        &:hover {
+            &.colored {
+                transform: scale(1.1);
+                transition: .5s;
+            }
+        }
+
+        i {
+            font-size: 60px;
+            transition: .5s;
+            transform: scale(1.0);
+
+
+            @include xl() {
+                font-size: 90px;
+            }
+
+            @include xxl() {
+                font-size: 120px;
+            }
+
+
+        }
+    }
+}

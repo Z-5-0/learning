@@ -1,0 +1,1213 @@
+<form>
+    <h6>Basic table</h6>
+    <ul class="element">
+        <div #table1 style="max-height: 400px; overflow: auto;">
+            <table mat-table [dataSource]="movies" [fixedLayout]="false">
+                <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef> Position </th>
+                    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="title">
+                    <th mat-header-cell *matHeaderCellDef> Title </th>
+                    <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="year">ng
+                    <th mat-header-cell *matHeaderCellDef> Year </th>
+                    <td mat-cell *matCellDef="let element"> {{element.year}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="genre">
+                    <th mat-header-cell *matHeaderCellDef> Genre </th>
+                    <td mat-cell *matCellDef="let element"> {{element.genre}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="rating">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <mat-icon fontIcon="star"></mat-icon>
+                    </th>
+                    <td mat-cell *matCellDef="let element"> {{element.rating}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="['position', 'title', 'year', 'genre', 'rating']"></tr>
+                <tr mat-row *matRowDef="let row; columns: ['position', 'title', 'year', 'genre', 'rating'];"></tr>
+            </table>
+        </div>
+        <br>
+        <div>
+            <button mat-raised-button (click)="addNewMovie()" [disabled]="newStaticMovieAdded">
+                Add new static movie
+            </button>
+            <button mat-raised-button (click)="removeNewMovie()" [disabled]="!newStaticMovieAdded">
+                Remove new static movie
+            </button>
+        </div>
+        <pre>
+    <b>// template</b>
+    &#60;div #table1 style="max-height: 400px; overflow: auto;">
+        &#60;table mat-table [dataSource]="movies" [fixedLayout]="false">
+            &#60;ng-container matColumnDef="position">
+                &#60;th mat-header-cell *matHeaderCellDef> Position &#60;/th>
+                &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element.position}} &#60;/td>
+            &#60;/ng-container>
+
+            &#60;ng-container matColumnDef="title">
+                &#60;th mat-header-cell *matHeaderCellDef> Title &#60;/th>
+                &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element.title}} &#60;/td>
+            &#60;/ng-container>
+
+            &#60;ng-container matColumnDef="year">ng
+                &#60;th mat-header-cell *matHeaderCellDef> Year &#60;/th>
+                &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element.year}} &#60;/td>
+            &#60;/ng-container>
+
+            &#60;ng-container matColumnDef="genre">
+                &#60;th mat-header-cell *matHeaderCellDef> Genre &#60;/th>
+                &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element.genre}} &#60;/td>
+            &#60;/ng-container>
+
+            &#60;ng-container matColumnDef="rating">
+                &#60;th mat-header-cell *matHeaderCellDef>
+                    &#60;mat-icon fontIcon="star">&#60;/mat-icon>
+                &#60;/th>
+                &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element.rating}} &#60;/td>
+            &#60;/ng-container>
+
+            &#60;tr mat-header-row *matHeaderRowDef="['position', 'title', 'year', 'genre', 'rating']">&#60;/tr>
+            &#60;tr mat-row *matRowDef="let row; columns: ['position', 'title', 'year', 'genre', 'rating'];">&#60;/tr>
+        &#60;/table>
+    &#60;/div>
+    &#60;br>
+    &#60;div>
+        &#60;button mat-raised-button (click)="addNewMovie()" [disabled]="newStaticMovieAdded">
+            Add new static movie
+        &#60;/button>
+        &#60;button mat-raised-button (click)="removeNewMovie()" [disabled]="!newStaticMovieAdded">
+            Remove new static movie
+        &#60;/button>
+    &#60;/div>
+
+    <b>// class</b>
+    interface Movie &#123;
+        position: number,
+        title: string,
+        year: number,
+        genre: string,
+        rating: number
+        }
+
+    export class MTableComponent &#123;
+        @ViewChild(MatTable) table1!: MatTable&#60;Movie>;
+        
+        movies: Movie[] = [
+            &#123; position: 1, title: 'Inception', year: 2010, genre: 'Sci-Fi', rating: 8.8 },
+            &#123; position: 2, title: 'The Dark Knight', year: 2008, genre: 'Action', rating: 9.0 },
+            &#123; position: 3, title: 'Interstellar', year: 2014, genre: 'Sci-Fi', rating: 8.6 },
+            ...
+        ]
+
+        newStaticMovieAdded: boolean = false;
+
+        addNewMovie() &#123;
+        const newColumn = &#123;
+            position: this.movies.length + 1,
+            title: 'New movie',
+            year: 2000,
+            genre: 'Comedy',
+            rating: 5.0
+        };
+        this.movies.push(newColumn);
+        this.table1.renderRows();
+        this.newStaticMovieAdded = true;
+        // this.movies = [...this.movies]; // deep copy-val is frissül a tábla
+        }
+    
+        removeNewMovie() &#123;
+        this.movies.pop();
+        this.table1.renderRows();
+        this.newStaticMovieAdded = false;
+        }
+    }
+        </pre>
+        <li>A fixedLayout attribútum nem működik
+            <ul>
+                <li><a href="https://github.com/angular/components/issues/26565" target="'_blank'">GitHub</a></li>
+            </ul>
+        </li>
+    </ul>
+
+    <br>
+    <h6>Dynamic columns</h6>
+    <ul class="element">
+        <div>
+            <mat-checkbox *ngFor="let col of tableAllColumns; let index = index" [name]="col"
+                [checked]="table2DisplayedColumns.includes(col)"
+                (change)="onColumnVisibilityChange(col, index, $event.checked)">
+                <span style="color: white">{{col[0].toUpperCase() + col.substr(1).toLowerCase()}}</span>
+            </mat-checkbox>
+        </div>
+        <div style="max-height: 400px; overflow: auto;">
+            <table mat-table [dataSource]="movies" [fixedLayout]="false">
+                <ng-container [matColumnDef]="column" *ngFor="let column of table2DisplayedColumns">
+                    <th mat-header-cell *matHeaderCellDef>
+                        {{column[0].toUpperCase() + column.substr(1).toLowerCase()}}
+                    </th>
+                    <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="table2DisplayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: table2DisplayedColumns;"
+                    [ngClass]="{selected: table2SelectedRows.includes(row.position)}" (click)="onRowClick(row)"></tr>
+            </table>
+        </div>
+        <div>Selected movies:</div>
+        <ul>
+            <li *ngFor="let selectedTitle of table2SelectedMovieTitles">
+                {{selectedTitle}}
+            </li>
+        </ul>
+        <pre>
+    <b>// template</b>
+    &#60;div>
+        &#60;mat-checkbox *ngFor="let col of tableAllColumns; let index = index" [name]="col"
+            [checked]="table2DisplayedColumns.includes(col)"
+            (change)="onColumnVisibilityChange(col, index, $event.checked)">
+            &#60;span style="color: white">&#123; &#123;col[0].toUpperCase() + col.substr(1).toLowerCase()}}&#60;/span>
+        &#60;/mat-checkbox>
+    &#60;/div>
+    &#60;div style="max-height: 400px; overflow: auto;">
+        &#60;table mat-table [dataSource]="movies" [fixedLayout]="false">
+            &#60;ng-container [matColumnDef]="column" *ngFor="let column of table2DisplayedColumns">
+                &#60;th mat-header-cell *matHeaderCellDef>
+                    &#123; &#123;column[0].toUpperCase() + column.substr(1).toLowerCase()}}
+                &#60;/th>
+                &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element[column]}} &#60;/td>
+            &#60;/ng-container>
+
+            &#60;tr mat-header-row *matHeaderRowDef="table2DisplayedColumns">&#60;/tr>
+            &#60;tr mat-row *matRowDef="let row; columns: table2DisplayedColumns;"
+                [ngClass]="&#123;selected: table2SelectedRows.includes(row.position)}" (click)="onRowClick(row)">&#60;/tr>
+        &#60;/table>
+    &#60;/div>
+    &#60;div>Selected movies:&#60;/div>
+    &#60;ul>
+        &#60;li *ngFor="let selectedTitle of table2SelectedMovieTitles">
+            &#123; &#123;selectedTitle}}
+        &#60;/li>
+    &#60;/ul>
+
+    <b>// class</b>
+    export class MTableComponent &#123;
+        movies: Movie[] = [
+            &#123; position: 1, title: 'Inception', year: 2010, genre: 'Sci-Fi', rating: 8.8 },
+            &#123; position: 2, title: 'The Dark Knight', year: 2008, genre: 'Action', rating: 9.0 },
+            &#123; position: 3, title: 'Interstellar', year: 2014, genre: 'Sci-Fi', rating: 8.6 },
+            ...
+        ]
+
+        tableAllColumns: string[] = ['position', 'title', 'year', 'genre', 'rating'];
+        table2DisplayedColumns: string[] = ['position', 'title', 'rating'];
+        
+        table2SelectedRows: number[] = [];
+        table2SelectedMovieTitles: string[] = [];
+
+        onColumnVisibilityChange(name: string, position: number, event: any) &#123;
+            this.table2DisplayedColumns.includes(name) ? this.table2DisplayedColumns = this.table2DisplayedColumns.filter(col => col !== name) : this.table2DisplayedColumns.splice(position, 0, name);
+            this.table2DisplayedColumns = [...this.table2DisplayedColumns];
+        }
+        
+        onRowClick(row: any) &#123;
+            this.table2SelectedRows.includes(row.position) ? this.table2SelectedRows.splice(this.table2SelectedRows.indexOf(row.position), 1) : this.table2SelectedRows.push(row.position);
+            this.table2SelectedRows = [...this.table2SelectedRows];
+            this.table2SelectedMovieTitles = [];
+            this.table2SelectedRows.map(pos => &#123;
+                this.table2SelectedMovieTitles.push(this.movies.find(mov => mov.position === pos)?.title ?? '');
+            });
+        }
+    }
+        </pre>
+    </ul>
+
+    <br>
+    <h6>Expandable rows</h6>
+    <ul class="element">
+        <div style="max-height: 400px; overflow: auto;">
+            <table mat-table [dataSource]="movies" multiTemplateDataRows>
+                <ng-container matColumnDef="{{column}}" *ngFor="let column of tableAllColumns">
+                    <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+                    <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+                </ng-container>
+                <ng-container matColumnDef="expand">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let element">
+                        <button mat-icon-button aria-label="expand row"
+                            (click)="(expandedElement = expandedElement === element ? null : element); $event.stopPropagation()">
+                            <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
+                            <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+                <ng-container matColumnDef="expandedDetail">
+                    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpand.length">
+                        <div class="example-element-detail"
+                            [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                            <div style="padding: 30px;">
+                                <mat-card>
+                                    <mat-card-header>
+                                        <img *ngIf="element === expandedElement" mat-card-avatar
+                                            class="example-header-image" src="https://picsum.photos/100/100/?blur">
+                                        <mat-card-title>
+                                            {{element.title}} ({{element.rating}} <mat-icon fontIcon="star"></mat-icon>)
+                                        </mat-card-title>
+                                        <mat-card-subtitle>{{element.year}} {{element.genre}}</mat-card-subtitle>
+                                    </mat-card-header>
+                                    <mat-card-content>
+                                        <p>{{element.plot}}</p>
+                                    </mat-card-content>
+                                    <mat-card-actions align="end">
+                                        <button mat-button (click)="expandedElement = null">Close details</button>
+                                    </mat-card-actions>
+                                </mat-card>
+                            </div>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
+                <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpand;" class="example-element-row"
+                    [class.example-expanded-row]="expandedElement === element"
+                    (click)="expandedElement = expandedElement === element ? null : element">
+                </tr>
+                <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+            </table>
+        </div>
+        <pre>
+    <b>// template</b>
+    &#60;div style="max-height: 400px; overflow: auto;">
+        &#60;table mat-table [dataSource]="movies" multiTemplateDataRows>
+            &#60;ng-container matColumnDef="&#123; &#123;column}}" *ngFor="let column of tableAllColumns">
+                &#60;th mat-header-cell *matHeaderCellDef> &#123; &#123;column}} &#60;/th>
+                &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element[column]}} &#60;/td>
+            &#60;/ng-container>
+            &#60;ng-container matColumnDef="expand">
+                &#60;th mat-header-cell *matHeaderCellDef>&#60;/th>
+                &#60;td mat-cell *matCellDef="let element">
+                    &#60;button mat-icon-button aria-label="expand row"
+                        (click)="(expandedElement = expandedElement === element ? null : element); $event.stopPropagation()">
+                        &#60;mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down&#60;/mat-icon>
+                        &#60;mat-icon *ngIf="expandedElement === element">keyboard_arrow_up&#60;/mat-icon>
+                    &#60;/button>
+                &#60;/td>
+            &#60;/ng-container>
+
+            &#60;!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+            &#60;ng-container matColumnDef="expandedDetail">
+                &#60;td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpand.length">
+                    &#60;div class="example-element-detail"
+                        [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                        &#60;div style="padding: 30px;">
+                            &#60;mat-card>
+                                &#60;mat-card-header>
+                                    &#60;img *ngIf="element === expandedElement" mat-card-avatar
+                                        class="example-header-image" src="https://picsum.photos/100/100/?blur">
+                                    &#60;mat-card-title>
+                                        &#123; &#123;element.title}} (&#123; &#123;element.rating}} &#60;mat-icon fontIcon="star">&#60;/mat-icon>)
+                                    &#60;/mat-card-title>
+                                    &#60;mat-card-subtitle>&#123; &#123;element.year}} &#123; &#123;element.genre}}&#60;/mat-card-subtitle>
+                                &#60;/mat-card-header>
+                                &#60;mat-card-content>
+                                    &#60;p>&#123; &#123;element.plot}}&#60;/p>
+                                &#60;/mat-card-content>
+                                &#60;mat-card-actions align="end">
+                                    &#60;button mat-button (click)="expandedElement = null">Close details&#60;/button>
+                                &#60;/mat-card-actions>
+                            &#60;/mat-card>
+                        &#60;/div>
+                    &#60;/div>
+                &#60;/td>
+            &#60;/ng-container>
+
+            &#60;tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand">&#60;/tr>
+            &#60;tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpand;" class="example-element-row"
+                [class.example-expanded-row]="expandedElement === element"
+                (click)="expandedElement = expandedElement === element ? null : element">
+            &#60;/tr>
+            &#60;tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row">&#60;/tr>
+        &#60;/table>
+    &#60;/div>
+    <b>// class</b>
+    @Component(&#123;
+        ...
+        animations: [
+            trigger('detailExpand', [
+            state('collapsed', style(&#123; height: '0px', minHeight: '0' })),
+            state('expanded', style(&#123; height: '*' })),
+            transition('expanded &#60;=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+            ]),
+        ],
+        })
+        
+    export class MTableComponent &#123;
+        movies: Movie[] = [
+            &#123; position: 1, title: 'Inception', year: 2010, genre: 'Sci-Fi', rating: 8.8, plot: 'A csapat tudatos álmokban próbál információt ellopni.' },
+            &#123; position: 2, title: 'The Dark Knight', year: 2008, genre: 'Action', rating: 9.0, plot: 'Batman szembeszáll Jokerrel Gotham megmentéséért.' },
+            ...
+        ]
+
+        columnsToDisplayWithExpand = [...this.tableAllColumns, 'expand']; // lemásoljuk a tableAllColumns tömböt, és hozzáadunk egy expand nevű oszlopot
+        expandedElement!: Movie | null;
+    }
+        </pre>
+    </ul>
+
+    <br>
+    <h6>Filtering</h6>
+    <ul class="element">
+        <mat-form-field>
+            <mat-label>Global filter</mat-label>
+            <input #input matInput (keyup)="applyFilter($event)"
+                (focus)="setfilterPredicate($event, ['position', 'title', 'year', 'genre', 'rating'])"
+                placeholder="Type something...">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Year filter</mat-label>
+            <input #input matInput (keyup)="applyFilter($event)" (focus)="setfilterPredicate($event, ['year'])"
+                placeholder="Type something...">
+        </mat-form-field>
+        <br>
+        <div style="max-height: 400px; overflow: auto;">
+            <table mat-table [dataSource]="moviesSource" [fixedLayout]="false">
+                <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef> Position </th>
+                    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="title">
+                    <th mat-header-cell *matHeaderCellDef> Title </th>
+                    <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="year">ng
+                    <th mat-header-cell *matHeaderCellDef> Year </th>
+                    <td mat-cell *matCellDef="let element"> {{element.year}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="genre">
+                    <th mat-header-cell *matHeaderCellDef> Genre </th>
+                    <td mat-cell *matCellDef="let element"> {{element.genre}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="rating">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <mat-icon fontIcon="star"></mat-icon>
+                    </th>
+                    <td mat-cell *matCellDef="let element"> {{element.rating}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="['position', 'title', 'year', 'genre', 'rating']"></tr>
+                <tr mat-row *matRowDef="let row; columns: ['position', 'title', 'year', 'genre', 'rating'];"></tr>
+
+                <!-- Row shown when there is no matching data. -->
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="5">No movie matching for "{{input.value}}"</td>
+                </tr>
+            </table>
+        </div>
+        <pre>
+    <b>// template</b>
+    &#60;mat-form-field>
+        &#60;mat-label>Global filter&#60;/mat-label>
+        &#60;input #input matInput (keyup)="applyFilter($event)"
+            (focus)="setfilterPredicate($event, ['position', 'title', 'year', 'genre', 'rating'])"
+            placeholder="Type something...">
+    &#60;/mat-form-field>
+    &#60;mat-form-field>
+        &#60;mat-label>Year filter&#60;/mat-label>
+        &#60;input #input matInput (keyup)="applyFilter($event)" (focus)="setfilterPredicate($event, ['year'])"
+            placeholder="Type something...">
+    &#60;/mat-form-field>
+    &#60;br>
+    &#60;div style="max-height: 400px; overflow: auto;">
+        &#60;table mat-table [dataSource]="moviesSource" [fixedLayout]="false">
+            &#60;ng-container matColumnDef="position">
+                &#60;th mat-header-cell *matHeaderCellDef> Position &#60;/th>
+                &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element.position}} &#60;/td>
+            &#60;/ng-container>
+
+            &#60;ng-container matColumnDef="title">
+                &#60;th mat-header-cell *matHeaderCellDef> Title &#60;/th>
+                &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element.title}} &#60;/td>
+            &#60;/ng-container>
+
+            &#60;ng-container matColumnDef="year">ng
+                &#60;th mat-header-cell *matHeaderCellDef> Year &#60;/th>
+                &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element.year}} &#60;/td>
+            &#60;/ng-container>
+
+            &#60;ng-container matColumnDef="genre">
+                &#60;th mat-header-cell *matHeaderCellDef> Genre &#60;/th>
+                &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element.genre}} &#60;/td>
+            &#60;/ng-container>
+
+            &#60;ng-container matColumnDef="rating">
+                &#60;th mat-header-cell *matHeaderCellDef>
+                    &#60;mat-icon fontIcon="star">&#60;/mat-icon>
+                &#60;/th>
+                &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element.rating}} &#60;/td>
+            &#60;/ng-container>
+
+            &#60;tr mat-header-row *matHeaderRowDef="['position', 'title', 'year', 'genre', 'rating']">&#60;/tr>
+            &#60;tr mat-row *matRowDef="let row; columns: ['position', 'title', 'year', 'genre', 'rating'];">&#60;/tr>
+
+            &#60;!-- Row shown when there is no matching data. -->
+            &#60;tr class="mat-row" *matNoDataRow>
+                &#60;td class="mat-cell" colspan="4">No movie matching for "&#123; &#123;input.value}}"&#60;/td> &#60;!-- 5 oszlop van, ezért a colspan 5 -->
+            &#60;/tr>
+        &#60;/table>
+    &#60;/div>
+
+    <b>// class</b>
+
+    ngOnInit(): void &#123;
+        /* this.moviesSource.filterPredicate = (data: any, filter: string) => &#123; // fixen is meg lehet adni a komponens betöltődésekor
+          return data.year.toString().includes(filter); // csak a year-ben keresünk
+        }; */
+    }
+
+    applyFilter(event: any) &#123;
+        const filterValue = (event.target as HTMLInputElement).value;
+        this.moviesSource.filter = filterValue.trim().toLowerCase();
+        }
+    
+        setfilterPredicate(event: any, filters: string[] = ['position', 'title', 'year', 'genre', 'rating']) &#123;
+        this.moviesSource.filterPredicate = (data: any, filter: string) => &#123;
+            return filters.some(key => &#123;
+            return data[key].toString().trim().toLowerCase().includes(filter);
+            });
+        };
+    }
+        </pre>
+        <li>A filterPredicate egy függvény, amely meghatározza, hogyan szűrjön a táblázat</li>
+        <li>Amikor fókuszba kerül valamelyik input mező, beállítjuk a megfelelő filterPredicate-et
+            <ul>
+                <li>Ha a Global filter mező kerül fókuszba, akkor az összes oszlopra szűrünk
+                    <ul>
+                        <pre>
+    (focus)="setfilterPredicate($event, ['position', 'title', 'year', 'genre', 'rating'])"
+                        </pre>
+                    </ul>
+                </li>
+                <li>Ha a Year filter mező kerül fókuszba, akkor csak a year oszlopra szűrünk
+                    <ul>
+                        <pre>
+    (focus)="setfilterPredicate($event, ['year'])"
+                        </pre>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>A setfilterPredicate filters tömbje az oszlopneveket tartalmazza, amelyeket szűrni szeretnénk
+            <ul>
+                <li>A tömb megadja, mely oszlopokat kell figyelembe venni szűréskor</li>
+                <li>A függvény minden oszlopot végignéz, és true-t ad vissza, ha bármelyik oszlop tartalmazza a
+                    szűrőszöveget</li>
+                <li>A some() metódus fut végig a filters tömbön, és ellenőrzi, hogy a táblázat aktuális sorának
+                    bármelyik oszlopértéke tartalmazza-e a keresett szöveget</li>
+                <li>A key a filters tömb aktuális eleme, vagyis egy oszlopnév ('position', 'title', ...)</li>
+            </ul>
+        </li>
+        <li>Az applyFilter a szűrő szövegét lekérdezi az inputból, kisbetűssé alakítja, majd a táblázat szűrőjéhez
+            rendeli</li>
+        <li>Ha nincs találat a szűrésre, akkor a *matNoDataRow jelenik meg</li>
+    </ul>
+
+    <br>
+    <h6>Footer</h6>
+    <ul class="element">
+        <div style="max-height: 400px; overflow: auto;">
+            <table mat-table [dataSource]="lessMovies" [fixedLayout]="false">
+                <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef> Position </th>
+                    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                    <td mat-footer-cell *matFooterCellDef> Position </td>
+                </ng-container>
+
+                <ng-container matColumnDef="title">
+                    <th mat-header-cell *matHeaderCellDef> Title </th>
+                    <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+                    <td mat-footer-cell *matFooterCellDef> Title </td>
+                </ng-container>
+
+                <ng-container matColumnDef="year">ng
+                    <th mat-header-cell *matHeaderCellDef> Year </th>
+                    <td mat-cell *matCellDef="let element"> {{element.year}} </td>
+                    <td mat-footer-cell *matFooterCellDef> Year </td>
+                </ng-container>
+
+                <ng-container matColumnDef="genre">
+                    <th mat-header-cell *matHeaderCellDef> Genre </th>
+                    <td mat-cell *matCellDef="let element"> {{element.genre}} </td>
+                    <td mat-footer-cell *matFooterCellDef> Genre </td>
+                </ng-container>
+
+                <ng-container matColumnDef="rating">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <mat-icon fontIcon="star"></mat-icon>
+                    </th>
+                    <td mat-cell *matCellDef="let element"> {{element.rating}} </td>
+                    <td mat-footer-cell *matFooterCellDef>
+                        <mat-icon fontIcon="star"></mat-icon>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="['position', 'title', 'year', 'genre', 'rating']"></tr>
+                <tr mat-row *matRowDef="let row; columns: ['position', 'title', 'year', 'genre', 'rating']"></tr>
+                <tr mat-footer-row *matFooterRowDef="['position', 'title', 'year', 'genre', 'rating']"></tr>
+            </table>
+        </div>
+        <pre>
+    &#60;table mat-table [dataSource]="lessMovies" [fixedLayout]="false">
+        &#60;ng-container matColumnDef="position">
+            &#60;th mat-header-cell *matHeaderCellDef> Position &#60;/th>
+            &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element.position}} &#60;/td>
+            &#60;td mat-footer-cell *matFooterCellDef> Position &#60;/td>
+        &#60;/ng-container>
+
+        &#60;ng-container matColumnDef="title">
+            &#60;th mat-header-cell *matHeaderCellDef> Title &#60;/th>
+            &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element.title}} &#60;/td>
+            &#60;td mat-footer-cell *matFooterCellDef> Title &#60;/td>
+        &#60;/ng-container>
+
+        &#60;ng-container matColumnDef="year">ng
+            &#60;th mat-header-cell *matHeaderCellDef> Year &#60;/th>
+            &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element.year}} &#60;/td>
+            &#60;td mat-footer-cell *matFooterCellDef> Year &#60;/td>
+        &#60;/ng-container>
+
+        &#60;ng-container matColumnDef="genre">
+            &#60;th mat-header-cell *matHeaderCellDef> Genre &#60;/th>
+            &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element.genre}} &#60;/td>
+            &#60;td mat-footer-cell *matFooterCellDef> Genre &#60;/td>
+        &#60;/ng-container>
+
+        &#60;ng-container matColumnDef="rating">
+            &#60;th mat-header-cell *matHeaderCellDef>
+                &#60;mat-icon fontIcon="star">&#60;/mat-icon>
+            &#60;/th>
+            &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element.rating}} &#60;/td>
+            &#60;td mat-footer-cell *matFooterCellDef>
+                &#60;mat-icon fontIcon="star">&#60;/mat-icon>
+            &#60;/td>
+        &#60;/ng-container>
+
+        &#60;tr mat-header-row *matHeaderRowDef="['position', 'title', 'year', 'genre', 'rating']">&#60;/tr>
+        &#60;tr mat-row *matRowDef="let row; columns: ['position', 'title', 'year', 'genre', 'rating']">&#60;/tr>
+        &#60;tr mat-footer-row *matFooterRowDef="['position', 'title', 'year', 'genre', 'rating']">&#60;/tr>
+    &#60;/table>
+        </pre>
+        <li>A legalsó soor a footer, ami ismétli a header tartalmát</li>
+    </ul>
+
+    <br>
+    <h6>Columns defined using ngFor</h6>
+    <ul class="element">
+        <div style="max-height: 400px; overflow: auto;">
+            <table mat-table [dataSource]="movies" [fixedLayout]="false">
+                <ng-container *ngFor="let col of columns" [matColumnDef]="col.name">
+                    <th mat-header-cell *matHeaderCellDef> {{col.header}} </th>
+                    <td mat-cell *matCellDef="let row"> {{col.cell(row)}} </td>
+                    <!-- érdekesebb megoldás, mert függvényt hív, aminek átadja a row-t -->
+                    <!--td mat-cell *matCellDef="let element"> {{element[col.name]}} </td--> <!-- működik így is -->
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="['position', 'title', 'year', 'genre', 'rating']"></tr>
+                <tr mat-row *matRowDef="let row; columns: ['position', 'title', 'year', 'genre', 'rating'];"></tr>
+            </table>
+        </div>
+        <pre>
+    <b>// template</b>
+    &#60;table mat-table [dataSource]="movies" [fixedLayout]="false">
+        &#60;ng-container *ngFor="let col of columns" [matColumnDef]="col.name">
+            &#60;th mat-header-cell *matHeaderCellDef> &#123; &#123;col.header}} &#60;/th>
+            &#60;td mat-cell *matCellDef="let row"> &#123; &#123;col.cell(row)}} &#60;/td> &#60;!-- érdekesebb megoldás, mert függvényt hív, aminek átadja a row-t -->
+            &#60;!--td mat-cell *matCellDef="let element"> &#123; &#123;element[col.name]}} &#60;/td--> &#60;!-- működik így is -->
+        &#60;/ng-container>
+
+        &#60;tr mat-header-row *matHeaderRowDef="['position', 'title', 'year', 'genre', 'rating']">&#60;/tr>
+        &#60;tr mat-row *matRowDef="let row; columns: ['position', 'title', 'year', 'genre', 'rating'];">&#60;/tr>
+    &#60;/table>
+
+    <b>// class</b>
+    columns = [
+        &#123; name: 'position', header: 'Position', cell: (element: Movie) => `$&#123;element.position}` },
+        &#123; name: 'title', header: 'Title', cell: (element: Movie) => `$&#123;element.title}` },
+        &#123; name: 'year', header: 'Year', cell: (element: Movie) => `$&#123;element.year}` },
+        &#123; name: 'genre', header: 'Genre', cell: (element: Movie) => `$&#123;element.genre}` },
+        &#123; name: 'rating', header: 'Rating', cell: (element: Movie) => `$&#123;element.rating}` },
+    ]
+        </pre>
+    </ul>
+
+    <br>
+    <h6>Sorting and pagination</h6>
+    <ul class="element">
+        <div style="max-height: 400px; overflow: auto;">
+            <table mat-table [dataSource]="moviesDataSource" matSort>
+
+                <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Position </th>
+                    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="title">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
+                    <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="year">ng
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Year </th>
+                    <td mat-cell *matCellDef="let element"> {{element.year}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="genre">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Genre </th>
+                    <td mat-cell *matCellDef="let element"> {{element.genre}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="rating">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        <mat-icon fontIcon="star"></mat-icon>
+                    </th>
+                    <td mat-cell *matCellDef="let element"> {{element.rating}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="tableAllColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: tableAllColumns;"></tr>
+            </table>
+        </div>
+        <mat-paginator [pageSizeOptions]="[3, 6, 9, 12]"></mat-paginator>
+
+        <pre>
+    <b>// template</b>
+    &#60;div style="max-height: 400px; overflow: auto;">
+        &#60;table mat-table [dataSource]="moviesDataSource" matSort>
+
+            &#60;ng-container matColumnDef="position">
+                &#60;th mat-header-cell *matHeaderCellDef mat-sort-header> Position &#60;/th>
+                &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element.position}} &#60;/td>
+            &#60;/ng-container>
+
+            &#60;ng-container matColumnDef="title">
+                &#60;th mat-header-cell *matHeaderCellDef mat-sort-header> Title &#60;/th>
+                &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element.title}} &#60;/td>
+            &#60;/ng-container>
+
+            &#60;ng-container matColumnDef="year">ng
+                &#60;th mat-header-cell *matHeaderCellDef mat-sort-header> Year &#60;/th>
+                &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element.year}} &#60;/td>
+            &#60;/ng-container>
+
+            &#60;ng-container matColumnDef="genre">
+                &#60;th mat-header-cell *matHeaderCellDef mat-sort-header> Genre &#60;/th>
+                &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element.genre}} &#60;/td>
+            &#60;/ng-container>
+
+            &#60;ng-container matColumnDef="rating">
+                &#60;th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    &#60;mat-icon fontIcon="star">&#60;/mat-icon>
+                &#60;/th>
+                &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element.rating}} &#60;/td>
+            &#60;/ng-container>
+
+            &#60;tr mat-header-row *matHeaderRowDef="tableAllColumns">&#60;/tr>
+            &#60;tr mat-row *matRowDef="let row; columns: tableAllColumns;">&#60;/tr>
+        &#60;/table>
+    &#60;/div>
+    &#60;mat-paginator [pageSizeOptions]="[3, 6, 9, 12]">&#60;/mat-paginator>
+
+    <b>// class</b>
+    @ViewChild(MatPaginator) paginator!: MatPaginator;
+    @ViewChild(MatSort) sort!: MatSort;
+
+    moviesDataSource!: MatTableDataSource&#60;Movie>;
+
+    ngOnInit(): void &#123;
+        /* this.moviesSource.filterPredicate = (data: any, filter: string) => &#123;
+        return data.year.toString().includes(filter);
+        }; */
+
+        this.moviesDataSource = new MatTableDataSource(this.movies);
+    }
+
+    ngAfterViewInit(): void &#123;
+        this.moviesDataSource.paginator = this.paginator;
+        this.moviesDataSource.sort = this.sort;
+    }
+        </pre>
+    </ul>
+
+    <br>
+    <h6>Multiple header and footer rows</h6>
+    <ul class="element">
+        <div style="max-height: 400px; overflow: auto;">
+            <table mat-table [dataSource]="lessMovies" [fixedLayout]="false">
+                <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef> Position </th>
+                    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                    <td mat-footer-cell *matFooterCellDef> Position </td>
+                </ng-container>
+
+                <ng-container matColumnDef="title">
+                    <th mat-header-cell *matHeaderCellDef> Title </th>
+                    <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+                    <td mat-footer-cell *matFooterCellDef> Title </td>
+                </ng-container>
+
+                <ng-container matColumnDef="year">
+                    <th mat-header-cell *matHeaderCellDef> Year </th>
+                    <td mat-cell *matCellDef="let element"> {{element.year}} </td>
+                    <td mat-footer-cell *matFooterCellDef> Year </td>
+                </ng-container>
+
+                <ng-container matColumnDef="genre">
+                    <th mat-header-cell *matHeaderCellDef> Genre </th>
+                    <td mat-cell *matCellDef="let element"> {{element.genre}} </td>
+                    <td mat-footer-cell *matFooterCellDef> Genre </td>
+                </ng-container>
+
+                <ng-container matColumnDef="rating">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <mat-icon fontIcon="star"></mat-icon>
+                    </th>
+                    <td mat-cell *matCellDef="let element"> {{element.rating}} </td>
+                    <td mat-footer-cell *matFooterCellDef>
+                        <mat-icon fontIcon="star"></mat-icon>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="extraHeader">
+                    <th mat-header-cell *matHeaderCellDef colspan="5">
+                        Aenean commodo ligula eget dolor (extra header)
+                    </th>
+                </ng-container>
+
+                <ng-container matColumnDef="extraFooter">
+                    <td mat-footer-cell *matFooterCellDef colspan="5">
+                        Cum sociis natoque penatibus et (extra foióoter)
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="['extraHeader']"></tr>
+                <tr mat-header-row *matHeaderRowDef="['position', 'title', 'year', 'genre', 'rating']"></tr>
+                <tr mat-row *matRowDef="let row; columns: ['position', 'title', 'year', 'genre', 'rating']"></tr>
+                <tr mat-footer-row *matFooterRowDef="['position', 'title', 'year', 'genre', 'rating']"></tr>
+                <tr mat-footer-row *matFooterRowDef="['extraFooter']"></tr>
+            </table>
+        </div>
+        <pre>
+    &#60;table mat-table [dataSource]="lessMovies" [fixedLayout]="false">
+        &#60;ng-container matColumnDef="position">
+            &#60;th mat-header-cell *matHeaderCellDef> Position &#60;/th>
+            &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element.position}} &#60;/td>
+            &#60;td mat-footer-cell *matFooterCellDef> Position &#60;/td>
+        &#60;/ng-container>
+
+        &#60;ng-container matColumnDef="title">
+            &#60;th mat-header-cell *matHeaderCellDef> Title &#60;/th>
+            &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element.title}} &#60;/td>
+            &#60;td mat-footer-cell *matFooterCellDef> Title &#60;/td>
+        &#60;/ng-container>
+
+        &#60;ng-container matColumnDef="year">
+            &#60;th mat-header-cell *matHeaderCellDef> Year &#60;/th>
+            &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element.year}} &#60;/td>
+            &#60;td mat-footer-cell *matFooterCellDef> Year &#60;/td>
+        &#60;/ng-container>
+
+        &#60;ng-container matColumnDef="genre">
+            &#60;th mat-header-cell *matHeaderCellDef> Genre &#60;/th>
+            &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element.genre}} &#60;/td>
+            &#60;td mat-footer-cell *matFooterCellDef> Genre &#60;/td>
+        &#60;/ng-container>
+
+        &#60;ng-container matColumnDef="rating">
+            &#60;th mat-header-cell *matHeaderCellDef>
+                &#60;mat-icon fontIcon="star">&#60;/mat-icon>
+            &#60;/th>
+            &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element.rating}} &#60;/td>
+            &#60;td mat-footer-cell *matFooterCellDef>
+                &#60;mat-icon fontIcon="star">&#60;/mat-icon>
+            &#60;/td>
+        &#60;/ng-container>
+
+        &#60;ng-container matColumnDef="extraHeader">
+            &#60;th mat-header-cell *matHeaderCellDef colspan="5">
+                Aenean commodo ligula eget dolor (extra header)
+            &#60;/th>
+        &#60;/ng-container>
+
+        &#60;ng-container matColumnDef="extraFooter">
+            &#60;td mat-footer-cell *matFooterCellDef colspan="5">
+                Cum sociis natoque penatibus et (extra foióoter)
+            &#60;/td>
+        &#60;/ng-container>
+
+        &#60;tr mat-header-row *matHeaderRowDef="['extraHeader']">&#60;/tr>
+        &#60;tr mat-header-row *matHeaderRowDef="['position', 'title', 'year', 'genre', 'rating']">&#60;/tr>
+        &#60;tr mat-row *matRowDef="let row; columns: ['position', 'title', 'year', 'genre', 'rating']">&#60;/tr>
+        &#60;tr mat-footer-row *matFooterRowDef="['position', 'title', 'year', 'genre', 'rating']">&#60;/tr>
+        &#60;tr mat-footer-row *matFooterRowDef="['extraFooter']">&#60;/tr>
+    &#60;/table>
+        </pre>
+    </ul>
+
+    <br>
+    <h6>Reorderable columns</h6>
+    <ul class="element">
+        <div style="max-height: 400px; overflow: auto;">
+            <table mat-table [dataSource]="movies" cdkDropList cdkDropListOrientation="horizontal"
+                (cdkDropListDropped)="drop($event)">
+                <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef cdkDrag> Position </th>
+                    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="title">
+                    <th mat-header-cell *matHeaderCellDef cdkDrag> Title </th>
+                    <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="year">ng
+                    <th mat-header-cell *matHeaderCellDef cdkDrag> Year </th>
+                    <td mat-cell *matCellDef="let element"> {{element.year}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="genre">
+                    <th mat-header-cell *matHeaderCellDef cdkDrag> Genre </th>
+                    <td mat-cell *matCellDef="let element"> {{element.genre}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="rating">
+                    <th mat-header-cell *matHeaderCellDef cdkDrag>
+                        <mat-icon fontIcon="star"></mat-icon>
+                    </th>
+                    <td mat-cell *matCellDef="let element"> {{element.rating}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="tableAllColumns"></tr>
+                <!-- itt megadva a tömböt ['title', ...] nem működik a dra&drop-->
+
+                <tr mat-row *matRowDef="let row; columns: ['position', 'title', 'year', 'genre', 'rating'];"></tr>
+                <!-- itt  tömböt megadva ['title', ...] drag&drop esetében csak a fejléc cserél helyet-->
+            </table>
+        </div>
+        <pre>
+    <b>// template</b>
+    &#60;table mat-table [dataSource]="movies" cdkDropList cdkDropListOrientation="horizontal"
+        (cdkDropListDropped)="drop($event)">
+        &#60;ng-container matColumnDef="position">
+            &#60;th mat-header-cell *matHeaderCellDef cdkDrag> Position &#60;/th>
+            &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element.position}} &#60;/td>
+        &#60;/ng-container>
+
+        &#60;ng-container matColumnDef="title">
+            &#60;th mat-header-cell *matHeaderCellDef cdkDrag> Title &#60;/th>
+            &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element.title}} &#60;/td>
+        &#60;/ng-container>
+
+        &#60;ng-container matColumnDef="year">ng
+            &#60;th mat-header-cell *matHeaderCellDef cdkDrag> Year &#60;/th>
+            &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element.year}} &#60;/td>
+        &#60;/ng-container>
+
+        &#60;ng-container matColumnDef="genre">
+            &#60;th mat-header-cell *matHeaderCellDef cdkDrag> Genre &#60;/th>
+            &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element.genre}} &#60;/td>
+        &#60;/ng-container>
+
+        &#60;ng-container matColumnDef="rating">
+            &#60;th mat-header-cell *matHeaderCellDef cdkDrag>
+                &#60;mat-icon fontIcon="star">&#60;/mat-icon>
+            &#60;/th>
+            &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element.rating}} &#60;/td>
+        &#60;/ng-container>
+
+        &#60;tr mat-header-row *matHeaderRowDef="tableAllColumns">&#60;/tr>
+        &#60;!-- itt megadva a tömböt ['title', ...] nem működik a dra&drop-->
+            
+        &#60;tr mat-row *matRowDef="let row; columns: ['position', 'title', 'year', 'genre', 'rating'];">&#60;/tr>
+        &#60;!-- itt  tömböt megadva ['title', ...] drag&drop esetében csak a fejléc cserél helyet-->
+    &#60;/table>
+
+    <b>// class</b>
+    drop(event: CdkDragDrop&#60;string[]>) &#123;
+        moveItemInArray(this.tableAllColumns, event.previousIndex, event.currentIndex);
+    }
+        </pre>
+    </ul>
+
+    <br>
+    <h6>Selection</h6>
+    <ul class="element">
+        <div style="max-height: 400px; overflow: auto;">
+            <table mat-table [dataSource]="lessMoviesSource" [fixedLayout]="false">
+
+                <!-- Checkbox Column -->
+                <ng-container matColumnDef="select">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <mat-checkbox (change)="$event ? toggleAllRows() : null"
+                            [checked]="selection.hasValue() && isAllSelected()"
+                            [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+                        </mat-checkbox>
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        <mat-checkbox (click)="$event.stopPropagation()"
+                            (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)"
+                            [aria-label]="checkboxLabel(row)">
+                        </mat-checkbox>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef> Position </th>
+                    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="title">
+                    <th mat-header-cell *matHeaderCellDef> Title </th>
+                    <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="year">ng
+                    <th mat-header-cell *matHeaderCellDef> Year </th>
+                    <td mat-cell *matCellDef="let element"> {{element.year}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="genre">
+                    <th mat-header-cell *matHeaderCellDef> Genre </th>
+                    <td mat-cell *matCellDef="let element"> {{element.genre}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="rating">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <mat-icon fontIcon="star"></mat-icon>
+                    </th>
+                    <td mat-cell *matCellDef="let element"> {{element.rating}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="['select', 'position', 'title', 'year', 'genre', 'rating']"></tr>
+                <tr mat-row *matRowDef="let row; columns: ['select', 'position', 'title', 'year', 'genre', 'rating'];">
+                </tr>
+            </table>
+        </div>
+        <pre>
+    <b>// template</b>
+    &#60;table mat-table [dataSource]="lessMoviesSource" [fixedLayout]="false">
+
+        &#60;!-- Checkbox Column -->
+        &#60;ng-container matColumnDef="select">
+            &#60;th mat-header-cell *matHeaderCellDef>
+                &#60;mat-checkbox (change)="$event ? toggleAllRows() : null"
+                    [checked]="selection.hasValue() && isAllSelected()"
+                    [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+                &#60;/mat-checkbox>
+            &#60;/th>
+            &#60;td mat-cell *matCellDef="let row">
+                &#60;mat-checkbox (click)="$event.stopPropagation()"
+                    (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)"
+                    [aria-label]="checkboxLabel(row)">
+                &#60;/mat-checkbox>
+            &#60;/td>
+        &#60;/ng-container>
+
+        &#60;ng-container matColumnDef="position">
+            &#60;th mat-header-cell *matHeaderCellDef> Position &#60;/th>
+            &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element.position}} &#60;/td>
+        &#60;/ng-container>
+
+        &#60;ng-container matColumnDef="title">
+            &#60;th mat-header-cell *matHeaderCellDef> Title &#60;/th>
+            &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element.title}} &#60;/td>
+        &#60;/ng-container>
+
+        &#60;ng-container matColumnDef="year">ng
+            &#60;th mat-header-cell *matHeaderCellDef> Year &#60;/th>
+            &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element.year}} &#60;/td>
+        &#60;/ng-container>
+
+        &#60;ng-container matColumnDef="genre">
+            &#60;th mat-header-cell *matHeaderCellDef> Genre &#60;/th>
+            &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element.genre}} &#60;/td>
+        &#60;/ng-container>
+
+        &#60;ng-container matColumnDef="rating">
+            &#60;th mat-header-cell *matHeaderCellDef>
+                &#60;mat-icon fontIcon="star">&#60;/mat-icon>
+            &#60;/th>
+            &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element.rating}} &#60;/td>
+        &#60;/ng-container>
+
+        &#60;tr mat-header-row *matHeaderRowDef="['select', 'position', 'title', 'year', 'genre', 'rating']">&#60;/tr>
+        &#60;tr mat-row *matRowDef="let row; columns: ['select', 'position', 'title', 'year', 'genre', 'rating'];">
+        &#60;/tr>
+    &#60;/table>
+
+    <b>// class</b>
+    moviesSource = new MatTableDataSource(this.movies);
+
+    selection = new SelectionModel&#60;Movie>(true, []);
+
+    /** Whether the number of selected elements matches the total number of rows. */
+    isAllSelected() &#123;
+        const numSelected = this.selection.selected.length;
+        const numRows = this.lessMoviesSource.data.length;
+        return numSelected === numRows;
+    }
+
+    /** Selects all rows if they are not all selected; otherwise clear selection. */
+    toggleAllRows() &#123;
+        if (this.isAllSelected()) &#123;
+        this.selection.clear();
+        return;
+        }
+
+        this.selection.select(...this.lessMoviesSource.data);
+    }
+
+    /** The label for the checkbox on the passed row */
+    checkboxLabel(row?: Movie): string &#123;
+        if (!row) &#123;
+        return `$&#123;this.isAllSelected() ? 'deselect' : 'select'} all`;
+        }
+        return `$&#123;this.selection.isSelected(row) ? 'deselect' : 'select'} row $&#123;row.position + 1}`;
+    }
+        </pre>
+    </ul>
+
+    <br>
+    <h6>Sticky headers, footers, and columns</h6>
+    <ul class="element">
+        <div #table1 style="max-height: 400px; max-width: 500px; overflow: auto;">
+            <table mat-table [dataSource]="movies" [fixedLayout]="false">
+                <ng-container matColumnDef="position" sticky>
+                    <th mat-header-cell *matHeaderCellDef> Position </th>
+                    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                    <td mat-footer-cell *matFooterCellDef> Position </td>
+                </ng-container>
+
+                <ng-container matColumnDef="title">
+                    <th mat-header-cell *matHeaderCellDef> Title </th>
+                    <td mat-cell *matCellDef="let element">
+                        <span style="white-space: nowrap;">{{element.title}}</span>
+                    </td>
+                    <td mat-footer-cell *matFooterCellDef> Title </td>
+                </ng-container>
+
+                <ng-container matColumnDef="year">ng
+                    <th mat-header-cell *matHeaderCellDef> Year </th>
+                    <td mat-cell *matCellDef="let element"> {{element.year}} </td>
+                    <td mat-footer-cell *matFooterCellDef> Year </td>
+                </ng-container>
+
+                <ng-container matColumnDef="genre">
+                    <th mat-header-cell *matHeaderCellDef> Genre </th>
+                    <td mat-cell *matCellDef="let element"> {{element.genre}} </td>
+                    <td mat-footer-cell *matFooterCellDef> Genre </td>
+                </ng-container>
+
+                <ng-container matColumnDef="plot">
+                    <th mat-header-cell *matHeaderCellDef> Plot </th>
+                    <td mat-cell *matCellDef="let element">
+                        <span style="white-space: nowrap;">{{element.plot}}</span>
+                    </td>
+                    <td mat-footer-cell *matFooterCellDef> Plot </td>
+                </ng-container>
+
+                <ng-container matColumnDef="rating">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <mat-icon fontIcon="star"></mat-icon>
+                    </th>
+                    <td mat-cell *matCellDef="let element"> {{element.rating}} </td>
+                    <td mat-footer-cell *matFooterCellDef>
+                        <mat-icon fontIcon="star"></mat-icon>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row
+                    *matHeaderRowDef="['position', 'title', 'year', 'genre', 'plot', 'rating'], sticky: true">
+                </tr>
+                <tr mat-row *matRowDef="let row; columns: ['position', 'title', 'year', 'genre', 'plot', 'rating'];">
+                </tr>
+                <tr mat-footer-row
+                    *matFooterRowDef="['position', 'title', 'year', 'genre', 'plot', 'rating'], sticky: true"></tr>
+            </table>
+        </div>
+        <pre>
+            &#60;table mat-table [dataSource]="movies" [fixedLayout]="false">
+                &#60;ng-container matColumnDef="position" sticky>
+                    &#60;th mat-header-cell *matHeaderCellDef> Position &#60;/th>
+                    &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element.position}} &#60;/td>
+                    &#60;td mat-footer-cell *matFooterCellDef> Position &#60;/td>
+                &#60;/ng-container>
+
+                &#60;ng-container matColumnDef="title">
+                    &#60;th mat-header-cell *matHeaderCellDef> Title &#60;/th>
+                    &#60;td mat-cell *matCellDef="let element">
+                        &#60;span style="white-space: nowrap;">&#123; &#123;element.title}}&#60;/span>
+                    &#60;/td>
+                    &#60;td mat-footer-cell *matFooterCellDef> Title &#60;/td>
+                &#60;/ng-container>
+
+                &#60;ng-container matColumnDef="year">ng
+                    &#60;th mat-header-cell *matHeaderCellDef> Year &#60;/th>
+                    &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element.year}} &#60;/td>
+                    &#60;td mat-footer-cell *matFooterCellDef> Year &#60;/td>
+                &#60;/ng-container>
+
+                &#60;ng-container matColumnDef="genre">
+                    &#60;th mat-header-cell *matHeaderCellDef> Genre &#60;/th>
+                    &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element.genre}} &#60;/td>
+                    &#60;td mat-footer-cell *matFooterCellDef> Genre &#60;/td>
+                &#60;/ng-container>
+
+                &#60;ng-container matColumnDef="plot">
+                    &#60;th mat-header-cell *matHeaderCellDef> Plot &#60;/th>
+                    &#60;td mat-cell *matCellDef="let element">
+                        &#60;span style="white-space: nowrap;">&#123; &#123;element.plot}}&#60;/span>
+                    &#60;/td>
+                    &#60;td mat-footer-cell *matFooterCellDef> Plot &#60;/td>
+                &#60;/ng-container>
+
+                &#60;ng-container matColumnDef="rating">
+                    &#60;th mat-header-cell *matHeaderCellDef>
+                        &#60;mat-icon fontIcon="star">&#60;/mat-icon>
+                    &#60;/th>
+                    &#60;td mat-cell *matCellDef="let element"> &#123; &#123;element.rating}} &#60;/td>
+                    &#60;td mat-footer-cell *matFooterCellDef>
+                        &#60;mat-icon fontIcon="star">&#60;/mat-icon>
+                    &#60;/td>
+                &#60;/ng-container>
+
+                &#60;tr mat-header-row
+                    *matHeaderRowDef="['position', 'title', 'year', 'genre', 'plot', 'rating'], sticky: true">
+                &#60;/tr>
+                &#60;tr mat-row *matRowDef="let row; columns: ['position', 'title', 'year', 'genre', 'plot', 'rating'];">
+                &#60;/tr>
+                &#60;tr mat-footer-row
+                    *matFooterRowDef="['position', 'title', 'year', 'genre', 'plot', 'rating'], sticky: true">&#60;/tr>
+            &#60;/table>
+        </pre>
+        <li>Az első oszlop, a header, és a footer sticky</li>
+    </ul>
+
+    <br>
+    <h6>TODO</h6>
+    <ul class="element">
+        <pre></pre>
+        <li></li>
+    </ul>
+</form>

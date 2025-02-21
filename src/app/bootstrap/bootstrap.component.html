@@ -1,5 +1,12 @@
 <h1>Bootstrap</h1>
 
+<div>
+  <h3 #typography data-anchor="typography">Typography</h3>
+  <ul>
+    <li></li>
+  </ul>
+</div>
+
 <div class="anchor-navi-container">
   <div *ngFor="let mainButton of anchorButtons" class="btn-group">
     <button type="button" class="btn btn-primary btn-sm anchor" (click)="scrollToAnchor(mainButton?.anchor)">
@@ -23,30 +30,30 @@
 <div>
   <h3 #bootstrap data-anchor="bootstrap">Bootstrap</h3>
   <ul>
-    <li>Reszponzív mobile-first CSS framework.</li>
-    <li>Beépített SAS változókkal, grid rendszerrel, mixin-ekkel, komponensekkel rendelkező Javascript plugin.</li>
-    <li>Néhány CSS és JS file-ból áll.</li>
-    <li>jQuery és properjs függőségei is vannak.</li>
+    <li>Reszponzív mobile-first CSS framework</li>
+    <li>Beépített SAS változókkal, grid rendszerrel, mixin-ekkel, komponensekkel rendelkező Javascript plugin</li>
+    <li>Néhány CSS és JS file-ból áll</li>
+    <li>jQuery és properjs függőségei is vannak</li>
   </ul>
 </div>
 
 <div>
   <h3 #angularintegration data-anchor="angularintegration">Angular integration</h3>
   <ul>
-    <li>CDN URL-lel beimportálható.
+    <li>CDN URL-lel beimportálható
       <ul>
         <li>CDN
           <ul>
             <li>A CDN egy földrajzilag elosztott szerverhálózat, amely a weboldalak és alkalmazások statikus tartalmait
               (például képeket, CSS fájlokat, JavaScript fájlokat, videókat) gyorsítótárazza, és ezekhez a felhasználók
-              számára legközelebbi szerverről biztosít hozzáférést.
+              számára legközelebbi szerverről biztosít hozzáférést
             </li>
           </ul>
         </li>
         <li>CDN URL
           <ul>
-            <li>A CDN URL egy olyan hivatkozás, amely egy erőforrást (pl. egy JavaScript könyvtárat, képet vagy
-              stíluslapot) a CDN-en keresztül ér el.
+            <li>A CDN URL egy olyan hivatkozás, amely egy erőforrást (például egy JavaScript könyvtárat, képet vagy
+              stíluslapot) a CDN-en keresztül ér el
             </li>
           </ul>
         </li>
@@ -54,18 +61,18 @@
           <ol>
             <li>Gyors betöltés
               <ul>
-                <li>Mivel a tartalom a felhasználóhoz legközelebbi szerverről érkezik, csökken a válaszidő.</li>
+                <li>Mivel a tartalom a felhasználóhoz legközelebbi szerverről érkezik, csökken a válaszidő</li>
               </ul>
             </li>
             <li>Kisebb szerverterhelés
               <ul>
-                <li>Az alkalmazás szervere kevésbé lesz terhelve, mert a statikus tartalmakat a CDN szolgáltatja.</li>
+                <li>Az alkalmazás szervere kevésbé lesz terhelve, mert a statikus tartalmakat a CDN szolgáltatja</li>
               </ul>
             </li>
             <li>Hatékonyabb cache-elés
               <ul>
-                <li>A gyakran használt erőforrások (pl. jQuery, Bootstrap) már lehet, hogy cache-elve vannak a
-                  felhasználó böngészőjében más webhelyek miatt, így nem szükséges újra letölteni őket.
+                <li>A gyakran használt erőforrások (például jQuery, Bootstrap) már lehet, hogy cache-elve vannak a
+                  felhasználó böngészőjében más webhelyek miatt, így nem szükséges újra letölteni őket
                 </li>
               </ul>
             </li>
@@ -73,27 +80,40 @@
         </li>
       </ul>
     </li>
-    <li>Egy másik importálási opció, ha felinstalláljuk.
+    <li>Egy másik importálási opció, ha felinstalláljuk
       <ul>
-        <li>npm i bootstrap
+        <li>
           <ul>
-            <li>A node_modules mappába telepítődik.</li>
-            <li>A min CSS-t a node_modules/bootstrap/dist/css/dist/bootstrap.min.css lokáción található.</li>
+            <pre>
+  npm install bootstrap
+  ng add @ng-bootstrap/ng-bootstrap
+  npm i bootstrap-icons
+  npm i @types/bootstrap
+            </pre>
+            <li>A node_modules mappába telepítődik</li>
+            <li>A min CSS-t a node_modules/bootstrap/dist/css/dist/bootstrap.min.css lokáción található</li>
             <li>Két módon használhatjuk ezt a CSS fájlt
               <ol>
-                <li>Az angular.json styles tömbjéhez hozzáadhatjuk (elegánsabb).
+                <li>Az angular.json styles tömbjéhez hozzáadhatjuk (elegánsabb)
                   <pre>
-                    "styles": [
-                      "node_modules/bootstrap/dist/css/dist/bootstrap.min.css",
-                      "src/styles.scss"
-                    ],
+  "styles": [
+    "node_modules/bootstrap/dist/css/bootstrap.min.css",
+    "node_modules/bootstrap-icons/font/bootstrap-icons.css",
+    "src/styles.scss"
+  ],
                   </pre>
                 </li>
-                <li>A styles.css fájlba importálás.
+                <li>A styles.css fájlba importálás
                   <pre>
                     @import "../node_modules/bootstrap/dist/css/dist/bootstrap.min.css";
                   </pre>
                 </li>
+                <li>Valamint ne felejtsük el hozzáadni az alábbi sort az angular.json scripts tömbjéhez</li>
+                <pre>
+  "scripts": [
+    "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+  ]
+                </pre>
               </ol>
             </li>
           </ul>
@@ -103,22 +123,216 @@
   </ul>
 </div>
 
-
 <div>
-  <h3 #buttons data-anchor="buttons">Buttons</h3>
+  <h3 #grid data-anchor="grid">Grid</h3>
   <ul>
-    <li>Az Bootstrap Angularba intergrálását, és egy újrafordítást követően már használhatjuk is a különféle elemeket
-      <pre>
-        &#60;button type="button" class="btn btn-info">Info Button&#60;/button>
-        &#60;button type="button" class="btn btn-primary">Primary Button&#60;/button>
-      </pre>
-      <button type="button" class="btn btn-info">Info Button</button>
-      <br>
-      <br>
-      <button class="btn btn-primary">Primary Button</button>
+    <li>Rugalmas és reszponzív rácsrendszer</li>
+    <li>12 oszlopos elrendezést használ</li>
+    <li>A grid container-ekből, sorokból (.row), és oszlopokból (.col) áll</li>
+    <li>Az oszlopok egyenletesen oszlanak el, ha nincs megadva szélességük</li>
+    <li>Flexbox alapú, ezért egyszerű az igazítás és a rendezés</li>
+    <li>Egy oszlop tartalmazhat saját .row és .col elemeket, így alrácsokat hozhatunk létre</li>
+    <br>
+    <li>Konténer típusok
+      <ul>
+        <br>
+        <table style="border-collapse: collapse; width: 100%;">
+          <thead>
+            <tr>
+              <th>Konténer</th>
+              <th>Leírás</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>.container</td>
+              <td>Fix szélességű konténer, amely a kijelzőmérettől függően változik</td>
+            </tr>
+            <tr>
+              <td>.container-fluid</td>
+              <td>Mindig teljes szélességet foglal el, függetlenül a kijelzőmérettő</td>
+            </tr>
+            <tr>
+              <td>.container-sm</td>
+              <td>576px-nél nagyobb kijelzőn fix szélességű, kisebb kijelzőn teljes szélességet foglal el</td>
+            </tr>
+            <tr>
+              <td>.container-md</td>
+              <td>768px-nél nagyobb kijelzőn fix szélességű, kisebb kijelzőn teljes szélességű</td>
+            </tr>
+            <tr>
+              <td>.container-lg</td>
+              <td>992px-nél nagyobb kijelzőn fix szélességű, kisebb kijelzőn teljes szélességű</td>
+            </tr>
+            <tr>
+              <td>.container-xl</td>
+              <td>1200px-nél nagyobb kijelzőn fix szélességű, kisebb kijelzőn teljes szélességű</td>
+            </tr>
+            <tr>
+              <td>.container-xxl</td>
+              <td>1400px-nél nagyobb kijelzőn fix szélességű, kisebb kijelzőn teljes szélességű</td>
+            </tr>
+          </tbody>
+        </table>
+      </ul>
     </li>
+    <br>
+    <li>Reszponzív oszlopméretek
+      <ul>
+        <br>
+        <table style="border-collapse: collapse; width: 100%;">
+          <thead>
+            <tr>
+              <th>Osztály</th>
+              <th>Leírás</th>
+              <th>Példa</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>.col</td>
+              <td>Automatikusan osztja fel a rendelkezésre álló helyet</td>
+              <td>class="col"</td>
+            </tr>
+            <tr>
+              <td>.col-&#123;szám}</td>
+              <td>Megadott szélességű oszlop (1-től 12-ig)</td>
+              <td>class="col-6"</td>
+            </tr>
+            <tr>
+              <td>.col-&#123;breakpoint}-&#123;szám}</td>
+              <td>Reszponzív oszlop, adott méret felett érvényes</td>
+              <td>class="col-md-4"</td>
+            </tr>
+            <tr>
+              <td>.col-auto</td>
+              <td>Az oszlop csak akkora, amekkora a tartalma</td>
+              <td>class="col-auto"</td>
+            </tr>
+            <tr>
+              <td>.col-&#123;breakpoint}-auto</td>
+              <td>Reszponzív méretezés, tartalomhoz igazítva</td>
+              <td>class="col-lg-auto"</td>
+            </tr>
+          </tbody>
+        </table>
+      </ul>
+    </li>
+    <div class="container text-center">
+      basic
+      <div class="row">
+        <div class="col">
+          col
+        </div>
+        <div class="col">
+          col
+        </div>
+        <div class="col">
+          col
+        </div>
+      </div>
+    </div>
+
+    <div class="container text-center">
+      center column wider
+      <div class="row">
+        <div class="col">
+          col
+        </div>
+        <div class="col-6">
+          col-6
+        </div>
+        <div class="col">
+          col
+        </div>
+      </div>
+    </div>
+
+    <div class="container text-center">
+      row: justify-content-center
+      <div class="row justify-content-md-center">
+        <div class="col col-2">
+          col-2
+        </div>
+        <div class="col-auto">
+          col-auto
+        </div>
+        <div class="col col-2">
+          col-2
+        </div>
+      </div>
+    </div>
+
+    <div class="container text-center">
+      combination of classes
+      <div class="row">
+        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
+          col-sm-12 col-md-6 col-lg-4 col-xl-3
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
+          col-sm-12 col-md-6 col-lg-4 col-xl-3
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
+          col-sm-12 col-md-6 col-lg-4 col-xl-3
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
+          col-sm-12 col-md-6 col-lg-4 col-xl-3
+        </div>
+      </div>
+    </div>
+
+    <div class="container text-center">
+      row: row-cols-2
+      <div class="row row-cols-2">
+        <div class="col">col</div>
+        <div class="col">col</div>
+        <div class="col">col</div>
+        <div class="col">col</div>
+      </div>
+    </div>
+
+    <div class="container text-center">
+      row: row-cols-auto
+      <div class="row row-cols-auto">
+        <div class="col">col</div>
+        <div class="col">col</div>
+        <div class="col">col</div>
+        <div class="col">col</div>
+      </div>
+    </div>
+
+    <div class="container text-center">
+      row: row-cols-4
+      <div class="row row-cols-4">
+        <div class="col">col</div>
+        <div class="col">col</div>
+        <div class="col-6">col-6</div>
+        <div class="col">col</div>
+      </div>
+    </div>
+
+    <div class="container text-center">
+      <div class="row">
+        <div class="col-3">
+          lvl 1 col-3
+        </div>
+        <div class="col">
+          <div class="row">
+            <div class="col-8">
+              lvl 2: col-8
+            </div>
+            <div class="col-4">
+              lvl 2 col-4
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </ul>
 </div>
+
+----- IDE -----
+
 
 
 <div>
@@ -150,8 +364,66 @@
 </div>
 
 <div>
-  <h3 #todo data-anchor="todo">TODO</h3>
+  <h3 #buttons data-anchor="buttons">Buttons</h3>
   <ul>
-    <li>todo</li>
+    <li>Az Bootstrap Angularba intergrálását, és egy újrafordítást követően már használhatjuk is a különféle elemeket
+      <pre>
+        &#60;button type="button" class="btn btn-info">Info Button&#60;/button>
+        &#60;button type="button" class="btn btn-primary">Primary Button&#60;/button>
+      </pre>
+      <button type="button" class="btn btn-info">Info Button</button>
+      <br>
+      <br>
+      <button class="btn btn-primary">Primary Button</button>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #input data-anchor="input">Input</h3>
+  <ul>
+    <li>validation?</li>
+  </ul>
+</div>
+
+<div>
+  <h3 #select data-anchor="select">Select</h3>
+  <ul>
+    <li></li>
+  </ul>
+</div>
+
+<div>
+  <h3 #breakpoints data-anchor="breakpoints">Breakpoints</h3>
+  <ul>
+    <li>flexbox?</li>
+  </ul>
+</div>
+
+<div>
+  <h3 #navbar data-anchor="navbar">Navbar</h3>
+  <ul>
+    <li></li>
+  </ul>
+</div>
+
+<div>
+  <h3 #breadcrumb data-anchor="breadcrumb">Breadcrumb</h3>
+  <ul>
+    <li></li>
+  </ul>
+</div>
+
+<div>
+  <h3 #modal data-anchor="modal">Modal</h3>
+  <ul>
+    <li></li>
+  </ul>
+</div>
+
+<div>
+  <h3 #input data-anchor="input">Input</h3>
+  <ul>
+    <li>validation?</li>
   </ul>
 </div>

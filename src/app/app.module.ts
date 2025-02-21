@@ -14,11 +14,9 @@ import { HttpClientModule } from "@angular/common/http";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { SsrComponent } from './ssr/ssr.component';
 import { CssscssComponent } from './cssscss/cssscss.component';
-import { NotionsComponent } from './notions/notions.component';
 import { SharedModule } from "../shared/shared.module";
 import { XmlComponent } from './xml/xml.component';
 import { JsonComponent } from './json/json.component';
-import { MaterialComponent } from './material/material.component';
 import { WebpackComponent } from './webpack/webpack.component';
 import { ReactComponent } from './react/react.component';
 import { BootstrapComponent } from './bootstrap/bootstrap.component';
@@ -39,7 +37,6 @@ import { UserListComponent } from './angular/service-example/user-list/user-list
 import { UserDetailsComponent } from './angular/service-example/user-details/user-details.component';
 import { ObservableModule } from './angular/observable/observable.module';
 import { AngularRxjsComponent } from './angular/rxjs/rxjs.component';
-import { GitComponent } from './git/git.component';
 import { ApiAngularComponent } from './angular/api/api.component';
 import { NewTaskComponent } from './angular/rxjs/subjects/new-task/new-task.component';
 import { ShowTaskComponent } from './angular/rxjs/subjects/show-task/show-task.component';
@@ -57,6 +54,16 @@ import { NgrxComponent } from './angular/ngrx/ngrx.component';
 import { SignalsComponent } from './angular/signals/signals.component';
 import { UnittestComponent } from './angular/unittest/unittest.component';
 import { TestsModule } from 'src/tests/tests.module';
+import { provideState, provideStore, StoreModule } from '@ngrx/store';
+import { CounterReducer } from './extras/state/counter/counter.reducer';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { VueComponent } from './vue/vue.component';
+import { ReduxComponent } from './redux/redux.component';
+import { TailwindComponent } from './tailwind/tailwind.component';
+import { GruntComponent } from './grunt/grunt.component';
+import { GulpComponent } from './gulp/gulp.component';
+import { LodashComponent } from './lodash/lodash.component';
+import { DartComponent } from './dart/dart.component';
 
 @NgModule({
   declarations: [
@@ -69,10 +76,8 @@ import { TestsModule } from 'src/tests/tests.module';
     TypescriptComponent,
     SsrComponent,
     CssscssComponent,
-    NotionsComponent,
     XmlComponent,
     JsonComponent,
-    MaterialComponent,
     WebpackComponent,
     ReactComponent,
     BootstrapComponent,
@@ -91,7 +96,6 @@ import { TestsModule } from 'src/tests/tests.module';
     UserListComponent,
     UserDetailsComponent,
     AngularRxjsComponent,
-    GitComponent,
     ApiAngularComponent,
     NewTaskComponent,
     ShowTaskComponent,
@@ -106,6 +110,14 @@ import { TestsModule } from 'src/tests/tests.module';
     NgrxComponent,
     SignalsComponent,
     UnittestComponent,
+    DashboardComponent,
+    VueComponent,
+    ReduxComponent,
+    TailwindComponent,
+    GruntComponent,
+    GulpComponent,
+    LodashComponent,
+    DartComponent,
   ],
   imports: [
     BrowserModule,
@@ -119,10 +131,12 @@ import { TestsModule } from 'src/tests/tests.module';
     NaviModule,
     CoreModule,
     TestsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    StoreModule.forRoot({}, {})
   ],
   providers: [
-
+    provideStore(),
+    provideState('counter', CounterReducer), // a State nevét, és a Reducer-t kell definiálni
   ],
   bootstrap: [AppComponent]
 })

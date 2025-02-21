@@ -1,0 +1,22 @@
+table,
+th,
+td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 10px;
+}
+
+.container {
+    margin: 30px 0;
+}
+
+[class^="col"] {
+    padding-top: .75rem;
+    padding-bottom: .75rem;
+    background-color: rgba(40, 167, 69, .15);
+    border: 1px solid rgba(40, 167, 69, .3);
+}

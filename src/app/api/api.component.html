@@ -32,7 +32,6 @@
                 <li>etc.</li>
             </ol>
         </li>
-        <h4>TODO +</h4>
     </ul>
 </div>
 
@@ -71,6 +70,13 @@
         <li>Webes, mobilalkalmazások fejlesztésénél, CRUD (Create, Read, Update, Delete) elvű alkalmazásoknál</li>
         <pre>
             GET https://api.example.com/users
+
+            ↓↓↓↓↓
+
+            [
+                &#123; "id": 1, "name": "Alice", "email": "alice@example.com" },
+                &#123; "id": 2, "name": "Bob", "email": "bob@example.com" }
+            ]
         </pre>
         <li>Tekinthetünk úgy rá, mint egy web applikációra
             <ul>
@@ -174,12 +180,10 @@
                                 <li>Angularban manuálisan előállítható</li>
                             </ul>
                         </li>
-                        <li></li>
                     </ul>
                 </li>
             </ol>
         </li>
-        <h4>TODO +</h4>
     </ul>
 </div>
 
@@ -190,7 +194,39 @@
         <li>Egy szabvány a REST API-k dokumentációjára és tervezésére</li>
         <li>Segít az API-k specifikációjának megírásában</li>
         <li>Automatikusan generál kódot vagy interaktív dokumentációt</li>
-        <h4>TODO +</h4>
+        <li>lehetővé teszi az API szerkezetének és működésének részletes dokumentálását</li>
+        <pre>
+    openapi: 3.0.0
+    info:
+    title: Product API
+    description: API for managing products
+    version: 1.0.0
+    paths:
+    /products:
+        get:
+        summary: Get all products
+        responses:
+            '200':
+            description: A list of products
+            content:
+                application/json:
+                schema:
+                    type: array
+                    items:
+                    $ref: '#/components/schemas/Product'
+    components:
+    schemas:
+        Product:
+        type: object
+        properties:
+            id:
+            type: integer
+            name:
+            type: string
+            price:
+            type: number
+            format: float
+        </pre>
     </ul>
 </div>
 
@@ -213,7 +249,6 @@
                 &#60;/soap:Body>
             &#60;/soap:Envelope>
         </pre>
-        <h4>TODO +</h4>
     </ul>
 </div>
 
@@ -232,7 +267,20 @@
         <pre>
             ws://example.com/socket
         </pre>
-        <h4>TODO +</h4>
+        <li>A WebSocket kapcsolat biztosítja a kétirányú, folyamatos kommunikációt</li>
+        <pre>
+    const socket = new WebSocket('ws://example.com/socket');
+
+    socket.onopen = () => &#123;
+    socket.send('Hello, server!');
+    };
+
+    socket.onmessage = (event) => &#123;
+    console.log('Received:', event.data);
+    };
+        </pre>
+        <li>A WebSocket előnye, hogy valós idejű adatátvitelt biztosít, így ideális olyan alkalmazásokhoz, amelyek
+            folyamatos adatfrissítést igényelnek</li>
     </ul>
 </div>
 
@@ -255,6 +303,5 @@
                 }
               }              
         </pre>
-        <h4>TODO +</h4>
     </ul>
 </div>

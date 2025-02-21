@@ -1,23 +1,3022 @@
-<ol>
-  <li>SCSS változók: $bluish-color: #3d90d7;</li>
-  <li>CSS változók:
+<h1>CSS / SCSS</h1>
+
+<div class="anchor-navi-container">
+  <div *ngFor="let mainButton of anchorButtons" class="btn-group">
+    <button type="button" class="btn btn-primary btn-sm anchor" (click)="scrollToAnchor(mainButton?.anchor)">
+      {{ mainButton.title }}
+    </button>
+    <button *ngIf="mainButton?.subtitles?.length" type="button"
+      class="btn btn-primary dropdown-toggle dropdown-toggle-split btn-sm anchor" data-bs-toggle="dropdown"
+      aria-expanded="false">
+    </button>
+    <ul *ngIf="mainButton.subtitles?.length" class="dropdown-menu dropdown-menu-dark">
+      <li>
+        <button *ngFor="let subButton of mainButton?.subtitles" class="dropdown-item"
+          (click)="scrollToAnchor(subButton?.anchor)">
+          {{ subButton?.title }}
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div>
+  <h3 #intro data-anchor="intro">Introduction</h3>
+  <ul>
+    <li>CSS
+      <ul>
+        <li>Cascading Style Sheets</li>
+        <li>Egy stílusleíró nyelv, mely a HTML vagy XHTML típusú strukturált dokumentumok megjelenését írja le</li>
+        <li>Lehetővé teszi a weboldal elemeinek, például szövegek, képek, gombok és egyéb elemek színének,
+          betűtípusának, elrendezésének, stb. beállítását</li>
+        <li>Alapvetően nem tartalmaz logikai struktúrákat, mint például változókat vagy függvényeket, hanem egyszerű
+          deklaratív stílusokat ad meg</li>
+        <li>Már limitáltan támogatja a neste-elést</li>
+        <pre>
+          .container &#123;
+            width: 100%;
+            height: 100vh;
+          }
+
+          .button &#123;
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+          }
+
+          .button:hover &#123;
+            background-color: #2980b9;
+          }
+        </pre>
+      </ul>
+    </li>
+    <li>SASS
+      <ul>
+        <li>Syntactically Awesome Stylesheets</li>
+        <li>CSS előfeldolgozó (CSS preprocessor)</li>
+        <li>Lehetővé teszi a CSS fejlettebb, dinamikusabb írását és jobb karbantartását</li>
+        <li>Alapvetően egy szintaktikai kiterjesztés a CSS számára, amely segít a stílusok gyorsabb és hatékonyabb
+          írásában a webfejlesztés során</li>
+        <li>Nem használ kapcsos zárójelet, és pontosvesszőt</li>
+        <li>A böngésző nem érti, CSS-sé kell alakítani/process-álni</li>
+        <pre>
+        .container
+          width: 100%
+          height: 100vh
+
+        .button
+          background-color: #3498db
+          color: white
+          padding: 10px 20px
+          border: none
+          border-radius: 5px
+
+          &:hover
+            background-color: #2980b9
+        </pre>
+      </ul>
+    </li>
+    <li>SCSS
+      <ul>
+        <li>Sassy CSS</li>
+        <li>A SASS egy szintaktikai változata, amely a CSS előfeldolgozója</li>
+        <li>A CSS kiterjesztése, amely lehetővé teszi a CSS-ben nem elérhető funkciók használatát
+          <ol>
+            <li>Változók
+              <ul>
+                <li>Lehetővé teszi változók definiálását (például színek, betűtípusok), amelyek segítenek az értékek
+                  újrafelhasználásában</li>
+              </ul>
+            </li>
+            <li>Beágyazás
+              <ul>
+                <li>Támogatja a CSS selectorok beágyazását, amely jobb olvashatóságot és szervezhetőséget biztosít a
+                  kódban</li>
+              </ul>
+            </li>
+            <li>Mixin-ek
+              <ul>
+                <li>Újrahasználható kódblokkok, amelyek különböző helyeken felhasználhatók</li>
+              </ul>
+            </li>
+            <li>Függvények
+              <ul>
+                <li>Segítenek dinamikus értékek kiszámításában, például színek keverése</li>
+              </ul>
+            </li>
+          </ol>
+        </li>
+        <li>A SCSS fájlokat először le kell fordítani CSS-re, mielőtt a weboldalon alkalmazhatók
+          lesznek
+          <ul>
+            <li>Ezért a SCSS kódot általában Sass compiler segítségével alakítják át tiszta CSS-é</li>
+          </ul>
+        </li>
+        <li>A SCSS kód jobban strukturálható és könnyebben karbantartható, mivel lehetőség van a kód
+          újrafelhasználására, valamint a kódok szervezésére logikai egységek szerint</li>
+        <li>Több funkcióval rendelkezik, amelyeket a CSS nem kínál</li>
+        <li>Ha a projekt nagy méretű és sok stílusra van szükség, a SCSS segíthet jobb struktúrát adni a kódnak</li>
+        <pre>
+  .container &#123;
+    width: 100%;
+    height: 100vh;
+  }
+
+  .button &#123;
+    background-color: #3498db;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+
+    &:hover &#123;
+      background-color: #2980b9;
+    }
+  }
+        </pre>
+      </ul>
+    </li>
+    <br>
+    <table style="border-collapse: collapse; width: 100%;">
+      <thead>
+        <tr>
+          <th></th>
+          <th>SASS</th>
+          <th>SCSS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Szintaxis</td>
+          <td>Egyszerű, nincs pontosvessző vagy zárójel</td>
+          <td>CSS-szerű, pontosvesszők és zárójelek szükségesek</td>
+        </tr>
+        <tr>
+          <td>Fájl kiterjesztése</td>
+          <td>.sass</td>
+          <td>.scss</td>
+        </tr>
+        <tr>
+          <td>CSS kompatibilitás</td>
+          <td>Nem teljesen CSS-kompatibilis</td>
+          <td>Teljesen CSS-kompatibilis</td>
+        </tr>
+        <tr>
+          <td>Beágyazás (Nesting)</td>
+          <td>Támogatott</td>
+          <td>Támogatott</td>
+        </tr>
+        <tr>
+          <td>Változók</td>
+          <td>Támogatott</td>
+          <td>Támogatott</td>
+        </tr>
+        <tr>
+          <td>Mixin-ek</td>
+          <td>Támogatott</td>
+          <td>Támogatott</td>
+        </tr>
+        <tr>
+          <td>Öröklődés</td>
+          <td>Támogatott</td>
+          <td>Támogatott</td>
+        </tr>
+        <tr>
+          <td>Függvények</td>
+          <td>Támogatott</td>
+          <td>Támogatott</td>
+        </tr>
+        <tr>
+          <td>Könnyű olvashatóság</td>
+          <td>Kevesebb szintaktikai elem, de szűkebb a CSS kompatibilitás</td>
+          <td>Tisztább CSS szintaxis, könnyebb integrálni a meglévő CSS-t</td>
+        </tr>
+        <tr>
+          <td>Általános használat</td>
+          <td>Inkább a kisebb, egyszerűbb projektekhez használják</td>
+          <td>Széleskörűen használt, mivel CSS-kompatibilis</td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <li>LESS
+      <ul>
+        <li>Egy másik CSS-preprocesszor, ami hasonló funkciókat kínál a SASS-hoz, például a nestelés, változók,
+          függvények és mixinek támogatása
+        </li>
+        <li>Egyes szintaxisban különbözik a SASS-tól
+          <ul>
+            <li>A LESS szintaxisában a kulcsszavak után &#123;} zárójeleket használunk, és nem szükséges a & jel, mint a
+              SASS-ban</li>
+            <li>A SASS, és SCSS a nested szabályoknál is a & operátort használják</li>
+          </ul>
+        </li>
+        <li>Sokoldalúbb, mint a sima CSS, de nem kínál annyi funkciót, és rugalmasságot, mint a SASS</li>
+      </ul>
+    </li>
+    <br>
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>LESS</th>
+          <th>SASS</th>
+          <th>SCSS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Változók</strong></td>
+          <td>@primary-color: #3498db;</td>
+          <td>$primary-color: #3498db</td>
+          <td>$primary-color: #3498db;</td>
+        </tr>
+        <tr>
+          <td><strong>Szintaxis</strong></td>
+          <td>Zárójelek és pontosvesszők szükségesek</td>
+          <td>Nincs zárójel és pontosvessző</td>
+          <td>Zárójelek és pontosvesszők szükségesek</td>
+        </tr>
+        <tr>
+          <td><strong>Mixinek</strong></td>
+          <td>.button() &#123;...}</td>
+          <td>@mixin button &#123;...}</td>
+          <td>@mixin button &#123;...}</td>
+        </tr>
+        <tr>
+          <td><strong>Függvények</strong></td>
+          <td>lighten(@color, 10%)</td>
+          <td>lighten($color, 10%)</td>
+          <td>lighten($color, 10%)</td>
+        </tr>
+        <tr>
+          <td><strong>Nested szabályok</strong></td>
+          <td>&:hover &#123;}</td>
+          <td>&:hover</td>
+          <td>&:hover &#123;}</td>
+        </tr>
+      </tbody>
+    </table>
+  </ul>
+</div>
+
+<div>
+  <h3 #gulp data-anchor="gulp">Gulp</h3>
+  <ul>
+    <li>Gulp
+      <ul>
+        <li>Task runner / feladatkezelő eszköz</li>
+        <li>Sass/SCSS fájlok compile-olására is használatos</li>
+        <li>Automatizálni tudja a különböző fejlesztési feladatokat (például fájlfigyelés, CSS minifikálás, SASS/SCSS
+          fordítás)</li>
+        <pre>
+  npm install gulp gulp-sass --save-dev
+        </pre>
+        <li>node.js-re szükség van a használatához</li>
+        <li>Hozzunk létre egy .scss fájlt, és a Gulp file-unkat</li>
+        <pre>
+  <b>// gulpfile.js</b>
+  const gulp = require('gulp');
+  const sass = require('gulp-sass')(require('sass'));
+
+  // SCSS/SASS fájlok fordítása
+  function compileSass() &#123;
+      return gulp.src('./*.scss') // SCSS fájlokat keres
+          .pipe(sass().on('error', sass.logError)) // Sass fordítás és hibakezelés
+          .pipe(gulp.dest('./dist/css')); // Kimeneti CSS fájlok helye
+  }
+
+  // Automatikus figyelés a változásokra
+  function watchSass() &#123;
+      gulp.watch('./*.scss', compileSass);
+  }
+
+  // Alapértelmezett feladat
+  exports.default = gulp.series(compileSass, watchSass);
+
+  <b>// reset.scss</b>
+  /* reset styles */
+  * &#123;
+    color: inherit;
+    margin: 0;
+  }
+
+  body &#123;
+    font-family: Poppins;
+  }
+
+  ul &#123;
+    padding: 0;
+    list-style-type: none;
+  }
+
+  a &#123;
+    text-decoration: none;
+  }
+
+  hr &#123;
+    border: 0;
+    border-top: 1px dotted #efefef;
+  }
+
+  img &#123;
+    max-width: 100%;
+  }
+
+  h1 &#123;
+    a &#123;
+      color: red;
+    }
+  }
+        </pre>
+        <li>A gulp parancs kiadásával a dist mappánkba compile-olódik egy css file, a reset.css</li>
+        <li>Angularban nincs szükség Gulp-ra az SCSS fordításához, mert az Angular CLI alapból támogatja az SCSS-t
+          <ul>
+            <li>A CLI automatikusan lefordítja az összes .scss fájlt a build folyamat során</li>
+          </ul>
+        </li>
+        <li>Amennyiben nem használunk Angular-t, meg kell teremteni a megfelelő környezetet
+          <ul>
+            <pre>
+  npm init
+            </pre>
+            <li>Ezzel létrehozunk egy package.json file-t
+              <ul>
+                <li>Ez a fájl a Node.js projektek alapvető konfigurációs fájlja, amely leírja a projektet, és annak
+                  függőségeit</li>
+                <pre>
+  &#123;
+    "name": "example-project",
+    "version": "1.0.0",
+    "description": "Példa Node.js projektre",
+    "main": "index.js",
+    "scripts": &#123;
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "start": "node index.js",
+    },
+    "author": "My Name",
+    "license": "ISC"
+  }
+                </pre>
+                <li>A telepített csomagok automatikusan bekerülnek a dependencies, vagy devDependencies szekcióhoz</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>gulpfile.js
+          <ul>
+            <li>Javascript file, ami a Gulp futtatásához tartalmaz függvényeket
+              <ul>
+                <li>Az egyik például a SASS -> CSS compile</li>
+              </ul>
+            </li>
+            <li>Között a neve, másképp nem lehet elnevezni</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #variables data-anchor="variables">Variables</h3>
+  <ul>
+    <li>Amennyiben például változóként definiáljuk a színeket, akkor csupán egyetlen helyen szükséges őket
+      megváltoztatni, hogy mindenhol megváltozzanak</li>
+    <br>
+    <div class="apply-style">
+      <h1>Heading 1</h1>
+      <a href="javascript:void(0)">URL to nowhere</a>
+      <p class="error">Something went wrong</p>
+      <p class="notification">This is a notification message</p>
+      <button>I'm a happy button</button>
+    </div>
     <pre>
-      :root &#123;
-        --primary-color: #3498db;
-        --secondary-color: #2ecc71;
-        --font-color: #333;
-        --base-font-size: 16px;
+  <b>// template</b>
+  &#60;h1>Heading 1&#60;/h1>
+  &#60;a href="javascript:void(0)">URL to nowhere&#60;/a>
+  &#60;p class="error">Something went wrong&#60;/p>
+  &#60;p class="notification">This is a notification message&#60;/p>
+  &#60;button>I'm a happy button&#60;/button>
+
+  <b>// scss</b>
+  // colors
+  $primary: #326dee;
+  $secondary: #1ac888;
+  $error: #d32752;
+  $info: #f6c31c;
+
+  // spacing
+  $base-padding: .75rem;
+  $base-margin: .75rem;
+
+  // borders
+  $base-border-thickness: 1px;
+  $base-border-radius: 5px;
+
+  h1 &#123;
+      color: $primary;
+      margin-bottom: $base-margin;
+  }
+
+  a &#123;
+      color: $secondary;
+  }
+
+  button &#123;
+      color: white;
+      border: 0;
+      border-radius: $base-border-radius;
+      background-color: $primary;
+      padding: $base-padding;
+  }
+
+  .error &#123;
+      color: $error;
+      border-color: $error;
+      border-style: solid;
+      border-radius: 5px;
+      margin: $base-margin;
+      padding: $base-padding;
+      border-radius: $base-border-radius;
+      border-width: $base-border-thickness;
+  }
+
+  .notification &#123;
+      color: $secondary;
+      border-color: $secondary;
+      border-style: solid;
+      margin: $base-margin;
+      padding: $base-padding;
+      border-radius: $base-border-radius;
+      border-width: $base-border-thickness;
+  }
+    </pre>
+  </ul>
+</div>
+
+<div>
+  <h3 #partials data-anchor="partials">partials</h3>
+  <ul>
+    <li>Annak érdekében, hogy átlátható, áttekinthető kódot írjunk, a stílusainkat több/sok .scss fájlban tároljuk</li>
+    <li>Például az alábbiakhoz lehet külön fájlunk
+      <ul>
+        <li>variables</li>
+        <li>css reset</li>
+        <li>buttons</li>
+        <li>links</li>
+        <li>stb.</li>
+      </ul>
+    </li>
+    <li>Ezeket a (partial) fájlokat egy root fájlba be kell hívnunk, hogy aktívak legyenek a bennük lévő stílusok</li>
+    <li>Ezen "stílusrészletekkel" a kódunkat modulárissá, jól karbantarthatóvá, könnyen olvashatóvá tesszük</li>
+    <li>A "behívás" importálást jelent</li>
+    <pre>
+  cssscss/
+  ├── cssscss.component.html
+  ├── cssscss.component.scss
+  ├── cssscss.component.spec.ts
+  ├── cssscss.component.ts
+  └── scss/
+      └── variables.scss
+
+  <b>// variables.scss</b>
+  // colors
+  $primary: #326dee;
+  $secondary: #1ac888;
+  $error: #d32752;
+  $info: #f6c31c;
+
+  // spacing
+  $base-padding: .75rem;
+  $base-margin: .75rem;
+
+  // borders
+  $base-border-thickness: 1px;
+  $base-border-radius: 5px;
+
+  <b>// cssscss.component.scss</b>
+  @import './scss/variables'; // relative path
+  ...
+    </pre>
+    <li>A kiterjesztést nem szükséges hozzáadni, a compiler okos, és tudja, hogy arról van szó</li>
+    <li>Minden ugyanúgy működik, mint korábban</li>
+    <li>Ha a fájlnevet alsóvonással kezdjük (pl. _variables.scss), akkor a SASS (és az SCSS) ezt "partial" fájlként
+      kezeli
+      <ul>
+        <li>Az ilyen fájlokat a SASS nem fordítja le különálló CSS fájlokká</li>
+        <li>Importálást használva a SASS automatikusan felismeri, hogy egy másik fájlra hivatkozunk, és beilleszti az
+          adott helyre a másik fájl szabályait</li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #projectstructure data-anchor="projectstructure">Project structure</h3>
+  <ul>
+    <li>Lehetőség szerint az index fájl minél kevesebb CSS kódot tartalmazzon</li>
+    <li>Természetesen, ha Gulp-ot használunk, akkor a rendszerezésünknek megfelelően szükséges módosítani a source, és
+      cél mappákat</li>
+    <pre>
+  <b>// example</b>
+  function watchSass() &#123;
+    gulp.watch('./**/*.scss', compileSass); // a dupla csillag azt jelenti, hogy minden sub-folder-ben is keressen bármilyen nevű scss fájlt
+  }
+    </pre>
+    <li>Erősen nem mindegy, milyen sorrendben importáljuk a fájlokat
+      <ul>
+        <li>A sorrend lényeges</li>
+        <li>"Top to bottom" működik a compile-olás, azaz fentről lefelé történik</li>
+        <li>Egyes fájlok függhetnek korábban megírt kódoktól</li>
+        <li>A _base.scss-ben használunk változókat, amik a _variable.scss-ben vannak definiálva</li>
+        <pre>
+  <b>// cssscss.component.scss</b>
+  // variables & functions
+  @import './scss/variables';
+
+  // base & layout
+  @import './scss/base';
+
+  // colors
+
+  // components (button, card, navbar, ...)
+
+  // utilities (margin, padding, border, ...)
+  
+
+  <b>// _base.scss</b>
+  h1 &#123;
+    color: $primary;
+    margin-bottom: $base-margin;
+  }
+
+  a &#123;
+      color: $secondary;
+  }
+
+  button &#123;
+      color: white;
+      border: 0;
+      border-radius: $base-border-radius;
+      background-color: $primary;
+      padding: $base-padding;
+  }
+
+  .error &#123;
+      color: $error;
+      border-color: $error;
+      border-style: solid;
+      border-radius: 5px;
+      margin: $base-margin;
+      padding: $base-padding;
+      border-radius: $base-border-radius;
+      border-width: $base-border-thickness;
+  }
+
+  .notification &#123;
+      color: $secondary;
+      border-color: $secondary;
+      border-style: solid;
+      margin: $base-margin;
+      padding: $base-padding;
+      border-radius: $base-border-radius;
+      border-width: $base-border-thickness;
+  }
+
+  <b>// _variables.scss</b>
+  // colors
+  $primary: #326dee;
+  $secondary: #1ac888;
+  $error: #d32752;
+  $info: #f6c31c;
+
+  // spacing
+  $base-padding: .75rem;
+  $base-margin: .75rem;
+
+  // borders
+  $base-border-thickness: 1px;
+  $base-border-radius: 5px;
+        </pre>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #nestedrules data-anchor="nestedrules">Nested rules</h3>
+  <ul>
+    <li>Az egyik legszebb dolog a SASS-ban / SCSS-ben</li>
+    <pre>
+cssscss/
+├── cssscss.component.html
+├── cssscss.component.scss
+├── cssscss.component.spec.ts
+├── cssscss.component.ts
+└── scss/
+    ├── _components/
+    │   └── _card.scss
+    ├── _base.scss
+    └── _variables.scss
+
+  <b>// cssscss.component.scss</b>
+  @import './scss/variables';
+  @import './scss/base';
+  @import './scss/component/card';
+
+  <b>// _base.scss</b>
+  h1 &#123;
+    color: $primary;
+    margin-bottom: $base-margin;
+  }
+
+  a &#123;
+      color: $secondary;
+  }
+  ...
+
+  <b>// _variables.scss</b>
+  // colors
+  $primary: #326dee;
+  $secondary: #1ac888;
+  $error: #d32752;
+  $info: #f6c31c;
+
+  // spacing
+  $base-padding: .75rem;
+  $base-margin: .75rem;
+
+  // borders
+  $base-border-thickness: 1px;
+  $base-border-radius: 5px;
+
+  // box-shadow
+  $base-box-shadow: 0px 0px 10px 10px rgba(200, 200, 200, 0.3);
+
+  //font sizes
+  $base-font-size: 1rem;
+
+  <b>// card.scss</b>
+  .card &#123;
+    display: block;
+    padding: $base-padding;
+    border: $base-border-thickness solid #ddd; // a border-style és border-color hard-coded értékek
+    box-shadow: $base-box-shadow;
+
+    // nest-elt szabályok
+    .card-title &#123;
+        font-size: $base-font-size;
+        padding: $base-padding;
+        font-weight: bold;
+    }
+
+    .card-body &#123;
+        font-size: $base-font-size;
+
+        a &#123;
+            text-decoration: underline; // amennyiben reset-eltünk, vagy máshol megadtuk, hogy none
+        }
+    }
+  }
+
+  <b>// template</b>
+  &#60;div>
+    &#60;div class="card">
+      &#60;div class="card-title">HELLO&#60;/div>
+      &#60;p class="card-body">Hi there &#60;a href="javascript:void(0)">John&#60;/a>!&#60;/p>
+    &#60;/div>
+  &#60;/div>
+    </pre>
+    <div>
+      <div class="card">
+        <div class="card-title">HELLO</div>
+        <p class="card-body">Hi there <a href="javascript:void(0)">John</a>!</p>
+      </div>
+    </div>
+  </ul>
+</div>
+
+<div>
+  <h3 #math data-anchor="math">Math</h3>
+  <ul>
+    <li>Matematikai műveletek elvégzésére szolgál, mint például összeadás, kivonás, szorzás, osztás, illetve komplexebb
+      műveletek</li>
+    <li>Készítsünk a font méretének változójából különféle variációkat
+      <ul>
+        <div class="card square" style="margin-top: 20px;">
+          <div class="card-title xl">HELLO</div>
+          <p class="card-body">Hi there!</p>
+        </div>
+        <pre>
+  &#60;div class="card square">
+    &#60;div class="card-title xl">HELLO&#60;/div>
+    &#60;p class="card-body">Hi there!&#60;/p>
+  &#60;/div>
+
+  //font sizes
+  $base-font-size: 1rem;
+  $font-size-sm: $base-font-size * .75;
+  $font-size-lg: $base-font-size * 1.25;
+  $font-size-xl: $base-font-size * 1.75;
+
+  .card &#123;
+    display: block;
+    padding: $base-padding;
+    border: $base-border-thickness solid #ddd; // a border-style és border-color hard-coded értékek
+    box-shadow: $base-box-shadow;
+
+    &.square &#123;
+        border-radius: $base-border-radius / 5;
+    }
+
+    // nest-elt szabályok
+    .card-title &#123;
+        font-size: $base-font-size;
+        padding: $base-padding;
+        font-weight: bold;
+
+        &.xl &#123;
+            font-size: $font-size-xl;
+        }
+    }
+
+    .card-body &#123;
+        font-size: $base-font-size;
+
+        a &#123;
+            text-decoration: underline; // amennyiben reset-eltünk, vagy máshol megadtuk, hogy none
+        }
+    }
+  }
+        </pre>
+        <li>Láthatóan megnőtt a title, és egy pixeles a radius-a a card-nak</li>
+      </ul>
+    </li>
+    <br>
+    <li>Előfordulhat, hogy hibát / figyeleztetést / javaslatot kapunk, hogy osztásnál ne használjuk a / jelet
+      <ul>
+        <li>A math csomagot ajánlott használni</li>
+        <pre>
+  @use 'sass:math'
+
+  .card &#123;
+      display: block;
+      padding: $base-padding;
+      border: $base-border-thickness solid #ddd; // a border-style és border-color hard-coded értékek
+      box-shadow: $base-box-shadow;
+
+      &.square &#123;
+          // border-radius: $base-border-radius / 5;
+          border-radius: math.div($base-border-radius, 5); // a math objektumon meghívjuk a div függvényt
+      }
+
+      // nest-elt szabályok
+      .card-title &#123;
+          font-size: $base-font-size;
+          padding: $base-padding;
+          font-weight: bold;
+
+          &.xl &#123;
+              font-size: $font-size-xl;
+          }
+      }
+
+      .card-body &#123;
+          font-size: $base-font-size;
+
+          a &#123;
+              text-decoration: underline; // amennyiben reset-eltünk, vagy máshol megadtuk, hogy none
+          }
+      }
+  }
+        </pre>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #debug data-anchor="debug">Debug</h3>
+  <ul>
+    <li>Amennyiben watch-oljuk az scss fájljainkat, a terminálban akár nyomon követhetjük a változók értékét</li>
+    <pre>
+  @debug 'Hello Sir!'
+    </pre>
+    <li>Megjelenik a terminálban a string</li>
+    <li>Ugyanezen az alapon más értékeket is kiirathatunk</li>
+    <pre>
+  @debug math.div(10, 5);
+  @debug 'let divide 10 by 5:' math.div(10, 5);
+    </pre>
+  </ul>
+</div>
+
+<div>
+  <h3 #maps data-anchor="maps">Maps</h3>
+  <ul>
+    <li>A map olyan adatstruktúra, amely kulcs-érték párokat tárol
+      <ul>
+        <li>Hasonlóan a JavaScript-ben található objektumokhoz</li>
+        <pre>
+  <b>// variables.scss</b>
+  // colors
+  $primary: #326dee;
+  $secondary: #1ac888;
+  $error: #d32752;
+  $info: #f6c31c;
+
+  // color-palette
+  $colors: (
+      "primary": $primary,
+      "secondary": $secondary,
+      "error": $error,
+      "info": $info,
+      "magenta": #d23c77,
+      "orange": #d28f3c,
+  );
+        </pre>
+        <li>Maps függvények
+          <ul>
+            <li>map-get($map, $key)
+              <ul>
+                <li>Visszaadja az értéket a megadott kulcs alapján</li>
+                <pre>
+  @debug map-get($colors, 'primary');
+
+  ↓↓↓↓↓
+
+  #326dee
+                </pre>
+                <li>A map-get végigiterál a $colors objektumon, és megkeresi a "primary" értéket
+                  <ul>
+                    <li>Az RGB kódot kapjuk meg</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>map-set($map, $key, $value)
+              <ul>
+                <li>Új kulcs-érték pár hozzáadása</li>
+              </ul>
+            </li>
+            <li>map-remove($map, $key)
+              <ul>
+                <li>Kulcs-érték pár eltávolítása</li>
+                <pre>
+  @debug map-remove($colors, 'primary')
+                </pre>
+              </ul>
+            </li>
+            <li>map-has-key($map, $key)
+              <ul>
+                <li>Ellenőrzi, hogy létezik-e adott kulcs</li>
+                <pre>
+  @debug map-has-key($colors, 'orange');
+
+  ↓↓↓↓↓
+
+  true
+
+
+  @debug map-has-key($colors, 'tertiary');
+
+  ↓↓↓↓↓
+
+  false
+                </pre>
+                <li>If statement-eknél igen hasznos</li>
+              </ul>
+            </li>
+            <li>map-keys($map)
+              <ul>
+                <li>Visszaadja az objektum kulcsait</li>
+              </ul>
+            </li>
+            <li>map-values($map)
+              <ul>
+                <li>Visszaadja a objektum értékeit</li>
+              </ul>
+            </li>
+            <li>map-merge($map)
+              <ul>
+                <li>Összeolvaszt két map-et</li>
+                <pre>
+  @debug map-merge($colors, ("pink": #ffc0cb));
+                </pre>
+                <li>Hozzáadtuk az eredeti colors map-ünkhöz a rózsaszín színt</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>Utility class-ok létrehozásánál nagyon hasznos</li>
+        <br>
+        <div class="apply-style">
+          <button class="magenta">Test button with class test-btn</button>
+        </div>
+        <pre>
+  &#60;div class="apply-style">
+    &#60;button class="magenta">Test button with class test-btn&#60;/button>
+  &#60;/div>
+
+  button &#123;
+    color: white;
+    border: 0;
+    border-radius: $base-border-radius;
+    background-color: $primary;
+    padding: $base-padding;
+
+    &.magenta &#123;
+        background-color: map-get($colors, 'magenta');
+    }
+  }
+        </pre>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #loops data-anchor="loops">Loops</h3>
+  <ul>
+    <pre>
+  <b>// variables.scss</b>
+  $colors: (
+      "primary": $primary,
+      "secondary": $secondary,
+      "error": $error,
+      "info": $info,
+      "magenta": #d23c77,
+      "orange": #d28f3c,
+  );
+
+  <b>// colors.scss</b>
+  @each $key, $value in $colors &#123;
+    .text-#&#123;$key} &#123;
+        color: #&#123;$value};
+    }
+
+    .bg-#&#123;$key} &#123;
+        background-color: #&#123;$value};
+    }
+  }
+    </pre>
+    <li>A $colors map-en végigmegyünk, a $key-be az egyes kulcsok ("primary"...) kerülnek, a $value-ba pedig az hozzájuk
+      tartozó
+      értékek ($primary...)
+      <ul>
+        <li>A $key és a $value lokális változók</li>
+      </ul>
+    </li>
+    <li>Erősen nem mindegy, hogy a ciklusunknál a 'to', vagy az 'through' szócskáz használjuk
+      <ul>
+        <pre>
+  @for $i from 1 to 9 &#123;}       // 1-8-ig iterál, a 9-es már nincs benne
+  @for $i from 1 through 9 &#123;}  // 1-9-ig iterál, a 9-es is benne van
+        </pre>
+      </ul>
+    </li>
+    <br>
+    <div>
+      <p *ngFor="let c of ['primary', 'secondary', 'error', 'info', 'magenta', 'orange']" [ngClass]="['text-' + c]">
+        .text-{{c}}
+      </p>
+    </div>
+    <pre>
+  &#60;p *ngFor="let c of ['primary', 'secondary', 'error', 'info', 'magenta', 'orange']"
+    [ngClass]="['text-' + c]">
+    .text-&#123; &#123;c}}
+  &#60;/p>
+    </pre>
+    <div>
+      <p *ngFor="let c of ['primary', 'secondary', 'error', 'info', 'magenta', 'orange']" [ngClass]="['bg-' + c]">
+        .bg-{{c}}
+      </p>
+    </div>
+    <pre>
+  &#60;p *ngFor="let c of ['primary', 'secondary', 'error', 'info', 'magenta', 'orange']"
+    [ngClass]="['bg-' + c]">
+    .bg-&#123; &#123;c}}
+  &#60;/p>
+    </pre>
+    <li>Létrehozhatjuk a színpalettánk színeinek világosabb verzióit is
+      <ul>
+        <li>Beépített függvényeket használunk
+          <ol>
+            <li>lighter()
+              <ul>
+                <li>Egyszerűen világosabbá teszi a fehér szín hozzáadásával</li>
+              </ul>
+            </li>
+            <li>mix()
+              <ul>
+                <li>Két színt kever össze, és a weight értéke alapján határozza meg az arányukat</li>
+                <li>Ha mix(white, $value, 20%)-t használunk, akkor 80%-ban az eredeti színt és 20%-ban a fehéret veszi
+                  alapul</li>
+              </ul>
+            </li>
+          </ol>
+        </li>
+      </ul>
+    </li>
+    <pre>
+  @each $key, $value in $colors &#123;
+    .text-#&#123;$key} &#123;
+        color: #&#123;$value};
+    }
+
+    .bg-#&#123;$key} &#123;
+        background-color: #&#123;$value};
+    }
+
+    // light variations
+    @for $i from 1 to 9 &#123;
+        .text-#&#123;$key}-lighten-#&#123;$i * 10} &#123;
+            color: lighten($value, $i * 10%);
+        }
+
+        .text-#&#123;$key}-white-mix-#&#123;$i * 10} &#123;
+            color: mix(white, $value, $i * 10%);
+        }
+    }
+  }
+    </pre>
+    <div style="display: grid; grid-template-columns: 1fr 1fr;">
+      <div>
+        <ng-container *ngFor="let c of ['primary', 'secondary', 'error', 'info', 'magenta', 'orange']">
+          <p *ngFor="let n of [10, 20, 30, 40, 50, 60, 70, 80, 90]" [ngClass]="['text-' + c + '-lighten-' + n]">
+            .text-{{c}}-lighten-{{n}}
+          </p>
+        </ng-container>
+      </div>
+      <div>
+        <ng-container *ngFor="let c of ['primary', 'secondary', 'error', 'info', 'magenta', 'orange']">
+          <p *ngFor="let n of [10, 20, 30, 40, 50, 60, 70, 80, 90]" [ngClass]="['text-' + c + '-white-mix-' + n]">
+            .text-{{c}}-white-mix-{{n}}
+          </p>
+        </ng-container>
+      </div>
+    </div>
+    <pre>
+  <b>// lighten()</b>
+  &#60;ng-container *ngFor="let c of ['primary', 'secondary', 'error', 'info', 'magenta', 'orange']">
+    &#60;p *ngFor="let n of [10, 20, 30, 40, 50, 60, 70, 80, 90]" [ngClass]="['text-' + c + '-lighter-' + n]">
+      .text-&#123; &#123;c}}-lighter-&#123; &#123;n}}
+    &#60;/p>
+  &#60;/ng-container>
+
+  <b>// mix()</b>
+  &#60;ng-container *ngFor="let c of ['primary', 'secondary', 'error', 'info', 'magenta', 'orange']">
+    &#60;p *ngFor="let n of [10, 20, 30, 40, 50, 60, 70, 80, 90]" [ngClass]="['text-' + c + '-white-mix-' + n]">
+      .text-&#123; &#123;c}}-white-mix-&#123; &#123;n}}
+    &#60;/p>
+  &#60;/ng-container>
+    </pre>
+
+    <select class="form-select" [(ngModel)]="textColorClass">
+      <option selected value="primary">Primary color</option>
+      <option value="secondary">Secondary color</option>
+      <option value="error">Error color</option>
+      <option value="info">Info color</option>
+      <option value="magenta">Magenta color</option>
+      <option value="orange">Orange color</option>
+    </select>
+    <br>
+    <label for="customRange2" class="form-label">
+      Paragraph active class: .text-{{textColorClass}}-white-mix-{{textColorClassValue * 10}}
+    </label>
+    <input type="range" class="form-range" min="1" max="9" id="textcolorrange" [(ngModel)]="textColorClassValue">
+    <p [ngClass]="['text-' + textColorClass + '-white-mix-' + (textColorClassValue * 10)]">
+      Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum
+      sociis natoque penatibus et</p>
+    <pre>
+  <b>// template</b>
+  &#60;select class="form-select" [(ngModel)]="textColorClass">
+    &#60;option selected value="primary">Primary color&#60;/option>
+    &#60;option value="secondary">Secondary color&#60;/option>
+    &#60;option value="error">Error color&#60;/option>
+    &#60;option value="info">Info color&#60;/option>
+    &#60;option value="magenta">Magenta color&#60;/option>
+    &#60;option value="orange">Orange color&#60;/option>
+  &#60;/select>
+  &#60;br>
+  &#60;label for="customRange2" class="form-label">
+    Paragraph active class: .text-&#123; &#123;textColorClass}}-white-mix-&#123; &#123;textColorClassValue * 10}}
+  &#60;/label>
+  &#60;input type="range" class="form-range" min="1" max="9" id="textcolorrange" [(ngModel)]="textColorClassValue">
+  &#60;p [ngClass]="['text-' + textColorClass + '-white-mix-' + (textColorClassValue * 10)]">
+    Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum
+    sociis natoque penatibus et&#60;/p>
+
+  <b>// class</b>
+  textColorClass: string = 'primary';
+  textColorClassValue: number = 1;
+    </pre>
+    <li>Ugyanezen a módon sötétebb színvariációkat is létre tudunk hozni
+      <ul>
+        <li>Ehhez a mix függvényben a fekete színnek szükséges operálnunk</li>
+      </ul>
+    </li>
+    <br>
+    <div>
+      <ng-container *ngFor="let c of ['primary', 'secondary', 'error', 'info', 'magenta', 'orange']">
+        <p *ngFor="let n of [10, 20, 30, 40, 50, 60, 70, 80, 90]" [ngClass]="['text-' + c + '-black-mix-' + n]">
+          .text-{{c}}-black-mix-{{n}}
+        </p>
+      </ng-container>
+    </div>
+    <pre>
+  <b>// template</b>
+  &#60;ng-container *ngFor="let c of ['primary', 'secondary', 'error', 'info', 'magenta', 'orange']">
+    &#60;p *ngFor="let n of [10, 20, 30, 40, 50, 60, 70, 80, 90]" [ngClass]="['text-' + c + '-black-mix-' + n]">
+      .text-&#123; &#123;c}}-black-mix-&#123; &#123;n}}
+    &#60;/p>
+  &#60;/ng-container>
+
+  <b>// SCSS</b>
+  @each $key, $value in $colors &#123;
+    .text-#&#123;$key} &#123;
+        color: #&#123;$value};
+    }
+
+    .bg-#&#123;$key} &#123;
+        background-color: #&#123;$value};
+    }
+
+    // light variations
+    @for $i from 1 to 9 &#123;
+        ...
+
+        .text-#&#123;$key}-black-mix-#&#123;$i * 10} &#123;
+            color: mix(black, $value, $i * 10%);
+        }
+    }
+  }
+    </pre>
+  </ul>
+</div>
+
+<div>
+  <h3 #conditionals data-anchor="conditionals">Conditionals</h3>
+  <ul>
+    <li>If else statements</li>
+    <pre>
+  @if(cond) &#123;
+    .true &#123;
+          // style
+      }
+  } @else &#123;
+      .false &#123;
+          // style
+      }
+  }
+    </pre>
+    <div>
+      <ng-container *ngFor="let c of colorPalette; let i = index">
+        <ng-container *ngFor="let n of colorPaletteNumbers; let j = index">
+          <p #paragraph *ngIf="!paragraphsVisibility[c] || paragraphsVisibility[c]?.[j]" [attr.data-color]="c"
+            [ngClass]="['text-' + c + '-white-conditional-mix-' + n]">
+            .text-{{c}}-white-conditional-mix-{{n}}
+          </p>
+        </ng-container>
+      </ng-container>
+    </div>
+    <pre>
+  <b>// template</b>
+  &#60;ng-container *ngFor="let c of colorPalette; let i = index">
+    &#60;ng-container *ngFor="let n of colorPaletteNumbers; let j = index">
+      &#60;p #paragraph *ngIf="!paragraphsVisibility[c] || paragraphsVisibility[c]?.[j]" [attr.data-color]="c"
+        [ngClass]="['text-' + c + '-white-conditional-mix-' + n]">
+        .text-&#123; &#123;c}}-white-conditional-mix-&#123; &#123;n}}
+      &#60;/p>
+    &#60;/ng-container>
+  &#60;/ng-container>
+
+  <b>// class</b>
+  @ViewChildren('paragraph') paragraph!: QueryList&#60;ElementRef>;
+  paragraphsVisibility: &#123; [key: string]: boolean[] } = &#123;};
+  colorPalette: string[] = ['primary', 'secondary', 'error', 'info', 'magenta', 'orange'];
+  colorPaletteNumbers: number[] = [10, 20, 30, 40, 50, 60, 70, 80, 90];
+
+  ngAfterViewInit(): void &#123;
+    setTimeout(() => &#123;
+      this.paragraph.forEach((p, index) => &#123;
+        let colorAttribute = p.nativeElement.getAttribute('data-color'); // kiszedjük a data-color attribútumot
+        let color = window.getComputedStyle(p.nativeElement).color;
+        this.paragraphsVisibility[colorAttribute] === undefined ? this.paragraphsVisibility[colorAttribute] = [] : null;
+        this.paragraphsVisibility[colorAttribute].push(color === 'rgb(255, 255, 255)' ? false : true);
+      });
+    }, 0);
+  }
+
+  <b>// SCSS</b>
+  @each $key, $value in $colors &#123;
+
+    // variations
+    @for $i from 1 through 9 &#123;
+        @if(mix(white, $value, $i * 10%) !=white) &#123; // ha a keverés eredménye nem tisztán fehér, csak akkor jön létre class
+            .text-#&#123;$key}-white-conditional-mix-#&#123;$i * 10%} &#123;
+                color: lighten($value, $i * 10%);
+            }
+        }
+
+        @if(mix(white, $value, $i * 10%) !=black) &#123; // ha a keverés eredménye nem tisztán fekete, csak akkor jön létre class
+            .text-#&#123;$key}-black-conditional-mix-#&#123;$i * 10%} &#123;
+                color: mix(black, $value, $i * 10%);
+            }
+        }
+    }
+  }
+    </pre>
+    <li>A A colorPalette tömb tartalmazza a színek nevét (['primary', 'secondary'...]), a colorPaletteNumbers pedig a
+      mixelés súlyát ([10, 20, 30, ...])</li>
+    <li>A két *ngFor ciklus kigenerálja az összes szín-szám kombinációt</li>
+    <li>Minden &#60;p> elem kap egy data-color attribútumot a szín nevével</li>
+    <li>A &#60;p> elem csak akkor jelenik meg, ha még nem létezik a paragraphsVisibility-ben az adott elemre
+      ráaggatott data-color (primary, secondary, ...), vagy, ha paragraphsVisibility-ben a data-color attribútumának is
+      odaadott kulcs alatt található tömb azon eleme true, amelyik megfelel az aktuális mix súlyának (10, 20, ...)</li>
+    <li>Az @ViewChildren('paragraph') segítségével begyűjtjük az összes &#60;p> elem referencia objektumát</li>
+    <li>A window.getComputedStyle( p.nativeElement ).color lekéri az aktuális &#60;p> referencia objektum
+      CSS-színértéket
+      <ul>
+        <li>A paragraphsVisibility objektum itt kerül feltöltésre kulcsokkal, és a kulcsok alá tömbök kerülnek</li>
+        <li>Aszerint kerül a tömbbe igaz, vagy hamis érték, hogy az akutális elem színe tisztán fehér-e</li>
+      </ul>
+    </li>
+    <li>Végeredményként azt kapjuk, hogy csak azok a paragráfusok jelennek meg a DOM-ban, amelyek mix-elt színe eltér a
+      fehértől (rgb(0, 0, 0))</li>
+    <br>
+    <li>SCSS-ben több feltétel is megadható</li>
+    <pre>
+  @if($var1 != black and var2 != white) &#123; // and a kulcsszó
+    .new-class &#123;
+          // style
+      }
+  }
+    </pre>
+  </ul>
+</div>
+
+<div>
+  <h3 #parentselector data-anchor="parentselector">Parent selector</h3>
+  <ul>
+    <li>A parent selector a & karakter</li>
+    <li>Beágyazott stílusok írásakor használatos</li>
+    <pre>
+      <b>// template</b>
+      &#60;p *ngFor="let p of ['primary', 'secondary', 'error', 'info', 'magenta', 'orange']"
+        [ngClass]="['text-' + p, 'text-' + p + '-hover']">
+        .text-&#123; &#123;p}}-hover
+        &#60;span *ngIf="['primary', 'secondary', 'info'].includes(p)">
+          (Bootstrap class: text-&#123; &#123;p}})
+        &#60;/span>
+      &#60;/p>
+
+      <b>// SCSS</b>
+      @each $key, $value in $colors &#123;
+        .text-#&#123;$key} &#123;
+            color: #&#123;$value};
+    
+            &-hover &#123;
+                &:hover &#123;
+                    color: mix(white, $value, 50%);
+                    cursor: pointer;
+                }
+            }
       }
     </pre>
-  </li>
-  <li>Mixins
-    <ul>
-      <li>@use vs @import</li>
-    </ul>
-  </li>
-  <li>Ciklusok</li>
-  <li>Szabályöröklődés</li>
-  <li>CSS reset</li>
-  <li>Vertical-align-t mikor tudjuk használni</li>
-  <li>rem, em, px, dvh, lvh, svh</li>
-</ol>
+    <div>
+      <p *ngFor="let p of ['primary', 'secondary', 'error', 'info', 'magenta', 'orange']"
+        [ngClass]="['text-' + p, 'text-' + p + '-hover']">
+        .text-{{p}}-hover
+        <span *ngIf="['primary', 'secondary', 'info'].includes(p)">
+          (Bootstrap class: text-{{p}})
+        </span>
+      </p>
+    </div>
+    <li>A Bootstrap osztályok nem kapják meg a hover effektust</li>
+  </ul>
+</div>
+
+<div>
+  <h3 #mixins data-anchor="mixins">Mixins</h3>
+  <ul>
+    <li>Az újrafelhasználható stílusok definiálására szolgálnak, amelyek tetszőleges paraméterekkel testreszabhatók</li>
+    <li>Amennyiben több elemünk ugyanazokat a stílusjegyekkel rendelkezdik, létrehozhatunk egy mixint, és csak azt kell
+      odaadjunk az elemeknek
+      <ul>
+        <li>Egy helyen változtathatjuk az összes stílusát</li>
+      </ul>
+    </li>
+    <li>Használhatunk paramétereket, feltételeket, média lekérdezéseket</li>
+    <br>
+    <div>
+      <button class="button-primary">BUTTON</button>
+      <button class="button-outlined-primary">BUTTON</button>
+    </div>
+    <pre>
+  <b>// template</b>
+  &#60;button class="button-primary">BUTTON&#60;/button>
+  &#60;button class="button-outlined-primary">BUTTON&#60;/button>
+
+  <b>// SCSS</b>
+  @each $key, $value in $colors &#123;
+    .button-#&#123;$key} &#123;
+        background-color: $value;
+        padding: $base-padding;
+        border: 0;
+        margin: 5px;
+        border-radius: $base-border-radius;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .button-outlined-#&#123;$key} &#123;
+        background-color: $value;
+        padding: $base-padding;
+        border: 0;
+        margin: 5px;
+        border-radius: $base-border-radius;
+        text-decoration: none;
+        cursor: pointer;
+        border: $base-border-thickness solid mix(white, $value, 50%);
+    }
+}
+    </pre>
+    <li>Láthatjuk, hogy a két class, amiből a színek mentén generálunk osztályokat, tulajdonképpen a border-t leszámítva
+      megegyeznek
+      <ul>
+        <li>Teljesen feleslegesen duplikálunk kódsorokat</li>
+        <li>Használhatnánk mixin-t ennek elkerülése érdekében</li>
+      </ul>
+    </li>
+    <br>
+    <div>
+      <ng-container *ngFor="let b of colorPalette">
+        <div>
+          <button [ngClass]="'button-' + b">Non-outlined button</button>
+          <button [ngClass]="'button-outlined-' + b">Outlined button</button>
+        </div>
+      </ng-container>
+    </div>
+    <pre>
+  <b>// template</b>
+  &#60;ng-container *ngFor="let b of colorPalette">
+    &#60;div>
+      &#60;button [ngClass]="'button-' + b">Non-outlined button&#60;/button>
+      &#60;button [ngClass]="'button-outlined-' + b">Outlined button&#60;/button>
+    &#60;/div>
+  &#60;/ng-container>
+
+  <b>// SCSS</b>
+  @mixin btn($bg-color) &#123; // a $bg-color egy paraméter
+      background-color: $bg-color;
+      padding: $base-padding;
+      border: 0;
+      margin: 5px;
+      border-radius: $base-border-radius;
+      text-decoration: none;
+      cursor: pointer;
+  }
+  
+  @each $key, $value in $colors &#123;
+      .button-#&#123;$key} &#123;
+          @include btn($value); // a $value az argumentum, amit átadsz a mixin számára
+
+          &:hover &#123;
+            background-color: lighten($value, 10%);
+          }
+      }
+  
+      .button-outlined-#&#123;$key} &#123;
+          @include btn($value); // $value az argumentum, amit átadsz a mixin számára
+          border: $base-border-thickness solid mix(white, $value, 50);
+
+          &:hover &#123;
+            background-color: lighten($value, 10%);
+          }
+      }
+  }
+    </pre>
+    <li>Amennyiben nem adunk meg arogumentumot az include-nak, úgy szükséges a mixin paraméterének default értéket adni
+    </li>
+    <pre>
+  <b>// template</b>
+  &#60;button class="custom-button">Custom button&#60;/button>
+
+  <b>// SCSS</b>
+  @mixin btn($bg-color: black) &#123; // a $bg-color paraméter
+    background-color: $bg-color;
+    padding: $base-padding;
+    border: 0;
+    margin: 5px;
+    border-radius: $base-border-radius;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .custom-button &#123;
+    @include btn;
+    color: white;
+  }
+    </pre>
+    <div>
+      <button class="custom-button">Custom button</button>
+    </div>
+  </ul>
+</div>
+
+<div>
+  <h3 #functions data-anchor="functions">Functions</h3>
+  <ul>
+    <li>Lehetővé teszik, hogy a stílusainkat dinamikusan generáljuk, kódot újrahasznosítsunk anélkül, hogy másolt
+      kódokat kellene alkalmaznunk</li>
+    <li>Kissé hasonló a mixin-hez, de amíg az több stílust biztosít, és paramétereket fogad, addig a függvény
+      rendszerint egy értékkel tér vissza, ami egy stílus értéke lesz</li>
+    <li>A lighten() és a mix() beépített függvények</li>
+    <pre>
+  lighten($value, 50%);
+  mix(white, $value, 30);
+    </pre>
+    <ng-container *ngFor="let p of colorPalette">
+      <div>
+        <button [ngClass]="['button-' + p]">Original button</button>
+        <button [ngClass]="['button-complement-' + p]">Light complement button</button>
+      </div>
+    </ng-container>
+    <pre>
+  <b>// template</b>
+  &#60;ng-container *ngFor="let p of colorPalette">
+    &#60;div>
+      &#60;button [ngClass]="['button-' + p]">Original button&#60;/button>
+      &#60;button [ngClass]="['button-complement-' + p]">Light complement button&#60;/button>
+    &#60;/div>
+  &#60;/ng-container>
+
+  <b>// cssscss.component.scss</b>
+  ...
+  @import './scss/functions'; // fontos, hogy a függvény korábban létezzen, mint ahol használjuk
+  @import './scss/component/button';
+
+  <b>// _functions.scss</b>
+  @function light-complement($color) &#123;
+      $complement: complement($color); // a $complement változó, a complement pedig beépített függvény, ami komplementer színt ad vissza
+      $light-complement: lighten($complement, 20%);
+      @return $light-complement;
+  }
+
+  <b>// _button.scss</b>
+  @each $key, $value in $colors &#123;
+    .button-#&#123;$key} &#123;
+        @include btn($value); // a $value az argumentum, amit átadsz a mixin számára
+
+        &:hover &#123;
+            background-color: lighten($value, 10%);
+        }
+    }
+
+    .button-outlined-#&#123;$key} &#123;
+        @include btn($value); // $value az argumentum, amit átadsz a mixin számára
+        border: $base-border-thickness solid mix(white, $value, 50);
+
+        &:hover &#123;
+            background-color: lighten($value, 10%);
+        }
+    }
+
+    .button-complement-#&#123;$key} &#123;
+        @include btn($value); // a $value az argumentum, amit átadsz a mixin számára
+        color: light-complement($value);
+
+        &:hover &#123;
+            color: black;
+            background-color: light-complement($value);
+        }
+    }
+  }
+    </pre>
+  </ul>
+</div>
+
+<div>
+  <h3 #utilityclasses data-anchor="utilityclasses">Utility classes</h3>
+  <ul>
+    <li>Olyan CSS osztályok, amelyek egy-egy speciális stílust, vagy tulajdonságot alkalmaznak anélkül, hogy komplexebb
+      szabályokat, komponenseket definiálnának</li>
+    <li>Az ilyen osztályok célja, hogy gyorsan, és egyszerűen alkalmazhassunk bizonyos stílusokat a HTML elemekre</li>
+    <br>
+    <div style="display: grid; gap: 10px;">
+      <div *ngFor="let p of [
+        {padding: 'p0', borderRadius: 'br-none'},
+        {padding: 'p1', borderRadius: 'br'},
+        {padding: 'p2', borderRadius: 'br-sm'},
+        {padding: 'p3', borderRadius: 'br-lg'},
+        {padding: 'p4', borderRadius: 'br-xl'},
+        {padding: 'p5', borderRadius: 'br-max'},
+        ]" style="display: flex; align-items: center; gap: 20px;">
+        <span class="mini-card {{p.padding}} {{p.borderRadius}}"></span>
+        <span>{{p.padding}} {{p.borderRadius}}</span>
+      </div>
+    </div>
+    <pre>
+  <b>// template</b>
+  &#60;div style="display: grid; gap: 10px;">
+    &#60;div *ngFor="let p of [
+          &#123;padding: 'p0', borderRadius: 'br-none'},
+          &#123;padding: 'p1', borderRadius: 'br-s'},
+          &#123;padding: 'p2', borderRadius: 'br'},
+          &#123;padding: 'p3', borderRadius: 'br-lg'},
+          &#123;padding: 'p4', borderRadius: 'br-xl'},
+          &#123;padding: 'p5', borderRadius: 'br-max'},
+          ]"
+      style="display: flex; align-items: center; gap: 20px;">
+      &#60;span class="mini-card &#123; &#123;p.padding}} &#123; &#123;p.borderRadius}}">&#60;/span>
+      &#60;span>&#123; &#123;p.padding}} &#123; &#123;p.borderRadius}}&#60;/span>
+    &#60;/div>
+  &#60;/div>
+
+  <b>// cssscss.component.scss</b>
+  .mini-card &#123;
+      display: inline-block;
+      border: 1px solid white;
+      background-color: brown;
+  }
+
+  <b>// _utilities.scss</b>
+  @use 'sass:math'; // math modul használata
+
+  $utilities: ( // utilities map
+      "padding": ( // CSS property névvel azonosnak kell lenniük
+          prefix: 'p',
+          values: (
+              0: 0,
+              1: $base-padding,
+              2: $base-padding * 2,
+              3: $base-padding * 3,
+              4: $base-padding * 4,
+              5: $base-padding * 5
+            )
+          ),
+      "margin": (
+          prefix: 'm',
+          values: (
+              0: 0,
+              1: $base-margin,
+              2: $base-margin * 2,
+              3: $base-margin * 3,
+              4: $base-margin * 4,
+              5: $base-margin * 5
+            )
+          ),
+      "border-radius": (
+          prefix: 'br',
+          values: (
+              default: $base-border-radius,
+              -none: 0,
+              -sm: math.div($base-border-radius, 2),
+              -lg: $base-border-radius * 2,
+              -xl: $base-border-radius * 4,
+              -max: '50%'
+            )
+          )
+  );
+
+  @each $property, $map in $utilities &#123;
+      $prefix: map-get($map, "prefix");
+      $values: map-get($map, "values");
+
+      @each $k, $v in $values &#123;
+          @if($k=='default') &#123; // ha a values-ban a kulcs default, akkor maga a prefix az érték
+              .#&#123;$prefix} &#123;
+                  #&#123;$property}: #&#123;$v}
+              }
+          }
+
+          @else &#123;
+              .#&#123;$prefix}#&#123;$k} &#123;
+                  #&#123;$property}: #&#123;$v}
+              }
+          }
+      }
+  }
+    </pre>
+  </ul>
+</div>
+
+<div>
+  <h3 #mediaqueries data-anchor="mediaqueries">Media queries</h3>
+  <ul>
+    <li>A reszponzív webdesign megvalósítására szolgálnak</li>
+    <li>Különböző stílusokat definiálhatók különböző eszközök, képernyőméretek, és felbontások alapján</li>
+    <pre>
+  <b>// template</b>
+  &#60;div class="responsive-test" style="height: 50px;">&#60;/div>
+
+  <b>// SCSS</b>
+  $breakpoints: ( // map a breakpoint-oknak
+      xs: 0,
+      sm: 576px,
+      md: 768px,
+      lg: 992px,
+      xl: 1200px,
+      xxl: 1400px
+  );
+
+  @mixin xs &#123; // a mixin-en belül használunk media query-t
+      @media (min-width: map-get($breakpoints, 'xs')) &#123;
+          @content;
+      }
+  }
+
+  @mixin sm &#123;
+      @media (min-width: map-get($breakpoints, 'sm')) &#123;
+          @content;
+      }
+  }
+
+  @mixin md &#123;
+      @media (min-width: map-get($breakpoints, 'md')) &#123;
+          @content;
+      }
+  }
+
+  @mixin lg &#123;
+      @media (min-width: map-get($breakpoints, 'lg')) &#123;
+          @content;
+      }
+  }
+
+  @mixin xl &#123;
+      @media (min-width: map-get($breakpoints, 'xl')) &#123;
+          @content;
+      }
+  }
+
+  @mixin xxl &#123;
+      @media (min-width: map-get($breakpoints, 'xxl')) &#123;
+          @content;
+      }
+  }
+
+  @mixin breakpoint($min, $max) &#123; // egyedi min és max méret megadására alkalmas
+      @media ((min-width: #&#123;$min}) and (max-width: #&#123;$max})) &#123;
+          @content;
+      }
+  }
+
+  .responsive-test &#123;
+      @include xs &#123;
+          background-color: red;
+      }
+
+      @include sm &#123;
+          background-color: blue;
+      }
+
+      @include md &#123;
+          background-color: green;
+      }
+
+      @include lg &#123;
+          background-color: yellow;
+      }
+
+      @include xl &#123;
+          background-color: purple;
+      }
+
+      @include xxl &#123;
+          background-color: brown;
+      }
+
+      @include breakpoint(1000, 1100) &#123;
+          background-color: pink;
+      }
+  }
+    </pre>
+    <li>Amikor egy mixin tartalmazza az @content utasítást, az azt jelenti, hogy dinamikus
+      tartalommal helyettesítjük az
+      @content-et ott, ahol a mixin-t használjuk
+      <ul>
+        <li>Ha a mixin-t meghívjuk, és stílusokat definiálunk a mixin-en belül, akkor ezek a stílusok bekerülnek a mixin
+          @content pozíciójába</li>
+      </ul>
+    </li>
+    <br>
+    <div class="responsive-test" style="height: 50px;"></div>
+  </ul>
+</div>
+
+<div>
+  <h3 #gridsystem data-anchor="gridsystem">Grid system</h3>
+  <ul>
+    <li>A breakpoint mixin-eket fogjuk felhasználni saját grid rendszer létrehozásához</li>
+    <li>A 12 felé osztott grid a legnépszerűbb</li>
+    <br>
+    <li>box-sizing
+      <ul>
+        <li>content-box
+          <ul>
+            <li>Alapértelmezett érték</li>
+            <li>Az elem méretéhez hozzáadódik a padding, és a border</li>
+            <li>Ha egy elem szélessége 200px, és van rajta 20px padding, valamint 2px border, akkor az elem tényleges
+              szélessége 200px + 20px + 2px (mindkét oldalon padding + border) = 244px</li>
+            <div style="display: flex; align-items: center;">
+              <span class="content-box-example"
+                [ngStyle]="{'box-sizing': boxswitch1.checked ? 'border-box' : 'content-box'}">
+                <p>
+                  <strong [ngStyle]="{'text-decoration': boxswitch1.checked ? 'line-through' : 'none'}">
+                    content-box
+                  </strong>, így a padding és a border kívül esik a szélességen
+                </p>
+              </span>
+              <div class="form-check form-switch">
+                <input #boxswitch1 class="form-check-input" type="checkbox" role="switch" id="boxSwitch1">
+                <label class="form-check-label" for="boxSwitch1">
+                  {{boxswitch1.checked ? 'border-box' : 'content-box'}}</label>
+              </div>
+            </div>
+            <pre>
+  <b>// template</b>
+  &#60;div style="display: flex; align-items: center;">
+    &#60;span class="content-box-example"
+      [ngStyle]="&#123;'box-sizing': boxswitch1.checked ? 'border-box' : 'content-box'}">
+      &#60;p>
+        &#60;strong [ngStyle]="&#123;'text-decoration': boxswitch1.checked ? 'line-through' : 'none'}">
+          content-box
+        &#60;/strong>, így a padding és a border kívül esik a szélességen
+      &#60;/p>
+    &#60;/span>
+    &#60;div class="form-check form-switch">
+      &#60;input #boxswitch1 class="form-check-input" type="checkbox" role="switch" id="boxSwitch1">
+      &#60;label class="form-check-label" for="boxSwitch1">
+        &#123; &#123;boxswitch1.checked ? 'border-box' : 'content-box'}}&#60;/label>
+    &#60;/div>
+  &#60;/div>
+
+  <b>// SCSS</b>
+  .content-box-example &#123;
+      display: inline-block;
+      width: 200px;
+      padding: 20px;
+      border: 5px solid black;
+      box-sizing: content-box;
+      background-color: lightblue;
+      margin: 20px;
+  }
+            </pre>
+          </ul>
+        </li>
+        <li>border-box
+          <ul>
+            <li>A padding, és border a width, és height értékbe van beleszámítva</li>
+            <li>Ha egy elem szélessége 200px, akkor a padding, és a border beletartozik a 200px-be, tehát a teljes
+              szélesség 200px marad, még akkor is, ha van rajta padding és border</li>
+            <div style="display: flex; align-items: center;">
+              <span class="border-box-example"
+                [ngStyle]="{'box-sizing': boxswitch2.checked ? 'content-box' : 'border-box'}">
+                <p>
+                  <strong [ngStyle]="{'text-decoration': boxswitch2.checked ? 'line-through' : 'none'}">
+                    border-box
+                  </strong>, így a padding és a border kívül esik a szélességen
+                </p>
+              </span>
+              <div class="form-check form-switch">
+                <input #boxswitch2 class="form-check-input" type="checkbox" role="switch" id="boxSwitch2">
+                <label class="form-check-label" for="boxSwitch2">
+                  {{boxswitch2.checked ? 'content-box' : 'border-box'}}</label>
+              </div>
+            </div>
+            <pre>
+  <b>// template</b>
+  &#60;div style="display: flex; align-items: center;">
+    &#60;span class="border-box-example"
+      [ngStyle]="&#123;'box-sizing': boxswitch2.checked ? 'content-box' : 'border-box'}">
+      &#60;p>
+        &#60;strong [ngStyle]="&#123;'text-decoration': boxswitch2.checked ? 'line-through' : 'none'}">
+          border-box
+        &#60;/strong>, így a padding és a border kívül esik a szélességen
+      &#60;/p>
+    &#60;/span>
+    &#60;div class="form-check form-switch">
+      &#60;input #boxswitch2 class="form-check-input" type="checkbox" role="switch" id="boxSwitch2">
+      &#60;label class="form-check-label" for="boxSwitch2">
+        &#123; &#123;boxswitch2.checked ? 'content-box' : 'border-box'}}&#60;/label>
+    &#60;/div>
+  &#60;/div>
+
+  <b>// SCSS</b>
+  .border-box-example &#123;
+      display: inline-block;
+      width: 200px;
+      padding: 20px;
+      border: 5px solid black;
+      box-sizing: border-box;
+      background-color: lightgreen;
+      margin: 20px;
+  }
+            </pre>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li>flex-flow: row wrap;
+      <ul>
+        <li>Egy rövidített (shorthand) forma
+          <ul>
+            <li>flex-direction: row --> a gyerekek egymás mellett, vízszintesen helyezkednek el</li>
+            <li>flex-wrap: wrap --> ha a gyerekelemek már nem férnek el egy sorban, akkor új sorba törnek</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <br>
+    <div style="background-color: beige;">
+      <div class="my-container">
+        <div class="my-row" style="background-color: antiquewhite;">
+          <div *ngFor="let i of [1, 2, 3, 4]" class="my-col-sm-12 my-col-md-6 my-col-lg-4 my-col-xl-3">
+            <div class="card">
+              <div class="card-title">HELLO</div>
+              <p class="card-body">Hi there <a href="javascript:void(0)">Buddy</a>!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <pre>
+  <b>// template</b>
+  &#60;div style="background-color: beige;">
+    &#60;div class="my-container">
+      &#60;div class="my-row" style="background-color: antiquewhite;">
+        &#60;div *ngFor="let i of [1, 2, 3, 4]" class="my-col-sm-12 my-col-md-6 my-col-lg-4 my-col-xl-3">
+          &#60;div class="card">
+            &#60;div class="card-title">HELLO&#60;/div>
+            &#60;p class="card-body">Hi there &#60;a href="javascript:void(0)">Buddy&#60;/a>!&#60;/p>
+          &#60;/div>
+        &#60;/div>
+      &#60;/div>
+    &#60;/div>
+  &#60;/div>
+
+  <b>// _breakpoints.scss</b>
+  $breakpoints: ( // map a breakpoint-oknak
+      xs: 0,
+      sm: 576px,
+      md: 768px,
+      lg: 992px,
+      xl: 1200px,
+      xxl: 1400px
+  );
+
+  @mixin breakpoint($min) &#123; // átírásra került, ezúttal csak min értéket fogad
+    @media ((min-width: #&#123;$min})) &#123;
+        @content;
+    }
+  }
+
+  <b>// _grid.scss</b>
+  @use 'sass:math';
+
+  $grid-columns: 12;
+
+  // base layout classes
+  .my-container &#123;
+      width: 100%;
+      max-width: 600px; // a gyakorlatban ez legalább dupla ennyi
+      margin: 0 auto; //középre helyezi a tartalmat
+      padding: 0 20px;
+      box-sizing: border-box;
+  }
+
+  .my-row &#123;
+      display: flex;
+      flex-flow: row wrap;
+  }
+
+  // column classes
+  @each $key, $value in $breakpoints &#123;
+      @include breakpoint($value) &#123;
+          @for $i from 1 through $grid-columns &#123;
+              .my-col-#&#123;$key}-#&#123;$i} &#123;
+                  flex-grow: 0;
+                  width: math.div($i * 100%, $grid-columns);
+                  box-sizing: border-box;
+              }
+          }
+      }
+  }
+
+  // hosszabban, és kevésbé praktikusan is le lehet generálni az egyes class-okat
+  @include xs &#123;
+    @for $i from 1 through $grid-columns &#123;
+        .col-#&#123;$i}-xs &#123;
+            flex-grow: 0;
+            width: math.div($i * 100%, $grid-columns);
+            box-sizing: border-box;
+        }
+    }
+  }
+  // majd az xs után sm, md...
+    </pre>
+    <li>Nézzük meg, miképp adhatunk gap-et a container-ünk megfelelő elemeinek</li>
+    <br>
+    <div style="background-color: beige;">
+      <div class="my-container">
+        <div class="my-row my-gap-2" style="background-color: antiquewhite;">
+          <div *ngFor="let i of [1, 2, 3, 4]" class="my-col-sm-12 my-col-md-6 my-col-lg-4 my-col-xl-3">
+            <div class="card">
+              <div class="card-title">HELLO</div>
+              <p class="card-body">Hi there <a href="javascript:void(0)">Buddy</a>!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <pre>
+  <b>// template</b>
+  &#60;div style="background-color: beige;">
+    &#60;div class="my-container">
+      &#60;div class="my-row my-gap-2" style="background-color: antiquewhite;"> &#60;!-- bekerült a my-gap-2 class -->
+        &#60;div *ngFor="let i of [1, 2, 3, 4]" class="my-col-sm-12 my-col-md-6 my-col-lg-4 my-col-xl-3">
+          &#60;div class="card">
+            &#60;div class="card-title">HELLO&#60;/div>
+            &#60;p class="card-body">Hi there &#60;a href="javascript:void(0)">Buddy&#60;/a>!&#60;/p>
+          &#60;/div>
+        &#60;/div>
+      &#60;/div>
+    &#60;/div>
+  &#60;/div>
+  <b>// _grid.scss</b>
+  $grid-gaps: (
+      0: 0,
+      1: 10px,
+      2: 20px,
+      3: 30px
+  );
+
+  ...
+
+  // grid gaps
+  @each $key, $value in $grid-gaps &#123;
+      .my-gap-#&#123;$key} > * &#123; // minden gyerek elemre érvényes szabály
+          padding: $value;
+        }
+        .my-gap-#&#123;$key} &#123;
+          // a padding miatt az első és utolsó elem, valamint a containerünk széle között is rés lenne, így negatív margin-nal operálunk
+          margin-left: -$value;
+          margin-right: -$value;
+        }
+  }
+    </pre>
+    <li>Végül oldjuk meg, hogy rendezhető is legyen a tartalom</li>
+    <pre>
+  <b>// _grid.scss</b>
+  $alignment-values: flex-start, flex-end, center, space-between, space-around; // list, értékek vesszővel elválasztva
+  ...
+  // justify classes
+  @each $value in $alignment-values &#123; // mivel lista, nincs kulcs, csak érték
+      .justify-#&#123;$value} &#123;
+          justify-content: $value;
+      }
+  }
+    </pre>
+    <br>
+    <div style="background-color: beige;">
+      <label class="my-container-label">justify-flex-end</label>
+      <div class="my-container">
+        <div class="my-row my-gap-1 justify-flex-end" style="background-color: antiquewhite;">
+          <div *ngFor="let i of [1, 2, 3, 4, 5]" class="my-col-sm-12 my-col-md-6 my-col-lg-4 my-col-xl-3">
+            <div class="card">
+              <div class="card-title">HELLO</div>
+              <p class="card-body">Hi there <a href="javascript:void(0)">Buddy</a>!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <pre>
+  <b>// template - justify-flex-end</b>
+  &#60;div style="background-color: beige;">
+    &#60;label class="my-container-label">justify-flex-end&#60;/label>
+    &#60;div class="my-container">
+      &#60;div class="my-row my-gap-1 justify-flex-end" style="background-color: antiquewhite;">
+        &#60;div *ngFor="let i of [1, 2, 3, 4, 5]" class="my-col-sm-12 my-col-md-6 my-col-lg-4 my-col-xl-3">
+          &#60;div class="card">
+            &#60;div class="card-title">HELLO&#60;/div>
+            &#60;p class="card-body">Hi there &#60;a href="javascript:void(0)">Buddy&#60;/a>!&#60;/p>
+          &#60;/div>
+        &#60;/div>
+      &#60;/div>
+    &#60;/div>
+  &#60;/div>
+    </pre>
+    <div style="background-color: beige;">
+      <label class="my-container-label">justify-center</label>
+      <div class="my-container">
+        <div class="my-row my-gap-1 justify-center" style="background-color: antiquewhite;">
+          <div *ngFor="let i of [1, 2, 3, 4, 5]" class="my-col-sm-12 my-col-md-6 my-col-lg-4 my-col-xl-3">
+            <div class="card">
+              <div class="card-title">HELLO</div>
+              <p class="card-body">Hi there <a href="javascript:void(0)">Buddy</a>!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <pre>
+  <b>// template - justify-center</b>
+  &#60;div style="background-color: beige;">
+    &#60;label class="my-container-label">justify-center&#60;/label>
+    &#60;div class="my-container">
+      &#60;div class="my-row my-gap-1 justify-center" style="background-color: antiquewhite;">
+        &#60;div *ngFor="let i of [1, 2, 3, 4, 5]" class="my-col-sm-12 my-col-md-6 my-col-lg-4 my-col-xl-3">
+          &#60;div class="card">
+            &#60;div class="card-title">HELLO&#60;/div>
+            &#60;p class="card-body">Hi there &#60;a href="javascript:void(0)">Buddy&#60;/a>!&#60;/p>
+          &#60;/div>
+        &#60;/div>
+      &#60;/div>
+    &#60;/div>
+  &#60;/div>
+    </pre>
+    <div style="background-color: beige;">
+      <label class="my-container-label">justify-space-between</label>
+      <div class="my-container">
+        <div class="my-row my-gap-1 justify-space-between" style="background-color: antiquewhite;">
+          <div *ngFor="let i of [1, 2, 3, 4, 5, 6]" class="my-col-sm-12 my-col-md-6 my-col-lg-4 my-col-xl-3">
+            <div class="card">
+              <div class="card-title">HELLO</div>
+              <p class="card-body">Hi there <a href="javascript:void(0)">Buddy</a>!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <pre>
+  <b>// template - justify-space-between</b>
+  &#60;div style="background-color: beige;">
+    &#60;label class="my-container-label">justify-space-between&#60;/label>
+    &#60;div class="my-container">
+      &#60;div class="my-row my-gap-1 justify-space-between" style="background-color: antiquewhite;">
+        &#60;div *ngFor="let i of [1, 2, 3, 4, 5, 6]" class="my-col-sm-12 my-col-md-6 my-col-lg-4 my-col-xl-3">
+          &#60;div class="card">
+            &#60;div class="card-title">HELLO&#60;/div>
+            &#60;p class="card-body">Hi there &#60;a href="javascript:void(0)">Buddy&#60;/a>!&#60;/p>
+          &#60;/div>
+        &#60;/div>
+      &#60;/div>
+    &#60;/div>
+  &#60;/div>
+    </pre>
+  </ul>
+</div>
+
+<div>
+  <h3 #extend data-anchor="extend">Extend</h3>
+  <ul>
+    <li>Lehetővé teszi a stílusok újrafelhasználását anélkül, hogy meg kellene ismételni azokat a CSS kódokban</li>
+    <li>Az elemek örökölheti egy másik elem összes stílusát</li>
+    <li>Hasznos lehet, ha több elemnek azonos vagy hasonló stílusokat szeretnénk alkalmazni</li>
+    <li>Nem hoz létre különálló osztályokat, hanem összevonja az azonos stílusokat használó elemeket</li>
+    <pre>
+  <b>// _navbar.scss</b>
+  .my-flex-layout &#123;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+  }
+  
+  .navbar &#123;
+      @extend .my-flex-layout;
+      padding: $base-padding $base-padding*2;
+      box-shadow: $base-box-shadow;
+  
+      .navbar-title &#123;
+          font-size: $font-size-lg;
+      }
+  }
+
+  // compile utáni CSS kimenet
+  /*
+    .my-flex-layout, .navbar &#123;
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: space-between;
+        box-sizing: border-box;
+    }
+
+    .navbar &#123;
+        padding: $base-padding $base-padding*2;
+        box-shadow: $base-box-shadow;
+    }
+    
+    .navbar .navbar-title &#123;
+        font-size: $font-size-lg;
+    }
+  */
+    </pre>
+    <li>Mixin-nel is megoldható lenne egy nagyon hasonló végkifejlett</li>
+    <pre>
+  @mixin my-flex-layout &#123; // my-flex-layout($param) - akár paramétert is át lehet adni, amíg extendnél nincs rá lehetőség
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: space-between;
+      box-sizing: border-box;
+  }
+  
+  .navbar &#123;
+      @include my-flex-layout;
+      padding: $base-padding $base-padding * 2;
+      box-shadow: $base-box-shadow;
+  
+      .navbar-title &#123;
+          font-size: $font-size-lg;
+      }
+  }
+  
+  // compile utáni CSS kimenet
+  /*
+    .navbar &#123;
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: space-between;
+      box-sizing: border-box;
+      padding: 16px 32px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+  
+    .navbar .navbar-title &#123;
+        font-size: 24px;
+    }
+  */
+    </pre>
+    <br>
+    <nav class="navbar text-magenta mb-2">
+      <div class="my-container">
+        <h2 class="navbar-title">Navbar title</h2>
+        <p>Lightweight CSS library</p>
+      </div>
+    </nav>
+    <br>
+    <pre>
+  <b>// template</b>
+  &#60;nav class="navbar text-magenta mb-2">
+    &#60;div class="my-container">
+      &#60;h2 class="navbar-title">Navbar title&#60;/h2>
+      &#60;p>Lightweight CSS library&#60;/p>
+    &#60;/div>
+  &#60;/nav>
+
+  <b>// SCSS</b>
+  %my-flex-layout &#123;
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: space-between;
+      box-sizing: border-box;
+  }
+  
+  .navbar &#123;
+      @extend %my-flex-layout;
+      padding: $base-padding $base-padding*2;
+      box-shadow: $base-box-shadow;
+  
+      .navbar-title &#123;
+          font-size: $font-size-lg;
+      }
+  
+      .my-container &#123;
+          @extend %my-flex-layout;
+      }
+    }
+    </pre>
+    <li>Placeholder rule
+      <ul>
+        <li>Egy speciális típusú szabály, amely nem fordul le önálló CSS osztályként, nem hoz létre CSS osztályt
+          <ul>
+            <li>%class</li>
+            <li>Más class-okat extendálhatunk vele</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <br>
+    <nav *ngFor="let c of ['primary', 'secondary', 'error', 'info', 'magenta', 'orange']" class="navbar mb-2"
+      [ngClass]="['navbar-' + c]">
+      <div class="my-container">
+        <h2 class="navbar-title">Navbar title</h2>
+        <p>Lightweight CSS library</p>
+      </div>
+    </nav>
+    <pre>
+  <b>// template</b>
+  &#60;nav *ngFor="let c of ['primary', 'secondary', 'error', 'info', 'magenta', 'orange']" class="navbar mb-2"
+        [ngClass]="['navbar-' + c]">
+    &#60;div class="my-container">
+      &#60;h2 class="navbar-title">Navbar title&#60;/h2>
+      &#60;p>Lightweight CSS library&#60;/p>
+    &#60;/div>
+  &#60;/nav>
+
+  <b>// _navbar.scss</b>
+  @each $key, $value in $colors &#123;
+    .navbar-#&#123;$key} &#123;
+        @extend .navbar;
+        background-color: $value;
+    }
+  }
+    </pre>
+  </ul>
+</div>
+
+<div>
+  <h3 #usingthelibrary data-anchor="usingthelibrary">Using the library</h3>
+  <ul>
+    <div style="margin: 30px; padding: 15px; border: 3px solid black; border-radius: 5px;">
+      <!-- navbar -->
+      <nav class="navbar justify-between">
+        <div class="my-container">
+          <h1 class="site-title">Website</h1>
+          <!--ul class="display-f">
+            <li class="ml-1 text-orange-white-mix-4">
+              <a href="javascript:void(0)">Our work</a>
+            </li>
+            <li class="ml-1 text-orange-white-mix-4">
+              <a href="javascript:void(0)">About us</a>
+            </li>
+          </ul-->
+          <div class="display-f">
+            <div>
+              <button class="button-primary">Our work</button>
+            </div>
+            <div>
+              <button class="button-primary">About us</button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <!-- intro -->
+      <div class="my-container mt-5">
+        <div class="my-row justify-center">
+          <div class="col-xs-12 col-md-5">
+            <h2>
+              <div class="font-xxl text-secondary">Your Website</div>
+            </h2>
+            <p class="text-gray mt-2 mb-3">Lorem ipsum dolor sit amet consectetur adipisicing elit</p>
+            <a href="javascript:void(0)" class="button-outlined-primary text-orange">View our work</a>
+          </div>
+          <div class="col-xs-12 col-md-5">
+            <img src="assets/imgs/process.png" width="100%">
+          </div>
+        </div>
+      </div>
+
+      <!-- about -->
+      <section id="about" class="bg-secondary mt-5 pt-4 pb-4">
+        <div class="my-container">
+          <h2 class="mb-2">About the website</h2>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit, culpa ipsam animi aliquid sequi fuga, nam nesciunt
+            dolore libero dolorem exercitationem aliquam cupiditate atque illo, quae dicta doloribus et? Ab ipsam
+            inventore quam asperiores, sequi unde tenetur accusamus, distinctio magni necessitatibus quis deserunt id
+            alias, iste eum ea labore rerum voluptatibus</p>
+          <p class="mt-1">Lorem, ipsum dolor sit amet consectetur adipisicing elit, soluta nam, corrupti dolorum
+            inventore
+            perspiciatis id illum repellat iste amet sapiente ducimus nihil molestias quasi, totam, ratione minima
+            molestiae blanditiis iure consequatur praesentium debitis, nulla maiores doloremque tempore nobis dolorum
+            amet</p>
+        </div>
+      </section>
+
+      <!-- work section -->
+      <section id="work" class="mt-5">
+        <div class="my-container">
+          <h2 class="mb-2">Some of our work</h2>
+          <div class="my-row my-gap-2">
+            <div class="my-col-xs-12 my-col-md-6 my-col-lg-6">
+              <div class="card p-0">
+                <h3 class="card-title m-1">Potatoe</h3>
+                <img src="assets/imgs/process.png" width="100%">
+                <p class="m-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
+              </div>
+            </div>
+            <div class="my-col-xs-12 my-col-md-6 my-col-lg-6">
+              <div class="card p-0">
+                <h3 class="card-title m-1">Onion</h3>
+                <img src="assets/imgs/process.png" width="100%">
+                <p class="m-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
+              </div>
+            </div>
+            <div class="my-col-xs-12 my-col-md-6 my-col-lg-6">
+              <div class="card p-0">
+                <h3 class="card-title m-1">Banana</h3>
+                <img src="assets/imgs/process.png" width="100%">
+                <p class="m-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
+              </div>
+            </div>
+            <div class="my-col-xs-12 my-col-md-6 my-col-lg-6">
+              <div class="card p-0">
+                <h3 class="card-title m-1">Carrot</h3>
+                <img src="assets/imgs/process.png" width="100%">
+                <p class="m-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
+              </div>
+            </div>
+          </div>
+          <div class="my-row justify-center mt-2">
+            <button class="button-secondary text-white font-md">View All</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- footer -->
+      <footer class="bg-magenta pt-3 pb-3 mt-5">
+        <div class="my-container">
+          copyright NOW
+        </div>
+      </footer>
+    </div>
+    <pre>
+  <b>// template</b>
+  &#60;div style="margin: 30px; padding: 15px; border: 3px solid black; border-radius: 5px;">
+    &#60;!-- navbar -->
+    &#60;nav class="navbar justify-between">
+      &#60;div class="my-container">
+        &#60;h1 class="site-title">Website&#60;/h1>
+        &#60;!--ul class="display-f">
+          &#60;li class="ml-1 text-orange-white-mix-4">
+            &#60;a href="javascript:void(0)">Our work&#60;/a>
+          &#60;/li>
+          &#60;li class="ml-1 text-orange-white-mix-4">
+            &#60;a href="javascript:void(0)">About us&#60;/a>
+          &#60;/li>
+        &#60;/ul-->
+        &#60;div class="display-f">
+          &#60;div>
+            &#60;button class="button-primary">Our work&#60;/button>
+          &#60;/div>
+          &#60;div>
+            &#60;button class="button-primary">About us&#60;/button>
+          &#60;/div>
+        &#60;/div>
+      &#60;/div>
+    &#60;/nav>
+
+    &#60;!-- intro -->
+    &#60;div class="my-container mt-5">
+      &#60;div class="my-row justify-center">
+        &#60;div class="col-xs-12 col-md-5">
+          &#60;h2>
+            &#60;div class="font-xxl text-secondary">Your Website&#60;/div>
+          &#60;/h2>
+          &#60;p class="text-gray mt-2 mb-3">Lorem ipsum dolor sit amet consectetur adipisicing elit&#60;/p>
+          &#60;a href="javascript:void(0)" class="button-outlined-primary text-orange">View our work&#60;/a>
+        &#60;/div>
+        &#60;div class="col-xs-12 col-md-5">
+          &#60;img src="assets/imgs/process.png" width="100%">
+        &#60;/div>
+      &#60;/div>
+    &#60;/div>
+
+    &#60;!-- about -->
+    &#60;section id="about" class="bg-secondary mt-5 pt-4 pb-4">
+      &#60;div class="my-container">
+        &#60;h2 class="mb-2">About the website&#60;/h2>
+        &#60;p>Lorem ipsum dolor sit amet consectetur adipisicing elit, culpa ipsam animi aliquid sequi fuga, nam nesciunt
+          dolore libero dolorem exercitationem aliquam cupiditate atque illo, quae dicta doloribus et? Ab ipsam
+          inventore quam asperiores, sequi unde tenetur accusamus, distinctio magni necessitatibus quis deserunt id
+          alias, iste eum ea labore rerum voluptatibus&#60;/p>
+        &#60;p class="mt-1">Lorem, ipsum dolor sit amet consectetur adipisicing elit, soluta nam, corrupti dolorum
+          inventore
+          perspiciatis id illum repellat iste amet sapiente ducimus nihil molestias quasi, totam, ratione minima
+          molestiae blanditiis iure consequatur praesentium debitis, nulla maiores doloremque tempore nobis dolorum
+          amet&#60;/p>
+      &#60;/div>
+    &#60;/section>
+
+    &#60;!-- work section -->
+    &#60;section id="work" class="mt-5">
+      &#60;div class="my-container">
+        &#60;h2 class="mb-2">Some of our work&#60;/h2>
+        &#60;div class="my-row my-gap-2">
+          &#60;div class="my-col-xs-12 my-col-md-6 my-col-lg-6">
+            &#60;div class="card p-0">
+              &#60;h3 class="card-title m-1">Potatoe&#60;/h3>
+              &#60;img src="assets/imgs/process.png" width="100%">
+              &#60;p class="m-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit&#60;/p>
+            &#60;/div>
+          &#60;/div>
+          &#60;div class="my-col-xs-12 my-col-md-6 my-col-lg-6">
+            &#60;div class="card p-0">
+              &#60;h3 class="card-title m-1">Onion&#60;/h3>
+              &#60;img src="assets/imgs/process.png" width="100%">
+              &#60;p class="m-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit&#60;/p>
+            &#60;/div>
+          &#60;/div>
+          &#60;div class="my-col-xs-12 my-col-md-6 my-col-lg-6">
+            &#60;div class="card p-0">
+              &#60;h3 class="card-title m-1">Banana&#60;/h3>
+              &#60;img src="assets/imgs/process.png" width="100%">
+              &#60;p class="m-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit&#60;/p>
+            &#60;/div>
+          &#60;/div>
+          &#60;div class="my-col-xs-12 my-col-md-6 my-col-lg-6">
+            &#60;div class="card p-0">
+              &#60;h3 class="card-title m-1">Carrot&#60;/h3>
+              &#60;img src="assets/imgs/process.png" width="100%">
+              &#60;p class="m-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit&#60;/p>
+            &#60;/div>
+          &#60;/div>
+        &#60;/div>
+        &#60;div class="my-row justify-center mt-2">
+          &#60;button class="button-secondary text-white font-md">View All&#60;/button>
+        &#60;/div>
+      &#60;/div>
+    &#60;/section>
+
+    &#60;!-- footer -->
+    &#60;footer class="bg-magenta pt-3 pb-3 mt-5">
+      &#60;div class="my-container">
+        copyright NOW
+      &#60;/div>
+    &#60;/footer>
+  &#60;/div>
+</pre>
+  </ul>
+</div>
+
+<div>
+  <h3 #purgingunusedstyles data-anchor="purgingunusedstyles">Purging unused styles</h3>
+  <ul>
+    <li>Jó esély van arra, hogy az általunk készített CSS könyvtárból nem használjuk az összes class-t a kódunkban
+      <ul>
+        <li>Így csak feleslegesen növeljük a CSS fájlunk méretét</li>
+      </ul>
+    </li>
+    <li>A gulp-purgecss plugin-t hívjuk segítségül</li>
+    <pre>
+  npm install --save-dev gulp-purgecss
+    </pre>
+    <li>Érdemes a compile task-jába bekötni a purge-t, amit egyszerűen egy újabb pipe használatával tehetünk meg</li>
+    <pre>
+  const gulp = require('gulp');
+  const sass = require('gulp-sass')(require('sass'));
+
+  // SCSS/SASS fájlok fordítása
+  function compileSass() &#123;
+      return gulp.src('./*.scss') // SCSS fájlokat keres
+          .pipe(sass().on('error', sass.logError)) // SASS fordítás és hibakezelés
+          .pipe(purgecss(&#123;content: ['*.html']}))
+          .pipe(gulp.dest('./dist/css')); // kimeneti CSS fájlok helye
+  }
+
+  // automatikus figyelés a változásokra
+  function watchSass() &#123;
+      gulp.watch(['./*.scss', '*.html'], compileSass);
+  }
+
+  // alapértelmezett feladat
+  exports.default = gulp.series(compileSass, watchSass);
+    </pre>
+    <li>Argomentumként objektumot kap
+      <ul>
+        <li>content property
+          <ul>
+            <li>Megmondjuk, hogy a plugin hol keresse a CSS fájlokat, amiket használunk</li>
+            <li>Útvonalak tömbje, relatívan a gulpfile.js-re</li>
+            <li>A '*.html' megadásával a root szinttől kezdve minden HTML fájlt átvizsgál a Gulp</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li>Kimenetként ezúttal egy olyan fájlt kapunk processzálva, ami nem tartalmaz olyan class-okat, amiketet egyáltalán
+      nem használtunk egyik HTML fájllunkban sem</li>
+    <li>Előfordulhat, hogy miközben a watch funkciót használjuk, elhelyezünk egy addig nem használt osztályt egy elemen
+      <ul>
+        <li>Ezt a watch csak akkor fogja észlelni, ha neki a '*.html' kiterjesztést odaadjuk neki, hogy arra is
+          figyeljen</li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #default data-anchor="default">!default</h3>
+  <ul>
+    <li>Amennyiben elkészült a library-nk, az osztályokat, szabályokat nem közvetlenül az általunk létrehozott
+      könyvtárban változtatjuk meg
+      <ul>
+        <li>Ehhez létrehozunk egy külön scss fájlt, amibe beimportáljuk a magát a library-t</li>
+        <li>A Gulp-ot átállítjuk, hogy erre az scss fájlra figyeljen</li>
+      </ul>
+    </li>
+    <pre>
+  css/
+  │--- index.css
+  sass/
+  │--- index.scss
+  css-library/
+  │--- components/
+  │    │--- _button.scss
+  │    │--- _card.scss
+  │    │--- _navbar.scss
+  │--- _base.scss
+  │--- _breakpoint.scss
+  │--- _color.scss
+  │--- _functions.scss
+  │--- _grid.scss
+  │--- _utilities.scss
+  │--- _variables.scss
+  │--- index.scss           // ebbe a fájlba kerül beimportálásra az összes több .scss
+  gulp/
+  │--- gulpfile.js
+
+  <b>// index.scss</b>
+  import 'css-library'; // így automatikusan az index fájlt keresi meg a mappában
+
+  <b>// gulpfile.js</b>
+  const gulp = require('gulp');
+  const sass = require('gulp-sass')(require('sass'));
+  
+  // SCSS/SASS fájlok fordítása
+  function compileSass() &#123;
+      return gulp.src('../sass/**/*.scss') // SCSS fájlokat keres
+          .pipe(sass().on('error', sass.logError)) // SASS fordítás és hibakezelés
+          .pipe(purgecss(&#123;content: ['*.html']}))
+          .pipe(gulp.dest('./dist/css')); // kimeneti CSS fájlok helye
+  }
+  
+  // automatikus figyelés a változásokra
+  function watchSass() &#123;
+      gulp.watch(['../sass/**/*.scss', '*.html'], compileSass);
+  }
+  
+  // alapértelmezett feladat
+  exports.default = gulp.series(compileSass, watchSass);
+      </pre>
+    <li>A sass/index.scss-be alapesetben a $primary színt nem tudjuk felülírni
+      <ul>
+        <pre>
+  $primary = indigo; // ha ide tesszük, a _variables.scss-ben felülírjuk
+
+  import 'css-library';
+
+  $primary = indigo; // ha ide tesszük, itt már legenerálódott az összes szín korábban
+        </pre>
+        <li>Megoldás erre a problémára a !default használata</li>
+      </ul>
+    </li>
+    <li>!default
+      <ul>
+        <li>Lehetővé teszi változók alapértelmezett értékének beállítását</li>
+        <li>Ha egy változó már definiálva van, a !default nem írja felül a meglévő értéket, de ha a változó még nincs
+          beállítva, akkor a megadott értéket használja</li>
+        <li>CSS szabály értéke után adható meg</li>
+        <pre>
+  <b>// _variables.scss</b>
+  $primary: #326dee !default;
+  ...
+
+  <b>// sass/index.scss</b>
+  $primary = indigo;
+
+  import 'css-library';
+        </pre>
+        <li>Minden változón érdemes alkalmazni, amiről azt gondoljuk, hogy a felhasználó módosítani szeretné majd</li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #extendingthelibrary data-anchor="extendingthelibrary">Extending the library</h3>
+  <ul>
+    <li>A könyvárunkat bármikor tovább bővíthetjük</li>
+    <br>
+    <div>
+      Messages
+      <span class="badge-orange text-white ml-1">8</span>
+    </div>
+
+    <pre>
+  <b>// template</b>
+  &#60;div>
+    Messages
+    &#60;span class="badge-orange text-white ml-1">8&#60;/span>
+  &#60;/div>
+
+  <b>// _badge.scss</b>
+  @use 'sass:math';
+
+  @mixin badge($bg-color: $info) &#123; // ha nem adunk meg színt, az $info lép életbe
+      border-radius: $base-border-radius * 4;
+      background-color: $bg-color;
+      padding: math.div($base-padding, 4) math.div($base-padding, 2);
+      font-size: $font-size-sm;
+      font-weight: normal;
+  }
+
+  .badge &#123;
+      @include badge;
+  }
+
+  @each $key, $val in $colors &#123;
+      .badge-#&#123;$key} &#123;
+          @include badge($val);
+      }
+  }
+    </pre>
+  </ul>
+</div>
+
+<div>
+  <h3 #extra data-anchor="extra">Extra</h3>
+  <br>
+  <h5 #cssscssvariables data-anchor="cssscssvariables">CSS/SCSS variables</h5>
+  <ul>
+    <li>CSS változó
+      <ul>
+        <li>Szintaktikai formátuma: --változónév: érték;</li>
+        <pre>
+  :root &#123;
+    --primary-color: #3498db;
+    --font-size-lg: 1.5rem;
+  }
+  
+  h1 &#123;
+    color: var(--primary-color);
+    font-size: var(--font-size-lg);
+  }          
+        </pre>
+        <li>A változó deklarációjának helye határozza meg az érvényességi tartományát</li>
+        <pre>
+  :root &#123; // globálisan érvényes változók
+    --global-color: blue;
+  }
+  
+  .component &#123;
+    --local-color: green; // lokálisan az adott elemhez köthető
+    color: var(--local-color);
+  }
+        </pre>
+      </ul>
+    </li>
+    <li>SCSS változó
+      <ul>
+        <li>Szintaktikai formátuma: $változónév: érték;</li>
+        <pre>
+  $primary-color: #3498db;
+  $font-size-lg: 1.5rem;
+
+  h1 &#123;
+    color: $primary-color;
+    font-size: $font-size-lg;
+  }
+        </pre>
+        <li>Alapértelmezetten globálisak, kivéve, ha egy függvényben, vagy mixinben definiáljuk</li>
+        <li>SCSS (Sass) fordítóval együtt kell használni, ami átalakítja a változókat statikus CSS értékekké</li>
+      </ul>
+    </li>
+  </ul>
+  <br>
+  <h5 #cssreset data-anchor="cssreset">CSS reset</h5>
+  <ul>
+    <li>Olyan stíluskészlet, amelyet arra használnak, hogy a különböző böngészők eltérő alapértelmezett
+      stílusbeállításait eltávolítsák, vagy egységesítsék</li>
+    <li>A különböző böngészők eltérően kezelik az elemek, például a margók, paddingok,és egyéb beépített stílusok
+      megjelenítését, ami következetlen megjelenést eredményezhet</li>
+    <li>A CSS reset célja ezeknek az eltéréseknek a megszüntetése</li>
+    <pre>
+  /* Remove all the styles of the "User-Agent-Stylesheet", except for the 'display' property */
+  *:where(:not(html, iframe, canvas, img, svg, video, audio):not(svg *, symbol *)) &#123;
+      all: unset;
+      display: revert;
+  }
+
+  /* Preferred box-sizing value */
+  *,
+  *::before,
+  *::after &#123;
+      box-sizing: border-box;
+  }
+
+  /* Fix mobile Safari increase font-size on landscape mode */
+  html &#123;
+      -moz-text-size-adjust: none;
+      -webkit-text-size-adjust: none;
+      text-size-adjust: none;
+  }
+
+  /* Reapply the pointer cursor for anchor tags */
+  a, button &#123;
+      cursor: revert;
+  }
+
+  /* Remove list styles (bullets/numbers) */
+  ol, ul, menu, summary &#123;
+      list-style: none;
+  }
+
+  /* Firefox: solve issue where nested ordered lists continue numbering from parent */
+  ol &#123;
+      counter-reset: revert;
+  }
+
+  /* For images to not be able to exceed their container */
+  img &#123;
+      max-inline-size: 100%;
+      max-block-size: 100%;
+  }
+
+  /* removes spacing between cells in tables */
+  table &#123;
+      border-collapse: collapse;
+  }
+
+  /* Safari - solving issue when using user-select:none on the &#60;body> text input doesn't working */
+  input, textarea &#123;
+      -webkit-user-select: auto;
+  }
+
+  /* revert the 'white-space' property for textarea elements on Safari */
+  textarea &#123;
+      white-space: revert;
+  }
+
+  /* minimum style to allow to style meter element */
+  meter &#123;
+      -webkit-appearance: revert;
+      appearance: revert;
+  }
+
+  /* preformatted text - use only for this feature */
+  :where(pre) &#123;
+      all: revert;
+      box-sizing: border-box;
+  }
+
+  /* reset default text opacity of input placeholder */
+  ::placeholder &#123;
+      color: unset;
+  }
+
+  /* fix the feature of 'hidden' attribute */
+  :where([hidden]) &#123;
+      display: none;
+  }
+
+  /* fix for the contenteditable attribute */
+  :where([contenteditable]:not([contenteditable="false"])) &#123;
+      -moz-user-modify: read-write;
+      -webkit-user-modify: read-write;
+      overflow-wrap: break-word;
+      -webkit-line-break: after-white-space;
+      -webkit-user-select: auto;
+  }
+
+  /* apply back the draggable feature */
+  :where([draggable="true"]) &#123;
+      -webkit-user-drag: element;
+  }
+
+  /* Revert Modal native behavior */
+  :where(dialog:modal) &#123;
+      all: revert;
+      box-sizing: border-box;
+  }
+
+  /* Remove details summary webkit styles */
+  ::-webkit-details-marker &#123;
+      display: none;
+  }
+    </pre>
+  </ul>
+  <br>
+  <h5 #verticalalign data-anchor="verticalalign">Vertical align</h5>
+  <ul>
+    <li>Csak inline vagy inline-block elemekre alkalmazható
+      <ul>
+        <li>div esetében például elfelejthetjük</li>
+      </ul>
+    </li>
+    <br>
+    <div>
+      <span style="display: inline-block; vertical-align: top; width: 50px; height: 50px; background-color: bisque;">
+      </span>
+      <span style="vertical-align: top; padding-left: 10px;">A szöveg a doboz tetejénél van</span>
+    </div>
+    <br>
+    <div>
+      <span style="display: inline-block; vertical-align: middle; width: 50px; height: 50px; background-color: bisque;">
+      </span>
+      <span style="vertical-align: middle; padding-left: 10px;">A szöveg a doboz közepénél van</span>
+    </div>
+    <br>
+    <div>
+      <span style="display: inline-block; vertical-align: bottom; width: 50px; height: 50px; background-color: bisque;">
+      </span>
+      <span style="vertical-align: bottom; padding-left: 10px;">A szöveg a doboz aljánál van</span>
+    </div>
+    <pre>
+  &#60;div>
+    &#60;span style="display: inline-block; vertical-align: top; width: 50px; height: 50px; background-color: bisque;">
+    &#60;/span>
+    &#60;span style="vertical-align: top; padding-left: 10px;">A szöveg a doboz tetejénél van&#60;/span>
+  &#60;/div>
+
+  &#60;div>
+    &#60;span style="display: inline-block; vertical-align: middle; width: 50px; height: 50px; background-color: bisque;">
+    &#60;/span>
+    &#60;span style="vertical-align: middle; padding-left: 10px;">A szöveg a doboz közepénél van&#60;/span>
+  &#60;/div>
+  
+  &#60;div>
+    &#60;span style="display: inline-block; vertical-align: bottom; width: 50px; height: 50px; background-color: bisque;">
+    &#60;/span>
+    &#60;span style="vertical-align: bottom; padding-left: 10px;">A szöveg a doboz aljánál van&#60;/span>
+  &#60;/div>
+    </pre>
+  </ul>
+  <br>
+  <h5 #operators data-anchor="operators">Operators</h5>
+  <ul>
+    <li>Starts with
+      <ul>
+        <pre>
+  [class^="prefix"]
+        </pre>
+        <li>Olyan elemeket céloz meg, amelyek osztályneve a megadott karakterlánccal kezdődnek</li>
+        <pre>
+  [class^="nav-"]
+
+  ↓↓↓↓↓
+
+  .nav-item, .nav-link
+        </pre>
+      </ul>
+    </li>
+    <li>Contains
+      <ul>
+        <pre>
+  [class*="substring"]
+        </pre>
+        <li>Olyan elemeket céloz, amelyek osztályneve bárhol tartalmazza a megadott karakterláncot</li>
+        <pre>
+  [class*="sm"]
+
+  ↓↓↓↓↓
+
+  .col-sm-2, .col-sm-12
+        </pre>
+      </ul>
+    </li>
+    <li>Ends with
+      <ul>
+        <pre>
+  [class$="suffix"]
+        </pre>
+        <li>Olyan elemeket választ, amelyek osztályneve a megadott karakterlánccal végződik</li>
+        <pre>
+  [class$="-text"]
+
+  ↓↓↓↓↓
+
+  .header-text, .footer-text
+        </pre>
+      </ul>
+    </li>
+    <li>Word contains
+      <ul>
+        <pre>
+  [class~="word"]
+        </pre>
+        <li>Olyan elemeket választ, amelyek osztálya tartalmazza a megadott szót, mint különálló szó</li>
+        <pre>
+  [class~="alert"]
+
+  ↓↓↓↓↓
+
+  .alert-info, .alert-danger
+        </pre>
+      </ul>
+    </li>
+    <li>Attribute exists
+      <ul>
+        <pre>
+  [attr]
+        </pre>
+        <li>Minden olyan elem, ami rendelkezik egy adott attribútummal, függetlenül annak értékétől</li>
+        <pre>
+  [disabled]
+
+  ↓↓↓↓↓
+
+  &#60;button disabled>, &#60;input disabled>
+        </pre>
+      </ul>
+    </li>
+    <li>Attribute equals
+      <ul>
+        <pre>
+  [attr="value"]
+        </pre>
+        <li>Minden olyan elem, aminek az adott attribútuma pontosan megegyezik a megadott értékkel</li>
+        <pre>
+  [href="#"]
+
+  ↓↓↓↓↓
+
+  &#60;a href="#">
+        </pre>
+      </ul>
+    </li>
+    <li>Attribute prefix
+      <ul>
+        <pre>
+  [attr|="value"]
+        </pre>
+        <li>Olyan elemeket céloz, amelyek egy szóval kezdődnek és pontosan megegyeznek a megadott értékkel, vagy annak
+          prefixeként jelennek meg</li>
+        <pre>
+  [lang|="en"]
+
+  ↓↓↓↓↓
+
+  &#60;html lang="en-US">, &#60;span lang="en-GB">
+        </pre>
+      </ul>
+    </li>
+    <li>Attribute starts with
+      <ul>
+        <pre>
+  [attr^="value"]
+        </pre>
+        <li>Olyan elemeket választ ki, amelyek attribútuma a megadott értékkel kezdődik</li>
+        <pre>
+  [src^="https://"]
+
+  ↓↓↓↓↓
+
+  &#60;img src="https://example.com/image.jpg">
+        </pre>
+      </ul>
+    </li>
+    <li>Attribute ends with
+      <ul>
+        <pre>
+  [attr$="value"]
+        </pre>
+        <li>Olyan elemeket választ ki, amelyek attribútuma a megadott értékkel végződik</li>
+        <pre>
+  [src$=".png"]
+
+  ↓↓↓↓↓
+
+  &#60;img src="https://example.com/image.png">
+        </pre>
+      </ul>
+    </li>
+    <li>Negáció
+      <ul>
+        <pre>
+          :not(selector)
+        </pre>
+        <li>olyan elemekre vonatkozik, amik nem felelnek meg a megadott szűrőnek</li>
+        <pre>
+          div:not(.highlight)
+
+          ↓↓↓↓↓
+
+          &#60;div class="lowlight">&#60;/div>
+        </pre>
+      </ul>
+    </li>
+  </ul>
+  <br>
+  <h5 #pxemrem data-anchor="pxemrem">px/em/rem</h5>
+  <ul>
+    <li>todo</li>
+  </ul>
+  <br>
+  <h5 #dvhlvhsvh data-anchor="dvhlvhsvh">dvh/lvh/svh</h5>
+  <ul>
+    <li>todo</li>
+  </ul>
+  <br>
+  <h5 #aspectratio data-anchor="aspectratio">aspect-ratio</h5>
+  <ul>
+    <li>todo</li>
+  </ul>
+  <br>
+  <h5 #todo data-anchor="todo">TODO</h5>
+  <ul>
+    <li>todo</li>
+  </ul>
+</div>

@@ -1,0 +1,152 @@
+<form [formGroup]="form">
+    <h6>Basic slider</h6>
+    <ul class="element">
+        <div>Value: {{slider.value}}</div>
+        <mat-slider [disabled]="disabled" [max]="max" [min]="min" [step]="step" [discrete]="thumbLabel"
+            [showTickMarks]="showTicks">
+            <input #slider matSliderThumb formControlName="value" [(ngModel)]="value">
+        </mat-slider>
+        <pre>
+    &#60;div>Value: &#123; &#123;slider.value}}&#60;/div>
+    &#60;mat-slider [disabled]="disabled" [max]="max" [min]="min" [step]="step" [discrete]="thumbLabel"
+        [showTickMarks]="showTicks">
+        &#60;input #slider matSliderThumb formControlName="value" [(ngModel)]="value">
+    &#60;/mat-slider>
+        </pre>
+        <li>A discrete adja hozzá a slider-hez az értékmegjelenítést, miközben csúsztatjuk</li>
+    </ul>
+
+    <br>
+    <h6>Configuration</h6>
+    <ul class="element">
+        <div>
+            <mat-form-field class="example-margin example-width">
+                <mat-label>Value</mat-label>
+                <input matInput type="number" formControlName="value" [(ngModel)]="value">
+            </mat-form-field>
+            <mat-form-field class="example-margin example-width">
+                <mat-label>Min value</mat-label>
+                <input matInput type="number" formControlName="min" [(ngModel)]="min">
+            </mat-form-field>
+            <mat-form-field class="example-margin example-width">
+                <mat-label>Max value</mat-label>
+                <input matInput type="number" formControlName="max" [(ngModel)]="max">
+            </mat-form-field>
+            <mat-form-field class="example-margin example-width">
+                <mat-label>Step size</mat-label>
+                <input matInput type="number" formControlName="step" [(ngModel)]="step">
+            </mat-form-field>
+        </div>
+
+        <div>
+            <mat-checkbox formControlName="ticks" [(ngModel)]="showTicks">
+                <span style="color: white">Show ticks</span>
+            </mat-checkbox>
+            <mat-checkbox formControlName="label" [(ngModel)]="thumbLabel">
+                <span style="color: white">Show thumb label</span>
+            </mat-checkbox>
+            <mat-checkbox formControlName="disabled" [(ngModel)]="disabled">
+                <span style="color: white">Disabled</span>
+            </mat-checkbox>
+        </div>
+
+        <div>Value: {{slider.value}}</div>
+        <mat-slider [disabled]="disabled" [max]="max" [min]="min" [step]="step" [discrete]="thumbLabel"
+            [showTickMarks]="showTicks">
+            <input #slider matSliderThumb formControlName="value" [(ngModel)]="value">
+        </mat-slider>
+        <div>Min: {{slider.min}}</div>
+        <div>Max: {{slider.max}}</div>
+        <pre>
+    <b>// template</b>
+    &#60;div>
+        &#60;mat-form-field class="example-margin example-width">
+            &#60;mat-label>Value&#60;/mat-label>
+            &#60;input matInput type="number" formControlName="value" [(ngModel)]="value">
+        &#60;/mat-form-field>
+        &#60;mat-form-field class="example-margin example-width">
+            &#60;mat-label>Min value&#60;/mat-label>
+            &#60;input matInput type="number" formControlName="min" [(ngModel)]="min">
+        &#60;/mat-form-field>
+        &#60;mat-form-field class="example-margin example-width">
+            &#60;mat-label>Max value&#60;/mat-label>
+            &#60;input matInput type="number" formControlName="max" [(ngModel)]="max">
+        &#60;/mat-form-field>
+        &#60;mat-form-field class="example-margin example-width">
+            &#60;mat-label>Step size&#60;/mat-label>
+            &#60;input matInput type="number" formControlName="step" [(ngModel)]="step">
+        &#60;/mat-form-field>
+    &#60;/div>
+
+    &#60;div>
+        &#60;mat-checkbox formControlName="ticks" [(ngModel)]="showTicks">
+            &#60;span style="color: white">Show ticks&#60;/span>
+        &#60;/mat-checkbox>
+        &#60;mat-checkbox formControlName="label" [(ngModel)]="thumbLabel">
+            &#60;span style="color: white">Show thumb label&#60;/span>
+        &#60;/mat-checkbox>
+        &#60;mat-checkbox formControlName="disabled" [(ngModel)]="disabled">
+            &#60;span style="color: white">Disabled&#60;/span>
+        &#60;/mat-checkbox>
+    &#60;/div>
+
+    &#60;div>Value: {{slider.value}}&#60;/div>
+    &#60;mat-slider [disabled]="disabled" [max]="max" [min]="min" [step]="step" [discrete]="thumbLabel"
+        [showTickMarks]="showTicks">
+        &#60;input #slider matSliderThumb formControlName="value" [(ngModel)]="value">
+    &#60;/mat-slider>
+    &#60;div>Min: &#123; &#123;slider.min}}&#60;/div>
+    &#60;div>Max: &#123; &#123;slider.max}}&#60;/div>
+
+    <b>// class</b>
+    form = this._formBuilder.group(&#123;
+        value: new FormControl(),
+        min: new FormControl(),
+        max: new FormControl(),
+        step: new FormControl(),
+        ticks: new FormControl(),
+        label: new FormControl(),
+        disabled: new FormControl(),
+        });
+    
+        disabled = false;
+        max = 100;
+        min = 0;
+        showTicks = true;
+        step = 10;
+        thumbLabel = false;
+        value = 30;
+    
+        constructor(private _formBuilder: FormBuilder) &#123;
+    
+        }
+        </pre>
+    </ul>
+
+    <br>
+    <h6>Range</h6>
+    <ul class="element">
+        <div>Value 1: {{range1.value}}</div>
+        <div>Value 2: {{range2.value}}</div>
+        <div>
+            {{rangeslider.min}}
+            <mat-slider #rangeslider min="100" max="500" [step]="100" [showTickMarks]="true">
+                <input #range1 value="200" matSliderStartThumb>
+                <input #range2 value="400" matSliderEndThumb>
+            </mat-slider>
+            {{rangeslider.max}}
+        </div>
+        <pre>
+    &#60;div>Value 1: &#123; &#123;range1.value}}&#60;/div>
+    &#60;div>Value 2: &#123; &#123;range2.value}}&#60;/div>
+    &#60;div>
+        &#123; &#123;rangeslider.min}}
+        &#60;mat-slider #rangeslider min="100" max="500" [step]="100" [showTickMarks]="true">
+            &#60;input #range1 value="200" matSliderStartThumb>
+            &#60;input #range2 value="400" matSliderEndThumb>
+        &#60;/mat-slider>
+        &#123; &#123;rangeslider.max}}
+    &#60;/div>
+        </pre>
+    </ul>
+</form>

@@ -12,6 +12,7 @@
                 <img [src]="article.image_url ? article.image_url : 'https://fakeimg.pl/600x400?text=no+image'">
                 <div>{{ article.source_name }}</div>
                 <div>{{ article.pubDate }}</div>
+                <a [href]="article.link" target="'_blank'">UGRÁS</a>
             </div>
             <div class="news-heading-text">
                 <h2>{{ article.title }}</h2>

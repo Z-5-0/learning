@@ -1,0 +1,86 @@
+%my-flex-layout {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+
+.navbar {
+    @extend %my-flex-layout;
+    padding: $base-padding $base-padding*2;
+    box-shadow: $base-box-shadow;
+
+    .navbar-title {
+        font-size: $font-size-lg;
+    }
+
+    .my-container {
+        @extend %my-flex-layout;
+    }
+}
+
+// compile utáni CSS kimenet
+/*
+    .my-flex-layout, .navbar {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: space-between;
+        box-sizing: border-box;
+    }
+
+    .navbar {
+        padding: $base-padding $base-padding*2;
+        box-shadow: $base-box-shadow;
+    }
+
+    .navbar .navbar-title {
+        font-size: $font-size-lg;
+    }
+*/
+
+// megoldás mixinnel
+/* 
+    @mixin my-flex-layout { // my-flex-layout($param) - akár paramétert is át lehet adni, amíg extendnél nincs rá lehetőség
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: space-between;
+        box-sizing: border-box;
+    }
+
+    .navbar {
+        @include my-flex-layout;
+        padding: $base-padding $base-padding * 2;
+        box-shadow: $base-box-shadow;
+
+        .navbar-title {
+            font-size: $font-size-lg;
+        }
+    } 
+*/
+
+// compile utáni CSS kimenet
+/*
+    .navbar {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: space-between;
+        box-sizing: border-box;
+        padding: 16px 32px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar .navbar-title {
+        font-size: 24px;
+    }
+*/
+
+@each $key, $value in $colors {
+    .navbar-#{$key} {
+        @extend .navbar;
+        background-color: $value;
+    }
+}
