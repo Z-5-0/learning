@@ -1,12 +1,5 @@
 <h1>Bootstrap</h1>
 
-<div>
-  <h3 #typography data-anchor="typography">Typography</h3>
-  <ul>
-    <li></li>
-  </ul>
-</div>
-
 <div class="anchor-navi-container">
   <div *ngFor="let mainButton of anchorButtons" class="btn-group">
     <button type="button" class="btn btn-primary btn-sm anchor" (click)="scrollToAnchor(mainButton?.anchor)">
@@ -105,7 +98,7 @@
                 </li>
                 <li>A styles.css fájlba importálás
                   <pre>
-                    @import "../node_modules/bootstrap/dist/css/dist/bootstrap.min.css";
+  @import "../node_modules/bootstrap/dist/css/dist/bootstrap.min.css";
                   </pre>
                 </li>
                 <li>Valamint ne felejtsük el hozzáadni az alábbi sort az angular.json scripts tömbjéhez</li>
@@ -331,25 +324,133 @@
   </ul>
 </div>
 
------ IDE -----
-
-
+<div>
+  <h3 #typography data-anchor="typography">Typography</h3>
+  <ul>
+    <li>Heading
+      <ul>
+        <h1>h1. Bootstrap heading</h1>
+        <p class="h1">h1. Bootstrap heading</p>
+        <h1 class="display-1">Display 1</h1>
+        <h3>
+          Fancy display heading
+          <small class="text-body-secondary text-info-emphasis">With faded secondary text</small>
+        </h3>
+        <pre>
+  &#60;h1>h1. Bootstrap heading&#60;/h1>
+  &#60;p class="h1">h1. Bootstrap heading&#60;/p>
+  &#60;h1 class="display-1">Display 1&#60;/h1>
+  &#60;h3>
+    Fancy display heading
+    &#60;small class="text-body-secondary text-info-emphasis"> // info színt is kapott, mert különben nem látszana
+        faded secondary text
+    &#60;/small>
+  &#60;/h3>
+        </pre>
+        <li>A Bootstrap a HTML alapértelmezett &#60;h1> – &#60;h6> címsorokat formázza, de a .h1 – .h6 osztályokkal is
+          alkalmazható a kívánt stílus más elemekre</li>
+      </ul>
+    </li>
+    <li>Text
+      <ul>
+        <p>You can use the mark tag to <mark>highlight</mark> text.</p>
+        <p><del>This line of text is meant to be treated as deleted text.</del></p>
+        <p><s>This line of text is meant to be treated as no longer accurate.</s></p>
+        <p><ins>This line of text is meant to be treated as an addition to the document.</ins></p>
+        <p><u>This line of text will render as underlined.</u></p>
+        <p><small>This line of text is meant to be treated as fine print.</small></p>
+        <p><strong>This line rendered as bold text.</strong></p>
+        <p><em>This line rendered as italicized text.</em></p>
+        <pre>
+  &#60;p>You can use the mark tag to &#60;mark>highlight&#60;/mark> text.&#60;/p>
+  &#60;p>&#60;del>This line of text is meant to be treated as deleted text.&#60;/del>&#60;/p>
+  &#60;p>&#60;s>This line of text is meant to be treated as no longer accurate.&#60;/s>&#60;/p>
+  &#60;p>&#60;ins>This line of text is meant to be treated as an addition to the document.&#60;/ins>&#60;/p>
+  &#60;p>&#60;u>This line of text will render as underlined.&#60;/u>&#60;/p>
+  &#60;p>&#60;small>This line of text is meant to be treated as fine print.&#60;/small>&#60;/p>
+  &#60;p>&#60;strong>This line rendered as bold text.&#60;/strong>&#60;/p>
+  &#60;p>&#60;em>This line rendered as italicized text.&#60;/em>&#60;/p>
+        </pre>
+        <li>Különböző osztályok állnak rendelkezésre a szöveg igazítására (például .text-center),
+          kiemelésére (például .text-muted), illetve színének módosítására (például .text-danger)</li>
+      </ul>
+    </li>
+    <li>Blockquote
+      <ul>
+        <figure class="text-end">
+          <blockquote class="blockquote">
+            <p>A well-known quote, contained in a blockquote element.</p>
+          </blockquote>
+          <figcaption class="blockquote-footer">
+            Someone famous in <cite title="Source Title">Source Title</cite>
+          </figcaption>
+        </figure>
+        <pre>
+  &#60;figure class="text-end"> // sok féle text utility-t használhatunk, ilyen ez a class is
+    &#60;blockquote class="blockquote">
+      &#60;p>A well-known quote, contained in a blockquote element.&#60;/p>
+    &#60;/blockquote>
+    &#60;figcaption class="blockquote-footer">
+      Someone famous in &#60;cite title="Source Title">Source Title&#60;/cite>
+    &#60;/figcaption>
+  &#60;/figure>
+        </pre>
+      </ul>
+    </li>
+    <li>List
+      <ul>
+        <ul class="list-unstyled">
+          <li>This is a list.</li>
+          <li>It appears completely unstyled.</li>
+          <li>Structurally, it's still a list.</li>
+          <li>However, this style only applies to immediate child elements.</li>
+          <li>Nested lists:
+            <ul>
+              <li>are unaffected by this style</li>
+              <li>will still show a bullet</li>
+              <li>and have appropriate left margin</li>
+            </ul>
+          </li>
+          <li>This may still come in handy in some situations.</li>
+        </ul>
+        <pre>
+  &#60;ul class="list-unstyled">
+    &#60;li>This is a list.&#60;/li>
+    &#60;li>It appears completely unstyled.&#60;/li>
+    &#60;li>Structurally, it's still a list.&#60;/li>
+    &#60;li>However, this style only applies to immediate child elements.&#60;/li>
+    &#60;li>Nested lists:
+      &#60;ul>
+        &#60;li>are unaffected by this style&#60;/li>
+        &#60;li>will still show a bullet&#60;/li>
+        &#60;li>and have appropriate left margin&#60;/li>
+      &#60;/ul>
+    &#60;/li>
+    &#60;li>This may still come in handy in some situations.&#60;/li>
+  &#60;/ul>
+        </pre>
+        <li>A .list-unstyled osztállyal eltávolíthatók a listaelemek alapértelmezett stíluselemei, amíg a .list-inline
+          osztállyal vízszintes lista hozható létre</li>
+      </ul>
+    </li>
+  </ul>
+</div>
 
 <div>
   <h3 #icons data-anchor="icons">Icons</h3>
   <ul>
     <li>Az ikonokat első lépésben fel kell telepíteni</li>
     <pre>
-      npm i bootstrap-icons
+  npm i bootstrap-icons
     </pre>
     <li>Ez után pedig best practice szerint be szükséges illeszteni az angular.json fájl styles tömbjébe a megfelelő CSS
       fájlt</li>
     <pre>
-      "styles": [
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "node_modules/bootstrap-icons/font/bootstrap-icons.css",
-              "src/styles.scss"
-            ],
+  "styles": [
+          "node_modules/bootstrap/dist/css/bootstrap.min.css",
+          "node_modules/bootstrap-icons/font/bootstrap-icons.css",
+          "src/styles.scss"
+        ],
     </pre>
     <li>Újrafordítás után már használhatóak is az ikonok</li>
     <br>
@@ -357,45 +458,922 @@
     <br>
     <i class="bi bi-alarm"></i>
     <pre>
-      &#60;i class="bi bi-eye">&#60;/i>
-      &#60;i class="bi bi-alarm">&#60;/i>
+  &#60;i class="bi bi-eye">&#60;/i>
+  &#60;i class="bi bi-alarm">&#60;/i>
     </pre>
+    <li>Linkekbe is illeszthetünk ikonokat</li>
+    <a class="icon-link" href="https://icons.getbootstrap.com/#install" target="_blank">
+      <svg class="bi" aria-hidden="true">
+        <use xlink:href="assets/svgs/bootstrap-icons.svg#heart-fill"></use>
+      </svg>
+      Bootstrap icons
+    </a>
+    <pre>
+  &#60;a class="icon-link" href="https://icons.getbootstrap.com/#install" target="_blank">
+    &#60;svg class="bi" aria-hidden="true">&#60;use xlink:href="#box-seam">&#60;/use>&#60;/svg>
+    Bootstrap icons
+  &#60;/a>
+    </pre>
+    <li>Alapértelmezés szerint az Angular csak azokat a fájlokat szolgálja ki a böngésző számára, amelyek az
+      angular.json fájlban az assets részben fel vannak tüntetve
+      <ul>
+        <li>Ezért a node_modules-ból a bootstrap-icons.svg fájl átkerült az assets/svgs mappába</li>
+      </ul>
+    </li>
+    <li>Alternatívaként például Font Awesome ikonokat is használhatunk</li>
   </ul>
 </div>
 
 <div>
   <h3 #buttons data-anchor="buttons">Buttons</h3>
   <ul>
-    <li>Az Bootstrap Angularba intergrálását, és egy újrafordítást követően már használhatjuk is a különféle elemeket
-      <pre>
-        &#60;button type="button" class="btn btn-info">Info Button&#60;/button>
-        &#60;button type="button" class="btn btn-primary">Primary Button&#60;/button>
-      </pre>
-      <button type="button" class="btn btn-info">Info Button</button>
-      <br>
-      <br>
-      <button class="btn btn-primary">Primary Button</button>
-    </li>
+    <div style="display: flex; flex-flow: wrap; gap: 10px;">
+      <button #buttons type="button" class="btn btn-primary">Primary</button>
+      <button #buttons type="button" class="btn btn-secondary">Secondary</button>
+      <button #buttons type="button" class="btn btn-success">Success</button>
+      <button #buttons type="button" class="btn btn-danger">Danger</button>
+      <button #buttons type="button" class="btn btn-warning">Warning</button>
+      <button #buttons type="button" class="btn btn-info">Info</button>
+      <button #buttons type="button" class="btn btn-light">Light</button>
+      <button #buttons type="button" class="btn btn-dark">Dark</button>
+      <button #buttons type="button" class="btn btn-link">Link</button>
+    </div>
+    <pre>
+  &#60;button #buttons type="button" class="btn btn-primary">Primary&#60;/button>
+  &#60;button #buttons type="button" class="btn btn-secondary">Secondary&#60;/button>
+  &#60;button #buttons type="button" class="btn btn-success">Success&#60;/button>
+  &#60;button #buttons type="button" class="btn btn-danger">Danger&#60;/button>
+  &#60;button #buttons type="button" class="btn btn-warning">Warning&#60;/button>
+  &#60;button #buttons type="button" class="btn btn-info">Info&#60;/button>
+  &#60;button #buttons type="button" class="btn btn-light">Light&#60;/button>
+  &#60;button #buttons type="button" class="btn btn-dark">Dark&#60;/button>
+  &#60;button #buttons type="button" class="btn btn-link">Link&#60;/button>
+    </pre>
+    <li>&#60;input>, és &#60;a> tag-eken is használhatóak az osztályok</li>
+    <br>
+    <div style="display: flex; flex-flow: wrap; gap: 10px;">
+      <button #buttons type="button" class="btn btn-outline-primary">Primary</button>
+      <button #buttons type="button" class="btn btn-outline-secondary">Secondary</button>
+      <button #buttons type="button" class="btn btn-outline-success">Success</button>
+      <button #buttons type="button" class="btn btn-outline-danger">Danger</button>
+      <button #buttons type="button" class="btn btn-outline-warning">Warning</button>
+      <button #buttons type="button" class="btn btn-outline-info">Info</button>
+      <button #buttons type="button" class="btn btn-outline-light">Light</button>
+      <button #buttons type="button" class="btn btn-outline-dark">Dark</button>
+    </div>
+    <pre>
+  &#60;button #buttons type="button" class="btn btn-outline-primary">Primary&#60;/button>
+  &#60;button #buttons type="button" class="btn btn-outline-secondary">Secondary&#60;/button>
+  &#60;button #buttons type="button" class="btn btn-outline-success">Success&#60;/button>
+  &#60;button #buttons type="button" class="btn btn-outline-danger">Danger&#60;/button>
+  &#60;button #buttons  type="button" class="btn btn-outline-warning">Warning&#60;/button>
+  &#60;button #buttons type="button" class="btn btn-outline-info">Info&#60;/button>
+  &#60;button #buttons type="button" class="btn btn-outline-light">Light&#60;/button>
+  &#60;button #buttons type="button" class="btn btn-outline-dark">Dark&#60;/button>
+    </pre>
+    <br>
+    <li>A méretük változtatható class megadásával</li>
+    <div style="display: flex; align-items: flex-start; gap: 10px; flex-wrap: wrap;">
+      <button #buttons type="button" class="btn btn-primary"
+        style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .25rem; --bs-btn-font-size: .5rem;">
+        Custom button
+      </button>
+      <button #buttons type="button" class="btn btn-primary btn-sm">Small button</button>
+      <button #buttons type="button" class="btn btn-primary">Normal button</button>
+      <button #buttons type="button" class="btn btn-primary btn-lg">Large button</button>
+    </div>
+    <pre>
+  &#60;button #buttons type="button" class="btn btn-primary"
+    style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .25rem; --bs-btn-font-size: .5rem;">
+    Custom button
+  &#60;/button>
+  &#60;button #buttons type="button" class="btn btn-primary btn-sm">Small button&#60;/button>
+  &#60;button #buttons type="button" class="btn btn-primary">Normal button&#60;/button>
+  &#60;button #buttons type="button" class="btn btn-primary btn-lg">Large button&#60;/button>
+    </pre>
+    <div>
+      <button #toggle type="button" class="btn btn-primary" data-bs-toggle="button" [attr.buttonsDisabled]="false"
+        (click)="toggleBaseButtonsDisableAttr(); toggle.setAttribute('buttonsDisabled', (toggle.getAttribute('buttonsDisabled') == 'true' ? 'false' : 'true'))">
+        Toggle disable attribute of all the above button
+      </button>
+      <div>Buttons are disabled: {{toggle.getAttribute('buttonsDisabled')}}</div>
+    </div>
+    <pre>
+  <b>// template</b>
+  &#60;button type="button" class="btn btn-primary" data-bs-toggle="button" [attr.buttonsDisabled]="false"
+      (click)="toggleBaseButtonsDisableAttr(); toggle.setAttribute('buttonsDisabled', (toggle.getAttribute('buttonsDisabled') == 'true' ? 'false' : 'true'))">
+    Toggle disable attribute of all the above button
+  &#60;/button>
+  &#60;div>Buttons are disabled: &#123; &#123;toggle.getAttribute('aria-pressed') || false}}&#60;/div>
+
+  <b>// class</b>
+  @ViewChildren('buttons') baseButtons!: QueryList&#60;ElementRef>;
+
+  toggleBaseButtonsDisableAttr() &#123;
+    this.baseButtons.forEach(button => &#123;
+      button.nativeElement.disabled = !button.nativeElement.disabled;
+    })
+  }
+    </pre>
   </ul>
 </div>
 
 <div>
   <h3 #input data-anchor="input">Input</h3>
   <ul>
-    <li>validation?</li>
-  </ul>
-</div>
+    <li>Floating label
+      <ul>
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com"
+                  value="test@example.com">
+                <label for="floatingInput">Email address</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input #password type="password" class="form-control" id="floatingPassword" placeholder="Password"
+                  value="12345">
+                <label for="floatingPassword">Password</label>
+              </div>
+              <div class="form-check form-switch mb-3">
+                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"
+                  (change)="password.getAttribute('type') === 'password' ? password.setAttribute('type', 'text') : password.setAttribute('type', 'password')">
+                <label class="form-check-label" for="flexSwitchCheckDefault">
+                  Field type: {{password.getAttribute('type')}}
+                </label>
+              </div>
+              <div class="form-floating mb-3">
+                <textarea class="form-control is-invalid" placeholder="Leave a comment here"
+                  id="floatingTextarea"></textarea>
+                <label for="floatingTextarea">Details</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="floatingInputDisabled" placeholder="name@example.com"
+                  value="Magyarország" disabled>
+                <label for="floatingInputDisabled">Country</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <pre>
+  &#60;div class="form-floating mb-3">
+    &#60;input type="email" class="form-control" id="floatingInput" placeholder="name@example.com"
+      value="test@example.com">
+    &#60;label for="floatingInput">Email address&#60;/label>
+  &#60;/div>
 
-<div>
-  <h3 #select data-anchor="select">Select</h3>
-  <ul>
-    <li></li>
+  &#60;div class="form-floating mb-3">
+    &#60;input #password type="password" class="form-control" id="floatingPassword" placeholder="Password"
+      value="12345">
+    &#60;label for="floatingPassword">Password&#60;/label>
+  &#60;/div>
+
+  &#60;div class="form-check form-switch mb-3">
+    &#60;input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"
+      (change)="password.getAttribute('type') === 'password' ? password.setAttribute('type', 'text') : password.setAttribute('type', 'password')">
+    &#60;label class="form-check-label" for="flexSwitchCheckDefault">
+      Field type: &#123; &#123;password.getAttribute('type')}}
+    &#60;/label>
+  &#60;/div>
+
+  // így is megoldható az input mező típusának változásai
+
+  &#60;div class="form-floating mb-3">
+    &#60;input #password type="password" class="form-control" id="floatingPassword" placeholder="Password"
+      value="12345" [attr.type]="passwordToggle.checked ? 'text' : 'password'">
+    &#60;label for="floatingPassword">Password&#60;/label>
+  &#60;/div>
+  &#60;div class="form-check form-switch mb-3">
+    &#60;input #passwordToggle class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+    &#60;label class="form-check-label" for="flexSwitchCheckDefault">
+      Field type: &#123; &#123; passwordToggle.checked ? 'text' : 'password' }}
+    &#60;/label>
+  &#60;/div>
+  
+  // 
+
+  &#60;div class="form-floating mb-3">
+    &#60;textarea class="form-control is-invalid" placeholder="Leave a comment here"
+      id="floatingTextarea">&#60;/textarea>
+    &#60;label for="floatingTextarea">Details&#60;/label>
+  &#60;/div>
+
+  &#60;div class="form-floating mb-3">
+    &#60;input type="email" class="form-control" id="floatingInputDisabled" placeholder="name@example.com"
+      value="Magyarország" disabled>
+    &#60;label for="floatingInputDisabled">Country&#60;/label>
+  &#60;/div>
+        </pre>
+      </ul>
+    </li>
+    <li>Input group
+      <ul>
+        <li>Az input mezők variálhatósága elég sokrétű, ha grouping-ról van szó</li>
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <div class="input-group mb-3">
+                <span class="input-group-text">@</span>
+                <div class="form-floating">
+                  <input type="text" class="form-control" id="floatingInputGroup1" placeholder="Test field 1">
+                  <label for="floatingInputGroup2">Test 1</label>
+                </div>
+              </div>
+              <div class="input-group has-validation mb-3">
+                <span class="input-group-text">#</span>
+                <div class="form-floating is-invalid">
+                  <input type="text" class="form-control is-invalid" id="floatingInputGroup2"
+                    placeholder="Test field 2">
+                  <label for="floatingInputGroup2">Test 2</label>
+                </div>
+                <div class="invalid-feedback">
+                  Constantly invalid field!
+                </div>
+              </div>
+              <div class="input-group mb-3">
+                <span class="input-group-text">Dear</span>
+                <input type="text" class="form-control" placeholder="First name" value="Elon">
+                <span class="input-group-text">Revee</span>
+                <input type="text" class="form-control" placeholder="Last name" value="Musk">
+                <span class="input-group-text">!</span>
+              </div>
+              <div class="input-group mb-3">
+                <span class="input-group-text">This is a textarea</span>
+                <textarea class="form-control"></textarea>
+              </div>
+              <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Small</span>
+                <input type="text" class="form-control" aria-label="Sizing example input"
+                  aria-describedby="inputGroup-sizing-sm">
+              </div>
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default">Default</span>
+                <input type="text" class="form-control" aria-label="Sizing example input"
+                  aria-describedby="inputGroup-sizing-default">
+              </div>
+              <div class="input-group input-group-lg mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-lg">Large</span>
+                <input type="text" class="form-control" aria-label="Sizing example input"
+                  aria-describedby="inputGroup-sizing-lg">
+              </div>
+              <div class="input-group mb-3">
+                <span class="input-group-text">Field 1 & 2</span>
+                <input type="text" aria-label="Field 1" class="form-control">
+                <input type="text" aria-label="Field 2" class="form-control">
+              </div>
+              <div class="input-group mb-3">
+                <button class="btn btn-outline-secondary" type="button" (click)="inputBetweenButtons.value = 'Filled'">
+                  fill
+                </button>
+                <input #inputBetweenButtons type="text" class="form-control" placeholder="">
+                <button class="btn btn-outline-secondary" type="button" (click)="inputBetweenButtons.value = ''">
+                  clear
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <pre>
+  &#60;div class="input-group mb-3">
+    &#60;span class="input-group-text">@&#60;/span>
+    &#60;div class="form-floating">
+      &#60;input type="text" class="form-control" id="floatingInputGroup1" placeholder="Test field 1">
+      &#60;label for="floatingInputGroup2">Test 1&#60;/label>
+    &#60;/div>
+  &#60;/div>
+
+  &#60;div class="input-group has-validation mb-3">
+    &#60;span class="input-group-text">#&#60;/span>
+    &#60;div class="form-floating is-invalid">
+      &#60;input type="text" class="form-control is-invalid" id="floatingInputGroup2"
+        placeholder="Test field 2">
+      &#60;label for="floatingInputGroup2">Test 2&#60;/label>
+    &#60;/div>
+    &#60;div class="invalid-feedback">
+      Constantly invalid field!
+    &#60;/div>
+  &#60;/div>
+
+  &#60;div class="input-group mb-3">
+    &#60;span class="input-group-text">Dear&#60;/span>
+    &#60;input type="text" class="form-control" placeholder="First name" value="Elon">
+    &#60;span class="input-group-text">Revee&#60;/span>
+    &#60;input type="text" class="form-control" placeholder="Last name" value="Musk">
+    &#60;span class="input-group-text">!&#60;/span>
+  &#60;/div>
+
+  &#60;div class="input-group mb-3">
+    &#60;span class="input-group-text">This is a textarea&#60;/span>
+    &#60;textarea class="form-control">&#60;/textarea>
+  &#60;/div>
+
+  &#60;div class="input-group input-group-sm mb-3">
+    &#60;span class="input-group-text" id="inputGroup-sizing-sm">Small&#60;/span>
+    &#60;input type="text" class="form-control" aria-label="Sizing example input"
+      aria-describedby="inputGroup-sizing-sm">
+  &#60;/div>
+
+  &#60;div class="input-group mb-3">
+    &#60;span class="input-group-text" id="inputGroup-sizing-default">Default&#60;/span>
+    &#60;input type="text" class="form-control" aria-label="Sizing example input"
+      aria-describedby="inputGroup-sizing-default">
+  &#60;/div>
+
+  &#60;div class="input-group input-group-lg mb-3">
+    &#60;span class="input-group-text" id="inputGroup-sizing-lg">Large&#60;/span>
+    &#60;input type="text" class="form-control" aria-label="Sizing example input"
+      aria-describedby="inputGroup-sizing-lg">
+  &#60;/div>
+
+  &#60;div class="input-group mb-3">
+    &#60;span class="input-group-text">Field 1 & 2&#60;/span>
+    &#60;input type="text" aria-label="Field 1" class="form-control">
+    &#60;input type="text" aria-label="Field 2" class="form-control">
+  &#60;/div>
+
+  &#60;div class="input-group mb-3">
+    &#60;button class="btn btn-outline-secondary" type="button" (click)="inputBetweenButtons.value = 'Filled'">
+      fill
+    &#60;/button>
+    &#60;input #inputBetweenButtons type="text" class="form-control" placeholder="">
+    &#60;button class="btn btn-outline-secondary" type="button" (click)="inputBetweenButtons.value = ''">
+      clear
+    &#60;/button>
+  &#60;/div>
+        </pre>
+      </ul>
+    </li>
+    <li>Select
+      <ul>
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <div class="form-floating mb-3">
+                <select class="form-select form-select-sm" id="floatingSelect">
+                  <option selected>Select a city</option>
+                  <option value="debrecen">Debrecen</option>
+                  <option value="kecskemet">Kecskemét</option>
+                  <option value="budapest">Budapest</option>
+                </select>
+                <label for="floatingSelect">City</label>
+              </div>
+              <div class="form-floating mb-3">
+                <select class="form-select" id="floatingSelect">
+                  <option selected>Select a city</option>
+                  <option value="debrecen">Debrecen</option>
+                  <option value="kecskemet">Kecskemét</option>
+                  <option value="budapest">Budapest</option>
+                </select>
+                <label for="floatingSelect">City</label>
+              </div>
+              <div class="form-floating mb-3">
+                <select class="form-select form-select-lg" id="floatingSelect">
+                  <option selected>Select a city</option>
+                  <option value="debrecen">Debrecen</option>
+                  <option value="kecskemet">Kecskemét</option>
+                  <option value="budapest">Budapest</option>
+                </select>
+                <label for="floatingSelect">City</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <pre>
+  &#60;div class="form-floating mb-3">
+    &#60;select class="form-select form-select-sm" id="floatingSelect">
+      &#60;option selected>Select a city&#60;/option>
+      &#60;option value="debrecen">Debrecen&#60;/option>
+      &#60;option value="kecskemet">Kecskemét&#60;/option>
+      &#60;option value="budapest">Budapest&#60;/option>
+    &#60;/select>
+    &#60;label for="floatingSelect">City&#60;/label>
+  &#60;/div>
+
+  &#60;div class="form-floating mb-3">
+    &#60;select class="form-select" id="floatingSelect">
+      &#60;option selected>Select a city&#60;/option>
+      &#60;option value="debrecen">Debrecen&#60;/option>
+      &#60;option value="kecskemet">Kecskemét&#60;/option>
+      &#60;option value="budapest">Budapest&#60;/option>
+    &#60;/select>
+    &#60;label for="floatingSelect">City&#60;/label>
+  &#60;/div>
+
+  &#60;div class="form-floating mb-3">
+    &#60;select class="form-select form-select-lg" id="floatingSelect">
+      &#60;option selected>Select a city&#60;/option>
+      &#60;option value="debrecen">Debrecen&#60;/option>
+      &#60;option value="kecskemet">Kecskemét&#60;/option>
+      &#60;option value="budapest">Budapest&#60;/option>
+    &#60;/select>
+    &#60;label for="floatingSelect">City&#60;/label>
+  &#60;/div>
+        </pre>
+      </ul>
+    </li>
+
+    <li>Checkbox
+      <ul>
+        <br>
+        <div class="form-check mb-3">
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+          <label class="form-check-label" for="flexCheckChecked">
+            Checked checkbox
+          </label>
+        </div>
+        <div class="form-check mb-3">
+          <input #indeterminate class="form-check-input" type="checkbox" value="" id="flexCheckIndeterminate"
+            (click)="indeterminateCheckboxChange($event)">
+          <label class="form-check-label" for="flexCheckIndeterminate">
+            Indeterminate checkbox
+          </label>
+        </div>
+        <div class="form-check mb-3">
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckDisabled" disabled>
+          <label class="form-check-label" for="flexCheckDisabled">
+            Disabled checkbox
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" checked>
+          <label class="form-check-label" for="inlineCheckbox1">Inline 1</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+          <label class="form-check-label" for="inlineCheckbox2">Inline 2</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" disabled>
+          <label class="form-check-label" for="inlineCheckbox3">Inline 3</label>
+        </div>
+        <pre>
+          <b>// template</b>
+  &#60;div class="form-check mb-3">
+    &#60;input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+    &#60;label class="form-check-label" for="flexCheckChecked">
+      Checked checkbox
+    &#60;/label>
+  &#60;/div>
+
+  &#60;div class="form-check mb-3">
+    &#60;input #indeterminate class="form-check-input" type="checkbox" value="" id="flexCheckIndeterminate"
+      (click)="indeterminateCheckboxChange($event)">
+    &#60;label class="form-check-label" for="flexCheckIndeterminate">
+      Indeterminate checkbox
+    &#60;/label>
+  &#60;/div>
+
+  &#60;div class="form-check mb-3">
+    &#60;input class="form-check-input" type="checkbox" value="" id="flexCheckDisabled" disabled>
+    &#60;label class="form-check-label" for="flexCheckDisabled">
+      Disabled checkbox
+    &#60;/label>
+  &#60;/div>
+
+  &#60;div class="form-check form-check-inline">
+    &#60;input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" checked>
+    &#60;label class="form-check-label" for="inlineCheckbox1">Inline 1&#60;/label>
+  &#60;/div>
+  &#60;div class="form-check form-check-inline">
+    &#60;input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+    &#60;label class="form-check-label" for="inlineCheckbox2">Inline 2&#60;/label>
+  &#60;/div>
+  &#60;div class="form-check form-check-inline">
+    &#60;input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" disabled>
+    &#60;label class="form-check-label" for="inlineCheckbox3">Inline 3&#60;/label>
+  &#60;/div>
+
+  <b>// class</b>
+  @ViewChild('indeterminate') indeterminate!: ElementRef;
+  state: 'unchecked' | 'indeterminate' | 'checked' = 'unchecked';
+
+  ...
+
+  indeterminateCheckboxChange(e: any) &#123;
+    if (this.state === 'unchecked') &#123;
+      this.state = 'indeterminate';
+      this.indeterminate.nativeElement.indeterminate = true;
+      this.indeterminate.nativeElement.checked = false;
+    } else if (this.state === 'indeterminate') &#123;
+      this.state = 'checked';
+      this.indeterminate.nativeElement.indeterminate = false;
+      this.indeterminate.nativeElement.checked = true;
+    } else &#123; // this.state === 'checked'
+      this.state = 'unchecked';
+      this.indeterminate.nativeElement.indeterminate = false;
+      this.indeterminate.nativeElement.checked = false;
+    }
+  }
+        </pre>
+        <li>A change event esetében minden kattintás automatikusan false-ra állítja az e.target.indetermined értékét
+          <ul>
+            <li>Ezért a kezelésére click esemény használata javasolt</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li>Radio
+      <ul>
+        <div class="form-check form-check-reverse">
+          <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+          <label class="form-check-label" for="exampleRadios1">
+            First
+          </label>
+        </div>
+        <div class="form-check form-check-reverse">
+          <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+          <label class="form-check-label" for="exampleRadios2">
+            Second
+          </label>
+        </div>
+        <div class="form-check form-check-reverse">
+          <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3"
+            disabled>
+          <label class="form-check-label" for="exampleRadios3">
+            Third
+          </label>
+        </div>
+        <div style="position: relative;">
+          <input type="radio" class="btn-check" name="options-base" id="option5" autocomplete="off" checked>
+          <label class="btn btn-outline-secondary me-1" for="option5">Option 1</label>
+
+          <input type="radio" class="btn-check" name="options-base" id="option6" autocomplete="off">
+          <label class="btn btn-outline-secondary me-1" for="option6">Option 2</label>
+
+          <input type="radio" class="btn-check" name="options-base" id="option7" autocomplete="off">
+          <label class="btn btn-outline-secondary me-1" for="option7">Option 3</label>
+
+          <input type="radio" class="btn-check" name="options-base" id="option8" autocomplete="off">
+          <label class="btn btn-outline-secondary me-1" for="option8">Option 4</label>
+        </div>
+        <pre>
+  &#60;div class="form-check form-check-reverse">
+    &#60;input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+    &#60;label class="form-check-label" for="exampleRadios1">
+      First
+    &#60;/label>
+  &#60;/div>
+  &#60;div class="form-check form-check-reverse">
+    &#60;input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+    &#60;label class="form-check-label" for="exampleRadios2">
+      Second
+    &#60;/label>
+  &#60;/div>
+  &#60;div class="form-check form-check-reverse">
+    &#60;input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3"
+      disabled>
+    &#60;label class="form-check-label" for="exampleRadios3">
+      Third
+    &#60;/label>
+  &#60;/div>
+  &#60;div style="position: relative;">
+    &#60;input type="radio" class="btn-check" name="options-base" id="option5" autocomplete="off" checked>
+    &#60;label class="btn btn-outline-secondary me-1" for="option5">Option 1&#60;/label>
+
+    &#60;input type="radio" class="btn-check" name="options-base" id="option6" autocomplete="off">
+    &#60;label class="btn btn-outline-secondary me-1" for="option6">Option 2&#60;/label>
+
+    &#60;input type="radio" class="btn-check" name="options-base" id="option7" autocomplete="off">
+    &#60;label class="btn btn-outline-secondary me-1" for="option7">Option 3&#60;/label>
+
+    &#60;input type="radio" class="btn-check" name="options-base" id="option8" autocomplete="off">
+    &#60;label class="btn btn-outline-secondary me-1" for="option8">Option 4&#60;/label>
+  &#60;/div>
+        </pre>
+      </ul>
+    </li>
+    <li>Range
+      <ul>
+        <label for="range" class="form-label">Range</label>
+        <input #range type="range" class="form-range" min="0" max="5" value="2" id="range">
+        <div style="display: grid; grid-template-columns: auto 1fr auto; justify-items: center;">
+          <span>{{range.min}}</span>
+          <span class="badge rounded-pill text-bg-info">{{range.value}}</span>
+          <span>{{range.max}}</span>
+        </div>
+        <pre>
+  &#60;label for="range" class="form-label">Range&#60;/label>
+  &#60;input #range type="range" class="form-range" min="0" max="5" value="2" id="range">
+  &#60;div style="display: grid; grid-template-columns: auto 1fr auto; justify-items: center;">
+      &#60;span>&#123; &#123;range.min}}&#60;/span>
+      &#60;span class="badge rounded-pill text-bg-info">&#123; &#123;range.value}}&#60;/span>
+      &#60;span>&#123; &#123;range.max}}&#60;/span>
+  &#60;/div>
+        </pre>
+      </ul>
+    </li>
+    <li>Validation
+      <ul>
+        <br>
+        <form class="row g-3 needs-validation" [ngClass]="{'was-validated': formWasValidated}" novalidate
+          (submit)="formSubmit($event)">
+          <div class="col-12 col-md-4">
+            <label for="validationCustom02" class="form-label">Last name</label>
+            <input type="text" class="form-control" id="validationCustom02" value="Kenesei" required>
+            <div class="valid-feedback">
+              Looks good!
+            </div>
+            <div class="invalid-feedback">
+              Last name is missing!
+            </div>
+          </div>
+          <div class="col-12 col-md-4">
+            <label for="validationCustom01" class="form-label">First name</label>
+            <input type="text" class="form-control" id="validationCustom01" value="Árpád" required>
+            <div class="valid-feedback">
+              Looks good!
+            </div>
+            <div class="invalid-feedback">
+              First name is missing!
+            </div>
+          </div>
+          <div class="col-12 col-md-4">
+            <label for="validationCustomUsername" class="form-label">Username</label>
+            <div class="input-group has-validation">
+              <span class="input-group-text" id="inputGroupPrepend">@</span>
+              <input type="text" class="form-control" id="validationCustomUsername" required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div class="invalid-feedback">
+                Username is missing!
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-3">
+            <label for="validationCustom05" class="form-label">Zip</label>
+            <input type="text" class="form-control" id="validationCustom05" required>
+            <div class="valid-feedback">
+              Looks good!
+            </div>
+            <div class="invalid-feedback">
+              ZIP is missing!
+            </div>
+          </div>
+          <div class="col-12 col-md-3">
+            <label for="validationCustom04" class="form-label">City</label>
+            <select class="form-select" id="validationCustom04" required>
+              <option selected disabled value="">Choose...</option>
+              <option>Budapest</option>
+              <option>Pécs</option>
+              <option>Debrecen</option>
+              <option>Kecskemét</option>
+              <option>Sopron</option>
+            </select>
+            <div class="valid-feedback">
+              Looks good!
+            </div>
+            <div class="invalid-feedback">
+              City is missing!
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <label for="validationCustom03" class="form-label">Address</label>
+            <input type="text" class="form-control" id="validationCustom03" required>
+            <div class="valid-feedback">
+              Looks good!
+            </div>
+            <div class="invalid-feedback">
+              Address is missing!
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+              <label class="form-check-label" for="invalidCheck">
+                Agree to terms and conditions
+              </label>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div class="invalid-feedback">
+                You must agree!
+              </div>
+            </div>
+          </div>
+          <div class="col-12 text-end">
+            <button class="btn btn-primary" type="submit">Submit form</button>
+          </div>
+        </form>
+        <pre>
+  <b>// template</b>
+  &#60;form class="row g-3 needs-validation" [ngClass]="&#123;'was-validated': formWasValidated}" novalidate
+      (submit)="formSubmit($event)">
+    &#60;div class="col-12 col-md-4">
+      &#60;label for="validationCustom02" class="form-label">Last name&#60;/label>
+      &#60;input type="text" class="form-control" id="validationCustom02" value="Kenesei" required>
+      &#60;div class="valid-feedback">
+        Looks good!
+      &#60;/div>
+      &#60;div class="invalid-feedback">
+        Last name is missing!
+      &#60;/div>
+    &#60;/div>
+
+    &#60;div class="col-12 col-md-4">
+      &#60;label for="validationCustom01" class="form-label">First name&#60;/label>
+      &#60;input type="text" class="form-control" id="validationCustom01" value="Árpád" required>
+      &#60;div class="valid-feedback">
+        Looks good!
+      &#60;/div>
+      &#60;div class="invalid-feedback">
+        First name is missing!
+      &#60;/div>
+    &#60;/div>
+
+    &#60;div class="col-12 col-md-4">
+      &#60;label for="validationCustomUsername" class="form-label">Username&#60;/label>
+      &#60;div class="input-group has-validation">
+        &#60;span class="input-group-text" id="inputGroupPrepend">@&#60;/span>
+        &#60;input type="text" class="form-control" id="validationCustomUsername" required>
+        &#60;div class="valid-feedback">
+          Looks good!
+        &#60;/div>
+        &#60;div class="invalid-feedback">
+          Username is missing!
+        &#60;/div>
+      &#60;/div>
+    &#60;/div>
+
+    &#60;div class="col-12 col-md-3">
+      &#60;label for="validationCustom05" class="form-label">Zip&#60;/label>
+      &#60;input type="text" class="form-control" id="validationCustom05" required>
+      &#60;div class="valid-feedback">
+        Looks good!
+      &#60;/div>
+      &#60;div class="invalid-feedback">
+        ZIP is missing!
+      &#60;/div>
+    &#60;/div>
+
+    &#60;div class="col-12 col-md-3">
+      &#60;label for="validationCustom04" class="form-label">City&#60;/label>
+      &#60;select class="form-select" id="validationCustom04" required>
+        &#60;option selected disabled value="">Choose...&#60;/option>
+        &#60;option>Budapest&#60;/option>
+        &#60;option>Pécs&#60;/option>
+        &#60;option>Debrecen&#60;/option>
+        &#60;option>Kecskemét&#60;/option>
+        &#60;option>Sopron&#60;/option>
+      &#60;/select>
+      &#60;div class="valid-feedback">
+        Looks good!
+      &#60;/div>
+      &#60;div class="invalid-feedback">
+        City is missing!
+      &#60;/div>
+    &#60;/div>
+
+    &#60;div class="col-12 col-md-6">
+      &#60;label for="validationCustom03" class="form-label">Address&#60;/label>
+      &#60;input type="text" class="form-control" id="validationCustom03" required>
+      &#60;div class="valid-feedback">
+        Looks good!
+      &#60;/div>
+      &#60;div class="invalid-feedback">
+        Address is missing!
+      &#60;/div>
+    &#60;/div>
+
+    &#60;div class="col-12">
+      &#60;div class="form-check">
+        &#60;input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+        &#60;label class="form-check-label" for="invalidCheck">
+          Agree to terms and conditions
+        &#60;/label>
+        &#60;div class="valid-feedback">
+          Looks good!
+        &#60;/div>
+        &#60;div class="invalid-feedback">
+          You must agree!
+        &#60;/div>
+      &#60;/div>
+    &#60;/div>
+
+    &#60;div class="col-12 text-end">
+      &#60;button class="btn btn-primary" type="submit">Submit form&#60;/button>
+    &#60;/div>
+  &#60;/form>
+
+  <b>// class</b>
+  formWasValidated: boolean = false;
+
+  ...
+
+  formSubmit(e: any) 
+    e.preventDefault();
+    this.formWasValidated = true;
+  }
+        </pre>
+        <li>A novalidate kikapcsolja az alapértelmezett HTML validációt</li>
+        <li>A HTML form validációt a CSS két pszeudo-osztálya, :invalid és :valid kezeli, amelyek az &#60;input>,
+          &#60;select> és &#60;textarea> elemekre vonatkoznak
+          <ul>
+            <li>Ezek az osztályok akkor érvényesek, ha a &#60;form> tartalmazza a .was-validated osztályt</li>
+            <li>Ez megakadályozza, hogy az űrlap mezők már az oldal betöltésekor érvénytelennek tűnjenek</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
   </ul>
 </div>
 
 <div>
   <h3 #breakpoints data-anchor="breakpoints">Breakpoints</h3>
   <ul>
+    <li>A breakpointok olyan szélességi értékek, amelyeken az oldal elrendezése megváltozik, hogy reszponzív maradjon
+      különböző képernyőméreteken</li>
+    <br>
+    <table style="border-collapse: collapse; width: 100%;">
+      <thead>
+        <tr>
+          <th>Breakpoint</th>
+          <th>Class infix</th>
+          <th>Mérethatár</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Extra small</td>
+          <td>Nincs</td>
+          <td>&lt;576px</td>
+        </tr>
+        <tr>
+          <td>Small</td>
+          <td>sm</td>
+          <td>≥576px</td>
+        </tr>
+        <tr>
+          <td>Medium</td>
+          <td>md</td>
+          <td>≥768px</td>
+        </tr>
+        <tr>
+          <td>Large</td>
+          <td>lg</td>
+          <td>≥992px</td>
+        </tr>
+        <tr>
+          <td>Extra large</td>
+          <td>xl</td>
+          <td>≥1200px</td>
+        </tr>
+        <tr>
+          <td>Extra extra large</td>
+          <td>xxl</td>
+          <td>≥1400px</td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <li>A reszponzív viselkedés biztosítására a Bootstrap grid osztályai (pl. col-6, col-lg-4) automatikusan
+      alkalmazkodnak a megadott breakpointokhoz</li>
+    <li>a Bootstrap Grid rendszer és a Flexbox együttműködnek
+      <ul>
+        <li>A Bootstrap rácsrendszere a Flexbox-ra épül, így a breakpointokat használhatjuk a különböző flex
+          tulajdonságok módosítására</li>
+        <pre>
+  &#60;div class="d-flex flex-column flex-md-row">
+    &#60;div class="p-2">Elem 1&#60;/div>
+    &#60;div class="p-2">Elem 2&#60;/div>
+    &#60;div class="p-2">Elem 3&#60;/div>
+  &#60;/div>
+        </pre>
+        <li>Mobilon oszlopos az elrendezés (flex-column), Közepes kijelzőtől (md, és nagyobb) pedig soros (flex-md-row)
+        </li>
+      </ul>
+    </li>
+    <br>
+    <div class="my-box"></div>
+    <pre>
+  <b>// template</b>
+  &#60;div class="my-box">&#60;/div>
+
+  <b>// SCSS</b>
+  @import "bootstrap/scss/functions"; // Bootstrap változók miatt szükséges
+  @import "bootstrap/scss/variables"; // Breakpoint változók miatt szükséges
+  @import "bootstrap/scss/mixins";    // Mixinek használatához szükséges
+
+  .my-box &#123;
+      display: block;
+      width: 100px;
+      height: 100px;
+      background: lightblue; // alapértelmezett
+
+      @include media-breakpoint-up(sm) &#123; // ≥576px
+          background: lightgreen;
+      }
+
+      @include media-breakpoint-up(md) &#123; // ≥768px
+          background: lightcoral;
+      }
+
+      @include media-breakpoint-up(lg) &#123; // ≥992px
+          background: lightgoldenrodyellow;
+      }
+  }
+    </pre>
     <li>flexbox?</li>
   </ul>
 </div>
@@ -403,27 +1381,640 @@
 <div>
   <h3 #navbar data-anchor="navbar">Navbar</h3>
   <ul>
-    <li></li>
+    <li>Egy reszponzív navigációs sáv, amely különböző eszközméretekhez képes igazodni</li>
+    <br>
+    <nav class="navbar  navbar-dark bg-primary" [ngClass]="{'navbar-expand-lg': navbarExpand, 'fixed-top': fixedToTop}">
+      <div class="container-fluid">
+        <!-- LOGO -->
+        <a class="navbar-brand" href="javascript:void(0)">Site</a>
+
+        <!-- HAMBURGER MENU -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- NAVIGATION ITEMS -->
+        <div class="collapse navbar-collapse bg-dark" id="navbarNav">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="javascript:void(0)">Szolgáltatások</a>
+            </li>
+
+            <!-- DROPDOWN -->
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="javascript:void(0)" role="button" data-bs-toggle="dropdown">
+                Továbbiak
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="javascript:void(0)">Rólunk</a></li>
+                <li><a class="dropdown-item" href="javascript:void(0)">Kapcsolat</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="javascript:void(0)">Segítség</a></li>
+              </ul>
+            </li>
+          </ul>
+
+          <!-- SEARCH -->
+          <form class="d-flex me-3 mb-md-3 mb-lg-0">
+            <input class="form-control me-2" type="search" placeholder="Keresés">
+            <button class="btn btn-light" type="submit"><i class="bi bi-search"></i></button>
+          </form>
+
+          <!-- LOGIN / REGISTER -->
+          <a href="javascript:void(0)" class="btn btn-outline-light me-2 mb-md-2 mb-lg-0">
+            <i class="bi bi-person"></i> Bejelentkezés
+          </a>
+          <a href="javascript:void(0)" class="btn btn-warning me-2 mb-md-2 mb-lg-0">
+            <i class="bi bi-person-plus"></i> Regisztráció
+          </a>
+        </div>
+      </div>
+    </nav>
+    <br>
+    <div class="form-check form-switch">
+      <input class="form-check-input" type="checkbox" role="switch" id="expandSwitcher" [(ngModel)]="navbarExpand">
+      <label class="form-check-label" for="expandSwitcher">
+        nav.navbar-expand-lg: {{navbarExpand}}
+      </label>
+    </div>
+    <div class="form-check form-switch">
+      <input class="form-check-input" type="checkbox" role="switch" id="expandSwitcher" [(ngModel)]="fixedToTop">
+      <label class="form-check-label" for="expandSwitcher">
+        nav.fixed-top: {{fixedToTop}}
+      </label>
+    </div>
+    <pre>
+  <b>// template</b>
+  &#60;nav class="navbar  navbar-dark bg-primary" [ngClass]="&#123;'navbar-expand-lg': navbarExpand, 'fixed-top': fixedToTop}">
+    &#60;div class="container-fluid">
+      &#60;!-- LOGO -->
+      &#60;a class="navbar-brand" href="javascript:void(0)">Site&#60;/a>
+
+      &#60;!-- HAMBURGER MENU -->
+      &#60;button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        &#60;span class="navbar-toggler-icon">&#60;/span>
+      &#60;/button>
+
+      &#60;!-- NAVIGATION ITEMS -->
+      &#60;div class="collapse navbar-collapse bg-dark" id="navbarNav">
+        &#60;ul class="navbar-nav me-auto">
+          &#60;li class="nav-item">
+            &#60;a class="nav-link" href="javascript:void(0)">Szolgáltatások&#60;/a>
+          &#60;/li>
+
+          &#60;!-- DROPDOWN -->
+          &#60;li class="nav-item dropdown">
+            &#60;a class="nav-link dropdown-toggle" href="javascript:void(0)" role="button" data-bs-toggle="dropdown">
+              Továbbiak
+            &#60;/a>
+            &#60;ul class="dropdown-menu">
+              &#60;li>&#60;a class="dropdown-item" href="javascript:void(0)">Rólunk&#60;/a>&#60;/li>
+              &#60;li>&#60;a class="dropdown-item" href="javascript:void(0)">Kapcsolat&#60;/a>&#60;/li>
+              &#60;li>
+                &#60;hr class="dropdown-divider">
+              &#60;/li>
+              &#60;li>&#60;a class="dropdown-item" href="javascript:void(0)">Segítség&#60;/a>&#60;/li>
+            &#60;/ul>
+          &#60;/li>
+        &#60;/ul>
+
+        &#60;!-- SEARCH -->
+        &#60;form class="d-flex me-3 mb-md-3 mb-lg-0">
+          &#60;input class="form-control me-2" type="search" placeholder="Keresés">
+          &#60;button class="btn btn-light" type="submit">&#60;i class="bi bi-search">&#60;/i>&#60;/button>
+        &#60;/form>
+
+        &#60;!-- LOGIN / REGISTER -->
+        &#60;a href="javascript:void(0)" class="btn btn-outline-light me-2 mb-md-2 mb-lg-0">
+          &#60;i class="bi bi-person">&#60;/i> Bejelentkezés
+        &#60;/a>
+        &#60;a href="javascript:void(0)" class="btn btn-warning me-2 mb-md-2 mb-lg-0">
+          &#60;i class="bi bi-person-plus">&#60;/i> Regisztráció
+        &#60;/a>
+      &#60;/div>
+    &#60;/div>
+  &#60;/nav>
+
+  &#60;div class="form-check form-switch">
+    &#60;input class="form-check-input" type="checkbox" role="switch" id="expandSwitcher" [(ngModel)]="navbarExpand">
+    &#60;label class="form-check-label" for="expandSwitcher">
+      nav.navbar-expand-lg: &#123; &#123;navbarExpand}}
+    &#60;/label>
+  &#60;/div>
+  &#60;div class="form-check form-switch">
+    &#60;input class="form-check-input" type="checkbox" role="switch" id="expandSwitcher" [(ngModel)]="fixedToTop">
+    &#60;label class="form-check-label" for="expandSwitcher">
+      nav.fixed-top: &#123; &#123;fixedToTop}}
+    &#60;/label>
+  &#60;/div>
+
+  <b>// class</b>
+  navbarExpand: boolean = true;
+  fixedToTop: boolean = false;
+    </pre>
   </ul>
 </div>
 
 <div>
   <h3 #breadcrumb data-anchor="breadcrumb">Breadcrumb</h3>
   <ul>
-    <li></li>
+    <li>Navigációs segédeszköz, amely a felhasználó jelenlegi helyzetét mutatja az oldalon hierarchikus módon</li>
+    <li>Segít a látogatónak megérteni, hol van az oldalon</li>
+    <li>A keresőmotorok is érzékelik, és segíthet az oldalak hierarchiájának feltérképezésében</li>
+    <li>A felhasználók gyorsan visszaléphetnek</li>
+    <br>
+    <nav aria-label="breadcrumb" style="--bs-breadcrumb-divider: '>';" class="bg-warning p-1">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item active">Kezdőlap</li>
+      </ol>
+    </nav>
+    <br>
+    <nav aria-label="breadcrumb" style="--bs-breadcrumb-divider: '>';" class="bg-warning p-1">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="javascript:void(0)">Kezdőlap</a></li>
+        <li class="breadcrumb-item active">Szolgáltatások</li>
+      </ol>
+    </nav>
+    <br>
+    <nav aria-label="breadcrumb" style="--bs-breadcrumb-divider: '>';" class="bg-warning p-1">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="javascript:void(0)">Kezdőlap</a></li>
+        <li class="breadcrumb-item"><a href="javascript:void(0)">Szolgáltatások</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Szigetelés</li>
+      </ol>
+    </nav>
+    <pre>
+  &#60;nav aria-label="breadcrumb" style="--bs-breadcrumb-divider: '>';" class="bg-warning p-1">
+    &#60;ol class="breadcrumb">
+      &#60;li class="breadcrumb-item active">Kezdőlap&#60;/li>
+    &#60;/ol>
+  &#60;/nav>
+
+  &#60;nav aria-label="breadcrumb" style="--bs-breadcrumb-divider: '>';" class="bg-warning p-1">
+    &#60;ol class="breadcrumb">
+      &#60;li class="breadcrumb-item">&#60;a href="javascript:void(0)">Kezdőlap&#60;/a>&#60;/li>
+      &#60;li class="breadcrumb-item active">Szolgáltatások&#60;/li>
+    &#60;/ol>
+  &#60;/nav>
+
+  &#60;nav aria-label="breadcrumb" style="--bs-breadcrumb-divider: '>';" class="bg-warning p-1">
+    &#60;ol class="breadcrumb">
+      &#60;li class="breadcrumb-item">&#60;a href="javascript:void(0)">Kezdőlap&#60;/a>&#60;/li>
+      &#60;li class="breadcrumb-item">&#60;a href="javascript:void(0)">Szolgáltatások&#60;/a>&#60;/li>
+      &#60;li class="breadcrumb-item active" aria-current="page">Szigetelés&#60;/li>
+    &#60;/ol>
+  &#60;/nav>
+    </pre>
   </ul>
 </div>
 
 <div>
   <h3 #modal data-anchor="modal">Modal</h3>
   <ul>
-    <li></li>
+    <li>Előugró ablak</li>
+    <li>A modal mindig a dokumentum felett jelenik meg, ezért más elemekre nem lehet kattintani, amíg nyitva van</li>
+    <li>Amikor a modal nyitva van, a &#60;body> görgetése letiltásra kerül, így csak a modal tartalma lesz görgethető
+    </li>
+    <li>Egyszerre csak egy modal lehet nyitva, viszont megolható a modal-ok közötti váltás</li>
+    <br>
+    <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      Open modal
+    </button>
+
+    <div *ngIf="modalControl.show" class="modal fade" id="exampleModal" tabindex="-1"
+      aria-labelledby="exampleModalLabel" aria-hidden="true"
+      [attr.data-bs-backdrop]="modalControl.backdrop ? 'static' : null"
+      [attr.data-bs-keyboard]="!modalControl.backdrop">
+      <div class="modal-dialog bg-dark"
+        [ngClass]="{'modal-dialog-centered': modalControl.centered, 'modal-dialog-scrollable': modalControl.scrollable, 'modal-fullscreen': modalControl.fullscreen}">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Title</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <ng-container *ngIf="!modalControl.scrollable">
+              <h4>Body</h4>
+              <div *ngIf="modalControl.backdrop">
+                <p>A modal nem zárható be sem ESC billentyű lenyomásával, sem pedig a háttérre kattintással</p>
+              </div>
+              <hr>
+              <p>Tooltip: <a href="javascript:void(0)" data-bs-toggle="tooltip" title="Title">Hover</a> (nem működik)
+              </p>
+              <p>Popover: <button class="btn btn-secondary" data-bs-toggle="popover" title="Title"
+                  data-bs-content="Minden felett jelenik meg">Click</button> (nem működik)</p>
+            </ng-container>
+            <ng-container *ngIf="modalControl.scrollable">
+              <div class="d-flex flex-column justify-content-between" style="height: 2000px;">
+                <p>Hol gyúrnak az angyalok?</p>
+                <p>A légkondiban.</p>
+              </div>
+            </ng-container>
+          </div>
+          <div class="modal-footer justify-content-between">
+            <h5>Footer</h5>
+            <div>
+              <button type="button" class="btn btn-secondary me-1" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-check form-switch mb-3">
+      <input class="form-check-input" type="checkbox" role="switch" id="modalSwitcher1"
+        (change)="backDropChanged($event, 'backdrop')">
+      <label class="form-check-label" for="modalSwitcher1">
+        Static backdrop: {{modalControl.backdrop ? 'On' : 'Off' }}
+      </label>
+      <p><i>Lehetővé teszi, hogy a modal mögötti háttérre kattintva ne záródjon be a modal</i></p>
+    </div>
+
+    <div class="form-check form-switch mb-3">
+      <input class="form-check-input" type="checkbox" role="switch" id="modalSwitcher2"
+        (change)="backDropChanged($event, 'centered')">
+      <label class="form-check-label" for="modalSwitcher2">
+        Vertically centered: {{modalControl.centered ? 'On' : 'Off' }}
+      </label>
+      <p><i>A modal függőlegesen középre lesz igazítva</i></p>
+    </div>
+
+    <div class="form-check form-switch mb-3">
+      <input class="form-check-input" type="checkbox" role="switch" id="modalSwitcher3"
+        [(ngModel)]="modalControl.scrollable">
+      <label class="form-check-label" for="modalSwitcher3">
+        Scrollable: {{modalControl.scrollable ? 'On' : 'Off' }}
+      </label>
+      <p><i>A modal tartalma görgethetővé válik</i></p>
+    </div>
+
+    <div class="form-check form-switch mb-3">
+      <input class="form-check-input" type="checkbox" role="switch" id="modalSwitcher4"
+        [(ngModel)]="modalControl.fullscreen">
+      <label class="form-check-label" for="modalSwitcher4">
+        Fullscreen: {{modalControl.fullscreen ? 'On' : 'Off' }}
+      </label>
+      <p><i>A modal kitölti az egész képernyőt</i></p>
+    </div>
+
+    <pre>
+  <b>// template</b>
+  &#60;button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Open modal
+  &#60;/button>
+
+  &#60;div *ngIf="modalControl.show" class="modal fade" id="exampleModal" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true"
+    [attr.data-bs-backdrop]="modalControl.backdrop ? 'static' : null"
+    [attr.data-bs-keyboard]="!modalControl.backdrop">
+    &#60;div class="modal-dialog bg-dark"
+      [ngClass]="&#123;'modal-dialog-centered': modalControl.centered, 'modal-dialog-scrollable': modalControl.scrollable, 'modal-fullscreen': modalControl.fullscreen}">
+      &#60;div class="modal-content">
+        &#60;div class="modal-header">
+          &#60;h1 class="modal-title fs-5" id="exampleModalLabel">Title&#60;/h1>
+          &#60;button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">&#60;/button>
+        &#60;/div>
+        &#60;div class="modal-body">
+          &#60;ng-container *ngIf="!modalControl.scrollable">
+            &#60;h4>Body&#60;/h4>
+            &#60;div *ngIf="modalControl.backdrop">
+              &#60;p>A modal nem zárható be sem ESC billentyű lenyomásával, sem pedig a háttérre kattintással&#60;/p>
+            &#60;/div>
+            &#60;hr>
+            &#60;p>Tooltip: &#60;a href="javascript:void(0)" data-bs-toggle="tooltip" title="Title">Hover&#60;/a>&#60;/p>
+            &#60;p>Popover: &#60;button class="btn btn-secondary" data-bs-toggle="popover" title="Title"
+                data-bs-content="Minden felett jelenik meg">Click&#60;/button>&#60;/p>
+          &#60;/ng-container>
+          &#60;ng-container *ngIf="modalControl.scrollable">
+            &#60;div class="d-flex flex-column justify-content-between" style="height: 2000px;">
+              &#60;p>Hol gyúrnak az angyalok?&#60;/p>
+              &#60;p>A légkondiban.&#60;/p>
+            &#60;/div>
+          &#60;/ng-container>
+        &#60;/div>
+        &#60;div class="modal-footer justify-content-between">
+          &#60;h5>Footer&#60;/h5>
+          &#60;div>
+            &#60;button type="button" class="btn btn-secondary me-1" data-bs-dismiss="modal">Close&#60;/button>
+            &#60;button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save changes&#60;/button>
+          &#60;/div>
+        &#60;/div>
+      &#60;/div>
+    &#60;/div>
+  &#60;/div>
+
+  &#60;div class="form-check form-switch mb-3">
+    &#60;input class="form-check-input" type="checkbox" role="switch" id="modalSwitcher1"
+      (change)="backDropChanged($event, 'backdrop')">
+    &#60;label class="form-check-label" for="modalSwitcher1">
+      Static backdrop: &#123; &#123;modalControl.backdrop ? 'On' : 'Off' }}
+    &#60;/label>
+    &#60;p>&#60;i>Lehetővé teszi, hogy a modal mögötti háttérre kattintva ne záródjon be a modal&#60;/i>&#60;/p>
+  &#60;/div>
+
+  &#60;div class="form-check form-switch mb-3">
+    &#60;input class="form-check-input" type="checkbox" role="switch" id="modalSwitcher2"
+      (change)="backDropChanged($event, 'centered')">
+    &#60;label class="form-check-label" for="modalSwitcher2">
+      Vertically centered: &#123; &#123;modalControl.centered ? 'On' : 'Off' }}
+    &#60;/label>
+    &#60;p>&#60;i>A modal függőlegesen középre lesz igazítva&#60;/i>&#60;/p>
+  &#60;/div>
+
+  &#60;div class="form-check form-switch mb-3">
+    &#60;input class="form-check-input" type="checkbox" role="switch" id="modalSwitcher3"
+      [(ngModel)]="modalControl.scrollable">
+    &#60;label class="form-check-label" for="modalSwitcher3">
+      Scrollable: &#123; &#123;modalControl.scrollable ? 'On' : 'Off' }}
+    &#60;/label>
+    &#60;p>&#60;i>A modal tartalma görgethetővé válik&#60;/i>&#60;/p>
+  &#60;/div>
+
+  &#60;div class="form-check form-switch mb-3">
+    &#60;input class="form-check-input" type="checkbox" role="switch" id="modalSwitcher4"
+      [(ngModel)]="modalControl.fullscreen">
+    &#60;label class="form-check-label" for="modalSwitcher4">
+      Fullscreen: &#123; &#123;modalControl.fullscreen ? 'On' : 'Off' }}
+    &#60;/label>
+    &#60;p>&#60;i>A modal kitölti az egész képernyőt&#60;/i>&#60;/p>
+  &#60;/div>
+
+  <b>// class</b>
+  modalControl: any = &#123;
+    show: true,
+    backdrop: false,
+    centered: false,
+    scrollable: false,
+    fullscreen: false,
+  }
+
+  ...
+
+  backDropChanged(e: any, switcher: string) &#123; // erre azért van szükség, hogy "frissüljön" a modal, megkapja a megfelelő attribútumot
+    this.modalControl.show = false;
+    this.modalControl[switcher] = e.target.checked;
+    setTimeout(() => &#123;
+      this.modalControl.show = true;
+    }, 0);
+  }
+    </pre>
+    <li>A dokumentáció szerint az alábbi módon kell alkalmazni a Tooltip-et, és a Popover-t
+      <ul>
+        <pre>
+  import &#123; Tooltip } from 'bootstrap';
+  import &#123; Popover } from 'bootstrap';
+
+  ngAfterViewInit(): void &#123;
+    // Tooltip-ek aktiválása
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    const tooltipList = Array.from(tooltipTriggerList).map(tooltipTriggerEl => new Tooltip(tooltipTriggerEl));
+
+    // Popover-ek aktiválása
+    const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+    const popoverList = Array.from(popoverTriggerList).map(popoverTriggerEl => new Popover(popoverTriggerEl));
+  }
+        </pre>
+        <li>Valamiért összeakad a bootstrap.bundle.min.js-sel, és ezen kód után anomáliák keletkeznek, például nem
+          nyílik le a dropdown</li>
+        <li>Valószínűleg újra betöltődik a Bootstrap könyvtára</li>
+        <li>Ha kivesszük az angular.json-ből a bootstrap.bundle.min.js-t, akkor működik minden (de én ott akartam
+          hagyni)</li>
+        <br>
+        <img src="assets/imgs/bootstrap_error.png" width="100%">
+      </ul>
+    </li>
   </ul>
 </div>
 
 <div>
-  <h3 #input data-anchor="input">Input</h3>
+  <h3 #card data-anchor="card">Card</h3>
   <ul>
-    <li>validation?</li>
+    <li>Rugalmas komponens, amely különféle információk és tartalmak megjelenítésére szolgál</li>
+    <li>A card osztály egy dobozt hoz létre, amiben más elemeket (például képek, szövegek, gombok) helyezhetünk el</li>
+    <br>
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-md-8">
+
+          <div class="card bg-{{cardBackgroundColor}} border-{{cardBorderColor}}" style="width: 18rem;">
+            <div class="card-header">
+              <ul class="nav nav-tabs card-header-tabs">
+                <li class="nav-item">
+                  <a class="nav-link" [ngClass]="{'active': cardActivetTab === 0}" aria-current="true"
+                    (click)="cardActivetTab = 0">
+                    Tab 1
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" [ngClass]="{'active': cardActivetTab === 1}" (click)="cardActivetTab = 1">
+                    Tab 2
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" [ngClass]="{'active': cardActivetTab === 2}" (click)="cardActivetTab = 2">
+                    Tab 3
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <img *ngIf="cardImageIsUp" src="assets/imgs/process.png" class="card-img-top">
+            <div class="card-body text-{{cardBodyAlignment}}">
+              <h5 class="card-title">Card title / {{'Tab ' + (cardActivetTab + 1)}}</h5>
+              <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
+              <p class="card-text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</p>
+              <a href="javascript:void(0)" class="card-link">Card link 1</a>
+              <a href="javascript:void(0)" class="card-link">Card link 2</a>
+              <div class="d-flex justify-content-between mt-3">
+                <input #imageUp type="radio" class="btn-check" name="imageOptions" id="imageOption1" autocomplete="off"
+                  checked (change)="cardImageIsUp = true; imageUp.checked  = true">
+                <label class="btn btn-dark" for="imageOption1">Image ↑</label>
+
+                <input #imageDown type="radio" class="btn-check" name="imageOptions" id="imageOption2"
+                  autocomplete="off" (change)="cardImageIsUp = false; imageDown.checked  = true">
+                <label class="btn btn-dark" for="imageOption2">Image ↓</label>
+              </div>
+            </div>
+            <img *ngIf="!cardImageIsUp" src="assets/imgs/process.png" class="card-img-bottom">
+          </div>
+
+        </div>
+        <div class="col-12 col-md-4">
+
+          <div>
+            <div>Body alignment</div>
+            <select class="form-select mb-1" [(ngModel)]="cardBodyAlignment">
+              <option value="start">Start (default)</option>
+              <option value="center">Center</option>
+              <option value="end">End</option>
+            </select>
+          </div>
+
+          <div>Border color</div>
+          <select class="form-select mb-1" [(ngModel)]="cardBorderColor">
+            <option value="white">White (default)</option>
+            <option value="black">Black</option>
+            <option value="info">Info</option>
+            <option value="primary">Primary</option>
+            <option value="warning">Warning</option>
+          </select>
+
+          <div>Background color</div>
+          <select class="form-select mb-1" [(ngModel)]="cardBackgroundColor">
+            <option value="white">White (default)</option>
+            <option value="black">Black</option>
+            <option value="info">Info</option>
+            <option value="primary">Primary</option>
+            <option value="warning">Warning</option>
+          </select>
+
+        </div>
+      </div>
+    </div>
+    <pre>
+  <b>// template</b>
+  &#60;div class="container">
+    &#60;div class="row">
+      &#60;div class="col-12 col-md-8">
+
+        &#60;div class="card bg-&#123; &#123;cardBackgroundColor}} border-&#123; &#123;cardBorderColor}}" style="width: 18rem;">
+          &#60;div class="card-header">
+            &#60;ul class="nav nav-tabs card-header-tabs">
+              &#60;li class="nav-item">
+                &#60;a class="nav-link" [ngClass]="&#123;'active': cardActivetTab === 0}" aria-current="true"
+                  (click)="cardActivetTab = 0">
+                  Tab 1
+                &#60;/a>
+              &#60;/li>
+              &#60;li class="nav-item">
+                &#60;a class="nav-link" [ngClass]="&#123;'active': cardActivetTab === 1}" (click)="cardActivetTab = 1">
+                  Tab 2
+                &#60;/a>
+              &#60;/li>
+              &#60;li class="nav-item">
+                &#60;a class="nav-link" [ngClass]="&#123;'active': cardActivetTab === 2}" (click)="cardActivetTab = 2">
+                  Tab 3
+                &#60;/a>
+              &#60;/li>
+            &#60;/ul>
+          &#60;/div>
+          &#60;img *ngIf="cardImageIsUp" src="assets/imgs/process.png" class="card-img-top">
+          &#60;div class="card-body text-&#123; &#123;cardBodyAlignment}}">
+            &#60;h5 class="card-title">Card title / &#123; &#123;'Tab ' + (cardActivetTab + 1)}}&#60;/h5>
+            &#60;h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle&#60;/h6>
+            &#60;p class="card-text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit&#60;/p>
+            &#60;a href="javascript:void(0)" class="card-link">Card link 1&#60;/a>
+            &#60;a href="javascript:void(0)" class="card-link">Card link 2&#60;/a>
+            &#60;div class="d-flex justify-content-between mt-3">
+              &#60;input #imageUp type="radio" class="btn-check" name="imageOptions" id="imageOption1" autocomplete="off"
+                checked (change)="cardImageIsUp = true; imageUp.checked  = true">
+              &#60;label class="btn btn-dark" for="imageOption1">Image ↑&#60;/label>
+
+              &#60;input #imageDown type="radio" class="btn-check" name="imageOptions" id="imageOption2"
+                autocomplete="off" (change)="cardImageIsUp = false; imageDown.checked  = true">
+              &#60;label class="btn btn-dark" for="imageOption2">Image ↓&#60;/label>
+            &#60;/div>
+          &#60;/div>
+          &#60;img *ngIf="!cardImageIsUp" src="assets/imgs/process.png" class="card-img-bottom">
+        &#60;/div>
+
+      &#60;/div>
+      &#60;div class="col-12 col-md-4">
+
+        &#60;div>
+          &#60;div>Body alignment&#60;/div>
+          &#60;select class="form-select mb-1" [(ngModel)]="cardBodyAlignment">
+            &#60;option value="start">Start (default)&#60;/option>
+            &#60;option value="center">Center&#60;/option>
+            &#60;option value="end">End&#60;/option>
+          &#60;/select>
+        &#60;/div>
+
+        &#60;div>Border color&#60;/div>
+        &#60;select class="form-select mb-1" [(ngModel)]="cardBorderColor">
+          &#60;option value="white">White (default)&#60;/option>
+          &#60;option value="black">Black&#60;/option>
+          &#60;option value="info">Info&#60;/option>
+          &#60;option value="primary">Primary&#60;/option>
+          &#60;option value="warning">Warning&#60;/option>
+        &#60;/select>
+
+        &#60;div>Background color&#60;/div>
+        &#60;select class="form-select mb-1" [(ngModel)]="cardBackgroundColor">
+          &#60;option value="white">White (default)&#60;/option>
+          &#60;option value="black">Black&#60;/option>
+          &#60;option value="info">Info&#60;/option>
+          &#60;option value="primary">Primary&#60;/option>
+          &#60;option value="warning">Warning&#60;/option>
+        &#60;/select>
+
+      &#60;/div>
+    &#60;/div>
+  &#60;/div>
+
+  <b>// class</b>
+  cardImageIsUp: boolean = true;
+  cardActivetTab: number = 0;
+  cardBodyAlignment: string = 'start';
+  cardBackgroundColor: string = 'white';
+  cardBorderColor: string = 'white';
+
+  modalControl: any = &#123;
+    show: true,
+    backdrop: false,
+    centered: false,
+    scrollable: false,
+    fullscreen: false,
+  }
+    </pre>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      <div *ngFor="let food of foodCards" class="col col-md-6 col-lg-4">
+        <div class="card h-100">
+          <img [src]="food.img" class="card-img-top">
+          <div class="card-body">
+            <h5 class="card-title">{{food.name}}</h5>
+            <p class="card-text">{{food.details}}</p>
+          </div>
+          <div class="card-footer text-end">
+            <small class="text-body-secondary">{{food.prepTime}} perc</small>
+          </div>
+        </div>
+      </div>
+    </div>
+    <pre>
+  <b>// template</b>
+  &#60;div class="row row-cols-1 row-cols-md-3 g-4">
+    &#60;div *ngFor="let food of foodCards" class="col col-md-6 col-lg-4">
+      &#60;div class="card h-100">
+        &#60;img [src]="food.img" class="card-img-top">
+        &#60;div class="card-body">
+          &#60;h5 class="card-title">&#123; &#123;food.name}}&#60;/h5>
+          &#60;p class="card-text">&#123; &#123;food.details}}&#60;/p>
+        &#60;/div>
+        &#60;div class="card-footer text-end">
+          &#60;small class="text-body-secondary">&#123; &#123;food.prepTime}} perc&#60;/small>
+        &#60;/div>
+      &#60;/div>
+    &#60;/div>
+  &#60;/div>
+
+  <b>// class</b>
+  interface Food &#123;
+    name: string,
+    details: string,
+    prepTime: number,
+    img: string
+  }
+
+  ...
+
+  foodCards: Food[] = [
+    &#123; name: 'Pörkölt', details: 'Hozzávalók: marhahús, hagyma, paprika, paradicsom, fűszerek. A pörkölt alapja a jól megpárolt hagyma, amelyre fűszereket és pirospaprikát adunk. Ezután a húsdarabokat hozzáadjuk, és elkezdjük pirítani, amíg szépen meg nem sülnek. A pörkölés során a hús magába szívja a fűszereket, majd paradicsomot és paprikát is hozzáadunk. A lassú főzés során a hús puhává válik, miközben az ízek jól összeérnek. Tálalás előtt fűszerezzük, és ha szükséges, tejföllel gazdagíthatjuk.', prepTime: 120, img: 'https://picsum.photos/50/50/?blur=1&random=1.webp' },
+    &#123; name: 'Túró rudi', details: 'Hozzávalók: túró, tejföl, csokoládé, porcukor. A túrós tölteléket csokoládéval borítjuk be, hogy krémes és finom édességet kapjunk.', prepTime: 30, img: 'https://picsum.photos/50/50/?blur=1&random=2.webp' },
+    &#123; name: 'Rakott krumpli', details: 'Hozzávalók: krumpli, tojás, kolbász, tejföl, sajt. A krumplit és tojást rétegezzük, a kolbászt és tejfölt hozzáadjuk, majd sütjük, míg a sajt megolvad.', prepTime: 60, img: 'https://picsum.photos/50/50/?blur=1&random=3.webp' },
+  ]
+    </pre>
   </ul>
 </div>

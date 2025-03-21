@@ -2,11 +2,39 @@ import { Component, ElementRef, QueryList, ViewChildren, OnInit, AfterViewInit, 
 import { ScrollingService } from "../../shared/services/scrolling.service";
 import { BehaviorSubject, catchError, of, Subject, Subscription, switchMap, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { KeyValue } from '@angular/common';
+import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
+
+interface Hero {
+  name: string;
+  origin: string;
+  specialAbility: string;
+  strength: number
+}
+
 
 @Component({
   selector: 'app-extras',
   templateUrl: './extras.component.html',
-  styleUrls: ['./extras.component.scss']
+  styleUrls: ['./extras.component.scss'],
+  animations: [
+    trigger('querystagger', [
+      transition('* <=> *', [
+        query(':enter', [
+          style({ opacity: 0, transform: 'scale(0.7)' }),
+          stagger(100, [
+            animate('200ms ease-in', style({ opacity: 1, transform: 'scale(1)' }))
+          ])
+        ], { optional: true }),
+        query(':leave', [
+          style({ opacity: 1, transform: 'scale(1)' }),
+          stagger(-100, [
+            animate('200ms ease-in', style({ opacity: 0, transform: 'scale(0.7)' }))
+          ])
+        ], { optional: true })
+      ])
+    ])
+  ]
 })
 export class ExtrasComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChildren(`
@@ -51,6 +79,60 @@ export class ExtrasComponent implements OnInit, AfterViewInit, OnDestroy {
     stylepreprocessoroptions,
     jsmethods,
     ngrx,
+    svgsprite,
+    importantsites,
+    accessibilityattributes,
+    arialabel,
+    ariahidden,
+    ariaexpanded,
+    ariarole,
+    arialive,
+    ariadescribedby,
+    ariachecked,
+    ariaselected,
+    ariainvalid,
+    cdn,
+    es6,
+    elementref,
+    injectable,
+    tabindex,
+    angularversions,
+    designpatterns,
+    cicd,
+    devops,
+    eventhandling,
+    salting,
+    bindings,
+    gettersetter,
+    corserror,
+    recursion,
+    typeguard,
+    typepredicate,
+    unknown,
+    templateusage,
+    sorting,
+    keyvalue,
+    valueorder,
+    trackby,
+    angularanimations,
+    enterandleave,
+    keyframe,
+    queryingandstaggering,
+    animationevents,
+    multipleanimations,
+    unknownheight,
+    flexibilitywithparams,
+    reusableanimations,
+    disableanimations,
+    routingtransition,
+
+    ifdirective,
+    newdirectives,
+    callbackfunction,
+    rxjs,
+    fontsizes,
+    handlingimages,
+    routerinrouter,
     
     todo
     `) sections!: QueryList<ElementRef>;
@@ -107,7 +189,71 @@ export class ExtrasComponent implements OnInit, AfterViewInit, OnDestroy {
     { title: 'stylePreprocessorOptions', anchor: 'stylepreprocessoroptions', subtitles: [] },
     { title: 'Javascript methods', anchor: 'jsmethods', subtitles: [] },
     { title: 'NgRx', anchor: 'ngrx', subtitles: [] },
-    { title: 'TODO', anchor: 'todo', subtitles: [] }
+    { title: 'SVG sprite', anchor: 'svgsprite', subtitles: [] },
+    { title: 'Important sites', anchor: 'importantsites', subtitles: [] },
+    {
+      title: 'Accessibility attributes', anchor: 'accessibilityattributes', subtitles: [
+        { title: 'aria-label', anchor: 'arialabel' },
+        { title: 'aria-hidden', anchor: 'ariahidden' },
+        { title: 'aria-expanded', anchor: 'ariaexpanded' },
+        { title: 'aria-controls', anchor: 'ariacontrols' },
+        { title: 'aria-role', anchor: 'ariarole' },
+        { title: 'aria-live', anchor: 'arialive' },
+        { title: 'aria-describedby', anchor: 'ariadescribedby' },
+        { title: 'aria-checked', anchor: 'ariachecked' },
+        { title: 'aria-selected', anchor: 'ariaselected' },
+        { title: 'aria-invalid', anchor: 'ariainvalid' },
+      ]
+    },
+    { title: 'CDN', anchor: 'CDN', subtitles: [] },
+    { title: 'ES6', anchor: 'es6', subtitles: [] },
+    { title: 'ElementRef', anchor: 'elementref', subtitles: [] },
+    { title: '@Injectable', anchor: 'injectable', subtitles: [] },
+    { title: 'tabindex', anchor: 'tabindex', subtitles: [] },
+    { title: 'Angular versions', anchor: 'angularversions', subtitles: [] },
+    { title: 'Design patterns', anchor: 'designpatterns', subtitles: [] },
+    { title: 'CI/CD pipeline', anchor: 'cicd', subtitles: [] },
+    { title: 'DevOps', anchor: 'devops', subtitles: [] },
+    { title: 'Event handling', anchor: 'eventhandling', subtitles: [] },
+    { title: 'Salting', anchor: 'salting', subtitles: [] },
+    { title: 'Bindings', anchor: 'bindings', subtitles: [] },
+    { title: 'Getter / Setter', anchor: 'gettersetter', subtitles: [] },
+    { title: 'CORS error', anchor: 'corserror', subtitles: [] },
+    { title: 'Recursion', anchor: 'recursion', subtitles: [] },
+    {
+      title: 'Type guard', anchor: 'typeguard', subtitles: [
+        { title: 'Template usage', anchor: 'templateusage' },
+        { title: 'Type predicate', anchor: 'typepredicate' },
+        { title: 'Unknown', anchor: 'unknown' }
+      ]
+    },
+    {
+      title: 'Sorting', anchor: 'sorting', subtitles: [
+        { title: 'keyvalue', anchor: 'keyvalue' },
+        { title: 'valueOrder', anchor: 'valueorder' },
+      ]
+    },
+    { title: 'trackBy', anchor: 'trackby', subtitles: [] },
+    {
+      title: 'Angular animations', anchor: 'angularanimations', subtitles: [
+        { title: 'Enter & leave', anchor: 'enterandleave' },
+        { title: 'Keyframe', anchor: 'keyframe' },
+        { title: 'Querying & staggering', anchor: 'queryingandstaggering' },
+        { title: 'Animation events', anchor: 'animationevents' },
+        { title: 'Multiple animations', anchor: 'multipleanimations' },
+        { title: 'Unknown height', anchor: 'unknownheight' },
+        { title: 'Flexibility with params', anchor: 'flexibilitywithparams' },
+        { title: 'Reusable animations', anchor: 'reusableanimations' },
+        { title: 'Disable animations', anchor: 'disableanimations' },
+        { title: 'Routing transition', anchor: 'routingtransition' },
+      ]
+    },
+    { title: 'New directives', anchor: 'newdirectives', subtitles: [] },
+    { title: 'Callback function', anchor: 'callbackfunction', subtitles: [] },
+    { title: 'RxJS', anchor: 'rxjs', subtitles: [] },
+    { title: 'Font sizes', anchor: 'fontsizes', subtitles: [] },
+    { title: 'Router in router', anchor: 'routerinrouter', subtitles: [] },
+    { title: 'TODO', anchor: 'todo', subtitles: [] },
   ];
 
   elems: string[] = [];
@@ -126,7 +272,7 @@ export class ExtrasComponent implements OnInit, AfterViewInit, OnDestroy {
     tap((response) => {
       this.isLoadingReactive$.next(false);
       this.elemsReactive$.next(response as string[]);
-      console.log('http: ', response);
+      // console.log('http: ', response);
     })
   );
 
@@ -156,6 +302,119 @@ export class ExtrasComponent implements OnInit, AfterViewInit, OnDestroy {
 
   subscriptions: Subscription[] = [];
 
+  valueOrder = (a: KeyValue<string, any>, b: KeyValue<string, any>): number => {
+    return b.value.strength - a.value.strength; // Csökkenő sorrendben rendezzük az erősség szerint
+  };
+
+  /* 
+    valueOrder = (a: KeyValue<string, any>, b: KeyValue<string, any>): number => {
+      return a.value.name.localeCompare(b.value.name); // ABC sorrend
+    };
+  */
+
+  /*
+    superHeroesObj = this.superHeroes.reduce((acc, hero, index) => {
+      acc[index] = hero;
+      return acc;
+    }, {} as { [key: number]: Hero });
+  */
+
+  superHeroes: { [key: string]: Hero } = {
+    superman: {
+      name: "Superman",
+      origin: "Kryptonian",
+      specialAbility: "Super strength, flight, heat vision",
+      strength: 10
+    },
+    spiderman: {
+      name: "Spider-Man",
+      origin: "Earth (New York)",
+      specialAbility: "Spider senses, web-shooting, wall-crawling",
+      strength: 7
+    },
+    wonderwoman: {
+      name: "Wonder Woman",
+      origin: "Amazonian",
+      specialAbility: "Super strength, combat skills, lasso of truth",
+      strength: 9
+    },
+    ironman: {
+      name: "Iron Man",
+      origin: "Earth (USA)",
+      specialAbility: "Powered armor, genius-level intellect",
+      strength: 8
+    },
+    thor: {
+      name: "Thor",
+      origin: "Asgardian",
+      specialAbility: "Control of thunder, flight (via Mjolnir)",
+      strength: 10
+    },
+    flash: {
+      name: "Flash",
+      origin: "Earth (Central City)",
+      specialAbility: "Super speed, time travel",
+      strength: 7
+    },
+    hulk: {
+      name: "Hulk",
+      origin: "Earth (USA)",
+      specialAbility: "Incredible strength, healing factor",
+      strength: 10
+    }
+  };
+
+  superHeroesArray: Hero[] = [
+    {
+      name: "Superman",
+      origin: "Kryptonian",
+      specialAbility: "Super strength, flight, heat vision",
+      strength: 10
+    },
+    {
+      name: "Spider-Man",
+      origin: "Earth (New York)",
+      specialAbility: "Spider senses, web-shooting, wall-crawling",
+      strength: 7
+    },
+    {
+      name: "Wonder Woman",
+      origin: "Amazonian",
+      specialAbility: "Super strength, combat skills, lasso of truth",
+      strength: 9
+    },
+    {
+      name: "Iron Man",
+      origin: "Earth (USA)",
+      specialAbility: "Powered armor, genius-level intellect",
+      strength: 8
+    },
+    {
+      name: "Thor",
+      origin: "Asgardian",
+      specialAbility: "Control of thunder, flight (via Mjolnir)",
+      strength: 10
+    },
+    {
+      name: "Flash",
+      origin: "Earth (Central City)",
+      specialAbility: "Super speed, time travel",
+      strength: 7
+    },
+    {
+      name: "Hulk",
+      origin: "Earth (USA)",
+      specialAbility: "Incredible strength, healing factor",
+      strength: 10
+    }
+  ];
+
+  testArray = [
+    { number: 1, name: 'First' },
+    { number: 2, name: 'Second' },
+    { number: 3, name: 'Third' },
+  ]
+
   constructor(private anchor: ScrollingService, private http: HttpClient) {
   }
 
@@ -180,15 +439,15 @@ export class ExtrasComponent implements OnInit, AfterViewInit, OnDestroy {
     fetch('https://kodbazis.hu/api/cimek')
       .then(res => res)
       .then(data => {
-        console.log(data);
+        // console.log(data);
         return data.json();
       })
       .then(content => {
-        console.log(content);
+        // console.log(content);
         this.elems = content;
       })
       .catch(error => {
-        console.error('Hiba történt:', error);
+        // console.error('Hiba történt:', error);
       })
       .finally(() => {
         this.isLoading = false;
@@ -197,7 +456,7 @@ export class ExtrasComponent implements OnInit, AfterViewInit, OnDestroy {
 
   newElem(event: any) {
     event.preventDefault();
-    console.log(event.target.elements.title.value);
+    // console.log(event.target.elements.title.value);
     const newElem = event.target.elements.title.value;
     this.elems.push(newElem);
     event.target.reset();
@@ -206,7 +465,7 @@ export class ExtrasComponent implements OnInit, AfterViewInit, OnDestroy {
   newAPIElem(event: any) {
     event.preventDefault();
     this.isLoading = true;
-    console.log(event.target.elements.title.value);
+    // console.log(event.target.elements.title.value);
     const newElem = event.target.elements.title.value;
     fetch('https://kodbazis.hu/api/cimek', {
       method: 'POST',
@@ -251,6 +510,22 @@ export class ExtrasComponent implements OnInit, AfterViewInit, OnDestroy {
     const newValue = e.target.elements.title.value;
     // @ts-ignore
     this.create$.next(newValue);
+  }
+
+  valueOrderFunction(a: KeyValue<string, Hero>, b: KeyValue<string, Hero>): number {
+    return a.value.name.localeCompare(b.value.name);
+  }
+
+  addToTestArray() {
+    this.testArray = [...this.testArray,
+    { number: 4, name: 'Fourth' },
+    { number: 5, name: 'Fifth' },
+    { number: 6, name: 'Sixth' }
+    ];
+  }
+
+  removeFromTestArray() {
+    this.testArray = this.testArray.slice(0, 3);
   }
 
   ngOnDestroy() {

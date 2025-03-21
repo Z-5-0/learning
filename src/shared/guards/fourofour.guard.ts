@@ -4,7 +4,7 @@ import { Router } from "@angular/router";
 export const YouCantActivate = () => {
     const router: Router = inject(Router);
 
-    router.navigate(['angular', '404']);
+    router.navigate(['404']);
 
     return false;
 }

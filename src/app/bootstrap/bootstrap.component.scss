@@ -20,3 +20,26 @@ td {
     background-color: rgba(40, 167, 69, .15);
     border: 1px solid rgba(40, 167, 69, .3);
 }
+
+@import "bootstrap/scss/functions"; // Bootstrap változók miatt szükséges
+@import "bootstrap/scss/variables"; // Breakpoint változók miatt szükséges
+@import "bootstrap/scss/mixins";    // Mixinek használatához szükséges
+
+.my-box {
+    display: block;
+    width: 100px;
+    height: 100px;
+    background: lightblue; // alapértelmezett
+
+    @include media-breakpoint-up(sm) { // ≥576px
+        background: lightgreen;
+    }
+
+    @include media-breakpoint-up(md) { // ≥768px
+        background: lightcoral;
+    }
+
+    @include media-breakpoint-up(lg) { // ≥992px
+        background: lightgoldenrodyellow;
+    }
+}

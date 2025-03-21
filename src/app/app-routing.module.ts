@@ -54,7 +54,7 @@ const routes: Routes = [
   { path: 'json', component: JsonComponent },
   { path: 'xml', component: XmlComponent },
   { path: 'react', component: ReactComponent },
-  { path: 'ionic', component: IonicComponent },
+  { path: 'ionic', component: IonicComponent, canActivate: [YouCantActivate] },
   { path: 'seo', component: SeoComponent },
   { path: 'api', component: ApiComponent },
   { path: 'database', component: DatabaseComponent },

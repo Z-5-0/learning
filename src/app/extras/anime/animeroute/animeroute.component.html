@@ -1,0 +1,16 @@
+<div style="display: grid; grid-template-columns: auto auto 1fr; gap: 30px;">
+    <nav [class.visible]="true">
+        <ul>
+            <li *ngFor="let link of links">
+                <a [routerLink]="link.path" [routerLinkActive]="['is-active']">
+                    {{ link.label }}
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <div style="max-height: 300px; overflow: auto;">
+        <router-outlet></router-outlet>
+    </div>
+
+</div>

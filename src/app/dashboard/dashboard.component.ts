@@ -25,7 +25,7 @@ export class DashboardComponent {
     { class: 'devicon-angularjs-plain', route: 'angular', colored: true, opacity: this.opacityScale.high },
     { class: 'devicon-react-original', route: 'react', colored: true, opacity: this.opacityScale.high },
     { class: 'devicon-vuejs-plain', route: 'vue', colored: false, opacity: this.opacityScale.low },
-    { class: 'devicon-ionic-original', route: 'ionic', colored: true, opacity: this.opacityScale.high },
+    { class: 'devicon-ionic-original', route: 'ionic', colored: false, opacity: this.opacityScale.low },
     { class: 'devicon-rxjs-plain', route: 'rxjs', colored: true, opacity: this.opacityScale.high },
     { class: 'devicon-redux-original', route: 'reduc', colored: false, opacity: this.opacityScale.low },
     { class: 'devicon-css3-plain', route: 'cssscss', colored: true, opacity: this.opacityScale.high },

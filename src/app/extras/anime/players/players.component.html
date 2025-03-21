@@ -1,0 +1,22 @@
+<section style="display: grid; grid-template-columns: auto 1fr;">
+    <img [src]="'assets/imgs/players/' + player.imageName + '.avif'" width="130px" height="95px" />
+    <div>
+        <h2>{{ player.name }}</h2>
+        <div>
+            <button #trigger="cdkOverlayOrigin" cdkOverlayOrigin (click)="detailsOpen = true" [class.open]="detailsOpen"
+                class="btn btn-secondary">
+                Details
+            </button>
+            <ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="trigger"
+                [cdkConnectedOverlayOpen]="detailsOpen" cdkConnectedOverlayWidth="50%"
+                (overlayOutsideClick)="detailsComponent.close()" (detach)="detailsOpen = false"
+                [cdkConnectedOverlayPositions]="[]" cdkConnectedOverlayPush="true"
+                class="custom-overlay"
+                [cdkConnectedOverlayViewportMargin]="7" [cdkConnectedOverlayScrollStrategy]="scrollStrategy"
+                cdkConnectedOverlayTransformOriginOn="app-player-details" [cdkConnectedOverlayDisableClose]="true"
+                (overlayKeydown)="$event.key === 'Escape' ? detailsComponent.close() : null">
+                <app-player-details [player]="player" (closed)="detailsOpen = false"></app-player-details>
+            </ng-template>
+        </div>
+    </div>
+</section>

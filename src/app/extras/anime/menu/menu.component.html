@@ -1,0 +1,8 @@
+<ul (click)="close.emit()">
+    <li *ngFor="let item of items">
+        <a>{{ item }}</a>
+    </li>
+</ul>
+<button>
+    <span class="visually-hidden">Close Menu</span>
+</button>

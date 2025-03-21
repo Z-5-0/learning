@@ -1,0 +1,76 @@
+<ng-container *ngIf="tempSwitcher === 'default'">
+    <div class="default">
+        <h2>Sign Up</h2>
+        <em>Hello! Welcome to the family.</em>
+        <form [formGroup]="form">
+            <div>
+                <label [@wobble]="wobbleField && form.invalid" (@wobble.done)="wobbleField = false"
+                    (@wobble.start)="onWobbleStart($event)">
+                    <span>Email Address</span>
+                    <input type="email" formControlName="email" />
+                </label>
+            </div>
+            <!-- <button
+    (click)="form.valid ? formSubmitted.emit() : null"
+    [class.disabled]="!form.valid">
+    Continue
+  </button> -->
+            <div>Form is invalid: {{form.invalid}}</div>
+            <div>wobbleField: {{wobbleField}}</div>
+            <br>
+            <button (click)="form.valid ? formSubmitted.emit() : wobbleField = true;" [class.disabled]="!form.valid">
+                Continue
+            </button>
+        </form>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="tempSwitcher === 'height'">
+    <div class="height">
+        <h2>Sign Up</h2>
+        <em>Hello! Welcome to the family.</em>
+        activePane: {{activePane()}}
+        <form [formGroup]="form">
+            <div #panes [@paneChange]="{
+                value: activePane(),
+                params: {
+                    startHeight: panes.clientHeight
+                }
+            }" class="panes">
+                <ng-container [ngSwitch]="activePane()">
+                    <div *ngSwitchCase="0" class="pane">
+                        <label>
+                            <span>Email Address</span>
+                            <input type="email" formControlName="email" />
+                        </label>
+                    </div>
+                    <div *ngSwitchCase="1" class="pane">
+                        <label>
+                            <span>Password</span>
+                            <input type="password" formControlName="password" />
+                        </label>
+                        <label>
+                            <span>Confirm Password</span>
+                            <input type="password" formControlName="password" />
+                        </label>
+                        <footer>
+                            <p>Password must contain:</p>
+                            <ul>
+                                <li>At least 8 characters</li>
+                                <li>At least 1 lowercase character</li>
+                                <li>At least 1 uppercase character</li>
+                                <li>At leaset 1 number or special character</li>
+                            </ul>
+                        </footer>
+                    </div>
+                </ng-container>
+            </div>
+            <button (click)="setActiveStep()" class="continue">
+                Continue
+            </button>
+            <button (click)="setActiveStep()" class="back" [class.visible]="activePane() !== 0" title="Previous Step">
+                <span class="visually-hidden">Previous Step</span>
+            </button>
+        </form>
+    </div>
+</ng-container>

@@ -66,6 +66,10 @@ export class AngularComponent implements OnDestroy {
   afterviewinit,
   afterviewichecked,
   ondestroy,
+  differences,
+  afternextrender,
+  afterrender,
+  newlifecycleorder,
   customdirective,
   customdirectivecreation,
   customdirectiverenderer,
@@ -261,6 +265,10 @@ export class AngularComponent implements OnDestroy {
         { title: 'AfterViewInit', anchor: 'afterviewinit' },
         { title: 'AfterViewChecked', anchor: 'afterviewichecked' },
         { title: 'OnDestroy', anchor: 'ondestroy' },
+        { title: 'Differences', anchor: 'differences' },
+        { title: 'AfterNextRender', anchor: 'afternextrender' },
+        { title: 'AfterRender', anchor: 'afterrender' },
+        { title: 'New lifecycle order', anchor: 'newlifecycleorder' },
       ]
     },
     {

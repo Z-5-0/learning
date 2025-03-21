@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BoxComponent } from './js/box/box.component';
 import { ColorChooserComponent } from './js/color-chooser/color-chooser.component';
-import { FormsModule, NgModel } from "@angular/forms";
+import { FormsModule, NgModel, ReactiveFormsModule } from "@angular/forms";
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { JsComponent } from './js/js.component';
 import { AngularComponent } from './angular/angular.component';
@@ -117,7 +117,7 @@ import { DartComponent } from './dart/dart.component';
     GruntComponent,
     GulpComponent,
     LodashComponent,
-    DartComponent,
+    DartComponent
   ],
   imports: [
     BrowserModule,
@@ -132,7 +132,9 @@ import { DartComponent } from './dart/dart.component';
     CoreModule,
     TestsModule,
     AppRoutingModule,
-    StoreModule.forRoot({}, {})
+    StoreModule.forRoot({}, {}),
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [
     provideStore(),

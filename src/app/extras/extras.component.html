@@ -1,5 +1,1424 @@
 <h1>Extras</h1>
 
+<h5 #routingtransition data-anchor="routingtransition">Routing transition</h5>
+<ul>
+  <app-animeroute></app-animeroute>
+</ul>
+
+<div>
+  <h3 #angularanimations data-anchor="angularanimations">Angular animations</h3>
+  <ul>
+    <li>Az animációk használatának első lépése a megfelelő modul aktiválása
+      <ul>
+        <pre>
+  <b>app.module.ts // Angular 17-ig</b>
+  @NgModule(&#123;
+    declarations: [
+      ...
+    ],
+    imports: [
+      ...
+      BrowserAnimationsModule,
+      ...
+    ],
+    providers: [
+      ...
+    ],
+    bootstrap: [AppComponent]
+  })
+  export class AppModule &#123;
+  }
+
+  <b>main.ts // Angular 17-től</b>
+  bootstrapApplication(AppComponent, &#123;
+    providers: [
+      provideAnimationsAsync() // vagy provideAnimations()
+    ]
+  });
+        </pre>
+        <table>
+          <tr>
+            <td>provideAnimations()</td>
+            <td>Ha nincs SSR az appban, és az animációknak azonnal be kell töltődniük</td>
+          </tr>
+          <tr>
+            <td>provideAnimationsAsync()</td>
+            <td>Ha van SSR, vagy gyorsabb app betöltést szeretnénk, és elfogadható, ha az animációk késleltetve
+              töltődnek be
+            </td>
+          </tr>
+        </table>
+        <br>
+        <li>A komponens metaadatainál adhatjuk meg az animációkat</li>
+        <li>Fő elemek
+          <ol>
+            <li>trigger()
+              <ul>
+                <li>Az animáció neve, és annak beállításai</li>
+                <li>Az első paraméter az animáció neve</li>
+                <li>A második paraméter egy tömb, ami az animáció utasításait tartalmazza
+                  <ul>
+                    <li>Állapotok, és átmenetek</li>
+                  </ul>
+                </li>
+                <pre>
+  trigger('name', [...])
+
+  template: `&#60;div [@fadeInOut]="'visible'">Animated element&#60;/div>`,
+  animations: [
+    trigger('fadeInOut', [
+      state('visible', style(&#123; opacity: 1 })),
+      state('hidden', style(&#123; opacity: 0 })),
+      transition('visible &#60;=> hidden', animate('500ms ease-in-out'))
+    ])
+  ]
+
+  // A trigger neve fadeInOut
+  // Két állapotot definiálunk (visible és hidden)
+  // A transition határozza meg, hogy az állapotok hogyan váltanak egymás között
+                </pre>
+              </ul>
+            </li>
+            <li>state()
+              <ul>
+                <li>Egy adott állapothoz tartozó stílus</li>
+                <li>Az első paraméter a state neve</li>
+                <li>A második paraméter CSS stílusokat tartalmaz</li>
+                <pre>
+  state('name', style(...))
+
+  template: `
+    &#60;button (click)="toggle()">Toggle&#60;/button>
+    &#60;div [@boxState]="isExpanded ? 'expanded' : 'collapsed'">Box&#60;/div>
+  `,
+  animations: [
+    trigger('boxState', [
+      state('expanded', style(&#123; height: '200px', backgroundColor: 'lightblue' })),
+      state('collapsed', style(&#123; height: '50px', backgroundColor: 'lightgray' })),
+      transition('expanded &#60;=> collapsed', animate('300ms ease-in-out'))
+    ])
+  ]
+
+  // Ha a div állapota expanded, akkor magasabb, és kék színű lesz
+  // Ha collapsed, akkor alacsonyabb, és szürke színű
+  // A transition definiálja, hogy az állapotok 300 ms alatt változnak.
+                </pre>
+              </ul>
+            </li>
+            <li>style()
+              <ul>
+                <li>CSS stílus, amit az animáció alkalmaz egy adott pillanatban</li>
+                <li>Objektum, benne stílusokkal</li>
+                <pre>
+  style(&#123;...})
+
+  template: `
+    &#60;button (click)="toggle()">Toggle&#60;/button>
+    &#60;div [@moveBox]="isMoved ? 'moved' : 'initial'">Moving box&#60;/div>
+  `,
+  animations: [
+    trigger('moveBox', [
+      state('initial', style(&#123; transform: 'translateX(0)', opacity: 1 })),
+      state('moved', style(&#123; transform: 'translateX(100px)', opacity: 0.5 })),
+      transition('initial &#60;=> moved', animate('500ms ease-in-out'))
+    ])
+  ]
+
+  // Ha moved, akkor a doboz 100px-re elmozdul, és félig áttetsző lesz
+  // Ha pedig initial, akkor az eredeti helyén marad
+                </pre>
+              </ul>
+            </li>
+            <li>transition()
+              <ul>
+                <li>Meghatározza, hogy hogyan váltson az animáció két állapot között</li>
+                <li>Az első paraméter meghatározza, hogy milyen állapotból milyen állapotba váltunk</li>
+                <li>A második paraméter egy tömb, ami tartalmazza az animációra vonatkozó szabályokat</li>
+                <pre>
+  transition(fromState => toState, [animate(...)])
+
+  template: `
+    &#60;button (click)="toggle()">Toggle&#60;/button>
+    &#60;div [@doorState]="isOpen ? 'open' : 'closed'">Door&#60;/div>
+  `,
+  animations: [
+    trigger('doorState', [
+      state('open', style(&#123; transform: 'rotateY(0deg)' })),
+      state('closed', style(&#123; transform: 'rotateY(90deg)' })),
+      transition('open &#60;=> closed', animate('400ms ease-in-out'))
+    ])
+  ]
+
+  //  Az open állapot, és a closed között egy 400 ms-os animáció van
+                </pre>
+              </ul>
+            </li>
+            <li>animate()
+              <ul>
+                <li>Az animáció időtartamáért, és az állapotváltás közbeni stílusért felel</li>
+                <li>Első paramétere az animáció időtartama ('500ms' / '1s')</li>
+                <li>A második paramétere az animáció végállapota</li>
+                <pre>
+  animate(duration, style(...))
+
+  template: `
+    &#60;button (click)="toggle()">Toggle&#60;/button>
+    &#60;div class="box" *ngIf="isVisible" [@fadeInOut]>Appearing box&#60;/div>
+  `,
+  animations: [
+    trigger('fadeInOut', [
+      transition(':enter', [
+        style(&#123; opacity: 0 }),
+        animate('500ms ease-out', style(&#123; opacity: 1 }))
+      ]),
+      transition(':leave', [
+        animate('500ms ease-in', style(&#123; opacity: 0 }))
+      ])
+    ])
+  ]
+
+  // A div fade in, és fade out effektet kap
+  // Az :enter (megjelenés) és :leave (eltűnés) animációt külön kezeljük
+  // Az animate határozza meg a sebességet
+                </pre>
+              </ul>
+            </li>
+            <li>keyframes()
+              <ul>
+                <li>Többlépéses animáció létrehozására való</li>
+                <li>A CSS keyframe animációk Angular változata</li>
+                <li>Egy tömb, amely a különböző időpillanatokban alkalmazott stílusokat tartalmazza</li>
+                <pre>
+  keyframes([...])
+
+  template: `
+    &#60;button (click)="startShake()">Shake&#60;/button>
+    &#60;div [@shakeAnimation]="shaking ? 'shake' : 'still'">Shaking box&#60;/div>
+  `,
+  animations: [
+    trigger('shakeAnimation', [
+      transition('* => shake', [
+        animate('500ms ease-in-out', keyframes([
+          style(&#123; transform: 'translateX(-10px)', offset: 0.2 }),
+          style(&#123; transform: 'translateX(10px)', offset: 0.4 }),
+          style(&#123; transform: 'translateX(-10px)', offset: 0.6 }),
+          style(&#123; transform: 'translateX(10px)', offset: 0.8 }),
+          style(&#123; transform: 'translateX(0)', offset: 1 })
+        ]))
+      ])
+    ])
+  ]
+
+  // Remegő animációt hoz létre
+  // Az offset paraméter adja meg az animáció közbenső állapotait
+                </pre>
+              </ul>
+            </li>
+            <li>query()
+              <ul>
+                <li>Több elem egyidejű animálására használatos</li>
+                <li>Első paramétere a szelektor</li>
+                <li>A második paraméter az animációk listája, amit a kiválasztott elemekre alkalmaz</li>
+                <li>A harmadik paraméter egy opcionális boolean, amit ha true értékbe állítunk, akkor az animáció nem
+                  dob hibát, ha nem sikerül elemet szelektálni (options?: &#123; optional: boolean })</li>
+                <pre>
+  query(selector, [...])
+
+  template: `
+    &#60;button (click)="toggle()">Toggle list&#60;/button>
+    &#60;ul>
+      &#60;li *ngFor="let item of items" [@listAnimation]>&#123; &#123; item }}&#60;/li>
+    &#60;/ul>
+  `,
+  animations: [
+    trigger('listAnimation', [
+      transition(':enter', [
+        query('li', [
+          style(&#123; opacity: 0, transform: 'translateY(-20px)' }),
+          stagger('100ms', [
+            animate('500ms ease-out', style(&#123; opacity: 1, transform: 'translateY(0)' }))
+          ])
+        ])
+      ])
+    ])
+  ]
+
+  // A lista elemei egymás után jelennek meg stagger() segítségével
+                </pre>
+              </ul>
+            </li>
+            <li>stagger()
+              <ul>
+                <li>Több elem egyidejű animálására használatos</li>
+                <li>Első paramétere a késleltetés időtartama ('500ms' / '1s')</li>
+                <li>A második paramétere az egyes elemek animációja</li>
+                <pre>
+  stagger(delay, [...])
+
+  template: `
+    &#60;button (click)="toggle()">Toggle list&#60;/button>
+    &#60;ul>
+      &#60;li *ngFor="let item of items" [@listAnimation]>&#123; &#123; item }}&#60;/li>
+    &#60;/ul>
+  `,
+  animations: [
+    trigger('listAnimation', [
+      transition(':enter', [
+        query('li', [
+          style(&#123; opacity: 0, transform: 'translateY(-20px)' }),
+          stagger('100ms', [
+            animate('500ms ease-out', style(&#123; opacity: 1, transform: 'translateY(0)' }))
+          ])
+        ])
+      ])
+    ])
+  ]
+
+  // A lista elemei egymás után jelennek meg stagger() segítségével
+                </pre>
+              </ul>
+            </li>
+            <li>group()
+              <ul>
+                <li>Több animáció egyidejű futtatására való</li>
+                <li>Paramétere az összes animáció, amiket egyszerre szükséges futtatni</li>
+                <pre>
+  group([...])
+
+  template: `
+    &#60;button (click)="toggle()">Toggle&#60;/button>
+    &#60;div class="box" [@moveFade]="isMoved ? 'moved' : 'initial'">Moving box&#60;/div>
+  `,
+  animations: [
+    trigger('moveFade', [
+      transition('initial => moved', [
+        group([
+          animate('500ms ease-in-out', style(&#123; transform: 'translateX(100px)' })),
+          animate('500ms ease-in-out', style(&#123; opacity: 0.5 }))
+        ])
+      ])
+    ])
+  ]
+
+  // A doboz egyszerre mozdul, és halványodik el
+  // A group() biztosítja, hogy a két animáció párhuzamosan fusson
+                </pre>
+              </ul>
+            </li>
+            <li>sequence()
+              <ul>
+                <li>Egymás utáni animációk futtatására használjuk</li>
+                <li>Egyetlen paramétere az egymás után lefutó animációk</li>
+                <pre>
+  sequence([...])
+
+  template: `
+    &#60;button (click)="toggle()">Toggle&#60;/button>
+    &#60;div class="box" [@fadeMove]="isMoved ? 'moved' : 'initial'">Box&#60;/div>
+  `,
+  animations: [
+    trigger('fadeMove', [
+      transition('initial => moved', [
+        sequence([
+          animate('300ms ease-in', style(&#123; opacity: 0.5 })),
+          animate('500ms ease-out', style(&#123; transform: 'translateX(100px)' }))
+        ])
+      ])
+    ])
+  ]
+
+  // A doboz először halványodik, majd csak ezután mozdul el
+  // A sequence() biztosítja az animációk egymás utáni lefutását
+                </pre>
+              </ul>
+            </li>
+            <br>
+            <li>@.disabled
+              <ul>
+                <li>Az adott template elemen kikapcsolja az animációt</li>
+                <pre>
+  [@.disabled]="name"
+
+  template: `
+    &#60;button (click)="disableAnimations()">Disable animations&#60;/button>
+    &#60;div class="box" [@fade]="isVisible ? 'visible' : 'hidden'" [@.disabled]="animationsDisabled">
+      Content
+    &#60;/div>
+  `,
+  animations: [
+    trigger('fade', [
+      transition('visible => hidden', [
+        animate('500ms', style(&#123; opacity: 0 }))
+      ])
+    ])
+  ]
+
+  //  A @.disabled teljesen kikapcsolja az animációt
+  // Az animációk állapota egy gombnyomással változtatható
+                </pre>
+              </ul>
+            </li>
+          </ol>
+        </li>
+      </ul>
+    </li>
+    <br>
+    <app-header></app-header>
+    <app-anime [tempSwitcher]="'default'"></app-anime>
+    <pre>
+  &#60;app-page-menu [@openClose]="menuState" (close)="menuState = 'closed'">&#60;/app-page-menu>
+
+  animations: [
+    trigger('openClose', [
+      state('closed', style(&#123; transform: 'translateX(100%)' })),
+      state('open', style(&#123; transform: 'translateX(0)' })),
+      transition('closed <=> open', [animate('500ms ease-in')])
+    ])
+  ]
+    </pre>
+  </ul>
+  <br>
+  <h5 #enterandleave data-anchor="enterandleave">Enter & leave</h5>
+  <ul>
+    <li>Animációs trigger-ek, amelyek a DOM-hoz hozzáadott, vagy onnan eltávolított elemek animációjára szolgálnak</li>
+    <li>:enter
+      <ul>
+        <li>Akkor aktiválódik, amikor egy elem megjelenik a DOM-ban</li>
+        <li>Például, ha egy *ngIf értéke true lesz, az elem belép a DOM-ba</li>
+      </ul>
+    </li>
+    <li>:leave
+      <ul>
+        <li>Aktiválódik, amikor egy elem elhagyja a DOM-ot</li>
+        <li>Mondjuk amikor egy *ngIf false lesz</li>
+      </ul>
+    </li>
+    <li>Csak olyan elemekre működnek, amelyeket az Angular dinamikusan hozzáad és eltávolít (például *ngIf, vagy *ngFor)
+    </li>
+    <li>Ha az elemet csak elrejtjük például [hidden] attribútummal, nem működnek</li>
+    <li>Az előző gyakorlati példában az app-page-menu mindig jelen van a DOM-ban</li>
+    <li>Amíg az animáció nem ér véget, addig az Angular nem távolítja el a DOM-ból a feltételes elemet</li>
+    <app-anime [tempSwitcher]="'enterleave'"></app-anime>
+    <pre>
+  &#60;app-page-menu *ngIf="menuOpen" @enterLeaveOpenClose (close)="menuOpen = false">&#60;/app-page-menu>
+
+  trigger('enterLeaveOpenClose', [
+    transition(':enter', [
+      style(&#123; transform: 'translateX(100%)' }),
+      animate('500ms ease-in', style(&#123; transform: 'translateX(0)' }))
+    ]),
+    transition(':leave', [
+      style(&#123; transform: 'translateX(0)' }),
+      animate('500ms ease-in', style(&#123; transform: 'translateX(100%)' }))
+    ]),
+  ]),
+
+  // OR
+
+  const hidden = &#123; transform: 'translateX(100%)' };
+  const visible = &#123; transform: 'translateX(0)' };
+  const timing = '500ms ease-in'
+
+  trigger('enterLeaveOpenClose2', [
+    transition(':enter', [
+      style(hidden),
+      animate(timing, style(visible))
+    ]),
+    transition(':leave', [
+      style(visible),
+      animate(timing, style(hidden))
+    ]),
+  ]),
+    </pre>
+  </ul>
+  <br>
+  <h5 #keyframe data-anchor="keyframe">Keyframe</h5>
+  <ul>
+    <li>Hatékony animációs API</li>
+    <li>A steps paramétert fogadja, ami egy AnimationStyleMetadata tömb
+      <ul>
+        <li>Stílus objektumok kerülnek bele</li>
+      </ul>
+    </li>
+    <app-anime [tempSwitcher]="'keyframe'"></app-anime>
+    <pre>
+  &#60;app-page-menu *ngIf="menuOpen" @keyframe (close)="menuOpen = false">&#60;/app-page-menu>
+
+  trigger('keyframe', [
+    transition(':enter',
+      animate('1s', keyframes([
+        style(&#123; transform: 'translateX(100%) scale(.5)', offset: 0 }),
+        style(&#123; transform: 'translateX(-100%) scale(.5)', offset: .2 }), // a teljes animációs idő (1mp) 20%-ánál már ebben az állapotban van
+        style(&#123; transform: 'translateX(-100%) scale(.75) rotate(360deg)', offset: .9 }), // a teljes animációs idő (1mp) 75%-ánál már ebben az állapotban van
+        style(&#123; transform: 'translateX(0) scale(1) rotate(360deg)', offset: 1 }),
+      ]
+      ))),
+    transition(':leave', animate('1s', keyframes([
+      style(&#123; transform: 'translateX(0) scale(1) rotate(360deg)', offset: 0 }),
+      style(&#123; transform: 'translateX(-100%) scale(.75) rotate(360deg)', offset: .2 }),
+      style(&#123; transform: 'translateX(-100%) scale(.5)', offset: .9 }),
+      style(&#123; transform: 'translateX(100%) scale(.5)', offset: 1 }),
+    ])))
+    </pre>
+    <li>Offset
+      <ul>
+        <li>Egy 0 és 1 közötti szám, amely megadja, hogy az adott keyframe az animáció melyik pontján történjen</li>
+        <li>A 0 az animáció kezdetét, az 1 pedig a végét jelenti</li>
+        <li>Megmondhatjuk vele, hogy az animációs idő hány %-ánál vegye fel az adott style állapotot</li>
+      </ul>
+    </li>
+  </ul>
+  <br>
+  <h5 #queryingandstaggering data-anchor="queryingandstaggering">Querying & staggering</h5>
+  <ul>
+    <app-anime [tempSwitcher]="'querystagger'"></app-anime>
+    <pre>
+  <b>// anime.component.html</b>
+  &#60;section cdkScrollable>
+    &#60;div [@querystagger]="players">
+        &#60;ng-container *ngFor="let player of players">
+            &#60;app-player [player]="player">&#60;/app-player>
+        &#60;/ng-container>
+    &#60;/div>
+  &#60;/section>
+  &#60;section class="text-center pt-5">
+      &#60;button *ngIf="players.length &#60; totalCount" (click)="addPlayers()" class="btn btn-danger">
+          &#60;span>Add&#60;/span>
+      &#60;/button>
+      &#60;button *ngIf="players.length > 0" (click)="removePlayers()" class="btn btn-primary">
+          &#60;span>Remove&#60;/span>
+      &#60;/button>
+  &#60;/section>
+
+  <b>// anime.component.ts</b>
+  import &#123; players } from './players/players'; // a játékosok interface-e, és listája ebben a fájlban található - export const players = [ &#123;...} ]
+
+  animations: [
+    trigger('querystagger', [
+      transition('* &#60;=> *', [   // bármilyen állapotból bármelyik állapotba átmenetkor igaz
+        query(':enter', [
+          style(&#123; opacity: 0, transform: 'scale(0.7)' }),
+          stagger(100, [
+            animate('500ms ease-in', style(&#123; opacity: 1, transform: 'scale(1)' }))
+          ])
+        ], &#123; optional: true }),
+        query(':leave', [
+          style(&#123; opacity: 1, transform: 'scale(1)' }),
+          stagger(-100, [   // negatív érték, fordított animáció sorrend
+            animate('500ms ease-in', style(&#123; opacity: 0, transform: 'scale(0.7)' }))
+          ])
+        ], &#123; optional: true })
+      ])
+  ])
+
+  ...
+
+  protected players = [players[0]];
+  protected totalCount = players.length;
+
+  protected addPlayers() &#123;
+    const allPlayers = players.slice(1);
+    this.players = [...this.players, ...allPlayers];
+  }
+
+  protected removePlayers() &#123;
+    this.players = [this.players[0]];
+  }
+
+  <b>// player.component.html</b>
+  &#60;section style="display: grid; grid-template-columns: auto 1fr;">
+      &#60;img [src]="'assets/imgs/players/' + player.imageName + '.avif'" width="130px" height="95px" />
+      &#60;div>
+          &#60;h2>&#123; &#123; player.name }}&#60;/h2>
+          &#60;div>
+              &#60;button #trigger="cdkOverlayOrigin" cdkOverlayOrigin (click)="detailsOpen = true" [class.open]="detailsOpen"
+                  class="btn btn-secondary">
+                  Details
+              &#60;/button>
+              &#60;ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="trigger"
+                  [cdkConnectedOverlayOpen]="detailsOpen" cdkConnectedOverlayWidth="50%"
+                  (overlayOutsideClick)="detailsComponent.close()" (detach)="detailsOpen = false"
+                  [cdkConnectedOverlayPositions]="[]" cdkConnectedOverlayPush="true"
+                  [cdkConnectedOverlayViewportMargin]="7" [cdkConnectedOverlayScrollStrategy]="scrollStrategy"
+                  cdkConnectedOverlayTransformOriginOn="app-player-details" [cdkConnectedOverlayDisableClose]="true"
+                  (overlayKeydown)="$event.key === 'Escape' ? detailsComponent.close() : null">
+                  &#60;app-player-details [player]="player" (closed)="detailsOpen = false">&#60;/app-player-details>
+              &#60;/ng-template>
+          &#60;/div>
+      &#60;/div>
+  &#60;/section>
+
+  <b>// player.component.ts</b>
+  @Input(&#123;required: true}) player!: Player;
+  @ViewChild(PlayerDetailsComponent) detailsComponent!: PlayerDetailsComponent;
+  protected detailsOpen = false;
+  protected scrollStrategy = this.overlay.scrollStrategies.reposition();
+
+  constructor(private overlay: Overlay) &#123;}
+
+  <b>// player.component.scss</b>
+  :host &#123;
+      display: block; // app-player tag-re irányuló szabály
+  }
+
+  <b>// player-details.component.html</b>
+  &#60;section role="dialog" aria-modal="true" aria-labelledby="dialog-title" aria-describedby="dialog-description"
+      cdkTrapFocus cdkTrapFocusAutoCapture="true">
+      &#60;h3 id="dialog-title" tabindex="-1" cdkFocusInitial>&#123; &#123; player.name }}&#60;/h3>
+      &#60;p id="dialog-description">&#123; &#123; player.description }}&#60;/p>
+      &#60;dl>
+          &#60;div>
+              &#60;dt>Games Played&#60;/dt>
+              &#60;dd> &#123; &#123; player.games | number }}&#60;/dd>
+          &#60;/div>
+          &#60;div>
+              &#60;dt>Points Scored&#60;/dt>
+              &#60;dd>&#123; &#123; player.points | number }}&#60;/dd>
+          &#60;/div>
+          &#60;div>
+              &#60;dt>Field Goal Percentage&#60;/dt>
+              &#60;dd>&#123; &#123; player.fieldGoalPercentage | percent:'.1' }}&#60;/dd>
+          &#60;/div>
+          &#60;div>
+              &#60;dt>Three Point Percentage&#60;/dt>
+              &#60;dd>&#123; &#123; player.threePointPercentage | percent:'.1' }}&#60;/dd>
+          &#60;/div>
+      &#60;/dl>
+      &#60;footer>
+          &#60;a [href]="player.wikipedia">See More on Wikipedia&#60;/a>
+          &#60;button (click)="close()">
+              &#60;span class="cdk-visually-hidden">Close&#60;/span>
+          &#60;/button>
+      &#60;/footer>
+  &#60;/section>
+
+  <b>// player-details.component.ts</b>
+  animations: [
+  trigger('animation', [
+    state('hidden', style(&#123;
+      opacity: 0,
+      transform: 'scale(.25)'
+    })),
+    state('visible', style(&#123;
+      opacity: 1,
+      transform: 'scale(1)'
+    })),
+    transition('hidden &#60;=> visible', animate('0.15s ease-in-out'))
+  ])
+
+  ...
+
+  @Input(&#123; required: true }) player!: Player;
+  @HostBinding('@animation') animationState = 'hidden';   // a @animation az animation triggerre utal
+  @HostListener('@animation.done', ['$event']) done(event: AnimationEvent) &#123;
+    if (event.toState === 'hidden') &#123;
+      this.closed.emit();
+    }
+  }
+  @Output() closed = new EventEmitter&#60;void>();
+
+  ngAfterViewInit() &#123;
+    this.animationState = 'visible';
+  }
+
+  close() &#123;
+    this.animationState = 'hidden';
+  }
+    </pre>
+    <li>Mivel az elemek eltűnnek, és megjelennek a DOM-ban, ezért használhatjuk az :enter és :leave alias-okat</li>
+    <li>Az :enter animáció inicializáláskor rendben lefut, mert megtalálja a players tömböt, de az &#123; optional: true
+      }
+      nélkül hibát kapnánk, mert tulajdonképpen nincs elem, ami eltűnne (a tömb nem tűnik el, csak kevesebb elem lesz
+      benne), így a :leave query nem talál elemet</li>
+    <li>Alapértelmezés szerint az app-players inline elem lenne
+      <ul>
+        <li>Az inline elemek nem támogatják a transform vagy opacity animációkat a legtöbb böngészőben, ezért van
+          szükség
+          block megjelenítésre</li>
+      </ul>
+    </li>
+    <li>A stagger egy animációs láncot hoz létre
+      <ul>
+        <li>Az egyes elemekre késlelteti az animációt</li>
+        <li>Nem szabad túl nagy időket beállítani, mert úgy nem fog jól látszani az eltolás a megjelenések között
+          (például
+          tömb elemeinek)</li>
+        <li>Negatív érték esetén a szakaszos animációk fordított sorrendben indulnak el, tehát az utolsó elem animációja
+          kezdődik először</li>
+      </ul>
+    </li>
+    <li>Az animációnak start és done eseményei vannak
+      <ul>
+        <pre>
+  @HostListener('@animation.start', ['$event']) // az animáció kezdetekor fut le
+  onAnimationStart(event: AnimationEvent) &#123;
+      console.log('Animation started!', event);
+  }
+
+  @HostListener('@animation.done', ['$event']) // az animáció befejeztével fut le
+  onAnimationDone(event: AnimationEvent) &#123;
+      console.log('Animation finished!', event);
+  }
+
+  ↓↓↓↓↓
+
+  &#123;
+    disabled: false,
+    element: 'app-player-details.ng-tns-c2341267558-4.ng-trigger.ng-trigger-animation.ng-star-inserted',
+    fromState: 'hidden',
+    phaseName: 'start', // vagy 'done'
+    toState: 'visible',
+    totalTime: 150,
+    triggerName: 'animation',
+    _data: 16
+  }
+        </pre>
+      </ul>
+    </li>
+    <li>Nézzünk meg egy sokkal egyszerűbb példát</li>
+    <div style="padding: 30px 0;">
+      <div [@querystagger]="testArray">
+        <ng-container *ngFor="let test of testArray">
+          <div style="padding-bottom: 30px;">{{test.number}} {{test.name}}</div>
+        </ng-container>
+      </div>
+
+      <button class="btn" [ngClass]="(testArray.length > 3) ? 'btn-danger' : 'btn-primary'"
+        (click)="testArray.length > 3 ? removeFromTestArray() : addToTestArray()">
+        {{ testArray.length > 3 ? 'REMOVE' : 'ADD'}}
+      </button>
+    </div>
+    <pre>
+  <b>// template</b>
+  &#60;div [@querystagger]="testArray">
+    &#60;ng-container *ngFor="let test of testArray">
+      &#60;div style="padding-bottom: 30px;">&#123; &#123;test.number}} &#123; &#123;test.name}}&#60;/div>
+    &#60;/ng-container>
+  &#60;/div>
+
+  &#60;button class="btn" [ngClass]="(testArray.length > 3) ? 'btn-danger' : 'btn-primary'"
+    (click)="testArray.length > 3 ? removeFromTestArray() : addToTestArray()">
+    &#123; &#123; testArray.length > 3 ? 'REMOVE' : 'ADD'}}
+  &#60;/button>
+
+  <b>// class</b>
+  testArray = [
+    &#123; number: 1, name: 'First' },
+    &#123; number: 2, name: 'Second' },
+    &#123; number: 3, name: 'Third' },
+  ]
+
+  addToTestArray() &#123;
+    this.testArray = [...this.testArray,
+    &#123; number: 4, name: 'Fourth' },
+    &#123; number: 5, name: 'Fifth' },
+    &#123; number: 6, name: 'Sixth' }
+    ];
+  }
+
+  removeFromTestArray() &#123;
+    this.testArray = this.testArray.slice(0,3);
+  }
+    </pre>
+    <li>A @querystagger animáció a külső &#60;div>-en van, ami egy fix, állandó elem</li>
+    <li>Az ng-container önmagában nem generál külön DOM-elemet, így az *ngFor által létrehozott &#60;div>-ek közvetlen
+      gyermekelemei lesznek az animált &#60;div>-nek</li>
+    <li>Így ismeri fel az :enter alias az új elemeket</li>
+    <li>Dinamikusan változó lista esetében nem közvetlenül az *ngFor-ral ellátott elemre, elemekre rakjuk az animációt
+      <ul>
+        <li>Szükséges egy wrapper elem</li>
+      </ul>
+    </li>
+  </ul>
+  <br>
+  <h5 #animationevents data-anchor="animationevents">Animation events</h5>
+  <ul>
+    <li>Előfordul(hat), hogy egy animáció kezdetekor, vagy éppen a végén valamilyen logikát szükséges futtatnunk
+      <ul>
+        <li>Az Angular Animatios start és done event-jei pontosan az animációk elején, és végén futnak le</li>
+        <li>Event binding segítségével férhetünk hozzájuk</li>
+        <pre>
+  (@animation.done)="function($event)"
+      </pre>
+        <li>Egy Angular AnimationEvent objektumot fog átadni függvény paraméterként</li>
+      </ul>
+    </li>
+    <app-anime [tempSwitcher]="'signupform'"></app-anime>
+    <pre>
+  <b>// anime.component.html</b>
+  &#60;app-page-content (menuClick)="menuOpen = true">&#60;/app-page-content>
+
+  <b>// anime.component.ts</b>
+  protected menuOpen: boolean = false;
+
+  <b>// content.component.html</b>
+  ...
+  &#60;button (click)="signUpModalOpen = !signUpModalOpen" class="signUp">
+      Sign Up
+  &#60;/button>
+  ...
+  &#60;app-sign-up-modal *ngIf="signUpModalOpen" (modalClose)="signUpModalOpen = false">&#60;/app-sign-up-modal>
+
+  <b>// content.component.ts</b>
+  @Output() menuClick = new EventEmitter&#60;void>();
+  protected signUpModalOpen = true;
+
+  <b>// sign-up-form.component.html</b>
+  &#60;h2>Sign Up&#60;/h2>
+  &#60;em>Hello! Welcome to the family.&#60;/em>
+  &#60;form [formGroup]="form">
+      &#60;div>
+          &#60;label [@wobble]="wobbleField && form.invalid" (@wobble.done)="wobbleField = false"
+              (@wobble.start)="onWobbleStart($event)">
+              &#60;span>Email Address&#60;/span>
+              &#60;input type="email" formControlName="email" />
+          &#60;/label>
+      &#60;/div>
+      &#60;div>Form is invalid: &#123; &#123;form.invalid}}&#60;/div>
+      &#60;div>wobbleField: &#123; &#123;wobbleField}}&#60;/div>
+      &#60;br>
+      &#60;button (click)="form.valid ? formSubmitted.emit() : wobbleField = true;" [class.disabled]="!form.valid">
+          Continue
+      &#60;/button>
+  &#60;/form>
+
+  <b>// sign-up-form.component.ts</b>
+  interface SignUpForm &#123;
+    email: FormControl&#60;string>;
+  }
+  ...
+  animations: [
+    trigger('wobble', [
+      transition('false => true', [
+        animate('1s', keyframes([
+          style(&#123; transform: 'translateX(-10px)', offset: 0.1 }),
+          style(&#123; transform: 'translateX(10px)', offset: 0.3 }),
+          style(&#123; transform: 'translateX(-10px)', offset: 0.5 }),
+          style(&#123; transform: 'translateX(5px)', offset: 0.7 }),
+          style(&#123; transform: 'translateX(5px)', offset: 0.8 }),
+          style(&#123; transform: 'translateX(0)', offset: 1 })
+        ]))
+      ])
+    ])
+  ]
+  
+  export class SignUpFormComponent &#123;
+    @Output() formSubmitted = new EventEmitter&#60;void>();
+    protected form = new FormGroup&#60;SignUpForm>(&#123;
+      email: new FormControl&#60;string>('', &#123; nonNullable: true, validators: Validators.required })
+    });
+  
+    protected wobbleField = false;
+  
+    constructor(private renderer: Renderer2) &#123; }
+  
+    protected onWobbleStart(event: AnimationEvent) &#123;
+      if (event.fromState !== 'void') &#123; // inicializálást követően void lesz a fromState
+        // this.renderer.addClass(event.element, 'invalid');
+        this.renderer.setStyle(event.element, 'color', 'red');
+        this.renderer.setStyle(event.element.lastElementChild, 'box-shadow', '0px 0px 10px 1px rgba(157,38,38,0.75)');
+      }
+    }
+  }
+
+  <b>// sign-up-form.component.html</b>
+  &#60;div cdkTrapFocus>
+    &#60;app-sign-up-form (formSubmitted)="modalClose.emit()">&#60;/app-sign-up-form>
+    &#60;button class="close" (click)="modalClose.emit()">
+      &#60;svg viewBox="0 0 24 24">
+        &#60;g clip-rule="evenodd" fill-rule="evenodd">
+          &#60;path d="M.39.39a1.335 1.335 0 011.886 0L23.61 21.725a1.333 1.333 0 11-1.886 1.886L.39 2.276a1.333 1.333 0 010-1.885z">&#60;/path>
+          &#60;path d="M.39 23.61a1.333 1.333 0 010-1.886L21.725.39a1.333 1.333 0 111.886 1.885L2.276 23.61a1.332 1.332 0 01-1.885 0z">&#60;/path>
+        &#60;/g>
+      &#60;/svg>
+      &#60;span class="visually-hidden">Close&#60;/span>
+    &#60;/button>
+  &#60;/div>
+  &#60;button class="shield" (click)="modalClose.emit()">
+    &#60;span class="visually-hidden">Close&#60;/span>
+  &#60;/button>
+
+  <b>// sign-up-form.component.ts</b>
+  @Output() modalClose = new EventEmitter&#60;void>();
+    </pre>
+    <li>Az Angular animációk csak akkor futnak le újra, ha az állapot ténylegesen megváltozik
+      <ul>
+        <li>Ha wobbleField mindig true marad, akkor az animáció nem indul újra, mert az Angular úgy látja, hogy nincs
+          változás</li>
+        <li>Ezért szükséges visszaállítanunk a property-t false-ra done eseménykor</li>
+      </ul>
+    </li>
+  </ul>
+  <br>
+  <h5 #multipleanimations data-anchor="multipleanimations">Multiple animations</h5>
+  <ul>
+    <li>Az animations tömbben megadott animációk szekvenciálisan (sorrendben) futnak le
+      <ul>
+        <li>Adott animáció az őt megelőző animáció után fog lefutni</li>
+      </ul>
+    </li>
+    <li>Az animációk azonos időben való futtatására a group függvényt használjuk</li>
+    <app-anime [tempSwitcher]="'multianime'"></app-anime>
+    <pre>
+  <b>// anime.component.html</b>
+  ...
+  &#60;div [@grouping]="players">
+    &#60;ng-container *ngFor="let player of players">
+        &#60;app-players [player]="player">&#60;/app-players>
+    &#60;/ng-container>
+  &#60;/div>
+  ...
+
+  <b>// anime.component.ts</b>
+  trigger('grouping', [
+    transition('* &#60;=> *', [
+      group([
+        query(':enter', [
+          style(&#123; opacity: 0, transform: 'scale(0.7)' }),
+          stagger(100, [
+            animate('500ms ease-in', style(&#123; opacity: 1, transform: 'scale(1)' }))
+          ])
+        ], &#123; optional: true }),
+        query(':enter', [
+          style(&#123; backgroundColor: 'rgba(0, 255, 0, .2)' }),
+          animate('1000ms ease-in', style(&#123; backgroundColor: '#212121)' }))
+        ], &#123; optional: true }),
+        query(':enter h2, :enter button', [
+          style(&#123; color: 'rgba(0, 255, 0, .7)' }),
+          animate('1000ms ease-in', style(&#123; color: 'rgb(178, 177, 188)' }))
+        ], &#123; optional: true }),
+      ]),
+      group([
+        query(':leave', [
+          style(&#123; opacity: 1, transform: 'scale(1)' }),
+          stagger(-100, [
+            animate('500ms ease-in', style(&#123; opacity: 0, transform: 'scale(0.7)' }))
+          ])
+        ], &#123; optional: true }),
+        query(':leave', [
+          animate('250ms ease-in', style(&#123; backgroundColor: 'rgba(255, 0, 0, .2)' })) // nincs style, csak "átanimáljuk" piros színre
+        ], &#123; optional: true }),
+        query(':leave h2, :leave button', [
+          animate('250ms ease-in', style(&#123; color: 'rgba(255, 0, 0, .7)' })) // nincs style, csak "átanimáljuk" piros színre
+        ], &#123; optional: true }),
+      ])
+    ])
+  ])
+  </pre>
+  </ul>
+  <br>
+  <h5 #unknownheight data-anchor="unknownheight">Unknown height</h5>
+  <ul>
+    <li>CSS magasság animálásához konkrét értéket szükséges megadni
+      <ul>
+        <li>Az auto és a 100% nem működik</li>
+        <li>A max-height sem ideiális</li>
+        <li>Az Angular animációk megoldást adnak</li>
+      </ul>
+    </li>
+    <li>A magasság animálása wildcard-dalérhető el
+      <ul>
+        <pre>
+  style(&#123; height: '*' })
+        </pre>
+        <li>Magasságra, és szélességre is lehet használni, amikor nem vagyunk biztosak az animáció magasságában,
+          szélességében</li>
+      </ul>
+    </li>
+    <li>Ahhoz, hogy jól működjön a magasság-váltás animáció, param-ot szükséges szolgáltatnunk
+      <ul>
+        <li>ehetőséget adnak dinamikus értékek megadására az animációkban, így nem kell fix számokat használni</li>
+        <li>A transition függvényhez adhatjuk hozzá</li>
+      </ul>
+    </li>
+    <app-anime [tempSwitcher]="'height'"></app-anime>
+    <pre>
+  <b>// sign-up-form.html</b>
+  &#60;h2>Sign Up&#60;/h2>
+  &#60;em>Hello! Welcome to the family.&#60;/em>
+  activePane: &#123; &#123;activePane()}}
+  &#60;form [formGroup]="form">
+      &#60;div #panes   &#60;!-- template reference variable -->
+          [@paneChange]="&#123;  &#60;!-- activePane() helyett -->
+              value: activePane(),
+              params: &#123;
+                  startHeight: panes.clientHeight
+              }
+          }" 
+          class="panes"> 
+          &#60;ng-container [ngSwitch]="activePane()">
+              &#60;div *ngSwitchCase="0" class="pane">
+                  &#60;label>
+                      &#60;span>Email Address&#60;/span>
+                      &#60;input type="email" formControlName="email" />
+                  &#60;/label>
+              &#60;/div>
+              &#60;div *ngSwitchCase="1" class="pane">
+                  &#60;label>
+                      &#60;span>Password&#60;/span>
+                      &#60;input type="password" formControlName="password" />
+                  &#60;/label>
+                  &#60;label>
+                      &#60;span>Confirm Password&#60;/span>
+                      &#60;input type="password" formControlName="password" />
+                  &#60;/label>
+                  &#60;footer>
+                      &#60;p>Password must contain:&#60;/p>
+                      &#60;ul>
+                          &#60;li>At least 8 characters&#60;/li>
+                          &#60;li>At least 1 lowercase character&#60;/li>
+                          &#60;li>At least 1 uppercase character&#60;/li>
+                          &#60;li>At leaset 1 number or special character&#60;/li>
+                      &#60;/ul>
+                  &#60;/footer>
+              &#60;/div>
+          &#60;/ng-container>
+      &#60;/div>
+      &#60;button (click)="setActiveStep()" class="continue">
+          Continue
+      &#60;/button>
+      &#60;button (click)="setActiveStep()" class="back" [class.visible]="activePane() !== 0" title="Previous Step">
+          &#60;span class="visually-hidden">Previous Step&#60;/span>
+      &#60;/button>
+  &#60;/form>
+
+  <b>// sign-up-form.ts</b>
+  trigger('paneChange', [
+      transition('* => *', [
+        query(':self', [
+          style(&#123; height: '&#123; &#123;startHeight}}px' }) // ezzel az értékkel indulunk, hogy ne változzon azonnal a méret
+        ]),
+        query(':enter', [ // belépő panel kezdeti állapota
+          style(&#123; opacity: 0, scale: 0.9 })
+        ]),
+        query(':leave', [ // a kilépő panel animálása
+          style(&#123; opacity: 1, scale: 1 }),
+          animate('1s ease-in', style(&#123; opacity: 0, scale: 0.9 }))
+        ]),
+        group([ // az új panel
+          query(':self', [  // a :self a triggerelő elemet célozza
+            animate('1s ease-in', style(&#123; height: '*' }))
+          ]),
+          query(':enter', [
+            animate('1s ease-in', style(&#123; opacity: 1, scale: 1 }))
+          ]),
+        ], &#123; params: &#123; startHeight: 0 } }) // ha nem lenne megadva, az @paneChange trigger hibára futhatna, mert nem tudná kiszámítani az induló magasságot
+      ])
+    ])
+
+  ...
+
+  protected activePane = signal(0);
+
+  setActiveStep() &#123;
+    this.activePane.set(this.activePane() === 0 ? 1 : 0);
+  }
+    </pre>
+    <li>A panes osztállyal rendelkező &#123;div> dinamikusan változtassa a magasságát</li>
+    <li>Az űrlap Angular reaktív formot (FormGroup) használ</li>
+    <li>Az animáció az activePane() változásakor történik
+      <ul>
+        <li>A startHeight paraméteren keresztül átadjuk az aktuális magasságát a .panes elemnek</li>
+      </ul>
+    </li>
+  </ul>
+  <br>
+  <h5 #flexibilitywithparams data-anchor="flexibilitywithparams">Flexibility with params</h5>
+  <ul>
+    <app-slider [tempSwitcher]="'default'"></app-slider>
+    <pre>
+  <b>// slider.component.html</b>
+  &#60;div [@slideToggle]="selectedImage()" class="image">
+    &#60;ng-container [ngSwitch]="selectedImage()">
+        &#60;img *ngSwitchCase="1" src="assets/imgs/slider/slider_1.jpg" loading="lazy" alt="A neon frog" />
+        &#60;img *ngSwitchCase="2" src="assets/imgs/slider/slider_2.jpg" loading="lazy" alt="A dog on a surfboard" />
+        &#60;img *ngSwitchCase="3" src="assets/imgs/slider/slider_3.jpg" loading="lazy"
+            alt="A chinchilla with sunglasses" />
+        &#60;img *ngSwitchCase="4" src="assets/imgs/slider/slider_4.jpg" loading="lazy"
+            alt="A cool cat wearing a jacket" />
+    &#60;/ng-container>
+  &#60;/div>
+
+  &#60;nav>
+      &#60;button (click)="previous()" [disabled]="this.selectedImage() === 1">
+          Previous Image
+      &#60;/button>
+      &#60;button (click)="next()" [disabled]="this.selectedImage() === 4">
+          Next Image
+      &#60;/button>
+  &#60;/nav>
+
+  <b>// slider.component.ts</b>
+  animations: [
+    trigger('slideToggle', [
+      transition('* => *', [
+        group([
+          query(':enter', style(&#123; transform: 'translateX(-100%) scale(.5)' })),
+          query(':leave', [
+            animate('750ms ease-in-out', style(&#123; transform: 'translateX(100%) scale(.25)' }))
+          ], &#123; optional: true }), // szükséges, mert inicializáláskor még nincs kilépő kép
+          query(':enter', [
+            animate('750ms ease-in-out', style(&#123; transform: 'translateX(0) scale(1)' }))
+          ])
+        ])
+      ])
+    ])
+  ]
+
+  ...
+
+  protected selectedImage = signal(1);
+
+  previous() &#123;
+    if (this.selectedImage() > 1) &#123;
+      this.selectedImage.set(this.selectedImage() - 1);
+    }
+  }
+
+  next() &#123;
+    if (this.selectedImage() < 4) &#123;
+      this.selectedImage.set(this.selectedImage() + 1);
+    }
+  }
+    </pre>
+    <li>A folyamat a gombnyomást követően
+      <ol>
+        <li>A belépő (:enter) elem kezdőállapotát beállítjuk
+          <ul>
+            <li>Balra van tolva (translateX(-100%)) és kicsinyített (scale(.5))</li>
+          </ul>
+        </li>
+        <li>Az éppen látható (:leave) kép animációval távozik
+          <ul>
+            <li>Jobbra (translateX(100%)) és még kisebb is lesz (scale(.25))</li>
+          </ul>
+        </li>
+        <li>A belépő (:enter) kép animációval megjelenik
+          <ul>
+            <li>Balról (translateX(0)) és normál méretű lesz (scale(1))</li>
+          </ul>
+        </li>
+      </ol>
+    </li>
+    <br>
+    <table style="width: 100%; border-collapse: collapse; border: 1px solid black;">
+      <tr>
+        <th></th>
+        <th>Leírás</th>
+        <th>Elem</th>
+        <th>Stílus</th>
+      </tr>
+      <tr>
+        <td>1) `query(:enter, style(...))`</td>
+        <td>Az új kép kívülre kerül (balra tolva, kicsinyítve)</td>
+        <td>ÚJ kép (`:enter`)</td>
+        <td>`translateX(-100%) scale(.5)`</td>
+      </tr>
+      <tr>
+        <td>2) `query(:leave, animate(...))`</td>
+        <td>Az előző kép elcsúszik jobbra és zsugorodik</td>
+        <td>RÉGI kép (`:leave`)</td>
+        <td>`translateX(100%) scale(.25)`</td>
+      </tr>
+      <tr>
+        <td>3) `query(:enter, animate(...))`</td>
+        <td>Az új kép beúszik balról és megnő</td>
+        <td>ÚJ kép (`:enter`)</td>
+        <td>`translateX(0) scale(1)`</td>
+      </tr>
+    </table>
+    <br>
+    <li>Ezzel már csak annyi a baj, hogy amikor visszafelé lapozunk, akkor is jobbra ugrik ki a kép
+      <ul>
+        <li>Ennek kiküszöböléséért az első lépés, hogy létrehozunk egy paramétert, amivel megmondjuk, melyik irányba
+          szeretnénk végezni az animációt</li>
+        <li>Majd a previous és next függvényekben beállítjuk a megfelelő értéket</li>
+        <pre>
+  protected animationDirection = signal&#60;'left' | 'right'>('right');
+
+  previous() &#123;
+    if (this.selectedImage() > 1) &#123;
+      this.animationDirection.set('left');
+      this.selectedImage.set(this.selectedImage() - 1);
+    }
+  }
+
+  next() &#123;
+    if (this.selectedImage() < 4) &#123;
+      this.animationDirection.set('right');
+      this.selectedImage.set(this.selectedImage() + 1);
+    }
+  }
+          </pre>
+        <li>A köetkező lépés, hogy paramétert adunk hozzá az animációhoz
+          <ul>
+            <li>A transition függvény option-jébe kerül az objektumunk</li>
+          </ul>
+        </li>
+        <pre>
+  animations: [
+    trigger('slideToggle', [
+      transition('* => *', [
+        group([
+          query(':enter', style(&#123; transform: 'translateX(&#123; &#123;enterStart}}) scale(.5)' })),
+          query(':leave', [
+            animate('750ms ease-in-out', style(&#123; transform: 'translateX(&#123; &#123;leaveEnd}}) scale(.25)' }))
+          ], &#123; optional: true }), // szükséges, mert inicializáláskor még nincs kilépő kép
+          query(':enter', [
+            animate('750ms ease-in-out', style(&#123; transform: 'translateX(0) scale(1)' }))
+          ])
+        ])
+      ], &#123;
+        params: &#123;
+          leaveEnd: '',
+          enterStart: ''
+        }
+      })
+    ])
+  ]
+        </pre>
+        <li>Ezzel előkészítettük az override paramétereket</li>
+        <li>Nincs más dolgunk, mint bekötni a template-be őket</li>
+      </ul>
+    </li>
+    <app-slider [tempSwitcher]="'params'"></app-slider>
+    <pre>
+  <b>// slider.component.html</b>
+  &#60;div [@slideToggleDynamic]="&#123;
+      value: selectedImage(),
+      params: &#123;
+          leaveEnd: animationDirection() === 'right' ? '100%' : '-100%',
+          enterStart: animationDirection() === 'right' ? '-100%' : '100%'
+      }
+  }" class="image">
+      &#60;ng-container [ngSwitch]="selectedImage()">
+          &#60;img *ngSwitchCase="1" src="assets/imgs/slider/slider_1.jpg" loading="lazy" alt="A neon frog" />
+          &#60;img *ngSwitchCase="2" src="assets/imgs/slider/slider_2.jpg" loading="lazy" alt="A dog on a surfboard" />
+          &#60;img *ngSwitchCase="3" src="assets/imgs/slider/slider_3.jpg" loading="lazy"
+              alt="A chinchilla with sunglasses" />
+          &#60;img *ngSwitchCase="4" src="assets/imgs/slider/slider_4.jpg" loading="lazy"
+              alt="A cool cat wearing a jacket" />
+      &#60;/ng-container>
+  &#60;/div>
+
+  &#60;nav>
+      &#60;button (click)="previous()" [disabled]="this.selectedImage() === 1">
+          Previous Image
+      &#60;/button>
+      &#60;button (click)="next()" [disabled]="this.selectedImage() === 4">
+          Next Image
+      &#60;/button>
+  &#60;/nav>
+
+  <b>// slider.component.ts</b>
+  trigger('slideToggleDynamic', [
+    transition('* => *', [
+      group([
+        query(':enter', style(&#123; transform: 'translateX(&#123; &#123;enterStart}}) scale(.5)' })),
+        query(':leave', [
+          animate('750ms ease-in-out', style(&#123; transform: 'translateX(&#123; &#123;leaveEnd}}) scale(.25)' }))
+        ], &#123; optional: true }), // szükséges, mert inicializáláskor még nincs kilépő kép
+        query(':enter', [
+          animate('750ms ease-in-out', style(&#123; transform: 'translateX(0) scale(1)' }))
+        ])
+      ])
+    ], &#123;
+      params: &#123;
+        leaveEnd: '',
+        enterStart: ''
+      }
+    })
+  ])
+
+  ...
+
+  protected selectedImage = signal(1);
+
+  protected animationDirection = signal&#60;'left' | 'right'>('right');
+
+
+  previous() &#123;
+    if (this.selectedImage() > 1) &#123;
+      this.animationDirection.set('left');
+      this.selectedImage.set(this.selectedImage() - 1);
+    }
+  }
+
+  next() &#123;
+    if (this.selectedImage() &#60; 4) &#123;
+      this.animationDirection.set('right');
+      this.selectedImage.set(this.selectedImage() + 1);
+    }
+  }
+    </pre>
+    <li>Végül egy dinamikusan változó irányú animációt sikerült elérni
+      <ul>
+        <li>1) A params-ben két változó kerül meghatározásra
+          <ul>
+            <li>leaveEnd (régi kép távozási iránya)</li>
+            <li>enterStart (új kép érkezési iránya)</li>
+          </ul>
+        </li>
+        <li>2) Az @slideToggle trigger aktiválódik, ha a selectedImage() signal értéke megváltozik</li>
+
+        <li>3) Az Angular behelyettesíti az &#123; &#123; enterStart }} és az &#123; 0&#123; leaveEnd }} értékeket</li>
+
+        <li>4) Az animáció lefut a dinamikusan meghatározott iránnyal
+          <ul>
+            <li>animationDirection() === 'right'
+              <ul>
+                <li>Az új kép balról jön be (enterStart = -100%)</li>
+                <li>A régi kép pedig jobbra megy ki (leaveEnd = 100%)</li>
+              </ul>
+            </li>
+            <li>animationDirection() === 'left'
+              <ul>
+                <li>Az új kép jobbról jön be (enterStart = 100%)</li>
+                <li>A régi kép pedig balra megy ki (leaveEnd = -100%)</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <br>
+  <h5 #reusableanimations data-anchor="toreusableanimationsdo">Reusable animations</h5>
+  <ul>
+    <li>Bizonyos animációkat általában több komponensben is használunk</li>
+    <li>Az újra felhasználható animációkat külön fájlban szokás tárolni
+      <ul>
+        <li>Egy exportálható állandót hozunk létre</li>
+        <li>Paramétereket is meg kell majd adnunk, mert akadnak változók a konstansban</li>
+      </ul>
+    </li>
+    <br>
+    <div style="position: relative; display: grid; justify-self: center; max-width: 500px; overflow: hidden;">
+      <app-header></app-header>
+      <app-slider [tempSwitcher]="'reuse'"></app-slider>
+    </div>
+    <pre>
+    <b>// slider.component.html</b>
+  &#60;div [@slideToggleDynamicReuseable]="&#123;
+      value: selectedImage(),
+      params: &#123;
+          leaveEnd: animationDirection() === 'right' ? '100%' : '-100%',
+          enterStart: animationDirection() === 'right' ? '-100%' : '100%',
+          hiddenScale: .25
+      }
+  }" class="image">
+      &#60;ng-container [ngSwitch]="selectedImage()">
+          &#60;img *ngSwitchCase="1" src="assets/imgs/slider/slider_1.jpg" loading="lazy" alt="A neon frog" />
+          &#60;img *ngSwitchCase="2" src="assets/imgs/slider/slider_2.jpg" loading="lazy" alt="A dog on a surfboard" />
+          &#60;img *ngSwitchCase="3" src="assets/imgs/slider/slider_3.jpg" loading="lazy"
+              alt="A chinchilla with sunglasses" />
+          &#60;img *ngSwitchCase="4" src="assets/imgs/slider/slider_4.jpg" loading="lazy"
+              alt="A cool cat wearing a jacket" />
+      &#60;/ng-container>
+  &#60;/div>
+
+  &#60;nav>
+      &#60;button (click)="previous()" [disabled]="this.selectedImage() === 1">
+          Previous Image
+      &#60;/button>
+      &#60;button (click)="next()" [disabled]="this.selectedImage() === 4">
+          Next Image
+      &#60;/button>
+  &#60;/nav>
+
+  <b>// slider.component.ts</b>
+  trigger('slideToggleDynamicReuseable', [
+    transition('* => *', [
+      useAnimation(slideAnimation)
+    ])
+  ])
+
+  <b>//header.component.html</b>
+  &#60;div [@slideToggleDynamicReuseable]="&#123;
+        value: showMenu(),
+        params: &#123;
+        leaveEnd: '100%',
+        enterStart: '100%',
+        hiddenScale: 1
+        }
+    }">
+    &#60;app-nav *ngIf="showMenu()" (close)="showMenu.set(false)">&#60;/app-nav>
+  &#60;/div>
+
+  <b>//header.component.ts</b>
+  trigger('slideToggleDynamicReuseable', [
+    transition('* => *', [
+      useAnimation(slideAnimation)
+    ])
+  ])
+
+  <b>// slider.animation.ts</b>
+  export const slideAnimation = animation([
+      group([
+          query(':enter', style(&#123; transform: 'translateX(&#123; &#123; enterStart }}) scale(&#123; &#123; hiddenScale }})' }), &#123; optional: true }),
+          query(':leave', [
+              animate('750ms ease-in-out', style(&#123; transform: 'translateX(&#123; &#123; leaveEnd }}) scale(&#123; &#123; hiddenScale }})' }))
+          ], &#123; optional: true }),
+          query(':enter', [
+              animate('750ms ease-in-out', style(&#123; transform: 'translateX(0) scale(1)' }))
+          ], &#123; optional: true })
+      ])
+  ])
+  </pre>
+    <li>Az animation() egy újrahasznosítható animációs séma létrehozására szolgál az Angularban
+      <ul>
+        <li>Megoldja, hogy az animációt külön fájlban tudjuk definiáni, és bármely trigger()-ben meghívni</li>
+      </ul>
+    </li>
+  </ul>
+  <br>
+  <h5 #disableanimations data-anchor="disableanimations">Disable animations</h5>
+  <ul>
+    <li>Sokszor nem kívánatos, hogy már a komponens inicializálásakor lefusson az animáció</li>
+    <li>Animation control binding-ot fogunk használni</li>
+    <pre>
+  [@.disabled]
+  </pre>
+    <li>Ha true értéket kap, minden animációt blokkol, még a nest-elt elemekét is</li>
+    <br>
+    <app-slider [tempSwitcher]="'disable'"></app-slider>
+    <pre>
+  <b>// slider.component.html</b>
+  &#60;div [@slideToggleDynamicReuseable]="&#123;
+      value: selectedImage(),
+      params: &#123;
+          leaveEnd: animationDirection() === 'right' ? '100%' : '-100%',
+          enterStart: animationDirection() === 'right' ? '-100%' : '100%',
+          hiddenScale: .25
+      }
+  }" [@.disabled]="animationDisabled()" class="image">
+  ...
+
+  <b>// slider.component.ts</b>
+  ...
+  protected animationDisabled = signal(true);
+
+  constructor() &#123;
+    afterNextRender(() => &#123;
+      if (this.animationDisabled()) &#123;
+        this.animationDisabled.set(false);
+      }
+    })
+  }
+  ...
+  </pre>
+    <li>Fontos tudnivaló, hogy az animation.start és animation.done event-ek akkor is lefutnak, ha az animáció ki van
+      kapcsolva</li>
+  </ul>
+  <br>
+
+  <br>
+  <h5 #todo data-anchor="todo">TODO</h5>
+  <ul>
+    <li></li>
+  </ul>
+</div>
+
 <div class="anchor-navi-container">
   <div *ngFor="let mainButton of anchorButtons" class="btn-group">
     <button type="button" class="btn btn-primary btn-sm anchor" (click)="scrollToAnchor(mainButton?.anchor)">
@@ -814,6 +2233,74 @@
       status: string;
   }
     </pre>
+    <li>A Javascript és a Typescript class eltér egymástól
+      <ul>
+        <li>Javascript class
+          <ul>
+            <li>"Csak" egy eszköz objektumok létrehozására</li>
+            <pre>
+  class Task &#123;
+    constructor(name) &#123;
+      this.name = name;
+    }
+  }
+
+  const firstTask = new Task(""); // létrehoztunk egy objektumot
+  console.log(firstTask.name);
+
+  ↓↓↓↓↓
+
+  "Kivinni a szemetet"
+
+  let taskType = Task; // Ez egy változó, ami az osztályra mutat, de nem "típus"
+            </pre>
+            <li>JavaScript-ben nincs statikus típusellenőrzés, így a következő is gond nélkül lefut</li>
+            <pre>
+  let firstTask = Task; // a firstTask a Task konstruktorra mutat
+
+  const taskInstance = new firstTask("Felporszívózni"); // teljesen megegyezik a new Task("Felporszívózni") kóddal
+
+  firstTask = "Nem fogunk hibát kapni!";
+
+  console.log(firstTask);
+
+  ↓↓↓↓↓
+
+  "Nem fogunk hibát kapni!"
+            </pre>
+            <li>JavaScript-ben minden osztály egy konstruktorfüggvény a háttérben</li>
+          </ul>
+        </li>
+        <br>
+        <li>Typescript class
+          <ul>
+            <li>Objektum létrehozásán kívül típusként is funkcionál</li>
+            <pre>
+              class Task &#123;
+                name: string;
+                constructor(name: string) &#123;
+                  this.name = name;
+                }
+              }
+
+              const firstTask = new Task("Meglocsolni a növényeket); // létrehoztunk egy objektumot
+              let secondTask: Task; // típust definiáltunk, nem példányosítottunk
+
+              secondTask = &#123; name: "Elmosogatni" }; // megfelelünk a Task típusnak
+              secondTask = &#123; title: "Port törölni" }; // hibát kapunk, mert name helyett a title kulcsot használjuk
+            </pre>
+            <li>Azzal, hogy típust adunk a változónak, a Task osztály referenciáját eltároljuk a secondTask változóban
+              <ul>
+                <li>A Task egy osztály, ami JavaScript-ben valójában egy függvény a háttérben</li>
+                <li>A secondTask változó innentől kezdve a Task osztályra mutat, tehát használhatjuk
+                  (például) példányosításra
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
   </ul>
 </div>
 
@@ -3622,6 +5109,20 @@
         </pre>
       </ul>
     </li>
+    <li>isNaN
+      <ul>
+        <li>ellenőrzi, hogy egy érték NaN-e (Not-a-Number)</li>
+        <li>Automatikusan átalakítja a bemenetet szám típussá, és csak utána vizsgál</li>
+        <pre>
+  isNaN(123);        // false   mert 123 egy szám
+  isNaN('hello');    // true    mert 'hello' nem alakítható számmá
+  isNaN(undefined);  // true    mert undefined nem szám
+  isNaN(null);       // false   mert a null numerikus értékké (0) alakul
+  isNaN('123');      // false   mert a '123' string számmá alakítható
+  isNaN(NaN);        // true    mert NaN önmaga is NaN
+        </pre>
+      </ul>
+    </li>
   </ul>
 </div>
 
@@ -3861,78 +5362,2937 @@
       </ul>
     </li>
   </ul>
-
 </div>
 
 <div>
-  <h3 #todo data-anchor="todo">TODO</h3>
+  <h3 #svgsprite data-anchor="svgsprite">SVG sprite</h3>
   <ul>
-    <li></li>
+    <li>Olyan technika, amely lehetővé teszi több SVG ikon vagy grafikai elem egyetlen fájlba történő összegyűjtését
+    </li>
+    <li>Segítségével hatékonyan kezelhetünk több SVG fájlt, csökkenthetjük a hálózati kérések számát, és
+      gyorsíthatjuk az oldal betöltését</li>
+    <li>Az egyes elemeket az &#60;use> tag segítségével lehet hivatkozni, így az adott elem nem kerül külön fájlként
+      betöltésre</li>
+    <pre>
+  <b>// SVG sprite szerkezet</b>
+  &#60;svg xmlns="http://www.w3.org/2000/svg">
+      &#60;symbol id="icon-heart" viewBox="0 0 24 24">
+        &#60;path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z">&#60;/path>
+      &#60;/symbol>
+      &#60;symbol id="icon-star" viewBox="0 0 24 24">
+        &#60;path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z">&#60;/path>
+      &#60;/symbol>
+  &#60;/svg>
+        </pre>
+    <li>A &#60;symbol> tag tartalmazza az SVG egyes elemeit</li>
+    <li>Az id attribútum segítségével adhatunk egyedi nevet ezeknek az elemeknek</li>
+    <pre>
+  <b>// SVG sprite használata</b>
+  &#60;svg class="icon">
+      &#60;use xlink:href="assets/icons.svg#icon-heart">&#60;/use>
+  &#60;/svg>
+
+  &#60;svg class="icon">
+      &#60;use xlink:href="assets/icons.svg#icon-star">&#60;/use>
+  &#60;/svg>
+    </pre>
   </ul>
 </div>
 
 <div>
-  <h3>+ témakörök</h3>
-  <ol>
-    <li>
-      Az Angular @if direktívája miatt a sablon frissül:
-
-      Az @if (firstNameAutofilled) &#123; &#60;mat-hint>Autofilled!&#60;/mat-hint> } szintaktika az Angular deferált if
-      kifejezése.
-      Ha az firstNameAutofilled értéke true-ra változik, az @if új DOM elemet hoz létre, így a „Autofilled!” üzenet
-      megjelenik.
+  <h3 #importantsites data-anchor="importantsites">Important sites</h3>
+  <ul>
+    <li><a href="https://caniuse.com/" target="_blank">CanIuse</a>
+      <ul>
+        <li>Böngészőkompatibilitás ellenőrzés</li>
+        <li>Megmutatja, hogy a különböző HTML, CSS és JavaScript funkciók mely böngészőkben támogatottak</li>
+      </ul>
     </li>
-    <li>Angular animations</li>
-    <li>getter, setter</li>
-    <li>ElementRef (+nativeElement)</li>
-    <li>track vs trackBy</li>
-    <li>signal</li>
-    <li>orderBy (pipe)</li>
-    <li>ng start / ng build / ng watch / ng test</li>
-    <li>ViewEncapsulation</li>
-    <li>CI/CD pipeline</li>
+    <li><a href="https://css-tricks.com/" target="_blank">css-Tricks</a>
+      <ul>
+        <li>Népszerű blog és tudásbázis, amely tele van CSS, JavaScript és frontend fejlesztési tippekkel, trükkökkel és
+          best practice-ekkel</li>
+      </ul>
+    </li>
+    <li><a href="https://javascript.info/" target="_blank">JavaScript.info</a>
+      <ul>
+        <li>Részletes, jól strukturált tananyag a modern JavaScript működéséről</li>
+      </ul>
+    </li>
+    <li><a href="https://angular.dev/update-guide" target="_blank">Angular Update Guide</a>
+      <ul>
+        <li>Hivatalos Angular tool</li>
+        <li>Lépésről lépésre végigvezet az Angular verziófrissítés folyamatán</li>
+        <li>Megmutatja, hogy milyen változások történtek az adott verziók között, és milyen módosításokat kell elvégezni
+          a kódbanMegmutatja, hogy milyen változások történtek az adott verziók között, és milyen módosításokat kell
+          elvégezni a kódban</li>
+      </ul>
+    </li>
+    <li><a href="https://pagespeed.web.dev/" target="_blank">PageSpeed Insight</a>
+      <ul>
+        <li>Nyílt forráskódú eszköz, amely elemzi a weboldalak teljesítményét, SEO-ját, hozzáférhetőségét és legjobb
+          gyakorlatait</li>
+      </ul>
+    </li>
+    <li><a href="https://education.github.com/git-cheat-sheet-education.pdf" target="_blank">Git Cheat Sheet</a>
+      <ul>
+        <li>Cheatsheet a leggyakrabban használt Git parancsokhoz</li>
+        <li>Tartalmaz alapvető műveleteket, haladóbb parancsokat</li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #accessibilityattributes data-anchor="accessibilityattributes">Accessibility attributes</h3>
+  <ul>
     <li>aria-label / aria-hidden / aria-expanded / aria-control (accessibility attributes)</li>
-    <li>angularjson / stylePreprocessorOptions</li>
-    <li>@Input() set changeToGreen(condition: boolean) &#123; }</li>
-    <li>eventpreventDefault() --> Az alapértelmezett HTML működést írja felül + eventstopPropogation()</li>
-    <li>Angular v12-től v17-ig mik az újítások? (Signal)</li>
-    <li>ES6</li>
-    <li>Salting</li>
-    <li>CORS error</li>
-    <li>Rekurzió</li>
-    <li>Mikor referencia az érték, és mikor nem?</li>
-    <li>Tabulátor sorrend</li>
-    <li>stylePreprocessorOptions</li>
+    <li>ARIA = Accessible Rich Internet Applications</li>
+    <li>Olyan HTML attribútumokat biztosít, amelyek segítik a weboldalak hozzáférhetőségét, különösen a
+      képernyőolvasókat, és más segédeszközöket használó felhasználók számára</li>
+  </ul>
+  <br>
+  <h5 #arialabel data-anchor="arialabel">aria-label</h5>
+  <ul>
+    <li>aria-label
+      <ul>
+        <li>HTML attribútum, amely lehetővé teszi, hogy egy elemhez egy szöveges címkét (label) rendeljünk</li>
+        <li>A képernyőolvasó számára olvasható, de nem jelenik meg vizuálisan az oldalon</li>
+        <li>Segít a felhasználónak megérteni az elem funkcióját (például egy felirat nélküli gomb)</li>
+        <br>
+        <button class="btn btn-dark" aria-label="További információk megtekintése">
+          <i class="bi bi-info-circle"></i>
+        </button>
+        <pre>
+  &#60;button class="btn btn-dark" aria-label="További információk megtekintése">
+    &#60;i class="bi bi-info-circle">&#60;/i>
+  &#60;/button>
+        </pre>
+      </ul>
+    </li>
+  </ul>
+  <br>
+  <h5 #ariahidden data-anchor="ariahidden">aria-hidden</h5>
+  <ul>
+    <li>Segítségével elrejthetünk egy elemet a képernyőolvasók elől anélkül, hogy eltávolítanánk azt a DOM-ból</li>
+    <pre>
+  &#60;div aria-hidden="true">Ez az elem rejtett a képernyőolvasók számára.&#60;/div>
+    </pre>
+  </ul>
+  <br>
+  <h5 #ariaexpanded data-anchor="ariaexpanded">aria-expanded</h5>
+  <ul>
+    <li>Állapotjelző attribútum, amely megmondja, hogy egy összecsukható, vagy kibővített tartalom látható-e az adott
+      elem alatt</li>
+    <li>Leggyakrabban menük, legördülő listák és accordion-ok esetén használjuk</li>
+    <pre>
+  &#60;button aria-expanded="false" aria-controls="menu">Menü&#60;/button>
+
+  &#60;div id="menu" hidden>
+    &#60;!-- menu content -->
+  &#60;/div>
+    </pre>
+  </ul>
+  <br>
+  <h5 #ariacontrols data-anchor="ariacontrols">aria-controls</h5>
+  <ul>
+    <li>Azt jelzi, hogy az adott elem egy másik elemre van hatással</li>
+    <li>Például egy gomb, amely kinyit egy menüt, vagy egy másik gomb, amely kibővíti egy szövegdoboz tartalmát</li>
+    <li>Értéke a vonatkozó elem id-ja</li>
+    <pre>
+  &#60;button aria-controls="info-box" aria-expanded="false">További információk&#60;/button>
+
+  &#60;div id="info-box" hidden>
+    &#60;!-- More text -->
+  &#60;/div>
+    </pre>
+  </ul>
+  <br>
+  <h5 #ariarole data-anchor="ariarole">aria-role</h5>
+  <ul>
+    <li>Meghatározza, hogy egy adott elem milyen szerepet (funkciót) tölt be a weboldalon</li>
+    <li>Ha egy HTML elem viselkedése nem egyértelmű a böngésző számára, az aria-role segítsévével azonosíthatjuk a
+      funkcióját</li>
+    <pre>
+  &#60;div role="button" tabindex="0">Kattints ide!&#60;/div>
+    </pre>
+  </ul>
+  <br>
+  <h5 #arialive data-anchor="arialive">aria-live</h5>
+  <ul>
+    <li>Dinamikusan frissülő tartalmaknál használják, hogy jelezze a képernyőolvasó számára, hogy egy elem tartalma
+      frissült</li>
+    <li>Segít a frissített tartalom figyelésében, és olvasásában</li>
+    <li>Értékei lehetnek
+      <ol>
+        <li>off - a frissülő tartalomról nem szükséges értesíteni a felhasználót</li>
+        <li>polite - az frissítésről az üzenet csak akkor kerül beolvasásra, amikor az aktuális beszéd befejeződik</li>
+        <li>assertive - a képernyőolvasónak azonnal értesíti a felhasználót a frissülő tartalomról</li>
+      </ol>
+    </li>
+    <pre>
+  &#60;div aria-live="polite">A tartalom frissült.&#60;/div>
+    </pre>
+  </ul>
+  <br>
+  <h5 #ariadescribedby data-anchor="ariadescribedby">aria-describedby</h5>
+  <ul>
+    <li>Egy elemhez kapcsol egy másik elemet, amely további leírást ad a felhasználónak</li>
+    <li>Gyakran űrlapoknál, és interaktív elemeknél alkalmazzák, hogy magyarázó szöveget biztosítsanak</li>
+    <pre>
+  &#60;input type="text" aria-describedby="emailHelp">
+  &#60;small id="emailHelp">Kérjük, adja meg az email címét.&#60;/small>
+    </pre>
+  </ul>
+  <br>
+  <h5 #ariachecked data-anchor="ariachecked">aria-checked</h5>
+  <ul>
+    <li>Jelzi, hogy egy interaktív elem (például egy checkbox) ki van-e választva, és azt is, hogy milyen állapotban van
+    </li>
+    <li>Értékei lehetnek
+      <ol>
+        <li>false - nincs kiválasztva</li>
+        <li>true - ki van választva</li>
+        <li>mixed - részben kiválasztott az elem (például indeterminate Bootstrap checkbox)</li>
+      </ol>
+    </li>
+    <pre>
+  &#60;input type="checkbox" aria-checked="true"> Feltételek elfogadása
+    </pre>
+  </ul>
+  <br>
+  <h5 #ariaselected data-anchor="ariaselected">aria-selected</h5>
+  <ul>
+    <li>Azt jelzi, hogy egy elem ki van választva egy csoportból</li>
+    <li>Tab-oknál vagy listáknál használatos, hogy a felhasználó tudja, melyik elem van kiválasztva</li>
+    <pre>
+  &#60;li role="tab" aria-selected="true">Tab 1&#60;/li>
+  &#60;li role="tab" aria-selected="false">Tab 2&#60;/li>
+    </pre>
+  </ul>
+  <br>
+  <h5 #ariainvalid data-anchor="ariainvalid">aria-invalid</h5>
+  <ul>
+    <li>Ha egy form mező érvénytelen, true értéket vesz fel</li>
+    <li>Különösen hasznos űrlapok esetében, amikor a felhasználónak egy hibát jelezni kell</li>
+    <pre>
+  &#60;input type="email" aria-invalid="true" />
+    </pre>
+  </ul>
+</div>
+
+<div>
+  <h3 #cdn data-anchor="cdn">CDN</h3>
+  <ul>
+    <li>Content Delivery Network
+      <ul>
+        <li>hálózati infrastruktúra, amely a weboldalak tartalmát különböző szerverekre tárolja, amelyek földrajzilag
+          elosztva vannak a világ különböző pontjain</li>
+      </ul>
+    </li>
+    <li>Egy globális hálózat, amely a weboldalak statikus tartalmát (például képek, CSS, JavaScript fájlok) gyorsabban,
+      és hatékonyabban képes elérhetővé tenni a felhasználók számára, függetlenül attól, hogy hol tartózkodnak a
+      világban
+    </li>
+    <li>A felhasználó, amikor megnyitja a weboldalt, a geográfiailag legközelebbi CDN szerveréről tölti le az adatokat
+    </li>
+    <li>Gyors betöltést, terheléselosztás, magas uptime-ot biztosít</li>
+    <pre>
+  &#60;!-- jQuery CDN -->
+  &#60;script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js">&#60;/script>
+
+  &#60;!-- Bootstrap CDN -->
+  &#60;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  &#60;script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">&#60;/script>
+    </pre>
+  </ul>
+</div>
+
+<div>
+  <h3 #es6 data-anchor="es6">ES6</h3>
+  <ul>
+    <li>Avagy ECMAScript 2015, a JavaScript egyik verziója</li>
+    <li>A JavaScript egyik legnagyobb, és legfontosabb frissítése volt</li>
+    <li>Az ECMAScript a JavaScript hivatalos szabványa, amelyet az ECMA International fejleszt és karbantart</li>
+    <li>Az ES6 számos új funkciót hozott a JavaScript nyelvbe, amelyeket ma már széles körben használnak a modern
+      fejlesztésben</li>
+    <li>A legtöbb modern böngésző, és JavaScript motor már támogatja az ES6-t
+      <ul>
+        <li>Illetve az újabb ECMAScript verziókat is</li>
+      </ul>
+    </li>
+    <li>A TypeScript alapja ES6+ szintaxisra épül, tehát minden ES6 funkció elérhető benne
+      <ul>
+        <li>TypeScriptben akár ESNext (a legújabb ECMAScript szabványok) kódot is írhatunk</li>
+      </ul>
+    </li>
+    <li>A legfontosabb újításai
+      <ol>
+        <li>let és const változók
+          <ul>
+            <pre>
+  let x = 10;  // újra értéket lehet adni neki
+  const y = 20; // állandó, nem módosítható
+            </pre>
+          </ul>
+        </li>
+        <li>Arrow functions
+          <ul>
+            <li>Rövidebb szintaxist eredményez</li>
+            <li>Megőrzi a this kontextust</li>
+            <li>Nem kell külön return, ha csak egy kifejezést tartalmaz</li>
+            <pre>
+  const add = (a, b) => a + b;
+  console.log(add(2, 3));
+
+  ↓↓↓↓↓
+
+  5
+            </pre>
+          </ul>
+        </li>
+        <li>Backtick szintaxis ``
+          <ul>
+            <li>Template literal</li>
+            <li>Helyettesíti a régi + összefűzést</li>
+            <li>Segítségével többsoros szövegeket is könnyen lehet kezelni</li>
+            <li>Változókat és kifejezéseket ( $&#123;} ) is könnyen beilleszthetünk</li>
+            <pre>
+  const name = "John Connor";
+  console.log(`Hello, $&#123;name}!`);
+
+  ↓↓↓↓↓
+
+  "Hello, John!"
+
+
+  const text = `Ez egy többsoros
+      szöveg, amit gond nélkül
+      leírhatunk több sorban!`;
+
+  console.log(text);
+
+  ↓↓↓↓↓
+
+  "Ez egy többsoros szöveg, amit gond nélkül leírhatunk több sorban!""
+            </pre>
+          </ul>
+        </li>
+        <li>Destructuring
+          <ul>
+            <li>Objektumok és tömbök bontása</li>
+            <li>Egyszerűsíti az értékek kinyerését objektumokból és tömbökből</li>
+            <pre>
+  // object destructuring
+  const person = &#123; name: "Alice", age: 25 };
+  const &#123; name, age } = person;
+  console.log(name, age);
+
+  ↓↓↓↓↓
+
+  "Alice" 25
+            </pre>
+          </ul>
+        </li>
+        <li>Spread és Rest operátor
+          <ul>
+            <li>Másolat készítéséhez, és argumentumok összegyűjtéséhez</li>
+            <pre>
+  const arr = [1, 2, 3];
+  const newArr = [...arr, 4, 5]; // spread - a másolathoz új elemeket adunk
+  console.log(newArr);
+
+  ↓↓↓↓↓
+
+  [1, 2, 3, 4, 5]
+
+  function sum(...numbers) &#123; // rest - több paraméter egy tömbbe gyűjtve
+    return numbers.reduce((acc, num) => acc + num, 0);
+  }
+  console.log(sum(1, 2, 3, 4));
+
+  ↓↓↓↓↓
+
+  10
+            </pre>
+          </ul>
+        </li>
+        <li>Class (OOP támogatás)
+          <ul>
+            <li>Bevezetésre került a class szintaxis, ami tisztább OOP-t (objektum-orientált programozást) tesz lehetővé
+            </li>
+            <pre>
+  class Fruit &#123;
+    constructor(name) &#123;
+      this.name = name;
+    }
+    name() &#123;
+      console.log(`$&#123;this.name} makes me hungry!`);
+    }
+  }
+  
+  const fruit = new Fruit("Orange");
+  fruit.name(); 
+  
+  ↓↓↓↓↓
+
+  "Orange makes me hungry!"
+            </pre>
+          </ul>
+        </li>
+        <li>Module-ok
+          <ul>
+            <li>Import és export</li>
+            <li>Segítségével külön fájlokba szervezhetjük a kódot</li>
+            <pre>
+  // math.js
+  export const add = (a, b) => a + b;
+
+  // main.js
+  import &#123; add } from './math.js';
+  console.log(add(8, 5));
+
+  ↓↓↓↓↓
+
+  13
+            </pre>
+          </ul>
+        </li>
+        <li>Promise
+          <ul>
+            <li>Aszinkron műveletek</li>
+            <li>Az ES6 bevezette a Promise-okat az aszinkron műveletek jobb kezelésére</li>
+            <pre>
+  const fetchData = () => &#123;
+    return new Promise((resolve) => &#123;
+      setTimeout(() => resolve("Adat betöltve!"), 2000);
+    });
+  };
+  
+  fetchData().then(data => console.log(data)); // 2mp múlva: "Adat betöltve!"              
+            </pre>
+          </ul>
+        </li>
+      </ol>
+    </li>
+    <li>Angularban is találkozhatunk különféle ES verziókkal
+      <ul>
+        <li>A tsconfig.json fájlban a target, module és lib beállításoknál
+          <ul>
+            <li>target
+              <ul>
+                <li>Meghatározza, hogy milyen JavaScript verzióra fordítsa le a TypeScript kódot (például ES5, ES6,
+                  ES2022, stb.)</li>
+              </ul>
+            </li>
+            <li>module
+              <ul>
+                <li>Meghatározza, hogy milyen modulkezelési rendszert használjon az app (például CommonJS, ESNext, AMD,
+                  stb.)
+                </li>
+              </ul>
+            </li>
+            <li>lib
+              <ul>
+                <li>Meghatározza, hogy milyen beépített funkciókat, és API-kat támogasson az app (például DOM, ES2020,
+                  ESNext, stb.)
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>Ezek a beállítások azért fontosak, mert meghatározzák, hogy az elkészült JavaScript kód milyen környezetben
+          (példéul böngésző, Node.js) fog megfelelően működni</li>
+      </ul>
+    </li>
+    <br>
+    <li>Kiegészítések
+      <ol>
+        <li>ES5 - Az egyik legelterjedtebb JavaScript szabvány (2009-ből), széles körben támogatott, de még nem
+          tartalmazza a modern ES6 funkciókat</li>
+        <li>ES2017 - Bevezette az async/await szintaxist, az Object.values() és Object.entries() metódusokat</li>
+        <li>ES2020 - Többek között az optional chaining (?.), nullish coalescing (??), és a BigInt támogatásával bővült
+        </li>
+        <li>ES2022 - Új class fields, top-level await, Array.prototype.at() és más fejlesztések kerültek bele</li>
+        <li>ESNext - Az éppen fejlesztés alatt álló, legfrissebb JavaScript verziót jelenti</li>
+        <li>AMD - Asynchronous Module Definition, egy modulkezelési rendszer, amelyet főleg böngészőoldali JavaScript
+          kódokhoz használtak</li>
+        <li>DOM - Document Object Model, egy böngésző API, amely lehetővé teszi a HTML, és XML dokumentumok
+          manipulálását JavaScript segítségével</li>
+      </ol>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #elementref data-anchor="elementref">ElementRef</h3>
+  <ul>
+    <li>ElementRef
+      <ul>
+        <li>Az Angular által biztosított osztály, amely lehetővé teszi, hogy hozzáférjünk a natív DOM elemhez, amely
+          egy adott Angular komponensben, vagy direktívában szerepel</li>
+        <li>Egy egyszerű wrapper, amely az adott DOM elemet reprezentálja, és az Angular környezetén
+          kívül lehetővé teszi az elérését</li>
+      </ul>
+    </li>
+    <li>nativeElement
+      <ul>
+        <li>Az ElementRef tulajdonsága, amely közvetlenül az adott DOM elemet adja vissza</li>
+        <li>Lehetővé teszi, hogy közvetlenül manipuláljuk a DOM elemet, például megváltoztassuk a stílusát,
+          attribútumait, vagy bármilyen egyéb jellemzőjét</li>
+      </ul>
+    </li>
+    <br>
+    <li>Közvetlen DOM módosítás
+      <ul>
+        <li>Közvetlen DOM manipulációt csak akkor alkalmazzunk, ha valóban szükséges, mivel az Angular biztonsági
+          mechanizmusai nem érvényesülnek ilyenkor</li>
+        <pre>
+          constructor(private el: ElementRef) &#123;} // a this.el.nativeElement az adott komponens vagy direktíva gyökér DOM elemére mutat
+
+          ngAfterViewInit() &#123;
+            this.el.nativeElement.style.backgroundColor = 'yellow';
+          }
+
+        </pre>
+      </ul>
+    </li>
+    <li>Ajánlott DOM módosítás
+      <ul>
+        <li>Az Angular ajánlása szerint a manipulációkat a Renderer2-vel kell végezni</li>
+        <li>Biztosítja az Angular biztonságos működését, például a különböző platformok közötti kompatibilitást (például
+          server-side rendering)</li>
+        <pre>
+            constructor(private renderer: Renderer2, private el: ElementRef) &#123;}
+
+            ngAfterViewInit() &#123;
+              this.renderer.setStyle(this.el.nativeElement, 'backgroundColor', 'yellow');
+            }
+          </pre>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #injectable data-anchor="injectable">@Injectable</h3>
+  <ul>
+    <li>Angular dekorátor</li>
+    <li>arra szolgál, hogy jelezze, hogy egy osztály "injectable", vagyis az osztály példányosítása DI (Dependency
+      Injection) segítségével történhet</li>
+    <li>A DI-t használva biztosítjuk, hogy az osztályok példányait más komponensek, vagy szolgáltatások használhatják
+    </li>
+    <li>Paraméterei
+      <ol>
+        <li>providedIn
+          <ul>
+            <li>Meghatározza, hogy hol regisztráljuk a szolgáltatást, és mikor legyen az elérhető</li>
+            <li>Az alapértelmezett értéke null
+              <ul>
+                <li>Ebben az esetben a szolgáltatás explicit módon a @NgModule-ban kell, hogy regisztrálva legyen</li>
+              </ul>
+            </li>
+            <li>Értékei
+              <ol>
+                <li>root
+                  <ul>
+                    <li>A leggyakrabban használt</li>
+                    <li>A szolgáltatás globálisan elérhetővé válik az egész alkalmazás számára</li>
+                    <li>Az Angular automatikusan regisztrálja az adott szolgáltatást az alkalmazás gyökérmoduljában</li>
+                    <li>Ezzel elkerülhetjük a szolgáltatás manuális hozzáadását a providers tömbhöz a @NgModule-ban</li>
+                    <li>A szolgáltatás egyetlen példánya (singleton) lesz az alkalmazásban</li>
+                    <pre>
+  @Injectable(&#123;
+    providedIn: 'root'
+  })
+  
+  export class MyService &#123; }
+                    </pre>
+                  </ul>
+                </li>
+                <li>platform
+                  <ul>
+                    <li>A szolgáltatás a platform szinten lesz elérhető, és így megosztható több Angular alkalmazás
+                      között ugyanazon a platformon</li>
+                    <li>Nem olyan gyakran használt, de különböző alkalmazások közötti megosztás esetén hasznos lehet
+                    </li>
+                    <pre>
+  @Injectable(&#123;
+    providedIn: 'platform'
+  })
+
+  export class MyService &#123; }
+                    </pre>
+                  </ul>
+                </li>
+                <li>any
+                  <ul>
+                    <li>Azt jelenti, hogy az adott szolgáltatás minden egyes module esetén külön példányosítódik</li>
+                    <li>Hasznos lehet, ha azt szeretnénk, hogy a szolgáltatás minden modul számára külön példányban
+                      legyen elérhető</li>
+                    <pre>
+  @Injectable(&#123;
+    providedIn: 'any'
+  })
+
+  export class MyService &#123; }                        
+                      </pre>
+                  </ul>
+                </li>
+                <li>null
+                  <ul>
+                    <li>Az alapértelmezett érték</li>
+                    <li>A szolgáltatás nem kerül automatikusan regisztrálásra</li>
+                    <li>A szolgáltatás explicit módon kell, hogy regisztrálva legyen egy modul providers tömbjében</li>
+                    <pre>
+  @Injectable(&#123;
+    providedIn: null
+  })
+
+  export class MyService &#123; }                      
+                    </pre>
+                  </ul>
+                </li>
+              </ol>
+            </li>
+          </ul>
+        </li>
+        <li>factory
+          <ul>
+            <li>Ritkán használt paraméter</li>
+            <li>Egy függvény, amely a szolgáltatás példányát létrehozza</li>
+            <li>A DI rendszer által futtatott kód, amely a szolgáltatás példányosítását végzi</li>
+            <pre>
+  @Injectable(&#123;
+    providedIn: 'root',
+    factory: () => new MyService()  // a szolgáltatás példányosítása factory függvényből
+  })
+  
+  export class MyService &#123; }              
+            </pre>
+            <li>A szolgáltatás példányát nem közvetlenül az Angular Dependency Injection rendszere hozza létre, hanem
+              egy általunk megadott factory függvény generálja azt</li>
+            <pre>
+  export class MyService &#123;
+    constructor(private message: string) &#123;}
+  
+    logMessage() &#123;
+      console.log(this.message);
+    }
+  }
+
+
+  export function myServiceFactory() &#123;
+    // dinamikusan generáljuk a szolgáltatás példányát, például egy üzenettel.
+    return new MyService('We used factory function!');
+  }
+
+  
+  import &#123; Injectable } from '@angular/core';
+
+  @Injectable(&#123;
+    providedIn: 'root',
+    factory: myServiceFactory  // factory függvény megadása
+  })
+  export class MyService &#123;
+    constructor(private message: string) &#123;}
+
+    logMessage() &#123;
+      console.log(this.message);
+    }
+  }
+              </pre>
+            <li>Miután a szolgáltatás regisztrálva van a DI rendszerben, ugyanúgy tudjuk használni, mint bármely más
+              szolgáltatást az Angular DI rendszerének segítségével</li>
+          </ul>
+        </li>
+      </ol>
+    </li>
+
+
     <li>@Injectable(&#123;providedIn: 'root'})
       <ul>
         <li>providedIn: 'platform' / 'any'</li>
       </ul>
     </li>
-    <li>Type guard</li>
-    <li>Lazy load components</li>
-    <li>Attribute binding vs property binding vs event binding vs data binding (vs directive)</li>
-    <li>Class példányosítás</li>
+  </ul>
+</div>
 
+<div>
+  <h3 #tabindex data-anchor="tabindex">tabindex</h3>
+  <ul>
+    <li>Az input mezők tabulátor sorrendjét a tabindex attribútum segítségével állíthatjuk be a HTML-ben</li>
+    <li>Értékei lehetnek
+      <ol>
+        <li>pozitív
+          <ul>
+            <li>A mezők tab sorrendjét állíthatjuk be vele</li>
+          </ul>
+        </li>
+        <li>0
+          <ul>
+            <li>A normális tab sorrendben következik</li>
+          </ul>
+        </li>
+        <li>-1
+          <ul>
+            <li>Az elem nem lesz fókuszálható a Tab billentyűvel</li>
+            <li>Kisebb számot megadva az alapértelmezett tabindex="0"-ként viselkedik, vagy a böngésző figyelmen kívül
+              hagyja</li>
+          </ul>
+        </li>
+      </ol>
+    </li>
+    <li>Alapértelmezés szerint a fókuszálható elemek tulajdonképpen megkapják a tabindex="0" értéket</li>
+    <li>Alapértelmezetten indexelt elemek
+      <ol>
+        <li>input</li>
+        <li>textarea</li>
+        <li>select</li>
+        <li>button</li>
+        <li>a (de csak ha href-fel ellátott)</li>
+        <li>details</li>
+        <li>iframe</li>
+        <li>pre</li>
+      </ol>
+    </li>
+    <li>Indexelhető elemek
+      <ol>
+        <li>div</li>
+        <li>span</li>
+        <li>p</li>
+        <li>fieldset</li>
+        <li>legend</li>
+        <li>table, tr, td</li>
+      </ol>
+    </li>
+    <br>
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-md-6 col-xl-3 mx-auto">
+          <form>
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" tabindex="1" placeholder="tabindex='1'">
+            </div>
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" tabindex="3" placeholder="tabindex='3'">
+            </div>
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" tabindex="2" placeholder="tabindex='2'">
+            </div>
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" tabindex="0" placeholder="tabindex='0'">
+            </div>
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" tabindex="-1" placeholder="tabindex='-1'">
+            </div>
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" tabindex="-2" placeholder="tabindex='-2'">
+            </div>
+            <div class="mb-3" tabindex="4">tabindex="4"</div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <pre>
+  &#60;form>
+    &#60;div class="input-group mb-3">
+      &#60;input type="text" class="form-control" tabindex="1" placeholder="tabindex='1'">
+    &#60;/div>
+    &#60;div class="input-group mb-3">
+      &#60;input type="text" class="form-control" tabindex="3" placeholder="tabindex='3'">
+    &#60;/div>
+    &#60;div class="input-group mb-3">
+      &#60;input type="text" class="form-control" tabindex="2" placeholder="tabindex='2'">
+    &#60;/div>
+    &#60;div class="input-group mb-3">
+      &#60;input type="text" class="form-control" tabindex="0" placeholder="tabindex='0'">
+    &#60;/div>
+    &#60;div class="input-group mb-3">
+      &#60;input type="text" class="form-control" tabindex="-1" placeholder="tabindex='-1'">
+    &#60;/div>
+    &#60;div class="input-group mb-3">
+      &#60;input type="text" class="form-control" tabindex="-2" placeholder="tabindex='-2'">
+    &#60;/div>
+    &#60;div class="mb-3" tabindex="4">tabindex="4"&#60;/div>
+  &#60;/form>
+    </pre>
+  </ul>
+</div>
 
-    --------------------------------------
+<div>
+  <h3 #angularversions data-anchor="angularversions">Angular versions</h3>
+  <ul>
+    <li><strong>Angular 2</strong> (2016 szeptember)
+      <ul>
+        <li>Teljes újraírás a TypeScript alapú fejlesztéshez</li>
+        <li>Új komponens-alapú architektúra bevezetése</li>
+        <li>Reactive Forms és Angular CLI bevezetése</li>
+      </ul>
+    </li>
+    <br>
+    <li><strong>Angular 4</strong> (2017 március)
+      <ul>
+        <li>Tree Shakable Modules, hogy csökkentsék a bundle méretét</li>
+        <li>Új érvényesítő rendszer (Validators) a reaktív formokban</li>
+        <li>Csökkentett fájlméret és gyorsabb renderelés</li>
+      </ul>
+    </li>
+    <br>
+    <li><strong>Angular 5</strong> (2017 november)
+      <ul>
+        <li>HttpClient API bevezetése az API hívások kezelésére</li>
+        <li>Angular Universal: Server-Side Rendering (SSR) jobb támogatása</li>
+        <li>CLI optimalizálás és build sebesség javítása</li>
+      </ul>
+    </li>
+    <br>
+    <li><strong>Angular 6</strong> (2018 május)
+      <ul>
+        <li>Angular CLI Workspaces bevezetése, hogy egyszerűbbé váljon több projekt kezelése</li>
+        <li>RxJS 6 támogatás, új operátorok és szintaxisok</li>
+        <li>Angular Elements: web komponensek egyszerű integrálása Angular alkalmazásokba</li>
+      </ul>
+    </li>
+    <br>
+    <li><strong>Angular 7</strong> (2018 október)
+      <ul>
+        <li>Angular Material és CDK fejlesztések, mint a drag-and-drop és virtualizálás</li>
+        <li>HttpClient JsonP támogatás</li>
+        <li>CLI Builder API, ami segít testre szabni a build folyamatot</li>
+      </ul>
+    </li>
+    <br>
+    <li><strong>Angular 8</strong> (2019 május)
+      <ul>
+        <li>Web Workers és differential loading támogatása a jobb teljesítmény érdekében</li>
+        <li>Lazy loading és routing fejlesztések</li>
+        <li>IVY: Az új renderelő motor első bevezetése a projektben</li>
+      </ul>
+    </li>
+    <br>
+    <li><strong>Angular 9</strong> (2020 február)
+      <ul>
+        <li>IVY teljes körű bevezetése: jelentős teljesítményjavulás és kisebb bundle méretek</li>
+        <li>TypeScript 3.7+ támogatás</li>
+        <li>A Component Tests egyszerűsítése</li>
+      </ul>
+    </li>
+    <br>
+    <li><strong>Angular 10</strong> (2020 június)
+      <ul>
+        <li>Augmented diagnostics és több új hibakeresési funkció</li>
+        <li>Strict Mode bevezetése, amely segít a kódminőség javításában</li>
+        <li>Új, könnyebben konfigurálható Angular CLI módok</li>
+      </ul>
+    </li>
+    <br>
+    <li><strong>Angular 11</strong> (2020 november)
+      <ul>
+        <li>ESLint bevezetése TSLint helyett a kód elemzésére</li>
+        <li>Hot Module Replacement támogatás a gyorsabb fejlesztési ciklus érdekében</li>
+        <li>Javított Build és Optimizer funkcionalitás</li>
+      </ul>
+    </li>
+    <br>
+    <li><strong>Angular 12</strong> (2021 május)
+      <ul>
+        <li>Strict mode alapértelmezetté tétele a jobb típusbiztonság érdekében</li>
+        <li>Az Ivy renderelő motor további finomhangolása és optimalizálása</li>
+        <li>Javított CSS és HTML Template support</li>
+      </ul>
+    </li>
+    <br>
+    <li><strong>Angular 13</strong> (2021 november)
+      <ul>
+        <li>Angular CLI új lehetőségei, például a CLI Builder API további fejlesztése</li>
+        <li>Components - Simplified API for routing and change detection</li>
+        <li>Support for TypeScript 4.4+ and better Reactivity handling in large applications</li>
+      </ul>
+    </li>
+    <br>
+    <li><strong>Angular 14</strong> (2022 június)
+      <ul>
+        <li>Standalone Components: a komponensek könnyebb kezelése a modulok nélkül</li>
+        <li>RxJS és más könyvtárak optimalizálása a jobb teljesítmény érdekében</li>
+        <li>Extended developer tool support for debugging and performance insights</li>
+      </ul>
+    </li>
+    <br>
+    <li><strong>Angular 15</strong> (2022 november)
+      <ul>
+        <li>Stricter Type Checking and Error Reporting for better consistency</li>
+        <li>Improved Lazy Loading mechanism and Advanced Route Prefetching techniques</li>
+        <li>Enhanced SSR (Server-Side Rendering) capabilities</li>
+      </ul>
+    </li>
+    <br>
+    <li><strong>Angular 16</strong> (2023 május)
+      <ul>
+        <li>Bevezetésre került egy új reaktivitási modell, amely egyszerűsíti a mentális modellezést, javítja a futási
+          teljesítményt és jobb RxJS interoperabilitást biztosít</li>
+        <li>Bevezetésre került a 'signals' könyvtár, amely új módot kínál a komponensek deklarálására, és potenciálisan
+          a jövőben helyettesítheti a zone.js-t</li>
+        <li>Fejlesztették a fejlesztői szervert, integrálva a Vite és az esbuild eszközöket, amelyek gyorsabb build időt
+          és jobb fejlesztői élményt biztosítanak</li>
+      </ul>
+    </li>
+    <br>
+    <li><strong>Angular 17</strong> (2023 november)
+      <ul>
+        <li>Az Angular Signals könyvtárat fejlesztették tovább, és a fejlesztői előnézetből stabil verzióvá lépett elő,
+          lehetővé téve a reaktív programozás egyszerűbb alkalmazását</li>
+        <li>Bevezetésre került a 'deferrable views' funkció, amely lehetővé teszi a nézetek késleltetett betöltését,
+          javítva ezzel a teljesítményt és a felhasználói élményt</li>
+        <li>Az Angular Material komponenseiben eltávolították a régi, elavult komponenseket, ösztönözve a fejlesztőket
+          az újabb, modernebb alternatívák használatára</li>
+      </ul>
+    </li>
+    <br>
+    <li><strong>Angular 18</strong> (2024 május)
+      <ul>
+        <li>Bevezetésre került a 'zoneless' mód, amely lehetővé teszi a zone.js nélküli működést, javítva a
+          teljesítményt és a hibakeresést</li>
+        <li>Fejlesztették a fejlesztői eszközöket, különös tekintettel a Signal-ok hibakeresésére az Angular
+          DevTools-ban</li>
+        <li>Az Angular CLI-ben bevezetésre került a 'standalone components' támogatása, amely lehetővé teszi a
+          komponensek modulok nélküli használatát, egyszerűsítve a projekt struktúrát</li>
+      </ul>
+    </li>
+    <br>
+    <li><strong>Angular 19</strong> (2024 november)
+      <ul>
+        <li>Az Angular Signals könyvtárban stabilizálták a 'signal-based queries', 'inputs' és 'model inputs'
+          funkciókat, elősegítve a reaktív programozás elterjedését</li>
+        <li>Bevezetésre került a 'route-level render mode' funkció, amely lehetővé teszi a különböző útvonalakhoz eltérő
+          renderelési módok alkalmazását, növelve a rugalmasságot és a teljesítményt</li>
+        <li>Fejlesztették a Hot Module Replacement (HMR) támogatást, gyorsabbá téve a fejlesztési ciklust és javítva a
+          fejlesztői élményt</li>
+      </ul>
+    </li>
+  </ul>
+</div>
 
-
-    <li>Design patterns (tervezési minták a szoftverfejlesztésben) (TODO)
+<div>
+  <h3 #designpatterns data-anchor="designpatterns">Design patterns</h3>
+  <ul>
+    <li>Tervezési minták a szoftverfejlesztésben
       <ul>
         <li>Singleton pattern
           <ul>
-            <li>Biztosítja, hogy egy adott osztályból csak egy példány létezzen a program futása során, és globális
-              hozzáférést biztosít ehhez a példányhoz</li>
+            <li>Biztosítja, hogy egy adott osztályból csak egy példány létezzen a program futása során&#123;</li>
+            <li>Globális hozzáférést biztosít az osztály példányához&#123;</li>
+            <li>Általában statikus változókat használ a példány tárolására&#123;</li>
+            <li>Elkerüli a példányok többszörös létrehozását, ami memóriát takarít meg&#123;</li>
+            <li>Hasznos, ha a rendszerben egy központi, megosztott erőforrásra van szükség (pl&#123; konfigurációk,
+              adatbázis-kapcsolatok)&#123;</li>
+            <br>
+            <li>Angularban gyakran alkalmazzuk a szolgáltatások (services) esetében, hogy egyetlen
+              példányban tároljuk őket, és ezt a példányt az egész alkalmazásban használjuk</li>
+            <pre>
+  import &#123; Injectable } from '@angular/core';
+
+  @Injectable(&#123;
+    providedIn: 'root', // Singleton minta alkalmazása a root szintjén
+  })
+  export class LoggerService &#123;
+    log(message: string): void &#123;
+      console.log(message);
+    }
+  }
+
+  // Komponens, ahol használjuk
+  import &#123; Component } from '@angular/core';
+  import &#123; LoggerService } from './logger.service';
+
+  @Component(&#123;
+    selector: 'app-my-component',
+    template: '&#60;button (click)="logMessage()">Log Message&#60;/button>',
+  })
+  export class MyComponent &#123;
+    constructor(private logger: LoggerService) &#123;}
+
+    logMessage(): void &#123;
+      this.logger.log('Button clicked');
+    }
+  }
+            </pre>
+            <li>A LoggerService egy singleton, mert az Angular DI rendszer biztosítja, hogy a providedIn: 'root' szint
+              beállításával az alkalmazás egészében csak egyetlen példányban létezzen</li>
           </ul>
         </li>
         <li>Observer pattern
           <ul>
-            <li>Arra használnak, hogy objektumok között létrehozzanak egy egyirányú kapcsolatot</li>
+            <li>Arra használják, hogy objektumok között létrehozzanak egy egyirányú kapcsolatot&#123;</li>
+            <li>Az alany (subject) értesíti a hozzá tartozó figyelőket (observers), ha valamilyen változás
+              történik&#123;
+            </li>
+            <li>Az observer minta használata lehetővé teszi a laza csatolást az objektumok között&#123;</li>
+            <li>Segít a különböző rendszerek közötti kommunikációban, anélkül, hogy az alanyról bármit is tudnának a
+              megfigyelők&#123;</li>
+            <li>Például események kezelése, UI frissítése, állapotváltozások figyelése&#123;</li>
+            <br>
+            <li>Az RxJS-en alapuló reaktív programozásnál gyakran használt, például a Subject és BehaviorSubject
+              segítségével</li>
+            <pre>
+  import &#123; Component, OnInit } from '@angular/core';
+  import &#123; Subject } from 'rxjs';
+
+  @Component(&#123;
+    selector: 'app-message',
+    template: '&#60;button (click)="sendMessage()">Send Message&#60;/button>',
+  })
+  export class MessageComponent implements OnInit &#123;
+    private messageSubject = new Subject&#60;string>();
+    message$ = this.messageSubject.asObservable();
+
+    ngOnInit() &#123;
+      this.message$.subscribe(message => &#123;
+        console.log('Received message:', message);
+      });
+    }
+
+    sendMessage() &#123;
+      this.messageSubject.next('Hello from MessageComponent');
+    }
+  }
+              </pre>
+            <li>A Subject egy Observer minta alkalmazása, amely figyeli az üzenetküldéseket, és azokat a feliratkozott
+              komponensnek továbbítja</li>
+          </ul>
+        </li>
+        <li>Factory pattern
+          <ul>
+            <li>Lehetővé teszi objektumok létrehozását anélkül, hogy közvetlenül az osztályt hívnánk meg&#123;</li>
+            <li>Agy üzleti logikát és objektumok inicializálását egy központi helyen tartja, így azokat könnyen
+              módosíthatjuk&#123;</li>
+            <li>Segít az objektumok típusának dinamikus meghatározásában a futásidőben&#123;</li>
+            <li>Csökkenti a kód ismétlődését és javítja a karbantarthatóságot&#123;</li>
+            <li>Például különböző típusú járművek vagy termékek gyártása egy központi "gyár" osztály segítségével&#123;
+            </li>
+            <br>
+            <li>Akkor alkalmazzuk Angularban, ha szükség van különböző típusú objektumok dinamikus létrehozására</li>
+            <pre>
+  import &#123; Injectable } from '@angular/core';
+
+  export interface Animal &#123;
+    makeSound(): void;
+  }
+
+  export class Dog implements Animal &#123;
+    makeSound() &#123;
+      console.log('Woof!');
+    }
+  }
+
+  export class Cat implements Animal &#123;
+    makeSound() &#123;
+      console.log('Meow!');
+    }
+  }
+
+  @Injectable(&#123;
+    providedIn: 'root',
+  })
+  export class AnimalFactory &#123;
+    createAnimal(type: string): Animal &#123;
+      if (type === 'dog') &#123;
+        return new Dog();
+      } else if (type === 'cat') &#123;
+        return new Cat();
+      }
+      throw new Error('Unknown animal type');
+    }
+  }
+
+  // komponens használata
+  import &#123; Component } from '@angular/core';
+  import &#123; AnimalFactory, Dog, Cat } from './animal.factory';
+
+  @Component(&#123;
+    selector: 'app-animal',
+    template: '&#60;button (click)="createAnimal()">Create Animal&#60;/button>',
+  })
+  export class AnimalComponent &#123;
+    constructor(private animalFactory: AnimalFactory) &#123;}
+
+    createAnimal() &#123;
+      const animal = this.animalFactory.createAnimal('dog');
+      animal.makeSound(); // "Woof!"
+    }
+  }
+            </pre>
+            <li>Az AnimalFactory minta a Factory tervezési mintát valósítja meg, amely különböző típusú Animal
+              objektumokat hoz létre</li>
+          </ul>
+        </li>
+        <li>Strategy pattern
+          <ul>
+            <li>Lehetővé teszi a különböző algoritmusok cserélhetőségét anélkül, hogy a kliens osztályt
+              módosítanánk&#123;
+            </li>
+            <li>Az algoritmusokat egy interfészhez kötve implementálják, így a kliens a kívánt algoritmust választja
+              futás közben&#123;</li>
+            <li>Segít a kód rugalmasabbá tételében, ha többféle viselkedés közül kell választani&#123;</li>
+            <li>Jó választás, ha egy osztály többféle viselkedéssel kell, hogy rendelkezzen, de nem akarunk minden egyes
+              viselkedést kódba égetni&#123;</li>
+            <li>Például egy fizetési rendszer, ahol a különböző fizetési módokat (kártya, PayPal, banki átutalás)
+              különböző algoritmusok reprezentálják&#123;</li>
+            <br>
+            <li>Alkalmazható Angularban, például az űrlapok validálásában, ahol többféle validációs stratégiát
+              alkalmazhatunk különböző mezőkhöz</li>
+            <pre>
+  import &#123; Component } from '@angular/core';
+
+  // validációs stratégiák
+  interface ValidationStrategy &#123;
+    validate(value: string): boolean;
+  }
+
+  class RequiredValidation implements ValidationStrategy &#123;
+    validate(value: string): boolean &#123;
+      return value.trim() !== '';
+    }
+  }
+
+  class EmailValidation implements ValidationStrategy &#123;
+    validate(value: string): boolean &#123;
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]&#123;2,4}$/;
+      return emailRegex.test(value);
+    }
+  }
+
+  @Component(&#123;
+    selector: 'app-form',
+    template: `&#60;input [(ngModel)]="value" (ngModelChange)="validate()"> &#60;p>&#123; &#123; validationMessage }}&#60;/p>`,
+  })
+  export class FormComponent &#123;
+    value = '';
+    validationMessage = '';
+    validationStrategy: ValidationStrategy = new RequiredValidation(); // Alapértelmezett stratégia
+
+    validate() &#123;
+      if (this.validationStrategy.validate(this.value)) &#123;
+        this.validationMessage = 'Valid';
+      } else &#123;
+        this.validationMessage = 'Invalid';
+      }
+    }
+
+    setValidationStrategy(strategy: ValidationStrategy) &#123;
+      this.validationStrategy = strategy;
+    }
+  }
+              </pre>
+            <li>A minta lehetővé teszi, hogy futás közben váltsunk a validációs stratégiák között, például egyes
+              mezőkhez más-más validációs logikát rendelhetünk</li>
+          </ul>
+        </li>
+        <li>Decorator pattern
+          <ul>
+            <li>Lehetővé teszi, hogy új funkciókat adjunk egy objektumhoz anélkül, hogy az eredeti osztályt
+              módosítanánk&#123;</li>
+            <li>Az osztályokat egyesével "díszítjük" egy új funkcióval, így az új viselkedés a futás ideje alatt adódik
+              hozzá&#123;</li>
+            <li>Segít az osztályok bővítésében, ha azokat túlzottan komplexé tenné a változtatás&#123;</li>
+            <li>Jó választás, ha egy objektumot szeretnénk dinamikusan kibővíteni különböző funkciókkal&#123;</li>
+            <li>Például egy grafikus felületen különböző szűrők és stílusok alkalmazása egy képen anélkül, hogy a
+              képfeldolgozó osztályt módosítanánk&#123;</li>
+            <br>
+            <li>Alkalmazható Angularban, például HTTP kérés előtti, és utáni műveletek bővítésére egy dekorátor
+              segítségével, mint az HttpInterceptor a HTTP hívások testreszabásához</li>
+            <pre>
+  import &#123; Injectable } from '@angular/core';
+  import &#123; HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
+  import &#123; Observable } from 'rxjs';
+
+  @Injectable()
+  export class AuthInterceptor implements HttpInterceptor &#123;
+    intercept(req: HttpRequest&#60;any>, next: HttpHandler): Observable&#60;HttpEvent&#60;any>> &#123;
+      const clonedReq = req.clone(&#123;
+        setHeaders: &#123;
+          Authorization: `Bearer your-token-here`,
+        },
+      });
+      return next.handle(clonedReq);
+    }
+  }
+
+  // AppModule-ban beállítva
+  import &#123; NgModule } from '@angular/core';
+  import &#123; HTTP_INTERCEPTORS } from '@angular/common/http';
+
+  @NgModule(&#123;
+    providers: [
+      &#123;
+        provide: HTTP_INTERCEPTORS,
+        useClass: AuthInterceptor,
+        multi: true,
+      },
+    ],
+  })
+  export class AppModule &#123;}
+            </pre>
+            <li>Az AuthInterceptor dekorálja a HttpRequest-et az autentikációs fejlécekkel, anélkül hogy az alap
+              HttpRequest osztályt módosítanánk</li>
           </ul>
         </li>
       </ul>
     </li>
 
+  </ul>
+</div>
+
+<div>
+  <h3 #cicd data-anchor="cicd">TODO</h3>
+  <ul>
+    <li>Fejlesztési és üzemeltetési gyakorlatok sorozata, amelyeket a szoftverfejlesztésben használnak annak érdekében,
+      hogy a kód folyamatosan integrálódjon, tesztelődjön, és gyorsan a felhasználók számára elérhetővé váljon</li>
+    <li>Lényegében automatizálja, és optimalizálja a fejlesztési, tesztelési és telepítési folyamatokat</li>
+    <br>
+    <li>CI pipeline
+      <ul>
+        <li>Continuous Integration</li>
+        <li>A folyamatos integráció azt jelenti, hogy a fejlesztők rendszeresen integrálják a kódjaikat egy központi
+          repóba
+          <ul>
+            <li>Típikusan naponta többször, feladatok, részfeladatok elvégzését követően</li>
+            <li>A rendszer minden egyes kódfrissítés után automatikusan futtatja az automatizált teszteket, hogy
+              biztosítva legyen a kód működőképessége</li>
+            <li>Az új kód integrálása után automatikusan történik a build, és a tesztelés, hogy elkerüljék
+              a hibák felhalmozódását</li>
+            <li>A folyamatos integráció magában foglalhatja a kód minőségi ellenőrzését
+              <ul>
+                <li>Például statikus kódelemzés vagy kódformázás</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>A folyamat röviden a gyakorlatban
+          <ol>
+            <li>Kód commitálása egy verziókezelő rendszerbe (például Git)</li>
+            <li>A CI rendszer automatikusan letölti a kódot és felépíti az alkalmazást</li>
+            <li>Az automatizált tesztek (unit tesztek, integrációs tesztek) lefutnak, hogy megbizonyosodjanak arról,
+              hogy az új kód nem törte el az alkalmazás működését</li>
+            <li>Ha a tesztek sikeresek, a kód bekerül a központi repóba, ha nem, akkor a fejlesztő értesítést kap a
+              hibáról</li>
+          </ol>
+        </li>
+      </ul>
+    </li>
+    <br>
+    <li>CD pipeline
+      <ul>
+        <li>Continuous Deployment / Continuous Delivery</li>
+        <li>A folyamatos szállítás és folyamatos telepítés két hasonló, de mégis különböző fogalom
+          <ol>
+            <li>Continuous Delivery
+              <ul>
+                <li>Minden kódváltoztatás, miután sikeresen átment az integrációs teszteken, automatikusan készen áll
+                  arra, hogy telepítésre kerüljön bármely környezetbe (például production)</li>
+                <li>Ez biztosítja, hogy bármikor elérhető legyen egy kiadás, de a tényleges telepítés manuálisan
+                  történhet</li>
+              </ul>
+            </li>
+            <li>Continuous Deployment
+              <ul>
+                <li>A sikeres tesztelést követően a kód automatikusan telepítésre kerül a production környezetbe is,
+                  anélkül, hogy manuális beavatkozásra lenne szükség
+                  <ul>
+                    <li>Tehát egy lépéssel tovább megy, mint a Continuous Delivery</li>
+                  </ul>
+                </li>
+                <li>Lehetővé teszi a fejlesztők számára, hogy nagyon gyorsan reagáljanak a felhasználói igényekre</li>
+              </ul>
+            </li>
+          </ol>
+        </li>
+        <li>A kód folyamatosan, automatikusan kerül a tesztelő vagy élő környezetekbe</li>
+        <li>A hibák gyorsan észlelhetők, és a csapat azonnal tud reagálni a változásokra, új funkciókra</li>
+        <li>A manuális telepítési folyamatok lecsökkennek, vagy teljes automatizálttá válnak</li>
+        <li>A folyamat röviden a gyakorlatban
+          <ul>
+            <li>A kód átment a teszteken, tehát a CI résznél a tesztelés sikeres, és a kód készen áll a telepítésre</li>
+            <li>A kód bekerül a staging környezetbe, ahol további manuális tesztelés történhet</li>
+            <li>Continuous Deployment esetén, miután minden teszt sikeresen lefutott, a kód automatikusan telepítésre
+              kerül az éles környezetbe</li>
+            <li>A production környezetben a rendszer folyamatosan figyeli az alkalmazás működését, és ha hibát észlel,
+              visszaállítható egy korábbi, stabil verzió</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <br>
+    <li>CI/CD munkafolyamat
+      <ol>
+        <li>A fejlesztők írják a kódot a gépükön</li>
+        <li>A kód egy verziókezelő rendszerbe feltöltésre kerül</li>
+        <li>A CI rendszer elindítja a build folyamatot (például Webpack, Maven, Gradle), amely létrehozza az alkalmazás
+          futtatható verzióját</li>
+        <li>Az automatizált tesztek lefutnak (például unit tesztek, integrációs tesztek)</li>
+        <li>A sikeres build után a kód átkerül a staging környezetbe, hogy manuálisan ellenőrizhető legyen</li>
+        <li>Continuous Deployment esetében, ha minden teszt sikeres, a kód automatikusan kerül az élő környezetbe</li>
+        <li>Az alkalmazás működése figyelhető, és ha hibát találnak, visszaállítható egy korábbi verzió</li>
+      </ol>
+    </li>
+    <br>
+    <li>CI/CD eszközök
+      <ul>
+        <li>Jenkins
+          <ul>
+            <li>Az egyik legismertebb CI/CD eszköz, amely rugalmas konfigurációval rendelkezik</li>
+          </ul>
+        </li>
+        <li>GitLab CI
+          <ul>
+            <li>GitLab által biztosított CI/CD eszköz, amely közvetlenül integrálódik a GitLab repókkal</li>
+          </ul>
+        </li>
+        <li>CircleCI
+          <ul>
+            <li>Könnyen használható és skálázható CI/CD eszköz</li>
+          </ul>
+        </li>
+        <li>Travis CI
+          <ul>
+            <li>Egy másik népszerű CI eszköz, amely a GitHub repókkal jól együttműködik</li>
+          </ul>
+        </li>
+        <li>Azure DevOps
+          <ul>
+            <li>A Microsoft által kínált eszköz, amely CI/CD pipeline-okhoz készült a .NET és egyéb technológiákhoz</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #devops data-anchor="devops">DevOps</h3>
+  <ul>
+    <li>Development és Operation</li>
+    <li>Szoftverfejlesztési és üzemeltetési filozófia és gyakorlat, amely a fejlesztői (Dev) és az üzemeltetési (Ops)
+      csapatok közötti együttműködést helyezi a középpontba
+      <ul>
+        <li>A fejlesztők és az üzemeltetők közösen dolgoznak a szoftverek gyorsabb kiadásán, a hibák gyorsabb javításán,
+          és az üzemeltetési problémák megoldásán</li>
+      </ul>
+    </li>
+    <li>Célja, hogy gyorsabbá és hatékonyabbá tegye a szoftverek fejlesztését, tesztelését, telepítését, és
+      üzemeltetését</li>
+    <li>Nem csupán technológia, hanem szemlélet, ami az együttműködésre, a kommunikációra, és az automatizálásra helyezi
+      a hangsúlyt a csapatok között</li>
+    <li>Csökkenteni a szoftverkiadások idejét, növelni a termelékenységet, és javítani a kód minőségét</li>
+    <li>Szoros kapcsolatban áll a folyamatos integrációval (CI), és a folyamatos telepítéssel (CD)</li>
+    <br>
+    <li>DevOps munkafolyamat
+      <ol>
+        <li>A fejlesztők új funkciókat készítenek, és azokat rendszeresen integrálják a központi kódbázisba</li>
+        <li>Mielőtt a kódot beépítenék a rendszerbe, automatizált teszteken megy keresztül</li>
+        <li>Az új kódot folyamatosan integrálják a rendszerbe, és automatikusan építik a szoftvert</li>
+        <li>A kód automatikusan telepíthető a különböző környezetekbe, mint például a staging vagy production</li>
+        <li>Az alkalmazás futás közben történő figyelése, hogy biztosítsák a stabil működést és gyorsan reagáljanak a
+          problémákra</li>
+        <li>A monitorozás és a felhasználói visszajelzések alapján történik a folyamatos fejlesztés, és finomhangolás
+        </li>
+      </ol>
+    </li>
+    <br>
+    <li>DevOps eszközök
+      <ul>
+        <li>Jenkins
+          <ul>
+            <li>A CI/CD automatizálására szolgáló eszköz</li>
+          </ul>
+        </li>
+        <li>Docker
+          <ul>
+            <li>Konténerek használatával segíti az alkalmazások gyors fejlesztését, tesztelését és telepítését</li>
+          </ul>
+        </li>
+        <li>Kubernetes
+          <ul>
+            <li>Konténerek kezelésére szolgáló rendszer, amely segít az alkalmazások automatikus skálázásában és
+              üzemeltetésében</li>
+          </ul>
+        </li>
+        <li>Ansible
+          <ul>
+            <li>Automatizálja a rendszerek konfigurálását és üzemeltetését</li>
+          </ul>
+        </li>
+        <li>Terraform
+          <ul>
+            <li>Infrastruktúra-kód (Infrastructure as Code) eszköz, amely lehetővé teszi az infrastruktúra automatikus
+              felépítését és kezelését</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #eventhandling data-anchor="eventhandling">Event handling</h3>
+  <ul>
+    <li>event.preventDefault()
+      <ul>
+        <li>Javascript függvény</li>
+        <li>Az események viselkedését befolyásolja</li>
+        <li>Megakadályozza, hogy az alapértelmezett eseménykezelő viselkedés végbemenjen</li>
+        <li>Ha egy form esetében nem szeretnénk, hogy az űrlap elküldése után frissüljön az oldal (alapértelmezett
+          esemény művelet), a stopPropagation függvénnyel ezt meggátolhatjuk</li>
+        <pre>
+  document.getElementById("myForm").addEventListener("submit", function(event) &#123;
+    event.preventDefault();
+    console.log("Form submit prevented");
+  });
+
+  formSubmit(event: any) &#123;
+    event.preventDefault();
+    console.log("Form submit prevented");
+  }
+        </pre>
+      </ul>
+    </li>
+    <li>event.stopPropagation()
+      <ul>
+        <li>Javascript függvény</li>
+        <li>Az események viselkedését befolyásolja</li>
+        <li>Megakadályozza, hogy az esemény tovább terjedjen az "eseménybuborékolás" (event bubbling) láncolatában</li>
+        <li>Akkor használjuk, ha nem szeretnénk, hogy egy esemény a szülőre is hatással legyen</li>
+        <pre>
+  &#60;div (click)="onParentClick()">
+    &#60;p>Szülő elem&#60;/p>
+    &#60;button class="btn btn-primary" (click)="onChildClick($event)">Click here&#60;/button>
+  &#60;/div>
+
+  // parent.component.ts
+  import &#123; Component } from '@angular/core';
+
+  @Component(&#123;
+    selector: 'app-parent',
+    templateUrl: './parent.component.html',
+  })
+  export class ParentComponent &#123;
+
+    onParentClick() &#123; // eseménykezelő szülőre kattintáskor
+      console.log('Szülő elemre kattintottak!');
+    }
+
+    onChildClick(event: Event) &#123; // eseménykezelő gyerekre kattintáskor
+      event.stopPropagation();  // Megakadályozza, hogy az esemény a szülőre is eljusson
+      console.log('Gyermek elemre kattintottak!');
+    }
+  }
+        </pre>
+        <li>Ha a szülő elemre kattintunk, akkor az onParentClick() fut le</li>
+        <li>Ha a gyermek gombra kattintunk, akkor a onChildClick() fut le, de az event.stopPropagation() hívása
+          miatt az onParentClick() nem fog lefutni</li>
+      </ul>
+    </li>
+    <br>
+    <li>event.target
+      <ul>
+        <li>Event object tulajdonság</li>
+        <li>Az eseményt ténylegesen kiváltó DOM elemet jelöli</li>
+        <pre>
+  &#60;button class="btn btn-primary" (click)="onClick($event)">Kattints rám!&#60;/button>
+
+  onClick(event: Event) &#123;
+    console.log(event.target); // kiírja azt az elemet, amire kattintottak
+  }
+        </pre>
+        <li>Az a DOM elem, amelyhez az eseménykezelőt hozzárendeltük</li>
+        <li>Ez az elem mindig ugyanaz marad, bárhol is történjen az esemény a DOM hierarchiában</li>
+      </ul>
+    </li>
+    <br>
+    <li>event.currentTarget
+      <ul>
+        <li>Event object tulajdonság</li>
+      </ul>
+    </li>
+    <br>
+    <li>event.type
+      <ul>
+        <li>Event object tulajdonság</li>
+        <li>String típusú tulajdonság, amely visszaadja az esemény típusát (például "click", "keydown", stb.)</li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #salting data-anchor="salting">Salting</h3>
+  <ul>
+    <li>Biztonságot növelő technika</li>
+    <li>Egyedi, véletlenszerű értéket (salt) adunk hozzá minden egyes jelszóhoz, mielőtt azt hasheljük</li>
+    <li>Megnehezíti a szótár alapú, és rainbow table támadásokat
+      <ul>
+        <li>Rainbow Table
+          <ul>
+            <li>Előre kiszámított hash-listák segítségével a támadók gyorsan visszafejthetik a gyenge jelszavakat</li>
+          </ul>
+        </li>
+        <li>Dictionary Attack
+          <ul>
+            <li>Egy jelszótörési technika, amely előre összeállított, gyakori jelszavakat tartalmazó szótárakat használ
+              a helyes jelszó kitalálására</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li>Lépések
+      <ol>
+        <li>Jelszó megadása</li>
+        <li>Random salt generálás
+          <ul>
+            <li>Minden felhasználónak véletlenszerű</li>
+          </ul>
+        </li>
+        <li>Salt és a jelszó összefűzése
+          <ul>
+            <li>Ha használunk pepper-t, itt kerül hozzá</li>
+          </ul>
+        </li>
+        <li>A kombinált érték hash-elése
+          <ul>
+            <li>jelszó + só</li>
+            <pre>
+  // a felhasználó a "pwd123"-mat adta meg jelszónak
+  // a random generált só az "slt987"
+  // a kombináció a "pwd123slt987"
+            </pre>
+            <li>Kriptográfiai hash-függvénnyel kódoljuk
+              <ul>
+                <li>A salt-ot külön tároljuk az adatbázisban</li>
+                <li>Hash algorutmusok például
+                  <ol>
+                    <li>SHA-256
+                      <ul>
+                        <li>Gyors, de önmagában nem elég biztonságos jelszavakhoz</li>
+                      </ul>
+                    </li>
+                    <li>bcrypt
+                      <ul>
+                        <li>Lassú, de erős, beépített salt támogatással</li>
+                        <li>A salt már a hash része, így külön nem kell tárolni</li>
+                      </ul>
+                    </li>
+                    <li>Argon2
+                      <ul>
+                        <li>Modern, memóriaigényes hash-elés, az egyik legbiztonságosabb</li>
+                      </ul>
+                    </li>
+                  </ol>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ol>
+    </li>
+    <li>Bejelentkezésnél a beírt jelszót sózzzuk az adatbázisban tárolt sóval, összerakjuk őket, hash-elünk, majd
+      összehasonlítjuk a korábban legenerált, és a procedúrákon átesett string-et</li>
+    <li>Salt típusai
+      <ul>
+        <li>Statikus
+          <ul>
+            <li>Ugyanaz a salt minden jelszóhoz</li>
+          </ul>
+        </li>
+        <li>Random
+          <ul>
+            <li>Minden jelszóhoz külön generált a salt</li>
+          </ul>
+        </li>
+        <li>Peppering
+          <ul>
+            <li>Egy globális titkos kulcsot (pepper) ad a jelszóhoz a hash-elés előtt, vagy közben</li>
+            <li>Minden jelszóhoz ugyanaz, és nem az adatbázisban, hanem egy külön biztonságos helyen (például
+              szerverkonfiguráció) van tárolva</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #bindings data-anchor="bindings">Bindings</h3>
+  <ol>
+    <li>Attribute Binding
+      <ul>
+        <li>Lehetővé teszi, hogy HTML attribútumokat hozzunk létre dinamikusan</li>
+        <li>Például class, style, vagy href</li>
+        <li>Egyirányú adatáramlás</li>
+        <pre>
+  [attr.attributeName]="value"
+        </pre>
+      </ul>
+    </li>
+    <li>Property Binding
+      <ul>
+        <li>Az elemek tulajdonságainak (properties) értékeit állítja be dinamikusan</li>
+        <li>Például disabled, value, src, vagy checked</li>
+        <li>Egyirányú adatáramlás</li>
+        <pre>
+  [propertyName]="value"
+        </pre>
+      </ul>
+    </li>
+    <li>Event Binding
+      <ul>
+        <li>Események kezelésére szolgál</li>
+        <li>Például click, input, vagy keyup</li>
+        <li>Egyirányú adatáramlás</li>
+        <pre>
+  (eventName)="method()"
+        </pre>
+      </ul>
+    </li>
+    <li>Data Binding
+      <ul>
+        <li>Összefoglaló fogalom</li>
+        <li>Különböző típusú adatkommunikációkat jelenti a komponens, és a template között</li>
+        <li>Magában foglalja a property binding-ot, attribute binding-ot, event binding-ot, és kétirányú binding-ot is
+        </li>
+        <li>Angularban a two-way binding tipikusan az [(ngModel)] használatával érhető el
+          <ul>
+            <li>Emellett egyéni eventek, és property binding segítségével is megoldható</li>
+            <pre>
+  &#60;input [value]="username" (input)="username = $event.target.value" />
+            </pre>
+          </ul>
+        </li>
+        <pre>
+  [property]="value" / &#123; &#123;  expression }}
+        </pre>
+      </ul>
+    </li>
+    <li>Directive
+      <ul>
+        <li>Nem binding</li>
+        <li>Angular funkció, amely a DOM viselkedését vagy megjelenését módosítja</li>
+        <li>Lehet struktúrált direktíva (*ngFor, *ngIf, stb.), vagy attribútum direktíva ([ngClass], stb.)</li>
+        <pre>
+  *directive / [directive]
+        </pre>
+      </ul>
+    </li>
+  </ol>
+</div>
+
+<div>
+  <h3 #gettersetter data-anchor="gettersetter">Getter / Setter</h3>
+  <ul>
+    <li>A getter, és a setter method-ok az objektumok tulajdonságainak elérésére, és módosítására szolgálnak</li>
+    <li>Amíg a setter függvények egy adott értéket állítanak be, addig a getter függvények visszaadnak egy értéket</li>
+    <li>Az adatátvitelt további logikákkal is bővíthetjük</li>
+    <br>
+    <li>Getter
+      <ul>
+        <li>Visszaad egy osztályon belüli privát változót, egy értéket, de nem változtatja meg az objektum
+          állapotát</li>
+        <li>Használhatjuk, ha valamilyen logikát szeretnénk végrehajtani a tulajdonság visszaadása előtt
+          <ul>
+            <li>Például formázás, vagy esetleg valamilyen feltételt alkalmaznánk</li>
+          </ul>
+        </li>
+        <pre>
+  class Person &#123;
+    private _age: number;
+  
+    constructor(age: number) &#123;
+      this._age = age;
+    }
+  
+    get age(): number &#123;
+      return this._age;
+    }
+  }
+  
+  const person = new Person(30);
+  console.log(person.age);
+  
+  ↓↓↓↓↓
+
+  30
+        </pre>
+      </ul>
+    </li>
+    <li>Setter
+      <ul>
+        <li>egy privát változó értékét állítja be, és lehetőséget ad arra, hogy módosítás előtt érvényességi ellenőrzést
+          vagy egyéb logikát hajtsunk végre</li>
+        <pre>
+  class Person &#123;
+    private _age: number;
+  
+    constructor(age: number) &#123;
+      this._age = age;
+    }
+  
+    set age(value: number) &#123;
+      if (value &#60; 0) &#123;
+        console.log("Invalid age");
+      } else &#123;
+        this._age = value;
+      }
+    }
+  }
+  
+  const person = new Person(30);
+  person.age = -5;
+  
+  ↓↓↓↓↓
+  
+  "Invalid age"
+
+  person.age = 35;
+  console.log(person.age);
+  
+  ↓↓↓↓↓
+
+  35
+        </pre>
+      </ul>
+    </li>
+    <br>
+    <pre>
+  <b>// példa 1</b>
+  class Rectangle &#123;
+    private _width: number;
+    private _height: number;
+
+    constructor(width: number, height: number) &#123;
+      this._width = width;
+      this._height = height;
+    }
+
+    // Getter a terület kiszámításához
+    get area(): number &#123;
+      return this._width * this._height;
+    }
+
+    set width(value: number) &#123;
+      if (value &#60;= 0) &#123;
+        console.log("Width must be greater than zero");
+      } else &#123;
+        this._width = value;
+      }
+    }
+
+    set height(value: number) &#123;
+      if (value &#60;= 0) &#123;
+        console.log("Height must be greater than zero");
+      } else &#123;
+        this._height = value;
+      }
+    }
+  }
+
+  const rectangle = new Rectangle(10, 5);
+  console.log(rectangle.area);
+
+  ↓↓↓↓↓
+
+  50
+
+  rectangle.width = 15;
+  rectangle.height = 0; // invalid, a height setter feltétele miatt
+
+  console.log(rectangle.area); // 15 * 5   
+
+  ↓↓↓↓↓
+
+  75
+    </pre>
+    <pre>
+  <b>// példa 2</b>
+  class Price &#123;
+    constructor(private _price: number, private _piece: number) &#123;
+  
+    }
+  
+    get price(): number &#123;
+      return this._price;
+    }
+  
+    set price(value: any) &#123; // szándékosan any a típusa, és nem number
+      if (typeof value !== 'number' || isNaN(value)) &#123; // az isNaN a NaN típus kiszűrése miatt szerepel, mivel az is egy szám
+        console.log('Not a number!');
+        return;
+      }
+      this._price = value;
+    }
+  
+    get piece(): number &#123;
+      return this._piece;
+    }
+  
+    set piece(value: number) &#123;
+      this._piece = value;
+    }
+  
+    get totalPrice() &#123; // ha gyakran változik, érdemes lehet így használni
+      return this._piece * this._price;
+    }
+  
+    getTotalPrice(): number &#123; // ha ritkán frissül, akkor egy metódussá érdemes alakítani
+      return this._piece * this._price;
+    }
+  
+    toString(): string &#123;
+      return `
+          A teljes kifizetett összeg: $&#123;this.totalPrice} Ft,
+          mivel $&#123;this._piece} karton tejet vásároltál,
+          $&#123;this._price} forintos darabáron
+      `;
+    }
+  }
+  
+  let milkPurchased = new Price(200, 5);
+  
+  console.log(milkPurchased); // &#123;_price: 200, _piece: 5}
+  console.log(milkPurchased.totalPrice); // 1000
+  console.log(milkPurchased.getTotalPrice()); // 1000
+  
+  milkPurchased.piece = 7;
+  
+  console.log(milkPurchased); // &#123;_price: 200, _piece: 7}
+  console.log(milkPurchased.totalPrice); // 1400
+  console.log(milkPurchased.getTotalPrice()); // 1400
+  
+  milkPurchased.price = 'A'; // "Not a number!"
+  
+  console.log(milkPurchased.toString()); // "A teljes kifizetett összeg: 1400 Ft, mivel 7 karton tejet vásároltál, 200 forintos darabáron"
+    </pre>
+    <li>@Input() setter
+      <ul>
+        <li>Egy komponens adatokat kap a szűlő komponenstől</li>
+        <li>A setter alkalmazásával ez az érték nem csak megadható, hanem extra logikát is alkalmazhatunk, mielőtt a
+          komponens belső állapotába kerül</li>
+        <pre>
+  <b>// példa 1</b>
+
+  <b>// parent</b>
+  @Component(&#123;
+    selector: 'app-parent',
+    template: `&#60;app-child [message]="parentMessage">&#60;app-child>`
+  })
+  export class ParentComponent &#123;
+    parentMessage = 'Oh my...this message is longer than it should be!';
+  }
+
+  <b>// child</b>
+  import &#123; Component, Input } from '@angular/core';
+
+  @Component(&#123;
+    selector: 'app-child',
+    template: `&#60;p>&#123; &#123; message }}&#60;/p>`
+  })
+  export class ChildComponent &#123;
+    private _message: string;
+
+    @Input() set message(value: string) &#123;
+      if (value && value.length > 10) &#123;
+        this._message = value;
+      } else &#123;
+        this._message = 'No valid message arrived';
+      }
+    }
+
+    get message(): string &#123;
+      return this._message;
+    }
+  }
+          </pre>
+        <pre>
+  <b>// példa 2</b>
+
+  <b>// parent</b>
+  @Component(&#123;
+    selector: 'app-parent',
+    template: `&#60;app-child [userRole]="role">&#60;/app-child>`
+  })
+  export class ParentComponent &#123;
+    role = 'admin';
+  }  
+  
+  <b>// child</b>
+  @Component(&#123;
+    selector: 'app-child',
+    template: `&#60;div>
+                 &#60;p>&#123; &#123; message }}&#60;/p>
+                 &#60;button *ngIf="hasAccess">Access Restricted Area&#60;/button>
+               &#60;/div>`
+  })
+
+  export class ChildComponent &#123;
+    private _role: string;
+    message: string = '';
+    hasAccess: boolean = false;
+  
+    @Input() set userRole(role: string) &#123;
+      this._role = role;
+      this.setRoleMessage();
+    }
+  
+    private setRoleMessage() &#123;
+      // A setterben beállítjuk, hogy mit jelenítsen meg a komponens a felhasználó szerepe alapján
+      if (this._role === 'admin') &#123;
+        this.message = 'You have admin access.';
+        this.hasAccess = true;
+      } else if (this._role === 'user') &#123;
+        this.message = 'You have user access.';
+        this.hasAccess = false;
+      } else &#123;
+        this.message = 'Access denied.';
+        this.hasAccess = false;
+      }
+    }
+  }  
+          </pre>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #corserror data-anchor="corserror">CORS error</h3>
+  <ul>
+    <li>Cross-Origin Resource Sharing</li>
+    <li>Mechanizmus, amely lehetővé teszi, hogy egy weboldal biztonságosan kérjen adatokat egy másik weboldalról
+      anélkül, hogy a böngésző blokkolná a kérést</li>
+    <li>A Same-Origin Policy (SOP) egy biztonsági intézkedés, amely megakadályozza, hogy egy weboldal hozzáférjen egy
+      másik weboldal erőforrásaihoz (például API-k, adatbázisok) anélkül, hogy a felhasználó ezt engedélyezné</li>
+    <li>Sokszor viszont szükség van arra, hogy egy webalkalmazás más domainről kérjen adatokat
+      <ul>
+        <li>A CORS mechanizmus oldja meg ezt a problémát, ami engedélyezi a cross-origin kéréseket biztonságos módon
+        </li>
+      </ul>
+    </li>
+    <br>
+    <li>A teljes folyamat
+      <ol>
+        <pre>
+  https://frontend.com            https://api.com
+            |                             |
+            |---- preflight (OPTIONS) --->|
+            |                             |
+            |&#60;--- preflight response -----|
+            |                             |
+            |------------- GET request -->|
+            |                             |
+            |&#60;--- GET response -----------|
+            |                             |
+            |             ...             |
+        </pre>
+        <li>A böngésző cross-origin kérést indít egy úgynevezett preflight kérés elküldésével
+          <ul>
+            <li>Cross-origin felé szükséges a preflight</li>
+            <li>Ez egy OPTIONS HTTP kérés, amelyet az API szerver kap</li>
+            <li>A preflight kérés ellenőrzi, hogy a cél szerver elfogadja-e a cross-origin kéréseket, és ha igen, akkor
+              engedélyezi majd a tényleges kérést</li>
+            <pre>
+  <b>// OPTIONS / preflight</b>
+  OPTIONS /data HTTP/1.1
+  Host: api.com
+  Origin: https://frontend.com
+  Access-Control-Request-Method: GET
+  Access-Control-Request-Headers: Authorization, X-Custom-Header
+              </pre>
+          </ul>
+        </li>
+        <li>A szerver válaszai
+          <ol>
+            <li>Engedélyezett HTTP metódusok</li>
+            <li>Request-ben használható header-ök</li>
+            <li>Origin-ek (domain-ek), amik hozzáférhetnek az erőforrásokhoz</li>
+          </ol>
+          <ul>
+            <pre>
+  <b>// szerver válasza a preflight-ra</b>
+  HTTP/1.1 204 No Content
+  Access-Control-Allow-Origin: https://frontend.com
+  Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS
+  Access-Control-Allow-Headers: Content-Type, Authorization, X-Custom-Header
+  Access-Control-Allow-Credentials: true
+  Access-Control-Max-Age: 3600
+            </pre>
+          </ul>
+        </li>
+        <li>A böngésző végrehajtja a tényleges (GET) kérést
+          <ul>
+            <pre>
+  GET /data HTTP/1.1
+  Host: api.com
+  Origin: https://frontend.com
+  Authorization: Bearer XYZ
+  X-Custom-Header: my-custom-value
+            </pre>
+          </ul>
+        </li>
+        <li>A szerver válaszol a kért adatokkal
+          <ul>
+            <pre>
+  HTTP/1.1 200 OK
+  Access-Control-Allow-Origin: https://frontend.com
+  Access-Control-Allow-Credentials: true
+  Content-Type: application/json
+
+  &#123;
+    "message": "Hello, this is your data!"
+  }
+            </pre>
+          </ul>
+        </li>
+      </ol>
+    </li>
+    <br>
+    <li>CORS header-ök (válasz tartalmazza őket)
+      <ul>
+        <li>Access-Control-Allow-Origin
+          <ul>
+            <li>Domainek hozzáférhetőségét adja meg</li>
+            <pre>
+  Access-Control-Allow-Origin: * // minden domain hozzáférhet
+
+  Access-Control-Allow-Origin: https://cors-test.com // csak ez a domain férhet hozzá az erőforráshoz
+            </pre>
+          </ul>
+        </li>
+        <li>Access-Control-Allow-Methods
+          <ul>
+            <li>Engedélyezett HTTP metódusok</li>
+          </ul>
+        </li>
+        <li>Access-Control-Allow-Headers
+          <ul>
+            <li>Meghatározza, hogy mely HTTP header-ek használhatóak a kérésben (például Content-Type, Authorization)
+            </li>
+          </ul>
+        </li>
+        <li>Access-Control-Allow-Credentials
+          <ul>
+            <li>Meghatározza, hogy az alkalmazás küldhet-e hitelesítő adatokat (például sütik vagy HTTP authentikációs
+              információk) a kéréshez</li>
+          </ul>
+        </li>
+        <li>Access-Control-Max-Age
+          <ul>
+            <li>Meghatározza, hogy mennyi ideig érvényesek a preflight válaszok</li>
+            <li>Ezáltal a böngésző nem küldi el újra a preflight kérdést minden egyes alkalommal, amikor ugyanazt az
+              erőforrást kéri</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <br>
+    <li>CORS hiba
+      <ul>
+        <li>Ha a szerver nem küldi vissza a megfelelő CORS header-eket, akkor a böngésző blokkolja a választ, és CORS
+          error jelenik meg</li>
+        <li>Ez egy biztonsági intézkedés, hogy megakadályozza az illetéktelen hozzáférést más domainek erőforrásaihoz
+        </li>
+        <pre>
+  // https://frontend.com adatokat kérne https://api.com domainről, de a szerver válasza nem tartalmazza az Access-Control-Allow-Origin header-t
+
+  Access to XMLHttpRequest at 'https://api.com/data' from origin 'https://frontend.com'
+  has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present
+  on the requested resource.
+        </pre>
+        <li>Kétféleképpen oldható fel
+          <ol>
+            <li>Szerver konfiguráció változtatás</li>
+            <li>Proxy használata</li>
+          </ol>
+        </li>
+      </ul>
+    </li>
+    <br>
+    <li>CORS bypass
+      <ul>
+        <pre>
+  sudo nano /etc/hosts
+
+  ↓↓↓↓↓
+
+  127.0.0.1       frontend.com
+        </pre>
+        <pre>
+  sudo ng s --port 30000 --disable-host-check
+        </pre>
+        <li>Helyi DNS felülírás</li>
+        <li>Ha a frontend.com domaint próbáljuk elérni, akkor történik egy átirányítás a 127.0.0.1 címre
+        </li>
+        <li>Amikor a böngészőbe begépeljük a https://frontend.com, az a saját gépünkön futó szerverhez fog kapcsolódni
+        </li>
+        <li>Ha az API például https://api.com címen van, akkor a böngésző normál esetben blokkolná a
+          http://localhost:30000 és https://api.com közötti kéréseket CORS miatt</li>
+        <li>Viszont ha a frontendet localhost helyett frontend.com-ként használjuk, és az API engedélyezi ezt a domaint,
+          akkor a CORS problémát elkerülhetjük</li>
+        <li>A --disable-host-check kapcsoló engedélyezi, hogy az Angular szerver bármilyen hostnévvel fusson, beleértve
+          a frontend.com domaint is</li>
+        <li>Fejlesztői környezetben hasznos trükk</li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #recursion data-anchor="recursion">Recursion</h3>
+  <ul>
+    <li>Programozási technika, amelyben egy függvény önmagát hívja meg</li>
+    <li>Megoldási módszer lehet például fa struktúrák, menük, vagy fájlstruktúrák kezelésére</li>
+    <li>Két fő részből áll
+      <ol>
+        <li>Base case / Báziseset
+          <ul>
+            <li>Az a feltétel, amikor a rekurzió leáll</li>
+          </ul>
+        </li>
+        <li>Recursive step / Rekurzív lépés
+          <ul>
+            <li>A függvény önmagát hívja meg kisebb bemenettel</li>
+          </ul>
+        </li>
+      </ol>
+    </li>
+    <pre>
+  interface FileSystemItem &#123;
+    name: string;
+    type: string;
+    children?: FileSystemItem[]; // ha directory akkor tartalmazhat további gyermekeket
+  }
+
+  const fileSystem = &#123;
+    name: "root",
+    type: "directory",
+    children: [
+      &#123;
+        name: "documents",
+        type: "directory",
+        children: [
+          &#123; name: "resume.txt", type: "file" },
+          &#123; name: "cover_letter.pdf", type: "file" }
+        ]
+      },
+      &#123;
+        name: "photos",
+        type: "directory",
+        children: [
+          &#123; name: "vacation.jpg", type: "file" },
+          &#123;
+            name: "family",
+            type: "directory",
+            children: [
+              &#123; name: "family_portrait.png", type: "file" }
+            ]
+          }
+        ]
+      },
+      &#123; name: "todo.txt", type: "file" }
+    ]
+  };
+
+  function listFilesAndDirectories(directory: FileSystemItem, level: number = 0) &#123;
+          const indent = '-'.repeat(level * 2);
+          if (directory.type === "file") &#123;    // ha a bemenet fájl típusú, csak a fájl nevét írjuk ki
+            console.log(indent + directory.name);
+          } else &#123;                            // ha könyvtár, akkor bejárjuk annak összes gyermekét
+            console.log(`$&#123;indent}$&#123;directory.name.toUpperCase()}`);
+            directory.children?.forEach((child: FileSystemItem) => listFilesAndDirectories(child, level + 1));
+          }
+        }
+
+  listFilesAndDirectories(fileSystem);
+    </pre>
+    <img src="assets/imgs/recursion.png" width="100%">
+    <pre>
+  <b>// extras.component.ts</b>
+  export interface MenuItem &#123;
+    title: string;
+    anchor: string;
+    subtitles?: MenuItem[];
+  }
+
+  ...
+
+  menu: MenuItem[] = [
+    &#123;
+      title: 'Type guard',
+      anchor: 'typeguard',
+      subtitles: [
+        &#123;
+          title: 'Template usage',
+          anchor: 'templateusage',
+          subtitles: [
+            &#123; title: 'typeof', anchor: 'typeof' },
+            &#123; title: 'instanceof', anchor: 'instanceof' }
+          ]
+        },
+        &#123; title: 'Type predicate', anchor: 'typepredicate' }
+      ]
+    }
+  ];
+
+  <b>// extras.component.html</b>
+  &#60;div>
+    &#60;!-- menü komponens meghívása, adatok átadása -->
+    &#60;app-menu [menu]="menu">&#60;/app-menu>
+  &#60;/div>
+  
+  <b>// menu.component.ts</b>
+  interface MenuItem &#123;
+    title: string;
+    anchor: string;
+    subtitles?: MenuItem[];
+  }
+
+  ...
+
+  @Input() menu: MenuItem[] = [];
+
+  <b>// menu.component.html</b>
+  &#60;ul>
+    &#60;li *ngFor="let item of menu">
+      &#60;a [href]="'#' + item.anchor">&#123; &#123; item.title }}&#60;/a>
+  
+      &#60;!-- ha van subtitle, rekurzív módon jelenítjük meg azt -->
+      &#60;ul *ngIf="item.subtitles?.length">
+        &#60;app-menu [menu]="item.subtitles">&#60;/app-menu>
+      &#60;/ul>
+    &#60;/li>
+  &#60;/ul>
+    </pre>
+  </ul>
+</div>
+
+<div>
+  <h3 #typeguard data-anchor="typeguard">Type guard</h3>
+  <ul>
+    <li>TypeScript funkció, amely segít ellenőrizni egy változó, vagy objektum típusát futásidőben</li>
+    <br>
+    <li>Típusok
+      <ol>
+        <li>typeof
+          <ul>
+            <li>Primitív típusok ellenőrzése</li>
+            <li>String, number, boolean, symbol, undefined, bigint vagy function típusokat tudja ellenőrizni</li>
+            <pre>
+  function isString(value: unknown): value is string &#123;
+    return typeof value === "string";
+  }
+  
+  const input: unknown = "Hello";
+  const input2: unknown = 123;
+  
+  if (isString(input)) &#123; // true
+    console.log(input.toUpperCase());
+  }
+  
+  if (isString(input2)) &#123; // false
+    console.log(input2.toUpperCase());
+  }              
+            </pre>
+          </ul>
+        </li>
+        <li>instanceof
+          <ul>
+            <li>Osztályok és objektumok ellenőrzése</li>
+            <pre>
+  class Cat &#123;
+    miau() &#123;
+      console.log("Miauuu!");
+    }
+  }
+  
+  const pet = new Cat();
+  
+  if (pet instanceof Cat) &#123; // true
+    pet.miau();
+  }
+            </pre>
+          </ul>
+        </li>
+        <li>Custom type guard
+          <ul>
+            <li>Komplex objektumok ellenőrzése (API válasz)</li>
+            <pre>
+  interface User &#123;
+      id: number;
+      name: string;
+  }
+  
+  interface Admin extends User &#123;
+      role: "admin";
+  }
+  
+  // saját type guard:
+  function isAdmin(user: User | Admin): user is Admin &#123;
+      return (user as Admin).role !== undefined;
+  }
+  
+  // API válasz
+  const response: User | Admin = &#123; id: 1, name: "John", role: "admin" };
+  
+  if (isAdmin(response)) &#123; // true
+      console.log(`Admin belépés: $&#123;response.name}, jogosultság: $&#123;response.role}`);
+  } else &#123;
+      console.log(`User belépés: $&#123;response.name}`);
+  }              
+            </pre>
+          </ul>
+        </li>
+      </ol>
+    </li>
+  </ul>
+  <br>
+  <h5 #templateusage data-anchor="templateusage">Template usage</h5>
+  <ul>
+    <li>A typeof és az instanceof operátorok a tempate-ben nem használhatók</li>
+    <li>Custom pipe segítségével viszont ez kiküszöbölhető</li>
+    <br>
+    <li>typeof
+      <ul>
+        <pre>
+  <b>// pipe</b>
+  import &#123; Pipe, PipeTransform } from '@angular/core';
+
+  @Pipe(&#123;
+    name: 'isString'
+  })
+  export class IsStringPipe implements PipeTransform &#123;
+    transform(value: any): value is string &#123;
+      return typeof value === 'string';
+    }
+  }
+
+  <b>// template</b>
+  &#60;p *ngIf="name | isString">Name contains &#123; &#123;name.length}} characters!&#60;/;p>
+        </pre>
+        <li>Csak akkor fog megjelenni a paragráfus, ha name string típusú</li>
+      </ul>
+    </li>
+    <br>
+    <li>instanceof
+      <ul>
+        <pre>
+          <b>// pipe</b>
+          import &#123; Pipe, PipeTransform } from '@angular/core';
+
+          @Pipe(&#123;
+            name: 'isInstanceOf'
+          })
+          export class IsInstanceOfPipe implements PipeTransform &#123;
+            transform&#60;T>(value: any, target: new () => T): value is T &#123;
+              return value instanceof target;
+            }
+          }
+
+          <b>// class</b>
+          hero: any = new Hero('Superman');
+
+          <b>// template</b>
+          &#60;p *ngIf="hero | isInstanceOf:Hero">&#123; &#123;hero}} is a hero!&#60;/p>
+        </pre>
+        <li>Ellenőrizzük, hogy az objektum egy adott osztály példánya-e</li>
+        <li>A transform() metódus egy értéket (value), és egy cél osztályt (target) kap</li>
+        <li>A 'value is T' type predicate </li>
+        <li>Ha hero a Hero osztály példánya, az ngIf igaz lesz, és megjelenik a &#60;p> elem</li>
+      </ul>
+    </li>
+  </ul>
+  <br>
+  <h5 #typepredicate data-anchor="typepredicate">Type predicate</h5>
+  <ul>
+    <li>Megmondja a Typescript-nek, hogy egy függvény type guard-ként fog működni</li>
+    <pre>
+  function isString(value: unknown): value is string &#123; // a value is string type predicate
+      return typeof value === "string";
+  }          
+        </pre>
+    <li>A Typescript-nek ugyancsak megmondjuk, hogy ha a függvény visszatérési értéke true, akkor a value biztosan
+      string</li>
+  </ul>
+  <br>
+  <h5 #unknown data-anchor="unknown">Unknown</h5>
+  <ul>
+    <li>Bármilyen értéket elfogad, csak úgy, mint az any</li>
+    <li>Any használatakor a Typescript nem figyelmeztet a hibákra
+      <ul>
+        <li>Mintha kikapcsolnánk a hibaellenőrzést</li>
+        <pre>
+  let data: any;
+
+  data = "Üdv";     // megadhatjuk, mint érték
+  data = 123;       // megadhatjuk, mint érték
+  data = true;      // megadhatjuk, mint érték
+
+  // hibát egyik esetben sem kapunk
+
+  console.log(data.toUpperCase());
+
+  ↓↓↓↓↓
+
+  Amennyiben nem string-et adtunk meg a data változónak, mint érték, pórul jártunk, hibát kapunk
+        </pre>
+        <li>Az unknown biztonságosabb
+          <ul>
+            <li>A TypeScript nem engedi, hogy használjuk, amíg nem ellenőriztük a típusát</li>
+            <pre>
+  let data: unknown;
+
+  data = "Csá";  // megadhatjuk, mint érték
+  data = 987;       // megadhatjuk, mint érték
+  data = false;     // megadhatjuk, mint érték
+
+  console.log(data.toUpperCase()); // fordítási hiba
+
+  if (typeof data === "string") &#123;
+    console.log(data.toUpperCase());
+  }
+
+  ↓↓↓↓↓
+
+  "Csá" // ha nem string, nincs console.log
+            </pre>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #sorting data-anchor="sorting">Sorting</h3>
+  <ul>
+    <div>{{ [ "banana", "cherry", "apple" ] }}</div>
+    <div>{{ [ "banana", "cherry", "apple" ].sort() }}</div>
+    <pre>
+  &#60;div>&#123; &#123; [ "banana", "cherry", "apple" ] }}&#60;/div>
+  &#60;div>&#123; &#123; [ "banana", "cherry", "apple" ].sort() }}&#60;/div>
+
+  &#123; &#123; [ 10, 5, 8, 2, 7 ].sort((a, b) => a - b) }} // növekvő sorrend
+
+  ↓↓↓↓↓
+
+  [2, 5, 7, 8, 10] 
+
+  &#123; &#123; [ 10, 5, 8, 2, 7 ].sort((a, b) => b - a) }} // csökkenő sorrend
+
+  ↓↓↓↓↓
+
+  [10, 8, 7, 5, 2] 
+
+
+  let superHeroes = [
+    &#123; name: "Superman", strength: 10 },
+    &#123; name: "Spider-Man", strength: 7 },
+    &#123; name: "Iron Man", strength: 8 }
+  ];
+
+  superHeroes.sort((a, b) => a.strength - b.strength); // növekvő sorrend
+  console.log(superHeroes);
+
+  ↓↓↓↓↓
+
+  &#123; name: "Spider-Man", strength: 7 }
+  &#123; name: "Iron Man", strength: 8 }
+  &#123; name: "Superman", strength: 10 }
+
+  superHeroes.sort((a, b) => b.strength - a.strength); // csökkenő sorrend
+  console.log(superHeroes);
+
+  ↓↓↓↓↓
+
+  &#123; name: "Superman", strength: 10 }
+  &#123; name: "Iron Man", strength: 8 }
+  &#123; name: "Spider-Man", strength: 7 }
+    </pre>
+  </ul>
+  <br>
+  <h5 #keyvalue data-anchor="keyvalue">keyvalue</h5>
+  <ul>
+    <li>A keyvalue pipe egy objektumot, vagy egy Map-ot átalakít át tömbbé, ahol az objektumok kulcsai és értékei
+      egy-egy elemként szerepelnek
+      <ul>
+        <li>Működik tömbökön is, de az indexeket kezeli kulcsként</li>
+        <pre>
+  &#123; &#123; hero.value.name}} // tömb esetében a template-ben erre hibát kapunk
+        </pre>
+      </ul>
+    </li>
+    <li>keyValue használata
+      <ul>
+        <div *ngFor="let hero of superHeroes | keyvalue">
+          <div>Key: {{ hero.key }}</div>
+          <div>Value: {{hero.value}} (Hero object)</div>
+          <br>
+        </div>
+        <pre>
+  <b>// class</b>
+  interface Hero &#123;
+    name: string;
+    origin: string;
+    specialAbility: string;
+    strength: number
+  }
+
+  superHeroes: &#123; [key: string]: Hero } = &#123;
+    superman: &#123;
+      name: "Superman",
+      origin: "Kryptonian",
+      specialAbility: "Super strength, flight, heat vision",
+      strength: 10
+    },
+    spiderman: &#123;
+      name: "Spider-Man",
+      origin: "Earth (New York)",
+      specialAbility: "Spider senses, web-shooting, wall-crawling",
+      strength: 7
+    },
+    wonderwoman: &#123;
+      name: "Wonder Woman",
+      origin: "Amazonian",
+      specialAbility: "Super strength, combat skills, lasso of truth",
+      strength: 9
+    },
+    ironman: &#123;
+      name: "Iron Man",
+      origin: "Earth (USA)",
+      specialAbility: "Powered armor, genius-level intellect",
+      strength: 8
+    },
+    thor: &#123;
+      name: "Thor",
+      origin: "Asgardian",
+      specialAbility: "Control of thunder, flight (via Mjolnir)",
+      strength: 10
+    },
+    flash: &#123;
+      name: "Flash",
+      origin: "Earth (Central City)",
+      specialAbility: "Super speed, time travel",
+      strength: 7
+    },
+    hulk: &#123;
+      name: "Hulk",
+      origin: "Earth (USA)",
+      specialAbility: "Incredible strength, healing factor",
+      strength: 10
+    }
+  };
+
+  <b>// template</b>
+  &#60;div *ngFor="let hero of superHeroes | keyvalue">
+    &#60;div>Key: &#123; &#123; hero.key }}&#60;/div>
+    &#60;div>Value: &#123; &#123; hero.value}} (Hero object)&#60;/div>
+    &#60;br>
+  &#60;/div>
+            </pre>
+        <div *ngFor="let hero of superHeroes | keyvalue">
+          <div>Name: {{ hero.value.name }}</div>
+          <div>Strength: {{hero.value.strength}}</div>
+          <br>
+        </div>
+        <pre>
+  &#60;div *ngFor="let hero of superHeroes | keyvalue">
+    &#60;div>Name: &#123; &#123; hero.value.name }}&#60;/div>
+    &#60;div>Strength: &#123; &#123;hero.value.strength}}&#60;/div>
+    &#60;br>
+  &#60;/div>
+            </pre>
+      </ul>
+    </li>
+  </ul>
+  <br>
+  <h5 #valueorder data-anchor="valueorder">valueOrder</h5>
+  <ul>
+    <li>A valueOrder egy rendezési logika, amit arrow function-ként írunk le, és a keyvalue pipe-ot használva
+      alkalmazzuk</li>
+    <li>valueOrder használata
+      <br>
+      <ul>
+        <div *ngFor="let hero of superHeroes | keyvalue: valueOrder">
+          <div>Name: {{ hero.value.name }}</div>
+          <div>Strength: {{hero.value.strength}}</div>
+          <br>
+        </div>
+        <pre>
+          <b>// template</b>
+  &#60;div *ngFor="let hero of superHeroes | keyvalue: valueOrder">
+    &#60;div>Name: &#123; &#123; hero.value.name }}&#60;/div>
+    &#60;div>Strength: &#123; &#123;hero.value.strength}}&#60;/div>
+    &#60;br>
+  &#60;/div>
+
+  <b>// class</b>
+  valueOrder = (a: KeyValue&#60;string, any>, b: KeyValue&#60;string, any>): number => &#123;
+    return b.value.strength - a.value.strength; // csökkenő sorrendben rendezzük az erősség szerint
+  };
+            </pre>
+        <li>A valueOrder egy névtelen függvény, amit a keyValue pipe-nak adunk át
+          <ul>
+            <li>Normál függvényként is definiálható lehetne</li>
+            <pre>
+  valueOrderFunction(a: KeyValue&#60;string, Hero>, b: KeyValue&#60;string, Hero>): number &#123;
+    return b.value.strength - a.value.strength;
+  }
+
+  &#60;div *ngFor="let hero of superHeroes | keyvalue: valueOrderFunction">
+    &#123; &#123; hero.value.name }} - Strength: &#123; &#123; hero.value.strength }}
+  &#60;/div>
+        </pre>
+            <li>A keyValue elfogad egy összehasonlító függvényt, amely meghatározza a kulcs-érték párok sorrendjét
+            </li>
+            <pre>
+  (a: KeyValue&#60;string, Hero>, b: KeyValue&#60;string, Hero>) => number
+        </pre>
+            <li>a és b egy-egy KeyValue&#60;string, Hero> objektum</li>
+            <li>A függvény egy számot ad vissza
+              <ol>
+                <li>-1 - 'a' elem kerül előrébb</li>
+                <li>1 - 'b' elem kerül előrébb</li>
+                <li>0 - nem változik a sorrend</li>
+              </ol>
+            </li>
+            <pre>
+  // KeyValue objektum
+  &#123;
+    key: superman,         // &#60;string,
+    value: &#123;               // Hero>
+        name: "Superman",
+        origin: "Kryptonian",
+        specialAbility: "Super strength, flight, heat vision",
+        strength: 10
+    }
+  }
+                </pre>
+            <div *ngFor="let hero of superHeroes | keyvalue: valueOrderFunction">
+              <div>Name: {{ hero.value.name }}</div>
+              <div>Strength: {{hero.value.strength}}</div>
+              <br>
+            </div>
+            <pre>
+  valueOrderFunction(a: KeyValue&#60;string, Hero>, b: KeyValue&#60;string, Hero>): number &#123;
+      return a.value.name.localeCompare(b.value.name); // fordított sorrend: b.value.name.localeCompare(a.value.name)
+  }
+                </pre>
+            <li>A localeCompare egy beépített függvény, amelyet szövegek összehasonlítására használunk
+              <ul>
+                <li>Három értéket ad vissza (-1, 0, 1), attól függően, hogy milyen sorrendben állnak a szavak</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #trackby data-anchor="trackby">trackBy</h3>
+  <ul>
+    <li>Teljesítményoptimalizáló mechanizmus az Angularban</li>
+    <li>Az *ngFor direktívával együtt használjuk, hogy hatékonyabban kezeljük a listák újrarenderelését</li>
+    <li>Alapértelmezés szerint az Angular az azonosítás helyett az objektumok memóriacíme alapján követi a listákat</li>
+    <li>Ha egy új elemet adunk hozzá, vagy egy meglévőt módosítunk, akkor az Angular az egész listát újragenerálja, még
+      akkor is, ha a legtöbb elem / többi elem változatlan maradt</li>
+    <li>A trackBy egy függvény, amely az egyes elemek azonosítóját adja vissza
+      <ul>
+        <li>Segít az Angularnak megérteni, hogy mely elemek változtak és melyek maradtak ugyanazok</li>
+      </ul>
+    </li>
+    <pre>
+  heroes = [
+    &#123; id: 1, name: "Superman" },
+    &#123; id: 2, name: "Batman" },
+    &#123; id: 3, name: "Iron Man" }
+  ];
+
+  &#60;li *ngFor="let hero of heroes; trackBy: trackById">
+    &#123; &#123; hero.name }}
+  &#60;/li>
+  
+  trackById(index: number, hero: Hero): number &#123;
+    return hero.id; // az Angular az id alapján követi az elemeket
+  }
+    </pre>
+    <li>Az index automatikusan átadásra kerül a trackByFn függvénybe, mint első paraméter
+      <ul>
+        <li>A trackByFn egy elnevezési konvenció, azt a függvényt jelenti, amit trackBy-ra használunk</li>
+        <li>Nem az id, hanem az index</li>
+        <li>Illetve ehhez nem szükséges a "let i = index" sem</li>
+        <li>A heroes tömbelemeket a trackById függvény a következők szerint kapja meg
+          <ol>
+            <li>trackById(0, &#123; id: 1, name: "Superman" })</li>
+            <li>trackById(0, &#123; id: 2, name: "Batman" })</li>
+            <li>trackById(0, &#123; id: 3, name: "Iron Man" })</li>
+          </ol>
+        </li>
+      </ul>
+    </li>
+    <li>Ha csak egy elem módosul a listában, az Angular csak azt az egyet frissíti, a többi változatlan marad
+      <ul>
+        <li>Így kevesebb DOM művelet történik</li>
+      </ul>
+    </li>
+    <li>Érdemes használni, ha
+      <ol>
+        <li>dinamikusan változó a lista</li>
+        <li>nagy mennyiségű adatról van szó</li>
+        <li>az elemek azonosíthatók egyedi értékekkel</li>
+      </ol>
+    </li>
+    <li>Objektum esetében is segítségünkre lehet</li>
+    <pre>
+  superHeroes: &#123; [key: string]: Hero } = &#123;
+    superman: &#123;
+      name: "Superman",
+      origin: "Kryptonian",
+      specialAbility: "Super strength, flight, heat vision",
+      strength: 10
+    },
+    spiderman: &#123;
+      name: "Spider-Man",
+      origin: "Earth (New York)",
+      specialAbility: "Spider senses, web-shooting, wall-crawling",
+      strength: 7
+    },
+    wonderwoman: &#123;
+      name: "Wonder Woman",
+      origin: "Amazonian",
+      specialAbility: "Super strength, combat skills, lasso of truth",
+      strength: 9
+    },
+  ]
+
+  &#60;li *ngFor="let hero of superHeroes | keyvalue; trackBy: trackByKey">
+    &#123; &#123; hero.key }} - &#123; &#123; hero.value.name }}
+  &#60;/li>
+
+  trackByKey(index: number, hero: KeyValue&#60;string, Hero>): string &#123;
+    return hero.key; // hiszen key-re, és value-ra bontottuk az elemeket a keyvalue használatával
+  }
+    </pre>
+  </ul>
+</div>
+
+------------------------------------------------------------------
+
+<div>
+  <h3 #newdirectives data-anchor="newdirectives">New directives</h3>
+  <ul>
+    <li>Angular 17-től új szintaktikák kerültek be az Angularba
+      <ul>
+        <li>A logika változatlan, a szintaktika különbözik</li>
+        <li>Az alábbiak nem mind Angular 17-es újítások, van, amelyik 18-as (például a @let)</li>
+      </ul>
+    </li>
+    <br>
+    <li>@if
+      <ul>
+        <pre>
+  @if (condition) &#123;
+      &#60;div>Content&#60;/div>
+  }
+        </pre>
+      </ul>
+    </li>
+    <li>@else if
+      <ul>
+        <pre>
+  @if (condition) &#123;
+      &#60;div>Content&#123;/div>
+  } @else if (otherCondition) &#123;
+      &#60;div>Content 2&#60;/div>
+  } @else &#123;
+      &#60;div>Default content&#60;/div>
+  }
+        </pre>
+      </ul>
+    </li>
+    <li>@for
+      <ul>
+        <li>Egy teljesítményoptimalizált reactive rendering megoldás
+          <ul>
+            <li>A track nélküli használat nem engedélyezett</li>
+            <li>Ha nincs id, akkor a track az indexre alapoz</li>
+            <pre>
+  @for (...; track $index) &#123; }
+            </pre>
+            <li>Problémás, ha a tömb módosul, mert az indexek eltolódhatnak</li>
+          </ul>
+        </li>
+        <pre>
+  @for (elem of elements; let i = $index; let last = $last; let first = $first; track elem.id) &#123;
+        @if (first)&#123;
+          &#60;div>#&#123; &#123;i}} &#123; &#123; elem.name }} (first)&#60;/div> 
+        } 
+        @if (!first && !last)&#123;
+            &#60;div>#&#123; &#123;i}} &#123; &#123; elem.name }}&#60;/div> 
+        } 
+        @if (last)&#123;
+            &#60;div>#&#123; &#123;i}} &#123; &#123; elem.name }} (last)&#60;/div> 
+        } 
+  }
+        </pre>
+      </ul>
+    </li>
+    <li>@empty
+      <ul>
+        <li>Az üres listák eseteit kezeli</li>
+        <pre>
+  @for (elem of elements; track elem.id) &#123;
+      &#60;div>&#123; &#123; elem.nev }}&#60;/div>
+  } @empty &#123;
+      &#60;div>No elements&#60;/div>
+  }
+        </pre>
+      </ul>
+    </li>
+    <li>@switch & @case
+      <ul>
+        <pre>
+  @switch (status) &#123;
+    @case ('available') &#123;
+      &#60;div>Available&#60;/div>
+    }
+    @case ('notAvailable') &#123;
+      &#60;div>Not Available&#60;/div>
+    }
+    @default &#123;
+      &#60;div>Default status&#60;/div>
+    }
+  }   
+  
+  &#60;ng-container [ngSwitch]="status">
+    &#60;div *ngSwitchCase="'available'">Available&#60;/div>
+    &#60;div *ngSwitchCase="'notAvailable'">Not available&#60;/div>
+    &#60;div *ngSwitchDefault>Default status&#60;/div>
+  &#60;/ng-container>
+        </pre>
+      </ul>
+    </li>
+    <li>@let
+      <ul>
+        <li>Angular 18+</li>
+        <li>A sablonban közvetlenül definiálhatunk változókat</li>
+        <pre>
+  @let salute = 'Dear, Mr. President!';
+  &#60;p>&#123; &#123; salute }}&#60;/p>
+        </pre>
+      </ul>
+    </li>
+    <li>@defer
+      <ul>
+        <li>Angular 18+</li>
+        <li>Lazy loading-ot valósít meg</li>
+        <li>Javítja a teljesítményt</li>
+        <li>Egy adott blokkot csak akkor renderel az Angular, ha az szükséges</li>
+        <li>A ritkán használt, nagy komponenseknél érdemes használni</li>
+        <li>A komponens csak akkor töltődik be, ha a user a megfelelő helyre görget, esetleg megnyom egy gombot, vagy
+          előtöltés történik, miközben a felhasználó böngészi az oldalt</li>
+        <pre>
+  @defer &#123;
+      &#60;huge-component>&#60;/huge-component>
+  }
+
+  // OR (shorter)
+
+  @defer &#123;
+    &#60;/huge-component />
+  }
+          </pre>
+        <li>A @defer egy extra bundle-t hoz létre</li>
+        <li>Különféle feltételeket adhatunk meg a betöltődés kapcsán</li>
+        <pre>
+  @defer (buttonIsClicked) &#123;
+      &#60;huge-component />
+  }
+        </pre>
+      </ul>
+    </li>
+    <li>@placeholder
+      <ul>
+        <li>Angular 18+</li>
+        <li>Ez a kétrészlet fog megjelenni, amíg a @defer nem töltődött be</li>
+        <li>Opcionális minimum paraméterrel is rendelkezik
+          <ul>
+            <li>Azt jelenti, hogy minimum ennyi idő után jelenjen meg a placeholder</li>
+          </ul>
+        </li>
+        <pre>
+  @defer &#123;
+      &#60;huge-component />
+  } @placeholder (minimum 500ms) &#123;
+      &#60;div>Loading...&#60;/div>
+  }
+        </pre>
+        <li>Ha a huge-component 500ms-on belül betöltődik, akkor a placeholder meg sem jelenik</li>
+      </ul>
+    </li>
+    <li>@loading
+      <ul>
+        <li>Angular 18+</li>
+        <li>Amíg a @defer töltődik, egyedi @loading állapotot is megadhatunk</li>
+        <li>Két opcionális paramétere is létezik
+          <ol>
+            <li>minimum
+              <ul>
+                <li>A legkevesebb idő, ami után megjelenik a @loading blokk</li>
+              </ul>
+            </li>
+            <li>after
+              <ul>
+                <li>Az az idő, amíg vár az alkalmazás a loading történte után, hogy megjelenítse a @loading-ot</li>
+              </ul>
+            </li>
+          </ol>
+        </li>
+        <li>A loading a @placeholder helyét veszi át akkor, amikor már megtriggerelődött a blokk, hogy be kell töltődnie
+        </li>
+        <pre>
+  @defer &#123;
+      &#60;huge-component />
+  } @loading (after 100ms; minimum 1s) &#123;
+      &#60;img src="loading.png" />
+  } @placeholder (minimum 100ms) &#123;
+      &#60;div>Loading...&#60;/div>
+  }
+        </pre>
+      </ul>
+    </li>
+    <li>@error
+      <ul>
+        <li>Angular 18+</li>
+        <li>Ha a komponens valamilyen okból kifolyólag nem tud betöltődni, akkor egyedi hibakezelést adhatunk meg</li>
+        <pre>
+  @defer &#123;
+    &#60;huge-component />
+  } @error &#123;
+    &#60;p>Component cannot be loaded...&#60;/p>
+  }          
+        </pre>
+      </ul>
+    </li>
+    <br>
+    <li>Az Angular CLI képes a korábbi kódokat átalakítani az új szintaxisra</li>
+    <pre>
+      ng generate @angular/core:control-flow
+    </pre>
+    <li>A korábbi szintaxis nem deprecated, mindkettő szabadon használható</li>
+  </ul>
+</div>
+
+<div>
+  <h3 #callbackfunction data-anchor="callbackfunction">Callback function</h3>
+  <ul>
     <li>callback function (TODO)
       <ul>
         <li>
@@ -3951,8 +8311,13 @@
         </pre>
       </ul>
     </li>
+    <li>TODO</li>
+  </ul>
+</div>
 
-
+<div>
+  <h3 #rxjs data-anchor="rxjs">RxJS</h3>
+  <ul>
     <li>RxJS (TODO)
       <ul>
         <li>exhaustMap()</li>
@@ -3998,8 +8363,6 @@
         </table>
       </ul>
     </li>
-
-
     <li>Methodok (RxJS !)
       <ul>
         <ul>
@@ -4018,5 +8381,193 @@
         </ul>
       </ul>
     </li>
-  </ol>
+  </ul>
+</div>
+
+<div>
+  <h3 #fontsizes data-anchor="fontsizes">Font sizes</h3>
+  <ul>
+    <pre>
+  100: Thin
+  200: Extra / Ultra Light
+  300: Light
+  400: Normal / Regular
+  500: Medium
+  600: Semi Bold
+  700: Bold
+  800: Extra / Ultra Bold 
+  900: Black / Heavy
+    </pre>
+  </ul>
+</div>
+
+<div>
+  <h3 #handlingimages data-anchor="handlingimages">Handling images</h3>
+  <ul>
+    <li>Lazy loading
+      <ul>
+        <li>HTML attribútum</li>
+        <li>Késlelteti a kép betöltését, amíg az nincs a viewportban (látható területen)
+          <ul>
+            <li>Amikor az oldal betöltődik, a kép nem töltődik le azonnal</li>
+            <li>A böngésző akkor kezdi el letölteni, amikor a felhasználó elkezd lefelé görgetni, és a kép közel kerül a
+              viewporthoz</li>
+          </ul>
+        </li>
+        <li>Gyorsabb oldalbetöltést eredményez</li>
+        <li>SEO barát</li>
+        <li>Hero-ra, banner-re nem szabad használni</li>
+      </ul>
+    </li>
+    <li>srcset
+      <ul>
+        <li>Hasznos HTML attribútum az &#60;img> tagekben</li>
+        <li>Segítségével a böngésző a böngésző a képernyő méretéhez, és felbontásához legmegfelelőbb tölti be a képeket
+        </li>
+        <li>Reszponzív webdesign esetén hasznos</li>
+        <pre>
+  &#60;img src="image-regular.jpg"
+    srcset="image-small.jpg 480w, image-medium.jpg 1024w, image-large.jpg 1920w"
+    sizes="(max-width: 600px) 480px, (max-width: 1200px) 1024px, 1920px"
+    alt="Example">
+        </pre>
+        <li>Az srcset azt mondja meg, hogy milyen szélességű képek állnak rendelkezésre</li>
+        <li>A sizes megmondja a böngészőnek, hogy adott képernyőszélességnél mekkora képet használjon
+          <ul>
+            <li>Viewport <= 600px==> Az image-small.jgp-t jeleníti meg a böngésző (480w)</li>
+            <li>Viewport <= 1200px==> Az image-medium.jgp-t jeleníti meg a böngésző (1024w)</li>
+            <li>Viewport > 1200px ==> Az image-large.jgp-t jeleníti meg a böngésző (1920w)</li>
+          </ul>
+        </li>
+        <li>A böngésző nem a teljes képernyő szélességét veszi figyelembe, hanem azt, hogy az &#60;img> elem mekkora a
+          layoutban</li>
+        <pre>
+  &#60;img src="image.jpg"
+    srcset="image-1x.jpg 1x, image-2x.jpg 2x, image-3x.jpg 3x"
+    alt="Example">
+        </pre>
+        <li>DPR (Device Pixel Ratio) alapú változat</li>
+        <li>Az eszköz pixelsűrűsége dönti el, hogy élesebb vagy kevésbé részletes képre van-e szükség</li>
+        <li>Akkor érdemes használni, ha a kép mindig fix méretű (nem reszponzív a layoutban)</li>
+        <li>Az x érték a kijelző pixelsűrűségére vonatkozik
+          <ul>
+            <li>1x - normál felbontás</li>
+            <li>2x - retina felbontás</li>
+            <li>3x,4x... - extrém nagy pixelsűrűség</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #routerinrouter data-anchor="routerinrouter">Router in router</h3>
+  <ul>
+    <li>Az app modulunk rendelkezik routing-gal, ezáltal tudunk az oldalon navigálni a menüpontok segítségével</li>
+    <li>Mi van akkor, ha egy adott oldalon szeretnénk az app navigációjától független navigációt megvalósítani
+      <ul>
+        <li>Avagy váltsunk kontentet/komponenst anélkül, hogy az adott oldalról elnavigálnánk, mindezt routing-gal
+          megoldva</li>
+      </ul>
+    </li>
+    <pre>
+  <b>// URL /extras</b>
+  ...
+  &#123; path: 'extras', loadChildren: () => import('./extras/extras.module').then(mod => mod.ExtrasModule) },
+  ...
+    </pre>
+    <li>Jelen komponensünk egyben egy modul is</li>
+    <li>Ahhoz, hogy megvalósítsuk a fent leírtakat, szükségünk lesz egy gyermek modulra</li>
+    <pre>
+  <b>// extras.component.html</b>
+  &#60;app-animeroute>&#60;/app-animeroute> // a gyerek komponens, ami gyermek modul része
+
+  <b>// extras.module.ts</b>
+  @NgModule(&#123;
+      declarations: [
+          ExtrasComponent,
+          ...
+      ],
+      imports: [
+          CommonModule,
+          ExtrasRoutingModule,
+          ...
+          AnimerouteModule // be kell importálnunk a gyermek modult
+      ],
+  })
+
+  <b>// extras-routing.module.ts</b>
+  const routes: Route[] = [
+      &#123;
+          path: '',
+          component: ExtrasComponent,
+          loadChildren: () => import('./anime/animeroute/animeroute.module').then(m => m.AnimerouteModule)
+      },
+  ]
+    </pre>
+    <li>Az alapértelmezett útvonal (path: '') az ExtrasComponent-et jeleníti meg</li>
+    <li>Ha a loadChildrenben (lazy loading) a gyermek modulra hivatkozunk, akkor a gyermek modul automatikusan
+      betöltődik</li>
+    <li>Amennyiben a gyermek modul routing-jában adtunk meg alapértelmezett útvonalat (path: ''), az szintén
+      automatikusan betöltődik</li>
+    <pre>
+  <b>// animeroute.component.html</b>
+  &#60;nav>
+      &#60;ul>
+          &#60;li>
+              &#60;a [routerLink]="['home']" [routerLinkActive]="['is-active']">Home&#60;/a>
+              &#60;a [routerLink]="['about']" [routerLinkActive]="['is-active']">About&#60;/a>
+              &#60;a [routerLink]="['contact']" [routerLinkActive]="['is-active']">Contact&#60;/a>
+          &#60;/li>
+      &#60;/ul>
+  &#60;/nav>
+
+  &#60;router-outlet>&#60;/router-outlet>
+
+  <b>// animeroute.module.ts</b>
+  @NgModule(&#123;
+    declarations: [
+      AnimerouteComponent,
+      HomeComponent,
+      ContactComponent,
+      AboutComponent
+    ],
+    imports: [
+      CommonModule,
+      AnimerouteRoutingModule,
+    ],
+    exports: [
+      AnimerouteComponent // szükséges exportálni, hogy használhassuk az extras.component.html
+    ]
+  })
+
+  <b>// animeroute-routing.module.ts</b>
+  const routes: Routes = [
+    &#123; path: '', component: HomeComponent }, // alapértelmezett útvonal, így egyből be is tölt
+    &#123; path: 'home', component: HomeComponent },
+    &#123; path: 'about', component: AboutComponent },
+    &#123; path: 'contact', component: ContactComponent },
+    // &#123; path: 'about', component: HomeComponent, outlet: 'animerouting' }, // ha az animeroute.component.html-ben named router-outlet-et akarnánk használni
+  ];
+    </pre>
+    <li>A router-outlet-et tartalmazó HTML-ben a router-outlet-en kívüli kód navigálástól függetlenül jelen van mindig
+    </li>
+    <br>
+    <!--app-animeroute></!--app-animeroute-->
+  </ul>
+</div>
+
+<div>
+  <h3 #todo data-anchor="todo">TODO</h3>
+  <ul>
+    <li></li>
+  </ul>
+</div>
+
+<div>
+  <h3>Topics</h3>
+  <ul>
+    <li>Make DOM element same height as inner text - line-height: 1</li>
+  </ul>
 </div>

@@ -410,7 +410,6 @@
         <li>Minden fejlesztő más kódolási standardot követ; ezt véli egységesíteni</li>
         <li>Fájltípusonként, és globálisan is megadhatók szabályok</li>
         <li>Praktikusan csak a Team Leader szerkesztheti</li>
-        <li></li>
       </ul>
     </li>
     <li>gitignore
@@ -426,7 +425,6 @@
         <li>Beállíthatjuk, melyik fájl fusson le, amikor az Angular elkezd futni (index), csakúgy, mint az applikáció
           belépési pontját (main)
         </li>
-        <li></li>
       </ul>
     </li>
     <li>package.lock.json
@@ -459,8 +457,35 @@
       <ul>
         <li>Képek, ikonok, szöveges fájlok helye</li>
         <li>"Publikusan" elérhető fájlok</li>
-        <li>Példa: <a href="/assets/imgs/process.png" [target]="'_blank'">Process PNG</a></li>
+        <li>Példa: <a href="/assets/imgs/process.png" [target]="'_blank'">Process PNG</a> (, aminek az útvonala
+          lokálisan: http://localhost:PORT/assets/imgs/process.png)</li>
         <li>Az app, vagy más mappába helyezett fájlok nem elérhetőek</li>
+        <li>A "publikusan" elérhető útvonalakat az angular.json fájlban adhatjuk meg
+          <ul>
+            <pre>
+  angular.json
+  └── projects
+      └── [projekt-neve]
+          └── architect
+              └── build
+                  └── options
+                      └── assets
+
+  ↓↓↓↓↓
+
+  "assets": [
+      "src/favicon.ico",
+      "src/assets"
+  ],
+            </pre>
+            <li>Az assets a statikus fájlok kiszolgálására van beállítva
+              <ul>
+                <li>A tömb segítségével tudjuk meghatározni, hogy mely fájlokat szeretnénk a projektben elérhetővé
+                  tenni</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
       </ul>
     </li>
     <li>favicon.ico
@@ -1601,6 +1626,7 @@
   &#60;/div&#62;
           </pre>
           <ul>
+            <li>ngForOf direktíva a neve</li>
             <li>A 'last' a ciklus utolsó elemre vonatkozik</li>
             <li>Ebben az esetben br tag az utolsó elem után nem jelenik meg</li>
           </ul>
@@ -3473,6 +3499,7 @@
         <li>Nem része a lifecycle-nek, nem is Angular specifikus, hanem Javascript sajátosság</li>
       </ul>
     </li>
+    <br>
     <li>
       <h5 #onchanges data-anchor="onchanges">ngOnChanges</h5>
       <ul>
@@ -3570,6 +3597,7 @@
         </pre>
       </ul>
     </li>
+    <br>
     <li>
       <h5 #ngoninit data-anchor="ngoninit">ngOnInit</h5>
       <ul>
@@ -3703,6 +3731,7 @@
         </li>
       </ul>
     </li>
+    <br>
     <li>
       <h5 #docheck data-anchor="docheck">ngDoCheck</h5>
       <ul>
@@ -3746,6 +3775,7 @@
         </pre>
       </ul>
     </li>
+    <br>
     <li>
       <h5 #aftercontentinit data-anchor="aftercontentinit">ngAfterContentInit</h5>
       <ul>
@@ -3799,6 +3829,7 @@
         <li>Az ngAfterContentInit, és ngAfterContentChecked komponens hook-ok, direktívák számára nem elérhetők</li>
       </ul>
     </li>
+    <br>
     <li>
       <h5 #aftercontentchecked data-anchor="aftercontentchecked">ngAfterContentChecked</h5>
       <ul>
@@ -3872,6 +3903,7 @@
         <li>Az ngAfterContentInit, és ngAfterContentChecked komponens hook-ok, direktívák számára nem elérhetők</li>
       </ul>
     </li>
+    <br>
     <li>
       <h5 #afterviewinit data-anchor="afterviewinit">ngAfterViewInit</h5>
       <ul>
@@ -3885,6 +3917,7 @@
         </li>
       </ul>
     </li>
+    <br>
     <li>
       <h5 #afterviewichecked data-anchor="afterviewichecked">ngAfterViewChecked</h5>
       <ul>
@@ -3892,6 +3925,7 @@
         <li>A ViewChild és ViewChildren frissített értékeit ebben a hookban érjük el</li>
       </ul>
     </li>
+    <br>
     <li>
       <h5 #ondestroy data-anchor="ondestroy">ngOnDestroy</h5>
       <ul>
@@ -3957,7 +3991,9 @@
         <li>Az utolsó lifecycle hook-ja a komponenseknek, direktíváknak</li>
       </ul>
     </li>
-    <li><b>Különbségek</b>
+    <br>
+    <li>
+      <h5 #differences data-anchor="differences">Differences</h5>
       <ul>
         <li>ngDoCheck:
           <ul>
@@ -4034,6 +4070,199 @@
         <li>Child: ngAfterViewChecked - A child komponens nézetének ellenőrzése</li>
         <li>Parent: ngAfterViewChecked - A szülő komponens nézetének ellenőrzése</li>
       </ol>
+    </li>
+    <br>
+    <li>
+      <h5 #afternextrender data-anchor="afternextrender">afterNextRender</h5>
+      <ul>
+        <li>Angular 16-ban már jelen van, de hivatalosan Angular 17-ben stabil került stabil API-ként bevezetésre</li>
+        <li>Aszinkron lifecycle hook, amely egyetlen egyszer fut le, miután az Angular befejezte a komponens
+          renderelését az első alkalommal</li>
+        <li>Nem szükséges külön importálni</li>
+        <li>A setTimeout helyett kiváló natív Angular megoldás
+          <ul>
+            <li>Sok esetben segíthet a setTimeout (0s), például "expressionchangedafterithasbeenchecked" hibánál</li>
+          </ul>
+        </li>
+        <li>Callback függvényként működik, amit a függvény argumentumaként kell megadni</li>
+        <pre>
+  import &#123; Component, afterNextRender } from '@angular/core';
+
+  @Component(&#123;
+    selector: 'app-demo',
+    template: `&#60;p>Komponens renderelve!&#60;/p>`
+  })
+  export class DemoComponent &#123;
+    constructor() &#123;
+      afterNextRender(() => &#123;
+        console.log('A DOM renderelődött!');
+        this.changeParagraphColor();
+      });
+    }
+
+    changeParagraphColor() &#123;
+      document.querySelector('p')!.style.color = 'red';
+    }
+  }
+        </pre>
+        <li>Bizonyos szintig kiválthatja az ngAfterViewChecked-et
+          <ul>
+            <li>Az afterNextRender() később fut le, de nem akasztja meg a render folyamatot, ezért hatékonyabb lehet,
+              mint AfterViewInit()</li>
+            <li>Az AfterViewInit() problémákat okoz SSR esetében, amíg az afterNextRender() hook nem</li>
+            <br>
+            <table style="border-collapse: collapse; width: 100%;">
+              <tr>
+                <th>Jellemző</th>
+                <th>ngAfterViewInit()</th>
+                <th>afterNextRender()</th>
+              </tr>
+              <tr>
+                <td>Futás időpontja</td>
+                <td>Az első change detection ciklus után, amikor a nézetek inicializálása befejeződött</td>
+                <td>Egyszer, az első render után, nem függ a change detection-től</td>
+              </tr>
+              <tr>
+                <td>SSR alatt</td>
+                <td>Fut SSR alatt is</td>
+                <td>Nem fut SSR alatt</td>
+              </tr>
+              <tr>
+                <td>Szinkronitás</td>
+                <td>Szinkron módon fut le</td>
+                <td>Aszinkron módon fut le</td>
+              </tr>
+              <tr>
+                <td>Alkalmazás típusa</td>
+                <td>Hasznos a nézetek kezdeti beállításához, például DOM manipulációhoz</td>
+                <td>Alkalmas arra, hogy az első renderelést követően valamit végezz el, de ne okozzon újabb change
+                  detection-t</td>
+              </tr>
+              <tr>
+                <td>Újraindulás</td>
+                <td>Nem fut újra, ha a nézetek nem változnak</td>
+                <td>Egyszer fut le, nincs újrahívás</td>
+              </tr>
+            </table>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <br>
+    <li>
+      <h5 #afterrender data-anchor="afterrender">afterRender</h5>
+      <ul>
+        <li>Angular 16-ban már jelen van, de hivatalosan Angular 17-ben stabil került stabil API-ként bevezetésre</li>
+        <li>Szintén aszinkron hook (mint az afterNextRender), így nem blokklja az Angular renderelést</li>
+        <li>Minden egyes változás (change detection) után lefut, amikor az Angular újrarendereli a komponenst</li>
+        <li>Nem szükséges külön importálni</li>
+        <li>Amennyiben minden renderelés után valamilyen logikát szeretnénk futtatni, használatos</li>
+        <li>Callback függvényként működik, amit a függvény argumentumaként kell megadni</li>
+        <pre>
+  import &#123; Component, afterRender } from '@angular/core';
+
+  @Component(&#123;
+    selector: 'app-demo',
+    template: `&#60;p>&#123; &#123; counter }}&#60;/p>
+              &#60;button (click)="increase()">Increase&#60;/button>`
+  })
+  export class DemoComponent &#123;
+    counter = 0;
+
+    constructor() &#123;
+      afterRender(() => &#123;
+        console.log('Renderelés után fut: ', this.counter);
+      });
+    }
+
+    increase() &#123;
+      this.counter++;
+    }
+  }
+        </pre>
+        <li>Minden egyes változtatásnál (például az increase() hívásakor) lefut az afterRender() hook</li>
+      </ul>
+    </li>
+    <br>
+    <li>
+      <h5 #newlifecycleorder data-anchor="newlifecycleorder">New lifecycle order</h5>
+      <ol>
+        <li>(constructor)</li>
+        <li>ngOnChanges()</li>
+        <li>ngOnInit(</li>
+        <li>ngDoCheck()</li>
+        <li>ngAfterContentInit()</li>
+        <li>ngAfterContentChecked()</li>
+        <li>ngAfterViewInit()</li>
+        <li>afterNextRender()</li>
+        <li>ngAfterViewChecked()</li>
+        <li>ngAfterViewChecked()</li>
+        <li>afterRender()</li>
+        <li>ngOnDestroy()</li>
+      </ol>
+      <br>
+      <table style="border-collapse: collapse; width: 100%;">
+        <tr>
+          <th></th>
+          <th>Mikor fut le?</th>
+          <th>Hányszor?</th>
+        </tr>
+        <tr>
+          <td>constructor</td>
+          <td>Osztály inicializálásakor</td>
+          <td>1x</td>
+        </tr>
+        <tr>
+          <td>ngOnChanges</td>
+          <td>Ha van @Input(), minden változásnál</td>
+          <td>Többször</td>
+        </tr>
+        <tr>
+          <td>ngOnInit</td>
+          <td>Komponens inicializálásakor</td>
+          <td>1x</td>
+        </tr>
+        <tr>
+          <td>ngDoCheck</td>
+          <td>Minden change detection ciklusban</td>
+          <td>Többször</td>
+        </tr>
+        <tr>
+          <td>ngAfterContentInit</td>
+          <td>&lt;ng-content&gt; inicializálásakor</td>
+          <td>1x</td>
+        </tr>
+        <tr>
+          <td>ngAfterContentChecked</td>
+          <td>Minden change detection után, ha &lt;ng-content&gt; változott</td>
+          <td>Többször</td>
+        </tr>
+        <tr>
+          <td>ngAfterViewInit</td>
+          <td>Ha a teljes template elkészült</td>
+          <td>1x</td>
+        </tr>
+        <tr>
+          <td>ngAfterViewChecked</td>
+          <td>Minden változás után</td>
+          <td>Többször</td>
+        </tr>
+        <tr>
+          <td>afterNextRender()</td>
+          <td>Az első teljes render után</td>
+          <td>1x</td>
+        </tr>
+        <tr>
+          <td>afterRender()</td>
+          <td>Minden render után (change detection)</td>
+          <td>Többször</td>
+        </tr>
+        <tr>
+          <td>ngOnDestroy</td>
+          <td>Amikor a komponens megszűnik</td>
+          <td>1x</td>
+        </tr>
+      </table>
     </li>
   </ul>
 </div>

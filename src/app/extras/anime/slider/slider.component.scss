@@ -1,0 +1,68 @@
+:host {
+    display: grid;
+    max-width: 500px;
+    justify-self: center;
+    padding: 0.25em;
+    margin: 0.5em;
+    border: solid 2px black;
+    border-radius: 5px;
+
+}
+
+.image {
+    aspect-ratio: 3 / 2;
+    display: grid;
+    overflow: hidden;
+    place-items: center;
+}
+
+img {
+    display: block;
+    grid-column: 1;
+    grid-row: 1;
+    width: 100%;
+}
+
+nav {
+    background: black;
+    display: flex;
+    margin-top: 0.125em;
+
+    &::before {
+        background: white;
+        content: '';
+        width: 0.125em;
+    }
+
+}
+
+button {
+    all: unset;
+    color: white;
+    flex: 1;
+    padding: 1em;
+    transition: background-color 250ms, color 250ms;
+    text-align: center;
+
+    &:first-child {
+        order: -1;
+    }
+
+    &:not([disabled]) {
+        cursor: pointer;
+    }
+
+    &:not([disabled]):hover {
+        background-color: rgb(white, 0.2);
+    }
+
+    &[disabled] {
+        color: #444;
+    }
+}
+
+.preload {
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+}

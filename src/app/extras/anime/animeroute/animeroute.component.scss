@@ -1,0 +1,66 @@
+:host {
+    display: flex;
+    z-index: 1;
+}
+
+nav {
+    $size: 14em;
+    background-color: #6244b0;
+    min-width: $size;
+    transition: translate 0.15s ease-in;
+    width: $size;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 2.5em 0.5em 2em 2em;
+}
+
+li {
+    margin-block: 1.75em;
+}
+
+a {
+    color: white;
+    display: block;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.5em;
+    position: relative;
+    transition: scale 0.15s ease-in;
+    transform-origin: left center;
+
+    &:hover {
+        text-decoration: underline;
+        scale: 1.25;
+    }
+
+    &.active::after {
+        background-color: currentColor;
+        content: '';
+        inset: -0.25em -0.5em -0.25em -0.5em;
+        opacity: 0.2;
+        position: absolute;
+    }
+
+}
+
+button {
+    display: none;
+}
+
+section {
+    background: #ff495d;
+    color: white;
+    filter: drop-shadow(0 0 0.5rem rgba(black, 0.5));
+    inset: auto 0 0;
+    padding: 1em;
+    position: fixed;
+    text-align: center;
+}
+
+.is-active {
+    color: black;
+    text-decoration: underline;
+}

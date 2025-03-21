@@ -1,0 +1,74 @@
+<ng-container *ngIf="tempSwitcher === 'default'">
+    <div style="position: relative;overflow-x: hidden;margin: 20px 0;">
+        <app-page-content [tempSwitcher]="'default'" (menuClick)="menuState = 'open'"></app-page-content>
+        <app-page-menu [@openClose]="menuState" (close)="menuState = 'closed'"></app-page-menu>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="tempSwitcher === 'enterleave'">
+    <div style="position: relative;overflow-x: hidden;margin: 20px 0;">
+        <app-page-content [tempSwitcher]="'default'" (menuClick)="menuOpen = true"></app-page-content>
+        <app-page-menu *ngIf="menuOpen" @enterLeaveOpenClose2 (close)="menuOpen = false"></app-page-menu>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="tempSwitcher === 'keyframe'">
+    <div style="position: relative;overflow-x: hidden;margin: 20px 0;">
+        <app-page-content [tempSwitcher]="'default'" (menuClick)="menuOpen = true"></app-page-content>
+        <app-page-menu *ngIf="menuOpen" @keyframe (close)="menuOpen = false"></app-page-menu>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="tempSwitcher === 'querystagger'">
+    <div style="position: relative;overflow-x: hidden;margin: 20px 0;">
+
+        <section cdkScrollable>
+            <div [@querystagger]="players">
+                <ng-container *ngFor="let player of players">
+                    <app-players [player]="player"></app-players>
+                </ng-container>
+            </div>
+        </section>
+        <section class="text-center pt-5">
+            <button *ngIf="players.length < totalCount" (click)="addPlayers()" class="btn btn-danger">
+                <span>Add</span>
+            </button>
+            <button *ngIf="players.length > 0" (click)="removePlayers()" class="btn btn-primary">
+                <span>Remove</span>
+            </button>
+        </section>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="tempSwitcher === 'signupform'">
+    <div style="position: relative;overflow-x: hidden;margin: 20px 0;">
+        <app-page-content [tempSwitcher]="'modal'" (menuClick)="menuOpen = true"></app-page-content>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="tempSwitcher === 'multianime'">
+    <div style="position: relative;overflow-x: hidden;margin: 20px 0;">
+
+        <section cdkScrollable>
+            <div [@grouping]="players">
+                <ng-container *ngFor="let player of players">
+                    <app-players [player]="player"></app-players>
+                </ng-container>
+            </div>
+        </section>
+        <section class="text-center pt-5">
+            <button *ngIf="players.length < totalCount" (click)="addPlayers()" class="btn btn-danger">
+                <span>Add</span>
+            </button>
+            <button *ngIf="players.length > 0" (click)="removePlayers()" class="btn btn-primary">
+                <span>Remove</span>
+            </button>
+        </section>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="tempSwitcher === 'height'">
+    <div style="position: relative;overflow-x: hidden;margin: 20px 0;">
+        <app-page-content [tempSwitcher]="'height'" (menuClick)="menuOpen = true"></app-page-content>
+    </div>
+</ng-container>

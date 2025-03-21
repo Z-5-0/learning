@@ -36,8 +36,9 @@ export class CssscssComponent implements AfterViewInit {
     verticalalign,
     operators,
     pxemrem,
-    dvhlvhsvh,
-    aspectratio
+    vhvwdvhlvhsvh,
+    aspectratio,
+    todo
     `) sections!: QueryList<ElementRef>;
 
   anchorButtons: any[] = [
@@ -69,10 +70,10 @@ export class CssscssComponent implements AfterViewInit {
         { title: 'CSS reset', anchor: 'cssreset', subtitles: [] },
         { title: 'vertical-align', anchor: 'verticalalign', subtitles: [] },
         { title: 'Operators', anchor: 'operators', subtitles: [] },
-        { title: 'Operators', anchor: 'operators', subtitles: [] },
-        { title: 'px/em/rem', anchor: 'pxemrem', subtitles: [] },
-        { title: 'dvl/lvh/svh', anchor: 'dvhlvhsvh', subtitles: [] },
+        { title: 'px / em / rem', anchor: 'pxemrem', subtitles: [] },
+        { title: 'vh / vw / dvh / lvh / svh', anchor: 'vhvwdvhlvhsvh', subtitles: [] },
         { title: 'aspect-ratio', anchor: 'aspectratio', subtitles: [] },
+        { title: 'TODO', anchor: 'todo', subtitles: [] },
       ]
     }
   ]

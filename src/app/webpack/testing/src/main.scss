@@ -1,0 +1,8 @@
+$primary: teal;
+$danger: purple;
+
+@use "~bootstrap/scss/bootstrap";
+
+.this-is-my-own-rule {
+    color: black;
+}

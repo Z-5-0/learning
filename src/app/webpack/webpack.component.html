@@ -1,27 +1,2269 @@
 <h1>Webpack</h1>
 
+<div class="anchor-navi-container">
+  <div *ngFor="let mainButton of anchorButtons" class="btn-group">
+    <button type="button" class="btn btn-primary btn-sm anchor" (click)="scrollToAnchor(mainButton?.anchor)">
+      {{ mainButton.title }}
+    </button>
+    <button *ngIf="mainButton?.subtitles?.length" type="button"
+      class="btn btn-primary dropdown-toggle dropdown-toggle-split btn-sm anchor" data-bs-toggle="dropdown"
+      aria-expanded="false">
+    </button>
+    <ul *ngIf="mainButton.subtitles?.length" class="dropdown-menu dropdown-menu-dark">
+      <li>
+        <button *ngFor="let subButton of mainButton?.subtitles" class="dropdown-item"
+          (click)="scrollToAnchor(subButton?.anchor)">
+          {{ subButton?.title }}
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>
+
 <div>
-  <h3>Introduction</h3>
+  <h3 #introduction data-anchor="introduction">Introduction</h3>
   <ul>
-    <li>Bundle, azaz csomagoló.</li>
-    <li>Javascript fájlokat olvaszt össze egyetlen JS fájllá.</li>
-    <li>Képes HTML, CSS, vagy akár kép fájlok összecsomagolására is.</li>
-  </ul>
-  <br>
-  <h5 #todo data-anchor="todo">TODO</h5>
-  <ul>
-    <li>todo</li>
+    <li>Bundler, azaz csomagoló, JavaScript-alapú projektekhez</li>
+    <li>Különféle fájlokat csomagol össze egyetlen fájllá
+      <ul>
+        <li>JS, SASS, képek, stb.</li>
+      </ul>
+    </li>
+    <li>Emellett gondoskodik a dependenciákról is
+      <ul>
+        <li>Garantálja, hogy az töltődik be előbb, aminek előbb kell betöltődnie</li>
+      </ul>
+    </li>
+    <li>Az importált kódból el tudja távolítani a nem használt részeket, így csökkenti a végső fájlméretet (Tree
+      Shaking)</li>
+    <br>
+    <img src="assets/imgs/webpack_intro.png" width="100%">
+    <br>
+    <br>
+    <li>A webpack.config.js a konfigurációs fájl, amelyben beállíthatók az entry pointok, loaderek, pluginek, output,
+      stb.
+      <ul>
+        <li>Az entry point a projekt belépési pontja (például az index.js, vagy app.js), amelyből a Webpack elindul a
+          fájlok
+          összegyűjtésére</li>
+        <li>A Webpack development és production módja eltérő optimalizálásokat végez a kimeneti fájlokon</li>
+        <br>
+        <table style="border-collapse: collapse; width: 100%;">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Development mód</th>
+              <th>Production mód</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Fő cél</td>
+              <td>Gyors fejlesztés és hibakeresés</td>
+              <td>Optimális teljesítmény és kis méret</td>
+            </tr>
+            <tr>
+              <td>Source map</td>
+              <td>Be van kapcsolva (könnyebb hibakeresés)</td>
+              <td>Alapértelmezetten ki van kapcsolva</td>
+            </tr>
+            <tr>
+              <td>Kód minifikálás</td>
+              <td>Nincs</td>
+              <td>Van (TerserPlugin által)</td>
+            </tr>
+            <tr>
+              <td>Tree Shaking</td>
+              <td>Nincs</td>
+              <td>Van (Eltávolítja a nem használt kódokat)</td>
+            </tr>
+            <tr>
+              <td>Code Splitting</td>
+              <td>Nem alapértelmezett</td>
+              <td>Alapértelmezett</td>
+            </tr>
+            <tr>
+              <td>Hot Module Replacement (HMR)</td>
+              <td>Elérhető (webpack-dev-server támogatja)</td>
+              <td>Nem szükséges</td>
+            </tr>
+            <tr>
+              <td>Asset Optimization (CSS, JS tömörítés)</td>
+              <td>Nincs</td>
+              <td>Van (CSS Minification, JS uglification)</td>
+            </tr>
+            <tr>
+              <td>Dead Code Elimination</td>
+              <td>Nincs</td>
+              <td>Van (Eltávolítja a felesleges kódot)</td>
+            </tr>
+            <tr>
+              <td>Build sebesség</td>
+              <td>Gyorsabb</td>
+              <td>Lassabb (több optimalizáció történik)</td>
+            </tr>
+            <tr>
+              <td>Parancs</td>
+              <td>webpack --mode development</td>
+              <td>webpack --mode production</td>
+            </tr>
+          </tbody>
+        </table>
+        <br>
+      </ul>
+    </li>
+    <li>Beépített fejlesztői szerverrel rendelkezik (webpack-dev-server), amely hot-reloadingot biztosít</li>
+    <li>Angular projektekben az Angular CLI kezeli a Webpack beállításokat, így közvetlenül
+      nem kell vele foglalkoznunk, hacsak nem szeretnénk egyedi konfigurációt</li>
   </ul>
 </div>
 
 <div>
-  <h3 #todo data-anchor="todo">TODO</h3>
+  <h3 #installingandrunning data-anchor="installingandrunning">Installing & running</h3>
+  <h5 #base data-anchor="base">Base</h5>
   <ul>
-    <li>todo</li>
+    <li>Kiindulási alap</li>
+    <pre>
+  assets
+  └── webpack_logo.png
+  src
+  └── app.js
+  index.html
+
+  <b>// index.html</b>
+  &#60;html lang="en">
+
+  &#60;head>
+      &#60;meta charset="UTF-8">
+      &#60;meta name="viewport" content="width=device-width, initial-scale=1.0">
+      &#60;meta http-equiv="X-UA-Compatible" content="ie=edge">
+      &#60;title>Testing Webpack&#60;/title>
+      &#60;!--link rel="stylesheet" href="./style.css"-->
+      &#60;!--link rel="icon" href="./favicon.ico" type="image/x-icon"-->
+      &#60;link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  &#60;/head>
+
+  &#60;body>
+      &#60;main>
+          &#60;h1>Testing Webpack&#60;/h1>
+
+          &#60;div id="error" class="alert alert-danger" role="alert">&#60;/div>
+
+          &#60;div class="container">
+              &#60;div class="row">
+                  &#60;div class="col-3">
+                      &#60;div class="input-group mb-3">
+                          &#60;input id="firstNumber" type="text" class="form-control">
+                      &#60;/div>
+                  &#60;/div>
+                  &#60;div class="col-3">
+                      &#60;div class="input-group mb-3">
+                          &#60;span class="input-group-text" id="plus-icon">+&#60;/span>
+                          &#60;input ID="secondNumber" type="text" class="form-control">
+                      &#60;/div>
+                  &#60;/div>
+                  &#60;div class="col-3">
+                      &#60;button id="addValues" type="button" class="btn btn-primary">Add&#60;/button>
+                  &#60;/div>
+                  &#60;div class="col-12">
+                      &#60;div class="card" style="width: 100%;">
+                          &#60;div class="card-body">
+                              &#60;div class="card-text">The result is: &#60;span id="resultText">&#60;/span>&#60;/div>
+                          &#60;/div>
+                      &#60;/div>
+                  &#60;/div>
+                  &#60;div class="col-12">
+                      &#60;img src="assets/webpack_logo.png" width="100%">
+                  &#60;/div>
+              &#60;/div>
+          &#60;/div>
+      &#60;/main>
+      &#60;script src="./src/app.js">&#60;/script>
+  &#60;/body>
+
+  &#60;/html>
+
+  <b>// app.js</b>
+  const firstNumberInput = document.getElementById('firstNumber');
+  const secondNumberInput = document.getElementById('secondNumber');
+  const addValuesButton = document.getElementById('addValues');
+  const resultTextContainer = document.getElementById('resultText');
+  const errorContainer = document.getElementById('error');
+
+  const parseInputs = (...input) => &#123;
+      return input.map(str => parseInt(str));
+  };
+
+  const inputsAreValid = (...input) => &#123;
+      return input.every(num => typeof num === "number" && !isNaN(num));
+  };
+
+  const handleAdditionError = (inputs, numbers) => &#123;
+      const fullMessage = inputs.reduce((message, str, index) => &#123;
+          if (inputsAreValid(numbers[index])) &#123;
+              return message + "";
+          } else &#123;
+              return message + `$&#123;str} is not a number. `;
+          }
+      }, "Please enter two valid numbers! ");
+
+      errorBox.classList.remove("invisible");
+      errorBox.innerText = fullMessage;
+  }
+
+  const hideErrors = () => &#123;
+      errorBox.classList.add("invisible");
+  }
+
+  hideErrors();
+
+  addValuesButton.addEventListener("click", () => &#123;
+      hideErrors();
+      const inputs = [numberOneInput.value, numberTwoInput.value];
+      const parsedInputs = parseInputs(...inputs);
+      if (inputsAreValid(...parsedInputs)) &#123;
+          const [numA, numB] = parsedInputs;
+          resultDiv.innerText = numA + numB;
+      } else &#123;
+          resultDiv.innerText = "";
+          handleAdditionError(inputs, parsedInputs);
+      }
+  });
+    </pre>
+    <li>Bootstrap elemeket használunk</li>
+    <li>Két számértéket fogunk összeadni, és amennyiben mindkét érték tisztán szám, kiírjuk az értéket
+      <ul>
+        <li>Ha nem tisztán szám, de tartalmaz számértéket, az adódik össze a másik számmal</li>
+        <li>Amennyiben az egyik érték nem tartalmaz számot, hibát kapunk</li>
+      </ul>
+    </li>
   </ul>
   <br>
-  <h5 #todo data-anchor="todo">TODO</h5>
+  <h5 #codeseparation data-anchor="codeseparation">Code separation</h5>
   <ul>
-    <li>todo</li>
+    <li>Kezdjük el funkció szerint szétbontani a kódunkat</li>
+    <pre>
+  assets/
+  ├── webpack_logo.png
+  src/
+  ├── utils/
+  │   ├── inputs-are-valid.js
+  │   ├── parse-inputs.js
+  ├── alert.service.js
+  ├── component.service.js
+  ├── app.js
+  index.html
+
+  <b>// index.html</b>
+  &#60;html lang="en">
+
+  &#60;head>
+      &#60;meta charset="UTF-8">
+      &#60;meta name="viewport" content="width=device-width, initial-scale=1.0">
+      &#60;meta http-equiv="X-UA-Compatible" content="ie=edge">
+      &#60;title>Testing Webpack&#60;/title>
+      &#60;!--link rel="stylesheet" href="./style.css"-->
+      &#60;!--link rel="icon" href="./favicon.ico" type="image/x-icon"-->
+      &#60;link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  &#60;/head>
+
+  &#60;body>
+      &#60;main>
+          &#60;div class="container">
+              &#60;div class="row">
+                  &#60;div class="col-6 mx-auto">
+
+                      &#60;h1>Testing Webpack&#60;/h1>
+
+                      &#60;div id="error" class="alert alert-danger" role="alert">&#60;/div>
+
+                      &#60;div class="container">
+                          &#60;div class="row">
+                              &#60;div class="col-12 col-md-4">
+                                  &#60;div class="input-group mb-3">
+                                      &#60;input id="numberOne" type="text" class="form-control">
+                                  &#60;/div>
+                              &#60;/div>
+                              &#60;div class="col-12 col-md-4">
+                                  &#60;div class="input-group mb-3">
+                                      &#60;span class="input-group-text" id="plus-icon">+&#60;/span>
+                                      &#60;input ID="numberTwo" type="text" class="form-control">
+                                  &#60;/div>
+                              &#60;/div>
+                              &#60;div class="col-12 col-md-4 text-end">
+                                  &#60;button id="addValues" type="button" class="btn btn-primary">Add&#60;/button>
+                              &#60;/div>
+                              &#60;div class="col-12 mt-3">
+                                  &#60;div class="card" style="width: 100%;">
+                                      &#60;div class="card-body">
+                                          &#60;div class="card-text">The result is: &#60;span id="result">&#60;/span>&#60;/div>
+                                      &#60;/div>
+                                  &#60;/div>
+                              &#60;/div>
+                              &#60;div class="col-12 text-center">
+                                  &#60;img src="assets/webpack_logo.png" width="50%">
+                              &#60;/div>
+                          &#60;/div>
+                      &#60;/div>
+
+                  &#60;/div>
+              &#60;/div>
+          &#60;/div>
+      &#60;/main>
+      &#60;script src="./src/app/alert.service.js">&#60;/script>
+      &#60;script src="./src/app/component.service.js">&#60;/script>
+      &#60;script src="./src/app/utils/inputs-are-valid.js">&#60;/script>
+      &#60;script src="./src/app/utils/parse-inputs.js">&#60;/script>
+      &#60;script src="./src/app/app.js">&#60;/script>
+  &#60;/body>
+
+  &#60;/html>
+
+  <b>// app.js</b>
+  const alertService = new AlertService(); // példányosítjuk az AlertService-t
+  const componentService = new ComponentService(); // példányosítjuk az ComponentService-t
+
+  const run = (alertService, componentService) => &#123; // run függvény, ami benementként a két service 1-1 példányát fogadja
+      alertService.hideErrors();
+
+      componentService.onClick(() => &#123;
+          alertService.hideErrors();
+          const inputs = componentService.getInputs();
+          const parsedInputs = parseInputs(...inputs);
+          if (inputsAreValid(...parsedInputs)) &#123;
+              const [numA, numB] = parsedInputs;
+              componentService.setResult(numA + numB);
+          } else &#123;
+              componentService.setResult("");
+              alertService.handleAdditionError(inputs, parsedInputs);
+          }
+      });
+  };
+
+  run(alertService, componentService); // itt indítjuk az app-unkat
+
+  <b>// alert.service.js</b>
+  class AlertService &#123;
+    constructor() &#123;
+        this.errorBox = document.getElementById("error");
+    }
+
+    handleAdditionError(inputs, numbers) &#123;
+        const fullMessage = inputs.reduce((message, str, index) => &#123;
+            if (inputsAreValid(numbers[index])) &#123;
+                return message + "";
+            } else &#123;
+                return message + `$&#123;str} is not a number. `;
+            }
+        }, "Please enter two valid numbers! ");
+
+        this.errorBox.classList.remove("invisible");
+        this.errorBox.innerText = fullMessage;
+    }
+
+    hideErrors() &#123;
+        this.errorBox.classList.add("invisible");
+    }
+  }
+
+  <b>// component.service.js</b>
+  class ComponentService &#123;
+    constructor() &#123;
+        this.numberOneInput = document.getElementById("numberOne");
+        this.numberTwoInput = document.getElementById("numberTwo");
+        this.addValuesButton = document.getElementById("addValues");
+        this.resultDiv = document.getElementById("result");
+    }
+
+    getInputs() &#123;
+        return [this.numberOneInput.value, this.numberTwoInput.value];
+    }
+
+    setResult(str) &#123;
+        this.resultDiv.innerText = str;
+    }
+
+    onClick(cb) &#123; // a cb egy callback függvény, amelyet az onClick paraméterként kap meg
+        this.addValuesButton.addEventListener("click", cb);
+    }
+  }
+
+  <b>// parse-inputs.js</b>
+  const parseInputs = (...input) => &#123;
+      return input.map(str => parseInt(str));
+  };
+
+  <b>// inputs-are-valid.js</b>
+  const inputsAreValid = (...input) => &#123;
+      return input.every(num => typeof num === "number" && !isNaN(num));
+  };
+    </pre>
+    <li>A két service-nek kell először betöltődniük
+      <ul>
+        <li>Az app.js ezen két service-től függ (jelenleg)</li>
+      </ul>
+    </li>
+    <li>Az index.html-be az összes JS fájlt be szükséges hivatkoznunk
+      <ul>
+        <li>Fontos a sorrend az egymástól függés miatt</li>
+        <pre>
+  &#60;script src="./src/app/alert.service.js">&#60;/script>
+  &#60;script src="./src/app/component.service.js">&#60;/script>
+  &#60;script src="./src/app/utils/inputs-are-valid.js">&#60;/script>
+  &#60;script src="./src/app/util/parse-inputs.js">&#60;/script>
+  &#60;script src="./src/app/app.js">&#60;/script> &#60;!-- minden mástól függ -->
+        </pre>
+      </ul>
+    </li>
+    <br>
+    <img src="assets/imgs/webpack_base.png" width="100%">
+    <br>
+  </ul>
+  <br>
+  <h5 #install data-anchor="install">Install</h5>
+  <ul>
+    <pre>
+  npm init -y
+    </pre>
+    <li>A -y (vagy --yes) opció az összes kérdést automatikusan az alapértelmezett értékekkel
+      válaszolja meg (például a projekt név, verzió, leírás, satöbbi)</li>
+    <li>Létrejön a package.json fájl</li>
+    <pre>
+  &#123;
+    "name": "testing",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": &#123;
+      "test": "echo \"Error: no test specified\" && exit 1" // törölhető, majd megírjuk a saját script-jeinket
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
+  }
+    </pre>
+    <li>Ezután a .gitignore fájlhoz érdemes hozzáadni a node_modules mappát, hogy ne commit-áljuk</li>
+    <li>Továbbá a biztonság kedvéért, a "public": true kulcs-érték párossal meggátolhatjuk, hogy az npm publish
+      paranccsal véletlen publikálást csináljunk</li>
+    <li>Telepíthetjük a Webpack-et</li>
+    <pre>
+  npm i -save-dev webpack webpack-cli
+    </pre>
+    <li>A package.json devDependencies tömbjébe be is kerül a 2 csomag</li>
+  </ul>
+  <br>
+  <h5 #running data-anchor="running">Running</h5>
+  <ul>
+    <li>A következő lépésben scriptet hozunk létre</li>
+    <pre>
+  "scripts": &#123;
+    "start": "webpack" // az npm start parancs a webpack-et hívja meg
+  },
+    </pre>
+    <li>Konfigurálás nélkül hibába fogunk ütközni
+      <ul>
+        <li>Ha nem állítunk be semmit, akkor például a Webpack a ./src mappában keresi az index.js-t, ami esetünkben nem
+          létezik</li>
+        <li>Amennyiben létrehozzunk az src mappán belül az index.js-t, és mondjuk egy nagyon egy szerű alert()-et
+          elhelyezünk benne, máris lefut az npm start parancs, és létrejön egy dist mappa a src mappa szomszédságában
+          <ul>
+            <li>A dist mappa egy main.js fájlt tartalmaz</li>
+            <li>A dist mappát is érdemes hozzáadni a .gitignore fájlhoz</li>
+            <li>A Webpack nem csak appendeli az általunk írt kódot, hanem be is ágyazza a saját kódjába</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li>Ezt követően adjuk hozzá ezt a main.js fájlt az index.html-ünkhöz</li>
+    <pre>
+  &#60;script src="./src/app/alert.service.js">&#60;/script>
+  &#60;script src="./src/app/component.service.js">&#60;/script>
+  &#60;script src="./src/app/utils/inputs-are-valid.js">&#60;/script>
+  &#60;script src="./src/app/utils/parse-inputs.js">&#60;/script>
+  &#60;script src="./src/app/app.js">&#60;/script>
+  &#60;script src="./dist/main.js">&#60;/script> // a belépési pontot fogjuk megtölteni mindenféle ES6 import/export-tal
+    </pre>
+    <li>Ha ezen a ponton ráfrissítünk a böngészőben a korábban már megynyitott index.html fájlra
+      (???/src/app/webpack/testing/index.html), akkor az alert message mellett az eddig látott tartalom is megjelenik
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #importexportmodules data-anchor="importexportmodules">Import, export, modules</h3>
+  <ul>
+    <li>ES6 importokat, és expoortokat fogunk használni
+      <ul>
+        <li>Például az AlertService függ az inputsAreValid változótól, így a service-ünkbe be szükséges importálnunk,
+          ugyanakkor a változó nincs is exportálva</li>
+      </ul>
+    </li>
+    <pre>
+  <b>// inputs-are-valid.js</b>
+  export const inputsAreValid = (...input) => &#123; // kapott egy export kulcsszót
+      return input.every(num => typeof num === "number" && !isNaN(num));
+  };
+
+  <b>// parse-inputs.js</b>
+  export const parseInputs = (...input) => &#123; // kapott egy export kulcsszót
+      return input.map(str => parseInt(str));
+  };
+
+  <b>// component.service.js</b>
+  export class ComponentService &#123; // kapott egy export kulcsszót
+    constructor() &#123;
+        this.numberOneInput = document.getElementById("numberOne");
+        this.numberTwoInput = document.getElementById("numberTwo");
+        this.addValuesButton = document.getElementById("addValues");
+        this.resultDiv = document.getElementById("result");
+    }
+
+    getInputs() &#123;
+        return [this.numberOneInput.value, this.numberTwoInput.value];
+    }
+
+    setResult(str) &#123;
+        this.resultDiv.innerText = str;
+    }
+
+    onClick(cb) &#123; // a cb egy callback függvény, amelyet az onClick paraméterként kap meg
+        this.addValuesButton.addEventListener("click", cb);
+    }
+  }
+
+  <b>// alert.service.js</b>
+  import &#123; inputsAreValid } from "./utils/inputs-are-valid"; // nem default-ot importálunk, hanem konkrét nevet, ezért a kapcsos zárójel
+
+  export class AlertService &#123; // kapott egy export kulcsszót
+      constructor() &#123;
+          this.errorBox = document.getElementById("error");
+      }
+
+      handleAdditionError(inputs, numbers) &#123;
+          const fullMessage = inputs.reduce((message, str, index) => &#123;
+              if (inputsAreValid(numbers[index])) &#123;
+                  return message + "";
+              } else &#123;
+                  return message + `$&#123;str} is not a number. `;
+              }
+          }, "Please enter two valid numbers! ");
+
+          this.errorBox.classList.remove("invisible");
+          this.errorBox.innerText = fullMessage;
+      }
+
+      hideErrors() &#123;
+          this.errorBox.classList.add("invisible");
+      }
+  }
+
+  <b>// app.js</b>
+  import &#123; inputsAreValid } from "./utils/inputs-are-valid"; // importáltuk
+  import &#123; parseInputs } from "./utils/parse-inputs"; // importáltuk
+
+  const run = (alertService, componentService) => &#123; // run függvény, ami benementként a két service 1-1 példányát fogadja
+      alertService.hideErrors();
+
+      componentService.onClick(() => &#123;
+          alertService.hideErrors();
+          const inputs = componentService.getInputs();
+          const parsedInputs = parseInputs(...inputs);
+          if (inputsAreValid(...parsedInputs)) &#123;
+              const [numA, numB] = parsedInputs;
+              componentService.setResult(numA + numB);
+          } else &#123;
+              componentService.setResult("");
+              alertService.handleAdditionError(inputs, parsedInputs);
+          }
+      });
+  };
+
+  <b>// index.js</b>
+  import &#123; AlertService } from "./app/alert.service"; // importáltuk
+  import &#123; ComponentService } from "./app/component.service"; // importáltuk
+  import &#123; run } from "./app/app";
+
+  const alertService = new AlertService(); // példányosítjuk az AlertService-t
+  const componentService = new ComponentService(); // példányosítjuk az ComponentService-t
+
+  run(alertService, componentService); // itt indítjuk az app-unkat
+    </pre>
+    <li>Az alkalmazásunk belépési pontjához hozzáadjuk a run függvényt (az app.js-ből átvisszük)
+      <ul>
+        <li>A belépési pont az index.js</li>
+      </ul>
+    </li>
+    <li>Az index.html-ben csak a main.js script-jét hagyjuk bent
+      <ul>
+        <pre>
+  &#60;script src="./src/app/alert.service.js">&#60;/script>
+  &#60;script src="./src/app/component.service.js">&#60;/script>
+  &#60;script src="./src/app/utils/inputs-are-valid.js">&#60;/script>
+  &#60;script src="./src/app/utils/parse-inputs.js">&#60;/script>
+  &#60;script src="./src/app/app.js">&#60;/script>
+  &#60;script src="./dist/main.js">&#60;/script>
+
+  ↓↓↓↓↓
+
+  &#60;script src="./dist/main.js">&#60;/script>
+        </pre>
+      </ul>
+    </li>
+    <li>Minden a megfelelő sorrendben van, és működő bundle-t készít a Webpack az npm start paranccsal</li>
+  </ul>
+</div>
+
+<div>
+  <h3 #configuration data-anchor="configuration">Configuration</h3>
+  <ul>
+    <li>Az npm start hatására a Webpack elindul, nem talál konfigurációt - még ezen a ponton - (például
+      webpack.config.js), így alapértelmezés szerint a ./src/index.js fájlt keresi meg, és indítja el ezzel az
+      alkalmazást
+      <ul>
+        <li>Ezen kívül az is alapértelmezés, hogy a ./dist mappában helyezi el az összecsomagolt kódot, main.js néven
+        </li>
+      </ul>
+    </li>
+    <pre>
+  root
+  ├── assets
+  │   └── webpack_logo.png
+  ├── dist
+  │   └── main.js
+  ├── node_modules
+  │   └── *rengeteg mappa*
+  ├── src
+  │   ├── app
+  │   │   ├── utils
+  │   │   │   ├── inputs-are-valid.js
+  │   │   │   └── parse-input.js
+  │   │   ├── alert.service.js
+  │   │   ├── app.js
+  │   │   └── component.service.js
+  │   └── index.js
+  ├── index.html
+  ├── package-lock.json
+  ├── package.json
+  └── webpack.config.js
+
+  <b>// webpack.config.js</b>
+  const path = require("path"); // a Node.js beépített path modulját importálja
+
+  module.exports = &#123; // egy CommonJS export, amely lehetővé teszi, hogy a Webpack beolvassa a beállításokat
+  mode: "development",
+      entry: "./src/index.js", // entry point
+      output: &#123;
+          filename: "main.js", // a bundle file neve
+          path: path.resolve(__dirname, "dist") // OS-független abszolút elérési útvonal legyen
+      }
+  }
+
+  <b>// package.json</b>
+  ...
+  "scripts": &#123;
+    "start": "webpack --config webpack.config.js" // más fájlnév is megadható
+  },
+  ...
+    </pre>
+    <li>A __dirname arra a mappára mutat, ahol a webpack.config.js fájlunk található</li>
+    <li>A Webpack bundle alapértelmezetten production módban készül el
+      <ul>
+        <li>Így nem lesz minify-olva a main.js fájlunk</li>
+      </ul>
+    </li>
+    <li>Amennyiben még a "devtool": "none" kulcs-érték párost is megadjuk, a bundle-ben (main.js) egy relatíve
+      változatlan kódot kapunk ahhoz képest, amit mi írtunk</li>
+  </ul>
+</div>
+
+<div>
+  <h3 #loaderscsssass data-anchor="loaderscsssass">Loaders, CSS & SASS</h3>
+  <ul>
+    <li>Eddig csak JS fájlokat csomagoltunk össze, pedig a webpack mindenféle fájlt képes kezelni
+      <ol>
+        <li>JSON</li>
+        <li>CSS</li>
+        <li>SASS</li>
+        <li>SVG</li>
+        <li>Typescript</li>
+        <li>...</li>
+      </ol>
+    </li>
+    <li>Ehhez package-eket szükséges telepítenünk, és módosítani a config-ot</li>
+  </ul>
+  <br>
+  <h5 #loaders data-anchor="loaders">Loaders</h5>
+  <ul>
+    <li>Kulcs ahhoz, hogy a Webpack Javascript fájlokon kívül más fájlokat is tudjon kezelni</li>
+    <li>A loader-ek bemenetként kapják az adott fájlt, átalakítják a fájlt egy olyan formátumba, amit a Webpack megért,
+      végül visszaadják a Webpack-nak, amely beépíti azt a kimeneti fájlba</li>
+    <li>Gyakran használt loader-ek
+      <ol>
+        <li>Babel Loader
+          <ul>
+            <li>Lehetővé teszi, hogy modern JavaScript kódot írjunk (ES6+, JSX), amely kompatibilis marad régebbi
+              böngészőkkel is</li>
+          </ul>
+        </li>
+        <li>CSS és SASS/SCSS Loader
+          <ul>
+            <li>A CSS fájlokat importálhatjuk, és a Webpack beépíti őket a bundle-be</li>
+          </ul>
+        </li>
+        <li>File Loader
+          <ul>
+            <li>Lehetővé teszi a képek, és egyéb fájlok importálását a JavaScript-ben</li>
+          </ul>
+        </li>
+        <li>URL Loader
+          <ul>
+            <li>A File Loader-hez hasonló, de kis fájlokat Base64-adattá alakít át</li>
+          </ul>
+        </li>
+        <li>TS Loader
+          <ul>
+            <li>TypeScript kódot alakít át JavaScript-re</li>
+          </ul>
+        </li>
+      </ol>
+    </li>
+    <li>Meglehetősen sok loader létezik a Webpack-hez</li>
+  </ul>
+  <br>
+  <h5 #cssloader data-anchor="cssloader">CSS Loader</h5>
+  <ul>
+    <li>Hozzunk létre egy main.css fájlt</li>
+    <pre>
+  root
+  ├── assets
+  │   └── webpack_logo.png
+  ├── dist
+  │   └── main.js
+  ├── node_modules
+  │   └── *rengeteg mappa*
+  ├── src
+  │   ├── app
+  │   │   ├── utils
+  │   │   │   ├── inputs-are-valid.js
+  │   │   │   └── parse-input.js
+  │   │   ├── alert.service.js
+  │   │   ├── app.js
+  │   │   └── component.service.js
+  │   ├── index.js
+  │   └── main.css                      // új fájl az src mappán belül
+  ├── index.html
+  ├── package-lock.json
+  ├── package.json
+  └── webpack.config.js
+    </pre>
+    <li>A main.css-t az index.html-ünkhöz is hozzáadhatnánk, de a cél az, hogy a Webpack kezelje masd
+      <ul>
+        <li>Bármennyi CSS fájlunk is legyen, a Webpack-nek kell bundle-t készíteni belőle, ez a fő koncepció</li>
+        <li>Adjuk hozzá a main.css-t az index.js fájlunkhoz</li>
+        <pre>
+  <b> // index.js</b>
+  import &#123; AlertService } from "./app/alert.service"; // importáltuk
+  import &#123; ComponentService } from "./app/component.service"; // importáltuk
+  import "./main.css";
+  import &#123; run } from "./app/app";
+
+  const alertService = new AlertService(); // példányosítjuk az AlertService-t
+  const componentService = new ComponentService(); // példányosítjuk az ComponentService-t
+
+  run(alertService, componentService); // itt indítjuk az app-unkat
+        </pre>
+      </ul>
+    </li>
+    <pre>
+  npm install --save-dev style-loader css-loader 
+    </pre>
+    <li>A Webpack konfigurációs fájljában modulokat fogunk definiálni
+      <ul>
+        <li>A különböző modulok különféle szabályokat (rule) kaphatnak</li>
+        <pre>
+  module: &#123;
+    rules: [
+      &#123;
+        test: /\.css$/i, // regex, .css végződésű fájlok keres
+        use: ["style-loader", "css-loader"], // ezt a 2 loadert használja a .css végződésű fájlok esetében a modul
+      },
+    ],
+  },
+        </pre>
+        <li>Először nézzük meg, mi történik, ha csak CSS Loader-t használunk</li>
+        <pre>
+  const path = require("path");
+
+  module.exports = &#123;
+      mode: "development",
+      entry: "./src/index.js",
+      output: &#123;
+          filename: "main.js",
+          path: path.resolve(__dirname, "dist")
+      },
+      module: &#123;
+          rules: [
+              &#123;
+                  test: /\.css$/i,
+                  use: ["style-loader", "css-loader"],
+              }
+          ]
+      }
+  }
+        </pre>
+        <li>A CSS Loader hozzáadta a main.js fájlunkhoz a main.css tartalmát
+          <ul>
+            <li>Ugyanakkor nem kerül alkalmazásra egyik stílusjegy sem</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <br>
+    <li>CSS Loader
+      <ul>
+        <li>Megkeresi a CSS kódokat, és Javascript-é alakítja</li>
+      </ul>
+    </li>
+    <li>Style Loader
+      <ul>
+        <li>Beilleszti a Javascript-é alakított CSS kódot a DOM-ba</li>
+        <li>A head-ben style tag-be helyezi</li>
+      </ul>
+    </li>
+    <br>
+    <li>A use tömbnek sorrendje is van
+      <ul>
+        <li>A CSS Loader végzi a munkát először, majd a Style Loader következik</li>
+        <pre>
+  <b>// main.css</b>
+  body &#123;
+    background-color: purple;
+  }
+
+  <b>// webpack.config.js</b>
+  const path = require("path");
+
+  module.exports = &#123;
+      mode: "development",
+      entry: "./src/index.js",
+      output: &#123;
+          filename: "main.js",
+          path: path.resolve(__dirname, "dist")
+      },
+      module: &#123;
+          rules: [
+              &#123;
+                  test: /\.css$/,
+                  use: ["style-loader", "css-loader"]
+              }
+          ]
+      }
+  }
+        </pre>
+        <li>A trükk az, hogy fordított sorrendben töltődnek be</li>
+        <br>
+        <img src="assets/imgs/webpack_css_loader.png" width="100%">
+      </ul>
+    </li>
+  </ul>
+  <br>
+  <h5 #sassloader data-anchor="sassloader">SASS Loader</h5>
+  <ul>
+    <li>Első körben installáljuk fel a Bootstrap-et, és vegyük ki a az index.html-ből a Bootstrap CDN url-t</li>
+    <pre>
+  npm i --save-dev bootstrap
+    </pre>
+    <li>Ez után nevezzük át a main.css fájlunkat .scss-re, vegyünk ki minden szabályt, és importáljuk a Bootstrap-et
+    </li>
+    <pre>
+  @import "~bootstrap/scss/bootstrap";
+    </pre>
+    <li>A ~ jel a Webpack-hoz kapcsolódó módosítást jelent, ami lehetővé teszi a csomagok, és modulok közvetlen elérését
+      a node_modules mappából
+      <ul>
+        <li>A ~ jel arra utasítja a Webpackot, hogy a fájlt a node_modules mappában keresse</li>
+        <li>Webpack 5-ben már nem szükséges, sőt, a @import a Dart Sass 3.0.0-mas verziójában már deprecated
+          <ul>
+            <li>Helyette a @use-t kell használni</li>
+            <pre>
+  @use "bootstrap";
+            </pre>
+            <li>A @use automatikusan namespaced módon importál</li>
+            <pre>
+  color: bootstrap.$primary;
+            </pre>
+            <li>A Bootstrap ezen projektben használt verziója még nem állt át @use-ra, így folyamatosak a warning-ok
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li>Mivel az SCSS fájlok kompilálásra szorulnak, ezért nem írhatjuk át csak simán a Webpack konfigunkat, .scss-re,
+      emellett használva a css-loader-t</li>
+    <pre>
+  npm install sass-loader sass webpack --save-dev
+      </pre>
+    <li>SASS Loader
+      <ul>
+        <li>3 lépésben működik
+          <ol>
+            <li>Először átalakítja az SCSS kódot CSS-sé</li>
+            <li>Ezt követően a CSS kódot Javascript kóddá alakítja</li>
+            <li>Végül a Javascript kódot beinjektálja a DOM-ba</li>
+          </ol>
+        </li>
+      </ul>
+    </li>
+    <pre>
+  <b>// webpack.config.js</b>
+  const path = require("path");
+
+  module.exports = &#123;
+      mode: "development",
+      entry: "./src/index.js",
+      output: &#123;
+          filename: "main.js",
+          path: path.resolve(__dirname, "dist")
+      },
+      module: &#123;
+          rules: [
+              &#123;
+                  test: /\.scss$/,
+                  use: [
+                    "style-loader", // harmadik
+                    "css-loader", // második
+                    "sass-loader" // első
+                  ]
+              }
+          ]
+      }
+  }
+    </pre>
+    <li>Ne felejtsük el átírni az index.js-ben az importot</li>
+    <pre>
+  import "./main.css";
+
+  ↓↓↓↓↓
+
+  import "./main.scss";
+    </pre>
+    <img src="assets/imgs/webpack_bootstrap_in_dom.png" width="100%">
+    <br>
+    <li>Egyértelműen látszik, hogy a Bootstrap bekerült a DOM-ba, a head tag-be, style tag-ek közé</li>
+    <li>Innentől kezdve, mivel SCSS fájlról van szó, nyugodt szívvel átírhatjuk a default Bootstrap stílusokat</li>
+    <pre>
+  <b>main.scss</b>
+  $primary: teal;
+  $danger: purple;
+
+  @import "~bootstrap/scss/bootstrap";
+    </pre>
+    <img src="assets/imgs/webpack_bootstrap_recolor.png" width="100%">
+    <br>
+    <li>A source-unkban semmi más nem szerepel, csak az index.html, és a main.js</li>
+  </ul>
+</div>
+
+<div>
+  <h3 #cachebustingandplugins data-anchor="cachebustingandplugins">Cache busting & plugins</h3>
+  <ul>
+    <li>A modern böngészők erőteljes gyorsítótárazási mechanizmusokat alkalmaznak, hogy csökkentsék a szerverre irányuló
+      kérések számát, és gyorsítsák a betöltési idő</li>
+    <li>Azonban ha egy fájl módosul (például egy új JavaScript funkciót adunk hozzá), a böngésző továbbra is a régi
+      verziót használhatja, mivel az gyorsítótárból töltődik be</li>
+  </ul>
+  <br>
+  <h5 #cachebusting data-anchor="cachebusting">Cache busting</h5>
+  <ul>
+    <li>Biztosítja, hogy a böngészők ne használjanak elavult (gyorsítótárazott) verziókat egy webalkalmazás statikus
+      fájljaiból (például CSS, JavaScript, képek)
+      <ul>
+        <li>A legfrissebb verziójú fájlok töltődjenek be a felhasználóknál</li>
+      </ul>
+    </li>
+    <li>Webpack esetén a output.filename beállításban hash-t adhatunk a fájlokhoz
+      <ul>
+        <li>A kódunkból készít egy hash-t</li>
+        <li>Ha a fájl változik, akkor a hash is megváltozik, így a böngésző új verzióként kezeli</li>
+        <li>Többféle hash is rendelkezésünkre áll
+          <ol>
+            <li>[hash] - az egész build állapotától függ (globális)</li>
+            <li>[chunkhash] - az adott chunk-tól függ</li>
+            <li>[contenthash] - az adott fájl tartalmából generálódik</li>
+          </ol>
+        </li>
+        <li>Cache bustinghoz az utolsó a legjobb választás</li>
+        <li>Ezen túl különböző algoritmusokat is használhatunk
+          <ul>
+            <li>xxhash64 - gyors és hatékony
+              <ul>
+                <li>A Webpack 5.54.0 verziójától elérhető az xxhash64, ami egy gyorsabb algoritmus, és ha be van
+                  kapcsolva a experiments.futureDefaults, akkor ez az alapértelmezés</li>
+              </ul>
+            </li>
+            <li>sha256 vagy md5 - erősebb hash, de lassabb</li>
+            <li>sha1 - nem javasolt, elavult, nem biztonságos</li>
+          </ul>
+        </li>
+        <pre>
+  <b>// webpack.config.js</b>
+  ...
+  output: &#123;
+      filename: "main.[contenthash].js",  // eredmény: main.344dcaa10982b95e1b11.js
+      path: path.resolve(__dirname, "dist"),
+      clean: true, // automatikusan törli a kimeneti mappa korábbi tartalmát
+  },
+  ...
+        </pre>
+      </ul>
+    </li>
+    <li>Azokat a fájlokat, amelyek ritkán változnak (például vendor fájlok — harmadik féltől származó könyvtárak),
+      érdemes cache-elni
+      <ul>
+        <li>A sűrűbben változó fájlok esetében pedig alkalmazandó a cache burst
+          <ul>
+            <li>Ha egy fájl tartalma változik, annak neve is megváltozik</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li>Kérdés lehet, hogy miképp töltjük be dinamikusan az index.html-be
+      <ul>
+        <li>A megoldás, hogy a továbbiakban nem mi írjuk bele az index.html-be a scriptet</li>
+        <pre>
+  &#60;script src="./dist/main.js">&#60;/script>
+        </pre>
+        <li>Plugin-t fogunk használni</li>
+
+      </ul>
+    </li>
+  </ul>
+  <br>
+  <h5 #plugins data-anchor="plugins">Plugins</h5>
+  <ul>
+    <li>A plugin-ek a Webpack build folyamatának személyre szabását teszik lehetővé</li>
+    <li>El kell érnünk, hogy a Webpack készítse el a HTML fájlunkat, és szúrja be a megfelelő helyre a
+      fájlstruktúránkban
+      <ul>
+        <li>Ehhez a HtmlWebpackPlugin-t válasszuk</li>
+      </ul>
+    </li>
+    <li>HtmlWebpackPlugin
+      <ul>
+        <li>Népszerű plugin, ami segít dinamikusan generálni egy HTML fájlt, amely tartalmazza a Webpack által
+          előállított összes szükséges JavaScript fájlt (például a bundle-t), és lehetővé teszi különféle HTML
+          beállítások testreszabását</li>
+        <li>A Webpack alapértelmezett viselkedése az, hogy csak a JavaScript fájlokat kezeli</li>
+        <li>Használatával nem kell manuálisan frissíteni a HTML fájlt, amikor a JavaScript fájlok nevei változnak
+          (mondjuk hash-elés miatt)</li>
+        <pre>
+  npm install --save-dev html-webpack-plugin
+        </pre>
+        <li>Mindenféle konfigurálás nélkül csak egy alap, default HTML fájlt kapunk eredményül npm start futtatását
+          követően</li>
+        <pre>
+  <b>// webpack.config.js</b>
+  const path = require("path");
+  const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+  module.exports = &#123;
+      mode: "development",
+      entry: "./src/index.js",
+      output: &#123;
+          filename: "main.[contenthash].js",
+          path: path.resolve(__dirname, "dist"),
+          hashFunction: "sha256",
+          clean: true, // automatikusan törli a kimeneti mappa korábbi tartalmát
+      },
+      plugins: [new HtmlWebpackPlugin()],
+      module: &#123;
+          rules: [
+              &#123;
+                  test: /\.scss$/,
+                  use: [
+                      "style-loader", // harmadik
+                      "css-loader", // második
+                      "sass-loader" // első
+                  ]
+              }
+          ]
+      }
+  }
+
+  ↓↓↓↓↓
+
+  dist/
+  ├── index.html
+  └── main.344dcaa10982b95e1b11.js
+
+  <b>// index.html</b>
+  &#60;!DOCTYPE html>
+  &#60;html>
+    &#60;head>
+      &#60;meta charset="utf-8">
+      &#60;title>Webpack App&#60;/title>
+      &#60;meta name="viewport" content="width=device-width, initial-scale=1">
+      &#60;script defer src="main.344dcaa10982b95e1b11.js">&#60;/script> // a script-ünk automatikusan, és megfelelően legenerálódott
+    &#60;/head>
+    &#60;body>
+    &#60;/body>
+  &#60;/html>
+        </pre>
+        <li>Ugyanakkor az oldalunk tartalma még sehol sincs</li>
+        <li>Innentől a dist mappában lévő index.html-t kell használnunk</li>
+        <li>A plugin-nek a saját template-ünket is átadhatjuk
+          <ul>
+            <li>Hozzunk létre egy template.html-t az src mappában</li>
+            <li>Másoljuk bele az index.html tartalmát</li>
+            <li>Konfiguráljuk a plugin-ünket, hog ebből a fájlból építsen index.html-t</li>
+            <pre>
+  <b>// webpack.config.js</b>
+  const path = require("path");
+  const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+  module.exports = &#123;
+      mode: "development",
+      entry: "./src/index.js",
+      output: &#123;
+          filename: "main.[contenthash].js",
+          path: path.resolve(__dirname, "dist"),
+          clean: true, // automatikusan törli a kimeneti mappa korábbi tartalmát
+      },
+      plugins: [new HtmlWebpackPlugin(&#123;
+          template: "./src/template.html" // megadtuk a template fájl helyét a config-hoz képest
+      })],
+      module: &#123;
+          rules: [
+              &#123;
+                  test: /\.scss$/,
+                  use: [
+                      "style-loader", // harmadik
+                      "css-loader", // második
+                      "sass-loader" // első
+                  ]
+              }
+          ]
+      }
+  }
+
+  ↓↓↓↓↓
+
+  <b>// dist/index.html</b>
+  &#60;html lang="en">
+
+  &#60;head>
+      &#60;meta charset="UTF-8">
+      &#60;meta name="viewport" content="width=device-width, initial-scale=1.0">
+      &#60;meta http-equiv="X-UA-Compatible" content="ie=edge">
+      &#60;title>Testing Webpack&#60;/title>
+      &#60;script defer src="main.36505e7a0f2e2339751c.js">&#60;/script>
+  &#60;/head>
+
+  &#60;body>
+      &#60;main>
+          &#60;div class="container">
+              &#60;div class="row">
+                  &#60;div class="col-6 mx-auto">
+
+                      &#60;h1>Testing Webpack&#60;/h1>
+
+                      &#60;div id="error" class="alert alert-danger" role="alert">&#60;/div>
+
+                      &#60;div class="container">
+                          &#60;div class="row">
+                              &#60;div class="col-12 col-md-4">
+                                  &#60;div class="input-group mb-3">
+                                      &#60;input id="numberOne" type="text" class="form-control">
+                                  &#60;/div>
+                              &#60;/div>
+                              &#60;div class="col-12 col-md-4">
+                                  &#60;div class="input-group mb-3">
+                                      &#60;span class="input-group-text" id="plus-icon">+&#60;/span>
+                                      &#60;input ID="numberTwo" type="text" class="form-control">
+                                  &#60;/div>
+                              &#60;/div>
+                              &#60;div class="col-12 col-md-4 text-end">
+                                  &#60;button id="addValues" type="button" class="btn btn-primary">Add&#60;/button>
+                              &#60;/div>
+                              &#60;div class="col-12 mt-3">
+                                  &#60;div class="card" style="width: 100%;">
+                                      &#60;div class="card-body">
+                                          &#60;div class="card-text">The result is: &#60;span id="result">&#60;/span>&#60;/div>
+                                      &#60;/div>
+                                  &#60;/div>
+                              &#60;/div>
+                              &#60;div class="col-12 text-center">
+                                  &#60;img src="assets/webpack_logo.png" width="50%">
+                              &#60;/div>
+                          &#60;/div>
+                      &#60;/div>
+
+                  &#60;/div>
+              &#60;/div>
+          &#60;/div>
+      &#60;/main>
+  &#60;/body>
+
+  &#60;/html>
+
+  root
+  ├── assets
+  │   └── webpack_logo.png
+  ├── dist
+  │   ├── index.html
+  │   └── main.36505e7a0f2e2339751c.js
+  ├── node_modules
+  │   └── *rengeteg mappa*
+  ├── src
+  │   ├── app
+  │   │   ├── utils
+  │   │   │   ├── inputs-are-valid.js
+  │   │   │   └── parse-input.js
+  │   │   ├── alert.service.js
+  │   │   ├── app.js
+  │   │   └── component.service.js
+  │   ├── index.js
+  │   ├── main.scss
+  │   └── template.html
+  ├── index.html
+  ├── package-lock.json
+  ├── package.json
+  └── webpack.config.js
+            </pre>
+          </ul>
+        </li>
+        <li>A viewport-ról is gondoskodik a Webpack</li>
+        <br>
+        <img src="assets/imgs/webpack_img_error.png" width="100%">
+        <br>
+        <br>
+        <li>A kép nem töltődött be, de ezzel később fogunk foglalkozni</li>
+        <li>Az eredeti index.html tulajdonképpen letörölhető, nem fogjuk használni</li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #devandprod data-anchor="devandprod">Dev & prod</h3>
+  <ul>
+    <li>Eddig egyetlen Webpack konfigurációt használtunk csak</li>
+    <li>Gyakori, hogy development, és production környezethez eltérő beállításokat szeretnénk használni</li>
+    <li>3 config-ot fogunk megkülönböztetni
+      <ol>
+        <li>Dev és prod közös konfig
+          <ul>
+            <li>Amit mindkét konfig ugyanúgy végez</li>
+          </ul>
+        </li>
+        <li>Dev konfig
+          <ul>
+            <li>Webpack Dev Server-t fogunk használni, ami live update-el</li>
+          </ul>
+        </li>
+        <li>Prod konfig
+          <ul>
+            <li>Minify-olni szeretnénk</li>
+          </ul>
+        </li>
+      </ol>
+    </li>
+    <pre>
+  root
+  ├── assets
+  ├── dist
+  ├── node_modules
+  ├── src
+  ├── index.html
+  ├── package-lock.json
+  ├── package.json
+  ├── webpack.config.js
+  ├── webpack.dev.config.js   // létrehozzuk a dev konfig-ot
+  └── webpack.prod.config.js  // létrehozzuk a prod konfig-ot
+    </pre>
+    <li>Induljunk ki onnan, hogy a korábbi egy konfigurációs fájlunkat már megfelelően szétbontottuk</li>
+    <pre>
+      <b>// webpack.config.js</b>
+      const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+      module.exports = &#123;
+          entry: "./src/index.js", // az entry point közös
+          plugins: [new HtmlWebpackPlugin(&#123;
+              template: "./src/template.html" // megadtuk a template fájl helyét a config-hoz képest
+          })],
+          module: &#123;
+              rules: [
+                  &#123;
+                      test: /\.scss$/,
+                      use: [
+                          "style-loader", // harmadik
+                          "css-loader", // második
+                          "sass-loader" // első
+                      ]
+                  }
+              ]
+          }
+      }
+
+      <b>// webpack.dev.config.js</b>
+      const path = require("path");
+
+      module.exports = &#123;
+          mode: "development",
+          output: &#123;
+              filename: "main.js", // egyszerűbb dev esetében a contanthash-sel nem bajlódni
+              path: path.resolve(__dirname, "dist"),
+              clean: true, // automatikusan törli a kimeneti mappa korábbi tartalmát
+          }
+      }
+
+      <b>// webpack.prod.config.js</b>
+      const path = require("path");
+
+      module.exports = &#123;
+          mode: "production",
+          output: &#123;
+              filename: "main.[contenthash].js",
+              path: path.resolve(__dirname, "dist"),
+              clean: true, // automatikusan törli a kimeneti mappa korábbi tartalmát
+          }
+      }
+    </pre>
+    <li>Természetesen ennyi még kevés ahhoz, hogy működjön
+      <ul>
+        <li>Ennek kivitelezésére plugin-t fogunk használni</li>
+      </ul>
+    </li>
+    <li>Webpack Merge</li>
+  </ul>
+  <br>
+  <h5 #webpackmerge data-anchor="webpackmerge">Webpack Merge</h5>
+  <ul>
+    <li>Egyszerűsítse a különböző Webpack konfigurációs fájlok összeolvasztását</li>
+    <li>Hasznos, ha különböző környezetekhez (például dev és prod) szeretnénk különböző konfigurációkat
+      létrehozni, de közös beállításokat is alkalmaznánk mindkét környezetre</li>
+    <li>Alapvetően két konfigurációs objektumot egyesít, ahol a második objektum felülírhatja az elsőt, ha az adott
+      kulcsok már léteznek</li>
+    <pre>
+  npm i --save-dev webpack-merge
+    </pre>
+    <li>Ezt követően a dev és prod konfigurációs fájlokban beállítjuk a merge-ölést</li>
+    <pre>
+  <b>// webpack.dev.config.js</b>
+  const path = require("path");
+  const common = require("./webpack.config");
+  const &#123; merge } = require("webpack-merge");
+
+  module.exports = merge(common, &#123; // egyesítsd a common  tartalmát az objektumban lévőkkel
+      mode: "development",
+      output: &#123;
+          filename: "main.js", // egyszerűbb dev esetében a contanthash-sel nem bajlódni
+          path: path.resolve(__dirname, "dist"),
+          clean: true, // automatikusan törli a kimeneti mappa korábbi tartalmát
+      }
+  })
+
+  <b>// webpack.prod.config.js</b>
+  const path = require("path");
+  const common = require("./webpack.config");
+  const &#123; merge } = require("webpack-merge");
+
+  module.exports = merge(common, &#123; // egyesítsd a common  tartalmát az objektumban lévőkkel
+      mode: "production",
+      output: &#123;
+          filename: "main.[contenthash].js",
+          path: path.resolve(__dirname, "dist"),
+          clean: true, // automatikusan törli a kimeneti mappa korábbi tartalmát
+      }
+  })
+    </pre>
+    <li>Szükséges megmondanunk a Webpack-nek, hogy mikor melyiket használja
+      <ul>
+        <li>A package.json script-jeihez kell hozzányúlnunk</li>
+        <pre>
+          <b>// package.json</b>
+  &#123;
+    "name": "testing",
+    "version": "1.0.0",
+    "description": "",
+    "private": true,
+    "main": "index.js",
+    "scripts": &#123;
+      "start": "webpack --config webpack.dev.config.js", // dev
+      "build": "webpack --config webpack.prod.config.js" // prod
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": &#123;
+      "bootstrap": "^5.3.3",
+      "css-loader": "^7.1.2",
+      "html-webpack-plugin": "^5.6.3",
+      "sass": "^1.85.1",
+      "sass-loader": "^16.0.5",
+      "style-loader": "^4.0.0",
+      "webpack": "^5.98.0",
+      "webpack-cli": "^6.0.1",
+      "webpack-merge": "^6.0.1"
+    }
+  }
+        </pre>
+        <li>npm start
+          <ul>
+            <li>A 'start' egy különleges parancs, amelyet az npm automatikusan felismer, ha szerepel a scripts részben a
+              package.json fájlban</li>
+            <li>A 'start' parancs futtatása nem igényli a run kulcsszót, tehát az egyszerűen npm start formában is
+              működik</li>
+          </ul>
+        </li>
+        <li>npm run build
+          <ul>
+            <li>Az npm minden run-nal kezdődő parancsot egy egyedi script-ként kezel</li>
+            <li>A run kulcsszó itt szükséges, mert az npm nem ismeri fel automatikusan a build parancsot, ellentétben a
+              start-tal</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <br>
+  <h5 #devserver data-anchor="devserver">Dev server</h5>
+  <ul>
+    <li>A Webpack Dev Server egy fejlesztési eszköz, amely segít a webalkalmazások gyors fejlesztésében, és
+      tesztelésében
+    </li>
+    <li>Automatikusan elindítja egy helyi szervert, figyeli a fájlokat, és minden változtatás után újraépíti, és
+      frissíti
+      a weboldalt
+      <ul>
+        <li>Így fejlesztés közben nem kell manuálisan újratölteni a böngészőt</li>
+      </ul>
+    </li>
+    <pre>
+  npm i --save-dev webpack-dev-server
+    </pre>
+    <li>Tömörítés, és optimalizálás nélküli build-et hoz létre</li>
+    <li>Live reload - az egész oldal újratöltődik, ha változást észlel a kódban</li>
+    <li>Hot Module Replacement (HMR) - Csak az érintett modulok cserélődnek le, nem kell újraindítani az egész oldalt,
+      így gyorsabb fejlesztési ciklusokat érhetsz el</li>
+    <li>A package.json fájlban adhatjuk meg, hogy a live szervert szeretnénk használni
+      <ul>
+        <pre>
+  <b>// package.json</b>
+  ...
+  "scripts": &#123;
+      "start": "webpack-dev-server --config webpack.dev.config.js --open",
+      "build": "webpack --config webpack.prod.config.js"
+  },
+  ...
+
+  <b>// webpack.dev.config.js</b>
+  const path = require("path");
+  const common = require("./webpack.config");
+  const &#123; merge } = require("webpack-merge");
+
+  module.exports = merge(common, &#123; // egyesítsd a common  tartalmát az objektumban lévőkkel
+      mode: "development",
+      output: &#123;
+          filename: "main.js", // egyszerűbb dev esetében a contanthash-sel nem bajlódni
+          path: path.resolve(__dirname, "dist"),
+          clean: true, // automatikusan törli a kimeneti mappa korábbi tartalmát
+      },
+      devServer: &#123;
+          compress: true, // engedélyezi a Gzip tömörítést
+          hot: true, // HMR bekapcsolva
+          port: 9000, // live szerver portja
+      },
+  })
+        </pre>
+        <li>Az open switch automatikusan megnyitja a lokális szerverünket a böngészőben a 8080-as porton</li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #moreloaders data-anchor="moreloaders">More loaders</h3>
+  <ul>
+    <li>Az eddig létrehozott konfiguráció nem tette lehetővé, hogy megjelenjen a kép az oldalon (egy Webpack logó)
+      <ul>
+        <li>Működött, amíg a root folderben lévő, már törölt index.html-lel dolgoztunk</li>
+        <pre>
+  ./assets/webpack_logo.png // a korábbi fájlnak megfelelően ez egy helyes elérési út volt
+        </pre>
+        <li>A template.html létrehozása óta a forrás file-unk azt src mappában helyezkedik el</li>
+        <li>Hibás, de működő megközelítés, ha statikusan átírjuk a template-ben a fájl elérését (hard-coded)</li>
+        <pre>
+  ../assets/webpack_logo.png // technikailag működnie kellene, nálam mégsem működik
+        </pre>
+        <li>A dist mappánknak minden tartalmaznia kell, amire szükségünk van az oldal megjelenítéséhez</li>
+        <li>Mozgassuk át az assets mappánkat az src mappába, és írjuk vissza az image elérését ./-re
+          <ul>
+            <li>Ezzel a dist mappán belül keresi a Webpack az assets mappát (ami persze még nincs ott)</li>
+          </ul>
+        </li>
+        <pre>
+  root
+  ├── dist
+  │   ├── index.html
+  │   └── main.js
+  ├── node_modules
+  │   └── *rengeteg mappa*
+  ├── src
+  │   ├── app
+  │   │   ├── utils
+  │   │   │   ├── inputs-are-valid.js
+  │   │   │   └── parse-input.js
+  │   │   ├── alert.service.js
+  │   │   ├── app.js
+  │   │   └── component.service.js
+  │   ├── assets
+  │   │   └── webpack_logo.png
+  │   ├── index.js
+  │   ├── main.scss
+  │   └── template.html
+  ├── index.html
+  ├── package-lock.json
+  ├── package.json
+  ├── webpack.config.js
+  ├── webpack.dev.config.js
+  └── webpack.prod.config.js
+        </pre>
+      </ul>
+    </li>
+  </ul>
+  <br>
+  <h5 #htmlloader data-anchor="htmlloader">HTML Loader</h5>
+  <ul>
+    <li>Lehetővé teszi, hogy HTML fájlokat importáljunk a JavaScript modulokba, és automatikusan kezeljük a bennük
+      található statikus erőforrásokat (például kép, CSS, JS)</li>
+    <li>Nem kell kézzel require-elni a képeket</li>
+    <pre>
+  npm i --save-dev html-loader
+    </pre>
+    <li>Ezt követően a common konfigurációs fájlunkhoz hozzáadunk egy újabb szabályt</li>
+    <pre>
+  <b>// webpack.config.js</b>
+  const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+  module.exports = &#123;
+      entry: "./src/index.js", // az entry point közös
+      plugins: [new HtmlWebpackPlugin(&#123;
+          template: "./src/template.html" // megadtuk a template fájl helyét a config-hoz képest
+      })],
+      module: &#123;
+          rules: [
+              &#123;
+                  test: /\.scss$/,
+                  use: [
+                      "style-loader", // harmadik
+                      "css-loader", // második
+                      "sass-loader" // első
+                  ]
+              },
+              &#123;
+                test: /\.html$/, // az összes .html-lel végződő fájl
+                use: ["html-loader"],
+              },
+              &#123;
+                  test: /\.(png|jpg|gif|svg)$/, // zárójelben az opciók
+                  type: "asset/resource",
+                  generator: &#123;
+                      filename: "imgs/[name].[hash][ext]"  // a fájlok helye, és neve
+                  }
+              }
+          ]
+      }
+  }
+
+  npm run build
+
+  ↓↓↓↓↓
+
+  root
+  ├── dist
+  │   ├── imgs
+  │   │   └── webpack_logo.17aca31fbb73f8e20750.png
+  │   ├── index.html
+  │   └── main.f70ede7d45e0d81529f2.js
+
+  // src/template.html
+  &#60;img src="./assets/webpack_logo.png" width="50%">
+
+  // dist/index.html
+  &#60;img src="imgs/webpack_logo.17aca31fbb73f8e20750.png" width="50%">
+    </pre>
+    <li>A folyamat
+      <ul>
+        <li>A html-loader biztosítja, hogy minden HTML fájlban található statikus fájl elérési útja helyesen legyen
+          kezelve, és a Webpack nemcsak a JavaScript fájlokat, hanem a HTML fájlokat is feldolgozza a build folyamat
+          során</li>
+        <li>A html-loader az img tag-ek src attribútumában szereplő képeket átirányítja a Webpack-nek, hogy az
+          asset/resource loader kezelje</li>
+        <li>A képek másolásra kerülnek a kimeneti mappába, és a Webpack által generált hash-ek lesznek a fájlok nevei
+          <ul>
+            <li>Vagy hozzáadódnak a fájlnevekhez, attól függ, hogy állítjuk be</li>
+          </ul>
+        </li>
+        <li>A src attribútumban lévő útvonal automatikusan frissül az új helyes fájlútvonalra az index.html-ben</li>
+      </ul>
+    </li>
+  </ul>
+  <br>
+  <h5 #fileloader data-anchor="fileloader">File Loader</h5>
+  <ul>
+    <li>Lehetővé teszi, hogy statikus fájlokat (például kép, betűtípus, médiafájl) kezeljünk, és a build során
+      áthelyezzük az output mappába</li>
+    <pre>
+  npm i --save-dev file-loader
+    </pre>
+    <li>A html-loader csak feldolgozta a HTML fájlt, és minden src attribútumban lévő fájlhivatkozást átadott a
+      Webpack-nak feldolgozásra</li>
+    <li>A file-loader volt az, ami ténylegesen kimásolta a fájlokat az output könyvtárba, átnevezte azokat (például
+      webpack_logo.34abce.png), és beírta a megfelelő fájlnevet a HTML-be</li>
+    <li>A Webpack 5-től viszont a html-loader az asset/resource beállítással dolgozik együtt, így a file-loader
+      feleslegessé vált</li>
+    <li>A html-loader már önmagában is képes a fájlokat kezelni, ha Webpack megfelelően van konfigurálva</li>
+  </ul>
+  <br>
+  <h5 #cleanwebpackplugin data-anchor="cleanwebpackplugin">Clean Webpack Plugin</h5>
+  <ul>
+    <li>Automatikusan törli a dist (vagy más output) mappát minden build előtt</li>
+    <pre>
+  npm install clean-webpack-plugin --save-dev
+    </pre>
+    <li>A dev szerver fájljai a memóriában vannak, így ezt a funkciót csak a prod konfigurációban érdemes használni</li>
+    <pre>
+  <b>// webpack.prod.config.js</b>
+  const path = require("path");
+  const common = require("./webpack.config");
+  const &#123; merge } = require("webpack-merge");
+  const &#123; CleanWebpackPlugin } = require("clean-webpack-plugin"); // named import
+
+  module.exports = merge(common, &#123; // egyesítsd a common  tartalmát az objektumban lévőkkel
+      mode: "production",
+      output: &#123;
+          filename: "main.[contenthash].js",
+          path: path.resolve(__dirname, "dist"),
+          clean: true, // automatikusan törli a kimeneti mappa korábbi tartalmát
+      },
+      // plugins: [new CleanWebpackPlugin()]
+  })
+    </pre>
+    <li>Minden build-nél valóban törlésre kerül az előző</li>
+    <br>
+    <li>Ugyanakkor erre van modernebb megoldás
+      <ul>
+        <li>Az output-nál a clean: true jóval egyszerűbben megoldja ezt a problémakört, mindenféle bővítmény nélkül,
+          ráadásul már eleve szerepelt a kódunkban</li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #multientrypoints data-anchor="multientrypoints">Multi entry points</h3>
+  <ul>
+    <li>Best practice, hogy elszeparáljuk a kódunkat a vendor kódtól</li>
+    <li>A vendor kód nagy eséllyel csak akkor változik, ha library-t telepítünk, vagy törlünk, esetleg upgrade-eljük,
+      vagy éppen downgrade-eljük</li>
+    <li>Hozzuk létre a vendor.js belépési pontunkat, és konfiguráljuk a Webpack-et
+      <ul>
+        <li>Általában a külső könyvtárakat (csomagokat, mint például react, lodash, angular, rxjs, stb.) tartalmazza, 3
+          fő célból
+          <ol>
+            <li>Külön válassza a könyvtárakat az alkalmazás saját kódjától</li>
+            <li>Csökkentse a build méretét</li>
+            <li>Hatékonyabb cache-elést tegyen lehetővé</li>
+          </ol>
+        </li>
+      </ul>
+    </li>
+    <pre>
+  root
+  ├── dist
+  │   ├── index.html
+  │   └── main.js
+  ├── node_modules
+  │   └── *rengeteg mappa*
+  ├── src
+  │   ├── app
+  │   │   ├── utils
+  │   │   │   ├── inputs-are-valid.js
+  │   │   │   └── parse-input.js
+  │   │   ├── alert.service.js
+  │   │   ├── app.js
+  │   │   └── component.service.js
+  │   ├── assets
+  │   │   └── webpack_logo.png
+  │   ├── index.js
+  │   ├── main.scss
+  │   ├── template.html
+  │   └── vendor.js                     // új fájl
+  ├── index.html
+  ├── package-lock.json
+  ├── package.json
+  ├── webpack.config.js
+  ├── webpack.dev.config.js
+  └── webpack.prod.config.js
+
+  <b>// webpack.config.js</b>
+  const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+  module.exports = &#123;
+      entry: &#123;                   // korábbi: entry: "./src/index.js"
+          main: "./src/index.js",
+          vendor: "./src/vendor.js"   // újabb közös entry point
+      },
+      plugins: [new HtmlWebpackPlugin(&#123;
+          template: "./src/template.html" // megadtuk a template fájl helyét a config-hoz képest
+      })],
+      module: &#123;
+          rules: [
+              &#123;
+                  test: /\.scss$/,
+                  use: [
+                      "style-loader", // harmadik
+                      "css-loader", // második
+                      "sass-loader" // első
+                  ]
+              },
+              &#123;
+                  test: /\.html$/, // az összes .html-lel végződő fájl
+                  use: ["html-loader"],
+              },
+              &#123;
+                  test: /\.(png|jpg|gif|svg)$/,
+                  type: "asset/resource",
+                  generator: &#123;
+                      filename: "imgs/[name].[hash][ext]"  // ez az outputPath helyett van
+                  }
+              }
+          ]
+      }
+  }
+    </pre>
+    <li>Az entry string helyett egy objektum, egy main és egy vendor kulccsal</li>
+    <li>A két belépési pont miatt nem csak a common konfigunk, hanem a dev és prod is módosítást igényel</li>
+    <pre>
+  <b>// webpack.dev.config.js</b>
+  const path = require("path");
+  const common = require("./webpack.config");
+  const &#123; merge } = require("webpack-merge");
+
+  module.exports = merge(common, &#123; // egyesítsd a common  tartalmát az objektumban lévőkkel
+      mode: "development",
+      output: &#123;
+          filename: "[name].bundle.js", // korábbi: filename: "main.js"
+          path: path.resolve(__dirname, "dist"),
+          clean: true, // automatikusan törli a kimeneti mappa korábbi tartalmát
+      },
+      devServer: &#123;
+          compress: true, // engedélyezi a Gzip tömörítést
+          hot: true, // HMR bekapcsolva
+          port: 9000, // live szerver portja
+      },
+  })
+
+  <b>// webpack.prod.config.js</b>
+  const path = require("path");
+  const common = require("./webpack.config");
+  const &#123; merge } = require("webpack-merge");
+  const &#123; CleanWebpackPlugin } = require("clean-webpack-plugin"); // named import
+
+  module.exports = merge(common, &#123; // egyesítsd a common  tartalmát az objektumban lévőkkel
+      mode: "production",
+      output: &#123;
+          filename: "[name].[contenthash].bundle.js", // korábbi: filename: "main.[contenthash].js"
+          path: path.resolve(__dirname, "dist"),
+          clean: true, // automatikusan törli a kimeneti mappa korábbi tartalmát
+      },
+      // plugins: [new CleanWebpackPlugin()]
+  })
+    </pre>
+    <li>A DevTools-ban megjelent a Source fülön a vendor.bundle.js is</li>
+    <br>
+    <img src="assets/imgs/webpack_vendor_source.png" width="100%">
+    <br>
+    <br>
+    <li>Prod esetében a Webpack automatikusan beleilleszti az index.html-be a 2 entry point-ot, olyan formában, amit
+      megadtunk, helyes fájlnévvel</li>
+    <li>Bármikor hozzáadhatunk újabb entry pontokat
+      <ul>
+        <li>A kulcs lesz a fájl neve</li>
+        <pre>
+  entry: &#123;
+      main: "./src/index.js",
+      vendor: "./src/vendor.js",
+      empty: "./src/empty.js"     // empty.31d6cfe0d16ae931b73c.bundle.js
+  },
+        </pre>
+      </ul>
+    </li>
+    <li>Importáljuk be a vendor.js-be a Bootstrap-et
+      <ul>
+        <pre>
+  <b>// vendor.js</b>
+  import "bootstrap";
+        </pre>
+        <li>Ezen import hiányában nem nyílik meg (például) a modal</li>
+        <li>A main.scss már tartalmaz egy Bootstrap importot, de az az SCSS</li>
+        <li>Itt a Javascript részét importáljuk</li>
+        <li>Ez után használni tudjuk azokat a Bootstrap komponenseket, amik Javascriptet igényelnek</li>
+        <pre>
+  <b>// template.html</b>
+  ...
+  &#60;div class="col-12 text-center mt-3">
+    &#60;!-- Button trigger modal -->
+
+    &#60;button type="button" class="btn btn-primary" data-bs-toggle="modal"
+        data-bs-target="#exampleModal">
+        Launch demo modal
+    &#60;/button>
+
+    &#60;!-- Modal -->
+
+    &#60;div class="modal fade" id="exampleModal" tabindex="-1"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        &#60;div class="modal-dialog">
+            &#60;div class="modal-content">
+                &#60;div class="modal-header">
+                    &#60;h1 class="modal-title fs-5" id="exampleModalLabel">Modal title&#60;/h1>
+                    &#60;button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close">&#60;/button>
+                &#60;/div>
+                &#60;div class="modal-body">
+                    ...
+                &#60;/div>
+                &#60;div class="modal-footer">
+                    &#60;button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close&#60;/button>
+                    &#60;button type="button" class="btn btn-primary" data-bs-dismiss="modal>Save changes&#60;/button>
+                &#60;/div>
+            &#60;/div>
+        &#60;/div>
+    &#60;/div>
+  &#60;/div>
+  ...
+        </pre>
+      </ul>
+    </li>
+    <br>
+    <img src="assets/imgs/webpack_bootstrap_modal.png" width="100%">
+    <br>
+    <br>
+    <li>Amennyiben szükség van egyéb dependenciákra, telepítsük őket, és importáljuk a vendor.js-ben</li>
+  </ul>
+</div>
+
+<div>
+  <h3 #extractandminify data-anchor="extractandminify">Extract & minify</h3>
+  <h5 #extractcss data-anchor="extractcss">Extract CSS</h5>
+  <ul>
+    <li>Az eddigiek során mindent a Javascript töltött be
+      <ul>
+        <li>A main.XXX.bundle.js tartalmazza az összes Bootstrap CSS-t stringként</li>
+        <li>A stílusok injektálásra kerülnek a DOM-ba, a head tag-be, style tag-ben</li>
+        <li>Alapvetően nincs ezzel semmi probléma, működik, de főképp prod környezetben illik szeparálni a stílusokat
+          egy külön CSS fájlba ahelyett, hogy a Javascript-re bíznánk őket</li>
+      </ul>
+    </li>
+    <li>A külön CSS fájl praktikusságának fő oka a performancia
+      <ul>
+        <li>Amikor az oldal betöltődik, még egyáltalán nincs CSS alkalmazva</li>
+        <li>A content betöltődik, majd ezután jut el a futás a script-ekhez (main + vendor), ami során alkalmazásra
+          kerülnek a stílusok
+          <ul>
+            <li>Gyorsan történik, de még így is megfigyelhető villanás a képernyőn, amikor betöltődik a CSS</li>
+            <li>Ez egy elég alacsony user experience-t okoz, kerülendő</li>
+          </ul>
+        </li>
+        <li>Dev módban erre nincs szükség, csak lassítjuk a live szerver hot reload-ját</li>
+      </ul>
+    </li>
+    <li>Az egyik módja a CSS külön választásának plugin használata
+      <ul>
+        <pre>
+  npm install --save-dev mini-css-extract-plugin
+        </pre>
+        <li>A style-loader-t nem szeretnénk használni prod-ban
+          <ul>
+            <li>Emiatt a common konfig-ból a teljes rule-t átmozgatjuk a dev-be</li>
+            <li>Az SCSS-re vonatkozó szabályra szükségünk van prod környezetben is
+              <ul>
+                <li>Csupán az változik, hogy utolsó képésként nem a style-loader-t használjuk, hogy beillesszük a DOM-ba
+                  a stílusokat, hanem a MiniCssExtractPlugin-t</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <pre>
+  <b>// webpack.config.js</b>
+  const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+  module.exports = &#123;
+      entry: &#123;
+          main: "./src/index.js",     // az entry point közös
+          vendor: "./src/vendor.js",  // újabb közös entry point
+          empty: "./src/empty.js"     // csak teszt
+      },
+      plugins: [new HtmlWebpackPlugin(&#123;
+          template: "./src/template.html" // megadtuk a template fájl helyét a config-hoz képest
+      })],
+      module: &#123;
+          rules: [
+              &#123;
+                  test: /\.html$/, // az összes .html-lel végződő fájl
+                  use: ["html-loader"],
+              },
+              &#123;
+                  test: /\.(png|jpg|gif|svg)$/,
+                  type: "asset/resource",
+                  generator: &#123;
+                      filename: "imgs/[name].[hash][ext]"  // ez az outputPath helyett van
+                  }
+              }
+          ]
+      }
+  }
+
+  <b>// webpack.dev.config.js</b>
+  const path = require("path");
+  const common = require("./webpack.config");
+  const &#123; merge } = require("webpack-merge");
+
+  module.exports = merge(common, &#123; // egyesítsd a common  tartalmát az objektumban lévőkkel
+      mode: "development",
+      output: &#123;
+          filename: "[name].bundle.js", // korábbi: filename: "main.js"
+          path: path.resolve(__dirname, "dist"),
+          clean: true, // automatikusan törli a kimeneti mappa korábbi tartalmát
+      },
+      devServer: &#123;
+          compress: true, // engedélyezi a Gzip tömörítést
+          hot: true, // HMR bekapcsolva
+          port: 9000, // live szerver portja
+      },
+      module: &#123;
+          rules: [
+              &#123;
+                  test: /\.scss$/,
+                  use: [
+                      "style-loader", // harmadik
+                      "css-loader", // második
+                      "sass-loader" // első
+                  ]
+              },
+          ]
+      }
+  })
+
+  <b>// webpack.prod.config.js</b>
+  const path = require("path");
+  const common = require("./webpack.config");
+  const &#123; merge } = require("webpack-merge");
+  const &#123; CleanWebpackPlugin } = require("clean-webpack-plugin"); // named import
+  const MiniCssExtractPlugin = require("mini-css-extract-plugin"); // default import
+
+
+  module.exports = merge(common, &#123; // egyesítsd a common  tartalmát az objektumban lévőkkel
+      mode: "production",
+      output: &#123;
+          filename: "[name].[contenthash].bundle.js", // korábbi: filename: "main.[contenthash].js"
+          path: path.resolve(__dirname, "dist"),
+          clean: true, // automatikusan törli a kimeneti mappa korábbi tartalmát
+      },
+      // plugins: [new CleanWebpackPlugin()]
+      plugins: [
+          new MiniCssExtractPlugin(
+              &#123;
+                  filename: "[name].[contenthash].css"
+              }
+          )],
+      module: &#123;
+          rules: [
+              &#123;
+                  test: /\.scss$/,
+                  use: [
+                      MiniCssExtractPlugin.loader, // harmadik - kiszedi fájlokba a CSS-t
+                      "css-loader", // második
+                      "sass-loader" // első
+                  ]
+              },
+          ]
+      }
+  })
+        </pre>
+        <li>A npm run build után a fájljaink megfelelően létrejöttek</li>
+        <pre>
+  root
+  ├── dist
+  │   ├── imgs
+  │   │   └── webpack_logo.17aca31fbb73f8e20750.png
+  │   ├── empty.31d6cfe0d16ae931b73c.bundle.js
+  │   ├── index.html
+  │   ├── main.692072d5d4e7aae2cce7.css
+  │   ├── main.2417503efd795ac66678.bundle.js
+  │   └── vendor.4ce510ccfbaa4f4a67c7.bundle.js
+        </pre>
+        <li>A build-elt index.html-be beillesztésre került a szeparált CSS fájlunk</li>
+        <pre>
+  &#60;link href="main.692072d5d4e7aae2cce7.css" rel="stylesheet">
+        </pre>
+        <li>Innentől kezdve nem kell arra várnunk, hogy a content után betöltődjenek a script-ek, amik a CSS
+          alkalmazását végzik</li>
+        <li>A plugin elvégezte a dolgát
+          <ul>
+            <li>Eltűnt a villanás, amit a CSS betöltődésekor láthattunk
+              <ul>
+                <li>Természetesen csak prod-ban, hiszen ott alkalmaztuk a plugin-t</li>
+              </ul>
+            </li>
+            <li>Konfigurálható úgy is, hogy több fájlba illesszük a CSS-t</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <br>
+  <h5 #minifycss data-anchor="minifycss">Minify CSS</h5>
+  <ul>
+    <li>A külön fájlba szeparált CSS még nincs minify-olva</li>
+    <li>A minify-olásban egy plugin segítségét kérjük</li>
+    <pre>
+  npm i css-minimizer-webpack-plugin
+    </pre>
+    <li>Csak production-ben szeretnénk megvalósítani</li>
+    <li>Nem plugin-ként definiáljuk a konfigban, hanem optimizer-ként</li>
+    <pre>
+      <b>// webpack.prod.config.js</b>
+      const path = require("path");
+      const common = require("./webpack.config");
+      const &#123; merge } = require("webpack-merge");
+      const &#123; CleanWebpackPlugin } = require("clean-webpack-plugin"); // named import
+      const MiniCssExtractPlugin = require("mini-css-extract-plugin"); // default import
+      const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+
+
+      module.exports = merge(common, &#123; // egyesítsd a common  tartalmát az objektumban lévőkkel
+          mode: "development",
+          output: &#123;
+              filename: "[name].[contenthash].bundle.js", // korábbi: filename: "main.[contenthash].js"
+              path: path.resolve(__dirname, "dist"),
+              clean: true, // automatikusan törli a kimeneti mappa korábbi tartalmát
+          },
+          // plugins: [new CleanWebpackPlugin()]
+          plugins: [
+              new MiniCssExtractPlugin(
+                  &#123;
+                      filename: "[name].[contenthash].css"
+                  }
+              )],
+          module: &#123;
+              rules: [
+                  &#123;
+                      test: /\.scss$/,
+                      use: [
+                          MiniCssExtractPlugin.loader, // harmadik - kiszedi fájlokba a CSS-t
+                          "css-loader", // második
+                          "sass-loader" // első
+                      ]
+                  },
+              ]
+          },
+          optimization: &#123;
+              minimizer: [
+                  new CssMinimizerPlugin(),
+              ],
+          },
+      })
+    </pre>
+    <li>Webpack 5-ig ez egy praktikus lépés, de a Webpack 5 már alapértelmezés szerint minifikálja production mode-ban a
+      CSS-t, és a Javascript-et is, így erre a plugin-ra nincs szükség e tekintetben
+      <ul>
+        <li>Kipróbálható, átállítva a mode-ot developement-re, valóban nem történik minifikálás</li>
+      </ul>
+    </li>
+    <li>Development módban a Webpack nem kapcsolja be az optimalizációkat
+      <ul>
+        <li>Ha mégis szeretnénk optimalizációt, az alábbi beállítás javasolt</li>
+        <pre>
+  mode: 'development',
+  ...
+  optimization: &#123;
+      minimize: true, // ezzel aktiválódik a plugin
+      minimizer: [
+          new CssMinimizerPlugin(),
+      ],
+  },
+        </pre>
+      </ul>
+    </li>
+    <li>Az optimization kulcs alatt található minimizer tömböt megadva (akár üresen) felülírjuk a Webpack
+      alapértelmezett optimalizációját
+      <ul>
+        <pre>
+  optimization: &#123;
+    minimizer: [],      // a JS fájlok ettől a ponttól kezdve nincsenek minify-olva
+  },
+        </pre>
+        <li>Ha használjuk a CssMinimizerPlugin bővítményt, ezt tesszük</li>
+        <li>Vissza kell így állítanunk a Webpack default optimalizációját
+          <ul>
+            <li>A Webpack-be beépített TerserPlugin gondoskodik róla</li>
+            <li>Megtalálható a node_modules-ban, semmit sem kell külön telepíteni</li>
+            <pre>
+  <b>// webpack.prod.config.js</b>
+  const TerserPlugin = require("terser-webpack-plugin");
+
+  ...
+
+  optimization: &#123;
+    minimizer: [
+        new CssMinimizerPlugin(),   // CSS minifikálást
+        new TerserPlugin(),         // JS minifikálást
+    ],
+  },
+            </pre>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <br>
+  <h5 #minifyhtml data-anchor="minifyhtml">Minify HTML</h5>
+  <ul>
+    <li>Egyedül már csak az index.html nem minify-olt</li>
+    <li>Opcionálisan minify-olhatjuk production módban</li>
+    <li>Nem szükséges újabb plugin-t telepítenünk, a html-webpack-plugin-t már telepítettük, és használhatjuk erre a
+      célra</li>
+    <li>Mivel dev módban nem szeretnénk HTML-t minify-olni, így a common konfigból át kell vinnünk a dev-be, és a prodba
+      is</li>
+    <pre>
+  <b>// webpack.config.js</b>
+  // const HtmlWebpackPlugin = require('html-webpack-plugin'); // kikerül a commonból
+
+  module.exports = &#123;
+      entry: &#123;
+          main: "./src/index.js",     // az entry point közös
+          vendor: "./src/vendor.js",  // újabb közös entry point
+          empty: "./src/empty.js"     // csak teszt
+      },
+      // plugins: [new HtmlWebpackPlugin(&#123; // kikerül a commonból
+      //     template: "./src/template.html"
+      // })],
+      module: &#123;
+          rules: [
+              &#123;
+                  test: /\.html$/, // az összes .html-lel végződő fájl
+                  use: ["html-loader"],
+              },
+              &#123;
+                  test: /\.(png|jpg|gif|svg)$/,
+                  type: "asset/resource",
+                  generator: &#123;
+                      filename: "imgs/[name].[hash][ext]"  // ez az outputPath helyett van
+                  }
+              }
+          ]
+      }
+  }
+
+  <b>// webpack.dev.config.js</b>
+  const path = require("path");
+  const common = require("./webpack.config");
+  const &#123; merge } = require("webpack-merge");
+  const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+  module.exports = merge(common, &#123; // egyesítsd a common  tartalmát az objektumban lévőkkel
+      mode: "development",
+      output: &#123;
+          filename: "[name].bundle.js", // korábbi: filename: "main.js"
+          path: path.resolve(__dirname, "dist"),
+          clean: true, // automatikusan törli a kimeneti mappa korábbi tartalmát
+      },
+      devServer: &#123;
+          compress: true, // engedélyezi a Gzip tömörítést
+          hot: true, // HMR bekapcsolva
+          port: 9000, // live szerver portja
+      },
+      plugins: [
+          new HtmlWebpackPlugin(&#123;
+              template: "./src/template.html",
+          }),
+      ],
+      module: &#123;
+          rules: [
+              &#123;
+                  test: /\.scss$/,
+                  use: [
+                      "style-loader", // harmadik
+                      "css-loader", // második
+                      "sass-loader" // első
+                  ]
+              },
+          ]
+      }
+  })
+
+  <b>// webpack.prod.config.js</b>
+  const path = require("path");
+  const common = require("./webpack.config");
+  const &#123; merge } = require("webpack-merge");
+  const &#123; CleanWebpackPlugin } = require("clean-webpack-plugin"); // named import
+  const MiniCssExtractPlugin = require("mini-css-extract-plugin"); // default import
+  const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+  const TerserPlugin = require("terser-webpack-plugin");
+  const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+
+  module.exports = merge(common, &#123; // egyesítsd a common  tartalmát az objektumban lévőkkel
+      mode: "production",
+      output: &#123;
+          filename: "[name].[contenthash].bundle.js", // korábbi: filename: "main.[contenthash].js"
+          path: path.resolve(__dirname, "dist"),
+          clean: true, // automatikusan törli a kimeneti mappa korábbi tartalmát
+      },
+      // plugins: [new CleanWebpackPlugin()]
+      plugins: [
+          new HtmlWebpackPlugin(&#123;
+              template: "./src/template.html",
+              minify: &#123;
+                  removeComments: true,         // eltávolítja a kommenteket
+                  removeAttributeQuotes: true,  // eltávolítja az idézőjeleket az attribútumokból, amennyiben nem szükségesek
+                  collapseWhitespace: true      // eltávolítja a felesleges szóközöket, és sortöréseket, hogy kisebb legyen a fájl
+              }
+          }),
+          new MiniCssExtractPlugin(
+              &#123;
+                  filename: "[name].[contenthash].css"
+              }
+          )],
+      module: &#123;
+          rules: [
+              &#123;
+                  test: /\.scss$/,
+                  use: [
+                      MiniCssExtractPlugin.loader, // harmadik - kiszedi fájlokba a CSS-t
+                      "css-loader", // második
+                      "sass-loader" // első
+                  ]
+              },
+          ]
+      },
+      optimization: &#123;
+          minimizer: [
+              new CssMinimizerPlugin(),   // CSS minifikálást
+              new TerserPlugin(),         // JS minifikálást
+          ]
+      },
+  })
+    </pre>
+    <li>Webpack 5-nél a production mód alapból minifikálja a HTML fájlokat, de a HtmlWebpackPlugin segítségével egyéb
+      optimalizációkat végezhetünk</li>
+    <br>
+    <li>Mivel a konfiguráció, főleg egy nagyobb cégnél, projekt munkáknál ritkán változik, így nehéz Webpack-ben
+      tapasztalatot szerezni, és egy igen mély téma is</li>
   </ul>
 </div>

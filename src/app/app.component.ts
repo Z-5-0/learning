@@ -58,7 +58,7 @@ export class AppComponent {
     { label: 'Angular', link: 'angular', buttonClass: 'warning', disabled: false },
     { label: 'React', link: 'react', buttonClass: 'warning', disabled: false },
     { label: 'Vue', link: 'vue', buttonClass: 'secondary', disabled: true },
-    { label: 'Ionic', link: 'ionic', buttonClass: 'warning', disabled: false },
+    { label: 'Ionic', link: 'ionic', buttonClass: 'secondary', disabled: true },
     { label: 'RxJS', link: 'rxjs', buttonClass: 'warning', disabled: false },
     { label: 'Redux', link: 'redux', buttonClass: 'secondary', disabled: true },
     { label: 'CSS/SCSS', link: 'cssscss', buttonClass: 'warning', disabled: false },

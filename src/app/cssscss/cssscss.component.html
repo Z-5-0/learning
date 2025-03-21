@@ -33,22 +33,22 @@
           deklaratív stílusokat ad meg</li>
         <li>Már limitáltan támogatja a neste-elést</li>
         <pre>
-          .container &#123;
-            width: 100%;
-            height: 100vh;
-          }
+  .container &#123;
+    width: 100%;
+    height: 100vh;
+  }
 
-          .button &#123;
-            background-color: #3498db;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-          }
+  .button &#123;
+    background-color: #3498db;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+  }
 
-          .button:hover &#123;
-            background-color: #2980b9;
-          }
+  .button:hover &#123;
+    background-color: #2980b9;
+  }
         </pre>
       </ul>
     </li>
@@ -62,19 +62,19 @@
         <li>Nem használ kapcsos zárójelet, és pontosvesszőt</li>
         <li>A böngésző nem érti, CSS-sé kell alakítani/process-álni</li>
         <pre>
-        .container
-          width: 100%
-          height: 100vh
+  .container
+    width: 100%
+    height: 100vh
 
-        .button
-          background-color: #3498db
-          color: white
-          padding: 10px 20px
-          border: none
-          border-radius: 5px
+  .button
+    background-color: #3498db
+    color: white
+    padding: 10px 20px
+    border: none
+    border-radius: 5px
 
-          &:hover
-            background-color: #2980b9
+    &:hover
+      background-color: #2980b9
         </pre>
       </ul>
     </li>
@@ -2986,33 +2986,206 @@ cssscss/
     <li>Negáció
       <ul>
         <pre>
-          :not(selector)
+  :not(selector)
         </pre>
         <li>olyan elemekre vonatkozik, amik nem felelnek meg a megadott szűrőnek</li>
         <pre>
-          div:not(.highlight)
+  div:not(.highlight)
 
-          ↓↓↓↓↓
+  ↓↓↓↓↓
 
-          &#60;div class="lowlight">&#60;/div>
+  &#60;div class="lowlight">&#60;/div>
         </pre>
       </ul>
     </li>
   </ul>
   <br>
-  <h5 #pxemrem data-anchor="pxemrem">px/em/rem</h5>
+  <h5 #pxemrem data-anchor="pxemrem">px / em / rem</h5>
   <ul>
-    <li>todo</li>
+    <li>px
+      <ul>
+        <li>A pixel egy fix méretű egység, amely a képernyő fizikai képpontjaihoz igazodik</li>
+        <li>Ha egy elem szélessége 16px, akkor az pontosan 16 képpont széles lesz</li>
+        <li>Nem skálázódik dinamikusan, így reszponzív dizájnnál nehézkes lehet a használata</li>
+      </ul>
+    </li>
+    <li>em
+      <ul>
+        <li>Relative to parent</li>
+        <li>Relatív egység, amely az adott elem, vagy szülőelem betűméretéhez igazodik</li>
+        <li>Ha több szint mélyen van nest-elve ("em az em-ben"), az értékek összeszorzódnak az öröklődés miatt</li>
+        <li>Alapértelmezés szerint a böngészőkben a betűméret 16px
+          <ol>
+            <li>1em = 16px</li>
+            <li>2em = 32px</li>
+            <li>0.5em = 8px</li>
+          </ol>
+        </li>
+      </ul>
+    </li>
+    <li>rem
+      <ul>
+        <li>Relative to root</li>
+        <li>Az em egy speciális változata, amely mindig az &#60;html> gyökérelem betűméretéhez igazodik, és nem
+          öröklődik a szülőelemtől</li>
+        <li>Reszponzív dizájnnál ideális választás</li>
+        <li>Az alapértelmezett root betűméret 16px
+          <ol>
+            <li>1em = 16px</li>
+            <li>2em = 32px</li>
+            <li>0.5em = 8px</li>
+          </ol>
+        </li>
+      </ul>
+    </li>
+    <br>
+    <table style="border-collapse: collapse; width: 100%;">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Relatív vagy fix?</th>
+          <th>Mihez viszonyít?</th>
+          <th>Használati esetek</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>px</td>
+          <td>Fix</td>
+          <td>Képernyő pixelei</td>
+          <td>Fix méretek, pl. keretek, képek</td>
+        </tr>
+        <tr>
+          <td>em</td>
+          <td>Relatív</td>
+          <td>Szülő betűmérete</td>
+          <td>Gombok, belső margók, dinamikus elemek</td>
+        </tr>
+        <tr>
+          <td>rem</td>
+          <td>Relatív</td>
+          <td>Gyökér betűmérete</td>
+          <td>Reszponzív dizájn, globális méretezés</td>
+        </tr>
+      </tbody>
+    </table>
+
   </ul>
   <br>
-  <h5 #dvhlvhsvh data-anchor="dvhlvhsvh">dvh/lvh/svh</h5>
+  <h5 #vhvwdvhlvhsvh data-anchor="vhvwdvhlvhsvh">vh / vw / dvh / lvh / svh</h5>
   <ul>
-    <li>todo</li>
+    <li>vw
+      <ul>
+        <li>Viewport width</li>
+        <li>Az aktuális ablak (viewport) szélességének százalékában van megadva</li>
+        <li>100vw a teljes képernyő szélessége, 1vw pedig az 1%-a</li>
+      </ul>
+    </li>
+    <li>vh
+      <ul>
+        <li>Viewport height</li>
+        <li>A 1vh azt jelenti, hogy az elem magassága a teljes ablak (viewport) 1%-a</li>
+        <li>100vh a teljes képernyő magassága</li>
+        <li>A mobilböngészőkben a böngészősávok és egyéb UI-elemek változhatnak (például görgetéskor elrejthetők, vagy
+          megjelenhetnek), ami miatt a vh értéke dinamikusan változik, és ez vizuális hibákhoz vezethet</li>
+      </ul>
+    </li>
+    <li>dvh/lvh/svh
+      <ul>
+        <li>Új CSS egységek</li>
+        <li>A nézetmagasság (vh - viewport height) továbbfejlesztett változatai</li>
+        <li>A vh különböző verziói, amelyek jobban kezelik a mobilböngészők UI-változásait</li>
+        <br>
+        <table style="border-collapse: collapse; width: 100%;">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Relatív vagy fix?</th>
+              <th>Mihez viszonyít?</th>
+              <th>Legjobb használati esetek</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>vh</td>
+              <td>Relatív</td>
+              <td>Nézetablak magassága</td>
+              <td>Teljes képernyő</td>
+            </tr>
+            <tr>
+              <td>vw</td>
+              <td>Relatív</td>
+              <td>Nézetablak szélessége</td>
+              <td>Reszponzív szélességek</td>
+            </tr>
+            <tr>
+              <td>dvh</td>
+              <td>Relatív</td>
+              <td>Dinamikus viewport magasság</td>
+              <td>Mobilbarát teljes képernyős elemek</td>
+            </tr>
+            <tr>
+              <td>lvh</td>
+              <td>Relatív</td>
+              <td>Legnagyobb viewport magasság</td>
+              <td>Maximális magasság mobilon</td>
+            </tr>
+            <tr>
+              <td>svh</td>
+              <td>Relatív</td>
+              <td>Legkisebb viewport magasság</td>
+              <td>Biztosított látható tartalom mobilon</td>
+            </tr>
+          </tbody>
+        </table>
+      </ul>
+    </li>
   </ul>
   <br>
   <h5 #aspectratio data-anchor="aspectratio">aspect-ratio</h5>
   <ul>
-    <li>todo</li>
+    <li>CSS tulajdonság, amely lehetővé teszi egy elem szélességének és magasságának arányát meghatározni anélkül, hogy
+      mindkét dimenziót fix értékkel kellene megadni</li>
+    <li>Reszponzív elrendezésekhez ideális</li>
+    <li>Széleskörű támogatás modern böngészőkben</li>
+    <pre>
+  .element &#123;
+      aspect-ratio: width / height;
+  }      
+    </pre>
+    <div style="position: relative; width: 200px; aspect-ratio: 1 / 1; background-color: lightblue;">
+      <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">.square</span>
+    </div>
+    <pre>
+  .square &#123;
+      width: 200px;
+      aspect-ratio: 1 / 1;
+      background-color: lightblue;
+  }
+    </pre>
+    <div style="position: relative; width: 200px; aspect-ratio: 1 / .5; background-color: lightcoral;">
+      <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">.rectangle</span>
+    </div>
+    <pre>
+  .rectangle &#123;
+      width: 200px;
+      aspect-ratio: 1 / .5;
+      background-color: lightblue;
+  }
+    </pre>
+    <div style="position: relative; width: 100%; aspect-ratio: 16 / 9; background-color: black;">
+      <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">.video-container</span>
+    </div>
+    <pre>
+      .video-container &#123;
+          width: 100%;
+          aspect-ratio: 16 / 9;
+          background-color: black;
+      }
+    </pre>
+    <li>Biztosítja, hogy a konténer arányosan megtartsa a szélesség/magasság viszonyát, függetlenül a width méretétől
+    </li>
+    <li>Természetesen a magasság megadásával is ugyanígy működik</li>
   </ul>
   <br>
   <h5 #todo data-anchor="todo">TODO</h5>

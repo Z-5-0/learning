@@ -1,1 +1,285 @@
-<p>json works!</p>
+<h1>JSON</h1>
+
+<div class="anchor-navi-container">
+    <div *ngFor="let mainButton of anchorButtons" class="btn-group">
+        <button type="button" class="btn btn-primary btn-sm anchor" (click)="scrollToAnchor(mainButton?.anchor)">
+            {{ mainButton.title }}
+        </button>
+        <button *ngIf="mainButton?.subtitles?.length" type="button"
+            class="btn btn-primary dropdown-toggle dropdown-toggle-split btn-sm anchor" data-bs-toggle="dropdown"
+            aria-expanded="false">
+        </button>
+        <ul *ngIf="mainButton.subtitles?.length" class="dropdown-menu dropdown-menu-dark">
+            <li>
+                <button *ngFor="let subButton of mainButton?.subtitles" class="dropdown-item"
+                    (click)="scrollToAnchor(subButton?.anchor)">
+                    {{ subButton?.title }}
+                </button>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div>
+    <h3 #introduction data-anchor="introduction">Introduction</h3>
+    <ul>
+        <li>JavaScript Object Notation</li>
+        <li>Egy könnyen olvasható, ember- és gépbarát adatcsere formátum</li>
+        <li>A Javascript szintaxisára épül, de független a programnyelvtől
+            <ul>
+                <li>A JSON JS objektumokhoz hasonló szerkezetet használ</li>
+                <li>Kulcs-érték párok szerepelnek benne, és támogatja a tömböket is</li>
+                <li>A JSON egy szöveges formátum, amely megfelel a JavaScript objektum szintaxisának, de minden kulcs
+                    idézőjelben van</li>
+                <li>A JSON értékek egy az egyben megfelelnek a JavaScript megfelelő típusainak</li>
+            </ul>
+        </li>
+        <li>Gyakran használják webalkalmazásokban, API-kban, adatbázisokban</li>
+        <br>
+        <li>2 fő adattípust támogat
+            <ol>
+                <li>Objektumok - &#123; "kulcs": "érték" }</li>
+                <li>Tömbök - [ "érték1", "érték2", "érték3" ]</li>
+            </ol>
+        </li>
+    </ul>
+</div>
+
+<div>
+    <h3 #rules data-anchor="rules">Rules</h3>
+    <ul>
+        <li>A kulcsok mindig idézőjelek között vannak</li>
+        <li>Érvényes értékek
+            <ul>
+                <br>
+                <table style="border-collapse: collapse; width: 100%;">
+                    <tr>
+                        <th>Érték</th>
+                        <th>Példa</th>
+                    </tr>
+                    <tr>
+                        <td>String</td>
+                        <td>"text"</td>
+                    </tr>
+                    <tr>
+                        <td>Number</td>
+                        <td>123, 3.14</td>
+                    </tr>
+                    <tr>
+                        <td>Boolean</td>
+                        <td>true, false</td>
+                    </tr>
+                    <tr>
+                        <td>Null</td>
+                        <td>null</td>
+                    </tr>
+                    <tr>
+                        <td>Array</td>
+                        <td>[1, "apple", true]</td>
+                    </tr>
+                    <tr>
+                        <td>Object</td>
+                        <td>&#123;"key": "value"}</td>
+                    </tr>
+                </table>
+
+            </ul>
+        </li>
+        <pre>
+    &#123;
+        "name": "John Connor",
+        "age": 35,
+        "isHero": true,
+        "courses": ["Shooting", "Tactical operations"]
+        }
+        </pre>
+    </ul>
+</div>
+
+<div>
+    <h3 #support data-anchor="support">Support</h3>
+    <ul>
+        <li>Szinte minden programozási nyelvben könnyen olvashatók, és írhatók</li>
+        <br>
+        <li>Javascript
+            <ul>
+                <pre>
+    const str = '&#123;"nev":"John Connor","kor":35}';
+
+
+    // JSON string átalakítás JavaScript objektummá
+    const obj = JSON.parse(str);
+    console.log(obj.nev);
+
+    ↓↓↓↓↓
+
+    " John Connor"
+
+
+    // JavaScript objektum átalakítás JSON stringgé
+    const jsonStr = JSON.stringify(obj);
+    console.log(jsonStr);
+
+    ↓↓↓↓↓
+
+    '&#123;"nev":"John Connor","kor":35}'
+                </pre>
+            </ul>
+        </li>
+        <li>PHP
+            <ul>
+                <pre>
+    &#60;?php
+    
+    $jsonData = '&#123;"nev":"John", "kor":30}'; // JSON adat
+
+    // JSON dekódolása PHP tömbbé
+    $decodedData = json_decode($jsonData, true); // PHP tömböt készít - a true azt jelenti, hogy asszociatív tömböt kapunk
+
+    echo "Név: " . $decodedData['nev'] . "\n";
+    echo "Kor: " . $decodedData['kor'] . "\n";
+
+    $array = [ // PHP tömb
+        'nev' => 'Jane',
+        'kor' => 25
+    ];
+    
+    $jsonEncoded = json_encode($array); // PHP tömb JSON kódolása
+    
+    echo "JSON kódolás: " . $jsonEncoded . "\n"; // kiíratjuk a JSON-ként kódolt adatot
+    ?>
+
+    ↓↓↓↓↓
+
+    Név: John
+    Kor: 30
+    JSON kódolás: &#123;"nev":"Jane","kor":25}   
+                </pre>
+            </ul>
+        </li>
+        <li>Golang
+            <ul>
+                <pre>
+    package main
+
+    import (
+        "encoding/json"
+        "fmt"
+        "log"
+    )
+
+    // Struct, amelyet a JSON-ba kódolunk
+    type Person struct &#123;
+        Nev string `json:"nev"`
+        Kor int    `json:"kor"`
+    }
+
+    func main() &#123;
+        // JSON adat
+        jsonData := `&#123;"nev": "John", "kor": 30}`
+
+        // JSON dekódolása Go struktúrává
+        var person Person
+        err := json.Unmarshal([]byte(jsonData), &person)
+        if err != nil &#123;
+            log.Fatal(err)
+        }
+
+        // Kiíratjuk a dekódolt adatot
+        fmt.Println("Név:", person.Nev)
+        fmt.Println("Kor:", person.Kor)
+
+        // Most Go struktúrát JSON-ná alakítunk
+        newPerson := Person&#123;
+            Nev: "Jane",
+            Kor: 25,
+        }
+
+        // JSON kódolás
+        jsonEncoded, err := json.Marshal(newPerson)
+        if err != nil &#123;
+            log.Fatal(err)
+        }
+
+        // Kiíratjuk a JSON-ként kódolt adatot
+        fmt.Println("JSON kódolás:", string(jsonEncoded))
+    }
+                </pre>
+            </ul>
+        </li>
+        <li>stb...</li>
+        <br>
+        <li>NoSQL adatbázisok JSON-szerű adatokat tárolnak
+            <ul>
+                <li>A Firebase Realtime Database és a Cloud Firestore is JSON-szerű adatstruktúrákat használ a tárolt
+                    adatok kezelésére</li>
+            </ul>
+        </li>
+        <li>SQL adatbázisokban a JSON szövegként tárolható
+            <ul>
+                <li>PostgreSQL és MySQL támogatják a JSON adattípust</li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<div>
+    <h3 #files data-anchor="files">Files</h3>
+    <ul>
+        <li>A fájlok kiterjesztése .json</li>
+        <li>Gyakran előfordulnak, mint konfigurációs file-ok</li>
+    </ul>
+</div>
+
+<div>
+    <h3 #jsonvsxml data-anchor="jsonvsxml">JSON vs XML</h3>
+    <ul>
+        <table style="border-collapse: collapse; width: 100%;">
+            <tr>
+                <th></th>
+                <th>JSON</th>
+                <th>XML</th>
+            </tr>
+            <tr>
+                <td>Struktúra</td>
+                <td>Kulcs-érték párok, és tömbök</td>
+                <td>Hierarchikus, fa-struktúra</td>
+            </tr>
+            <tr>
+                <td>Formátum</td>
+                <td>Egyszerű, tömör</td>
+                <td>Verbózus, több szöveget igényel</td>
+            </tr>
+            <tr>
+                <td>Olvashatóság</td>
+                <td>Könnyebben olvasható ember, és gép számára</td>
+                <td>Nehezebben olvasható, több jelölőt tartalmaz</td>
+            </tr>
+            <tr>
+                <td>Támogatás</td>
+                <td>JavaScript natívan támogatja (JSON.parse(), JSON.stringify())</td>
+                <td>Külön könyvtár szükséges az elemzéshez</td>
+            </tr>
+            <tr>
+                <td>Adatméret</td>
+                <td>Kisebb fájlméret (kevesebb redundancia)</td>
+                <td>Nagyobb fájlméret (több metaadat)</td>
+            </tr>
+            <tr>
+                <td>Típuskezelés</td>
+                <td>Támogatja a számokat, booleaneket, tömböket, objektumokat</td>
+                <td>Minden érték szöveges, manuális átalakításra van szükség</td>
+            </tr>
+            <tr>
+                <td>Bővíthetőség</td>
+                <td>Kellően rugalmas</td>
+                <td>Bármilyen strukturált adat tárolható benne</td>
+            </tr>
+            <tr>
+                <td>Alkalmazási terület</td>
+                <td>Web API-k, adatbázisok, JavaScript</td>
+                <td>Dokumentumformátumok, régi rendszerek</td>
+            </tr>
+        </table>
+    </ul>
+</div>
