@@ -19,7 +19,6 @@ export interface Link {
 export class AnimerouteComponent {
   protected links: Link[] = [
     { label: 'Home', path: 'home' },
-    { label: 'About', path: 'about' },
     { label: 'Contact', path: 'contact' }
   ];
   protected isVisible = signal(false);

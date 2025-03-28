@@ -7,11 +7,30 @@ import { USER_TOKEN } from 'src/shared/shared.module';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, Subscription } from 'rxjs';
+import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-angular',
   templateUrl: './angular.component.html',
-  styleUrls: ['./angular.component.scss']
+  styleUrls: ['./angular.component.scss'],
+  animations: [
+    trigger('querystagger', [
+      transition('* <=> *', [
+        query(':enter', [
+          style({ opacity: 0, transform: 'scale(0.7)' }),
+          stagger(100, [
+            animate('200ms ease-in', style({ opacity: 1, transform: 'scale(1)' }))
+          ])
+        ], { optional: true }),
+        query(':leave', [
+          style({ opacity: 1, transform: 'scale(1)' }),
+          stagger(-100, [
+            animate('200ms ease-in', style({ opacity: 0, transform: 'scale(0.7)' }))
+          ])
+        ], { optional: true })
+      ])
+    ])
+  ]
 })
 export class AngularComponent implements OnDestroy {
   protected readonly Object = Object;
@@ -193,7 +212,25 @@ export class AngularComponent implements OnDestroy {
   creatingstandalonedirective,
   standalonerootcomponent,
   servicesinstandalonecomponents,
-  routingandlazyloadingwithstandalonecomponents
+  routingandlazyloadingwithstandalonecomponents,
+  angularanimations,
+    enterandleave,
+    keyframe,
+    queryingandstaggering,
+    animationevents,
+    multipleanimations,
+    unknownheight,
+    flexibilitywithparams,
+    reusableanimations,
+    disableanimations,
+    routingtransition,
+    slideinout,
+    flip,
+    crossfade,
+    expandandcollapse,
+    hostbinding,
+    cdkoverlay,
+    routetransition,
   `) sections!: QueryList<ElementRef>;
 
   anchorButtons: any[] = [
@@ -446,6 +483,26 @@ export class AngularComponent implements OnDestroy {
         { title: 'Routing and lazy loading with standalone components', anchor: 'routingandlazyloadingwithstandalonecomponents' }
       ]
     },
+    {
+      title: 'Angular animations', anchor: 'angularanimations', subtitles: [
+        { title: 'Enter & leave', anchor: 'enterandleave' },
+        { title: 'Keyframe', anchor: 'keyframe' },
+        { title: 'Querying & staggering', anchor: 'queryingandstaggering' },
+        { title: 'Animation events', anchor: 'animationevents' },
+        { title: 'Multiple animations', anchor: 'multipleanimations' },
+        { title: 'Unknown height', anchor: 'unknownheight' },
+        { title: 'Flexibility with params', anchor: 'flexibilitywithparams' },
+        { title: 'Reusable animations', anchor: 'reusableanimations' },
+        { title: 'Disable animations', anchor: 'disableanimations' },
+        { title: 'Routing transition', anchor: 'routingtransition' },
+        { title: 'Slide in & out', anchor: 'slideinout' },
+        { title: 'Flip', anchor: 'flip' },
+        { title: 'Cross fade', anchor: 'crossfade' },
+        { title: 'Expand and collapse', anchor: 'expandandcollapse' },
+        { title: 'Host binding', anchor: 'hostbinding' },
+        { title: 'CDK overlay', anchor: 'cdkoverlay' },
+      ]
+    },
   ];
 
   example: string = 'Ez csak egy példa';
@@ -578,6 +635,11 @@ export class AngularComponent implements OnDestroy {
 
   rxjsSubscriptionsCounter: number = 1;
 
+  testArray = [
+    { number: 1, name: 'First' },
+    { number: 2, name: 'Second' },
+    { number: 3, name: 'Third' },
+  ]
 
   private _router: Router = inject(Router);
   private _activeRouter: ActivatedRoute = inject(ActivatedRoute);
@@ -615,6 +677,18 @@ export class AngularComponent implements OnDestroy {
     } else {
       alert('No anchor provided for this button!')
     }
+  }
+
+  addToTestArray() {
+    this.testArray = [...this.testArray,
+    { number: 4, name: 'Fourth' },
+    { number: 5, name: 'Fifth' },
+    { number: 6, name: 'Sixth' }
+    ];
+  }
+
+  removeFromTestArray() {
+    this.testArray = this.testArray.slice(0, 3);
   }
 
   onDataBindFromHTMLToClass() {

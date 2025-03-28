@@ -29,32 +29,13 @@ import { FadeComponent } from './fade/fade.component';
 @NgModule({
     declarations: [
         ExtrasComponent,
-        NgrxComponent,
-        AnimeComponent,
-        ContentComponent,
-        MenuComponent,
-        FormComponent,
-        ModalComponent,
-        PlayersComponent,
-        PlayerDetailsComponent,
-        FilterPlayerPipe,
-        SignUpFormComponent,
-        SignUpModalComponent,
-        SliderComponent,
-        NavComponent,
-        HeaderComponent,
-        Slider2Component,
-        FlipComponent,
-        FadeComponent
+        NgrxComponent
     ],
     imports: [
         CommonModule,
         ExtrasRoutingModule,
-        OverlayModule,
         FormsModule,
-        CdkScrollable,
-        ReactiveFormsModule,
-        AnimerouteModule
+        ReactiveFormsModule
     ],
 })
 

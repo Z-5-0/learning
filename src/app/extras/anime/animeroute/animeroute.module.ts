@@ -19,6 +19,7 @@ import { AboutComponent } from './about/about.component';
   imports: [
     CommonModule,
     AnimerouteRoutingModule,
+    RouterModule
   ],
   exports: [
     AnimerouteComponent

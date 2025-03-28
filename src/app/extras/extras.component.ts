@@ -120,25 +120,8 @@ export class ExtrasComponent implements OnInit, AfterViewInit, OnDestroy {
     fontsizes,
     handlingimages,
     routerinrouter,
-    angularanimations,
-    enterandleave,
-    keyframe,
-    queryingandstaggering,
-    animationevents,
-    multipleanimations,
-    unknownheight,
-    flexibilitywithparams,
-    reusableanimations,
-    disableanimations,
-    routingtransition,
-    slideinout,
-    flip,
-    crossfade,
-    expandandcollapse,
-    hostbinding,
-    cdkoverlay,
-    routetransition,
-
+    lineheight1,
+    
     todo
     `) sections!: QueryList<ElementRef>;
 
@@ -243,26 +226,8 @@ export class ExtrasComponent implements OnInit, AfterViewInit, OnDestroy {
     { title: 'RxJS', anchor: 'rxjs', subtitles: [] },
     { title: 'Font sizes', anchor: 'fontsizes', subtitles: [] },
     { title: 'Router in router', anchor: 'routerinrouter', subtitles: [] },
-    {
-      title: 'Angular animations', anchor: 'angularanimations', subtitles: [
-        { title: 'Enter & leave', anchor: 'enterandleave' },
-        { title: 'Keyframe', anchor: 'keyframe' },
-        { title: 'Querying & staggering', anchor: 'queryingandstaggering' },
-        { title: 'Animation events', anchor: 'animationevents' },
-        { title: 'Multiple animations', anchor: 'multipleanimations' },
-        { title: 'Unknown height', anchor: 'unknownheight' },
-        { title: 'Flexibility with params', anchor: 'flexibilitywithparams' },
-        { title: 'Reusable animations', anchor: 'reusableanimations' },
-        { title: 'Disable animations', anchor: 'disableanimations' },
-        { title: 'Routing transition', anchor: 'routingtransition' },
-        { title: 'Slide in & out', anchor: 'slideinout' },
-        { title: 'Flip', anchor: 'flip' },
-        { title: 'Cross fade', anchor: 'crossfade' },
-        { title: 'Expand and collapse', anchor: 'expandandcollapse' },
-        { title: 'Host binding', anchor: 'hostbinding' },
-        { title: 'CDK overlay', anchor: 'cdkoverlay' },
-      ]
-    },
+    { title: 'line-height: 1', anchor: 'lineheight1', subtitles: [] },
+    
     { title: 'TODO', anchor: 'todo', subtitles: [] },
   ];
 

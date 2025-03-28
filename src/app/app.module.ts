@@ -66,6 +66,24 @@ import { LodashComponent } from './lodash/lodash.component';
 import { DartComponent } from './dart/dart.component';
 import { AnimerouteComponent } from './extras/anime/animeroute/animeroute.component';
 import { AnimerouteModule } from './extras/anime/animeroute/animeroute.module';
+import { AnimerouteRoutingModule } from './extras/anime/animeroute/animeroute-routing.module';
+import { CdkScrollable, OverlayModule } from '@angular/cdk/overlay';
+import { AnimeComponent } from './extras/anime/anime.component';
+import { ContentComponent } from './extras/anime/content/content.component';
+import { MenuComponent } from './extras/anime/menu/menu.component';
+import { FormComponent } from './extras/anime/form/form.component';
+import { ModalComponent } from './extras/anime/modal/modal.component';
+import { PlayersComponent } from './extras/anime/players/players.component';
+import { PlayerDetailsComponent } from './extras/anime/players/player-details/player-details.component';
+import { FilterPlayerPipe } from './extras/anime/players/filter-player.pipe';
+import { SignUpFormComponent } from './extras/anime/sign-up-form/sign-up-form.component';
+import { SignUpModalComponent } from './extras/anime/sign-up-modal/sign-up-modal.component';
+import { SliderComponent } from './extras/anime/slider/slider.component';
+import { NavComponent } from './extras/anime/nav/nav.component';
+import { HeaderComponent } from './extras/anime/header/header.component';
+import { Slider2Component } from './extras/slider2/slider2.component';
+import { FlipComponent } from './extras/flip/flip.component';
+import { FadeComponent } from './extras/fade/fade.component';
 
 @NgModule({
   declarations: [
@@ -119,7 +137,23 @@ import { AnimerouteModule } from './extras/anime/animeroute/animeroute.module';
     GruntComponent,
     GulpComponent,
     LodashComponent,
-    DartComponent
+    DartComponent,
+    AnimeComponent,
+    ContentComponent,
+    MenuComponent,
+    FormComponent,
+    ModalComponent,
+    PlayersComponent,
+    PlayerDetailsComponent,
+    FilterPlayerPipe,
+    SignUpFormComponent,
+    SignUpModalComponent,
+    SliderComponent,
+    NavComponent,
+    HeaderComponent,
+    Slider2Component,
+    FlipComponent,
+    FadeComponent
   ],
   imports: [
     BrowserModule,
@@ -137,6 +171,9 @@ import { AnimerouteModule } from './extras/anime/animeroute/animeroute.module';
     StoreModule.forRoot({}, {}),
     FormsModule,
     ReactiveFormsModule,
+    OverlayModule,
+    CdkScrollable,
+    AnimerouteModule
   ],
   providers: [
     provideStore(),
