@@ -1,6 +1,7 @@
 import { animate, group, keyframes, query, stagger, state, style, transition, trigger } from '@angular/animations';
 import { Component, Input } from '@angular/core';
 import { players } from './players/players';
+import { enterLeaveAnimation } from './animations/enterleave.animation';
 
 const hidden = { transform: 'translateX(100%)' };
 const visible = { transform: 'translateX(0)' };
@@ -105,13 +106,14 @@ const timing = '500ms ease-in'
   ]
 })
 export class AnimeComponent {
-  @Input() tempSwitcher: 'default' | 'enterleave' | 'keyframe' | 'querystagger' | 'signupform' | 'multianime' | 'height' = 'default';
+  @Input() tempSwitcher: 'default' | 'enterleave' | 'keyframe' | 'querystagger' | 'signupform' | 'multianime' | 'height' | 'expandandcollapse' | 'hostbinding' | 'overlay' = 'default';
 
   protected menuState: 'open' | 'closed' = 'closed';
 
   protected menuOpen: boolean = false;
 
   protected players = [players[0]];
+  protected players2 = players;
   protected totalCount = players.length;
 
   protected addPlayers() {
@@ -121,5 +123,18 @@ export class AnimeComponent {
 
   protected removePlayers() {
     this.players = [this.players[0]];
+  }
+
+  addOnePlayer() {
+    const nextPlayer = players[this.players.length];
+    this.players.push(nextPlayer);
+  }
+
+  removeOnePlayer() {
+    this.players.splice(-1);
+  }
+
+  trackByName(index: number, player: any) {
+    return player.name;
   }
 }

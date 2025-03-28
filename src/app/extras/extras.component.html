@@ -1,1424 +1,5 @@
 <h1>Extras</h1>
 
-<h5 #routingtransition data-anchor="routingtransition">Routing transition</h5>
-<ul>
-  <app-animeroute></app-animeroute>
-</ul>
-
-<div>
-  <h3 #angularanimations data-anchor="angularanimations">Angular animations</h3>
-  <ul>
-    <li>Az animációk használatának első lépése a megfelelő modul aktiválása
-      <ul>
-        <pre>
-  <b>app.module.ts // Angular 17-ig</b>
-  @NgModule(&#123;
-    declarations: [
-      ...
-    ],
-    imports: [
-      ...
-      BrowserAnimationsModule,
-      ...
-    ],
-    providers: [
-      ...
-    ],
-    bootstrap: [AppComponent]
-  })
-  export class AppModule &#123;
-  }
-
-  <b>main.ts // Angular 17-től</b>
-  bootstrapApplication(AppComponent, &#123;
-    providers: [
-      provideAnimationsAsync() // vagy provideAnimations()
-    ]
-  });
-        </pre>
-        <table>
-          <tr>
-            <td>provideAnimations()</td>
-            <td>Ha nincs SSR az appban, és az animációknak azonnal be kell töltődniük</td>
-          </tr>
-          <tr>
-            <td>provideAnimationsAsync()</td>
-            <td>Ha van SSR, vagy gyorsabb app betöltést szeretnénk, és elfogadható, ha az animációk késleltetve
-              töltődnek be
-            </td>
-          </tr>
-        </table>
-        <br>
-        <li>A komponens metaadatainál adhatjuk meg az animációkat</li>
-        <li>Fő elemek
-          <ol>
-            <li>trigger()
-              <ul>
-                <li>Az animáció neve, és annak beállításai</li>
-                <li>Az első paraméter az animáció neve</li>
-                <li>A második paraméter egy tömb, ami az animáció utasításait tartalmazza
-                  <ul>
-                    <li>Állapotok, és átmenetek</li>
-                  </ul>
-                </li>
-                <pre>
-  trigger('name', [...])
-
-  template: `&#60;div [@fadeInOut]="'visible'">Animated element&#60;/div>`,
-  animations: [
-    trigger('fadeInOut', [
-      state('visible', style(&#123; opacity: 1 })),
-      state('hidden', style(&#123; opacity: 0 })),
-      transition('visible &#60;=> hidden', animate('500ms ease-in-out'))
-    ])
-  ]
-
-  // A trigger neve fadeInOut
-  // Két állapotot definiálunk (visible és hidden)
-  // A transition határozza meg, hogy az állapotok hogyan váltanak egymás között
-                </pre>
-              </ul>
-            </li>
-            <li>state()
-              <ul>
-                <li>Egy adott állapothoz tartozó stílus</li>
-                <li>Az első paraméter a state neve</li>
-                <li>A második paraméter CSS stílusokat tartalmaz</li>
-                <pre>
-  state('name', style(...))
-
-  template: `
-    &#60;button (click)="toggle()">Toggle&#60;/button>
-    &#60;div [@boxState]="isExpanded ? 'expanded' : 'collapsed'">Box&#60;/div>
-  `,
-  animations: [
-    trigger('boxState', [
-      state('expanded', style(&#123; height: '200px', backgroundColor: 'lightblue' })),
-      state('collapsed', style(&#123; height: '50px', backgroundColor: 'lightgray' })),
-      transition('expanded &#60;=> collapsed', animate('300ms ease-in-out'))
-    ])
-  ]
-
-  // Ha a div állapota expanded, akkor magasabb, és kék színű lesz
-  // Ha collapsed, akkor alacsonyabb, és szürke színű
-  // A transition definiálja, hogy az állapotok 300 ms alatt változnak.
-                </pre>
-              </ul>
-            </li>
-            <li>style()
-              <ul>
-                <li>CSS stílus, amit az animáció alkalmaz egy adott pillanatban</li>
-                <li>Objektum, benne stílusokkal</li>
-                <pre>
-  style(&#123;...})
-
-  template: `
-    &#60;button (click)="toggle()">Toggle&#60;/button>
-    &#60;div [@moveBox]="isMoved ? 'moved' : 'initial'">Moving box&#60;/div>
-  `,
-  animations: [
-    trigger('moveBox', [
-      state('initial', style(&#123; transform: 'translateX(0)', opacity: 1 })),
-      state('moved', style(&#123; transform: 'translateX(100px)', opacity: 0.5 })),
-      transition('initial &#60;=> moved', animate('500ms ease-in-out'))
-    ])
-  ]
-
-  // Ha moved, akkor a doboz 100px-re elmozdul, és félig áttetsző lesz
-  // Ha pedig initial, akkor az eredeti helyén marad
-                </pre>
-              </ul>
-            </li>
-            <li>transition()
-              <ul>
-                <li>Meghatározza, hogy hogyan váltson az animáció két állapot között</li>
-                <li>Az első paraméter meghatározza, hogy milyen állapotból milyen állapotba váltunk</li>
-                <li>A második paraméter egy tömb, ami tartalmazza az animációra vonatkozó szabályokat</li>
-                <pre>
-  transition(fromState => toState, [animate(...)])
-
-  template: `
-    &#60;button (click)="toggle()">Toggle&#60;/button>
-    &#60;div [@doorState]="isOpen ? 'open' : 'closed'">Door&#60;/div>
-  `,
-  animations: [
-    trigger('doorState', [
-      state('open', style(&#123; transform: 'rotateY(0deg)' })),
-      state('closed', style(&#123; transform: 'rotateY(90deg)' })),
-      transition('open &#60;=> closed', animate('400ms ease-in-out'))
-    ])
-  ]
-
-  //  Az open állapot, és a closed között egy 400 ms-os animáció van
-                </pre>
-              </ul>
-            </li>
-            <li>animate()
-              <ul>
-                <li>Az animáció időtartamáért, és az állapotváltás közbeni stílusért felel</li>
-                <li>Első paramétere az animáció időtartama ('500ms' / '1s')</li>
-                <li>A második paramétere az animáció végállapota</li>
-                <pre>
-  animate(duration, style(...))
-
-  template: `
-    &#60;button (click)="toggle()">Toggle&#60;/button>
-    &#60;div class="box" *ngIf="isVisible" [@fadeInOut]>Appearing box&#60;/div>
-  `,
-  animations: [
-    trigger('fadeInOut', [
-      transition(':enter', [
-        style(&#123; opacity: 0 }),
-        animate('500ms ease-out', style(&#123; opacity: 1 }))
-      ]),
-      transition(':leave', [
-        animate('500ms ease-in', style(&#123; opacity: 0 }))
-      ])
-    ])
-  ]
-
-  // A div fade in, és fade out effektet kap
-  // Az :enter (megjelenés) és :leave (eltűnés) animációt külön kezeljük
-  // Az animate határozza meg a sebességet
-                </pre>
-              </ul>
-            </li>
-            <li>keyframes()
-              <ul>
-                <li>Többlépéses animáció létrehozására való</li>
-                <li>A CSS keyframe animációk Angular változata</li>
-                <li>Egy tömb, amely a különböző időpillanatokban alkalmazott stílusokat tartalmazza</li>
-                <pre>
-  keyframes([...])
-
-  template: `
-    &#60;button (click)="startShake()">Shake&#60;/button>
-    &#60;div [@shakeAnimation]="shaking ? 'shake' : 'still'">Shaking box&#60;/div>
-  `,
-  animations: [
-    trigger('shakeAnimation', [
-      transition('* => shake', [
-        animate('500ms ease-in-out', keyframes([
-          style(&#123; transform: 'translateX(-10px)', offset: 0.2 }),
-          style(&#123; transform: 'translateX(10px)', offset: 0.4 }),
-          style(&#123; transform: 'translateX(-10px)', offset: 0.6 }),
-          style(&#123; transform: 'translateX(10px)', offset: 0.8 }),
-          style(&#123; transform: 'translateX(0)', offset: 1 })
-        ]))
-      ])
-    ])
-  ]
-
-  // Remegő animációt hoz létre
-  // Az offset paraméter adja meg az animáció közbenső állapotait
-                </pre>
-              </ul>
-            </li>
-            <li>query()
-              <ul>
-                <li>Több elem egyidejű animálására használatos</li>
-                <li>Első paramétere a szelektor</li>
-                <li>A második paraméter az animációk listája, amit a kiválasztott elemekre alkalmaz</li>
-                <li>A harmadik paraméter egy opcionális boolean, amit ha true értékbe állítunk, akkor az animáció nem
-                  dob hibát, ha nem sikerül elemet szelektálni (options?: &#123; optional: boolean })</li>
-                <pre>
-  query(selector, [...])
-
-  template: `
-    &#60;button (click)="toggle()">Toggle list&#60;/button>
-    &#60;ul>
-      &#60;li *ngFor="let item of items" [@listAnimation]>&#123; &#123; item }}&#60;/li>
-    &#60;/ul>
-  `,
-  animations: [
-    trigger('listAnimation', [
-      transition(':enter', [
-        query('li', [
-          style(&#123; opacity: 0, transform: 'translateY(-20px)' }),
-          stagger('100ms', [
-            animate('500ms ease-out', style(&#123; opacity: 1, transform: 'translateY(0)' }))
-          ])
-        ])
-      ])
-    ])
-  ]
-
-  // A lista elemei egymás után jelennek meg stagger() segítségével
-                </pre>
-              </ul>
-            </li>
-            <li>stagger()
-              <ul>
-                <li>Több elem egyidejű animálására használatos</li>
-                <li>Első paramétere a késleltetés időtartama ('500ms' / '1s')</li>
-                <li>A második paramétere az egyes elemek animációja</li>
-                <pre>
-  stagger(delay, [...])
-
-  template: `
-    &#60;button (click)="toggle()">Toggle list&#60;/button>
-    &#60;ul>
-      &#60;li *ngFor="let item of items" [@listAnimation]>&#123; &#123; item }}&#60;/li>
-    &#60;/ul>
-  `,
-  animations: [
-    trigger('listAnimation', [
-      transition(':enter', [
-        query('li', [
-          style(&#123; opacity: 0, transform: 'translateY(-20px)' }),
-          stagger('100ms', [
-            animate('500ms ease-out', style(&#123; opacity: 1, transform: 'translateY(0)' }))
-          ])
-        ])
-      ])
-    ])
-  ]
-
-  // A lista elemei egymás után jelennek meg stagger() segítségével
-                </pre>
-              </ul>
-            </li>
-            <li>group()
-              <ul>
-                <li>Több animáció egyidejű futtatására való</li>
-                <li>Paramétere az összes animáció, amiket egyszerre szükséges futtatni</li>
-                <pre>
-  group([...])
-
-  template: `
-    &#60;button (click)="toggle()">Toggle&#60;/button>
-    &#60;div class="box" [@moveFade]="isMoved ? 'moved' : 'initial'">Moving box&#60;/div>
-  `,
-  animations: [
-    trigger('moveFade', [
-      transition('initial => moved', [
-        group([
-          animate('500ms ease-in-out', style(&#123; transform: 'translateX(100px)' })),
-          animate('500ms ease-in-out', style(&#123; opacity: 0.5 }))
-        ])
-      ])
-    ])
-  ]
-
-  // A doboz egyszerre mozdul, és halványodik el
-  // A group() biztosítja, hogy a két animáció párhuzamosan fusson
-                </pre>
-              </ul>
-            </li>
-            <li>sequence()
-              <ul>
-                <li>Egymás utáni animációk futtatására használjuk</li>
-                <li>Egyetlen paramétere az egymás után lefutó animációk</li>
-                <pre>
-  sequence([...])
-
-  template: `
-    &#60;button (click)="toggle()">Toggle&#60;/button>
-    &#60;div class="box" [@fadeMove]="isMoved ? 'moved' : 'initial'">Box&#60;/div>
-  `,
-  animations: [
-    trigger('fadeMove', [
-      transition('initial => moved', [
-        sequence([
-          animate('300ms ease-in', style(&#123; opacity: 0.5 })),
-          animate('500ms ease-out', style(&#123; transform: 'translateX(100px)' }))
-        ])
-      ])
-    ])
-  ]
-
-  // A doboz először halványodik, majd csak ezután mozdul el
-  // A sequence() biztosítja az animációk egymás utáni lefutását
-                </pre>
-              </ul>
-            </li>
-            <br>
-            <li>@.disabled
-              <ul>
-                <li>Az adott template elemen kikapcsolja az animációt</li>
-                <pre>
-  [@.disabled]="name"
-
-  template: `
-    &#60;button (click)="disableAnimations()">Disable animations&#60;/button>
-    &#60;div class="box" [@fade]="isVisible ? 'visible' : 'hidden'" [@.disabled]="animationsDisabled">
-      Content
-    &#60;/div>
-  `,
-  animations: [
-    trigger('fade', [
-      transition('visible => hidden', [
-        animate('500ms', style(&#123; opacity: 0 }))
-      ])
-    ])
-  ]
-
-  //  A @.disabled teljesen kikapcsolja az animációt
-  // Az animációk állapota egy gombnyomással változtatható
-                </pre>
-              </ul>
-            </li>
-          </ol>
-        </li>
-      </ul>
-    </li>
-    <br>
-    <app-header></app-header>
-    <app-anime [tempSwitcher]="'default'"></app-anime>
-    <pre>
-  &#60;app-page-menu [@openClose]="menuState" (close)="menuState = 'closed'">&#60;/app-page-menu>
-
-  animations: [
-    trigger('openClose', [
-      state('closed', style(&#123; transform: 'translateX(100%)' })),
-      state('open', style(&#123; transform: 'translateX(0)' })),
-      transition('closed <=> open', [animate('500ms ease-in')])
-    ])
-  ]
-    </pre>
-  </ul>
-  <br>
-  <h5 #enterandleave data-anchor="enterandleave">Enter & leave</h5>
-  <ul>
-    <li>Animációs trigger-ek, amelyek a DOM-hoz hozzáadott, vagy onnan eltávolított elemek animációjára szolgálnak</li>
-    <li>:enter
-      <ul>
-        <li>Akkor aktiválódik, amikor egy elem megjelenik a DOM-ban</li>
-        <li>Például, ha egy *ngIf értéke true lesz, az elem belép a DOM-ba</li>
-      </ul>
-    </li>
-    <li>:leave
-      <ul>
-        <li>Aktiválódik, amikor egy elem elhagyja a DOM-ot</li>
-        <li>Mondjuk amikor egy *ngIf false lesz</li>
-      </ul>
-    </li>
-    <li>Csak olyan elemekre működnek, amelyeket az Angular dinamikusan hozzáad és eltávolít (például *ngIf, vagy *ngFor)
-    </li>
-    <li>Ha az elemet csak elrejtjük például [hidden] attribútummal, nem működnek</li>
-    <li>Az előző gyakorlati példában az app-page-menu mindig jelen van a DOM-ban</li>
-    <li>Amíg az animáció nem ér véget, addig az Angular nem távolítja el a DOM-ból a feltételes elemet</li>
-    <app-anime [tempSwitcher]="'enterleave'"></app-anime>
-    <pre>
-  &#60;app-page-menu *ngIf="menuOpen" @enterLeaveOpenClose (close)="menuOpen = false">&#60;/app-page-menu>
-
-  trigger('enterLeaveOpenClose', [
-    transition(':enter', [
-      style(&#123; transform: 'translateX(100%)' }),
-      animate('500ms ease-in', style(&#123; transform: 'translateX(0)' }))
-    ]),
-    transition(':leave', [
-      style(&#123; transform: 'translateX(0)' }),
-      animate('500ms ease-in', style(&#123; transform: 'translateX(100%)' }))
-    ]),
-  ]),
-
-  // OR
-
-  const hidden = &#123; transform: 'translateX(100%)' };
-  const visible = &#123; transform: 'translateX(0)' };
-  const timing = '500ms ease-in'
-
-  trigger('enterLeaveOpenClose2', [
-    transition(':enter', [
-      style(hidden),
-      animate(timing, style(visible))
-    ]),
-    transition(':leave', [
-      style(visible),
-      animate(timing, style(hidden))
-    ]),
-  ]),
-    </pre>
-  </ul>
-  <br>
-  <h5 #keyframe data-anchor="keyframe">Keyframe</h5>
-  <ul>
-    <li>Hatékony animációs API</li>
-    <li>A steps paramétert fogadja, ami egy AnimationStyleMetadata tömb
-      <ul>
-        <li>Stílus objektumok kerülnek bele</li>
-      </ul>
-    </li>
-    <app-anime [tempSwitcher]="'keyframe'"></app-anime>
-    <pre>
-  &#60;app-page-menu *ngIf="menuOpen" @keyframe (close)="menuOpen = false">&#60;/app-page-menu>
-
-  trigger('keyframe', [
-    transition(':enter',
-      animate('1s', keyframes([
-        style(&#123; transform: 'translateX(100%) scale(.5)', offset: 0 }),
-        style(&#123; transform: 'translateX(-100%) scale(.5)', offset: .2 }), // a teljes animációs idő (1mp) 20%-ánál már ebben az állapotban van
-        style(&#123; transform: 'translateX(-100%) scale(.75) rotate(360deg)', offset: .9 }), // a teljes animációs idő (1mp) 75%-ánál már ebben az állapotban van
-        style(&#123; transform: 'translateX(0) scale(1) rotate(360deg)', offset: 1 }),
-      ]
-      ))),
-    transition(':leave', animate('1s', keyframes([
-      style(&#123; transform: 'translateX(0) scale(1) rotate(360deg)', offset: 0 }),
-      style(&#123; transform: 'translateX(-100%) scale(.75) rotate(360deg)', offset: .2 }),
-      style(&#123; transform: 'translateX(-100%) scale(.5)', offset: .9 }),
-      style(&#123; transform: 'translateX(100%) scale(.5)', offset: 1 }),
-    ])))
-    </pre>
-    <li>Offset
-      <ul>
-        <li>Egy 0 és 1 közötti szám, amely megadja, hogy az adott keyframe az animáció melyik pontján történjen</li>
-        <li>A 0 az animáció kezdetét, az 1 pedig a végét jelenti</li>
-        <li>Megmondhatjuk vele, hogy az animációs idő hány %-ánál vegye fel az adott style állapotot</li>
-      </ul>
-    </li>
-  </ul>
-  <br>
-  <h5 #queryingandstaggering data-anchor="queryingandstaggering">Querying & staggering</h5>
-  <ul>
-    <app-anime [tempSwitcher]="'querystagger'"></app-anime>
-    <pre>
-  <b>// anime.component.html</b>
-  &#60;section cdkScrollable>
-    &#60;div [@querystagger]="players">
-        &#60;ng-container *ngFor="let player of players">
-            &#60;app-player [player]="player">&#60;/app-player>
-        &#60;/ng-container>
-    &#60;/div>
-  &#60;/section>
-  &#60;section class="text-center pt-5">
-      &#60;button *ngIf="players.length &#60; totalCount" (click)="addPlayers()" class="btn btn-danger">
-          &#60;span>Add&#60;/span>
-      &#60;/button>
-      &#60;button *ngIf="players.length > 0" (click)="removePlayers()" class="btn btn-primary">
-          &#60;span>Remove&#60;/span>
-      &#60;/button>
-  &#60;/section>
-
-  <b>// anime.component.ts</b>
-  import &#123; players } from './players/players'; // a játékosok interface-e, és listája ebben a fájlban található - export const players = [ &#123;...} ]
-
-  animations: [
-    trigger('querystagger', [
-      transition('* &#60;=> *', [   // bármilyen állapotból bármelyik állapotba átmenetkor igaz
-        query(':enter', [
-          style(&#123; opacity: 0, transform: 'scale(0.7)' }),
-          stagger(100, [
-            animate('500ms ease-in', style(&#123; opacity: 1, transform: 'scale(1)' }))
-          ])
-        ], &#123; optional: true }),
-        query(':leave', [
-          style(&#123; opacity: 1, transform: 'scale(1)' }),
-          stagger(-100, [   // negatív érték, fordított animáció sorrend
-            animate('500ms ease-in', style(&#123; opacity: 0, transform: 'scale(0.7)' }))
-          ])
-        ], &#123; optional: true })
-      ])
-  ])
-
-  ...
-
-  protected players = [players[0]];
-  protected totalCount = players.length;
-
-  protected addPlayers() &#123;
-    const allPlayers = players.slice(1);
-    this.players = [...this.players, ...allPlayers];
-  }
-
-  protected removePlayers() &#123;
-    this.players = [this.players[0]];
-  }
-
-  <b>// player.component.html</b>
-  &#60;section style="display: grid; grid-template-columns: auto 1fr;">
-      &#60;img [src]="'assets/imgs/players/' + player.imageName + '.avif'" width="130px" height="95px" />
-      &#60;div>
-          &#60;h2>&#123; &#123; player.name }}&#60;/h2>
-          &#60;div>
-              &#60;button #trigger="cdkOverlayOrigin" cdkOverlayOrigin (click)="detailsOpen = true" [class.open]="detailsOpen"
-                  class="btn btn-secondary">
-                  Details
-              &#60;/button>
-              &#60;ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="trigger"
-                  [cdkConnectedOverlayOpen]="detailsOpen" cdkConnectedOverlayWidth="50%"
-                  (overlayOutsideClick)="detailsComponent.close()" (detach)="detailsOpen = false"
-                  [cdkConnectedOverlayPositions]="[]" cdkConnectedOverlayPush="true"
-                  [cdkConnectedOverlayViewportMargin]="7" [cdkConnectedOverlayScrollStrategy]="scrollStrategy"
-                  cdkConnectedOverlayTransformOriginOn="app-player-details" [cdkConnectedOverlayDisableClose]="true"
-                  (overlayKeydown)="$event.key === 'Escape' ? detailsComponent.close() : null">
-                  &#60;app-player-details [player]="player" (closed)="detailsOpen = false">&#60;/app-player-details>
-              &#60;/ng-template>
-          &#60;/div>
-      &#60;/div>
-  &#60;/section>
-
-  <b>// player.component.ts</b>
-  @Input(&#123;required: true}) player!: Player;
-  @ViewChild(PlayerDetailsComponent) detailsComponent!: PlayerDetailsComponent;
-  protected detailsOpen = false;
-  protected scrollStrategy = this.overlay.scrollStrategies.reposition();
-
-  constructor(private overlay: Overlay) &#123;}
-
-  <b>// player.component.scss</b>
-  :host &#123;
-      display: block; // app-player tag-re irányuló szabály
-  }
-
-  <b>// player-details.component.html</b>
-  &#60;section role="dialog" aria-modal="true" aria-labelledby="dialog-title" aria-describedby="dialog-description"
-      cdkTrapFocus cdkTrapFocusAutoCapture="true">
-      &#60;h3 id="dialog-title" tabindex="-1" cdkFocusInitial>&#123; &#123; player.name }}&#60;/h3>
-      &#60;p id="dialog-description">&#123; &#123; player.description }}&#60;/p>
-      &#60;dl>
-          &#60;div>
-              &#60;dt>Games Played&#60;/dt>
-              &#60;dd> &#123; &#123; player.games | number }}&#60;/dd>
-          &#60;/div>
-          &#60;div>
-              &#60;dt>Points Scored&#60;/dt>
-              &#60;dd>&#123; &#123; player.points | number }}&#60;/dd>
-          &#60;/div>
-          &#60;div>
-              &#60;dt>Field Goal Percentage&#60;/dt>
-              &#60;dd>&#123; &#123; player.fieldGoalPercentage | percent:'.1' }}&#60;/dd>
-          &#60;/div>
-          &#60;div>
-              &#60;dt>Three Point Percentage&#60;/dt>
-              &#60;dd>&#123; &#123; player.threePointPercentage | percent:'.1' }}&#60;/dd>
-          &#60;/div>
-      &#60;/dl>
-      &#60;footer>
-          &#60;a [href]="player.wikipedia">See More on Wikipedia&#60;/a>
-          &#60;button (click)="close()">
-              &#60;span class="cdk-visually-hidden">Close&#60;/span>
-          &#60;/button>
-      &#60;/footer>
-  &#60;/section>
-
-  <b>// player-details.component.ts</b>
-  animations: [
-  trigger('animation', [
-    state('hidden', style(&#123;
-      opacity: 0,
-      transform: 'scale(.25)'
-    })),
-    state('visible', style(&#123;
-      opacity: 1,
-      transform: 'scale(1)'
-    })),
-    transition('hidden &#60;=> visible', animate('0.15s ease-in-out'))
-  ])
-
-  ...
-
-  @Input(&#123; required: true }) player!: Player;
-  @HostBinding('@animation') animationState = 'hidden';   // a @animation az animation triggerre utal
-  @HostListener('@animation.done', ['$event']) done(event: AnimationEvent) &#123;
-    if (event.toState === 'hidden') &#123;
-      this.closed.emit();
-    }
-  }
-  @Output() closed = new EventEmitter&#60;void>();
-
-  ngAfterViewInit() &#123;
-    this.animationState = 'visible';
-  }
-
-  close() &#123;
-    this.animationState = 'hidden';
-  }
-    </pre>
-    <li>Mivel az elemek eltűnnek, és megjelennek a DOM-ban, ezért használhatjuk az :enter és :leave alias-okat</li>
-    <li>Az :enter animáció inicializáláskor rendben lefut, mert megtalálja a players tömböt, de az &#123; optional: true
-      }
-      nélkül hibát kapnánk, mert tulajdonképpen nincs elem, ami eltűnne (a tömb nem tűnik el, csak kevesebb elem lesz
-      benne), így a :leave query nem talál elemet</li>
-    <li>Alapértelmezés szerint az app-players inline elem lenne
-      <ul>
-        <li>Az inline elemek nem támogatják a transform vagy opacity animációkat a legtöbb böngészőben, ezért van
-          szükség
-          block megjelenítésre</li>
-      </ul>
-    </li>
-    <li>A stagger egy animációs láncot hoz létre
-      <ul>
-        <li>Az egyes elemekre késlelteti az animációt</li>
-        <li>Nem szabad túl nagy időket beállítani, mert úgy nem fog jól látszani az eltolás a megjelenések között
-          (például
-          tömb elemeinek)</li>
-        <li>Negatív érték esetén a szakaszos animációk fordított sorrendben indulnak el, tehát az utolsó elem animációja
-          kezdődik először</li>
-      </ul>
-    </li>
-    <li>Az animációnak start és done eseményei vannak
-      <ul>
-        <pre>
-  @HostListener('@animation.start', ['$event']) // az animáció kezdetekor fut le
-  onAnimationStart(event: AnimationEvent) &#123;
-      console.log('Animation started!', event);
-  }
-
-  @HostListener('@animation.done', ['$event']) // az animáció befejeztével fut le
-  onAnimationDone(event: AnimationEvent) &#123;
-      console.log('Animation finished!', event);
-  }
-
-  ↓↓↓↓↓
-
-  &#123;
-    disabled: false,
-    element: 'app-player-details.ng-tns-c2341267558-4.ng-trigger.ng-trigger-animation.ng-star-inserted',
-    fromState: 'hidden',
-    phaseName: 'start', // vagy 'done'
-    toState: 'visible',
-    totalTime: 150,
-    triggerName: 'animation',
-    _data: 16
-  }
-        </pre>
-      </ul>
-    </li>
-    <li>Nézzünk meg egy sokkal egyszerűbb példát</li>
-    <div style="padding: 30px 0;">
-      <div [@querystagger]="testArray">
-        <ng-container *ngFor="let test of testArray">
-          <div style="padding-bottom: 30px;">{{test.number}} {{test.name}}</div>
-        </ng-container>
-      </div>
-
-      <button class="btn" [ngClass]="(testArray.length > 3) ? 'btn-danger' : 'btn-primary'"
-        (click)="testArray.length > 3 ? removeFromTestArray() : addToTestArray()">
-        {{ testArray.length > 3 ? 'REMOVE' : 'ADD'}}
-      </button>
-    </div>
-    <pre>
-  <b>// template</b>
-  &#60;div [@querystagger]="testArray">
-    &#60;ng-container *ngFor="let test of testArray">
-      &#60;div style="padding-bottom: 30px;">&#123; &#123;test.number}} &#123; &#123;test.name}}&#60;/div>
-    &#60;/ng-container>
-  &#60;/div>
-
-  &#60;button class="btn" [ngClass]="(testArray.length > 3) ? 'btn-danger' : 'btn-primary'"
-    (click)="testArray.length > 3 ? removeFromTestArray() : addToTestArray()">
-    &#123; &#123; testArray.length > 3 ? 'REMOVE' : 'ADD'}}
-  &#60;/button>
-
-  <b>// class</b>
-  testArray = [
-    &#123; number: 1, name: 'First' },
-    &#123; number: 2, name: 'Second' },
-    &#123; number: 3, name: 'Third' },
-  ]
-
-  addToTestArray() &#123;
-    this.testArray = [...this.testArray,
-    &#123; number: 4, name: 'Fourth' },
-    &#123; number: 5, name: 'Fifth' },
-    &#123; number: 6, name: 'Sixth' }
-    ];
-  }
-
-  removeFromTestArray() &#123;
-    this.testArray = this.testArray.slice(0,3);
-  }
-    </pre>
-    <li>A @querystagger animáció a külső &#60;div>-en van, ami egy fix, állandó elem</li>
-    <li>Az ng-container önmagában nem generál külön DOM-elemet, így az *ngFor által létrehozott &#60;div>-ek közvetlen
-      gyermekelemei lesznek az animált &#60;div>-nek</li>
-    <li>Így ismeri fel az :enter alias az új elemeket</li>
-    <li>Dinamikusan változó lista esetében nem közvetlenül az *ngFor-ral ellátott elemre, elemekre rakjuk az animációt
-      <ul>
-        <li>Szükséges egy wrapper elem</li>
-      </ul>
-    </li>
-  </ul>
-  <br>
-  <h5 #animationevents data-anchor="animationevents">Animation events</h5>
-  <ul>
-    <li>Előfordul(hat), hogy egy animáció kezdetekor, vagy éppen a végén valamilyen logikát szükséges futtatnunk
-      <ul>
-        <li>Az Angular Animatios start és done event-jei pontosan az animációk elején, és végén futnak le</li>
-        <li>Event binding segítségével férhetünk hozzájuk</li>
-        <pre>
-  (@animation.done)="function($event)"
-      </pre>
-        <li>Egy Angular AnimationEvent objektumot fog átadni függvény paraméterként</li>
-      </ul>
-    </li>
-    <app-anime [tempSwitcher]="'signupform'"></app-anime>
-    <pre>
-  <b>// anime.component.html</b>
-  &#60;app-page-content (menuClick)="menuOpen = true">&#60;/app-page-content>
-
-  <b>// anime.component.ts</b>
-  protected menuOpen: boolean = false;
-
-  <b>// content.component.html</b>
-  ...
-  &#60;button (click)="signUpModalOpen = !signUpModalOpen" class="signUp">
-      Sign Up
-  &#60;/button>
-  ...
-  &#60;app-sign-up-modal *ngIf="signUpModalOpen" (modalClose)="signUpModalOpen = false">&#60;/app-sign-up-modal>
-
-  <b>// content.component.ts</b>
-  @Output() menuClick = new EventEmitter&#60;void>();
-  protected signUpModalOpen = true;
-
-  <b>// sign-up-form.component.html</b>
-  &#60;h2>Sign Up&#60;/h2>
-  &#60;em>Hello! Welcome to the family.&#60;/em>
-  &#60;form [formGroup]="form">
-      &#60;div>
-          &#60;label [@wobble]="wobbleField && form.invalid" (@wobble.done)="wobbleField = false"
-              (@wobble.start)="onWobbleStart($event)">
-              &#60;span>Email Address&#60;/span>
-              &#60;input type="email" formControlName="email" />
-          &#60;/label>
-      &#60;/div>
-      &#60;div>Form is invalid: &#123; &#123;form.invalid}}&#60;/div>
-      &#60;div>wobbleField: &#123; &#123;wobbleField}}&#60;/div>
-      &#60;br>
-      &#60;button (click)="form.valid ? formSubmitted.emit() : wobbleField = true;" [class.disabled]="!form.valid">
-          Continue
-      &#60;/button>
-  &#60;/form>
-
-  <b>// sign-up-form.component.ts</b>
-  interface SignUpForm &#123;
-    email: FormControl&#60;string>;
-  }
-  ...
-  animations: [
-    trigger('wobble', [
-      transition('false => true', [
-        animate('1s', keyframes([
-          style(&#123; transform: 'translateX(-10px)', offset: 0.1 }),
-          style(&#123; transform: 'translateX(10px)', offset: 0.3 }),
-          style(&#123; transform: 'translateX(-10px)', offset: 0.5 }),
-          style(&#123; transform: 'translateX(5px)', offset: 0.7 }),
-          style(&#123; transform: 'translateX(5px)', offset: 0.8 }),
-          style(&#123; transform: 'translateX(0)', offset: 1 })
-        ]))
-      ])
-    ])
-  ]
-  
-  export class SignUpFormComponent &#123;
-    @Output() formSubmitted = new EventEmitter&#60;void>();
-    protected form = new FormGroup&#60;SignUpForm>(&#123;
-      email: new FormControl&#60;string>('', &#123; nonNullable: true, validators: Validators.required })
-    });
-  
-    protected wobbleField = false;
-  
-    constructor(private renderer: Renderer2) &#123; }
-  
-    protected onWobbleStart(event: AnimationEvent) &#123;
-      if (event.fromState !== 'void') &#123; // inicializálást követően void lesz a fromState
-        // this.renderer.addClass(event.element, 'invalid');
-        this.renderer.setStyle(event.element, 'color', 'red');
-        this.renderer.setStyle(event.element.lastElementChild, 'box-shadow', '0px 0px 10px 1px rgba(157,38,38,0.75)');
-      }
-    }
-  }
-
-  <b>// sign-up-form.component.html</b>
-  &#60;div cdkTrapFocus>
-    &#60;app-sign-up-form (formSubmitted)="modalClose.emit()">&#60;/app-sign-up-form>
-    &#60;button class="close" (click)="modalClose.emit()">
-      &#60;svg viewBox="0 0 24 24">
-        &#60;g clip-rule="evenodd" fill-rule="evenodd">
-          &#60;path d="M.39.39a1.335 1.335 0 011.886 0L23.61 21.725a1.333 1.333 0 11-1.886 1.886L.39 2.276a1.333 1.333 0 010-1.885z">&#60;/path>
-          &#60;path d="M.39 23.61a1.333 1.333 0 010-1.886L21.725.39a1.333 1.333 0 111.886 1.885L2.276 23.61a1.332 1.332 0 01-1.885 0z">&#60;/path>
-        &#60;/g>
-      &#60;/svg>
-      &#60;span class="visually-hidden">Close&#60;/span>
-    &#60;/button>
-  &#60;/div>
-  &#60;button class="shield" (click)="modalClose.emit()">
-    &#60;span class="visually-hidden">Close&#60;/span>
-  &#60;/button>
-
-  <b>// sign-up-form.component.ts</b>
-  @Output() modalClose = new EventEmitter&#60;void>();
-    </pre>
-    <li>Az Angular animációk csak akkor futnak le újra, ha az állapot ténylegesen megváltozik
-      <ul>
-        <li>Ha wobbleField mindig true marad, akkor az animáció nem indul újra, mert az Angular úgy látja, hogy nincs
-          változás</li>
-        <li>Ezért szükséges visszaállítanunk a property-t false-ra done eseménykor</li>
-      </ul>
-    </li>
-  </ul>
-  <br>
-  <h5 #multipleanimations data-anchor="multipleanimations">Multiple animations</h5>
-  <ul>
-    <li>Az animations tömbben megadott animációk szekvenciálisan (sorrendben) futnak le
-      <ul>
-        <li>Adott animáció az őt megelőző animáció után fog lefutni</li>
-      </ul>
-    </li>
-    <li>Az animációk azonos időben való futtatására a group függvényt használjuk</li>
-    <app-anime [tempSwitcher]="'multianime'"></app-anime>
-    <pre>
-  <b>// anime.component.html</b>
-  ...
-  &#60;div [@grouping]="players">
-    &#60;ng-container *ngFor="let player of players">
-        &#60;app-players [player]="player">&#60;/app-players>
-    &#60;/ng-container>
-  &#60;/div>
-  ...
-
-  <b>// anime.component.ts</b>
-  trigger('grouping', [
-    transition('* &#60;=> *', [
-      group([
-        query(':enter', [
-          style(&#123; opacity: 0, transform: 'scale(0.7)' }),
-          stagger(100, [
-            animate('500ms ease-in', style(&#123; opacity: 1, transform: 'scale(1)' }))
-          ])
-        ], &#123; optional: true }),
-        query(':enter', [
-          style(&#123; backgroundColor: 'rgba(0, 255, 0, .2)' }),
-          animate('1000ms ease-in', style(&#123; backgroundColor: '#212121)' }))
-        ], &#123; optional: true }),
-        query(':enter h2, :enter button', [
-          style(&#123; color: 'rgba(0, 255, 0, .7)' }),
-          animate('1000ms ease-in', style(&#123; color: 'rgb(178, 177, 188)' }))
-        ], &#123; optional: true }),
-      ]),
-      group([
-        query(':leave', [
-          style(&#123; opacity: 1, transform: 'scale(1)' }),
-          stagger(-100, [
-            animate('500ms ease-in', style(&#123; opacity: 0, transform: 'scale(0.7)' }))
-          ])
-        ], &#123; optional: true }),
-        query(':leave', [
-          animate('250ms ease-in', style(&#123; backgroundColor: 'rgba(255, 0, 0, .2)' })) // nincs style, csak "átanimáljuk" piros színre
-        ], &#123; optional: true }),
-        query(':leave h2, :leave button', [
-          animate('250ms ease-in', style(&#123; color: 'rgba(255, 0, 0, .7)' })) // nincs style, csak "átanimáljuk" piros színre
-        ], &#123; optional: true }),
-      ])
-    ])
-  ])
-  </pre>
-  </ul>
-  <br>
-  <h5 #unknownheight data-anchor="unknownheight">Unknown height</h5>
-  <ul>
-    <li>CSS magasság animálásához konkrét értéket szükséges megadni
-      <ul>
-        <li>Az auto és a 100% nem működik</li>
-        <li>A max-height sem ideiális</li>
-        <li>Az Angular animációk megoldást adnak</li>
-      </ul>
-    </li>
-    <li>A magasság animálása wildcard-dalérhető el
-      <ul>
-        <pre>
-  style(&#123; height: '*' })
-        </pre>
-        <li>Magasságra, és szélességre is lehet használni, amikor nem vagyunk biztosak az animáció magasságában,
-          szélességében</li>
-      </ul>
-    </li>
-    <li>Ahhoz, hogy jól működjön a magasság-váltás animáció, param-ot szükséges szolgáltatnunk
-      <ul>
-        <li>ehetőséget adnak dinamikus értékek megadására az animációkban, így nem kell fix számokat használni</li>
-        <li>A transition függvényhez adhatjuk hozzá</li>
-      </ul>
-    </li>
-    <app-anime [tempSwitcher]="'height'"></app-anime>
-    <pre>
-  <b>// sign-up-form.html</b>
-  &#60;h2>Sign Up&#60;/h2>
-  &#60;em>Hello! Welcome to the family.&#60;/em>
-  activePane: &#123; &#123;activePane()}}
-  &#60;form [formGroup]="form">
-      &#60;div #panes   &#60;!-- template reference variable -->
-          [@paneChange]="&#123;  &#60;!-- activePane() helyett -->
-              value: activePane(),
-              params: &#123;
-                  startHeight: panes.clientHeight
-              }
-          }" 
-          class="panes"> 
-          &#60;ng-container [ngSwitch]="activePane()">
-              &#60;div *ngSwitchCase="0" class="pane">
-                  &#60;label>
-                      &#60;span>Email Address&#60;/span>
-                      &#60;input type="email" formControlName="email" />
-                  &#60;/label>
-              &#60;/div>
-              &#60;div *ngSwitchCase="1" class="pane">
-                  &#60;label>
-                      &#60;span>Password&#60;/span>
-                      &#60;input type="password" formControlName="password" />
-                  &#60;/label>
-                  &#60;label>
-                      &#60;span>Confirm Password&#60;/span>
-                      &#60;input type="password" formControlName="password" />
-                  &#60;/label>
-                  &#60;footer>
-                      &#60;p>Password must contain:&#60;/p>
-                      &#60;ul>
-                          &#60;li>At least 8 characters&#60;/li>
-                          &#60;li>At least 1 lowercase character&#60;/li>
-                          &#60;li>At least 1 uppercase character&#60;/li>
-                          &#60;li>At leaset 1 number or special character&#60;/li>
-                      &#60;/ul>
-                  &#60;/footer>
-              &#60;/div>
-          &#60;/ng-container>
-      &#60;/div>
-      &#60;button (click)="setActiveStep()" class="continue">
-          Continue
-      &#60;/button>
-      &#60;button (click)="setActiveStep()" class="back" [class.visible]="activePane() !== 0" title="Previous Step">
-          &#60;span class="visually-hidden">Previous Step&#60;/span>
-      &#60;/button>
-  &#60;/form>
-
-  <b>// sign-up-form.ts</b>
-  trigger('paneChange', [
-      transition('* => *', [
-        query(':self', [
-          style(&#123; height: '&#123; &#123;startHeight}}px' }) // ezzel az értékkel indulunk, hogy ne változzon azonnal a méret
-        ]),
-        query(':enter', [ // belépő panel kezdeti állapota
-          style(&#123; opacity: 0, scale: 0.9 })
-        ]),
-        query(':leave', [ // a kilépő panel animálása
-          style(&#123; opacity: 1, scale: 1 }),
-          animate('1s ease-in', style(&#123; opacity: 0, scale: 0.9 }))
-        ]),
-        group([ // az új panel
-          query(':self', [  // a :self a triggerelő elemet célozza
-            animate('1s ease-in', style(&#123; height: '*' }))
-          ]),
-          query(':enter', [
-            animate('1s ease-in', style(&#123; opacity: 1, scale: 1 }))
-          ]),
-        ], &#123; params: &#123; startHeight: 0 } }) // ha nem lenne megadva, az @paneChange trigger hibára futhatna, mert nem tudná kiszámítani az induló magasságot
-      ])
-    ])
-
-  ...
-
-  protected activePane = signal(0);
-
-  setActiveStep() &#123;
-    this.activePane.set(this.activePane() === 0 ? 1 : 0);
-  }
-    </pre>
-    <li>A panes osztállyal rendelkező &#123;div> dinamikusan változtassa a magasságát</li>
-    <li>Az űrlap Angular reaktív formot (FormGroup) használ</li>
-    <li>Az animáció az activePane() változásakor történik
-      <ul>
-        <li>A startHeight paraméteren keresztül átadjuk az aktuális magasságát a .panes elemnek</li>
-      </ul>
-    </li>
-  </ul>
-  <br>
-  <h5 #flexibilitywithparams data-anchor="flexibilitywithparams">Flexibility with params</h5>
-  <ul>
-    <app-slider [tempSwitcher]="'default'"></app-slider>
-    <pre>
-  <b>// slider.component.html</b>
-  &#60;div [@slideToggle]="selectedImage()" class="image">
-    &#60;ng-container [ngSwitch]="selectedImage()">
-        &#60;img *ngSwitchCase="1" src="assets/imgs/slider/slider_1.jpg" loading="lazy" alt="A neon frog" />
-        &#60;img *ngSwitchCase="2" src="assets/imgs/slider/slider_2.jpg" loading="lazy" alt="A dog on a surfboard" />
-        &#60;img *ngSwitchCase="3" src="assets/imgs/slider/slider_3.jpg" loading="lazy"
-            alt="A chinchilla with sunglasses" />
-        &#60;img *ngSwitchCase="4" src="assets/imgs/slider/slider_4.jpg" loading="lazy"
-            alt="A cool cat wearing a jacket" />
-    &#60;/ng-container>
-  &#60;/div>
-
-  &#60;nav>
-      &#60;button (click)="previous()" [disabled]="this.selectedImage() === 1">
-          Previous Image
-      &#60;/button>
-      &#60;button (click)="next()" [disabled]="this.selectedImage() === 4">
-          Next Image
-      &#60;/button>
-  &#60;/nav>
-
-  <b>// slider.component.ts</b>
-  animations: [
-    trigger('slideToggle', [
-      transition('* => *', [
-        group([
-          query(':enter', style(&#123; transform: 'translateX(-100%) scale(.5)' })),
-          query(':leave', [
-            animate('750ms ease-in-out', style(&#123; transform: 'translateX(100%) scale(.25)' }))
-          ], &#123; optional: true }), // szükséges, mert inicializáláskor még nincs kilépő kép
-          query(':enter', [
-            animate('750ms ease-in-out', style(&#123; transform: 'translateX(0) scale(1)' }))
-          ])
-        ])
-      ])
-    ])
-  ]
-
-  ...
-
-  protected selectedImage = signal(1);
-
-  previous() &#123;
-    if (this.selectedImage() > 1) &#123;
-      this.selectedImage.set(this.selectedImage() - 1);
-    }
-  }
-
-  next() &#123;
-    if (this.selectedImage() < 4) &#123;
-      this.selectedImage.set(this.selectedImage() + 1);
-    }
-  }
-    </pre>
-    <li>A folyamat a gombnyomást követően
-      <ol>
-        <li>A belépő (:enter) elem kezdőállapotát beállítjuk
-          <ul>
-            <li>Balra van tolva (translateX(-100%)) és kicsinyített (scale(.5))</li>
-          </ul>
-        </li>
-        <li>Az éppen látható (:leave) kép animációval távozik
-          <ul>
-            <li>Jobbra (translateX(100%)) és még kisebb is lesz (scale(.25))</li>
-          </ul>
-        </li>
-        <li>A belépő (:enter) kép animációval megjelenik
-          <ul>
-            <li>Balról (translateX(0)) és normál méretű lesz (scale(1))</li>
-          </ul>
-        </li>
-      </ol>
-    </li>
-    <br>
-    <table style="width: 100%; border-collapse: collapse; border: 1px solid black;">
-      <tr>
-        <th></th>
-        <th>Leírás</th>
-        <th>Elem</th>
-        <th>Stílus</th>
-      </tr>
-      <tr>
-        <td>1) `query(:enter, style(...))`</td>
-        <td>Az új kép kívülre kerül (balra tolva, kicsinyítve)</td>
-        <td>ÚJ kép (`:enter`)</td>
-        <td>`translateX(-100%) scale(.5)`</td>
-      </tr>
-      <tr>
-        <td>2) `query(:leave, animate(...))`</td>
-        <td>Az előző kép elcsúszik jobbra és zsugorodik</td>
-        <td>RÉGI kép (`:leave`)</td>
-        <td>`translateX(100%) scale(.25)`</td>
-      </tr>
-      <tr>
-        <td>3) `query(:enter, animate(...))`</td>
-        <td>Az új kép beúszik balról és megnő</td>
-        <td>ÚJ kép (`:enter`)</td>
-        <td>`translateX(0) scale(1)`</td>
-      </tr>
-    </table>
-    <br>
-    <li>Ezzel már csak annyi a baj, hogy amikor visszafelé lapozunk, akkor is jobbra ugrik ki a kép
-      <ul>
-        <li>Ennek kiküszöböléséért az első lépés, hogy létrehozunk egy paramétert, amivel megmondjuk, melyik irányba
-          szeretnénk végezni az animációt</li>
-        <li>Majd a previous és next függvényekben beállítjuk a megfelelő értéket</li>
-        <pre>
-  protected animationDirection = signal&#60;'left' | 'right'>('right');
-
-  previous() &#123;
-    if (this.selectedImage() > 1) &#123;
-      this.animationDirection.set('left');
-      this.selectedImage.set(this.selectedImage() - 1);
-    }
-  }
-
-  next() &#123;
-    if (this.selectedImage() < 4) &#123;
-      this.animationDirection.set('right');
-      this.selectedImage.set(this.selectedImage() + 1);
-    }
-  }
-          </pre>
-        <li>A köetkező lépés, hogy paramétert adunk hozzá az animációhoz
-          <ul>
-            <li>A transition függvény option-jébe kerül az objektumunk</li>
-          </ul>
-        </li>
-        <pre>
-  animations: [
-    trigger('slideToggle', [
-      transition('* => *', [
-        group([
-          query(':enter', style(&#123; transform: 'translateX(&#123; &#123;enterStart}}) scale(.5)' })),
-          query(':leave', [
-            animate('750ms ease-in-out', style(&#123; transform: 'translateX(&#123; &#123;leaveEnd}}) scale(.25)' }))
-          ], &#123; optional: true }), // szükséges, mert inicializáláskor még nincs kilépő kép
-          query(':enter', [
-            animate('750ms ease-in-out', style(&#123; transform: 'translateX(0) scale(1)' }))
-          ])
-        ])
-      ], &#123;
-        params: &#123;
-          leaveEnd: '',
-          enterStart: ''
-        }
-      })
-    ])
-  ]
-        </pre>
-        <li>Ezzel előkészítettük az override paramétereket</li>
-        <li>Nincs más dolgunk, mint bekötni a template-be őket</li>
-      </ul>
-    </li>
-    <app-slider [tempSwitcher]="'params'"></app-slider>
-    <pre>
-  <b>// slider.component.html</b>
-  &#60;div [@slideToggleDynamic]="&#123;
-      value: selectedImage(),
-      params: &#123;
-          leaveEnd: animationDirection() === 'right' ? '100%' : '-100%',
-          enterStart: animationDirection() === 'right' ? '-100%' : '100%'
-      }
-  }" class="image">
-      &#60;ng-container [ngSwitch]="selectedImage()">
-          &#60;img *ngSwitchCase="1" src="assets/imgs/slider/slider_1.jpg" loading="lazy" alt="A neon frog" />
-          &#60;img *ngSwitchCase="2" src="assets/imgs/slider/slider_2.jpg" loading="lazy" alt="A dog on a surfboard" />
-          &#60;img *ngSwitchCase="3" src="assets/imgs/slider/slider_3.jpg" loading="lazy"
-              alt="A chinchilla with sunglasses" />
-          &#60;img *ngSwitchCase="4" src="assets/imgs/slider/slider_4.jpg" loading="lazy"
-              alt="A cool cat wearing a jacket" />
-      &#60;/ng-container>
-  &#60;/div>
-
-  &#60;nav>
-      &#60;button (click)="previous()" [disabled]="this.selectedImage() === 1">
-          Previous Image
-      &#60;/button>
-      &#60;button (click)="next()" [disabled]="this.selectedImage() === 4">
-          Next Image
-      &#60;/button>
-  &#60;/nav>
-
-  <b>// slider.component.ts</b>
-  trigger('slideToggleDynamic', [
-    transition('* => *', [
-      group([
-        query(':enter', style(&#123; transform: 'translateX(&#123; &#123;enterStart}}) scale(.5)' })),
-        query(':leave', [
-          animate('750ms ease-in-out', style(&#123; transform: 'translateX(&#123; &#123;leaveEnd}}) scale(.25)' }))
-        ], &#123; optional: true }), // szükséges, mert inicializáláskor még nincs kilépő kép
-        query(':enter', [
-          animate('750ms ease-in-out', style(&#123; transform: 'translateX(0) scale(1)' }))
-        ])
-      ])
-    ], &#123;
-      params: &#123;
-        leaveEnd: '',
-        enterStart: ''
-      }
-    })
-  ])
-
-  ...
-
-  protected selectedImage = signal(1);
-
-  protected animationDirection = signal&#60;'left' | 'right'>('right');
-
-
-  previous() &#123;
-    if (this.selectedImage() > 1) &#123;
-      this.animationDirection.set('left');
-      this.selectedImage.set(this.selectedImage() - 1);
-    }
-  }
-
-  next() &#123;
-    if (this.selectedImage() &#60; 4) &#123;
-      this.animationDirection.set('right');
-      this.selectedImage.set(this.selectedImage() + 1);
-    }
-  }
-    </pre>
-    <li>Végül egy dinamikusan változó irányú animációt sikerült elérni
-      <ul>
-        <li>1) A params-ben két változó kerül meghatározásra
-          <ul>
-            <li>leaveEnd (régi kép távozási iránya)</li>
-            <li>enterStart (új kép érkezési iránya)</li>
-          </ul>
-        </li>
-        <li>2) Az @slideToggle trigger aktiválódik, ha a selectedImage() signal értéke megváltozik</li>
-
-        <li>3) Az Angular behelyettesíti az &#123; &#123; enterStart }} és az &#123; 0&#123; leaveEnd }} értékeket</li>
-
-        <li>4) Az animáció lefut a dinamikusan meghatározott iránnyal
-          <ul>
-            <li>animationDirection() === 'right'
-              <ul>
-                <li>Az új kép balról jön be (enterStart = -100%)</li>
-                <li>A régi kép pedig jobbra megy ki (leaveEnd = 100%)</li>
-              </ul>
-            </li>
-            <li>animationDirection() === 'left'
-              <ul>
-                <li>Az új kép jobbról jön be (enterStart = 100%)</li>
-                <li>A régi kép pedig balra megy ki (leaveEnd = -100%)</li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-  </ul>
-  <br>
-  <h5 #reusableanimations data-anchor="toreusableanimationsdo">Reusable animations</h5>
-  <ul>
-    <li>Bizonyos animációkat általában több komponensben is használunk</li>
-    <li>Az újra felhasználható animációkat külön fájlban szokás tárolni
-      <ul>
-        <li>Egy exportálható állandót hozunk létre</li>
-        <li>Paramétereket is meg kell majd adnunk, mert akadnak változók a konstansban</li>
-      </ul>
-    </li>
-    <br>
-    <div style="position: relative; display: grid; justify-self: center; max-width: 500px; overflow: hidden;">
-      <app-header></app-header>
-      <app-slider [tempSwitcher]="'reuse'"></app-slider>
-    </div>
-    <pre>
-    <b>// slider.component.html</b>
-  &#60;div [@slideToggleDynamicReuseable]="&#123;
-      value: selectedImage(),
-      params: &#123;
-          leaveEnd: animationDirection() === 'right' ? '100%' : '-100%',
-          enterStart: animationDirection() === 'right' ? '-100%' : '100%',
-          hiddenScale: .25
-      }
-  }" class="image">
-      &#60;ng-container [ngSwitch]="selectedImage()">
-          &#60;img *ngSwitchCase="1" src="assets/imgs/slider/slider_1.jpg" loading="lazy" alt="A neon frog" />
-          &#60;img *ngSwitchCase="2" src="assets/imgs/slider/slider_2.jpg" loading="lazy" alt="A dog on a surfboard" />
-          &#60;img *ngSwitchCase="3" src="assets/imgs/slider/slider_3.jpg" loading="lazy"
-              alt="A chinchilla with sunglasses" />
-          &#60;img *ngSwitchCase="4" src="assets/imgs/slider/slider_4.jpg" loading="lazy"
-              alt="A cool cat wearing a jacket" />
-      &#60;/ng-container>
-  &#60;/div>
-
-  &#60;nav>
-      &#60;button (click)="previous()" [disabled]="this.selectedImage() === 1">
-          Previous Image
-      &#60;/button>
-      &#60;button (click)="next()" [disabled]="this.selectedImage() === 4">
-          Next Image
-      &#60;/button>
-  &#60;/nav>
-
-  <b>// slider.component.ts</b>
-  trigger('slideToggleDynamicReuseable', [
-    transition('* => *', [
-      useAnimation(slideAnimation)
-    ])
-  ])
-
-  <b>//header.component.html</b>
-  &#60;div [@slideToggleDynamicReuseable]="&#123;
-        value: showMenu(),
-        params: &#123;
-        leaveEnd: '100%',
-        enterStart: '100%',
-        hiddenScale: 1
-        }
-    }">
-    &#60;app-nav *ngIf="showMenu()" (close)="showMenu.set(false)">&#60;/app-nav>
-  &#60;/div>
-
-  <b>//header.component.ts</b>
-  trigger('slideToggleDynamicReuseable', [
-    transition('* => *', [
-      useAnimation(slideAnimation)
-    ])
-  ])
-
-  <b>// slider.animation.ts</b>
-  export const slideAnimation = animation([
-      group([
-          query(':enter', style(&#123; transform: 'translateX(&#123; &#123; enterStart }}) scale(&#123; &#123; hiddenScale }})' }), &#123; optional: true }),
-          query(':leave', [
-              animate('750ms ease-in-out', style(&#123; transform: 'translateX(&#123; &#123; leaveEnd }}) scale(&#123; &#123; hiddenScale }})' }))
-          ], &#123; optional: true }),
-          query(':enter', [
-              animate('750ms ease-in-out', style(&#123; transform: 'translateX(0) scale(1)' }))
-          ], &#123; optional: true })
-      ])
-  ])
-  </pre>
-    <li>Az animation() egy újrahasznosítható animációs séma létrehozására szolgál az Angularban
-      <ul>
-        <li>Megoldja, hogy az animációt külön fájlban tudjuk definiáni, és bármely trigger()-ben meghívni</li>
-      </ul>
-    </li>
-  </ul>
-  <br>
-  <h5 #disableanimations data-anchor="disableanimations">Disable animations</h5>
-  <ul>
-    <li>Sokszor nem kívánatos, hogy már a komponens inicializálásakor lefusson az animáció</li>
-    <li>Animation control binding-ot fogunk használni</li>
-    <pre>
-  [@.disabled]
-  </pre>
-    <li>Ha true értéket kap, minden animációt blokkol, még a nest-elt elemekét is</li>
-    <br>
-    <app-slider [tempSwitcher]="'disable'"></app-slider>
-    <pre>
-  <b>// slider.component.html</b>
-  &#60;div [@slideToggleDynamicReuseable]="&#123;
-      value: selectedImage(),
-      params: &#123;
-          leaveEnd: animationDirection() === 'right' ? '100%' : '-100%',
-          enterStart: animationDirection() === 'right' ? '-100%' : '100%',
-          hiddenScale: .25
-      }
-  }" [@.disabled]="animationDisabled()" class="image">
-  ...
-
-  <b>// slider.component.ts</b>
-  ...
-  protected animationDisabled = signal(true);
-
-  constructor() &#123;
-    afterNextRender(() => &#123;
-      if (this.animationDisabled()) &#123;
-        this.animationDisabled.set(false);
-      }
-    })
-  }
-  ...
-  </pre>
-    <li>Fontos tudnivaló, hogy az animation.start és animation.done event-ek akkor is lefutnak, ha az animáció ki van
-      kapcsolva</li>
-  </ul>
-  <br>
-
-  <br>
-  <h5 #todo data-anchor="todo">TODO</h5>
-  <ul>
-    <li></li>
-  </ul>
-</div>
-
 <div class="anchor-navi-container">
   <div *ngFor="let mainButton of anchorButtons" class="btn-group">
     <button type="button" class="btn btn-primary btn-sm anchor" (click)="scrollToAnchor(mainButton?.anchor)">
@@ -1546,29 +127,6 @@
     return &#123;variable1, variable2};
   }
       </pre>
-  </ul>
-</div>
-
-<div>
-  <h3 #trackby data-anchor="trackby">TrackBy TODO</h3>
-  <ul>
-    <li>A trackBy használatának célja, hogy Angular hatékonyabban kezelje a DOM elemeket, amikor a lista változik</li>
-    <li>Ha nem használunk trackBy-t, Angular újra rendereli az összes elemet, amikor a lista változik</li>
-    <li>trackBy segítségével Angular nyomon követheti, hogy mely elemek változtak, így csak a ténylegesen változott
-      elemeket rendereli újra
-    </li>
-    <pre>
-  &#60;div *ngFor="let phoneNumber of phoneNumbers; trackBy: tracker">
-
-  &#60;/div>
-
-  constructor() &#123;
-
-    tracker = (index: number, item: string) => index;
-  }
-    </pre>
-    <li>Az indexet adja vissza</li>
-    <li>TODO</li>
   </ul>
 </div>
 
@@ -8555,6 +7113,2125 @@
     </li>
     <br>
     <!--app-animeroute></!--app-animeroute-->
+  </ul>
+</div>
+
+<div>
+  <h3 #angularanimations data-anchor="angularanimations">Angular animations</h3>
+  <ul>
+    <li>Az animációk használatának első lépése a megfelelő modul aktiválása
+      <ul>
+        <pre>
+  <b>app.module.ts // Angular 17-ig</b>
+  @NgModule(&#123;
+    declarations: [
+      ...
+    ],
+    imports: [
+      ...
+      BrowserAnimationsModule,
+      ...
+    ],
+    providers: [
+      ...
+    ],
+    bootstrap: [AppComponent]
+  })
+  export class AppModule &#123;
+  }
+
+  <b>main.ts // Angular 17-től</b>
+  bootstrapApplication(AppComponent, &#123;
+    providers: [
+      provideAnimationsAsync() // vagy provideAnimations()
+    ]
+  });
+        </pre>
+        <table>
+          <tr>
+            <td>provideAnimations()</td>
+            <td>Ha nincs SSR az appban, és az animációknak azonnal be kell töltődniük</td>
+          </tr>
+          <tr>
+            <td>provideAnimationsAsync()</td>
+            <td>Ha van SSR, vagy gyorsabb app betöltést szeretnénk, és elfogadható, ha az animációk késleltetve
+              töltődnek be
+            </td>
+          </tr>
+        </table>
+        <br>
+        <li>A komponens metaadatainál adhatjuk meg az animációkat</li>
+        <li>Fő elemek
+          <ol>
+            <li>trigger()
+              <ul>
+                <li>Az animáció neve, és annak beállításai</li>
+                <li>Az első paraméter az animáció neve</li>
+                <li>A második paraméter egy tömb, ami az animáció utasításait tartalmazza
+                  <ul>
+                    <li>Állapotok, és átmenetek</li>
+                  </ul>
+                </li>
+                <pre>
+  trigger('name', [...])
+
+  template: `&#60;div [@fadeInOut]="'visible'">Animated element&#60;/div>`,
+  animations: [
+    trigger('fadeInOut', [
+      state('visible', style(&#123; opacity: 1 })),
+      state('hidden', style(&#123; opacity: 0 })),
+      transition('visible &#60;=> hidden', animate('500ms ease-in-out'))
+    ])
+  ]
+
+  // A trigger neve fadeInOut
+  // Két állapotot definiálunk (visible és hidden)
+  // A transition határozza meg, hogy az állapotok hogyan váltanak egymás között
+                </pre>
+              </ul>
+            </li>
+            <li>state()
+              <ul>
+                <li>Egy adott állapothoz tartozó stílus</li>
+                <li>Az első paraméter a state neve</li>
+                <li>A második paraméter CSS stílusokat tartalmaz</li>
+                <pre>
+  state('name', style(...))
+
+  template: `
+    &#60;button (click)="toggle()">Toggle&#60;/button>
+    &#60;div [@boxState]="isExpanded ? 'expanded' : 'collapsed'">Box&#60;/div>
+  `,
+  animations: [
+    trigger('boxState', [
+      state('expanded', style(&#123; height: '200px', backgroundColor: 'lightblue' })),
+      state('collapsed', style(&#123; height: '50px', backgroundColor: 'lightgray' })),
+      transition('expanded &#60;=> collapsed', animate('300ms ease-in-out'))
+    ])
+  ]
+
+  // Ha a div állapota expanded, akkor magasabb, és kék színű lesz
+  // Ha collapsed, akkor alacsonyabb, és szürke színű
+  // A transition definiálja, hogy az állapotok 300 ms alatt változnak.
+                </pre>
+              </ul>
+            </li>
+            <li>style()
+              <ul>
+                <li>CSS stílus, amit az animáció alkalmaz egy adott pillanatban</li>
+                <li>Objektum, benne stílusokkal</li>
+                <pre>
+  style(&#123;...})
+
+  template: `
+    &#60;button (click)="toggle()">Toggle&#60;/button>
+    &#60;div [@moveBox]="isMoved ? 'moved' : 'initial'">Moving box&#60;/div>
+  `,
+  animations: [
+    trigger('moveBox', [
+      state('initial', style(&#123; transform: 'translateX(0)', opacity: 1 })),
+      state('moved', style(&#123; transform: 'translateX(100px)', opacity: 0.5 })),
+      transition('initial &#60;=> moved', animate('500ms ease-in-out'))
+    ])
+  ]
+
+  // Ha moved, akkor a doboz 100px-re elmozdul, és félig áttetsző lesz
+  // Ha pedig initial, akkor az eredeti helyén marad
+                </pre>
+              </ul>
+            </li>
+            <li>transition()
+              <ul>
+                <li>Meghatározza, hogy hogyan váltson az animáció két állapot között</li>
+                <li>Az első paraméter meghatározza, hogy milyen állapotból milyen állapotba váltunk</li>
+                <li>A második paraméter egy tömb, ami tartalmazza az animációra vonatkozó szabályokat</li>
+                <pre>
+  transition(fromState => toState, [animate(...)])
+
+  template: `
+    &#60;button (click)="toggle()">Toggle&#60;/button>
+    &#60;div [@doorState]="isOpen ? 'open' : 'closed'">Door&#60;/div>
+  `,
+  animations: [
+    trigger('doorState', [
+      state('open', style(&#123; transform: 'rotateY(0deg)' })),
+      state('closed', style(&#123; transform: 'rotateY(90deg)' })),
+      transition('open &#60;=> closed', animate('400ms ease-in-out'))
+    ])
+  ]
+
+  //  Az open állapot, és a closed között egy 400 ms-os animáció van
+                </pre>
+              </ul>
+            </li>
+            <li>animate()
+              <ul>
+                <li>Az animáció időtartamáért, és az állapotváltás közbeni stílusért felel</li>
+                <li>Első paramétere az animáció időtartama ('500ms' / '1s')</li>
+                <li>A második paramétere az animáció végállapota</li>
+                <pre>
+  animate(duration, style(...))
+
+  template: `
+    &#60;button (click)="toggle()">Toggle&#60;/button>
+    &#60;div class="box" *ngIf="isVisible" [@fadeInOut]>Appearing box&#60;/div>
+  `,
+  animations: [
+    trigger('fadeInOut', [
+      transition(':enter', [
+        style(&#123; opacity: 0 }),
+        animate('500ms ease-out', style(&#123; opacity: 1 }))
+      ]),
+      transition(':leave', [
+        animate('500ms ease-in', style(&#123; opacity: 0 }))
+      ])
+    ])
+  ]
+
+  // A div fade in, és fade out effektet kap
+  // Az :enter (megjelenés) és :leave (eltűnés) animációt külön kezeljük
+  // Az animate határozza meg a sebességet
+                </pre>
+              </ul>
+            </li>
+            <li>keyframes()
+              <ul>
+                <li>Többlépéses animáció létrehozására való</li>
+                <li>A CSS keyframe animációk Angular változata</li>
+                <li>Egy tömb, amely a különböző időpillanatokban alkalmazott stílusokat tartalmazza</li>
+                <pre>
+  keyframes([...])
+
+  template: `
+    &#60;button (click)="startShake()">Shake&#60;/button>
+    &#60;div [@shakeAnimation]="shaking ? 'shake' : 'still'">Shaking box&#60;/div>
+  `,
+  animations: [
+    trigger('shakeAnimation', [
+      transition('* => shake', [
+        animate('500ms ease-in-out', keyframes([
+          style(&#123; transform: 'translateX(-10px)', offset: 0.2 }),
+          style(&#123; transform: 'translateX(10px)', offset: 0.4 }),
+          style(&#123; transform: 'translateX(-10px)', offset: 0.6 }),
+          style(&#123; transform: 'translateX(10px)', offset: 0.8 }),
+          style(&#123; transform: 'translateX(0)', offset: 1 })
+        ]))
+      ])
+    ])
+  ]
+
+  // Remegő animációt hoz létre
+  // Az offset paraméter adja meg az animáció közbenső állapotait
+                </pre>
+              </ul>
+            </li>
+            <li>query()
+              <ul>
+                <li>Több elem egyidejű animálására használatos</li>
+                <li>Első paramétere a szelektor</li>
+                <li>A második paraméter az animációk listája, amit a kiválasztott elemekre alkalmaz</li>
+                <li>A harmadik paraméter egy opcionális boolean, amit ha true értékbe állítunk, akkor az animáció nem
+                  dob hibát, ha nem sikerül elemet szelektálni (options?: &#123; optional: boolean })</li>
+                <pre>
+  query(selector, [...])
+
+  template: `
+    &#60;button (click)="toggle()">Toggle list&#60;/button>
+    &#60;ul>
+      &#60;li *ngFor="let item of items" [@listAnimation]>&#123; &#123; item }}&#60;/li>
+    &#60;/ul>
+  `,
+  animations: [
+    trigger('listAnimation', [
+      transition(':enter', [
+        query('li', [
+          style(&#123; opacity: 0, transform: 'translateY(-20px)' }),
+          stagger('100ms', [
+            animate('500ms ease-out', style(&#123; opacity: 1, transform: 'translateY(0)' }))
+          ])
+        ])
+      ])
+    ])
+  ]
+
+  // A lista elemei egymás után jelennek meg stagger() segítségével
+                </pre>
+              </ul>
+            </li>
+            <li>stagger()
+              <ul>
+                <li>Több elem egyidejű animálására használatos</li>
+                <li>Első paramétere a késleltetés időtartama ('500ms' / '1s')</li>
+                <li>A második paramétere az egyes elemek animációja</li>
+                <pre>
+  stagger(delay, [...])
+
+  template: `
+    &#60;button (click)="toggle()">Toggle list&#60;/button>
+    &#60;ul>
+      &#60;li *ngFor="let item of items" [@listAnimation]>&#123; &#123; item }}&#60;/li>
+    &#60;/ul>
+  `,
+  animations: [
+    trigger('listAnimation', [
+      transition(':enter', [
+        query('li', [
+          style(&#123; opacity: 0, transform: 'translateY(-20px)' }),
+          stagger('100ms', [
+            animate('500ms ease-out', style(&#123; opacity: 1, transform: 'translateY(0)' }))
+          ])
+        ])
+      ])
+    ])
+  ]
+
+  // A lista elemei egymás után jelennek meg stagger() segítségével
+                </pre>
+              </ul>
+            </li>
+            <li>group()
+              <ul>
+                <li>Több animáció egyidejű futtatására való</li>
+                <li>Paramétere az összes animáció, amiket egyszerre szükséges futtatni</li>
+                <pre>
+  group([...])
+
+  template: `
+    &#60;button (click)="toggle()">Toggle&#60;/button>
+    &#60;div class="box" [@moveFade]="isMoved ? 'moved' : 'initial'">Moving box&#60;/div>
+  `,
+  animations: [
+    trigger('moveFade', [
+      transition('initial => moved', [
+        group([
+          animate('500ms ease-in-out', style(&#123; transform: 'translateX(100px)' })),
+          animate('500ms ease-in-out', style(&#123; opacity: 0.5 }))
+        ])
+      ])
+    ])
+  ]
+
+  // A doboz egyszerre mozdul, és halványodik el
+  // A group() biztosítja, hogy a két animáció párhuzamosan fusson
+                </pre>
+              </ul>
+            </li>
+            <li>sequence()
+              <ul>
+                <li>Egymás utáni animációk futtatására használjuk</li>
+                <li>Egyetlen paramétere az egymás után lefutó animációk</li>
+                <pre>
+  sequence([...])
+
+  template: `
+    &#60;button (click)="toggle()">Toggle&#60;/button>
+    &#60;div class="box" [@fadeMove]="isMoved ? 'moved' : 'initial'">Box&#60;/div>
+  `,
+  animations: [
+    trigger('fadeMove', [
+      transition('initial => moved', [
+        sequence([
+          animate('300ms ease-in', style(&#123; opacity: 0.5 })),
+          animate('500ms ease-out', style(&#123; transform: 'translateX(100px)' }))
+        ])
+      ])
+    ])
+  ]
+
+  // A doboz először halványodik, majd csak ezután mozdul el
+  // A sequence() biztosítja az animációk egymás utáni lefutását
+                </pre>
+              </ul>
+            </li>
+            <br>
+            <li>@.disabled
+              <ul>
+                <li>Az adott template elemen kikapcsolja az animációt</li>
+                <pre>
+  [@.disabled]="name"
+
+  template: `
+    &#60;button (click)="disableAnimations()">Disable animations&#60;/button>
+    &#60;div class="box" [@fade]="isVisible ? 'visible' : 'hidden'" [@.disabled]="animationsDisabled">
+      Content
+    &#60;/div>
+  `,
+  animations: [
+    trigger('fade', [
+      transition('visible => hidden', [
+        animate('500ms', style(&#123; opacity: 0 }))
+      ])
+    ])
+  ]
+
+  //  A @.disabled teljesen kikapcsolja az animációt
+  // Az animációk állapota egy gombnyomással változtatható
+                </pre>
+              </ul>
+            </li>
+          </ol>
+        </li>
+      </ul>
+    </li>
+    <li>Időzítési függvények, amelyek meghatározzák, hogy az animáció lassan induljon, gyorsuljon, vagy épp lassuljon a
+      végén
+      <ul>
+        <table style="border-collapse: collapse; width: 100%;">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Leírás</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>linear</td>
+              <td>Az animáció egyenletes sebességgel fut végig</td>
+            </tr>
+            <tr>
+              <td>ease-in</td>
+              <td>Lassan indul, majd fokozatosan gyorsul</td>
+            </tr>
+            <tr>
+              <td>ease-out</td>
+              <td>Gyorsan indul, majd fokozatosan lassul</td>
+            </tr>
+            <tr>
+              <td>ease-in-out</td>
+              <td>Lassan indul, gyorsul, majd újra lassul a végén</td>
+            </tr>
+            <tr>
+              <td>cubic-bezier(x, y, z, w)</td>
+              <td>Egyedi sebességgörbe megadása</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </ul>
+    </li>
+    <br>
+    <!--app-header></!--app-header-->
+    <app-anime [tempSwitcher]="'default'"></app-anime>
+    <pre>
+  &#60;app-page-menu [@openClose]="menuState" (close)="menuState = 'closed'">&#60;/app-page-menu>
+
+  animations: [
+    trigger('openClose', [
+      state('closed', style(&#123; transform: 'translateX(100%)' })),
+      state('open', style(&#123; transform: 'translateX(0)' })),
+      transition('closed <=> open', [animate('500ms ease-in')])
+    ])
+  ]
+    </pre>
+  </ul>
+  <br>
+  <h5 #enterandleave data-anchor="enterandleave">Enter & leave</h5>
+  <ul>
+    <li>Animációs trigger-ek, amelyek a DOM-hoz hozzáadott, vagy onnan eltávolított elemek animációjára szolgálnak</li>
+    <li>:enter
+      <ul>
+        <li>Akkor aktiválódik, amikor egy elem megjelenik a DOM-ban</li>
+        <li>Például, ha egy *ngIf értéke true lesz, az elem belép a DOM-ba</li>
+      </ul>
+    </li>
+    <li>:leave
+      <ul>
+        <li>Aktiválódik, amikor egy elem elhagyja a DOM-ot</li>
+        <li>Mondjuk amikor egy *ngIf false lesz</li>
+      </ul>
+    </li>
+    <li>Csak olyan elemekre működnek, amelyeket az Angular dinamikusan hozzáad és eltávolít (például *ngIf, vagy *ngFor)
+    </li>
+    <li>Ha az elemet csak elrejtjük például [hidden] attribútummal, nem működnek</li>
+    <li>Az előző gyakorlati példában az app-page-menu mindig jelen van a DOM-ban</li>
+    <li>Amíg az animáció nem ér véget, addig az Angular nem távolítja el a DOM-ból a feltételes elemet</li>
+    <app-anime [tempSwitcher]="'enterleave'"></app-anime>
+    <pre>
+  &#60;app-page-menu *ngIf="menuOpen" @enterLeaveOpenClose (close)="menuOpen = false">&#60;/app-page-menu>
+
+  trigger('enterLeaveOpenClose', [
+    transition(':enter', [
+      style(&#123; transform: 'translateX(100%)' }),
+      animate('500ms ease-in', style(&#123; transform: 'translateX(0)' }))
+    ]),
+    transition(':leave', [
+      style(&#123; transform: 'translateX(0)' }),
+      animate('500ms ease-in', style(&#123; transform: 'translateX(100%)' }))
+    ]),
+  ]),
+
+  // OR
+
+  const hidden = &#123; transform: 'translateX(100%)' };
+  const visible = &#123; transform: 'translateX(0)' };
+  const timing = '500ms ease-in'
+
+  trigger('enterLeaveOpenClose2', [
+    transition(':enter', [
+      style(hidden),
+      animate(timing, style(visible))
+    ]),
+    transition(':leave', [
+      style(visible),
+      animate(timing, style(hidden))
+    ]),
+  ]),
+    </pre>
+  </ul>
+  <br>
+  <h5 #keyframe data-anchor="keyframe">Keyframe</h5>
+  <ul>
+    <li>Hatékony animációs API</li>
+    <li>A steps paramétert fogadja, ami egy AnimationStyleMetadata tömb
+      <ul>
+        <li>Stílus objektumok kerülnek bele</li>
+      </ul>
+    </li>
+    <app-anime [tempSwitcher]="'keyframe'"></app-anime>
+    <pre>
+  &#60;app-page-menu *ngIf="menuOpen" @keyframe (close)="menuOpen = false">&#60;/app-page-menu>
+
+  trigger('keyframe', [
+    transition(':enter',
+      animate('1s', keyframes([
+        style(&#123; transform: 'translateX(100%) scale(.5)', offset: 0 }),
+        style(&#123; transform: 'translateX(-100%) scale(.5)', offset: .2 }), // a teljes animációs idő (1mp) 20%-ánál már ebben az állapotban van
+        style(&#123; transform: 'translateX(-100%) scale(.75) rotate(360deg)', offset: .9 }), // a teljes animációs idő (1mp) 75%-ánál már ebben az állapotban van
+        style(&#123; transform: 'translateX(0) scale(1) rotate(360deg)', offset: 1 }),
+      ]
+      ))),
+    transition(':leave', animate('1s', keyframes([
+      style(&#123; transform: 'translateX(0) scale(1) rotate(360deg)', offset: 0 }),
+      style(&#123; transform: 'translateX(-100%) scale(.75) rotate(360deg)', offset: .2 }),
+      style(&#123; transform: 'translateX(-100%) scale(.5)', offset: .9 }),
+      style(&#123; transform: 'translateX(100%) scale(.5)', offset: 1 }),
+    ])))
+    </pre>
+    <li>Offset
+      <ul>
+        <li>Egy 0 és 1 közötti szám, amely megadja, hogy az adott keyframe az animáció melyik pontján történjen</li>
+        <li>A 0 az animáció kezdetét, az 1 pedig a végét jelenti</li>
+        <li>Megmondhatjuk vele, hogy az animációs idő hány %-ánál vegye fel az adott style állapotot</li>
+      </ul>
+    </li>
+  </ul>
+  <br>
+  <h5 #queryingandstaggering data-anchor="queryingandstaggering">Querying & staggering</h5>
+  <ul>
+    <app-anime [tempSwitcher]="'querystagger'"></app-anime>
+    <pre>
+  <b>// anime.component.html</b>
+  &#60;section cdkScrollable>
+    &#60;div [@querystagger]="players">
+        &#60;ng-container *ngFor="let player of players">
+            &#60;app-player [player]="player">&#60;/app-player>
+        &#60;/ng-container>
+    &#60;/div>
+  &#60;/section>
+  &#60;section class="text-center pt-5">
+      &#60;button *ngIf="players.length &#60; totalCount" (click)="addPlayers()" class="btn btn-danger">
+          &#60;span>Add&#60;/span>
+      &#60;/button>
+      &#60;button *ngIf="players.length > 0" (click)="removePlayers()" class="btn btn-primary">
+          &#60;span>Remove&#60;/span>
+      &#60;/button>
+  &#60;/section>
+
+  <b>// anime.component.ts</b>
+  import &#123; players } from './players/players'; // a játékosok interface-e, és listája ebben a fájlban található - export const players = [ &#123;...} ]
+
+  animations: [
+    trigger('querystagger', [
+      transition('* &#60;=> *', [   // bármilyen állapotból bármelyik állapotba átmenetkor igaz
+        query(':enter', [
+          style(&#123; opacity: 0, transform: 'scale(0.7)' }),
+          stagger(100, [
+            animate('500ms ease-in', style(&#123; opacity: 1, transform: 'scale(1)' }))
+          ])
+        ], &#123; optional: true }),
+        query(':leave', [
+          style(&#123; opacity: 1, transform: 'scale(1)' }),
+          stagger(-100, [   // negatív érték, fordított animáció sorrend
+            animate('500ms ease-in', style(&#123; opacity: 0, transform: 'scale(0.7)' }))
+          ])
+        ], &#123; optional: true })
+      ])
+  ])
+
+  ...
+
+  protected players = [players[0]];
+  protected totalCount = players.length;
+
+  protected addPlayers() &#123;
+    const allPlayers = players.slice(1);
+    this.players = [...this.players, ...allPlayers];
+  }
+
+  protected removePlayers() &#123;
+    this.players = [this.players[0]];
+  }
+
+  <b>// player.component.html</b>
+  &#60;section style="display: grid; grid-template-columns: auto 1fr;">
+      &#60;img [src]="'assets/imgs/players/' + player.imageName + '.avif'" width="130px" height="95px" />
+      &#60;div>
+          &#60;h2>&#123; &#123; player.name }}&#60;/h2>
+          &#60;div>
+              &#60;button #trigger="cdkOverlayOrigin" cdkOverlayOrigin (click)="detailsOpen = true" [class.open]="detailsOpen"
+                  class="btn btn-secondary">
+                  Details
+              &#60;/button>
+              &#60;ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="trigger"
+                  [cdkConnectedOverlayOpen]="detailsOpen" cdkConnectedOverlayWidth="50%"
+                  (overlayOutsideClick)="detailsComponent.close()" (detach)="detailsOpen = false"
+                  [cdkConnectedOverlayPositions]="[]" cdkConnectedOverlayPush="true"
+                  [cdkConnectedOverlayViewportMargin]="7" [cdkConnectedOverlayScrollStrategy]="scrollStrategy"
+                  cdkConnectedOverlayTransformOriginOn="app-player-details" [cdkConnectedOverlayDisableClose]="true"
+                  (overlayKeydown)="$event.key === 'Escape' ? detailsComponent.close() : null">
+                  &#60;app-player-details [player]="player" (closed)="detailsOpen = false">&#60;/app-player-details>
+              &#60;/ng-template>
+          &#60;/div>
+      &#60;/div>
+  &#60;/section>
+
+  <b>// player.component.ts</b>
+  @Input(&#123;required: true}) player!: Player;
+  @ViewChild(PlayerDetailsComponent) detailsComponent!: PlayerDetailsComponent;
+  protected detailsOpen = false;
+  protected scrollStrategy = this.overlay.scrollStrategies.reposition();
+
+  constructor(private overlay: Overlay) &#123;}
+
+  <b>// player.component.scss</b>
+  :host &#123;
+      display: block; // app-player tag-re irányuló szabály
+  }
+
+  <b>// player-details.component.html</b>
+  &#60;section role="dialog" aria-modal="true" aria-labelledby="dialog-title" aria-describedby="dialog-description"
+      cdkTrapFocus cdkTrapFocusAutoCapture="true">
+      &#60;h3 id="dialog-title" tabindex="-1" cdkFocusInitial>&#123; &#123; player.name }}&#60;/h3>
+      &#60;p id="dialog-description">&#123; &#123; player.description }}&#60;/p>
+      &#60;dl>
+          &#60;div>
+              &#60;dt>Games Played&#60;/dt>
+              &#60;dd> &#123; &#123; player.games | number }}&#60;/dd>
+          &#60;/div>
+          &#60;div>
+              &#60;dt>Points Scored&#60;/dt>
+              &#60;dd>&#123; &#123; player.points | number }}&#60;/dd>
+          &#60;/div>
+          &#60;div>
+              &#60;dt>Field Goal Percentage&#60;/dt>
+              &#60;dd>&#123; &#123; player.fieldGoalPercentage | percent:'.1' }}&#60;/dd>
+          &#60;/div>
+          &#60;div>
+              &#60;dt>Three Point Percentage&#60;/dt>
+              &#60;dd>&#123; &#123; player.threePointPercentage | percent:'.1' }}&#60;/dd>
+          &#60;/div>
+      &#60;/dl>
+      &#60;footer>
+          &#60;a [href]="player.wikipedia" target="_blank">See More on Wikipedia&#60;/a>
+          &#60;button (click)="close()">
+              &#60;span class="cdk-visually-hidden">Close&#60;/span>
+          &#60;/button>
+      &#60;/footer>
+  &#60;/section>
+
+  <b>// player-details.component.ts</b>
+  animations: [
+  trigger('animation', [
+    state('hidden', style(&#123;
+      opacity: 0,
+      transform: 'scale(.25)'
+    })),
+    state('visible', style(&#123;
+      opacity: 1,
+      transform: 'scale(1)'
+    })),
+    transition('hidden &#60;=> visible', animate('0.15s ease-in-out'))
+  ])
+
+  ...
+
+  @Input(&#123; required: true }) player!: Player;
+  @HostBinding('@animation') animationState = 'hidden';   // a @animation az animation triggerre utal
+  @HostListener('@animation.done', ['$event']) done(event: AnimationEvent) &#123;
+    if (event.toState === 'hidden') &#123;
+      this.closed.emit();
+    }
+  }
+  @Output() closed = new EventEmitter&#60;void>();
+
+  ngAfterViewInit() &#123;
+    this.animationState = 'visible';
+  }
+
+  close() &#123;
+    this.animationState = 'hidden';
+  }
+    </pre>
+    <li>Mivel az elemek eltűnnek, és megjelennek a DOM-ban, ezért használhatjuk az :enter és :leave alias-okat</li>
+    <li>Az :enter animáció inicializáláskor rendben lefut, mert megtalálja a players tömböt, de az &#123; optional: true
+      }
+      nélkül hibát kapnánk, mert tulajdonképpen nincs elem, ami eltűnne (a tömb nem tűnik el, csak kevesebb elem lesz
+      benne), így a :leave query nem talál elemet</li>
+    <li>Alapértelmezés szerint az app-players inline elem lenne
+      <ul>
+        <li>Az inline elemek nem támogatják a transform vagy opacity animációkat a legtöbb böngészőben, ezért van
+          szükség
+          block megjelenítésre</li>
+      </ul>
+    </li>
+    <li>A stagger egy animációs láncot hoz létre
+      <ul>
+        <li>Az egyes elemekre késlelteti az animációt</li>
+        <li>Nem szabad túl nagy időket beállítani, mert úgy nem fog jól látszani az eltolás a megjelenések között
+          (például
+          tömb elemeinek)</li>
+        <li>Negatív érték esetén a szakaszos animációk fordított sorrendben indulnak el, tehát az utolsó elem animációja
+          kezdődik először</li>
+      </ul>
+    </li>
+    <li>Az animációnak start és done eseményei vannak
+      <ul>
+        <pre>
+  @HostListener('@animation.start', ['$event']) // az animáció kezdetekor fut le
+  onAnimationStart(event: AnimationEvent) &#123;
+      console.log('Animation started!', event);
+  }
+
+  @HostListener('@animation.done', ['$event']) // az animáció befejeztével fut le
+  onAnimationDone(event: AnimationEvent) &#123;
+      console.log('Animation finished!', event);
+  }
+
+  ↓↓↓↓↓
+
+  &#123;
+    disabled: false,
+    element: 'app-player-details.ng-tns-c2341267558-4.ng-trigger.ng-trigger-animation.ng-star-inserted',
+    fromState: 'hidden',
+    phaseName: 'start', // vagy 'done'
+    toState: 'visible',
+    totalTime: 150,
+    triggerName: 'animation',
+    _data: 16
+  }
+        </pre>
+      </ul>
+    </li>
+    <li>Nézzünk meg egy sokkal egyszerűbb példát</li>
+    <div style="padding: 30px 0;">
+      <div [@querystagger]="testArray">
+        <ng-container *ngFor="let test of testArray">
+          <div style="padding-bottom: 30px;">{{test.number}} {{test.name}}</div>
+        </ng-container>
+      </div>
+
+      <button class="btn" [ngClass]="(testArray.length > 3) ? 'btn-danger' : 'btn-primary'"
+        (click)="testArray.length > 3 ? removeFromTestArray() : addToTestArray()">
+        {{ testArray.length > 3 ? 'REMOVE' : 'ADD'}}
+      </button>
+    </div>
+    <pre>
+  <b>// template</b>
+  &#60;div [@querystagger]="testArray">
+    &#60;ng-container *ngFor="let test of testArray">
+      &#60;div style="padding-bottom: 30px;">&#123; &#123;test.number}} &#123; &#123;test.name}}&#60;/div>
+    &#60;/ng-container>
+  &#60;/div>
+
+  &#60;button class="btn" [ngClass]="(testArray.length > 3) ? 'btn-danger' : 'btn-primary'"
+    (click)="testArray.length > 3 ? removeFromTestArray() : addToTestArray()">
+    &#123; &#123; testArray.length > 3 ? 'REMOVE' : 'ADD'}}
+  &#60;/button>
+
+  <b>// class</b>
+  testArray = [
+    &#123; number: 1, name: 'First' },
+    &#123; number: 2, name: 'Second' },
+    &#123; number: 3, name: 'Third' },
+  ]
+
+  addToTestArray() &#123;
+    this.testArray = [...this.testArray,
+    &#123; number: 4, name: 'Fourth' },
+    &#123; number: 5, name: 'Fifth' },
+    &#123; number: 6, name: 'Sixth' }
+    ];
+  }
+
+  removeFromTestArray() &#123;
+    this.testArray = this.testArray.slice(0,3);
+  }
+    </pre>
+    <li>A @querystagger animáció a külső &#60;div>-en van, ami egy fix, állandó elem</li>
+    <li>Az ng-container önmagában nem generál külön DOM-elemet, így az *ngFor által létrehozott &#60;div>-ek közvetlen
+      gyermekelemei lesznek az animált &#60;div>-nek</li>
+    <li>Így ismeri fel az :enter alias az új elemeket</li>
+    <li>Dinamikusan változó lista esetében nem közvetlenül az *ngFor-ral ellátott elemre, elemekre rakjuk az animációt
+      <ul>
+        <li>Szükséges egy wrapper elem</li>
+      </ul>
+    </li>
+  </ul>
+  <br>
+  <h5 #animationevents data-anchor="animationevents">Animation events</h5>
+  <ul>
+    <li>Előfordul(hat), hogy egy animáció kezdetekor, vagy éppen a végén valamilyen logikát szükséges futtatnunk
+      <ul>
+        <li>Az Angular Animatios start és done event-jei pontosan az animációk elején, és végén futnak le</li>
+        <li>Event binding segítségével férhetünk hozzájuk</li>
+        <pre>
+  (@animation.done)="function($event)"
+      </pre>
+        <li>Egy Angular AnimationEvent objektumot fog átadni függvény paraméterként</li>
+      </ul>
+    </li>
+    <app-anime [tempSwitcher]="'signupform'"></app-anime>
+    <pre>
+  <b>// anime.component.html</b>
+  &#60;app-page-content (menuClick)="menuOpen = true">&#60;/app-page-content>
+
+  <b>// anime.component.ts</b>
+  protected menuOpen: boolean = false;
+
+  <b>// content.component.html</b>
+  ...
+  &#60;button (click)="signUpModalOpen = !signUpModalOpen" class="signUp">
+      Sign Up
+  &#60;/button>
+  ...
+  &#60;app-sign-up-modal *ngIf="signUpModalOpen" (modalClose)="signUpModalOpen = false">&#60;/app-sign-up-modal>
+
+  <b>// content.component.ts</b>
+  @Output() menuClick = new EventEmitter&#60;void>();
+  protected signUpModalOpen = true;
+
+  <b>// sign-up-form.component.html</b>
+  &#60;h2>Sign Up&#60;/h2>
+  &#60;em>Hello! Welcome to the family.&#60;/em>
+  &#60;form [formGroup]="form">
+      &#60;div>
+          &#60;label [@wobble]="wobbleField && form.invalid" (@wobble.done)="wobbleField = false"
+              (@wobble.start)="onWobbleStart($event)">
+              &#60;span>Email Address&#60;/span>
+              &#60;input type="email" formControlName="email" />
+          &#60;/label>
+      &#60;/div>
+      &#60;div>Form is invalid: &#123; &#123;form.invalid}}&#60;/div>
+      &#60;div>wobbleField: &#123; &#123;wobbleField}}&#60;/div>
+      &#60;br>
+      &#60;button (click)="form.valid ? formSubmitted.emit() : wobbleField = true;" [class.disabled]="!form.valid">
+          Continue
+      &#60;/button>
+  &#60;/form>
+
+  <b>// sign-up-form.component.ts</b>
+  interface SignUpForm &#123;
+    email: FormControl&#60;string>;
+  }
+  ...
+  animations: [
+    trigger('wobble', [
+      transition('false => true', [
+        animate('1s', keyframes([
+          style(&#123; transform: 'translateX(-10px)', offset: 0.1 }),
+          style(&#123; transform: 'translateX(10px)', offset: 0.3 }),
+          style(&#123; transform: 'translateX(-10px)', offset: 0.5 }),
+          style(&#123; transform: 'translateX(5px)', offset: 0.7 }),
+          style(&#123; transform: 'translateX(5px)', offset: 0.8 }),
+          style(&#123; transform: 'translateX(0)', offset: 1 })
+        ]))
+      ])
+    ])
+  ]
+  
+  export class SignUpFormComponent &#123;
+    @Output() formSubmitted = new EventEmitter&#60;void>();
+    protected form = new FormGroup&#60;SignUpForm>(&#123;
+      email: new FormControl&#60;string>('', &#123; nonNullable: true, validators: Validators.required })
+    });
+  
+    protected wobbleField = false;
+  
+    constructor(private renderer: Renderer2) &#123; }
+  
+    protected onWobbleStart(event: AnimationEvent) &#123;
+      if (event.fromState !== 'void') &#123; // inicializálást követően void lesz a fromState
+        // this.renderer.addClass(event.element, 'invalid');
+        this.renderer.setStyle(event.element, 'color', 'red');
+        this.renderer.setStyle(event.element.lastElementChild, 'box-shadow', '0px 0px 10px 1px rgba(157,38,38,0.75)');
+      }
+    }
+  }
+
+  <b>// sign-up-form.component.html</b>
+  &#60;div cdkTrapFocus>
+    &#60;app-sign-up-form (formSubmitted)="modalClose.emit()">&#60;/app-sign-up-form>
+    &#60;button class="close" (click)="modalClose.emit()">
+      &#60;svg viewBox="0 0 24 24">
+        &#60;g clip-rule="evenodd" fill-rule="evenodd">
+          &#60;path d="M.39.39a1.335 1.335 0 011.886 0L23.61 21.725a1.333 1.333 0 11-1.886 1.886L.39 2.276a1.333 1.333 0 010-1.885z">&#60;/path>
+          &#60;path d="M.39 23.61a1.333 1.333 0 010-1.886L21.725.39a1.333 1.333 0 111.886 1.885L2.276 23.61a1.332 1.332 0 01-1.885 0z">&#60;/path>
+        &#60;/g>
+      &#60;/svg>
+      &#60;span class="visually-hidden">Close&#60;/span>
+    &#60;/button>
+  &#60;/div>
+  &#60;button class="shield" (click)="modalClose.emit()">
+    &#60;span class="visually-hidden">Close&#60;/span>
+  &#60;/button>
+
+  <b>// sign-up-form.component.ts</b>
+  @Output() modalClose = new EventEmitter&#60;void>();
+    </pre>
+    <li>Az Angular animációk csak akkor futnak le újra, ha az állapot ténylegesen megváltozik
+      <ul>
+        <li>Ha wobbleField mindig true marad, akkor az animáció nem indul újra, mert az Angular úgy látja, hogy nincs
+          változás</li>
+        <li>Ezért szükséges visszaállítanunk a property-t false-ra done eseménykor</li>
+      </ul>
+    </li>
+  </ul>
+  <br>
+  <h5 #multipleanimations data-anchor="multipleanimations">Multiple animations</h5>
+  <ul>
+    <li>Az animations tömbben megadott animációk szekvenciálisan (sorrendben) futnak le
+      <ul>
+        <li>Adott animáció az őt megelőző animáció után fog lefutni</li>
+      </ul>
+    </li>
+    <li>Az animációk azonos időben való futtatására a group függvényt használjuk</li>
+    <app-anime [tempSwitcher]="'multianime'"></app-anime>
+    <pre>
+  <b>// anime.component.html</b>
+  ...
+  &#60;div [@grouping]="players">
+    &#60;ng-container *ngFor="let player of players">
+        &#60;app-players [player]="player">&#60;/app-players>
+    &#60;/ng-container>
+  &#60;/div>
+  ...
+
+  <b>// anime.component.ts</b>
+  trigger('grouping', [
+    transition('* &#60;=> *', [
+      group([
+        query(':enter', [
+          style(&#123; opacity: 0, transform: 'scale(0.7)' }),
+          stagger(100, [
+            animate('500ms ease-in', style(&#123; opacity: 1, transform: 'scale(1)' }))
+          ])
+        ], &#123; optional: true }),
+        query(':enter', [
+          style(&#123; backgroundColor: 'rgba(0, 255, 0, .2)' }),
+          animate('1000ms ease-in', style(&#123; backgroundColor: '#212121)' }))
+        ], &#123; optional: true }),
+        query(':enter h2, :enter button', [
+          style(&#123; color: 'rgba(0, 255, 0, .7)' }),
+          animate('1000ms ease-in', style(&#123; color: 'rgb(178, 177, 188)' }))
+        ], &#123; optional: true }),
+      ]),
+      group([
+        query(':leave', [
+          style(&#123; opacity: 1, transform: 'scale(1)' }),
+          stagger(-100, [
+            animate('500ms ease-in', style(&#123; opacity: 0, transform: 'scale(0.7)' }))
+          ])
+        ], &#123; optional: true }),
+        query(':leave', [
+          animate('250ms ease-in', style(&#123; backgroundColor: 'rgba(255, 0, 0, .2)' })) // nincs style, csak "átanimáljuk" piros színre
+        ], &#123; optional: true }),
+        query(':leave h2, :leave button', [
+          animate('250ms ease-in', style(&#123; color: 'rgba(255, 0, 0, .7)' })) // nincs style, csak "átanimáljuk" piros színre
+        ], &#123; optional: true }),
+      ])
+    ])
+  ])
+  </pre>
+  </ul>
+  <br>
+  <h5 #unknownheight data-anchor="unknownheight">Unknown height</h5>
+  <ul>
+    <li>CSS magasság animálásához konkrét értéket szükséges megadni
+      <ul>
+        <li>Az auto és a 100% nem működik</li>
+        <li>A max-height sem ideiális</li>
+        <li>Az Angular animációk megoldást adnak</li>
+      </ul>
+    </li>
+    <li>A magasság animálása wildcard-dalérhető el
+      <ul>
+        <pre>
+  style(&#123; height: '*' })
+        </pre>
+        <li>Magasságra, és szélességre is lehet használni, amikor nem vagyunk biztosak az animáció magasságában,
+          szélességében</li>
+      </ul>
+    </li>
+    <li>Ahhoz, hogy jól működjön a magasság-váltás animáció, param-ot szükséges szolgáltatnunk
+      <ul>
+        <li>ehetőséget adnak dinamikus értékek megadására az animációkban, így nem kell fix számokat használni</li>
+        <li>A transition függvényhez adhatjuk hozzá</li>
+      </ul>
+    </li>
+    <app-anime [tempSwitcher]="'height'"></app-anime>
+    <pre>
+  <b>// sign-up-form.html</b>
+  &#60;h2>Sign Up&#60;/h2>
+  &#60;em>Hello! Welcome to the family.&#60;/em>
+  activePane: &#123; &#123;activePane()}}
+  &#60;form [formGroup]="form">
+      &#60;div #panes   &#60;!-- template reference variable -->
+          [@paneChange]="&#123;  &#60;!-- activePane() helyett -->
+              value: activePane(),
+              params: &#123;
+                  startHeight: panes.clientHeight
+              }
+          }" 
+          class="panes"> 
+          &#60;ng-container [ngSwitch]="activePane()">
+              &#60;div *ngSwitchCase="0" class="pane">
+                  &#60;label>
+                      &#60;span>Email Address&#60;/span>
+                      &#60;input type="email" formControlName="email" />
+                  &#60;/label>
+              &#60;/div>
+              &#60;div *ngSwitchCase="1" class="pane">
+                  &#60;label>
+                      &#60;span>Password&#60;/span>
+                      &#60;input type="password" formControlName="password" />
+                  &#60;/label>
+                  &#60;label>
+                      &#60;span>Confirm Password&#60;/span>
+                      &#60;input type="password" formControlName="password" />
+                  &#60;/label>
+                  &#60;footer>
+                      &#60;p>Password must contain:&#60;/p>
+                      &#60;ul>
+                          &#60;li>At least 8 characters&#60;/li>
+                          &#60;li>At least 1 lowercase character&#60;/li>
+                          &#60;li>At least 1 uppercase character&#60;/li>
+                          &#60;li>At leaset 1 number or special character&#60;/li>
+                      &#60;/ul>
+                  &#60;/footer>
+              &#60;/div>
+          &#60;/ng-container>
+      &#60;/div>
+      &#60;button (click)="setActiveStep()" class="continue">
+          Continue
+      &#60;/button>
+      &#60;button (click)="setActiveStep()" class="back" [class.visible]="activePane() !== 0" title="Previous Step">
+          &#60;span class="visually-hidden">Previous Step&#60;/span>
+      &#60;/button>
+  &#60;/form>
+
+  <b>// sign-up-form.ts</b>
+  trigger('paneChange', [
+      transition('* => *', [
+        query(':self', [
+          style(&#123; height: '&#123; &#123;startHeight}}px' }) // ezzel az értékkel indulunk, hogy ne változzon azonnal a méret
+        ]),
+        query(':enter', [ // belépő panel kezdeti állapota
+          style(&#123; opacity: 0, scale: 0.9 })
+        ]),
+        query(':leave', [ // a kilépő panel animálása
+          style(&#123; opacity: 1, scale: 1 }),
+          animate('1s ease-in', style(&#123; opacity: 0, scale: 0.9 }))
+        ]),
+        group([ // az új panel
+          query(':self', [  // a :self a triggerelő elemet célozza
+            animate('1s ease-in', style(&#123; height: '*' }))
+          ]),
+          query(':enter', [
+            animate('1s ease-in', style(&#123; opacity: 1, scale: 1 }))
+          ]),
+        ], &#123; params: &#123; startHeight: 0 } }) // ha nem lenne megadva, az @paneChange trigger hibára futhatna, mert nem tudná kiszámítani az induló magasságot
+      ])
+    ])
+
+  ...
+
+  protected activePane = signal(0);
+
+  setActiveStep() &#123;
+    this.activePane.set(this.activePane() === 0 ? 1 : 0);
+  }
+    </pre>
+    <li>A panes osztállyal rendelkező &#123;div> dinamikusan változtassa a magasságát</li>
+    <li>Az űrlap Angular reaktív formot (FormGroup) használ</li>
+    <li>Az animáció az activePane() változásakor történik
+      <ul>
+        <li>A startHeight paraméteren keresztül átadjuk az aktuális magasságát a .panes elemnek</li>
+      </ul>
+    </li>
+  </ul>
+  <br>
+  <h5 #flexibilitywithparams data-anchor="flexibilitywithparams">Flexibility with params</h5>
+  <ul>
+    <app-slider [tempSwitcher]="'default'"></app-slider>
+    <pre>
+  <b>// slider.component.html</b>
+  &#60;div [@slideToggle]="selectedImage()" class="image">
+    &#60;ng-container [ngSwitch]="selectedImage()">
+        &#60;img *ngSwitchCase="1" src="assets/imgs/slider/slider_1.jpg" loading="lazy" alt="A neon frog" />
+        &#60;img *ngSwitchCase="2" src="assets/imgs/slider/slider_2.jpg" loading="lazy" alt="A dog on a surfboard" />
+        &#60;img *ngSwitchCase="3" src="assets/imgs/slider/slider_3.jpg" loading="lazy"
+            alt="A chinchilla with sunglasses" />
+        &#60;img *ngSwitchCase="4" src="assets/imgs/slider/slider_4.jpg" loading="lazy"
+            alt="A cool cat wearing a jacket" />
+    &#60;/ng-container>
+  &#60;/div>
+
+  &#60;nav>
+      &#60;button (click)="previous()" [disabled]="this.selectedImage() === 1">
+          Previous Image
+      &#60;/button>
+      &#60;button (click)="next()" [disabled]="this.selectedImage() === 4">
+          Next Image
+      &#60;/button>
+  &#60;/nav>
+
+  <b>// slider.component.ts</b>
+  animations: [
+    trigger('slideToggle', [
+      transition('* => *', [
+        group([
+          query(':enter', style(&#123; transform: 'translateX(-100%) scale(.5)' })),
+          query(':leave', [
+            animate('750ms ease-in-out', style(&#123; transform: 'translateX(100%) scale(.25)' }))
+          ], &#123; optional: true }), // szükséges, mert inicializáláskor még nincs kilépő kép
+          query(':enter', [
+            animate('750ms ease-in-out', style(&#123; transform: 'translateX(0) scale(1)' }))
+          ])
+        ])
+      ])
+    ])
+  ]
+
+  ...
+
+  protected selectedImage = signal(1);
+
+  previous() &#123;
+    if (this.selectedImage() > 1) &#123;
+      this.selectedImage.set(this.selectedImage() - 1);
+    }
+  }
+
+  next() &#123;
+    if (this.selectedImage() < 4) &#123;
+      this.selectedImage.set(this.selectedImage() + 1);
+    }
+  }
+    </pre>
+    <li>A folyamat a gombnyomást követően
+      <ol>
+        <li>A belépő (:enter) elem kezdőállapotát beállítjuk
+          <ul>
+            <li>Balra van tolva (translateX(-100%)) és kicsinyített (scale(.5))</li>
+          </ul>
+        </li>
+        <li>Az éppen látható (:leave) kép animációval távozik
+          <ul>
+            <li>Jobbra (translateX(100%)) és még kisebb is lesz (scale(.25))</li>
+          </ul>
+        </li>
+        <li>A belépő (:enter) kép animációval megjelenik
+          <ul>
+            <li>Balról (translateX(0)) és normál méretű lesz (scale(1))</li>
+          </ul>
+        </li>
+      </ol>
+    </li>
+    <br>
+    <table style="width: 100%; border-collapse: collapse; border: 1px solid black;">
+      <tr>
+        <th></th>
+        <th>Leírás</th>
+        <th>Elem</th>
+        <th>Stílus</th>
+      </tr>
+      <tr>
+        <td>1) `query(:enter, style(...))`</td>
+        <td>Az új kép kívülre kerül (balra tolva, kicsinyítve)</td>
+        <td>ÚJ kép (`:enter`)</td>
+        <td>`translateX(-100%) scale(.5)`</td>
+      </tr>
+      <tr>
+        <td>2) `query(:leave, animate(...))`</td>
+        <td>Az előző kép elcsúszik jobbra és zsugorodik</td>
+        <td>RÉGI kép (`:leave`)</td>
+        <td>`translateX(100%) scale(.25)`</td>
+      </tr>
+      <tr>
+        <td>3) `query(:enter, animate(...))`</td>
+        <td>Az új kép beúszik balról és megnő</td>
+        <td>ÚJ kép (`:enter`)</td>
+        <td>`translateX(0) scale(1)`</td>
+      </tr>
+    </table>
+    <br>
+    <li>Ezzel már csak annyi a baj, hogy amikor visszafelé lapozunk, akkor is jobbra ugrik ki a kép
+      <ul>
+        <li>Ennek kiküszöböléséért az első lépés, hogy létrehozunk egy paramétert, amivel megmondjuk, melyik irányba
+          szeretnénk végezni az animációt</li>
+        <li>Majd a previous és next függvényekben beállítjuk a megfelelő értéket</li>
+        <pre>
+  protected animationDirection = signal&#60;'left' | 'right'>('right');
+
+  previous() &#123;
+    if (this.selectedImage() > 1) &#123;
+      this.animationDirection.set('left');
+      this.selectedImage.set(this.selectedImage() - 1);
+    }
+  }
+
+  next() &#123;
+    if (this.selectedImage() < 4) &#123;
+      this.animationDirection.set('right');
+      this.selectedImage.set(this.selectedImage() + 1);
+    }
+  }
+          </pre>
+        <li>A köetkező lépés, hogy paramétert adunk hozzá az animációhoz
+          <ul>
+            <li>A transition függvény option-jébe kerül az objektumunk</li>
+          </ul>
+        </li>
+        <pre>
+  animations: [
+    trigger('slideToggle', [
+      transition('* => *', [
+        group([
+          query(':enter', style(&#123; transform: 'translateX(&#123; &#123;enterStart}}) scale(.5)' })),
+          query(':leave', [
+            animate('750ms ease-in-out', style(&#123; transform: 'translateX(&#123; &#123;leaveEnd}}) scale(.25)' }))
+          ], &#123; optional: true }), // szükséges, mert inicializáláskor még nincs kilépő kép
+          query(':enter', [
+            animate('750ms ease-in-out', style(&#123; transform: 'translateX(0) scale(1)' }))
+          ])
+        ])
+      ], &#123;
+        params: &#123;
+          leaveEnd: '',
+          enterStart: ''
+        }
+      })
+    ])
+  ]
+        </pre>
+        <li>Ezzel előkészítettük az override paramétereket</li>
+        <li>Nincs más dolgunk, mint bekötni a template-be őket</li>
+      </ul>
+    </li>
+    <app-slider [tempSwitcher]="'params'"></app-slider>
+    <pre>
+  <b>// slider.component.html</b>
+  &#60;div [@slideToggleDynamic]="&#123;
+      value: selectedImage(),
+      params: &#123;
+          leaveEnd: animationDirection() === 'right' ? '100%' : '-100%',
+          enterStart: animationDirection() === 'right' ? '-100%' : '100%'
+      }
+  }" class="image">
+      &#60;ng-container [ngSwitch]="selectedImage()">
+          &#60;img *ngSwitchCase="1" src="assets/imgs/slider/slider_1.jpg" loading="lazy" alt="A neon frog" />
+          &#60;img *ngSwitchCase="2" src="assets/imgs/slider/slider_2.jpg" loading="lazy" alt="A dog on a surfboard" />
+          &#60;img *ngSwitchCase="3" src="assets/imgs/slider/slider_3.jpg" loading="lazy"
+              alt="A chinchilla with sunglasses" />
+          &#60;img *ngSwitchCase="4" src="assets/imgs/slider/slider_4.jpg" loading="lazy"
+              alt="A cool cat wearing a jacket" />
+      &#60;/ng-container>
+  &#60;/div>
+
+  &#60;nav>
+      &#60;button (click)="previous()" [disabled]="this.selectedImage() === 1">
+          Previous Image
+      &#60;/button>
+      &#60;button (click)="next()" [disabled]="this.selectedImage() === 4">
+          Next Image
+      &#60;/button>
+  &#60;/nav>
+
+  <b>// slider.component.ts</b>
+  trigger('slideToggleDynamic', [
+    transition('* => *', [
+      group([
+        query(':enter', style(&#123; transform: 'translateX(&#123; &#123;enterStart}}) scale(.5)' })),
+        query(':leave', [
+          animate('750ms ease-in-out', style(&#123; transform: 'translateX(&#123; &#123;leaveEnd}}) scale(.25)' }))
+        ], &#123; optional: true }), // szükséges, mert inicializáláskor még nincs kilépő kép
+        query(':enter', [
+          animate('750ms ease-in-out', style(&#123; transform: 'translateX(0) scale(1)' }))
+        ])
+      ])
+    ], &#123;
+      params: &#123;
+        leaveEnd: '',
+        enterStart: ''
+      }
+    })
+  ])
+
+  ...
+
+  protected selectedImage = signal(1);
+
+  protected animationDirection = signal&#60;'left' | 'right'>('right');
+
+
+  previous() &#123;
+    if (this.selectedImage() > 1) &#123;
+      this.animationDirection.set('left');
+      this.selectedImage.set(this.selectedImage() - 1);
+    }
+  }
+
+  next() &#123;
+    if (this.selectedImage() &#60; 4) &#123;
+      this.animationDirection.set('right');
+      this.selectedImage.set(this.selectedImage() + 1);
+    }
+  }
+    </pre>
+    <li>Végül egy dinamikusan változó irányú animációt sikerült elérni
+      <ul>
+        <li>1) A params-ben két változó kerül meghatározásra
+          <ul>
+            <li>leaveEnd (régi kép távozási iránya)</li>
+            <li>enterStart (új kép érkezési iránya)</li>
+          </ul>
+        </li>
+        <li>2) Az @slideToggle trigger aktiválódik, ha a selectedImage() signal értéke megváltozik</li>
+
+        <li>3) Az Angular behelyettesíti az &#123; &#123; enterStart }} és az &#123; 0&#123; leaveEnd }} értékeket</li>
+
+        <li>4) Az animáció lefut a dinamikusan meghatározott iránnyal
+          <ul>
+            <li>animationDirection() === 'right'
+              <ul>
+                <li>Az új kép balról jön be (enterStart = -100%)</li>
+                <li>A régi kép pedig jobbra megy ki (leaveEnd = 100%)</li>
+              </ul>
+            </li>
+            <li>animationDirection() === 'left'
+              <ul>
+                <li>Az új kép jobbról jön be (enterStart = 100%)</li>
+                <li>A régi kép pedig balra megy ki (leaveEnd = -100%)</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <br>
+  <h5 #reusableanimations data-anchor="toreusableanimationsdo">Reusable animations</h5>
+  <ul>
+    <li>Bizonyos animációkat általában több komponensben is használunk</li>
+    <li>Az újra felhasználható animációkat külön fájlban szokás tárolni
+      <ul>
+        <li>Egy exportálható állandót hozunk létre</li>
+        <li>Paramétereket is meg kell majd adnunk, mert akadnak változók a konstansban</li>
+      </ul>
+    </li>
+    <br>
+    <div style="position: relative; display: grid; justify-self: center; max-width: 500px; overflow: hidden;">
+      <app-header></app-header>
+      <app-slider [tempSwitcher]="'reuse'"></app-slider>
+    </div>
+    <pre>
+    <b>// slider.component.html</b>
+  &#60;div [@slideToggleDynamicReuseable]="&#123;
+      value: selectedImage(),
+      params: &#123;
+          leaveEnd: animationDirection() === 'right' ? '100%' : '-100%',
+          enterStart: animationDirection() === 'right' ? '-100%' : '100%',
+          hiddenScale: .25
+      }
+  }" class="image">
+      &#60;ng-container [ngSwitch]="selectedImage()">
+          &#60;img *ngSwitchCase="1" src="assets/imgs/slider/slider_1.jpg" loading="lazy" alt="A neon frog" />
+          &#60;img *ngSwitchCase="2" src="assets/imgs/slider/slider_2.jpg" loading="lazy" alt="A dog on a surfboard" />
+          &#60;img *ngSwitchCase="3" src="assets/imgs/slider/slider_3.jpg" loading="lazy"
+              alt="A chinchilla with sunglasses" />
+          &#60;img *ngSwitchCase="4" src="assets/imgs/slider/slider_4.jpg" loading="lazy"
+              alt="A cool cat wearing a jacket" />
+      &#60;/ng-container>
+  &#60;/div>
+
+  &#60;nav>
+      &#60;button (click)="previous()" [disabled]="this.selectedImage() === 1">
+          Previous Image
+      &#60;/button>
+      &#60;button (click)="next()" [disabled]="this.selectedImage() === 4">
+          Next Image
+      &#60;/button>
+  &#60;/nav>
+
+  <b>// slider.component.ts</b>
+  trigger('slideToggleDynamicReuseable', [
+    transition('* => *', [
+      useAnimation(slideAnimation)
+    ])
+  ])
+
+  <b>//header.component.html</b>
+  &#60;div [@slideToggleDynamicReuseable]="&#123;
+        value: showMenu(),
+        params: &#123;
+        leaveEnd: '100%',
+        enterStart: '100%',
+        hiddenScale: 1
+        }
+    }">
+    &#60;app-nav *ngIf="showMenu()" (close)="showMenu.set(false)">&#60;/app-nav>
+  &#60;/div>
+
+  <b>//header.component.ts</b>
+  trigger('slideToggleDynamicReuseable', [
+    transition('* => *', [
+      useAnimation(slideAnimation)
+    ])
+  ])
+
+  <b>// slider.animation.ts</b>
+  export const slideAnimation = animation([
+      group([
+          query(':enter', style(&#123; transform: 'translateX(&#123; &#123; enterStart }}) scale(&#123; &#123; hiddenScale }})' }), &#123; optional: true }),
+          query(':leave', [
+              animate('750ms ease-in-out', style(&#123; transform: 'translateX(&#123; &#123; leaveEnd }}) scale(&#123; &#123; hiddenScale }})' }))
+          ], &#123; optional: true }),
+          query(':enter', [
+              animate('750ms ease-in-out', style(&#123; transform: 'translateX(0) scale(1)' }))
+          ], &#123; optional: true })
+      ])
+  ])
+  </pre>
+    <li>Az animation() egy újrahasznosítható animációs séma létrehozására szolgál az Angularban
+      <ul>
+        <li>Megoldja, hogy az animációt külön fájlban tudjuk definiáni, és bármely trigger()-ben meghívni</li>
+      </ul>
+    </li>
+  </ul>
+  <br>
+  <h5 #disableanimations data-anchor="disableanimations">Disable animations</h5>
+  <ul>
+    <li>Sokszor nem kívánatos, hogy már a komponens inicializálásakor lefusson az animáció</li>
+    <li>Animation control binding-ot fogunk használni</li>
+    <pre>
+  [@.disabled]
+  </pre>
+    <li>Ha true értéket kap, minden animációt blokkol, még a nest-elt elemekét is</li>
+    <br>
+    <app-slider [tempSwitcher]="'disable'"></app-slider>
+    <pre>
+  <b>// slider.component.html</b>
+  &#60;div [@slideToggleDynamicReuseable]="&#123;
+      value: selectedImage(),
+      params: &#123;
+          leaveEnd: animationDirection() === 'right' ? '100%' : '-100%',
+          enterStart: animationDirection() === 'right' ? '-100%' : '100%',
+          hiddenScale: .25
+      }
+  }" [@.disabled]="animationDisabled()" class="image">
+  ...
+
+  <b>// slider.component.ts</b>
+  ...
+  protected animationDisabled = signal(true);
+
+  constructor() &#123;
+    afterNextRender(() => &#123;
+      if (this.animationDisabled()) &#123;
+        this.animationDisabled.set(false);
+      }
+    })
+  }
+  ...
+  </pre>
+    <li>Fontos tudnivaló, hogy az animation.start és animation.done event-ek akkor is lefutnak, ha az animáció ki van
+      kapcsolva</li>
+  </ul>
+  <br>
+  <h5 #routingtransition data-anchor="routingtransition">Routing transition</h5>
+  <ul>
+    <li>Az új route aktív komponense a belépési pont (:enter)</li>
+    <li>A korábbi útvonal komponense pedig a kilépési pont (:leave)</li>
+    <li>A router-outlet-et wrappelni szükséges, hogy megfelelően működjön az animáció</li>
+    <app-animeroute></app-animeroute>
+    <pre>
+  <b>// animeroute.component.html</b>
+  &#60;div>
+    &#60;nav [class.visible]="true">
+        &#60;ul>
+            &#60;li *ngFor="let link of links">
+                &#60;a [routerLink]="link.path" [routerLinkActive]="['is-active']">
+                    &#123; &#123; link.label }}
+                &#60;/a>
+            &#60;/li>
+        &#60;/ul>
+    &#60;/nav>
+
+    &#60;div style="max-height: 300px; overflow: auto;">
+        &#60;div [@routeTransition]="url" style="position: relative; display: flex;">
+            &#60;router-outlet>&#60;/router-outlet>
+        &#60;/div>
+    &#60;/div>
+  &#60;/div>
+
+  <b>// animeroute.component.ts</b>
+  @Component(&#123;
+    ...
+    animations: [
+      routeTransition
+    ]
+  })
+  export class AnimerouteComponent &#123;
+    protected links: Link[] = [
+      &#123; label: 'Home', path: 'home' },
+      &#123; label: 'About', path: 'about' },
+      &#123; label: 'Contact', path: 'contact' }
+    ];
+    protected isVisible = signal(false);
+  
+    protected url = '';
+  
+    constructor(protected activeRoute: ActivatedRoute, protected router: Router) &#123;
+      this.router.events.subscribe(event => &#123;
+        if (event instanceof NavigationEnd) &#123;
+          this.url = event.url;
+        }
+      });
+    }
+  }
+
+  <b>// route-transition.ts</b>
+  export const routeTransition = trigger('routeTransition', [
+      transition('* => *', [
+          query(':enter', [
+              style(&#123; opacity: 0, transform: 'scale(0.4)' }),
+          ], &#123; optional: true }),
+          query(':leave', [
+              style(&#123; position: 'absolute' }),
+              animate('1s', style(&#123; opacity: 0, transform: 'scale(0.4)' }))
+          ], &#123; optional: true }),
+          query(':enter', [
+              animate('1s', style(&#123; opacity: 1, transform: 'scale(1)' }))
+          ], &#123; optional: true })
+      ])
+  ]);
+    </pre>
+    <li>A position: relative és a display: flex a szülő elemre vonatkozik, a position: absolute pedig az animált
+      (eltűnő/megjelenő) gyermek elemekre</li>
+  </ul>
+  <br>
+  <h5 #slideinout data-anchor="slideinout">Slide in & out</h5>
+  <ul>
+    <app-slider2></app-slider2>
+    <pre>
+  <b>// slider2.component.html</b>
+  &#60;div [@slide]="visible()">&#60;/div>
+  &#60;button (click)="visible.set(!visible())">&#123; &#123; visible() ? 'Hide' : 'Show' }}&#60;/button>
+
+  <b>// slider2.component.ts</b>
+  @Component(&#123;
+    ...
+    animations: [
+      trigger('slide', [
+        state('false', style(&#123; translate: '-300%' })), // balra animálás
+        state('true', style(&#123; translate: '0' })),
+        // state('false', style(&#123; translate: '0' })), // jobbra animálás
+        // state('true', style(&#123; translate: '300%' })),
+        // state('false', style(&#123; translate: '0 -300%' })), // felfelé animálás
+        // state('true', style(&#123; translate: '0' })),
+        // state('false', style(&#123; translate: '0 300%' })), // lefelé animálás
+        // state('true', style(&#123; translate: '0' })),
+        transition('false &#60;=> true', animate('1s ease-in-out'))
+      ])
+    ]
+  })
+  export class Slider2Component &#123;
+    protected visible = signal(false);
+  }
+  </pre>
+    <li>ngx-bootjack-bounce
+      <ul>
+        <li>Egyszerű, testreszabható animációkat biztosít Angular alkalmazások számára</li>
+        <pre>
+  npm i ngx-bootjack-bounce
+      </pre>
+        <li>Angular 18-cal, és felfelé kompatibilis</li>
+        <li>Slide, flip, és fade animációra is képes egyszerűen</li>
+        <pre>
+  <b>// slider2.component.html</b>
+  &#60;div [@btjSlideState]="visible()">&#60;/div>
+  &#60;button (click)="visible.set(!visible())">&#123; &#123; visible() ? 'Hide' : 'Show' }}&#60;/button>
+
+  <b>// slider2.component.ts</b>
+  @Component(&#123;
+    ...
+    animations: [
+      btjSlideState,
+      btjSlideEnterLeave
+    ]
+  })
+  export class AnimationComponent &#123;
+    protected visible = signal(false);
+  }        
+      </pre>
+      </ul>
+    </li>
+  </ul>
+  <br>
+  <h5 #flip data-anchor="flip">Flip</h5>
+  <ul>
+    <li>Lehetővé tesszük, hogy egy animált elem (tulajdonképpen egy kétoldalas doboz) különböző irányokba foroghasson
+    </li>
+    <app-flip></app-flip>
+    <pre>
+  <b>// flip.component.html</b>
+  &#60;div [@flip]="&#123;
+      value: flipped().status, 
+      params: &#123; 
+          transformData: flipped().rotate
+      }
+  }" class="container">
+      &#60;div class="box">Side A&#60;/div>
+      &#60;div class="box"
+          [ngStyle]="(flipped().direction === 'left' || flipped().direction === 'right') ? &#123;'transform': 'rotateY(180deg)'} : &#123;'transform': 'rotateX(180deg)'}">
+          Side B&#60;/div>
+  &#60;/div>
+  
+  &#60;div class="btn-group mt-5" role="group" aria-label="Basic example">
+      &#60;button type="button" class="btn btn-primary"
+          [ngClass]="(flipped().status && flipped().direction !== 'left') ? 'btn-primary' : 'btn-warning'"
+          [disabled]="flipped().status && flipped().direction !== 'left'"
+          (click)="flipped.set(&#123;status: !flipped().status, rotate: 'rotateY(180deg)', direction: 'left'})">
+          &#123; &#123; (flipped().status && flipped().direction === 'left') ? 'Flip back →' : 'Flip →' }}
+      &#60;/button>
+      &#60;button type="button" class="btn btn-primary"
+          [ngClass]="(flipped().status &&flipped().direction !== 'right') ? 'btn-primary' : 'btn-warning'"
+          [disabled]="flipped().status && flipped().direction !== 'right'"
+          (click)="flipped.set(&#123;status: !flipped().status, rotate: 'rotateY(-180deg)', direction: 'right'})">
+          &#123; &#123; (flipped().status && flipped().direction === 'right') ? 'Flip back ←' : 'Flip ←' }}
+      &#60;/button>
+      &#60;button type="button" class="btn btn-primary"
+          [ngClass]="(flipped().status && flipped().direction !== 'top') ? 'btn-primary' : 'btn-warning'"
+          [disabled]="flipped().status && flipped().direction !== 'top'"
+          (click)="flipped.set(&#123;status: !flipped().status, rotate: 'rotateX(180deg)', direction: 'top'})">
+          &#123; &#123; (flipped().status && flipped().direction === 'top') ? 'Flip back ↑' : 'Flip ↑' }}
+      &#60;/button>
+      &#60;button type="button" class="btn btn-primary"
+          [ngClass]="(flipped().status && flipped().direction !== 'bottom') ? 'btn-primary' : 'btn-warning'"
+          [disabled]="flipped().status && flipped().direction !== 'bottom'"
+          (click)="flipped.set(&#123;status: !flipped().status, rotate: 'rotateX(-180deg)', direction: 'bottom'})">
+          &#123; &#123; (flipped().status && flipped().direction === 'bottom') ? 'Flip back ↓' : 'Flip ↓' }}
+      &#60;/button>
+  &#60;/div>
+
+  <b>// flip.component.ts</b>
+  @Component(&#123;
+    selector: 'app-flip',
+    templateUrl: './flip.component.html',
+    styleUrls: ['./flip.component.scss'],
+    animations: [
+      trigger('flip', [
+        state('false', style(&#123; transform: 'none' })),
+        state('true', style(&#123; transform: '&#123; &#123;transformData}}' }), &#123; params: &#123; transformData: 'rotateY(180deg)' } }), // a param adja meg a default értéket
+        transition('true &#60;=> false', [animate('1s ease-in-out')])
+      ])
+    ]
+  })
+  export class FlipComponent &#123;
+    protected flipped = signal(&#123; status: false, rotate: 'rotateY(180deg)', direction: '' });
+  }
+
+  <b>// flip.component.scss</b>
+  :host &#123;
+      align-content: center;
+      display: grid;
+      height: 100vh;
+      place-items: center;
+      width: 100%;
+      perspective: 500px; // a nézőpontot határozza meg a "3D-s térben", azaz hogy milyen távolságra van a "kamera" az animált elemtől
+  }
+  
+  .container &#123;
+      aspect-ratio: 1 / 1;
+      color: white;
+      display: grid;
+      font-size: 2em;
+      position: relative;
+      width: 33.334%;
+      backface-visibility: hidden; // amikor egy elem el van forgatva, a felhasználó nem látja az elemet
+      transform-style: preserve-3d; // az elem és annak gyermekei is képesek lesznek teljes 3D-s térben mozogni - alapértelmezetten 'flat' az értéke
+  }
+  
+  .box &#123;
+      display: grid;
+      grid-row: 1;
+      grid-column: 1;
+      place-items: center;
+  
+      &:first-child &#123;
+          background-color: #6244b0;
+          z-index: 1; // A oldalt-t B oldal elé hozzuk
+      }
+  
+      &:last-child &#123;
+          background-color: #ff495d;
+          // transform: rotateY(180deg); // B oldal így alapesetben 180%-kal el van forgatva
+          // transform: rotateX(180deg); // vertikális flip esetében
+      }
+  }
+  </pre>
+  </ul>
+  <br>
+  <h5 #crossfade data-anchor="crossfade">Cross fade</h5>
+  <ul>
+    <app-fade></app-fade>
+    <pre>
+  <b>// fade.compent.html</b>
+  &#60;div [@fakeFade]="fadeType === 'fakeFade' ? step : null" 
+        [@trueFade]="fadeType === 'trueFade' ? step : null"
+          class="container">
+      &#60;div class="box" [class.active]="step === 1">Step 1&#60;/div>
+      &#60;div class="box" [class.active]="step === 2">Step 2&#60;/div>
+  &#60;/div>
+  &#60;button class="btn btn-secondary" (click)="step = step === 1 ? 2 : 1">
+      &#123; &#123; step === 1 ? 'Next step' : 'Prev step' }}
+  &#60;/button>
+
+  &#60;div class="form-check mt-3">
+      &#60;input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="fakeFade" checked
+          [(ngModel)]="fadeType">
+      &#60;label class="form-check-label" for="flexRadioDefault1">
+          Fake fade effect
+      &#60;/label>
+  &#60;/div>
+  &#60;div class="form-check">
+      &#60;input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="trueFade"
+          [(ngModel)]="fadeType">
+      &#60;label class="form-check-label" for="flexRadioDefault2">
+          True fade effect
+      &#60;/label>
+  &#60;/div>
+
+  <b>// fade.compent.ts</b>
+  const fakeFade = trigger('fakeFade', [
+    transition('1 &#60;=> 2', [
+      query('.active', [
+        style(&#123; opacity: 0, scale: .7 }),
+      ]),
+      query(':not(.active)', [
+        animate('500ms ease-out', style(&#123; opacity: 0, scale: .7 }))
+      ]),
+      query('.active', [
+        animate('500ms ease-in', style(&#123; opacity: 1, scale: 1 }))
+      ])
+    ])
+  ]);
+
+  const trueFade = trigger('trueFade', [
+    transition('1 &#60;=> 2', [
+      group([ // szimultán mód futtatja a query-ket, enélkül nem igazi a fade effektus
+        query('.active', [
+          style(&#123; opacity: 0, scale: .7 }),
+        ]),
+        query(':not(.active)', [
+          animate('500ms ease-out', style(&#123; opacity: 0, scale: .7 }))
+        ]),
+        query('.active', [
+          animate('500ms ease-in', style(&#123; opacity: 1, scale: 1 }))
+        ])
+      ])
+    ])
+  ]);
+
+  @Component(&#123;
+    ...
+    animations: [fakeFade, trueFade]
+  })
+  export class FadeComponent &#123;
+    protected step: 1 | 2 = 1;
+
+    protected fadeType: 'fakeFade' | 'trueFade' = 'fakeFade';
+  }
+
+  <b>// fade.compent.scss</b>
+  :host &#123;
+    align-content: center;
+    display: grid;
+    height: 100%;
+    place-items: center;
+    width: 100%;
+    padding: 30px 0;
+  }
+  
+  .container &#123;
+    aspect-ratio: 1 / 1;
+    color: white;
+    font-size: 2em;
+    position: relative;
+    width: 33.334%;
+    display: grid;
+  }
+  
+  .box &#123;
+    display: grid;
+    place-items: center;
+  
+    grid-row: 1;
+    grid-column: 1;
+  
+    &:first-child &#123;
+      background-color: #6244b0;
+    }
+  
+    &:last-child &#123;
+      background-color: #ff495d;
+    }
+  
+    &:not(.active):not(.ng-animating) &#123; // display none, ha egyik class sincs rajta az elemen
+      display: none;
+    }
+  }
+    </pre>
+    <li>Az ng-animating osztály automatikusan rékerül az elemre, amikor fut az animációt</li>
+    <br>
+    <li>A következő lépések történnek
+      <ol>
+        <li>Amikor megváltozik a step értéke, azzal együtt az aktív osztály is átkerül a másik box-ra</li>
+        <li>Ez az aktív elem az első query miatt kap egy opacity: 0 és egy scale: .7 stílust (innen fog indítani)</li>
+        <li>Ezt követően az az elem, amiről lekerült az active class, a második query miatt elkezd animálódni opacity:
+          0,
+          scale: .7 felé</li>
+        <li>Az aktuálisan aktív osztályt kapott elem megkezdi a harmadik query végett az animációt, aminek végeredménye
+          opacity: 1, és scale: 1 lesz</li>
+      </ol>
+    </li>
+  </ul>
+  <br>
+  <h5 #expandandcollapse data-anchor="expandandcollapse">Expand & collapse</h5>
+  <ul>
+    <app-anime [tempSwitcher]="'expandandcollapse'"></app-anime>
+    <pre>
+  <b>// players.compnent.html</b>
+  &#60;section style="display: grid; grid-template-columns: auto 1fr;">
+    &#60;img [src]="'assets/imgs/players/' + player.imageName + '.avif'" width="130px" height="95px" />
+    &#60;div>
+        &#60;h2>&#123; &#123; player.name }}&#60;/h2>
+    &#60;/div>
+    &#60;button type="button" class="btn btn-info rounded-circle"
+              (click)="showDetails.set(!showDetails())">↓&#60;/button>&#123; &#123;showDetails()}}
+    &#60;section *ngIf="showDetails()" [@toggle]="showDetails()">
+        &#60;div class="details">
+            &#60;p>&#123; &#123; player.description }}&#60;/p>
+            &#60;ul>
+                &#60;li>Games played: &#123; &#123; player.games }}&#60;/li>
+                &#60;li>Points scored: &#123; &#123; player.points }}&#60;/li>
+                &#60;li>Field Goal Percentage: &#123; &#123; player.fieldGoalPercentage }}&#60;/li>
+                &#60;li>Three Point Percentage: &#123; &#123; player.threePointPercentage }}&#60;/li>
+            &#60;/ul>
+        &#60;/div>
+    &#60;/section>
+  &#60;/section>
+
+  <b>// players.compnent.ts</b>
+  animations: [
+    trigger('toggle', [
+      transition(':enter', [
+        style(&#123; height: 0, opacity: 0 }),
+        query('.details', [  // child elemet keresünk meg vele
+          style(&#123; translate: '0 -100%' })
+        ]),
+        group([
+          animate('250ms ease-in', style(&#123; height: '*', opacity: 1 })),
+          query('.details', [  // child elemet keresünk meg vele
+            animate('250ms ease-in', style(&#123; translate: '0 0' })),
+          ]),
+        ]),
+      ]),
+      transition(':leave', [
+        style(&#123; height: '*', opacity: 1 }),
+        query('.details', [
+          style(&#123; translate: '0 0' }),
+        ]),
+        group([
+          animate('250ms ease-out', style(&#123; height: 0, opacity: 0 })),
+          query('.details', [
+            animate('250ms ease-in', style(&#123; translate: '0 -100%' })),
+          ])
+        ])
+      ])
+    ])
+  ]
+
+  ...
+
+showDetails = signal(false);
+    </pre>
+  </ul>
+  <br>
+  <h5 #hostbinding data-anchor="hostbinding">Host binding</h5>
+  <ul>
+    <li class="example-error">A @HostBinding('@triggerName') kizárólag az adott komponens fő (host) elemére vonatkozik
+      <ul>
+        <li>A korábbiakban a "wrapper"-re tettük az animációt, de most már az &#60;app-players> komponensünkben van</li>
+        <pre>
+  &#60;div [@grouping]="players">
+    &#60;ng-container *ngFor="let player of players">
+        &#60;app-players [tempSwitcher]="'default'" [player]="player">&#60;/app-players>
+    &#60;/ng-container>
+  &#60;/div>
+
+  ↓↓↓↓↓
+
+  &#60;div>
+    &#60;app-players *ngFor="let player of players" [tempSwitcher]="'hostbinding'"
+        [player]="player">&#60;/app-players>
+  &#60;/div>
+        </pre>
+        <li>Az iterációnak át kell kerülni az &#60;app-players>-re</li>
+      </ul>
+    </li>
+    <li>Sajnos valamiért a :leave animáció nem fut le, csak eltűnik az elem a listából
+      <ul>
+        <li>Ennek miértjére nem sikerült rájönni</li>
+      </ul>
+    </li>
+    <app-anime [tempSwitcher]="'hostbinding'"></app-anime>
+    <pre>
+  <b>// anime.component.html</b>
+  &#60;div style="position: relative;overflow-x: hidden;margin: 20px 0;">
+    &#60;section>
+        &#60;div>
+            &#60;app-players *ngFor="let player of players; trackBy: trackByName" [tempSwitcher]="'hostbinding'"
+                [player]="player">&#60;/app-players>
+        &#60;/div>
+    &#60;/section>
+    &#60;section class="text-center pt-5">
+        &#60;button *ngIf="players.length &#60; totalCount" (click)="addOnePlayer()" class="btn btn-danger">
+            &#60;span>Add&#60;/span>
+        &#60;/button>
+        &#60;button *ngIf="players.length > 0" (click)="removeOnePlayer()" class="btn btn-primary">
+            &#60;span>Remove&#60;/span>
+        &#60;/button>
+    &#60;/section>
+  &#60;/div>
+
+  <b>// anime.component.ts</b>
+  ...
+  addOnePlayer() &#123;
+    const nextPlayer = players[this.players.length];
+    this.players.push(nextPlayer);
+  }
+
+  removeOnePlayer() &#123;
+    this.players.splice(-1);
+  }
+
+  trackByName(index: number, player: any) &#123;
+    return player.name;
+  }
+
+  <b>// enterleave.animation.ts</b>
+  export const enterLeaveAnimation = trigger('enterLeaveAnimation', [
+      transition(':enter', [
+          group([
+              style(&#123; opacity: 0 }),
+              animate('1000ms ease-in', style(&#123; opacity: 1 })),
+              query('img', [
+                  style(&#123; filter: 'blur(5px)' }),
+                  animate('1000ms ease-in', style(&#123; filter: 'blur(0)' })),
+              ])
+          ])
+      ]),
+      transition(':leave', [
+          style(&#123; opacity: 1 }),
+          animate('1000ms ease-in', style(&#123; opacity: 0 })),
+      ]),
+  ]);
+
+  <b>// players.component.html</b>
+  &#60;section #section style="display: grid; grid-template-columns: auto 1fr;">
+    &#60;img [src]="'assets/imgs/players/' + player.imageName + '.avif'" width="130px" height="95px" />
+    &#60;div>
+        &#60;h2>&#123; &#123; player.name }}&#60;/h2>
+        &#60;ul>
+          &#60;li>Games played: &#123; &#123; player.games }}&#60;/li>
+          &#60;li>Points scored: &#123; &#123; player.points }}&#60;/li>
+          &#60;li>Field Goal Percentage: &#123; &#123; player.fieldGoalPercentage }}&#60;/li>
+          &#60;li>Three Point Percentage: &#123; &#123; player.threePointPercentage }}&#60;/li>
+      &#60;/ul>
+    &#60;/div>
+  &#60;/section>
+  <b>// players.component.ts</b>
+  animations: [
+    enterLeaveAnimation
+  ]
+
+  ...
+
+  export class PlayersComponent &#123;
+    @Input(&#123; required: true }) player!: Player;
+    
+    showDetails = signal(false);
+  
+    @ViewChild('section') section!: ElementRef;
+    @HostBinding('@enterLeaveAnimation') animate = false;
+  
+    @HostListener('@enterLeaveAnimation.start', ['$event'])
+    onStartAnimation(event: any) &#123;
+      this.section.nativeElement.style.backgroundColor = '#392c33';
+    };
+    @HostListener('@enterLeaveAnimation.done', ['$event'])
+    onDoneAnimation(event: any) &#123;
+      this.section.nativeElement.style.backgroundColor = '#212121';
+    };
+  
+    constructor() &#123; }
+  }
+    </pre>
+  </ul>
+  <br>
+  <h5 #cdkoverlay data-anchor="cdkoverlay">CDK overlay</h5>
+  <ul>
+    <li>CDK = Component Dev Kit</li>
+    <li>Dinamikus, abszolút pozicionált, lebegő elemek (például modal, tooltip, menu, pop-up) kezelését teszi lehetővé
+    </li>
+    <li>:enter / :leave animáció esetében az overlay előbb bezáródik, mint hogy az animáció lefutna
+      <ul>
+        <li>State alapú animációra van szükségünk</li>
+        <li>Hidden és visible állapotot adunk meg az overlay-nek</li>
+      </ul>
+    </li>
+    <pre>
+  @NgModule(&#123;
+    imports: [
+      ...
+      OverlayModule,
+        ...
+    ],
+  })
+    </pre>
+    <app-anime [tempSwitcher]="'overlay'"></app-anime>
+    <pre>
+  <b>// anime.component.html</b>
+  &#60;section cdkScrollable>
+    &#60;div>
+        &#60;ng-container *ngFor="let player of players2">
+            &#60;app-players [tempSwitcher]="'overlay'" [player]="player">&#60;/app-players>
+        &#60;/ng-container>
+    &#60;/div>
+  &#60;/section>
+
+  <b>// anime.component.ts</b>
+  protected players2 = players;
+
+  <b>// players.component.html</b>
+  &#60;div>
+    &#60;button #trigger="cdkOverlayOrigin" cdkOverlayOrigin (click)="detailsOpen = true"
+        [class.open]="detailsOpen" class="btn btn-secondary">
+        Details
+    &#60;/button>
+    &#60;ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="trigger"
+        [cdkConnectedOverlayOpen]="detailsOpen" cdkConnectedOverlayWidth="50%"
+        (overlayOutsideClick)="detailsComponent.close()" // @ViewChild(PlayerDetailsComponent) detailsComponent!: PlayerDetailsComponent; segítségével hozzáférünk a close függvényhez
+        (detach)="detailsOpen = false"
+        [cdkConnectedOverlayPositions]="[]" cdkConnectedOverlayPush="true" class="custom-overlay"
+        [cdkConnectedOverlayViewportMargin]="7" [cdkConnectedOverlayScrollStrategy]="scrollStrategy"
+        cdkConnectedOverlayTransformOriginOn="app-player-details" [cdkConnectedOverlayDisableClose]="true"
+        (overlayKeydown)="$event.key === 'Escape' ? detailsComponent.close() : null">
+        &#60;app-player-details [player]="player" (closed)="detailsOpen = false">&#60;/app-player-details> // @Output() closed = new EventEmitter&#60;void>(); ide fut ki
+    &#60;/ng-template>
+  &#60;/div>
+
+  <b>// players.component.ts</b>
+  export class PlayersComponent &#123;
+    @Input(&#123; required: true }) player!: Player;
+    @ViewChild(PlayerDetailsComponent) detailsComponent!: PlayerDetailsComponent;
+    protected detailsOpen = false;
+    protected scrollStrategy = this.overlay.scrollStrategies.reposition(); // amikor a felhasználó görget, az overlay (például egy lebegő menü, vagy tooltip) újrapozícionálódik
+  
+    showDetails = signal(false);
+  
+    constructor(private overlay: Overlay) &#123; }
+  }
+
+  <b>// player-details.component.html</b>
+  &#60;section role="dialog" aria-modal="true" aria-labelledby="dialog-title" aria-describedby="dialog-description"
+      cdkTrapFocus cdkTrapFocusAutoCapture="true">
+      &#60;h3 id="dialog-title" tabindex="-1" cdkFocusInitial>&#123; &#123; player.name }}&#60;/h3>
+      &#60;p id="dialog-description">&#123; &#123; player.description }}&#60;/p>
+      &#60;dl>
+          &#60;div>
+              &#60;dt>Games Played&#60;/dt>
+              &#60;dd> &#123; &#123; player.games | number }}&#60;/dd>
+          &#60;/div>
+          &#60;div>
+              &#60;dt>Points Scored&#60;/dt>
+              &#60;dd>&#123; &#123; player.points | number }}&#60;/dd>
+          &#60;/div>
+          &#60;div>
+              &#60;dt>Field Goal Percentage&#60;/dt>
+              &#60;dd>&#123; &#123; player.fieldGoalPercentage | percent:'.1' }}&#60;/dd>
+          &#60;/div>
+          &#60;div>
+              &#60;dt>Three Point Percentage&#60;/dt>
+              &#60;dd>&#123; &#123; player.threePointPercentage | percent:'.1' }}&#60;/dd>
+          &#60;/div>
+      &#60;/dl>
+      &#60;footer>
+          &#60;a [href]="player.wikipedia" target="_blank">See More on Wikipedia&#60;/a>
+          &#60;button (click)="close()">
+              &#60;span class="cdk-visually-hidden">Close&#60;/span>
+          &#60;/button>
+      &#60;/footer>
+  &#60;/section>
+
+  <b>// player-details.component.ts</b>
+  @Component(&#123;
+    ...
+    animations: [
+      trigger('overlay', [
+        state('hidden', style(&#123; opacity: 0, scale: .8 })),
+        state('visible', style(&#123; opacity: 1, scale: 1 })),
+        transition('hidden &#60;=> visible', animate('.5s ease-in-out'))
+      ])
+    ]
+  })
+  export class PlayerDetailsComponent &#123;
+    @Input(&#123; required: true }) player!: Player;
+  
+    @HostBinding('@overlay') animationState = 'hidden';
+  
+    @HostListener('@overlay.done', ['$event']) done(event: AnimationEvent) &#123;
+      if (event.toState === 'hidden') &#123;
+        this.closed.emit();
+      }
+    }
+  
+    @HostListener('@overlay.start', ['$event'])
+    onAnimationStart(event: AnimationEvent) &#123;
+      // console.log('Animation started!', event);
+    }
+    @Output() closed = new EventEmitter&#60;void>();
+  
+    ngAfterViewInit() &#123;
+      this.animationState = 'visible'; // biztosítjuk, hogy az animáció akkor induljon el, amikor a komponens ténylegesen megjelenik
+    }
+  
+    close() &#123;
+      this.animationState = 'hidden';
+    }
+  }
+    </pre>
   </ul>
 </div>
 

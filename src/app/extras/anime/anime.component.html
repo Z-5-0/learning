@@ -52,7 +52,7 @@
         <section cdkScrollable>
             <div [@grouping]="players">
                 <ng-container *ngFor="let player of players">
-                    <app-players [player]="player"></app-players>
+                    <app-players [tempSwitcher]="'default'" [player]="player"></app-players>
                 </ng-container>
             </div>
         </section>
@@ -70,5 +70,49 @@
 <ng-container *ngIf="tempSwitcher === 'height'">
     <div style="position: relative;overflow-x: hidden;margin: 20px 0;">
         <app-page-content [tempSwitcher]="'height'" (menuClick)="menuOpen = true"></app-page-content>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="tempSwitcher === 'expandandcollapse'">
+    <div style="position: relative;overflow-x: hidden;margin: 20px 0;">
+        <section>
+            <div>
+                <ng-container *ngFor="let player of players2">
+                    <app-players [tempSwitcher]="'expandandcollapse'" [player]="player"></app-players>
+                </ng-container>
+            </div>
+        </section>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="tempSwitcher === 'hostbinding'">
+    <div style="position: relative;overflow-x: hidden;margin: 20px 0;">
+        <section>
+            <div>
+                <app-players *ngFor="let player of players; trackBy: trackByName" [tempSwitcher]="'hostbinding'"
+                    [player]="player"></app-players>
+            </div>
+        </section>
+        <section class="text-center pt-5">
+            <button *ngIf="players.length < totalCount" (click)="addOnePlayer()" class="btn btn-danger">
+                <span>Add</span>
+            </button>
+            <button *ngIf="players.length > 0" (click)="removeOnePlayer()" class="btn btn-primary">
+                <span>Remove</span>
+            </button>
+        </section>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="tempSwitcher === 'overlay'">
+    <div style="position: relative;overflow-x: hidden;margin: 20px 0;">
+
+        <section cdkScrollable>
+            <div>
+                <ng-container *ngFor="let player of players2">
+                    <app-players [tempSwitcher]="'overlay'" [player]="player"></app-players>
+                </ng-container>
+            </div>
+        </section>
     </div>
 </ng-container>

@@ -1,0 +1,24 @@
+<div [@fakeFade]="fadeType === 'fakeFade' ? step : null" 
+     [@trueFade]="fadeType === 'trueFade' ? step : null"
+        class="container">
+    <div class="box" [class.active]="step === 1">Step 1</div>
+    <div class="box" [class.active]="step === 2">Step 2</div>
+</div>
+<button class="btn btn-secondary mt-3" (click)="step = step === 1 ? 2 : 1">
+    {{ step === 1 ? 'Next step' : 'Prev step' }}
+</button>
+
+<div class="form-check mt-3">
+    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="fakeFade" checked
+        [(ngModel)]="fadeType">
+    <label class="form-check-label" for="flexRadioDefault1">
+        Fake fade effect
+    </label>
+</div>
+<div class="form-check">
+    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="trueFade"
+        [(ngModel)]="fadeType">
+    <label class="form-check-label" for="flexRadioDefault2">
+        True fade effect
+    </label>
+</div>

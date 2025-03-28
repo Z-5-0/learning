@@ -19,26 +19,33 @@ import { Player } from '../players';
         transform: 'scale(1)'
       })),
       transition('hidden <=> visible', animate('0.15s ease-in-out'))
+    ]),
+    trigger('overlay', [
+      state('hidden', style({ opacity: 0, scale: .8 })),
+      state('visible', style({ opacity: 1, scale: 1 })),
+      transition('hidden <=> visible', animate('.5s ease-in-out'))
     ])
   ]
 })
 export class PlayerDetailsComponent {
   @Input({ required: true }) player!: Player;
-  @HostBinding('@animation') animationState = 'hidden';
-  @HostListener('@animation.done', ['$event']) done(event: AnimationEvent) {
+
+  @HostBinding('@overlay') animationState = 'hidden';
+
+  @HostListener('@overlay.done', ['$event']) done(event: AnimationEvent) {
     if (event.toState === 'hidden') {
       this.closed.emit();
     }
   }
 
-  @HostListener('@animation.start', ['$event'])
+  @HostListener('@overlay.start', ['$event'])
   onAnimationStart(event: AnimationEvent) {
     // console.log('Animation started!', event);
   }
   @Output() closed = new EventEmitter<void>();
 
   ngAfterViewInit() {
-    this.animationState = 'visible';
+    this.animationState = 'visible'; // biztosítjuk, hogy az animáció akkor induljon el, amikor a komponens ténylegesen megjelenik
   }
 
   close() {

@@ -1,9 +1,10 @@
-import { Component, ElementRef, QueryList, ViewChildren, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, ElementRef, QueryList, ViewChildren, OnInit, AfterViewInit, OnDestroy, afterRender } from '@angular/core';
 import { ScrollingService } from "../../shared/services/scrolling.service";
 import { BehaviorSubject, catchError, of, Subject, Subscription, switchMap, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { KeyValue } from '@angular/common';
 import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 
 interface Hero {
   name: string;
@@ -43,7 +44,6 @@ export class ExtrasComponent implements OnInit, AfterViewInit, OnDestroy {
     modulewithrouting,
     functioninputoutputtypes,
     ngiffunctioncall,
-    trackby,
     ngswitchnote,
     prtoceduralvsreactivethinking,
     locale,
@@ -114,6 +114,12 @@ export class ExtrasComponent implements OnInit, AfterViewInit, OnDestroy {
     keyvalue,
     valueorder,
     trackby,
+    newdirectives,
+    callbackfunction,
+    rxjs,
+    fontsizes,
+    handlingimages,
+    routerinrouter,
     angularanimations,
     enterandleave,
     keyframe,
@@ -125,15 +131,14 @@ export class ExtrasComponent implements OnInit, AfterViewInit, OnDestroy {
     reusableanimations,
     disableanimations,
     routingtransition,
+    slideinout,
+    flip,
+    crossfade,
+    expandandcollapse,
+    hostbinding,
+    cdkoverlay,
+    routetransition,
 
-    ifdirective,
-    newdirectives,
-    callbackfunction,
-    rxjs,
-    fontsizes,
-    handlingimages,
-    routerinrouter,
-    
     todo
     `) sections!: QueryList<ElementRef>;
 
@@ -143,7 +148,6 @@ export class ExtrasComponent implements OnInit, AfterViewInit, OnDestroy {
     { title: 'Module with routing', anchor: 'modulewithrouting', subtitles: [] },
     { title: 'Function input-output types', anchor: 'functioninputoutputtypes', subtitles: [] },
     { title: 'ngIf function call', anchor: 'ngiffunctioncall', subtitles: [] },
-    { title: 'TrackBy', anchor: 'trackby', subtitles: [] },
     { title: 'ngSwitch note', anchor: 'ngswitchnote', subtitles: [] },
     { title: 'Procedural vs reactive thinking', anchor: 'prtoceduralvsreactivethinking', subtitles: [] },
     { title: 'Locale', anchor: 'locale', subtitles: [] },
@@ -234,6 +238,11 @@ export class ExtrasComponent implements OnInit, AfterViewInit, OnDestroy {
       ]
     },
     { title: 'trackBy', anchor: 'trackby', subtitles: [] },
+    { title: 'New directives', anchor: 'newdirectives', subtitles: [] },
+    { title: 'Callback function', anchor: 'callbackfunction', subtitles: [] },
+    { title: 'RxJS', anchor: 'rxjs', subtitles: [] },
+    { title: 'Font sizes', anchor: 'fontsizes', subtitles: [] },
+    { title: 'Router in router', anchor: 'routerinrouter', subtitles: [] },
     {
       title: 'Angular animations', anchor: 'angularanimations', subtitles: [
         { title: 'Enter & leave', anchor: 'enterandleave' },
@@ -246,13 +255,14 @@ export class ExtrasComponent implements OnInit, AfterViewInit, OnDestroy {
         { title: 'Reusable animations', anchor: 'reusableanimations' },
         { title: 'Disable animations', anchor: 'disableanimations' },
         { title: 'Routing transition', anchor: 'routingtransition' },
+        { title: 'Slide in & out', anchor: 'slideinout' },
+        { title: 'Flip', anchor: 'flip' },
+        { title: 'Cross fade', anchor: 'crossfade' },
+        { title: 'Expand and collapse', anchor: 'expandandcollapse' },
+        { title: 'Host binding', anchor: 'hostbinding' },
+        { title: 'CDK overlay', anchor: 'cdkoverlay' },
       ]
     },
-    { title: 'New directives', anchor: 'newdirectives', subtitles: [] },
-    { title: 'Callback function', anchor: 'callbackfunction', subtitles: [] },
-    { title: 'RxJS', anchor: 'rxjs', subtitles: [] },
-    { title: 'Font sizes', anchor: 'fontsizes', subtitles: [] },
-    { title: 'Router in router', anchor: 'routerinrouter', subtitles: [] },
     { title: 'TODO', anchor: 'todo', subtitles: [] },
   ];
 
@@ -415,7 +425,12 @@ export class ExtrasComponent implements OnInit, AfterViewInit, OnDestroy {
     { number: 3, name: 'Third' },
   ]
 
-  constructor(private anchor: ScrollingService, private http: HttpClient) {
+  constructor(private anchor: ScrollingService, private http: HttpClient, private activeRoute: ActivatedRoute) {
+    /* afterRender(() => {
+      if (this.activeRoute.snapshot.queryParamMap.get('jump') === 'routetransition') {
+        this.scrollToAnchor('routetransition');
+      }
+    }); */
   }
 
   scrollToAnchor(anchor: string) {

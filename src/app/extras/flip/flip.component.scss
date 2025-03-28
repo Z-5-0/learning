@@ -1,0 +1,37 @@
+:host {
+    align-content: center;
+    display: grid;
+    height: 100vh;
+    place-items: center;
+    width: 100%;
+    perspective: 500px; // a nézőpontot határozza meg a "3D-s térben", azaz hogy milyen távolságra van a "kamera" az animált elemtől
+}
+
+.container {
+    aspect-ratio: 1 / 1;
+    color: white;
+    display: grid;
+    font-size: 2em;
+    position: relative;
+    width: 33.334%;
+    backface-visibility: hidden; // amikor egy elem el van forgatva, a felhasználó nem látja az elemet
+    transform-style: preserve-3d; // az elem és annak gyermekei is képesek lesznek teljes 3D-s térben mozogni - alapértelmezetten 'flat' az értéke
+}
+
+.box {
+    display: grid;
+    grid-row: 1;
+    grid-column: 1;
+    place-items: center;
+
+    &:first-child {
+        background-color: #6244b0;
+        z-index: 1; // A oldalt-t B oldal elé hozzuk
+    }
+
+    &:last-child {
+        background-color: #ff495d;
+        // transform: rotateY(180deg); // B oldal így alapesetben 180%-kal el van forgatva
+        // transform: rotateX(180deg); // vertikális flip esetében
+    }
+}

@@ -1,0 +1,30 @@
+:host {
+  align-content: center;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  width: 100vh;
+  padding: 30px 0;
+  overflow: hidden;
+}
+
+div {
+  aspect-ratio: 1 / 1;
+  background-color: #6244b0;
+  width: 33.334%;
+}
+
+button {
+  all: unset;
+  background-color: black;
+  color: white;
+  margin-block-start: 2em;
+  padding: 1em 2em;
+  transition: background-color 250ms;
+  text-align: center;
+
+  &:hover {
+    background-color: #ff495d;
+  }
+
+}

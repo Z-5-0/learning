@@ -43,3 +43,19 @@ th,
 td {
   padding: 10px;
 }
+
+.example-error {
+  position: relative;
+
+  &:after {
+    content: 'HIBA';
+    position: absolute;
+    top: 100%;
+    left: 45%;
+    transform: translate(-45%, -100%);
+    rotate: 45deg;
+    font-size: 50px;
+    color: #9d2626;
+    z-index: 1;
+  }
+}

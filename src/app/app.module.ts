@@ -64,6 +64,8 @@ import { GruntComponent } from './grunt/grunt.component';
 import { GulpComponent } from './gulp/gulp.component';
 import { LodashComponent } from './lodash/lodash.component';
 import { DartComponent } from './dart/dart.component';
+import { AnimerouteComponent } from './extras/anime/animeroute/animeroute.component';
+import { AnimerouteModule } from './extras/anime/animeroute/animeroute.module';
 
 @NgModule({
   declarations: [

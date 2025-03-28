@@ -1,0 +1,37 @@
+:host {
+  align-content: center;
+  display: grid;
+  height: 100%;
+  place-items: center;
+  width: 100%;
+  padding: 30px 0;
+}
+
+.container {
+  aspect-ratio: 1 / 1;
+  color: white;
+  font-size: 2em;
+  position: relative;
+  width: 33.334%;
+  display: grid;
+}
+
+.box {
+  display: grid;
+  place-items: center;
+
+  grid-row: 1;
+  grid-column: 1;
+
+  &:first-child {
+    background-color: #6244b0;
+  }
+
+  &:last-child {
+    background-color: #ff495d;
+  }
+
+  &:not(.active):not(.ng-animating) { // display none, ha egyik class sincs rajta az elemen
+    display: none;
+  }
+}

@@ -1,0 +1,38 @@
+<div [@flip]="{
+    value: flipped().status, 
+    params: { 
+        transformData: flipped().rotate
+    }
+}" class="container">
+    <div class="box">Side A</div>
+    <div class="box"
+        [ngStyle]="(flipped().direction === 'left' || flipped().direction === 'right') ? {'transform': 'rotateY(180deg)'} : {'transform': 'rotateX(180deg)'}">
+        Side B</div>
+</div>
+
+<div class="btn-group mt-5" role="group" aria-label="Basic example">
+    <button type="button" class="btn btn-primary"
+        [ngClass]="(flipped().status && flipped().direction !== 'left') ? 'btn-primary' : 'btn-warning'"
+        [disabled]="flipped().status && flipped().direction !== 'left'"
+        (click)="flipped.set({status: !flipped().status, rotate: 'rotateY(180deg)', direction: 'left'})">
+        {{ (flipped().status && flipped().direction === 'left') ? 'Flip back →' : 'Flip →' }}
+    </button>
+    <button type="button" class="btn btn-primary"
+        [ngClass]="(flipped().status &&flipped().direction !== 'right') ? 'btn-primary' : 'btn-warning'"
+        [disabled]="flipped().status && flipped().direction !== 'right'"
+        (click)="flipped.set({status: !flipped().status, rotate: 'rotateY(-180deg)', direction: 'right'})">
+        {{ (flipped().status && flipped().direction === 'right') ? 'Flip back ←' : 'Flip ←' }}
+    </button>
+    <button type="button" class="btn btn-primary"
+        [ngClass]="(flipped().status && flipped().direction !== 'top') ? 'btn-primary' : 'btn-warning'"
+        [disabled]="flipped().status && flipped().direction !== 'top'"
+        (click)="flipped.set({status: !flipped().status, rotate: 'rotateX(180deg)', direction: 'top'})">
+        {{ (flipped().status && flipped().direction === 'top') ? 'Flip back ↑' : 'Flip ↑' }}
+    </button>
+    <button type="button" class="btn btn-primary"
+        [ngClass]="(flipped().status && flipped().direction !== 'bottom') ? 'btn-primary' : 'btn-warning'"
+        [disabled]="flipped().status && flipped().direction !== 'bottom'"
+        (click)="flipped.set({status: !flipped().status, rotate: 'rotateX(-180deg)', direction: 'bottom'})">
+        {{ (flipped().status && flipped().direction === 'bottom') ? 'Flip back ↓' : 'Flip ↓' }}
+    </button>
+</div>

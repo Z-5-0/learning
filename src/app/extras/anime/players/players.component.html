@@ -1,22 +1,64 @@
-<section style="display: grid; grid-template-columns: auto 1fr;">
+<section #section style="display: grid; grid-template-columns: auto 1fr;">
     <img [src]="'assets/imgs/players/' + player.imageName + '.avif'" width="130px" height="95px" />
     <div>
         <h2>{{ player.name }}</h2>
-        <div>
-            <button #trigger="cdkOverlayOrigin" cdkOverlayOrigin (click)="detailsOpen = true" [class.open]="detailsOpen"
-                class="btn btn-secondary">
-                Details
-            </button>
-            <ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="trigger"
-                [cdkConnectedOverlayOpen]="detailsOpen" cdkConnectedOverlayWidth="50%"
-                (overlayOutsideClick)="detailsComponent.close()" (detach)="detailsOpen = false"
-                [cdkConnectedOverlayPositions]="[]" cdkConnectedOverlayPush="true"
-                class="custom-overlay"
-                [cdkConnectedOverlayViewportMargin]="7" [cdkConnectedOverlayScrollStrategy]="scrollStrategy"
-                cdkConnectedOverlayTransformOriginOn="app-player-details" [cdkConnectedOverlayDisableClose]="true"
-                (overlayKeydown)="$event.key === 'Escape' ? detailsComponent.close() : null">
-                <app-player-details [player]="player" (closed)="detailsOpen = false"></app-player-details>
-            </ng-template>
-        </div>
+        <ng-container *ngIf="tempSwitcher === 'default'">
+            <div>
+                <button #trigger="cdkOverlayOrigin" cdkOverlayOrigin (click)="detailsOpen = true"
+                    [class.open]="detailsOpen" class="btn btn-secondary">
+                    Details
+                </button>
+                <ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="trigger"
+                    [cdkConnectedOverlayOpen]="detailsOpen" cdkConnectedOverlayWidth="50%"
+                    (overlayOutsideClick)="detailsComponent.close()" (detach)="detailsOpen = false"
+                    [cdkConnectedOverlayPositions]="[]" cdkConnectedOverlayPush="true" class="custom-overlay"
+                    [cdkConnectedOverlayViewportMargin]="7" [cdkConnectedOverlayScrollStrategy]="scrollStrategy"
+                    cdkConnectedOverlayTransformOriginOn="app-player-details" [cdkConnectedOverlayDisableClose]="true"
+                    (overlayKeydown)="$event.key === 'Escape' ? detailsComponent.close() : null">
+                    <app-player-details [player]="player" (closed)="detailsOpen = false"></app-player-details>
+                </ng-template>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="tempSwitcher === 'expandandcollapse'">
+            <button type="button" class="btn btn-info rounded-circle"
+                (click)="showDetails.set(!showDetails())">↓</button>{{showDetails()}}
+            <section *ngIf="showDetails()" [@toggle]="showDetails()">
+                <div class="details">
+                    <p>{{ player.description }}</p>
+                    <ul>
+                        <li>Games played: {{ player.games }}</li>
+                        <li>Points scored: {{ player.points }}</li>
+                        <li>Field Goal Percentage: {{ player.fieldGoalPercentage }}</li>
+                        <li>Three Point Percentage: {{ player.threePointPercentage }}</li>
+                    </ul>
+                </div>
+            </section>
+        </ng-container>
+        <ng-container *ngIf="tempSwitcher === 'hostbinding'">
+            <ul>
+                <li>Games played: {{ player.games }}</li>
+                <li>Points scored: {{ player.points }}</li>
+                <li>Field Goal Percentage: {{ player.fieldGoalPercentage }}</li>
+                <li>Three Point Percentage: {{ player.threePointPercentage }}</li>
+            </ul>
+        </ng-container>
+        <ng-container *ngIf="tempSwitcher === 'overlay'">
+            <div>
+                <button #trigger="cdkOverlayOrigin" cdkOverlayOrigin (click)="detailsOpen = true"
+                    [class.open]="detailsOpen" class="btn btn-secondary">
+                    Details
+                </button>
+                <ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="trigger"
+                    [cdkConnectedOverlayOpen]="detailsOpen" cdkConnectedOverlayWidth="50%"
+                    (overlayOutsideClick)="detailsComponent.close()"
+                    (detach)="detailsOpen = false"
+                    [cdkConnectedOverlayPositions]="[]" cdkConnectedOverlayPush="true" class="custom-overlay"
+                    [cdkConnectedOverlayViewportMargin]="7" [cdkConnectedOverlayScrollStrategy]="scrollStrategy"
+                    cdkConnectedOverlayTransformOriginOn="app-player-details" [cdkConnectedOverlayDisableClose]="true"
+                    (overlayKeydown)="$event.key === 'Escape' ? detailsComponent.close() : null">
+                    <app-player-details [player]="player" (closed)="detailsOpen = false"></app-player-details>
+                </ng-template>
+            </div>
+        </ng-container>
     </div>
 </section>

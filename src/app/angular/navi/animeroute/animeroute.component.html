@@ -1,0 +1,13 @@
+<nav>
+    <ul>
+        <li>
+            <a [routerLink]="['animehome']" [routerLinkActive]="['is-active']">Home</a>
+            <a [routerLink]="['animeabout']" [routerLinkActive]="['is-active']">About</a>
+            <a [routerLink]="['animecontact']" [routerLinkActive]="['is-active']">Contact</a>
+        </li>
+    </ul>
+</nav>
+
+<div style="max-width: 300px; overflow: auto;">
+    <router-outlet></router-outlet>
+</div>

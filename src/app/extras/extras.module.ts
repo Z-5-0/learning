@@ -22,6 +22,9 @@ import { AnimerouteComponent } from "./anime/animeroute/animeroute.component";
 import { HomeComponent } from './anime/animeroute/home/home.component';
 import { AnimerouteModule } from "./anime/animeroute/animeroute.module";
 import { RouterModule } from "@angular/router";
+import { Slider2Component } from './slider2/slider2.component';
+import { FlipComponent } from './flip/flip.component';
+import { FadeComponent } from './fade/fade.component';
 
 @NgModule({
     declarations: [
@@ -40,6 +43,9 @@ import { RouterModule } from "@angular/router";
         SliderComponent,
         NavComponent,
         HeaderComponent,
+        Slider2Component,
+        FlipComponent,
+        FadeComponent
     ],
     imports: [
         CommonModule,

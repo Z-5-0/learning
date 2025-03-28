@@ -58,7 +58,9 @@ export class SliderComponent {
   constructor() {
     afterNextRender(() => {
       if (this.animationDisabled()) {
-        this.animationDisabled.set(false);
+        setTimeout(() => {
+          this.animationDisabled.set(false);
+        }, 0)
       }
     })
   }
