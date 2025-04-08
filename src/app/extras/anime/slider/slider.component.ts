@@ -11,26 +11,26 @@ import { slideAnimation } from '../animations/slide.animation';
     trigger('slideToggle', [
       transition('* => *', [
         group([
-          query(':enter', style({ transform: 'translateX(-100%) scale(.5)' })),
+          query(':enter', style({ transform: 'translateX(-100%) scale(.5)' }), { optional: true }),
           query(':leave', [
             animate('750ms ease-in-out', style({ transform: 'translateX(100%) scale(.25)' }))
           ], { optional: true }), // szükséges, mert inicializáláskor még nincs kilépő
           query(':enter', [
             animate('750ms ease-in-out', style({ transform: 'translateX(0) scale(1)' }))
-          ])
+          ], { optional: true })
         ])
       ])
     ]),
     trigger('slideToggleDynamic', [
       transition('* => *', [
         group([
-          query(':enter', style({ transform: 'translateX({{enterStart}}) scale(.5)' })),
+          query(':enter', style({ transform: 'translateX({{enterStart}}) scale(.5)' }), { optional: true }),
           query(':leave', [
             animate('750ms ease-in-out', style({ transform: 'translateX({{leaveEnd}}) scale(.25)' }))
           ], { optional: true }), // szükséges, mert inicializáláskor még nincs kilépő kép
           query(':enter', [
             animate('750ms ease-in-out', style({ transform: 'translateX(0) scale(1)' }))
-          ])
+          ], { optional: true })
         ])
       ], {
         params: {

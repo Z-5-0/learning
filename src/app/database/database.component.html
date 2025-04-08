@@ -21,24 +21,193 @@
 </div>
 
 <div>
+    <h3 #introduction data-anchor="introduction">Introduction</h3>
     <ul>
-        <h4>TODO +</h4>
+        <li>Az adatbázisok strukturált adat tárolására szolgálnak, és két fő típusa van
+            <ol>
+                <li>Relációs adatbázisok (SQL)</li>
+                <li>Nem relációs adatbázisok (NoSQL)</li>
+            </ol>
+        </li>
     </ul>
 </div>
 
 <div>
     <h3 #relational data-anchor="relational">Relational database</h3>
     <ul>
-        <li></li>
-        <h4>TODO +</h4>
+        <li>A relációs adatbázisok (RDBMS) táblákban tárolják az adatokat, ahol az adatok előre meghatározott
+            szerkezettel (oszlopok, sorok) rendelkeznek, és kapcsolatok vannak az egyes táblák között
+            <ul>
+                <li>RDBMS = <b>R</b>elational <b>D</b>ata<b>B</b>ase <b>M</b>anagement <b>S</b>ystem</li>
+            </ul>
+        </li>
+        <br>
+        <li>Jellemzők
+            <ol>
+                <li>Táblázatos szerkezet: Az adatok táblákban (sorok, és oszlopok formájában) kerülnek tárolásra</li>
+                <li>Előre meghatározott séma: Az adatok struktúráját (mezők, adattípusok) előre definiálni kell</li>
+                <li>Kapcsolatok táblák között: Az adatok közötti kapcsolatokat idegen kulcsok (FOREIGN KEY), és
+                    kapcsolati műveletek (JOIN) segítségével kezelik</li>
+                <li>SQL alapú lekérdezések: Az SQL nyelv segítségével hajthatunk végre adatlekérdezéseket,
+                    módosításokat és törléseket</li>
+                <li>ACID-kompatibilitás: A tranzakciók követik az ACID szabályokat
+                    <ul>
+                        <li>Az ACID egy tranzakciós modell, amely garantálja az adatintegritást, és
+                            konzisztenciát a relációs adatbázisokban</li>
+                        <br>
+                        <table style="border-collapse: collapse; width: 100%;">
+                            <tr>
+                                <th></th>
+                                <th>Leírás</th>
+                            </tr>
+                            <tr>
+                                <td><b>Atomicity (Atomitás)</b></td>
+                                <td>A tranzakciók vagy teljesen végrehajtódnak, vagy egyáltalán nem (ROLLBACK
+                                    lehetőség).</td>
+                            </tr>
+                            <tr>
+                                <td><b>Consistency (Konzisztencia)</b></td>
+                                <td>Az adatbázis mindig érvényes állapotban marad, biztosítva az
+                                    adatintegritást.</td>
+                            </tr>
+                            <tr>
+                                <td><b>Isolation (Elszigeteltség)</b></td>
+                                <td>Párhuzamos tranzakciók nem zavarják meg egymást, az adatok inkonzisztens
+                                    állapota elkerülhető.</td>
+                            </tr>
+                            <tr>
+                                <td><b>Durability (Tartósság)</b></td>
+                                <td>A végrehajtott tranzakciók nem vesznek el rendszerhiba esetén sem.</td>
+                            </tr>
+                        </table>
+                        <br>
+                    </ul>
+                </li>
+                <li>Tranzakciókezelés: Több lépésből álló műveletek végrehajtása úgy, hogy vagy minden lépés
+                    végrehajtásra kerül, vagy egyik sem (ROLLBACK)</li>
+                <li>Indexek és normalizálás: A hatékony keresést és adatkonzisztenciát indexek és normalizálási
+                    szabályok segítik</li>
+                <li>Kiváló adatkonzisztencia: Nagy pontosságot és megbízhatóságot biztosít az adatok számára</li>
+            </ol>
+        </li>
+        <br>
+        <li>Előnyök
+            <ol>
+                <li>Adatintegritás és konzisztencia</li>
+                <li>Komplex lekérdezések (JOIN, GROUP BY, ...)</li>
+                <li>Jó támogatás és széles körű használat</li>
+            </ol>
+        </li>
+        <br>
+        <li>Hátrányok
+            <ol>
+                <li>Skálázás nehézségei (vízszintes skálázás korlátai)</li>
+                <li>Nagy mennyiségű, változó adatra kevésbé hatékony</li>
+            </ol>
+        </li>
+        <br>
+        <li>Népszerű relációs adatbázisok
+            <ol>
+                <li>MySQL
+                    <ul>
+                        <li> Nyílt forráskódú, ingyenesen használható (van fizetős verzió is)</li>
+                        <li>Nagyon elterjedt a webes fejlesztésekben (WordPress, Joomla, ...)</li>
+                        <li>Gyors és egyszerű használat, de nem minden esetben a legjobb választás nagyvállalati
+                            alkalmazásokhoz</li>
+                        <li>Hátrány: Korlátozott funkcionalitás bonyolult tranzakciókezelés esetén</li>
+                    </ul>
+                </li>
+                <li>PostgreSQL
+                    <ul>
+                        <li>Haladó SQL-funkciók, például JSON-kezelés, bővíthetőség</li>
+                        <li>Erős ACID és tranzakciókezelés, kiválóan alkalmas banki, és vállalati rendszerekhez</li>
+                        <li>Jobb teljesítmény és skálázhatóság, mint MySQL esetén</li>
+                        <li>Hátrány: Bonyolultabb beállítás, és konfiguráció</li>
+                    </ul>
+                </li>
+                <li>Microsoft SQL Server
+                    <ul>
+                        <li>Microsoft által fejlesztett robusztus adatbáziskezelő</li>
+                        <li>Jól integrálható Microsoft termékekkel (például .NET, Azure)</li>
+                        <li>Könnyen kezelhető, stabil, skálázható</li>
+                        <li>Hátrány: Magas licencköltségek, zárt forráskód</li>
+                    </ul>
+                </li>
+                <li>Oracle database
+                    <ul>
+                        <li>Nagyvállalati környezetre optimalizált</li>
+                        <li>Skálázható, teljesítményorientált</li>
+                        <li>Támogatja a PL/SQL nyelvet, és fejlett tranzakciókezelést</li>
+                        <li>Hátrány: Drága, bonyolult konfiguráció</li>
+                    </ul>
+                </li>
+            </ol>
+        </li>
     </ul>
 </div>
 
 <div>
     <h3 #nonrelational data-anchor="nonrelational">Non-relational database</h3>
     <ul>
-        <li></li>
-        <h4>TODO +</h4>
+        <li>A NoSQL adatbázisok nem használnak fix táblázatokat és strukturált sémát, inkább dokumentumokat, kulcs-érték
+            párokat, gráfokat, vagy oszloporientált modelleket alkalmaznak</li>
+        <br>
+        <li>Jellemzők
+            <ol>
+                <li>Séma nélküli adattárolás: Az adatok változó szerkezetűek lehetnek, nem kell előre meghatározni az
+                    adatmezőket</li>
+                <li>Nagy skálázhatóság: Horizontálisan skálázható, több szerveren könnyen megosztható</li>
+                <li>BASE elv: Ellentétben az SQL ACID modelljével, inkább az elérhetőséget és teljesítményt helyezi
+                    előtérbe</li>
+                <li>Gyors írás-olvasás műveletek: Nagy adatforgalmat igénylő alkalmazásokhoz kiváló</li>
+            </ol>
+        </li>
+        <br>
+        <li>Előnyök
+            <ol>
+                <li>Gyors adatfeldolgozás nagy volumenű adatnál</li>
+                <li>Rugalmas adatszerkezet</li>
+                <li>Könnyen skálázható</li>
+            </ol>
+        </li>
+        <br>
+        <li>Hátrányok
+            <ol>
+                <li>Gyengébb adatintegritás (nincs erős ACID támogatás)</li>
+                <li>Kevésbé hatékony komplex lekérdezésekhez</li>
+            </ol>
+        </li>
+        <br>
+        <li>Főbb típusok
+            <ol>
+                <li>Dokumentum alapú adatbázisok: JSON szerű tárolás
+                    <ul>
+                        <li>MongoDB</li>
+                        <li>CouchDB</li>
+                        <li>Firebase Firestore</li>
+                    </ul>
+                </li>
+                <li>Kulcs-érték adatbázisok: Gyors keresés
+                    <ul>
+                        <li>Redis</li>
+                        <li>DynamoDB</li>
+                        <li>Firebase Realtime Database (hierarchikus JSON alapú)</li>
+                    </ul>
+                </li>
+                <li>Gráf adatbázisok: Kapcsolati modellek
+                    <ul>
+                        <li>Neo4j</li>
+                        <li>ArangoDB</li>
+                    </ul>
+                </li>
+                <li>Oszloporientált adatbázisok: Nagy mennyiségű adat analitikája
+                    <ul>
+                        <li>Apache Cassandra</li>
+                        <li>HBase</li>
+                    </ul>
+                </li>
+            </ol>
+        </li>
     </ul>
 </div>
 
@@ -47,15 +216,63 @@
     <ul>
         <img src="https://www.ml4devs.com/images/illustrations/sql-vs-nosql-comparision.webp" alt=""
             style="max-width: 768px; width: 100%;">
-        <li></li>
-        <h4>TODO +</h4>
-    </ul>
-</div>
+        <br>
+        <br>
+        <table style="border-collapse: collapse; width: 100%;">
+            <tr>
+                <th>Tulajdonság</th>
+                <th>SQL (Relációs)</th>
+                <th>NoSQL (Nem relációs)</th>
+            </tr>
+            <tr>
+                <td>Adatszerkezet</td>
+                <td>Táblázatos (sorok, oszlopok)</td>
+                <td>Rugalmas (JSON, kulcs-érték, gráf, oszloporientált)</td>
+            </tr>
+            <tr>
+                <td>Kapcsolatok</td>
+                <td>Erős (FOREIGN KEY, JOIN)</td>
+                <td>Általában nincs</td>
+            </tr>
+            <tr>
+                <td>Lekérdezési nyelv</td>
+                <td>SQL (Structured Query Language)</td>
+                <td>Különböző API-k vagy lekérdezési nyelvek</td>
+            </tr>
+            <tr>
+                <td>Adatintegritás</td>
+                <td>ACID tranzakciók</td>
+                <td>BASE elv</td>
+            </tr>
+            <tr>
+                <td>Skálázás</td>
+                <td>Vertikális (nagyobb szerver)</td>
+                <td>Horizontális (több szerver)</td>
+            </tr>
+        </table>
+        <br>
+        <table style="border-collapse: collapse; width: 100%;">
+            <tr>
+                <th>Használati eset</th>
+                <th>SQL (Relációs)</th>
+                <th>NoSQL (Nem relációs)</th>
+            </tr>
+            <tr>
+                <td>Strukturált adatok (például ügyféladatbázis)</td>
+                <td>igen</td>
+                <td>nem</td>
+            </tr>
+            <tr>
+                <td>Komplex kapcsolatok (például több tábla JOIN)</td>
+                <td>igen</td>
+                <td>nem</td>
+            </tr>
+            <tr>
+                <td>Gyors olvasás/írás nagy adatmennyiségnél</td>
+                <td>nem</td>
+                <td>igen</td>
+            </tr>
+        </table>
 
-<div>
-    <h3 #todo data-anchor="todo">TODO</h3>
-    <ul>
-        <li></li>
-        <h4>TODO +</h4>
     </ul>
 </div>

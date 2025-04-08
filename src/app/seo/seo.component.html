@@ -1,6 +1,6 @@
 <h1>SEO</h1>
 
-<div class="anchor-navi-container">
+<div #observedElement class="anchor-navi-container">
     <div *ngFor="let mainButton of anchorButtons" class="btn-group">
         <button type="button" class="btn btn-primary btn-sm anchor" (click)="scrollToAnchor(mainButton?.anchor)">
             {{ mainButton.title }}
@@ -21,13 +21,2335 @@
 </div>
 
 <div>
+    <h3 #basics data-anchor="basics">Basics</h3>
+    <ul>
+        <li>Search Engine Optimization</li>
+        <li>A keresőoptimalizálás (SEO) célja, hogy egy weboldal minél jobb helyezést érjen el a keresőmotorok (például
+            a Google) találati listáján</li>
+        <li>Az organikus, tehát a nem fizetett keresési eredményekre koncentrálunk
+            <ul>
+                <li>A fizetett hirdetéseket PPC-nek (Pay-Per-Click), vagy SEA-nak (Search Engine Advertising) hívni
+                    <ul>
+                        <li>A fizetett hirdetésekre jóval kevesebben kattintanak rá, a SEO győz körülbelül 30% - 70%
+                            arányban</li>
+                        <li>A fizetés abbahagyása nagy Lead vesztéssel jár(hat)
+                            <ul>
+                                <li>Lead
+                                    <ul>
+                                        <li>A Lead egy potenciális ügyfél, aki valamilyen módon érdeklődést mutatott egy
+                                            termék vagy szolgáltatás iránt</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>A SEO és a PPC együtt alkotják a SEM-et (Search Engine Marketing), azaz a keresőmarketinget</li>
+                <br>
+                <img src="assets/imgs/seo_sem.png" width="100%">
+                <br>
+                <br>
+            </ul>
+        </li>
+        <li>3 fő tényezőtől függ a rangsorolni<ol>
+                <li>Technikai SEO</li>
+                <li>Tartalmi SEO</li>
+                <li>Off-page SEO</li>
+            </ol>
+        </li>
+        <li>Számos más dolog is befolyásolja, befolyásolhatja a rangsorolást (például a domain életkora), de a fenti 3 a
+            legfőbb tényező</li>
+        <li>Google Search Console: URL Inspection tab
+            <ul>
+                <li>Itt lehet re-crawl-t / re-indexelést kérvényezni</li>
+            </ul>
+        </li>
+        <br>
+        <li>Alapfogalmak
+            <ul>
+                <li>Crawling
+                    <ul>
+                        <li>Feltérképezés</li>
+                        <li>A keresőmotorok, például a Google, webrobotokat (crawler, bot, spider) használnak, amelyek
+                            bejárják az internetet, hogy új és frissített oldalakat találjanak</li>
+                        <li>Crawler
+                            <ul>
+                                <li>Követi a linkeket egyik oldalról a másikra</li>
+                                <li>Letölti az oldal tartalmát</li>
+                                <li>Ellenőrzi a technikai részeket (például robots.txt, meta tag-ek)</li>
+                            </ul>
+                        </li>
+                        <li>Ha egy oldal blokkolva van a robots.txt fájlban, a Google nem fogja feltérképezni</li>
+                        <li>Akkor, ha az oldal gyorsan betöltődik, és megfelelően van felépítve, a crawler hatékonyabban
+                            tudja bejárni</li>
+                        <li>Abban az esetben a weboldalunkat nem tudják a crawler-ek bejárni, nem fog megtörténni az
+                            indexelés, és ha nincs indexelés, nincs rangsorolás sem</li>
+                        <li>
+                            <a href="https://chromewebstore.google.com/detail/detailed-seo-extension/pfjdepjjfjjahkjfpkcgfmfhmnakjfba"
+                                target="_blank">Detailed SEO Extension</a>
+                            <ul>
+                                <li>Chrome bővítmény, hogy az oldalunk crawl-olható-e, indexelhető-e</li>
+                            </ul>
+                        </li>
+                        <li>A Google Search Console-ban (is) megtekinthető, hogy mennyire - jól - képes a Google a
+                            site-unkat crawl-olni, indexelni
+                            <ul>
+                                <li>A "Why pages aren't indexed" szekciónál megnézhetjük az esetleges problémákat
+                                    egy-egy oldal kapcsán</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>Indexing
+                    <ul>
+                        <li>Indexelés</li>
+                        <li>Miután a keresőrobot bejárta az oldalt, a következő lépés az indexelés, amely azt jelenti,
+                            hogy a keresőmotor feldolgozza és eltárolja az oldal tartalmát az adatbázisában</li>
+                        <li>Ha egy oldal "noindex" meta tag-et tartalmaz, akkor a Google nem fogja indexelni, és nem fog
+                            megjelenni a keresési eredmények között</li>
+                        <pre>
+    &#60;head>
+        ...
+        &#60;meta name="robots" content="noindex">
+        ...
+    &#60;/head>
+                        </pre>
+                    </ul>
+                </li>
+                <li>Ranking
+                    <ul>
+                        <li>Rangsorolás</li>
+                        <li>Indexelés során a keresőmotorok feldolgozzák a weboldal tartalmát (szövegek, képek, videók),
+                            metaadatait (title, description, structured data) és szerkezetét, majd ezeket adatbázisukba
+                            rögzítik, hogy később a keresési eredmények között megjeleníthessék (SERP)</li>
+                        <li>A rangsorolásnál a Google több száz tényezőt figyelembe vesz</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <br>
+        <li>A teljes téma kapcsán fontos, hogy ne akarjuk teljes mélységében, minden apró részletét megismerni a SEO-nak
+            <ul>
+                <li>Egy rendkívül összetett és folyamatosan változó terület, amelynek minden apró részletét lehetetlen
+                    (és felesleges) teljesen megérteni</li>
+                <li>A főbb elveket szükséges alkalmazni annak érdekében, hogy jobb eredményeket érjünk el a
+                    keresőmotorokban</li>
+                <li>Illetve mindig az akutálisan életbe lépő, felkapottabb trendeket kell követni</li>
+                <li>A megvalósítással sokkal több időt töltsünk, mint tanulással</li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<div>
+    <h3 #factors data-anchor="factors">Factors</h3>
+    <ul>
+        <li>Több tényezőn alapul, hogy egy kifejezésre egy weboldal hányadik helyen szerepel</li>
+    </ul>
+    <ol>
+        <li>Technikai SEO</li>
+        <li>Tartalmi SEO</li>
+        <li>Off-page SEO</li>
+    </ol>
+    <br>
+    <h5 #technicalseo data-anchor="technicalseo">Technical SEO</h5>
+    <ul>
+        <li>Technikai SEO</li>
+        <br>
+        <li>URL-struktúra és permalinkek
+            <ul>
+                <li>XML sitemap és robots.txt fájlok használata (segítenek gyorsabban indexeltetni az
+                    oldalt)
+                    <ul>
+                        <li>XML sitemap
+                            <ul>
+                                <li>Fájl, amely a weboldal összes fontos URL-jét tartalmazza, segítve a
+                                    keresőrobotokat az indexelésben</li>
+                                <li>Általában a gyökér könyvtárban helyezkedik el</li>
+                                <pre>
+    &#60;?xml version="1.0" encoding="UTF-8"?>
+        &#60;urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+            &#60;url>
+                &#60;loc>https://fagyilap.hu/&#60;/loc>
+                &#60;lastmod>2024-04-01&#60;/lastmod>
+                &#60;priority>1.0&#60;/priority>
+            &#60;/url>
+            &#60;url>
+                &#60;loc>https://fagyilap.hu/fagylaltok&#60;/loc>
+                &#60;lastmod>2024-04-01&#60;/lastmod>
+                &#60;priority>0.8&#60;/priority>
+            &#60;/url>
+            &#60;url>
+                &#60;loc>https://fagyilap.hu/fagylaltok/csokolade&#60;/loc>
+                &#60;lastmod>2024-04-01&#60;/lastmod>
+                &#60;priority>0.7&#60;/priority>
+            &#60;/url>
+        &#60;/urlset>
+                                </pre>
+                            </ul>
+                        </li>
+                        <li>robots.txt
+                            <ul>
+                                <li>Szintén egy fájl, amely megmondja a keresőmotoroknak, hogy mit
+                                    indexelhetnek</li>
+                                <pre>
+    # Általános beállítások
+    User-agent: *
+    Disallow: /admin/
+    Disallow: /cart/
+    Allow: /
+
+    # Bingbot kizárása az egész oldalon
+    User-agent: Bingbot
+    Disallow: /
+
+    # Googlebot csak a 'fagylaltok' kategóriát indexelje
+    User-agent: Googlebot
+    Disallow: /
+    Allow: /fagylaltok/
+
+    # Speciális szabályok a képek indexelésére
+    User-agent: Googlebot-Image
+    Disallow: /private-images/
+
+    # Sitemap helyének megadása
+    Sitemap: https://fagyilap.hu/sitemap.xml
+                                </pre>
+                                <li>A Disallow és Allow direktívák határozzák meg, hogy mely oldalakat
+                                    indexelhetnek a robotok</li>
+                                <li>A Sitemap direktíva biztosítja a keresők számára a sitemap fájl
+                                    elérhetőségét</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>Rövid, érthető URL-ek, amik tartalmaznak kulcsszavakat
+                    <ul>
+                        <li>Nem https://example-page.com/page=123, hanem
+                            https://example-page.com/page=about-us</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>Mobilbarát tartalom
+            <ul>
+                <li>A Google Mobile First Indexing-et használ, azaz az oldal mobilverzióját veszi alapul
+                    a rangsorolásnál</li>
+                <li>Reszponzív design</li>
+                <li>Megfelelő méretű betűk mobil nézetben</li>
+                <li>Gyors betöltési idő
+                    <ul>
+                        <li>Ellenőrizhető például a PageSpeed Insights-al</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>Oldalsebesség
+            <ul>
+                <li>A lassú oldalak rossz felhasználói élményt adnak és hátrébb kerülnek a Google-ben
+                </li>
+                <li>Gyors tárhely használata</li>
+                <li>CSS és JS fájlok minify-olása</li>
+                <li>Cache
+                    <ul>
+                        <li>A tárhelyen (a .htaccess, vagy nginx.conf fájlokban), és az alkalmazásban is
+                            be lehet állítani (Service Worker)
+                            <ul>
+                                <li>Service Worker
+                                    <ul>
+                                        <li>Egy külön JavaScript fájl, amely a böngészőben fut, és lehetővé
+                                            teszi az offline működést, az erőforrások gyorsítótárba mentését,
+                                            valamint a háttérben való adatfrissítést</li>
+                                        <li>Az applikáció elindulásakor regisztrálódik a Service Worker, majd
+                                            letölt egy előre meghatározott listát az erőforrásokból (például
+                                            HTML, CSS, JS, képek), és cache-be helyezi őket, a böngésző pedig
+                                            minden egyes kérésre megpróbálja a cache-ből szolgáltatni az
+                                            adatokat</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>HTTP fejlécben is beállítható cache
+                            <ul>
+                                <pre>
+    fetch('/data', &#123;
+        method: 'GET',
+        headers: &#123;
+            'Cache-Control': 'max-age=3600'  // a böngésző 1 órán keresztül tárolja a választ
+        }
+    });
+                                </pre>
+                                <li>no-cache: A válasz nem kerül cache-elésre</li>
+                            </ul>
+                        </li>
+                        <li>CDN használatával gyorsabbá tehető az oldal betöltése, mivel gyorsítótárazza
+                            az oldal tartalmának egy részét</li>
+                    </ul>
+                </li>
+                <li>A Google szerint ha egy weboldal 1 másodperccel gyorsabban betöltődik, különösen mobil eszközök
+                    esetében, akkor a felhasználók nagyobb valószínűséggel (akár 27%-kal valószínűbben) hajtanak végre
+                    konverziós műveletet (például vásárolnak, feliratkoznak hírlevélre, kitöltenek egy űrlapot, stb.)
+                <li>
+            </ul>
+        </li>
+        <li>Struktúrált adatok
+            <ul>
+                <li>Segítenek a Google-nek jobban megérteni az oldal tartalmát, és speciális
+                    megjelenéseket biztosítanak (shippet-ek) a keresési találatok között
+                    <ul>
+                        <li>A snippet a Google találati listáján megjelenő rövid leírás
+                            <ol>
+                                <li>Standard snippet: Alap keresési eredmény
+                                    <ul>
+                                        <li>A cím, URL és meta leírás jelenik meg</li>
+                                    </ul>
+                                </li>
+                                <li>Rich snippet: Speciális információkat tartalmaz
+                                    <ul>
+                                        <li>A találat mellett egyéb tartalom jelenik, jelenhet meg</li>
+                                        <li>Például csillagos értékelés, ár, elérhetőség</li>
+                                    </ul>
+                                </li>
+                                <li>Featured snippet: A keresési eredmények tetején kiemelt válasz
+                                    <ul>
+                                        <li>A keresési eredmények tetején megjelenő, a legjobbnak ítélt válasz
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ol>
+                        </li>
+                    </ul>
+                </li>
+                <li>Több féle formátumot is használhatunk
+                    <ol>
+                        <li>JSON-LD</li>
+                        <li>Microdata</li>
+                        <li>RDFa</li>
+                    </ol>
+                </li>
+            </ul>
+        </li>
+        <br>
+        <li>Nem szabad elfelejteni, hogy nem akarjuk, hogy minden oldalunk indexelve legyen
+            <ul>
+                <li>Nem minden oldal hasznos a keresőmotorok számára, és egyes oldalak indexelése akár negatívan is
+                    befolyásolhatja a SEO-t</li>
+                <li>Nem indexelendő oldalak
+                    <ol>
+                        <li>Login</li>
+                        <ul>
+                            <li>Nem tartalmaz hasznos, nyilvános információt a felhasználók számára</li>
+                        </ul>
+                        <li>Checkout</li>
+                        <ul>
+                            <li>Ezek dinamikusak és egyéni felhasználói adatokhoz kötődhetnek, nem relevánsak a
+                                keresőmotorok számára</li>
+                        </ul>
+                        <li>Archives
+                            <ul>
+                                <li>Régebbi, már kevésbé releváns tartalmakat tartalmaznak, de továbbra is elérhetők a
+                                    látogatók számára</li>
+                                <li>A kategória archívum oldal is ilyen, tehát az olyan kategória oldal, ami régi, nem
+                                    releváns</li>
+                                <li>Sokszor duplikált, vagy kevésbé hasznos tartalmat tartalmaznak, ami ronthatja az
+                                    oldal általános SEO teljesítményét</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <br>
+    <h5 #onpageseo data-anchor="onpageseo">On-page SEO</h5>
+    <ul>
+        <li>On-page / On-site SEO / Tartalmi SEO</li>
+        <br>
+        <li>Kulcsszókutatás
+            <ul>
+                <li>A kulcsszavak azok a kifejezések, amelyeket az emberek a keresőmotorokban használnak
+                </li>
+                <li>A hatékony SEO stratégia alapja a megfelelő kulcsszavak kiválasztása</li>
+                <li>A Google Search Console megmutatja, hogy a weboldalunl milyen kulcsszavakra jelenik
+                    meg</li>
+                <li>Több "kutatóeszköz" is létezik
+                    <ul>
+                        <li>Google Keyword Planner</li>
+                        <li>Ahrefs</li>
+                        <li>SEMrush</li>
+                        <li>Ubersuggest</li>
+                    </ul>
+                </li>
+                <li>Long-tail, és short-tail kulcsszavak egyensúlya
+                    <ul>
+                        <li>Long-tail
+                            <ul>
+                                <li>Hosszú kulcsszó</li>
+                                <li>3 vagy több szóból áll</li>
+                                <li>Célzottabb kereséseket fed le</li>
+                                <li>Érdemes a long-tail kulcsszavakat megcélozni, mert könnyebb velük
+                                    rangsorolni, és jobban illeszkednek a keresők szándékához</li>
+                            </ul>
+                        </li>
+                        <li>Short-tail
+                            <ul>
+                                <li>Rövid kulcsszó</li>
+                                <li>1-2 szóból áll, nehéz velük jó helyezést elérni</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>Érdemes megértenünk, hogy egy adott kifejezésre keresve a felhasználó hogyan fogja folytatni a
+                    keresésé (milyen további szavakkal, szókapcsolatokkal), és az oldalunkon lehetőleg bejárni ezt a
+                    teljes utat, azaz minden kérdésére választ adni számára
+                </li>
+            </ul>
+        </li>
+        <li>Minőség és relevancia
+            <ul>
+                <li>A Google a hasznos, és egyedi tartalmat részesíti előnyben</li>
+                <li>Naprakész, könnyen olvasható, jól struktúrált, tartalmaz kulcsszavakat, képeket, és
+                    egyéb multimédiákat</li>
+                <li>Rendszeres frissítés, blog és új tartalom készítése</li>
+            </ul>
+        </li>
+        <li>Tartalom
+            <ul>
+                <li>Header-ök hierarchikus sorredben következnek (H1, H2, H3, ...)
+                    <ul>
+                        <li>Ajánlott egyetlen H1-et használni egy oldalon</li>
+                        <li>A többi címsor korlátlanul használható a tartalom tagolására</li>
+                        <li>Semmi sem gátolja, hogy több H1-et használjunk, de SEO szempontból
+                            zavarhatja a keresőrobotokat</li>
+                    </ul>
+                </li>
+                <li>A meta leírás (Meta Description) 150-160 karakter hosszú összegzés az adott page
+                    tartalmáról
+                    <ul>
+                        <li>El kell kerülni az idézőjelet, mert a Google-t tördelésre kényszeríti a szöveget</li>
+                        <li>Minden page-en egyedi meta-descriptiont kell megadni, ellenkező esetben a crawler
+                            "összezavarodhat", lejjebb minősítheti a weboldalt</li>
+                    </ul>
+                </li>
+                <li>A kiemelések (bold, italic) segítik az olvashatóságot</li>
+                <li>Listák használata</li>
+                <li>Érdemes sok keyword-focused content-et (kulcsszó-orientált tartalom) használni
+                    <ul>
+                        <li>Olyan tartalom, amelyet kifejezetten a keresőoptimalizálás (SEO) érdekében úgy alakítanak
+                            ki, hogy a megfelelő kulcsszavakat és kifejezéseket tartalmazza, amelyek a felhasználók
+                            által gyakran keresettek az adott témában</li>
+                        <li>Akár a teljes website szövegének 80%-a</li>
+                    </ul>
+                </li>
+                <li>Amiről az adott oldal szól (például fagylalt), meg kell jeleníteni a kulcsszót a linkben, a címben
+                    (h1), meta description-ben, a cikk/leírás/oldal első-, és utolsó mondatában
+                    <ul>
+                        <li>Valamilyen variációban érdemes az első h2 tag-be is belecsempészni
+                            <ul>
+                                <li>&#60;h2>Hogyan készül a fagylalt?&#60;/h2></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>Bevethetjük az NLP-t is
+                    <ul>
+                        <li>Natural Language Processing</li>
+                        <li>Természetes nyelvfeldolgozás</li>
+                        <li>SEO szempontjából az NLP azt jelenti, hogy a keresőmotorok, mint a Google, nemcsak a
+                            kulcsszavakat vagy azok pontos előfordulásait nézik a weboldalakon, hanem képesek értelmezni
+                            a szövegek valódi jelentését, szándékát és kontextusát is</li>
+                        <li>Alkalmazásával a SEO-javítás nemcsak a kulcsszavak alkalmazására összpontosít, hanem a
+                            tartalom minőségére és relevanciájára is, hogy jobb és hasznosabb válaszokat nyújtson a
+                            felhasználók kereséseire</li>
+                        <li></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>Belső linkelés
+            <ul>
+                <li>Segítenek a Google-nek feltérképezni az oldaladat, és erősítik az oldal
+                    relevanciáját</li>
+                <li>Érdemes anchor text-et használni
+                    <ul>
+                        <li>Semmi "Kattins ide", vagy Olvasd el a cikket</li>
+                        <li>Helyette Tovább a <b>Rólunk</b> oldalra, vagy "Így fejlődtünk az évek során"</li>
+                        <li>A Rólunk egy létező oldal, az "Így fejlődtünk az évek során" pedig egy létező cikk,
+                            mindkettőnek ez a konkrét neve/címe</li>
+                    </ul>
+                </li>
+                <li>A weboldal struktúráját úgy kell kialakítani, hogy a felhasználók és a keresőmotorok könnyen
+                    hozzáférhessenek a legfontosabb tartalmakhoz, anélkül hogy 3 kattintásnál mélyebbre kellene
+                    navigálniuk
+                    <ul>
+                        <li>Nemcsak a keresőoptimalizálás szempontjából fontos, hanem a felhasználói élmény javítása
+                            érdekében is</li>
+                        <li>Ennél nagyobb mélység esetében a mélyebb szinteket a Google alacsonyabb prioritásként
+                            kezeli, és sokkal ritkábban crawl-olja, sőt, megeshet,hogy be sem indexeli őket</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>Képek és multimédia optimalizálása
+            <ul>
+                <li>Alt attribútum használata image tag-en</li>
+                <li>WEBP formátumú képek JPG helyett</li>
+                <li>Képek lazy betöltése</li>
+                <li>Az accessibility attribútumok nem közvetlen SEO rangsorolási tényezők, de javítják a
+                    felhasználói élményt, és segítik a keresőmotorokat az oldal megértésében
+                </li>
+            </ul>
+        </li>
+        <br>
+        <li><a href="https://www.semrush.com/" target="_blank">SEMrush</a>
+            <ul>
+                <li>Átfogó digitális marketing weboldal, amely elsősorban SEO (keresőoptimalizálás), PPC (fizetett
+                    hirdetések), tartalommarketing, közösségi média, és versenytárs-elemzés területein nyújt segítséget
+                </li>
+                <li>Fizetős szolgáltatás</li>
+            </ul>
+        </li>
+    </ul>
+    <br>
+    <h5 #offpage data-anchor="offpage">Off-page SEO</h5>
+    <ul>
+        <li>Off-page / Off-site SEO
+            <ul>
+                <li>Az oldalunkon kívül történő tevékenységek, faktorok, amik az oldalunkra vannak hatással</li>
+                <li>Mennyi link (backlink) mutat a weboldalunkra?
+                    <ul>
+                        <li>Minőségi, és releváns weboldalakról érkező hivatkozások</li>
+                        <li>Vendégblogolás, PR-cikkek, közösségi média megosztások</li>
+                        <li>Facebook, Twitter, LinkedIn, Instagram használata a forgalom növelésére</li>
+                        <li>Fórumokon, Reddit-en, és szakmai csoportokban való részvétel</li>
+                    </ul>
+                </li>
+                <li>A Google úgy tekint a backlink-ekre, mint valamiféle vote-okra
+                    <ul>
+                        <li>Minél több van, annál relevánsabbnak tekinti az oldalunkat</li>
+                    </ul>
+                </li>
+                <li>A backlink-jeink számának legskálázhatóbb növekedése úgy érhető el, ha értéket teremtünk az
+                    oldalunkon, aminek url-jére az emberek rá akarnak kattintani
+                    <ul>
+                        <li>Magas minőségű tartalommal érhető el</li>
+                    </ul>
+                </li>
+                <li>Általánosan igaz, hogy minél több hiteles, és releváns hivatkozásunk van más oldalaktól,
+                    annál jobb helyezést fogunk elérni a Google rangsorában</li>
+                <li><a href="https://ahrefs.com/" target="_blank">ahrefs.com</a>
+                    <ul>
+                        <li>Megnézhetjük például, hogy a konkurenciának milyen weboldalakra sikerült backlink-eket
+                            elhelyeznie</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<div>
+    <h3 #snippets data-anchor="snippets">Snippets</h3>
+    <ul>
+        <li>A Google kereső találati oldalán (SERP = Search Engine Results Page) megjelenő rövid előnézet, amely segít a
+            felhasználónak eldönteni, hogy az adott oldal releváns-e a kereséséhez, miről szól az adott oldal</li>
+        <li>A snippetek célja, hogy növeljék az átkattintási arányt (CTR = Click-Through Rate) azáltal, hogy a
+            felhasználó számára releváns és vonzó információkat mutatnak
+            <ul>
+                <li>CTR
+                    <ul>
+                        <li>Mutató, amely azt méri, hogy egy adott keresési találatot vagy hirdetést hányszor
+                            kattintanak meg a felhasználók a megjelenések számához képest</li>
+                        <li>Minél magasabb a CTR, annál vonzóbb az oldal snippetje a keresési eredményekben</li>
+                        <pre>
+            kattintások száma
+    CTR = -------------------- × 100%
+            megjelenések száma
+            
+                        </pre>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>Létrehozásának lépései
+            <ul>
+                <li>Kutatómunka, hogy mire szoktak rákeresni az emberek
+                    <ul>
+                        <li>Featured snippetek bizonyos keresésekre jelennek meg csak</li>
+                    </ul>
+                </li>
+                <li>Átgondolni, hogy hogyan lehet átvenni a jelenlegi helyét (még relevánsabb információkkal megtöltve a
+                    tartalmát a snippetnek)
+                    <ul>
+                        <li>A sorban lehet több, a miénknél relevánsabb snippet is</li>
+                    </ul>
+                </li>
+                <li>Elkészítés
+                    <ul>
+                        <li>Ha mondjuk egy keresésnél megjelenik egy featured snippet tábla formájában, akkor érdemes
+                            megnézni, hogy miként rakták ki a weboldalukra azok, akik jelenleg kikerülnek a snippetbe
+                        </li>
+                        <li>Egyik best practice: H2-nek vagy H3-nak kell szerepelnie az adott weboldalon, és azonnal
+                            alatta egyértelmű szöveges választ kell adni 40-60 szóban
+                            <ul>
+                                <li>Definition Snippet lehet belőle
+                                    <ul>
+                                        <li>Egy tömör, világos válasz, amelyet a Google automatikusan kiemelhet</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>Meg lehet próbálni megmutatni a Google-nek, hogy az oldalunkon van olyan tartalom, ami akár
+                            Featured Snippet is lehetne, de ezt a Google dönti el, hogy érdemes-e Featured Snippet-et
+                            létrehozni</li>
+                        <li>Headerek használata fontos, és alattuk egyértelmű válaszok, leírások</li>
+                        <li>A képre érdemes szöveget tenni</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>A kérdés mögé írva kötőjellel a domaint, ahonnan származik a snippet, megnézhetjük, hogy ki a soron
+            következő második találat
+            <ul>
+                <li>A Google úgy értelmezi, hogy az adott domainről származó találatokat ki kell hagyni a keresési
+                    eredményekből</li>
+                <pre>
+    a fagylalt hőmérséklet -gasztropartner.hu
+                </pre>
+            </ul>
+        </li>
+        <li>Amennyiben azt szeretnénk, hogy csak egy adott oldal találatai jelenjenek meg, a site: kifejezést használjuk
+            <ul>
+                <pre>
+    a fagylalt hőmérséklet site:hazipatika.com
+                </pre>
+            </ul>
+        </li>
+        <li>Mindhárom típusánál megjelenik/megjelenhet a félkövér (bold) szöveg
+            <ul>
+                <li>Desktopon, és mobilon is, a 'Math Sans Bold' betűtípus használatával, vagy &#60;b> és &#60;strong>
+                    tag is működik, de ezek nem befolyásolják a SEO-t
+                    <ul>
+                        <li>Csak odacsalhatják a szemeket</li>
+                    </ul>
+                </li>
+            </ul>
+            <br>
+            <ol>
+                <li>Standard Snippet
+                    <ul>
+                        <li>Megjelenhet a félkövér szöveg, de a Google automatikusan félkövérítheti a keresett
+                            kulcsszavakat a snippetben, még akkor is, ha az eredeti weboldalon nem volt félkövér</li>
+                    </ul>
+                </li>
+                <li>Rich Snippet
+                    <ul>
+                        <li>Ha az értékelések, receptek, árak vagy más strukturált adatok között van félkövér szöveg, az
+                            esélyes, hogy megjelenik félkövéren</li>
+                    </ul>
+                </li>
+                <li>Featured Snippet
+                    <ul>
+                        <li>Jó eséllyel megmarad félkövé, de ha a kereső úgy gondolja, hogy egy adott szó vagy kifejezés
+                            fontos, félkövérré teheti a snippetben, függetlenül attól, hogy az oldalon eredetileg
+                            félkövér volt-e vagy sem</li>
+                    </ul>
+                </li>
+            </ol>
+        </li>
+        <li>A SERP listában megjelenő tartalmat tudjuk szabályozni
+            <ol>
+                <li>data-nosnippet attribútum
+                    <ul>
+                        <li>Megakadályozza, hogy egy adott HTML elem tartalma megjelenjen a Google találati lista
+                            leírásában (Snippet-ben)</li>
+                        <li>Csak a megjelölt HTML elemre vonatkozik, nem az egész oldalra</li>
+                        <pre>
+    &#60;p data-nosnippet>Ez a szöveg nem jelenik meg a Google snippetben.&#60;/p>
+                        </pre>
+                    </ul>
+                </li>
+                <li>nosnippet meta tag
+                    <ul>
+                        <li>Oldalszintű</li>
+                        <li>Teljesen megakadályozza, hogy az oldalhoz bármilyen snippet generálódjon a Google találatok
+                            között</li>
+                        <li>A keresőmotor még indexelheti az oldalt, de nem fog hozzá megjeleníteni leírást/snippetet
+                        </li>
+                        <pre>
+    &#60;meta name="googlebot" content="nosnippet">
+                        </pre>
+                    </ul>
+                </li>
+            </ol>
+        </li>
+    </ul>
+    <br>
+    <h5 #standardsnippet data-anchor="standardsnippet">Standard Snippet</h5>
+    <ul>
+        <li>A klasszikus keresési találat, amely egy cím, egy URL, és egy leírás (meta description) részből áll</li>
+        <br>
+        <img src="assets/imgs/seo_standard_snippet.png" width="100%">
+        <br>
+    </ul>
+    <br>
+    <h5 #richsnippet data-anchor="richsnippet">Rich Snippet</h5>
+    <ul>
+        <li>Strukturált adatokat (JSON-LD, Microdata, RDFa) használva kiegészített találatok, amelyek extra
+            információkat jelenítenek meg
+            <ul>
+                <li>Magyarán struktúrált adatot szükséges hozzáadni a weboldalunkhoz</li>
+            </ul>
+        </li>
+        <li>Értékelések, események, receptek, ...</li>
+        <li>Rich Result-ként is hivatkoznak rá</li>
+        <li>Magas CTR-t eredményeznek</li>
+        <br>
+        <img src="assets/imgs/seo_rich_snippet.png" width="100%">
+        <br>
+    </ul>
+    <br>
+    <h5 #featuredsnippet data-anchor="featuredsnippet">Featured Snippet</h5>
+    <ul>
+        <li>Kiemelt találat ("0. pozíció"), amelyet a Google a keresési eredmények tetején jelenít meg</li>
+        <li>Célja, hogy azonnali választ adjon a felhasználók kérdésére, anélkül, hogy rá kellene kattintani a
+            weboldalra</li>
+        <li>Egy jól strukturált oldal tartalmából kerül ki</li>
+        <li>Formátuma lehet
+            <ol>
+                <li>szöveg</li>
+                <li>lista</li>
+                <li>táblázat</li>
+                <li>kép</li>
+                <li>videó</li>
+            </ol>
+        </li>
+        <br>
+        <img src="assets/imgs/seo_featured_snippet.png" width="100%">
+        <br>
+    </ul>
+</div>
+
+<div>
+    <h3 #structureddata data-anchor="structureddata">Structured data</h3>
+    <ul>
+        <li>Olyan (strukturált / egyértelműen, jól meghatározott módon rendezett) adatokat jelent, amelyek
+            szabványosított formában vannak tárolva, és könnyen feldolgozhatók gépek számára</li>
+        <li>Segít a crawlerek-nek / Google botoknak, hogy úgy jelenjenek meg a keresési találatok, ahogy mi szeretnénk
+        </li>
+        <li>Az oldal tartalmának besorolására / osztályozására való</li>
+        <li>Használatának 3 célja lehet
+            <ol>
+                <li>SEO optimalizálása
+                    <ul>
+                        <li>A strukturált adatok lehetővé teszik, hogy a keresőmotorok pontosabb találatokat
+                            jelenítsenek meg</li>
+                        <li>Nem helyettesíti a meta tag-eket, és egyéb SEO optimalizálásokat, hanem kiegészíti</li>
+                    </ul>
+                </li>
+                <li>Rich Snippet megjelenítése
+                    <ul>
+                        <li>Több információt adnak a felhasználónak, és figyelemfelkeltőbbek lehetnek, mint a
+                            hagyományos találatok</li>
+                    </ul>
+                </li>
+                <li>Időmegtakarítás
+                    <ul>
+                        <li>Struktúrált adatok használatával gyorsabb, és pontosabb találatokat adhatnak</li>
+                        <li>A weboldal tulajdonosának is kevesebb időt kell tölteni az adatok manuális feldolgozásával,
+                            vagy optimalizálásával</li>
+                    </ul>
+                </li>
+            </ol>
+        </li>
+        <li>Használatával sem garantált az, hogy a megfelelő meta description fog megjelenni a SERP-en, de egyébként
+            fallback-ként tudja használni a Google, amennyiben nem kapott meta adatot
+            <ul>
+                <li>Ha az oldal nem tartalmaz meta description-t, vagy ha a Google úgy ítéli meg, hogy az nem releváns,
+                    akkor a Google saját szöveget generálhat a találat leírásaként, amely a keresett kulcsszót
+                    tartalmazza</li>
+                <li>a Google ebből a struktúrált adatból próbál információt nyerni, és azt jeleníti meg a meta
+                    description helyett a keresési találatokban</li>
+            </ul>
+        </li>
+        <li><a href="https://developers.google.com/search/docs/appearance/structured-data" target="_blank">
+                Google Rich Result Test and Schema Markup Validator</a>
+        </li>
+    </ul>
+    <br>
+    <h5 #schemamarkup data-anchor="schemamarkup">Schema Markup</h5>
+    <ul>
+        <li>Egy olyan strukturált adat formátum, amelyet a Schema.org nyílt webes szótár használ</li>
+        <li>Lehetővé teszi különböző típusú entitások (például termékek, események, személyek) meghatározását
+            strukturált adatok segítségével</li>
+        <li>A a weboldalon segít megfelelő módon reprezentálni, hogy a keresőmotorok (például Google, Bing) jobban
+            értelmezzék a weboldal tartalmát
+            <ul>
+                <li>Ha az adott oldalunkon mondjuk egy recept található, a Schema.org szerint formázva a strukturált
+                    adatunkat, a keresőmotorok tudják, hogy ez egy recept, és hogyan jeleníthetik meg mondjuk Rich
+                    Snippet-ként</li>
+            </ul>
+        </li>
+        <li>Több száz schema markup létezik
+            <ul>
+                <li>Avagy a Schema.org szótár több száz különböző Schema Markup típusú adatot tartalmaz</li>
+            </ul>
+            <br>
+            <ol>
+                <li>Személyek: név, cím, születési dátum</li>
+                <li>Termékek: ár, értékelések, elérhetőség</li>
+                <li>Receptek: hozzávalók, elkészítési idő, receptlépései</li>
+                <li>Események: dátumok, helyszínek, jegyvásárlás</li>
+                <li>Cikkek és hírek: cím, szerző, publikálási dátum</li>
+                <li>Szervezetek: cég neve, tevékenység, elérhetőség</li>
+                <li>Vélemények, értékelések: csillagos értékelések, vélemények</li>
+                <li>...</li>
+            </ol>
+        </li>
+        <li>Használhatunk különböző formátumokat (JSON-LD, Microdata, RDFa) a megjelenítésére</li>
+        <li><a href="https://technicalseo.com/tools/schema-markup-generator/" target="_blank">
+                Schema Markup Generator</a>
+        </li>
+        <li><a href="https://www.google.com/webmasters/markup-helper/u/0/" target="_blank">Markup Helper</a></li>
+        <li><a href="https://validator.schema.org/" target="_blank">Schema.org Validator</a></li>
+    </ul>
+    <h5 #dictionary data-anchor="dictionary">Schema.org dictionary</h5>
+    <ul>
+        <li>A description 50-150 karakter hosszú legyen</li>
+        <li>A mainEntityOfPage-t, és az isPartOf-ot érdemes megadni annak érdekében, hogy a robotok teljesebb képet
+            kapjanak a weboldalunkról, az adott oldal és a teljes weboldal közötti kapcsolatról (de nem kötelezőek!)
+        </li>
+        <li>A primaryImageOfpage a WebPage típusoknál alkalmazandó</li>
+        <li>Az ArticleBody plain text, vagy HTML lehet</li>
+    </ul>
+    <br>
+    <h5 #jsonld data-anchor="jsonld">JSON-LD</h5>
+    <ul>
+        <li>JavaScript Object Notation (JSON) for Linked Data</li>
+        <li>Specifikus formátum a Structured Data számára</li>
+        <li>A JSON-LD a Schema Markup egyik legelterjedtebb formátuma</li>
+        <li>JavaScript alapú, és könnyen olvasható</li>
+        <li>Az egyik legújabb, legjobb, és legajánlottabb formátum</li>
+        <li>JSON-t használ, de a Linked Data koncepcióját követi</li>
+        <li>Az adatok a HTML kódon kívül egy (praktikusan egy, nem több) &#60;script> tagben jelenhetnek meg, nem
+            befolyásolják a weboldal vizuális megjelenését</li>
+        <li>Könnyű implementálni</li>
+        <li>A Google és más keresők kifejezetten javasolják a JSON-LD használatát</li>
+        <li>Bonyolultabb adatmodellek esetén is alkalmazható</li>
+        <li>Implementáció után a Google Search Central-ban megtekinthetők a riportok a Structured Data
+            validitását illetően</li>
+        <br>
+        <li>Linked Data
+            <ul>
+                <li>A kapcsolt adatok egy olyan módszertan, amely lehetővé teszi az
+                    adatok összekapcsolását az interneten keresztül, úgy, hogy a gépek
+                    könnyebben megértsék és feldolgozzák azokat</li>
+                <li>4 alapelve
+                    <ol>
+                        <li>Egyedi azonosítók: Minden egyes adat (például személy,
+                            termék) kapjon egyedi azonosítót (például URL)</li>
+                        <li>Elérhetőség: Az URI-k legyenek elérhetők HTTP-n keresztül,
+                            hogy a felhasználók és gépek egyaránt lekérdezhessék azokat
+                        </li>
+                        <li>Struktúrált adatok: Az adatok leírására strukturált, gép
+                            által olvasható formátumokat kell alkalmazni</li>
+                        <li>Adatkapcsolatok: Az adatok között kapcsolatokat kell
+                            teremteni, hogy értelmezhetők legyenek a többi információval
+                            együtt</li>
+                    </ol>
+                </li>
+            </ul>
+        </li>
+        <br>
+        <li>Az a legfontosabb, hogy pontos információt adjunk át, ami valóban megfelel az adott oldalnak
+            <ul>
+                <li>Ha valami nem áll rendelkezésre, "üresen" ne kerüljön az adathalmazba</li>
+            </ul>
+        </li>
+        <li>A túl nagy JSON-LD adatok lassíthatják az oldal betöltési idejét, mivel a weboldal egyes keresőmotorok
+            számára történő indexelését akadályozhatják
+            <ul>
+                <li>Az optimális elemszám jellemzően 10.000 - 30.000 közötti érték</li>
+                <li>Semmiképpen se haladja meg a 100.000-res elemszámot</li>
+            </ul>
+        </li>
+    </ul>
+    <br>
+    <h5 #microdata data-anchor="microdata">Microdata</h5>
+    <ul>
+        <li>HTML kiterjesztés, amely a strukturált adatokat közvetlenül a HTML elemekbe ágyazza
+        </li>
+        <li>Könnyen elérhető az oldal tartalmához</li>
+        <li>A weboldal dizájnjával együtt változhat, és a szerkesztése bonyolultabb lehet, mint
+            a JSON-LD esetében</li>
+    </ul>
+    <h5 #rdfa data-anchor="rdfa">RDFa</h5>
+    <ul>
+        <li>Resource Description Framework in Attributes</li>
+        <li>RDF szabvány kiterjesztése, amely lehetővé teszi a strukturált adatok beágyazását a
+            HTML dokumentumba
+            <ul>
+                <li>RDF
+                    <ul>
+                        <li>Resource Description Framework</li>
+                        <li>Egy adatmodell, amelyet a weben található erőforrások leírására, és
+                            összekapcsolására használnak</li>
+                        <li>A Linked Data egyik alapköve</li>
+                        <li>Az RDF adat 3 részből áll (triplet)
+                            <ol>
+                                <li>Alany (Subject): A szóban forgó doloog (például egy személy,
+                                    termék)</li>
+                                <li>Állítmány (Predicate): Az adott alanyhoz kapcsolódó
+                                    tulajdonság, vagy kapcsolat (például a neve)</li>
+                                <li>Tárgy (Object): Az alany tulajdonságának értéke (például
+                                    Clark Kent)</li>
+                            </ol>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>Nehezebben implementálható és karbantartható</li>
+    </ul>
+    <br>
+</div>
+
+<div>
+    <h3 #examples data-anchor="examples">Examples</h3>
+    <h5 #loginpageexample data-anchor="loginpageexample">Login page</h5>
+    <ul>
+        <pre>
+    <b>// JSON-LD</b>
+
+    &#60;script type="application/ld+json">
+        &#123;
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "url": "https://www.example.com/login",
+            "name": "Login",
+            "description": " Login to a food delivery service that offers a wide variety of delicious meals.",
+            "language": "hu-HU",
+            "isPartOf": &#123;
+                "@type": "WebSite",
+                "name": "Example Food Delivery",
+                "url": https://www.example.com,
+                "logo": &#123;
+                "@type": "ImageObject",
+                "url": "https://www.food-delivery-business.com/logo.png"
+                }
+            },
+            "primaryImageOfPage": &#123;
+                "@type": "ImageObject",
+                "url": "https://www.example.com/images/logo.png"
+            },
+            "breadcrumb": &#123;
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    &#123;
+                        "@type": "ListItem",
+                        "position": 1,
+                        "item": &#123;
+                        "@id": "https://www.example.com",
+                        "name": "Home"
+                        }
+                    },
+                    &#123;
+                        "@type": "ListItem",
+                        "position": 2,
+                        "item": &#123;
+                        "@id": "https://www.example.com/login",
+                        "name": "Login"
+                        }
+                    }
+                ]
+            }
+        }
+    &#60;/script>
+
+    <b> // Microdata</b>
+
+    &#60;div itemscope itemtype="https://schema.org/WebPage">
+        &#60;meta itemprop="url" content="https://www.example.com/login">
+        &#60;meta itemprop="name" content="Login">
+        &#60;meta itemprop="description" content="Login to a food delivery service that offers a wide variety of delicious meals.">
+        &#60;meta itemprop="language" content="hu-HU">
+        
+        &#60;div itemprop="isPartOf" itemscope itemtype="https://schema.org/WebSite">
+            &#60;meta itemprop="name" content="Example Food Delivery">
+            &#60;meta itemprop="url" content="https://www.example.com">
+            &#60;div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+            &#60;meta itemprop="url" content="https://www.food-delivery-business.com/logo.png">
+            &#60;/div>
+        &#60;/div>
+        
+        &#60;div itemprop="primaryImageOfPage" itemscope itemtype="https://schema.org/ImageObject">
+            &#60;meta itemprop="url" content="https://www.example.com/images/logo.png">
+        &#60;/div>
+        
+        &#60;div itemprop="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+            &#60;div itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            &#60;meta itemprop="position" content="1">
+            &#60;meta itemprop="name" content="Home">
+            &#60;meta itemprop="item" content="https://www.example.com">
+            &#60;/div>
+            &#60;div itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            &#60;meta itemprop="position" content="2">
+            &#60;meta itemprop="name" content="Login">
+            &#60;meta itemprop="item" content="https://www.example.com/login">
+            &#60;/div>
+        &#60;/div>
+    &#60;/div>              
+
+    <b>// RDFa</b>
+
+    &#60;div xmlns:v="http://rdf.data-vocabulary.org/#" xmlns="http://www.w3.org/1999/xhtml">
+        &#60;div typeof="v:WebPage">
+            &#60;span property="v:url" content="https://www.example.com/login">&#60;/span>
+            &#60;span property="v:name" content="Login">&#60;/span>
+            &#60;span property="v:description" content="Login to a food delivery service that offers a wide variety of delicious meals.">&#60;/span>
+            &#60;span property="v:language" content="hu-HU">&#60;/span>
+            
+            &#60;div property="v:isPartOf" typeof="v:WebSite">
+            &#60;span property="v:name" content="Example Food Delivery">&#60;/span>
+            &#60;span property="v:url" content="https://www.example.com">&#60;/span>
+            &#60;div property="v:logo" typeof="v:ImageObject">
+                &#60;span property="v:url" content="https://www.food-delivery-business.com/logo.png">&#60;/span>
+            &#60;/div>
+            &#60;/div>
+        
+            &#60;div property="v:primaryImageOfPage" typeof="v:ImageObject">
+            &#60;span property="v:url" content="https://www.example.com/images/logo.png">&#60;/span>
+            &#60;/div>
+        
+            &#60;div property="v:breadcrumb" typeof="v:BreadcrumbList">
+            &#60;div property="v:itemListElement" typeof="v:ListItem">
+                &#60;span property="v:position" content="1">&#60;/span>
+                &#60;span property="v:name" content="Home">&#60;/span>
+                &#60;span property="v:item" content="https://www.example.com">&#60;/span>
+            &#60;/div>
+            &#60;div property="v:itemListElement" typeof="v:ListItem">
+                &#60;span property="v:position" content="2">&#60;/span>
+                &#60;span property="v:name" content="Login">&#60;/span>
+                &#60;span property="v:item" content="https://www.example.com/login">&#60;/span>
+            &#60;/div>
+            &#60;/div>
+        &#60;/div>
+    &#60;/div> 
+        </pre>
+    </ul>
+    <br>
+    <h5 #homepageexample data-anchor="homepageexample">Home page</h5>
+    <ul>
+        <pre>
+    <b>// JSON-LD</b>
+    
+    &#60;script type="application/ld+json">
+        &#123;
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "url": "https://www.example.com",
+            "name": "Example Food Delivery",
+            "description": "A food delivery service that offers a wide variety of delicious meals.",
+            "language": "hu-HU",
+            "isPartOf": &#123;
+            "@type": "WebSite",
+            "name": "Example Food Delivery",
+            "url": https://www.example.com,
+            "logo": &#123;
+                "@type": "ImageObject",
+                "url": "https://www.food-delivery-business.com/logo.png"
+            }
+            },
+            "sameAs": [
+                "https://www.facebook.com/example",
+                "https://twitter.com/example",
+                "https://www.instagram.com/example"
+            ],
+            "primaryImageOfPage": &#123;
+            "@type": "ImageObject",
+            "url": "https://www.example.com/images/logo.png"
+            },
+            "breadcrumbList": &#123;
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                &#123;
+                "@type": "ListItem",
+                "position": 1,
+                "item": &#123;
+                    "@id": "https://www.example.com",
+                    "name": "Home"
+                }
+                }
+            ]
+            }
+        }
+    &#60;/script>
+
+    <b>// Microdata</b>
+    
+    &#60;div itemscope itemtype="https://schema.org/WebPage">
+        &#60;link itemprop="url" href="https://www.example.com" />
+        &#60;span itemprop="name">Example Food Delivery&#60;/span>
+        &#60;meta itemprop="description" content="A food delivery service that offers a wide variety of delicious meals." />
+        &#60;meta itemprop="language" content="hu-HU" />
+        &#60;div itemprop="isPartOf" itemscope itemtype="https://schema.org/WebSite">
+            &#60;span itemprop="name">Example Food Delivery&#60;/span>
+            &#60;link itemprop="url" href="https://www.example.com" />
+            &#60;div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+            &#60;link itemprop="url" href="https://www.food-delivery-business.com/logo.png" />
+            &#60;/div>
+        &#60;/div>
+        &#60;ul itemprop="sameAs" itemscope>
+            &#60;li>&#60;a href="https://www.facebook.com/example">Facebook&#60;/a>&#60;/li>
+            &#60;li>&#60;a href="https://twitter.com/example">Twitter&#60;/a>&#60;/li>
+            &#60;li>&#60;a href="https://www.instagram.com/example">Instagram&#60;/a>&#60;/li>
+        &#60;/ul>
+        &#60;div itemprop="primaryImageOfPage" itemscope itemtype="https://schema.org/ImageObject">
+            &#60;link itemprop="url" href="https://www.example.com/images/logo.png" />
+        &#60;/div>
+        &#60;div itemprop="breadcrumbList" itemscope itemtype="https://schema.org/BreadcrumbList">
+            &#60;div itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            &#60;meta itemprop="position" content="1" />
+            &#60;link itemprop="item" href="https://www.example.com" />
+            &#60;span itemprop="name">Home&#60;/span>
+            &#60;/div>
+        &#60;/div>
+    &#60;/div>              
+
+    <b>// RDFa</b>
+
+    &#60;div typeof="WebPage" about="https://www.example.com">
+        &#60;span property="name">Example Food Delivery&#60;/span>
+        &#60;meta property="description" content="A food delivery service that offers a wide variety of delicious meals." />
+        &#60;meta property="language" content="hu-HU" />
+        &#60;div property="isPartOf" typeof="WebSite">
+            &#60;span property="name">Example Food Delivery&#60;/span>
+            &#60;link property="url" href="https://www.example.com" />
+            &#60;div property="logo" typeof="ImageObject">
+            &#60;link property="url" href="https://www.food-delivery-business.com/logo.png" />
+            &#60;/div>
+        &#60;/div>
+        &#60;ul property="sameAs">
+            &#60;li>&#60;a href="https://www.facebook.com/example">Facebook&#60;/a>&#60;/li>
+            &#60;li>&#60;a href="https://twitter.com/example">Twitter&#60;/a>&#60;/li>
+            &#60;li>&#60;a href="https://www.instagram.com/example">Instagram&#60;/a>&#60;/li>
+        &#60;/ul>
+        &#60;div property="primaryImageOfPage" typeof="ImageObject">
+            &#60;link property="url" href="https://www.example.com/images/logo.png" />
+        &#60;/div>
+        &#60;div property="breadcrumbList" typeof="BreadcrumbList">
+            &#60;div property="itemListElement" typeof="ListItem">
+            &#60;meta property="position" content="1" />
+            &#60;link property="item" href="https://www.example.com" />
+            &#60;span property="name">Home&#60;/span>
+            &#60;/div>
+        &#60;/div>
+    &#60;/div>  
+        </pre>
+    </ul>
+    <br>
+    <h5 #cartepageexample data-anchor="cartepageexample">Carte page</h5>
+    <ul>
+        <pre>
+    <b>// JSON-LD</b>
+
+    &#60;script type="application/ld+json">
+        &#123;
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "url": "https://www.example.com/menu",
+            "name": "Example Food Delivery - Menu",
+            "description": "Our food company offers the following carte – All kinds of food are available – Order now",
+            "language": "hu-HU",
+            "datePublished": "2022-01-01",
+            "dateModified": "2022-01-01",
+            "isPartOf": &#123;
+                "@type": "WebSite",
+                "name": "Example Food Delivery",
+                "url": https://www.example.com,
+                "logo": &#123;
+                "@type": "ImageObject",
+                "url": "https://www.food-delivery-business.com/logo.png"
+                }
+            },
+            "primaryImageOfPage": &#123;
+                "@type": "ImageObject",
+                "url": "https://www.example.com/images/logo.png"
+            },
+            "hasPart": &#123;
+            "@type": "ItemList",
+            "name": "List of Food Items",
+            "itemListElement": [
+                &#123;
+                "@type": "ListItem",
+                "name": "Pizza Margherita",
+                "description": "A classic pizza with tomato sauce, mozzarella cheese, and basil.",
+                "image": "https://www.example.com/images/pizza-margherita.jpg",
+                "offers": &#123;
+                    "@type": "Offer",
+                    "price": "1440",
+                    "priceCurrency": "HUF",
+                    "availability": "InStock"
+                }
+                },
+                &#123;
+                "@type": "ListItem",
+                "name": "Spaghetti Bolognese",
+                "description": "Spaghetti pasta with a meat-based sauce.",
+                "image": "https://www.example.com/images/spaghetti-bolognese.jpg",
+                "offers": &#123;
+                    "@type": "Offer",
+                    "price": "1875",
+                    "priceCurrency": "HUF",
+                    "availability": "OutOfStock"
+                }
+                },
+                &#123;
+                "@type": "ListItem",
+                "name": "Fried Rice",
+                "description": "A classic Chinese dish made with rice, vegetables, and meat.",
+                "image": "https://www.example.com/images/fried-rice.jpg",
+                "offers": &#123;
+                    "@type": "Offer",
+                    "price": "2245",
+                    "priceCurrency": "HUF",
+                    "availability": "InStock"
+                }
+                }
+            ]
+            },
+            "breadcrumb": &#123;
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                &#123;
+                "@type": "ListItem",
+                "position": 1,
+                "item": &#123;
+                    "@id": "https://www.example.com",
+                    "name": "Home"
+                }
+                },
+                &#123;
+                "@type": "ListItem",
+                "position": 2,
+                "item": &#123;
+                    "@id": "https://www.example.com/menu",
+                    "name": "Menu"
+                }
+                }
+                ]
+            }
+        }
+    &#60;/script>
+
+    <b>// Microdata</b>
+
+    &#60;div itemscope itemtype="https://schema.org/WebPage">
+        &#60;link itemprop="url" href="https://www.example.com/menu" />
+        &#60;span itemprop="name">Example Food Delivery - Menu&#60;/span>
+        &#60;meta itemprop="description" content="Our food company offers the following carte – All kinds of food are available – Order now" />
+        &#60;meta itemprop="language" content="hu-HU" />
+        &#60;meta itemprop="datePublished" content="2022-01-01" />
+        &#60;meta itemprop="dateModified" content="2022-01-01" />
+        
+        &#60;div itemprop="isPartOf" itemscope itemtype="https://schema.org/WebSite">
+            &#60;span itemprop="name">Example Food Delivery&#60;/span>
+            &#60;link itemprop="url" href="https://www.example.com" />
+            &#60;div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+            &#60;link itemprop="url" href="https://www.food-delivery-business.com/logo.png" />
+            &#60;/div>
+        &#60;/div>
+        
+        &#60;div itemprop="primaryImageOfPage" itemscope itemtype="https://schema.org/ImageObject">
+            &#60;link itemprop="url" href="https://www.example.com/images/logo.png" />
+        &#60;/div>
+        
+        &#60;div itemprop="hasPart" itemscope itemtype="https://schema.org/ItemList">
+            &#60;span itemprop="name">List of Food Items&#60;/span>
+            &#60;div itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            &#60;span itemprop="name">Pizza Margherita&#60;/span>
+            &#60;meta itemprop="description" content="A classic pizza with tomato sauce, mozzarella cheese, and basil." />
+            &#60;img itemprop="image" src="https://www.example.com/images/pizza-margherita.jpg" alt="Pizza Margherita" />
+            &#60;div itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                &#60;meta itemprop="price" content="1440" />
+                &#60;meta itemprop="priceCurrency" content="HUF" />
+                &#60;meta itemprop="availability" content="InStock" />
+            &#60;/div>
+            &#60;/div>
+        
+            &#60;div itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            &#60;span itemprop="name">Spaghetti Bolognese&#60;/span>
+            &#60;meta itemprop="description" content="Spaghetti pasta with a meat-based sauce." />
+            &#60;img itemprop="image" src="https://www.example.com/images/spaghetti-bolognese.jpg" alt="Spaghetti Bolognese" />
+            &#60;div itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                &#60;meta itemprop="price" content="1875" />
+                &#60;meta itemprop="priceCurrency" content="HUF" />
+                &#60;meta itemprop="availability" content="OutOfStock" />
+            &#60;/div>
+            &#60;/div>
+        
+            &#60;div itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            &#60;span itemprop="name">Fried Rice&#60;/span>
+            &#60;meta itemprop="description" content="A classic Chinese dish made with rice, vegetables, and meat." />
+            &#60;img itemprop="image" src="https://www.example.com/images/fried-rice.jpg" alt="Fried Rice" />
+            &#60;div itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                &#60;meta itemprop="price" content="2245" />
+                &#60;meta itemprop="priceCurrency" content="HUF" />
+                &#60;meta itemprop="availability" content="InStock" />
+            &#60;/div>
+            &#60;/div>
+        &#60;/div>
+        
+        &#60;div itemprop="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+            &#60;div itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            &#60;meta itemprop="position" content="1" />
+            &#60;link itemprop="item" href="https://www.example.com" />
+            &#60;span itemprop="name">Home&#60;/span>
+            &#60;/div>
+            &#60;div itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            &#60;meta itemprop="position" content="2" />
+            &#60;link itemprop="item" href="https://www.example.com/menu" />
+            &#60;span itemprop="name">Menu&#60;/span>
+            &#60;/div>
+        &#60;/div>
+    &#60;/div>              
+
+    <b>// RDFa</b>
+
+    &#60;div typeof="WebPage" about="https://www.example.com/menu">
+        &#60;span property="name">Example Food Delivery - Menu&#60;/span>
+        &#60;meta property="description" content="Our food company offers the following carte – All kinds of food are available – Order now" />
+        &#60;meta property="language" content="hu-HU" />
+        &#60;meta property="datePublished" content="2022-01-01" />
+        &#60;meta property="dateModified" content="2022-01-01" />
+        
+        &#60;div property="isPartOf" typeof="WebSite">
+            &#60;span property="name">Example Food Delivery&#60;/span>
+            &#60;link property="url" href="https://www.example.com" />
+            &#60;div property="logo" typeof="ImageObject">
+            &#60;link property="url" href="https://www.food-delivery-business.com/logo.png" />
+            &#60;/div>
+        &#60;/div>
+        
+        &#60;div property="primaryImageOfPage" typeof="ImageObject">
+            &#60;link property="url" href="https://www.example.com/images/logo.png" />
+        &#60;/div>
+        
+        &#60;div property="hasPart" typeof="ItemList">
+            &#60;span property="name">List of Food Items&#60;/span>
+            &#60;div property="itemListElement" typeof="ListItem">
+            &#60;span property="name">Pizza Margherita&#60;/span>
+            &#60;meta property="description" content="A classic pizza with tomato sauce, mozzarella cheese, and basil." />
+            &#60;img property="image" src="https://www.example.com/images/pizza-margherita.jpg" alt="Pizza Margherita" />
+            &#60;div property="offers" typeof="Offer">
+                &#60;meta property="price" content="1440" />
+                &#60;meta property="priceCurrency" content="HUF" />
+                &#60;meta property="availability" content="InStock" />
+            &#60;/div>
+            &#60;/div>
+        
+            &#60;div property="itemListElement" typeof="ListItem">
+            &#60;span property="name">Spaghetti Bolognese&#60;/span>
+            &#60;meta property="description" content="Spaghetti pasta with a meat-based sauce." />
+            &#60;img property="image" src="https://www.example.com/images/spaghetti-bolognese.jpg" alt="Spaghetti Bolognese" />
+            &#60;div property="offers" typeof="Offer">
+                &#60;meta property="price" content="1875" />
+                &#60;meta property="priceCurrency" content="HUF" />
+                &#60;meta property="availability" content="OutOfStock" />
+            &#60;/div>
+            &#60;/div>
+        
+            &#60;div property="itemListElement" typeof="ListItem">
+            &#60;span property="name">Fried Rice&#60;/span>
+            &#60;meta property="description" content="A classic Chinese dish made with rice, vegetables, and meat." />
+            &#60;img property="image" src="https://www.example.com/images/fried-rice.jpg" alt="Fried Rice" />
+            &#60;div property="offers" typeof="Offer">
+                &#60;meta property="price" content="2245" />
+                &#60;meta property="priceCurrency" content="HUF" />
+                &#60;meta property="availability" content="InStock" />
+            &#60;/div>
+            &#60;/div>
+        &#60;/div>
+        
+        &#60;div property="breadcrumb" typeof="BreadcrumbList">
+            &#60;div property="itemListElement" typeof="ListItem">
+            &#60;meta property="position" content="1" />
+            &#60;link property="item" href="https://www.example.com" />
+            &#60;span property="name">Home&#60;/span>
+            &#60;/div>
+            &#60;div property="itemListElement" typeof="ListItem">
+            &#60;meta property="position" content="2" />
+            &#60;link property="item" href="https://www.example.com/menu" />
+            &#60;span property="name">Menu&#60;/span>
+            &#60;/div>
+        &#60;/div>
+    &#60;/div>
+        </pre>
+    </ul>
+    <br>
+    <h5 #categorypageexample data-anchor="categorypageexample">Category page</h5>
+    <ul>
+        <pre>
+    <b>// JSON-LD</b>
+    
+    &#60;script type="application/ld+json">
+        &#123;
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            "url": "https://www.example.com/categories",
+            "name": "Categories",
+            "description": "List of available categories for food ordering on our site",
+            "language": "hu-HU",
+            "isPartOf": &#123;
+                "@type": "WebSite",
+                "name": "Example Food Delivery",
+                "url": https://www.example.com,
+                "logo": &#123;
+                "@type": "ImageObject",
+                "url": "https://www.food-delivery-business.com/logo.png"
+                }
+            },
+            "primaryImageOfPage": &#123;
+                "@type": "ImageObject",
+                "url": "https://www.example.com/images/logo.png"
+            },
+            "itemListElement": [
+                &#123;
+                    "@type": "ListItem",
+                    "name": "Pizza",
+                    "url": "https://www.example.com/categories/pizza"
+                },
+                &#123;
+                    "@type": "ListItem",
+                    "name": "Pasta",
+                    "url": "https://www.example.com/categories/pasta"
+                },
+                &#123;
+                    "@type": "ListItem",
+                    "name": "Deserts",
+                    "url": "https://www.example.com/categories/deserts"
+                }
+            ],
+            "breadcrumb": &#123;
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    &#123;
+                        "@type": "ListItem",
+                            "position": "1",
+                            "item": &#123;
+                            "@id": "https://www.example.com",
+                            "name": "Home"
+                        }
+                    },
+                    &#123;
+                        "@type": "ListItem",
+                            "position": "2",
+                            "item": &#123;
+                            "@id": "https://www.example.com/categories",
+                            "name": "Categories"
+                        }
+                    }
+                ]
+            }
+        }
+    &#60;/script>
+
+    <b>// Microdata</b>
+
+    &#60;div itemscope itemtype="https://schema.org/CollectionPage">
+        &#60;link itemprop="url" href="https://www.example.com/categories">
+        &#60;h1 itemprop="name">Categories&#60;/h1>
+        &#60;meta itemprop="description" content="List of available categories for food ordering on our site">
+        &#60;meta itemprop="language" content="hu-HU">
+        
+        &#60;div itemprop="isPartOf" itemscope itemtype="https://schema.org/WebSite">
+            &#60;meta itemprop="name" content="Example Food Delivery">
+            &#60;link itemprop="url" href="https://www.example.com">
+            &#60;div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+            &#60;link itemprop="url" href="https://www.food-delivery-business.com/logo.png">
+            &#60;/div>
+        &#60;/div>
+        
+        &#60;div itemprop="primaryImageOfPage" itemscope itemtype="https://schema.org/ImageObject">
+            &#60;link itemprop="url" href="https://www.example.com/images/logo.png">
+        &#60;/div>
+        
+        &#60;ul itemprop="itemListElement" itemscope itemtype="https://schema.org/ItemList">
+            &#60;li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            &#60;a itemprop="item" href="https://www.example.com/categories/pizza">
+                &#60;span itemprop="name">Pizza&#60;/span>
+            &#60;/a>
+            &#60;/li>
+            &#60;li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            &#60;a itemprop="item" href="https://www.example.com/categories/pasta">
+                &#60;span itemprop="name">Pasta&#60;/span>
+            &#60;/a>
+            &#60;/li>
+            &#60;li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            &#60;a itemprop="item" href="https://www.example.com/categories/deserts">
+                &#60;span itemprop="name">Deserts&#60;/span>
+            &#60;/a>
+            &#60;/li>
+        &#60;/ul>
+        
+        &#60;div itemprop="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+            &#60;ol>
+            &#60;li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                &#60;a itemprop="item" href="https://www.example.com">
+                &#60;span itemprop="name">Home&#60;/span>
+                &#60;/a>
+            &#60;/li>
+            &#60;li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                &#60;a itemprop="item" href="https://www.example.com/categories">
+                &#60;span itemprop="name">Categories&#60;/span>
+                &#60;/a>
+            &#60;/li>
+            &#60;/ol>
+        &#60;/div>
+    &#60;/div>  
+
+    <b>// RDFa</b>
+
+    &#60;div xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+            typeof="https://schema.org/CollectionPage">
+        &#60;link href="https://www.example.com/categories" rel="canonical">
+        &#60;h1 property="name">Categories&#60;/h1>
+        &#60;meta property="description" content="List of available categories for food ordering on our site">
+        &#60;meta property="language" content="hu-HU">
+
+        &#60;div property="isPartOf" typeof="https://schema.org/WebSite">
+            &#60;meta property="name" content="Example Food Delivery">
+            &#60;link property="url" href="https://www.example.com">
+            &#60;div property="logo" typeof="https://schema.org/ImageObject">
+            &#60;link property="url" href="https://www.food-delivery-business.com/logo.png">
+            &#60;/div>
+        &#60;/div>
+
+        &#60;div property="primaryImageOfPage" typeof="https://schema.org/ImageObject">
+            &#60;link property="url" href="https://www.example.com/images/logo.png">
+        &#60;/div>
+
+        &#60;ul property="itemListElement" typeof="https://schema.org/ItemList">
+            &#60;li property="itemListElement" typeof="https://schema.org/ListItem">
+            &#60;a property="item" href="https://www.example.com/categories/pizza">
+                &#60;span property="name">Pizza&#60;/span>
+            &#60;/a>
+            &#60;/li>
+            &#60;li property="itemListElement" typeof="https://schema.org/ListItem">
+            &#60;a property="item" href="https://www.example.com/categories/pasta">
+                &#60;span property="name">Pasta&#60;/span>
+            &#60;/a>
+            &#60;/li>
+            &#60;li property="itemListElement" typeof="https://schema.org/ListItem">
+            &#60;a property="item" href="https://www.example.com/categories/deserts">
+                &#60;span property="name">Deserts&#60;/span>
+            &#60;/a>
+            &#60;/li>
+        &#60;/ul>
+
+        &#60;div property="breadcrumb" typeof="https://schema.org/BreadcrumbList">
+            &#60;ol>
+            &#60;li property="itemListElement" typeof="https://schema.org/ListItem">
+                &#60;a property="item" href="https://www.example.com">
+                &#60;span property="name">Home&#60;/span>
+                &#60;/a>
+            &#60;/li>
+            &#60;li property="itemListElement" typeof="https://schema.org/ListItem">
+                &#60;a property="item" href="https://www.example.com/categories">
+                &#60;span property="name">Categories&#60;/span>
+                &#60;/a>
+            &#60;/li>
+            &#60;/ol>
+        &#60;/div>
+    &#60;/div>
+        </pre>
+    </ul>
+    <br>
+    <h5 #staticpageexample data-anchor="staticpageexample">Static page</h5>
+    <ul>
+        <pre>
+    <b>// JSON-LD</b>
+
+    &#60;script type="application/ld+json">
+        &#123;
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "url": "https://www.example.com/about",
+            "name": "About Us",
+            "description": "Learn more about our company, mission, and team.",
+            "language": "hu-HU",
+            "isPartOf": &#123;
+            "@type": "WebSite",
+            "name": "Example Food Delivery",
+            "url": https://www.example.com,
+            "logo": &#123;
+                "@type": "ImageObject",
+                "url": "https://www.food-delivery-business.com/logo.png"
+                }
+            },
+            "primaryImageOfPage": &#123;
+            "@type": "ImageObject",
+            "url": "https://www.example.com/images/logo.png"
+            },
+            "breadcrumb": &#123;
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                &#123;
+                "@type": "ListItem",
+                "position": 1,
+                "item": &#123;
+                    "@id": "https://www.example.com/",
+                    "name": "Home"
+                }
+                },
+                &#123;
+                "@type": "ListItem",
+                "position": 2,
+                "item": &#123;
+                    "@id": "https://www.example.com/login",
+                    "name": "Login"
+                }
+                }
+            ]
+            }
+        }
+    &#60;/script>
+
+    <b>// Microdata</b>
+
+    &#60;div itemscope itemtype="https://schema.org/WebPage">
+        &#60;link itemprop="url" href="https://www.example.com/about">
+        &#60;h1 itemprop="name">About Us&#60;/h1>
+        &#60;meta itemprop="description" content="Learn more about our company, mission, and team.">
+        &#60;meta itemprop="language" content="hu-HU">
+        
+        &#60;div itemprop="isPartOf" itemscope itemtype="https://schema.org/WebSite">
+            &#60;meta itemprop="name" content="Example Food Delivery">
+            &#60;link itemprop="url" href="https://www.example.com">
+            &#60;div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+            &#60;link itemprop="url" href="https://www.food-delivery-business.com/logo.png">
+            &#60;/div>
+        &#60;/div>
+        
+        &#60;div itemprop="primaryImageOfPage" itemscope itemtype="https://schema.org/ImageObject">
+            &#60;link itemprop="url" href="https://www.example.com/images/logo.png">
+        &#60;/div>
+        
+        &#60;div itemprop="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+            &#60;ol>
+            &#60;li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                &#60;a itemprop="item" href="https://www.example.com/">
+                &#60;span itemprop="name">Home&#60;/span>
+                &#60;/a>
+            &#60;/li>
+            &#60;li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                &#60;a itemprop="item" href="https://www.example.com/about">
+                &#60;span itemprop="name">About Us&#60;/span>
+                &#60;/a>
+            &#60;/li>
+            &#60;/ol>
+        &#60;/div>
+    &#60;/div> 
+    
+    <b>// RDFa</b>
+    
+    &#60;div xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+            typeof="https://schema.org/WebPage">
+        &#60;link href="https://www.example.com/about" rel="canonical">
+        &#60;h1 property="name">About Us&#60;/h1>
+        &#60;meta property="description" content="Learn more about our company, mission, and team.">
+        &#60;meta property="language" content="hu-HU">
+
+        &#60;div property="isPartOf" typeof="https://schema.org/WebSite">
+            &#60;meta property="name" content="Example Food Delivery">
+            &#60;link property="url" href="https://www.example.com">
+            &#60;div property="logo" typeof="https://schema.org/ImageObject">
+            &#60;link property="url" href="https://www.food-delivery-business.com/logo.png">
+            &#60;/div>
+        &#60;/div>
+
+        &#60;div property="primaryImageOfPage" typeof="https://schema.org/ImageObject">
+            &#60;link property="url" href="https://www.example.com/images/logo.png">
+        &#60;/div>
+
+        &#60;div property="breadcrumb" typeof="https://schema.org/BreadcrumbList">
+            &#60;ol>
+            &#60;li property="itemListElement" typeof="https://schema.org/ListItem">
+                &#60;a property="item" href="https://www.example.com/">
+                &#60;span property="name">Home&#60;/span>
+                &#60;/a>
+            &#60;/li>
+            &#60;li property="itemListElement" typeof="https://schema.org/ListItem">
+                &#60;a property="item" href="https://www.example.com/about">
+                &#60;span property="name">About Us&#60;/span>
+                &#60;/a>
+            &#60;/li>
+            &#60;/ol>
+        &#60;/div>
+    &#60;/div>
+        </pre>
+    </ul>
+    <br>
+    <h5 #blogpageexample data-anchor="blogpageexample">Blog page</h5>
+    <ul>
+        <pre>
+    <b>// JSON-LD</b>
+
+    &#60;script type="application/ld+json">
+        &#123;
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": "Article Title",
+            "description": "A brief summary of the article",
+            "articleBody": "The main content of the article goes here",
+            "datePublished": "2022-12-01",
+            "dateModified": "2022-12-01",
+            "isPartOf": &#123;
+            "@type": "WebSite",
+            "name": "Example Food Delivery",
+            "url": https://www.example.com,
+            "logo": &#123;
+                "@type": "ImageObject",
+                "url": "https://www.food-delivery-business.com/logo.png"
+                }
+            },
+            "primaryImageOfPage": &#123;
+                "@type": "ImageObject",
+                "url": "https://www.example.com/images/logo.png"
+            },
+        "author": &#123;
+            "@type": "Person",
+            "name": "John Doe"
+            },
+            "publisher": &#123;
+            "@type": "Organization",
+            "name": "Food Delivery Business",
+            "url": "https://www.food-delivery-business.com",
+            "logo": &#123;
+                "@type": "ImageObject",
+                "url": "https://www.food-delivery-business.com/logo.png"
+            }
+            },  "breadcrumb": &#123;
+            "@type": "BreadcrumbList",
+            "itemListElement": [&#123;
+                "@type": "ListItem",
+                "position": 1,
+                "item": &#123;
+                    "@id": "https://www.example.com/",
+                    "name": "Home"
+                }
+                },&#123;
+                "@type": "ListItem",
+                "position": 2,
+                "item": &#123;
+                    "@id": "https://www.example.com/blog",
+                    "name": "Blog"
+                }
+                },&#123;
+                "@type": "ListItem",
+                "position": 3,
+                "item": &#123;
+                    "@id": "https://www.example.com/blog/article-page",
+                    "name": "Article Title"
+                }
+            }]
+            }
+        }
+    &#60;/script>
+
+    <b>// Microdata</b>
+
+    &#60;div itemscope itemtype="https://schema.org/Article">
+        &#60;h1 itemprop="headline">Article Title&#60;/h1>
+        &#60;meta itemprop="description" content="A brief summary of the article">
+        &#60;div itemprop="articleBody">
+            The main content of the article goes here
+        &#60;/div>
+        &#60;meta itemprop="datePublished" content="2022-12-01">
+        &#60;meta itemprop="dateModified" content="2022-12-01">
+        
+        &#60;div itemprop="isPartOf" itemscope itemtype="https://schema.org/WebSite">
+            &#60;meta itemprop="name" content="Example Food Delivery">
+            &#60;link itemprop="url" href="https://www.example.com">
+            &#60;div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+            &#60;link itemprop="url" href="https://www.food-delivery-business.com/logo.png">
+            &#60;/div>
+        &#60;/div>
+        
+        &#60;div itemprop="primaryImageOfPage" itemscope itemtype="https://schema.org/ImageObject">
+            &#60;link itemprop="url" href="https://www.example.com/images/logo.png">
+        &#60;/div>
+        
+        &#60;div itemprop="author" itemscope itemtype="https://schema.org/Person">
+            &#60;meta itemprop="name" content="John Doe">
+        &#60;/div>
+        
+        &#60;div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+            &#60;meta itemprop="name" content="Food Delivery Business">
+            &#60;link itemprop="url" href="https://www.food-delivery-business.com">
+            &#60;div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+            &#60;link itemprop="url" href="https://www.food-delivery-business.com/logo.png">
+            &#60;/div>
+        &#60;/div>
+        
+        &#60;div itemprop="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+            &#60;ol>
+            &#60;li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                &#60;a itemprop="item" href="https://www.example.com/">
+                &#60;span itemprop="name">Home&#60;/span>
+                &#60;/a>
+            &#60;/li>
+            &#60;li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                &#60;a itemprop="item" href="https://www.example.com/blog">
+                &#60;span itemprop="name">Blog&#60;/span>
+                &#60;/a>
+            &#60;/li>
+            &#60;li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                &#60;a itemprop="item" href="https://www.example.com/blog/article-page">
+                &#60;span itemprop="name">Article Title&#60;/span>
+                &#60;/a>
+            &#60;/li>
+            &#60;/ol>
+        &#60;/div>
+    &#60;/div>              
+
+    <b>// RDFa</b>
+
+    &#60;div xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+            typeof="https://schema.org/Article">
+        &#60;h1 property="headline">Article Title&#60;/h1>
+        &#60;meta property="description" content="A brief summary of the article">
+        &#60;div property="articleBody">
+            The main content of the article goes here
+        &#60;/div>
+        &#60;meta property="datePublished" content="2022-12-01">
+        &#60;meta property="dateModified" content="2022-12-01">
+        
+        &#60;div property="isPartOf" typeof="https://schema.org/WebSite">
+            &#60;meta property="name" content="Example Food Delivery">
+            &#60;link property="url" href="https://www.example.com">
+            &#60;div property="logo" typeof="https://schema.org/ImageObject">
+            &#60;link property="url" href="https://www.food-delivery-business.com/logo.png">
+            &#60;/div>
+        &#60;/div>
+
+        &#60;div property="primaryImageOfPage" typeof="https://schema.org/ImageObject">
+            &#60;link property="url" href="https://www.example.com/images/logo.png">
+        &#60;/div>
+
+        &#60;div property="author" typeof="https://schema.org/Person">
+            &#60;meta property="name" content="John Doe">
+        &#60;/div>
+
+        &#60;div property="publisher" typeof="https://schema.org/Organization">
+            &#60;meta property="name" content="Food Delivery Business">
+            &#60;link property="url" href="https://www.food-delivery-business.com">
+            &#60;div property="logo" typeof="https://schema.org/ImageObject">
+            &#60;link property="url" href="https://www.food-delivery-business.com/logo.png">
+            &#60;/div>
+        &#60;/div>
+
+        &#60;div property="breadcrumb" typeof="https://schema.org/BreadcrumbList">
+            &#60;ol>
+            &#60;li property="itemListElement" typeof="https://schema.org/ListItem">
+                &#60;a property="item" href="https://www.example.com/">
+                &#60;span property="name">Home&#60;/span>
+                &#60;/a>
+            &#60;/li>
+            &#60;li property="itemListElement" typeof="https://schema.org/ListItem">
+                &#60;a property="item" href="https://www.example.com/blog">
+                &#60;span property="name">Blog&#60;/span>
+                &#60;/a>
+            &#60;/li>
+            &#60;li property="itemListElement" typeof="https://schema.org/ListItem">
+                &#60;a property="item" href="https://www.example.com/blog/article-page">
+                &#60;span property="name">Article Title&#60;/span>
+                &#60;/a>
+            &#60;/li>
+            &#60;/ol>
+        &#60;/div>
+    &#60;/div>
+        </pre>
+    </ul>
+</div>
+
+<div>
+    <h3 #algorithms data-anchor="algorithms">Algorithms</h3>
+    <ul>
+        <li>Az algoritmusok különböző szempontok alapján határozzák meg, hogy mely weboldalak jelennek meg előkelőbb
+            helyen a keresési találatok között</li>
+        <li>A rangsorolásért felelős Google algoritmusok
+            <ul>
+                <br>
+                <li>Panda algoritmus (2011)
+                    <ul>
+                        <li>A gyenge minőségű tartalom büntetése</li>
+                        <li>A célja a magas színvonalú, jól megírt tartalom előnyben részesítése</li>
+                    </ul>
+                </li>
+                <br>
+                <li>Penguin algoritmus (2012)
+                    <ul>
+                        <li>A manipulált linkek (link farmok, vásárolt linkek) büntetése</li>
+                        <li>A Google figyelembe vette a természetes linképítést</li>
+                    </ul>
+                </li>
+                <br>
+                <li>Hummingbird algoritmus (2013)
+                    <ul>
+                        <li>A szándék alapú keresés előtérbe helyezése</li>
+                        <li>Jobb válaszokat ad a hosszú kérdésekre és a hosszú farok (long-tail) keresésekre</li>
+                    </ul>
+                </li>
+                <br>
+                <li>Mobilegeddon algoritmus (2015)
+                    <ul>
+                        <li>Mobilbarát webhelyek előnyben részesítése</li>
+                        <li>A mobilbarát dizájnok és a gyors betöltési sebesség kulcsfontosságúvá váltak</li>
+                    </ul>
+                </li>
+                <br>
+                <li>RankBrain algoritmus (2015)
+                    <ul>
+                        <li>A mesterséges intelligencia alkalmazása a keresési eredmények javítására</li>
+                        <li>A Google most már képes értelmezni a keresési kifejezések mögötti szándékot</li>
+                    </ul>
+                </li>
+                <br>
+                <li>BERT algoritmus (2019)
+                    <ul>
+                        <li>A természetes nyelvfeldolgozás (NLP) bevezetése, a keresési kifejezések pontosabb
+                            értelmezésére
+                        </li>
+                        <li>A felhasználói szándékok és a kérdések kontextusa most már sokkal jobban figyelembevételre
+                            kerül</li>
+                    </ul>
+                </li>
+                <br>
+                <li>Core Web Vitals (2021)
+                    <ul>
+                        <li>A felhasználói élmény mérése, különös figyelemmel a betöltési sebességre, interaktivitásra
+                            és a vizuális stabilitásra</li>
+                        <li>A Largest Contentful Paint (LCP), First Input Delay (FID), és Cumulative Layout Shift (CLS)
+                            fontos metrikák
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<div>
+    <h3 #angular data-anchor="angular">Angular</h3>
+    <ul>
+        <li>A metaadatok, és a JSON-LD generálása Angular projektekben kulcsfontosságú, különösen SEO szempontjából</li>
+        <li>A dinamikusan betöltődő oldalak esetén az SSR (Server-Side Rendering) használata különösen fontos, hogy a
+            keresőmotorok megfelelően indexeljék a tartalmat, még akkor is, ha az nem statikus HTML</li>
+        <li>A metadatokat, és JSON-LD-t az oldal betöltődésekor, általában az oldal tartalmának lekérése után érdemes
+            generálni</li>
+        <li>A JSON-LD adatokat leginkább a &#60;script type="application/ld+json"> tag-en keresztül adjuk hozzá a
+            &#60;head> szakaszhoz</li>
+        <li>Az Meta szolgáltatás az Angularban egy praktikus eszköz, amely lehetővé teszi, hogy dinamikusan módosítsuk
+            az oldalunk &#60;meta> tag-jeit, amik az oldal metaadatait tartalmazzák
+            <ul>
+                <li>Az og: (Open Graph) egy metaadat-kiterjesztés, amelyet a Facebook hozott létre, és amit más
+                    közösségi média platformok is átvettek</li>
+                <li>Az Open Graph célja, hogy szabványos formátumban adják meg, hogyan jelenjen meg egy weboldal
+                    tartalma, amikor azt megosztják a közösségi médiában</li>
+            </ul>
+        </li>
+    </ul>
+    <br>
+    <h5 #angularmetadata data-anchor="angularmetadata">Meta data</h5>
+    <ul>
+        <li>Dinamikus metadata</li>
+        <pre>
+    import &#123; Component } from '@angular/core';
+    import &#123; Meta, Title } from '@angular/platform-browser';
+    import &#123; Router, NavigationStart, NavigationEnd } from '@angular/router';
+    import &#123; filter } from 'rxjs/operators';
+    import &#123; environment } from '../environments/environment';
+    
+    @Component(&#123;
+        selector: 'app-root',
+        templateUrl: './app.component.html',
+    })
+    export class AppComponent &#123;
+        siteUrl = environment.siteUrl; // https://fagylaltkiraly.hu
+        imgUrl = environment.imgUrl;   // https://img.fagylaltkiraly.hu
+    
+        constructor(private router: Router, private meta: Meta, private title: Title) &#123;
+        this.router.events
+            .pipe(filter(event => event instanceof NavigationStart))
+            .subscribe(() => &#123;
+            this.updateSeoTags();
+            });
+    
+        this.router.events
+            .pipe(filter(event => event instanceof NavigationEnd))
+            .subscribe((event: NavigationEnd) => &#123;
+            this.updateCanonical(event);
+            });
+        }
+    
+        private updateSeoTags() &#123; // meta adatok frissítése
+        this.title.setTitle('Fagylalt Király - A legfinomabb kézműves fagyik');
+    
+        this.meta.updateTag(&#123;
+            name: 'description',
+            content:
+            'Kóstold meg a Fagylalt Király legjobb kézműves fagylaltjait! Friss, természetes alapanyagokból készült különleges ízek.',
+        });
+    
+        this.meta.updateTag(&#123; property: 'og:title', content: 'Fagylalt Király' });
+        this.meta.updateTag(&#123;
+            property: 'og:description',
+            content:
+            'Fedezd fel a Fagylalt Király különleges kézműves fagylaltjait, 100% természetes alapanyagokból!',
+        });
+        this.meta.updateTag(&#123;
+            property: 'og:url',
+            content: this.siteUrl + '/',
+        });
+        this.meta.updateTag(&#123;
+            property: 'og:image',
+            content: `$&#123;this.imgUrl}/assets/images/social_share.jpg`,
+        });
+        }
+    
+        private updateCanonical(event: NavigationEnd) &#123; // canonical frissítése
+        const canonical = document.querySelector(
+            'link[rel="canonical"]'
+        ) as HTMLLinkElement;
+    
+        if (canonical) &#123;
+            canonical.href = this.siteUrl + event.url.split('?')[0];
+        }
+        }
+    }     
+        </pre>
+        <li>NavigaionStart router event esetében frissítjük a metaadatokat az Angular-ba beépített Meta service
+            segítségével
+            <ul>
+                <li>Az Angular biztosítja a metaadatok dinamikus kezelésére a &#60;head> szekcióban</li>
+            </ul>
+        </li>
+        <li>Érdemes Service-be kiszervezni, és akkor az updateSeoTags csak a serice-ben lesz ilyen hosszú, majd
+            komponensekből egyszerűbben meghívhatjuk</li>
+        <pre>
+    <b>// seo.service.ts</b>
+
+    import &#123; Injectable } from '@angular/core';
+    import &#123; Meta, Title } from '@angular/platform-browser';
+    import &#123; NavigationEnd } from '@angular/router';
+    import &#123; environment } from '../../environments/environment';
+
+    @Injectable(&#123;
+        providedIn: 'root',
+    })
+    export class SeoService &#123;
+        private siteUrl = environment.siteUrl;
+        private imgUrl = environment.imgUrl;
+
+        constructor(private meta: Meta, private title: Title) &#123;}
+
+        updateTags(options: &#123;
+            title?: string;
+            description?: string;
+            image?: string;
+            url?: string;
+        }) &#123;
+            if (options.title) &#123;
+                this.title.setTitle(options.title);
+                this.meta.updateTag(&#123; property: 'og:title', content: options.title });
+            }
+
+            if (options.description) &#123;
+                this.meta.updateTag(&#123; name: 'description', content: options.description });
+                this.meta.updateTag(&#123; property: 'og:description', content: options.description });
+            }
+
+            this.meta.updateTag(&#123;
+                property: 'og:image',
+                content: options.image?.startsWith('http')
+                            ? options.image
+                            : `$&#123;this.imgUrl}/$&#123;options.image}?w=1200&h=630`,
+            });
+
+            this.meta.updateTag(&#123;
+                property: 'og:url',
+                content: options.url?.startsWith('http') ? options.url : `$&#123;this.siteUrl}/$&#123;options.url}`,
+            });
+        }
+
+        updateCanonical(event: NavigationEnd) &#123;
+            const canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
+            if (canonical) &#123;
+            canonical.href = this.siteUrl + event.url.split('?')[0];
+            }
+        }
+    }
+
+    <b>// page.compnent.ts</b>
+
+    import &#123; Component, OnInit, OnDestroy } from '@angular/core';
+    import &#123; ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+    import &#123; Subscription } from 'rxjs';
+    import &#123; filter } from 'rxjs/operators';
+    import &#123; JsonLdService } from '../jsonld.service';
+    import &#123; SeoService } from '../seo.service';
+    import &#123; Page } from '../page.ts';
+    import &#123; environment } from '../../environments/environment';
+
+    @Component(&#123;
+        selector: 'app-page',
+        templateUrl: './page.component.html',
+    })
+
+    export class PageComponent implements OnInit, OnDestroy &#123;
+        page: Page;
+        subscriptions: Subscription[] = [];
+
+        constructor(
+            private arouter: ActivatedRoute,
+            private router: Router,
+            private seo: SeoService,
+            private jsonld: JsonLdService
+        ) &#123;}
+
+        ngOnInit(): void &#123;
+            this.subscriptions.push(
+                this.arouter.data.subscribe((r) => this.dataChanged(r)) // amikor a komponens adatot kap (például resolver által), akkor a dataChanged() metódus lefut
+            );
+
+            this.subscriptions.push(
+                this.router.events
+                    .pipe(filter((e) => e instanceof NavigationEnd))
+                    .subscribe((event: NavigationEnd) => this.seo.updateCanonical(event)) // frissítjük a canonical url-t
+            );
+        }
+
+        dataChanged(r): void &#123;
+            this.page = r.page;
+
+            if (this.Page) &#123;
+                this.jsonld.createJsonLdData(this.page); // például így, és itt hívhatjuk meg a JSON-LD generálását
+
+                this.seo.updateTags(&#123;
+                    title: this.page.title,
+                    description: this.page.metaDescription?.substring(0, 160),
+                    image: this.page.imageUrl,
+                    url: this.arouter.snapshot.url.join('/'), // csak a relatív url
+                    });                          
+            }
+        }
+
+        ngOnDestroy(): void &#123;
+            this.subscriptions.forEach((sub) => sub.unsubscribe());
+        }
+    }
+
+    <b>// routing.module.ts</b>
+    
+    &#123;
+        path: 'page/:link',
+        component: PageComponent,
+        resolve: &#123;
+            page: PageResolver // a PageResolver által visszaadott adat page néven itt kerül bele a route adatba
+        }
+    }    
+    
+    <b>// page.resolver.ts</b>
+
+    @Injectable(&#123;
+        providedIn: 'root'
+        })
+        export class PageResolver implements Resolve&#60;Page> &#123;
+        constructor(private api: RestApiService, private router: Router) &#123;
+        
+        }
+        
+        resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable&#60;Page> &#123;
+        
+            return this.api.getPage(route.params.link || '').pipe(catchError(e => &#123; // elkapjuk a hibákat (például a 404-et)
+        
+            if (e.status == 404) &#123; // 
+                this.router.navigate(['/']);
+            } else &#123;
+                this.router.navigate(['/', ROUTES.ERROR]); // a konstansban lévé kulcs-érték pár miatt tulajdonképpen /betoltes-re navigálunk
+            }
+            return of(&#123;PageTitle: '', PageDescription: '', PageImage: '', PageBody: &#123;}} as Page);
+            }));
+        }
+        }
+
+        <b>// routes.const.ts</b>
+        export const ROUTES = &#123;
+        ...
+        "ERROR": "betoltes",
+        }
+        </pre>
+        <li>A különféle oldal template-ekből (mint például a page.component.ts) meghívhatjuk a frissítő függvényt,
+            függvényeket</li>
+        <li>A feliratkozás célja, hogy figyeljük a route változásokat, és frissítsük a metaadatokat akkor is, ha
+            ugyanazon a sablonon belül történik az oldalcserélés, például a PageComponent esetén</li>
+        <li>NavigationEnd az a pont, amikor már minden route feldolgozódott</li>
+        <li>A Resolver mindig Observable&#60;Page>-t kell visszaadjon, még hiba esetén is, különben Angular hibát dobna
+            <ul>
+                <li>Ezért az of() RxJS függvénnyel visszaadunk egy Observable-t, ami egy "üres" oldalt tartalmaz</li>
+            </ul>
+        </li>
+        <li>Canonical URL
+            <ul>
+                <li>A canonical (kanonikus) URL azt jelzi a keresőmotoroknak, hogy egy adott tartalomnak melyik az
+                    "eredeti" (preferált) URL-je, ha többféleképpen is elérhető</li>
+                <li>Az index.html-ben helyezzük el</li>
+                <pre>
+    https://fagylaltkiraly.hu/fagyi/csokolade
+
+    https://fagylaltkiraly.hu/fagyi/csokolade?utm_source=fb
+                </pre>
+                <li>Mindkét URL-en elérhető ugyanaz a tartalom, de a keresőmotor két különböző URL-nek látja
+                    <ul>
+                        <li>A keresőmotor duplikált tartalomnak fogja tekinteni, ami negatívan hat a SEO-ra</li>
+                    </ul>
+                </li>
+                <li>A canonical tag-gel megmondjuk, hogy melyik URL-jét tekintsék a hivatalos (indexelésre szánt) verzió
+                </li>
+                <pre>
+                   <b>// index.html</b>
+    &#60;head>
+        ...
+        &#60;link rel="canonical" href="https://fagylaltkiraly.hu/">
+    &#60;/head>
+                </pre>
+                <li>A Resolver-ben is meghívhatnánk a jsonLdService-t, és a seoService-t</li>
+            </ul>
+        </li>
+        <li>A Meta service fontosabb metódusai
+            <ol>
+                <li>updateTag(): Frissít egy meta tage-et, ha létezik, ha nem, akkor létrehozza</li>
+                <li>addTag(): Új meta tageket ad hozzá</li>
+                <li>removeTag(): Egy létező meta tage-et töröl</li>
+            </ol>
+        </li>
+    </ul>
+    <br>
+    <h5 #angularjsonld data-anchor="angularjsonld">JSON-LD</h5>
+    <ul>
+        <pre>
+    @Injectable(&#123;
+            providedIn: 'root'
+    })
+
+    export class JsonLdService &#123;
+        imageUrl: string = environment.imgUrl; // A kép URL-jét az environment fájlban definiáljuk
+        
+        private renderer: Renderer2;
+        
+        constructor(@Optional() @Inject(DOCUMENT) private document: Document, private rendererFactory: RendererFactory2) &#123;
+            this.renderer = this.rendererFactory.createRenderer(null, null);
+        }
+        
+        createJsonLdData(pageData: Page): any &#123;
+            let jsonLdData = &#123;
+            '@context': 'https://schema.org',
+            '@type': 'WebPage',
+            url: 'https://www.fagylaltkiraly.hu/' + pageData?.PageLink, // Fagylaltkirály URL
+            name: pageData?.PageName,
+            description: pageData?.PageDescription,
+            isPartOf: &#123;
+                '@type': 'WebSite',
+                name: 'Fagylaltkirály', // Fagylaltkirály weboldal neve
+                url: 'https://www.fagylaltkiraly.hu', // Fagylaltkirály weboldal URL
+            },
+            primaryImageOfPage: &#123;
+                '@type': 'ImageObject',
+                url: pageData?.PageImage ? `$&#123;this.imageUrl}/$&#123;pageData?.PageImage}?format=webp&w=1000&h=775` : `$&#123;this.imageUrl}/Brand/fagylaltkiraly_social.png?w=1200&h=630`, // Kép URL (ha van kép)
+                width: pageData?.PageImage ? 1000 : 1200,
+                height: pageData?.PageImage ? 775 : 630
+            },
+            breadcrumb: &#123;
+                '@type': 'BreadcrumbList',
+                itemListElement: [
+                &#123;
+                    '@type': 'ListItem',
+                    position: 1,
+                    item: &#123;
+                    '@id': 'https://www.fagylaltkiraly.hu/', // Fagylaltkirály főoldal URL
+                    name: 'Címlap' // Címlap név
+                    }
+                },
+                &#123;
+                    '@type': 'ListItem',
+                    position: 2,
+                    item: &#123;
+                    '@id': 'https://www.fagylaltkiraly.hu/' + pageData?.PageLink, // Az aktuális oldal linkje
+                    name: pageData?.PageName // Az aktuális oldal neve
+                    }
+                }
+                ]
+            }
+            };
+            this.insertStructuredData(jsonLdData);
+        }
+        
+        insertStructuredData(schema: Record&#60;string, any>): void &#123;
+            const script = this.document.head.getElementsByClassName('structured-data')[0];
+            if (script) &#123;
+            this.renderer.removeChild(this.document.head, script);
+            }
+        
+            const newScript = this.renderer.createElement('script');
+            this.renderer.setAttribute(newScript, 'type', 'application/ld+json');
+            this.renderer.setAttribute(newScript, 'class', 'structured-data');
+            newScript.innerHTML = JSON.stringify(schema);
+            this.renderer.appendChild(this.document.head, newScript);
+        }
+        
+        sanitizeArticleBody(body: &#123; version: number, time: number, blocks: any[] }): string &#123; // a függvény cikkek esetén eltávolítja a nem kívánt karaktereket, és HTML tag-eket
+            return body?.blocks.reduce((acc, item) => &#123;
+            return acc + ' ' + (item.data?.text || '');
+            }, '')
+            .replace(/[\u0000-\u001f]/g, ' ') // Forbidden characters replaced by space
+            .replace(/&[^;]+;/g, ' ') // HTML entities replaced by space
+            .replace(/&#60;(?:.|\n)*?>/gm, ' ') // HTML tags removed
+            .replace(/\s+/g, ' '); // Multiple spaces replaced by a single space
+        }
+    }              
+        </pre>
+        <li>Az @Optional() dekorátor biztosítja, hogy ha a DOCUMENT nem elérhető (például server-side rendering esetén),
+            akkor ne dobjon hibát</li>
+        <li>A Renderer2 a DOM-ot módosítja, és segít abban, hogy az alkalmazás jól működjön mind a böngészőben, mind
+            szerver oldalon (SSR)</li>
+        <li>A Page objektum alapján legeneráljuk a struktúrált adatot</li>
+        <li>Az insertStructuredData metódussal beszúrjuk a head-be a JSON-LD-t</li>
+        <li>A Record&#60;string, any> egy beépített generikus Typescript típus
+            <ul>
+                <li>Olyan objektum, amely bármilyen kulccsal rendelkezhet, de a kulcsok típusának mindig string-nek kell
+                    lennie</li>
+                <pre>
+    <b>// példa</b>
+
+    const obj: Record&#60;string, any> = &#123;
+            name: "Jim",
+            age: 30,
+            isActive: true,
+            details: &#123;
+                address: "123 Jim Street",
+                city: "Seattle"
+        }
+        };
+                </pre>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<!--div>
     <h3 #todo data-anchor="todo">TODO</h3>
     <ul>
         <li>todo</li>
     </ul>
-    <br>
-    <h5 #todo data-anchor="todo">TODO</h5>
-    <ul>
-        <li>todo</li>
-    </ul>
-</div>
+</!--div-->

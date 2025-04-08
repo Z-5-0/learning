@@ -21,6 +21,173 @@
 </div>
 
 <div>
+    <h3 #introduction data-anchor="introduction">Introduction</h3>
+    <ul>
+        <li>Server-Side Rendering</li>
+        <li>Lehetővé teszi, hogy az Angular alkalmazásokat a szerveren rendereljük le, mielőtt azok a böngészőhöz
+            kerülnek</li>
+        <li>Javítja
+            <ol>
+                <li>az alkalmazás sebességét
+                    <ul>
+                        <li>Az alkalmazásnak nem kell megvárnia a JavaScript betöltődését és az alkalmazás
+                            inicializálását, mielőtt az oldal megjelenik a felhasználó számára</li>
+                    </ul>
+                </li>
+                <li>a keresőoptimalizálást (SEO)
+                    <ul>
+                        <li>Mivel a szerveren renderelt oldalak teljes HTML-t tartalmaznak, a keresőrobotok könnyebben
+                            indexálhatják őket</li>
+                    </ul>
+                </li>
+                <li>az általános felhasználói élményt
+                    <ul>
+                        <li>Lassabb eszközön, lassabb internet elérés esetében a user gyorsabban láthatja a tartalmat
+                        </li>
+                    </ul>
+                </li>
+            </ol>
+        </li>
+        <li>Teljesen más, mint a szokásos client-side rendering (CSR), ahol a teljes alkalmazás JavaScript kódja a
+            böngészőben fut le, és az oldalak dinamikusan épülnek fel</li>
+        <li>Az SSR implementálása bonyolítja az alkalmazásunkat, mivel nemcsak a kliensoldali JavaScript
+            logikát kell kezelnünk, hanem a szerver oldalt is, és biztosítani, hogy minden működjön mindkét
+            oldalon</li>
+        <li>Ha dinamikus interakciókra van szükség (például animációk, valós idejű adat frissítések), a kliensoldali
+            JavaScript-nek aktiválódnia kell az oldal betöltődése után, hogy működjenek az interaktív elemek</li>
+        <li>Szerver oldali kód futtatást igényelnek (nagyobb a szerver terheltsége), így más típusú infrastruktúrát, és
+            deploy folyamatot igényelhetnek
+        </li>
+        <li>Hybrid Rendering APIs
+            <ul>
+                <li>Fejlesztési koncepciója, amely lehetővé teszi, hogy az alkalmazás egyszerre futtasson több
+                    renderelési módot (CSR + SSR)</li>
+                <li>Kihasználjuk az Angular Universal előnyeit anélkül, hogy teljesen átállnánk SSR-re, miközben
+                    megtartjuk a CSR-t</li>
+                <li>Az API-k segítenek a dinamikus döntések meghozatalában, hogy mikor és hogyan renderelődjön az oldal
+                    a szerveren, és mikor a kliensen</li>
+                <li>Célja, hogy az alkalmazás gyorsabban töltődjön be</li>
+                <li>Azokat az oldalak, amelyeken SEO szempontból fontos az indexelés, általában szerver oldalon
+                    renderelődnek, azok pedig, amelyek interaktív elemeket tartalmaznak, általában kliens oldalon</li>
+            </ul>
+        </li>
+    </ul>
+    <br>
+    <h5 #implementation data-anchor="implementation">Implementation</h5>
+    <ul>
+        <li>Megvalósítása Angular Universal használatával történik
+            <ul>
+                <li>Lehetővé teszi az Angular alkalmazások szerveroldali renderelését</li>
+                <li>A szerveren generálja az alkalmazás HTML-jét, mielőtt a felhasználó böngészőjébe kerülne</li>
+            </ul>
+        </li>
+        <li>A server.ts fájlban található kód felelős azért, hogy az Angular alkalmazást szerveroldalon renderelje le
+        </li>
+        <li>A folyamat
+            <ol>
+                <li> A szerver megkapja az első kérését, majd egy előre renderelt HTML-t küld vissza, amely tartalmazza
+                    az összes statikus adatot és interaktív komponenseket</li>
+                <li>Miután a HTML betöltődik a böngészőben, a JavaScript kód futni kezd, és az alkalmazás "átveszi" az
+                    irányítást a kliensoldalon</li>
+                <li>Az alkalmazás mostantól teljes mértékben interaktívvá válik a felhasználó számára, az összes
+                    dinamikus adat frissítése, és interakciója JavaScript segítségével történik</li>
+            </ol>
+        </li>
+        <li>A lépések
+            <ol>
+                <li>Csomag telepítése
+                    <ul>
+                        <pre>
+    ng add @nguniversal/express-engine
+                        </pre>
+                    </ul>
+                </li>
+                <li>Szerver oldali renderelésért felelős kód létrehozása
+                    <ul>
+                        <pre>
+    ng generate universal &#60;app-name> // korábbi megvalósítás
+
+    ng add @angular/ssr
+                        </pre>
+                        <li>Létrejönnek szerver oldali fájlok
+                            <ol>
+                                <li>server.ts: A szerver belépési pontja</li>
+                                <li>main.server.ts: Az Angular alkalmazás szerver oldali bootstrap fájlja</li>
+                                <li>app.server.module.ts: A szerver oldali alkalmazásmodul (a meglévő AppModule alapján
+                                    kiegészítve)</li>
+                                <li>tsconfig.server.json: Külön TypeScript konfiguráció a szerver oldali buildhez</li>
+                                <li>environment.server.ts: A környezet-specifikus fájl szerver oldali változata</li>
+                                <pre>
+    root/
+    ├── server.ts
+    ├── tsconfig.server.json
+    └── src/
+        ├── main.server.ts
+        ├── app.config.server.ts
+        └── environments/
+            └── environment.server.ts
+                                </pre>
+                            </ol>
+                        </li>
+                        <li>Frissítésre kerül az angular.json fájl
+                            <ul>
+                                <pre>
+    "scripts": &#123;
+        "build:ssr": "ng build && ng run my-app:server",    // lefordítja az alkalmazás kliens oldali kódját
+        "serve:ssr": "node dist/my-app/server/main.js"      // elindítja az SSR alkalmazást a szerveren
+    }
+                                </pre>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>Szerver konfigurálása</li>
+                <li>Node.js vagy a cloud platformon deploy
+                    <ul>
+                        <pre>
+    npm run build:ssr
+    npm run serve:ssr
+                        </pre>
+                    </ul>
+                </li>
+            </ol>
+        </li>
+        <li>Teljesen új projekt létrehozása
+            <ul>
+                <pre>
+    ng new my-new-projekt --standalone --ssr
+                </pre>
+                <li>Standalone komponens architektúrával, és SSR támogatással indulunk</li>
+                <li>Nincs szükség AppModule-ra, vagy más NgModule-ra, a komponensek és szolgáltatások közvetlenül
+                    használhatók</li>
+                <li>Angular 14-től elérhető (standalone), és a 17-es verziótól hivatalosan is támogatott
+                </li>
+            </ul>
+        </li>
+        <li>Ha nem adunk meg projektnevet, akkor a CLI folyamat megkérdezi
+            <ul>
+                <pre>
+    ng new --ssr
+                </pre>
+                <li>"What name would you like to use for the new workspace and initial project?"</li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<div>
+    <h3 #todo data-anchor="todo">TODO</h3>
+    <ul>
+        <li>todo</li>
+    </ul>
+    <br>
+    <h5 #todo data-anchor="todo">TODO</h5>
+    <ul>
+        <li>todo</li>
+    </ul>
+</div>
+
+<div>
     <h3 #todo data-anchor="todo">TODO</h3>
     <ul>
         <li>todo</li>

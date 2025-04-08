@@ -29,14 +29,16 @@ export class RxjsComponent implements OnInit, AfterViewInit {
     rxjs,
     rxjs_,
     examples,
-    types
+    components,
+    operators,
     `) sections!: QueryList<ElementRef>;
 
   anchorButtons: any[] = [
     { title: 'RxJS', anchor: 'rxjs', subtitles: [] },
     { title: 'RxJS+', anchor: 'rxjs_', subtitles: [] },
     { title: 'Examples', anchor: 'examples', subtitles: [] },
-    { title: 'Típusok', anchor: 'types', subtitles: [] },
+    { title: 'Components', anchor: 'components', subtitles: [] },
+    { title: 'Operators', anchor: 'operators', subtitles: [] },
   ]
 
   @ViewChild('button') button!: ElementRef<HTMLButtonElement>;

@@ -1,5 +1,32 @@
 @import "mixin";
 
+.menu {
+  button {
+    transition: .2s font-weight;
+    box-shadow: inset 0px 0px 5px 1px #212121;
+    border: 1px solid #212121;
+
+    &:hover {
+      transition: .2s font-weight;
+      font-weight: bold;
+
+      &:not(.active) {
+        border-color: #212121;
+      }
+    }
+
+    &.active {
+      box-shadow: 0px 0px 10px 2px #ffc107;
+      font-weight: bold;
+      cursor: default;
+    }
+
+    &:disabled {
+      border-color: #212121;
+    }
+  }
+}
+
 .dropdow-menu {
   @include breakpoint(md) {
     display: none;

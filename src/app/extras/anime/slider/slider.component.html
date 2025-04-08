@@ -1,11 +1,11 @@
 <ng-container *ngIf="tempSwitcher === 'default'">
     <div [@slideToggle]="selectedImage()" class="image">
         <ng-container [ngSwitch]="selectedImage()">
-            <img *ngSwitchCase="1" src="assets/imgs/slider/slider_1.jpg" loading="lazy" alt="A neon frog" />
-            <img *ngSwitchCase="2" src="assets/imgs/slider/slider_2.jpg" loading="lazy" alt="A dog on a surfboard" />
-            <img *ngSwitchCase="3" src="assets/imgs/slider/slider_3.jpg" loading="lazy"
+            <img *ngSwitchCase="1" src="assets/imgs/slider/slider_1.jpg" [attr.loading]="'lazy'" alt="A neon frog" />
+            <img *ngSwitchCase="2" src="assets/imgs/slider/slider_2.jpg" [attr.loading]="'lazy'" alt="A dog on a surfboard" />
+            <img *ngSwitchCase="3" src="assets/imgs/slider/slider_3.jpg" [attr.loading]="'lazy'"
                 alt="A chinchilla with sunglasses" />
-            <img *ngSwitchCase="4" src="assets/imgs/slider/slider_4.jpg" loading="lazy"
+            <img *ngSwitchCase="4" src="assets/imgs/slider/slider_4.jpg" [attr.loading]="'lazy'"
                 alt="A cool cat wearing a jacket" />
         </ng-container>
     </div>
@@ -29,11 +29,11 @@
         }
     }" class="image">
         <ng-container [ngSwitch]="selectedImage()">
-            <img *ngSwitchCase="1" src="assets/imgs/slider/slider_1.jpg" loading="lazy" alt="A neon frog" />
-            <img *ngSwitchCase="2" src="assets/imgs/slider/slider_2.jpg" loading="lazy" alt="A dog on a surfboard" />
-            <img *ngSwitchCase="3" src="assets/imgs/slider/slider_3.jpg" loading="lazy"
+            <img *ngSwitchCase="1" src="assets/imgs/slider/slider_1.jpg" [attr.loading]="'lazy'" alt="A neon frog" />
+            <img *ngSwitchCase="2" src="assets/imgs/slider/slider_2.jpg" [attr.loading]="'lazy'" alt="A dog on a surfboard" />
+            <img *ngSwitchCase="3" src="assets/imgs/slider/slider_3.jpg" [attr.loading]="'lazy'"
                 alt="A chinchilla with sunglasses" />
-            <img *ngSwitchCase="4" src="assets/imgs/slider/slider_4.jpg" loading="lazy"
+            <img *ngSwitchCase="4" src="assets/imgs/slider/slider_4.jpg" [attr.loading]="'lazy'"
                 alt="A cool cat wearing a jacket" />
         </ng-container>
     </div>
@@ -58,11 +58,11 @@
         }
     }" class="image">
         <ng-container [ngSwitch]="selectedImage()">
-            <img *ngSwitchCase="1" src="assets/imgs/slider/slider_1.jpg" loading="lazy" alt="A neon frog" />
-            <img *ngSwitchCase="2" src="assets/imgs/slider/slider_2.jpg" loading="lazy" alt="A dog on a surfboard" />
-            <img *ngSwitchCase="3" src="assets/imgs/slider/slider_3.jpg" loading="lazy"
+            <img *ngSwitchCase="1" src="assets/imgs/slider/slider_1.jpg" [attr.loading]="'lazy'" alt="A neon frog" />
+            <img *ngSwitchCase="2" src="assets/imgs/slider/slider_2.jpg" [attr.loading]="'lazy'" alt="A dog on a surfboard" />
+            <img *ngSwitchCase="3" src="assets/imgs/slider/slider_3.jpg" [attr.loading]="'lazy'"
                 alt="A chinchilla with sunglasses" />
-            <img *ngSwitchCase="4" src="assets/imgs/slider/slider_4.jpg" loading="lazy"
+            <img *ngSwitchCase="4" src="assets/imgs/slider/slider_4.jpg" [attr.loading]="'lazy'"
                 alt="A cool cat wearing a jacket" />
         </ng-container>
     </div>
@@ -87,11 +87,11 @@
         }
     }" [@.disabled]="animationDisabled()" class="image">
         <ng-container [ngSwitch]="selectedImage()">
-            <img *ngSwitchCase="1" src="assets/imgs/slider/slider_1.jpg" loading="lazy" alt="A neon frog" />
-            <img *ngSwitchCase="2" src="assets/imgs/slider/slider_2.jpg" loading="lazy" alt="A dog on a surfboard" />
-            <img *ngSwitchCase="3" src="assets/imgs/slider/slider_3.jpg" loading="lazy"
+            <img *ngSwitchCase="1" src="assets/imgs/slider/slider_1.jpg" [attr.loading]="'lazy'" alt="A neon frog" />
+            <img *ngSwitchCase="2" src="assets/imgs/slider/slider_2.jpg" [attr.loading]="'lazy'" alt="A dog on a surfboard" />
+            <img *ngSwitchCase="3" src="assets/imgs/slider/slider_3.jpg" [attr.loading]="'lazy'"
                 alt="A chinchilla with sunglasses" />
-            <img *ngSwitchCase="4" src="assets/imgs/slider/slider_4.jpg" loading="lazy"
+            <img *ngSwitchCase="4" src="assets/imgs/slider/slider_4.jpg" [attr.loading]="'lazy'"
                 alt="A cool cat wearing a jacket" />
         </ng-container>
     </div>

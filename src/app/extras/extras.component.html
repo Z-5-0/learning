@@ -6851,13 +6851,10 @@
 <div>
   <h3 #callbackfunction data-anchor="callbackfunction">Callback function</h3>
   <ul>
-    <li>callback function (TODO)
-      <ul>
-        <li>
-          A callback function egy olyan függvény, amelyet egy másik függvény paramétereként adunk át, és amelyet később,
-          a hívó függvény egy bizonyos pontján hívunk meg</li>
-        <li>A callback-ek különösen hasznosak aszinkron műveleteknél használjuk, vagy felhasználói interakcióknál</li>
-        <pre>
+    <li>A callback function egy olyan függvény, amelyet egy másik függvény paramétereként adunk át, és amelyet
+      később, a hívó függvény egy bizonyos pontján hívunk meg</li>
+    <li>A callback-ek különösen hasznosak aszinkron műveleteknél használjuk, vagy felhasználói interakcióknál</li>
+    <pre>
   function greeting (name) &#123;
   alert('Hello 1 + name);
   }
@@ -6867,80 +6864,58 @@
   }
   processUserInput (greeting);
         </pre>
+    <li>Például az addEventListener függvény második paramétere callback függvény
+      <ul>
+        <pre>
+  document.getElementById('order')
+      .addEventListener('click', () => &#123;
+          console.log('Order button clicked')
+      });
+
+  OR
+
+  const cbfgv = () => &#123;
+      console.log('Order button clicked')
+  }
+
+  document.getElementById('order')
+      .addEventListener('click', cb);
+            </pre>
       </ul>
     </li>
-    <li>TODO</li>
-  </ul>
-</div>
-
-<div>
-  <h3 #rxjs data-anchor="rxjs">RxJS</h3>
-  <ul>
-    <li>RxJS (TODO)
+    <li>A callback legprimitívebb formája
       <ul>
-        <li>exhaustMap()</li>
-        <li>switchMap()</li>
-        <li>mergeMap()</li>
-        <li>concatMap()</li>
-        <br>
-        <table cellpadding="8" style="border-collapse: collapse;">
-          <thead>
-            <tr>
-              <th>Operátor</th>
-              <th>Több kérés?</th>
-              <th>Megszakítja az előzőt?</th>
-              <th>Feldolgozási sorrend</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>exhaustMap</td>
-              <td>Nem</td>
-              <td>Igen</td>
-              <td>Nem számít</td>
-            </tr>
-            <tr>
-              <td>switchMap</td>
-              <td>Nem</td>
-              <td>Igen</td>
-              <td>Nem számít</td>
-            </tr>
-            <tr>
-              <td>mergeMap</td>
-              <td>Igen</td>
-              <td>Nem</td>
-              <td>Párhuzamos</td>
-            </tr>
-            <tr>
-              <td>concatMap</td>
-              <td>Nem</td>
-              <td>Nem</td>
-              <td>Sorrendben</td>
-            </tr>
-          </tbody>
-        </table>
+        <pre>
+  const cb = () => &#123;console.log('Hi there!')};
+
+  const f = (callback: any) => callback();
+
+  f(cb);
+
+  ↓↓↓↓↓
+
+  "Hi there!"
+            </pre>
       </ul>
     </li>
-    <li>Methodok (RxJS !)
+    <li>Bizonyos esetekben érdemes lehet leellenőrizni, hogy a callback függvényünk valóban függvény-e
       <ul>
-        <ul>
-          <li>merge()
-            <ul>
-              <pre>
-                const mergedObj = merge(&#123; name: "Alice" }, &#123; age: 30 });
-                console.log(mergedObj);
-
-                ↓↓↓↓↓
-
-                &#123; name: "Alice", age: 30 }
-              </pre>
-            </ul>
-          </li>
-        </ul>
+        <li>Ezt legegyszerűbben a typeof segítségével tehetjük meg</li>
+        <pre>
+  function myFunction(callback) &#123;
+    if (typeof callback === "function") &#123;
+        // logic
+    }
+  }
+  
+  myFunction(myCallback);
+            </pre>
       </ul>
     </li>
   </ul>
 </div>
+
+-------------------------------------
 
 <div>
   <h3 #fontsizes data-anchor="fontsizes">Font sizes</h3>
@@ -7149,8 +7124,266 @@
 </div>
 
 <div>
+  <h3 #host data-anchor="host">:host</h3>
+  <ul>
+    <li>Speciális CSS pszeudo-szelektor az Angularban</li>
+    <li>Az adott komponens saját gyökérelemére (host) vonatkozik</li>
+    <li>Alapértelmezés szerint az Angular komponensekben a stílusok csak a komponens belső elemeire vonatkoznak</li>
+    <li>A :host segítségével viszont maga a komponens "tartalmazó eleme" kaphat stílust</li>
+    <pre>
+  <b>// child.component.scss</b>
+  :host &#123;
+    display: block;
+    border: 1px solid red;
+    padding: 10px;
+  }
+
+  <b>// parent.component.html</b>
+  &#60;app-card>&#60;/app-card> <!-- ez az elem kapja meg a stílust -->
+    </pre>
+  </ul>
+</div>
+
+<div>
+  <h3 #visibilitytracking data-anchor="visibilitytracking">Visibility tracking</h3>
+  <ul>
+    <li>Ha azt szeretnénk megfigyelni, hogy egy elem látható-e a Viewport-ban, használhatjuk az IntersectionObserver
+    </li>
+    <br>
+    <div #visibilityObservedElement class="visibility-tracked-element">TRACKED ELEMENT</div>
+    <div>observedElementIsVisible: {{ observedElementIsVisible }}</div>
+    <pre>
+  <b>// template</b>
+  &#60;div #visibilityObservedElement class="visibility-tracked-element">TRACKED ELEMENT&#60;/div>
+  &#60;div>observedElementIsVisible: &#123; &#123; observedElementIsVisible }}&#60;/div>
+
+  <b>// class</b>
+  ...
+  @ViewChild('visibilityObservedElement') visibilityObservedElement!: ElementRef;
+  observedElementIsVisible!: boolean;
+  ...
+
+  ngAfterViewInit() &#123;
+    const observer = new IntersectionObserver(([entry]) => &#123; // [entry] - destructuring assignment
+      this.observedElementIsVisible = entry.isIntersecting
+    }, &#123; threshold: 0.2 }); // ha az elem legalább 80%-a nem látszik, a változó false lesz
+
+    observer.observe(this.visibilityObservedElement.nativeElement); // az IntersectionObserver-t az adott DOM elemhez rendeljük
+  }
+
+  // így is meg lehetne adni
+
+  const observer = new IntersectionObserver((entries) => &#123;
+    const entry = entries[0]; // az első elem kivétele a tömbből
+    // logika
+  }, &#123; threshold: 0.2 });
+    </pre>
+    <li>Amennyiben a tracked elementt kikerül a Viewport-ból, az observedElementIsVisible változó false állapotba kerül
+    </li>
+    <li>A megfigyelés azért kerül az AfterViewInit lifecycle hookba, mert az @ViewChild-dal való hivatkozás az elemekre
+      a komponens renderelése után történik, tehát biztosítani kell, hogy az observedElement már létezzen a DOM-ban,
+      amikor a IntersectionObserver-t elindítjuk</li>
+    <li>A threshold az IntersectionObserver konfigurációs opciója (0 és 1 között), amely meghatározza, hogy egy elem
+      mekkora része legyen látható ahhoz, hogy az observer aktiválódjon</li>
+    <li>Az observer.observe értesíti a callback függvényt, amelyben megadtuk, hogy milyen logika futton le, ha az elem X
+      része már nem látszik a Viewport-ban</li>
+    <li>Az IntersectionObserver callback függvény első paramétere egy tömböt ad át, amelyben az egyes belépési események
+      találhatók
+      <ul>
+        <li>Egyébként 2 paramétere van a függvénynek</li>
+        <pre>
+  const observer = new IntersectionObserver((entries, observerInstance) => &#123;
+    // logika
+  }, &#123; threshold: 0.2 });
+        </pre>
+        <li>A második paraméter maga az IntersectionObserver példány
+          <ul>
+            <li>Fontosabb metódusai
+              <ol>
+                <li>observe(element: Element): új elem figyelése</li>
+                <li>unobserve(element: Element): egy adott elem figyelésének leállítása</li>
+                <li>disconnect(): minden elem figyelésének leállítása</li>
+                <li>takeRecords(): Az utolsó események lekérése</li>
+              </ol>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <br>
+    <li>Több elemet is megfigyelhetünk</li>
+    <br>
+    <div #visibilityObservedElements class="visibility-tracked-element">ELEM 1</div>
+    <div #visibilityObservedElements class="visibility-tracked-element">ELEM 2</div>
+    <div #visibilityObservedElements class="visibility-tracked-element">ELEM 3</div>
+    <div>observedElementsVisibility: {{observedElementsVisibility | json}}</div>
+    <pre>
+  <b>// template</b>
+  &#60;div #visibilityObservedElements class="visibility-tracked-element">ELEM 1&#60;/div>
+  &#60;div #visibilityObservedElements class="visibility-tracked-element">ELEM 2&#60;/div>
+  &#60;div #visibilityObservedElements class="visibility-tracked-element">ELEM 3&#60;/div>
+
+  &#60;div>observedElementsVisibility: &#123; &#123; observedElementsVisibility | json}}&#60;/div>
+
+  <b>// class</b>
+  ...
+  @ViewChildren('visibilityObservedElements') visibilityObservedElements!: QueryList&#60;ElementRef>;
+  observedElementsVisibility: boolean[] = [];
+  ...
+
+  ngAfterViewInit() &#123;
+    const elements = this.visibilityObservedElements.toArray(); // az Angular ElementRef listát tömbbé alakítjuk
+
+    const observers = new IntersectionObserver((entries) => &#123;
+      entries.forEach(entry => &#123;
+        const realIndex = elements.findIndex(el => el.nativeElement === entry.target);
+
+        // console.log(entry.target); // entry.target: maga a HTMLElement
+
+        this.observedElementsVisibility[realIndex] = entry.isIntersecting;
+      });
+    }, &#123; threshold: 0.2 });
+
+    this.visibilityObservedElements.forEach(element => observers.observe(element.nativeElement)); // az összes figyelt elem hozzáadása
+  }
+    </pre>
+  </ul>
+</div>
+
+<div>
+  <h3 #navigationevent data-anchor="navigationevent">Navigation event</h3>
+  <ul>
+    <li>Az Angular Router egyik fontos eseménye, amely lehetővé teszi, hogy figyeljük, mi történik a navigáció során az
+      alkalmazásunkban</li>
+    <li>A navigációs események (NavigationEvent) akkor keletkeznek, amikor a felhasználó új útvonalra navigál, vagy egy
+      linket kattint
+      <ul>
+        <li>A következő események kapcsolódnak hozzá (időrendben)
+          <ol>
+            <li>NavigationStart: A navigáció kezdete, amikor a felhasználó elindítja a navigációt</li>
+            <li>RouteConfigLoadStart: Amikor elkezdődik egy route konfiguráció betöltése (például lazy loading esetén)
+            </li>
+            <li>RouteConfigLoadEnd: A route konfiguráció sikeresen betöltődött (például lazy loading esetén)</li>
+            <li>RoutesRecognized: A route sikeresen felismerésre került a router által</li>
+            <li>NavigationEnd: A navigáció befejeződött</li>
+            <li>NavigationCancel: A navigációt valami megszakította</li>
+            <li>NavigationError: A navigációs folyamat során hiba történt</li>
+          </ol>
+        </li>
+      </ul>
+    </li>
+    <li>A navigációs események a Router osztályból elérhetőek, és figyelhetjük őket a router.events Observable
+      segítségével</li>
+    <li>Elérhetjük például, hogy megjelenítünk egy töltő animációt a NavigationStart esemény indításakor,
+      majd eltüntetjük a navigáció befejeztekor (NavigationEnd)</li>
+    <pre>
+      import &#123; Component, OnInit } from '@angular/core';
+      import &#123; Router, NavigationStart, NavigationEnd, NavigationError, NavigationCancel, Event } from '@angular/router';
+
+      @Component(&#123;
+        selector: 'app-navigation-listener',
+        templateUrl: './navigation-listener.component.html',
+        styleUrls: ['./navigation-listener.component.css']
+      })
+      export class NavigationListenerComponent implements OnInit &#123;
+        loading: boolean = false;
+
+        constructor(private router: Router) &#123;}
+
+        ngOnInit(): void &#123;
+          this.router.events.subscribe((event: Event) => &#123;
+            if (event instanceof NavigationStart) &#123; // a navigáció kezdete
+              this.loading = true;
+            }
+            if (event instanceof NavigationEnd) &#123; // a navigáció vége
+              this.loading = false;
+            }
+            if (event instanceof NavigationError) &#123; // hiba történt a navigáció során
+              this.loading = false;
+            }
+            if (event instanceof NavigationCancel) &#123; // a navigációt megszakították
+              this.loading = false;
+            }
+          });
+        }
+      }
+    </pre>
+  </ul>
+</div>
+
+<div>
+  <h3 #httperrors data-anchor="httperrors">HTTP errors</h3>
+  <ul>
+    <li>1xx - Információs kódok
+      <ul>
+        <li>100 Continue: A kliens folytathatja a kérést, mert a szerver úgy döntött, hogy nincs hiba, és nem szükséges
+          semmilyen más információ</li>
+        <li>101 Switching Protocols: A szerver elfogadta a kliens által kért protokollváltást</li>
+      </ul>
+    </li>
+    <br>
+    <li>2xx - Sikeres kódok
+      <ul>
+        <li>200 OK: A kérés sikeresen feldolgozásra került, az adatok a válaszban találhatók</li>
+        <li>201 Created: A kérés sikeresen végrehajtva, és egy új erőforrást hozott létre</li>
+        <li>204 No Content: A kérés sikeresen végrehajtva, de nincs visszaküldött tartalom</li>
+      </ul>
+    </li>
+    <br>
+    <li>3xx - Átirányítási kódok
+      <ul>
+        <li>301 Moved Permanently: Az erőforrás véglegesen másik helyre lett áthelyezve</li>
+        <li>302 Found: Az erőforrás ideiglenesen másik helyen található</li>
+        <li>304 Not Modified: Az erőforrás nem változott, így a kliens az előző cache-elt verziót használhatja</li>
+        <li>307 Temporary Redirect: Az erőforrás ideiglenesen másik helyre lett áthelyezve, és a kliensnek ugyanazzal a
+          HTTP módszerrel kell újra kérni</li>
+        <li>308 Permanent Redirect: Az erőforrás véglegesen másik helyre lett áthelyezve</li>
+      </ul>
+    </li>
+    <br>
+    <li>4xx - Kliensoldali hibák
+      <ul>
+        <li>400 Bad Request: A kérés nem érvényes vagy hibás formátumú, és a szerver nem tudja feldolgozni</li>
+        <li>401 Unauthorized: A kéréshez hitelesítés szükséges, és a kliens nem biztosította azt (például nem adta meg a
+          megfelelő hitelesítést)</li>
+        <li>403 Forbidden: A kérés végrehajtása megtagadva, mivel a kliens nem rendelkezik megfelelő jogosultsággal</li>
+        <li>404 Not Found: Az erőforrás nem található, ami az egyik leggyakoribb hiba, amit a felhasználók látnak</li>
+        <li>405 Method Not Allowed: A kérésben szereplő HTTP módszer (például GET, POST) nem engedélyezett az adott
+          erőforráson</li>
+        <li>406 Not Acceptable: A kérés elfogadott formátuma nem érhető el a szerveren</li>
+        <li>407 Proxy Authentication Required: A proxy-kiszolgáló hitelesítést kér a klienssel szemben</li>
+        <li>408 Request Timeout: A szerver nem kapott választ a kliens kérésére a megadott időn belül</li>
+        <li>409 Conflict: A kérés ellentmondásba kerül a szerver állapotával (például próbálkozás egy már létező
+          erőforrás módosításával)</li>
+        <li>410 Gone: Az erőforrás véglegesen eltűnt, és már nem elérhető</li>
+        <li>411 Length Required: A kérés nem tartalmazza a szükséges Content-Length fejléceket</li>
+        <li>412 Precondition Failed: A kérés feltételei nem teljesültek</li>
+        <li>413 Payload Too Large: A kérés testének mérete túl nagy, és a szerver nem képes feldolgozni</li>
+        <li>414 URI Too Long: A kérés URI-ja túl hosszú, és nem feldolgozható</li>
+        <li>415 Unsupported Media Type: A kérésben megadott típus nem támogatott</li>
+        <li>416 Range Not Satisfiable: A kérésben megadott tartomány nem érvényes</li>
+        <li>417 Expectation Failed: A kérésben szereplő elvárás nem teljesíthető</li>
+      </ul>
+    </li>
+    <br>
+    <li>5xx - Szerveroldali hibák
+      <ul>
+        <li>500 Internal Server Error: A szerver belső hibát észlelt, ami megakadályozza a kérés teljesítését</li>
+        <li>501 Not Implemented: A szerver nem támogatja a kérésben szereplő funkciót</li>
+        <li>502 Bad Gateway: A szerver közvetítőként működik, és hiba történt, miközben egy másik szerver válaszát várta
+        </li>
+        <li>503 Service Unavailable: A szerver ideiglenesen nem elérhető (például karbantartás miatt)</li>
+        <li>504 Gateway Timeout: A szerver nem kapott időben választ egy másik szervertől, amely közvetítő szerepet
+          látott el</li>
+        <li>505 HTTP Version Not Supported: A kérésben szereplő HTTP verziót a szerver nem támogatja</li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<!--div>
   <h3 #todo data-anchor="todo">TODO</h3>
   <ul>
     <li></li>
   </ul>
-</div>
+</!--div-->

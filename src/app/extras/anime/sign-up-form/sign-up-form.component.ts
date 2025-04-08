@@ -31,10 +31,10 @@ interface SignUpForm {
       transition('* => *', [
         query(':self', [
           style({ height: '{{startHeight}}px' }) // ezzel az értékkel indulunk, hogy ne változzon azonnal a méret
-        ]),
+        ], { optional: true }),
         query(':enter', [ // belépő panel kezdeti állapota
           style({ opacity: 0, scale: 0.9 })
-        ]),
+        ], { optional: true }),
         query(':leave', [ // a kilépő panel animálása
           style({ opacity: 1, scale: 1 }),
           animate('1s ease-in', style({ opacity: 0, scale: 0.9 }))
@@ -42,10 +42,10 @@ interface SignUpForm {
         group([ 
           query(':self', [  // a :self a triggerelő elemet célozza
             animate('1s ease-in', style({ height: '*' }))
-          ]),
+          ], { optional: true }),
           query(':enter', [
             animate('1s ease-in', style({ opacity: 1, scale: 1 }))
-          ]),
+          ], { optional: true }),
         ], { params: { startHeight: 0 } })
       ])
     ])

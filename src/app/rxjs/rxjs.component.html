@@ -612,7 +612,7 @@
 </div>
 
 <div>
-  <h3 #examples data-anchor="examples">Példák</h3>
+  <h3 #examples data-anchor="examples">Examples</h3>
   <pre>
   constructor(private aRouter: ActivatedRoute) &#123;
     aRouter.params.subscribe(params => &#123;
@@ -644,40 +644,576 @@
 </div>
 
 <div>
-  <h3 #types data-anchor="types">Observable, Observer, Subscription, Subject, Operators</h3>
+  <h3 #components data-anchor="components">Components</h3>
   <ul>
     <li>Observable
       <ul>
-        <li></li>
+        <li>Az RxJS egyik legfontosabb összetevője, amely lehetővé teszi az aszinkron adatfolyamok kezelését</li>
+        <li>Olyan objektum, amely képes adatokat kibocsátani (emitálni) egy adott időpontban, és azokat figyelni,
+          reagálni rájuk</li>
+        <li>Az Observable elindítja az adatáramlást és figyeli a változásokat</li>
+        <li>A változásokra egy Observer, vagy akár több Observer reagálhat</li>
+        <li>Késleltetett (aszinkron) eseményekkel dolgozik, így például HTTP kérések, vagy események kezelésére
+          használható</li>
+        <pre>
+  const observable = new Observable((observer) => &#123;
+    setTimeout(() => &#123;
+      observer.next('Hello RxJS');
+      observer.complete();
+    }, 1000);
+  });            
+          </pre>
       </ul>
     </li>
     <li>Observer
       <ul>
-        <li></li>
+        <li>Egy objektum, amely figyeli az Observable által kibocsátott értékeket</li>
+        <li>Meghatározza, hogy mi történjen, amikor az Observable adatot bocsát ki, hibát dob, vagy befejeződik</li>
+        <li>3 fő metódust tartalmaz
+          <ol>
+            <li>next(): tartalmazza az adatokat, amelyeket az Observable kibocsátott</li>
+            <li>error(): a hibákat kezeli</li>
+            <li>complete(): az Observable befejeztét jelzi, már nem fog új adatokat kibocsátani</li>
+          </ol>
+        </li>
+        <pre>
+  const observer = &#123;
+    next: (value) => console.log(value),
+    error: (err) => console.error('Error:', err),
+    complete: () => console.log('Completed')
+  };
+  
+  observable.subscribe(observer);
+        </pre>
       </ul>
     </li>
     <li>Subscription
       <ul>
-        <li></li>
-      </ul>
-    </li>
-    <li>Operators
-      <ul>
-        <li></li>
+        <li>Referencia, amely az Observable és az Observer közötti kapcsolatot jelöli</li>
+        <li>Lehetővé teszi, hogy az Observer feliratkozzon, vagy leiratkozzon az Observable-ről
+          <ul>
+            <li>Az unsubscribe() metódus segítségével leiratkozhatunk az Observable-ról</li>
+          </ul>
+        </li>
+        <pre>
+  const subscription = observable.subscribe(observer);
+
+  // ha már nem akarjuk figyelni, akkor leiratkozunk
+  subscription.unsubscribe();
+        </pre>
       </ul>
     </li>
     <li>Subject
       <ul>
-        <li></li>
-        <li>Fajtái
-          <ul>
-            <li>Subject</li>
-            <li>BehaviorSubject</li>
-            <li>ReplaySubject</li>
-            <li>AsyncSubject</li>
-          </ul>
-        </li>
+        <li>Különleges típusú Observable, amely képes egyszerre adattárolásra, és Subscription kezelésére</li>
+        <li>Egyszerre Observer, és Observable is lehet, így képes adatokat fogadni (mint Observer), és ugyanazokat az
+          adatokat más Observer-eknek átadni (mint Observable)</li>
+        <li>Nagyon hasznos például az event stream-ek kezelésére, vagy ha egy Observable értékeit más Observable-oknak
+          kell továbbítani</li>
+        <pre>
+  const subject = new Subject();
+
+  subject.subscribe(value => console.log(`Observer 1: $&#123;value}`));
+  subject.subscribe(value => console.log(`Observer 2: $&#123;value}`));
+
+  subject.next('Hello from Subject');  // mindkét observer megkapja
+        </pre>
+        <table style="border-collapse: collapse; width: 100%;">
+          <tr>
+            <th></th>
+            <th>Mit csinál?</th>
+            <th>Mikor használjuk?</th>
+          </tr>
+          <tr>
+            <td>Subject</td>
+            <td>Alapértelmezett Subject, minden új Subscriber csak az újonnan érkező értékeket kapja meg.</td>
+            <td>Ha több Observer-nek kell egyszerre adatot küldeni.</td>
+          </tr>
+          <tr>
+            <td>BehaviorSubject</td>
+            <td>Az utolsó kibocsátott értéket is eltárolja, így az újonnan feliratkozók is megkapják ezt.</td>
+            <td>Ha mindig szükség van az utolsó ismert értékre (pl. állapotkezelés).</td>
+          </tr>
+          <tr>
+            <td>ReplaySubject</td>
+            <td>Az összes korábbi értéket eltárolja és minden új Subscriber-nek elküldi ezeket.</td>
+            <td>Ha minden új Observer-nek vissza kell adni az előzményeket is.</td>
+          </tr>
+          <tr>
+            <td>AsyncSubject</td>
+            <td>Csak az utolsó értéket küldi ki, de csak akkor, ha az Observable befejeződött.</td>
+            <td>Ha csak a végső eredmény érdekes (pl. egy HTTP kérés után).</td>
+          </tr>
+        </table>
       </ul>
     </li>
+    <br>
+    <li>Operators
+      <ul>
+        <li>Az RxJS operátorok az Observable-ek feldolgozására szolgálnak</li>
+        <li>Lehetővé teszik az adatok átalakítását, kombinálását, szűrését és létrehozását, hogy könnyebben kezelhessük
+          az aszinkron eseményeket, például HTTP kéréseket, felhasználói interakciókat vagy időzített eseményeket</li>
+        <li>A kód tisztább, hatékonyabb és reaktívabb lesz
+          <ul>
+            <li>Nincs összekuszálva callback-ekkel, és Promise láncokkal</li>
+          </ul>
+        </li>
+        <br>
+        <table style="border-collapse: collapse; width: 100%;">
+          <tr>
+            <th>Kategória</th>
+            <th>Mit csinál?</th>
+            <th>Példa operátorok</th>
+          </tr>
+          <tr>
+            <td>Creation (Létrehozás)</td>
+            <td>Új Observable-t hoz létre</td>
+            <td>of(), from(), interval(), timer()</td>
+          </tr>
+          <tr>
+            <td>Transformation (Átalakítás)</td>
+            <td>Az adatok módosítása</td>
+            <td>map(), switchMap(), mergeMap(), concatMap(), exhaustMap()</td>
+          </tr>
+          <tr>
+            <td>Filtering (Szűrés)</td>
+            <td>Csak a kívánt adatokat engedi át</td>
+            <td>filter(), debounceTime(), distinctUntilChanged()</td>
+          </tr>
+          <tr>
+            <td>Combination (Kombináció)</td>
+            <td>Több Observable egyesítése vagy összehangolása</td>
+            <td>merge(), combineLatest(), forkJoin(), withLatestFrom()</td>
+          </tr>
+        </table>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #operators data-anchor="operators">Operators</h3>
+  <ul>
+    <li>Creation operátorok
+      <ul>
+        <li>"Teremtő" operátorok</li>
+        <li>Új Observable-t hoznak létre</li>
+      </ul>
+      <br>
+      <ol>
+        <li>of()
+          <ul>
+            <li>Statikus értékekből hoz létre egy Observable-t</li>
+            <li>Használatos, amikor egy vagy több értéket akarunk egyszerűen kiadni</li>
+            <pre>
+  import &#123; of } from 'rxjs';
+
+  const obs$ = of(1, 2, 3, 4, 5);
+  obs$.subscribe(value => console.log(value));
+
+  ↓↓↓↓↓
+
+  1, 2, 3, 4, 5
+            </pre>
+          </ul>
+        </li>
+        <li>from()
+          <ul>
+            <li>Tömbből, Promise-ból vagy iterálható objektumból hoz létre Observable-t</li>
+            <li>Akkor használjuk, ha egy tömb, vagy Promise adatait akarjuk Observable-ként kezelni</li>
+            <pre>
+  import &#123; from } from 'rxjs';
+
+  const obs$ = from([10, 20, 30]);
+  obs$.subscribe(value => console.log(value));
+
+  ↓↓↓↓↓
+
+  10, 20, 30
+            </pre>
+          </ul>
+        </li>
+        <li>interval()
+          <ul>
+            <li>Időzített intervallumonként kibocsát egy értéket</li>
+            <li>Akkor jó, ha például egy számlálót szeretnénk időzíteni</li>
+            <pre>
+  import &#123; interval } from 'rxjs';
+
+  const obs$ = interval(1000); // 1 másodpercenként ad ki egy számot
+  obs$.subscribe(value => console.log(value));
+
+  ↓↓↓↓↓
+
+  0, 1, 2, 3, 4, ...
+            </pre>
+          </ul>
+        </li>
+      </ol>
+    </li>
+    <br>
+    <li>Transformation operátorok
+      <ul>
+        <li>Átalakító operátorok</li>
+        <li>Segítségükkel az Observable által kibocsátott értékeket módosíthatjuk</li>
+      </ul>
+      <br>
+      <ol>
+        <li>map()
+          <ul>
+            <li>Egyenként módosítja az értékeket</li>
+            <li>Előnyös, ha minden értéket át akarunk alakítani valami mássá</li>
+            <pre>
+  import &#123; of } from 'rxjs';
+  import &#123; map } from 'rxjs/operators';
+
+  const obs$ = of(1, 2, 3).pipe(
+    map(value => value * 10)
+  );
+
+  obs$.subscribe(value => console.log(value));
+
+  ↓↓↓↓↓
+
+  10, 20, 30
+            </pre>
+          </ul>
+        </li>
+        <li>switchMap()
+          <ul>
+            <li>Egy új Observable-re vált, és az előzőt leállítja</li>
+            <li>Akkor jó, ha például HTTP kéréseket végzünk, és mindig csak a legfrissebb eredményt akarjuk megtartani
+            </li>
+            <pre>
+  import &#123; fromEvent, interval } from 'rxjs';
+  import &#123; switchMap } from 'rxjs/operators';
+
+  const click$ = fromEvent(document, 'click');
+  const interval$ = interval(1000);
+
+  click$.pipe(
+    switchMap(() => interval$)
+  ).subscribe(console.log);
+
+  // minden kattintás elindít egy számlálót, de az előzőt megszakítja
+            </pre>
+          </ul>
+        </li>
+        <li>mergeMap()
+          <ul>
+            <li>Az összes új Observable-t megtartja, nem szakítja meg az előzőket</li>
+            <li>Haszbnáljuk, ha minden új eseményt párhuzamosan akarunk kezelni</li>
+            <pre>
+  import &#123; of } from 'rxjs';
+  import &#123; mergeMap } from 'rxjs/operators';
+
+  const obs$ = of('A', 'B', 'C').pipe(
+    mergeMap(letter => of(letter + '1', letter + '2'))
+  );
+
+  obs$.subscribe(console.log);
+
+  ↓↓↓↓↓
+
+  A1, A2, B1, B2, C1, C2
+            </pre>
+          </ul>
+        </li>
+        <li>concatMap()
+          <ul>
+            <li>Sorban dolgozza fel az Observable-eket, egyet befejez, mielőtt a következőt elkezdi</li>
+            <li>Jó, ha például HTTP kéréseket sorban akarunk végrehajtani</li>
+            <pre>
+  import &#123; of } from 'rxjs';
+  import &#123; concatMap, delay } from 'rxjs/operators';
+
+  const obs$ = of('X', 'Y', 'Z').pipe(
+    concatMap(value => of(value).pipe(delay(1000)))
+  );
+
+  obs$.subscribe(console.log);
+
+  ↓↓↓↓↓
+
+  X, Y, Z // 1 másodpercenként
+            </pre>
+          </ul>
+        </li>
+        <li>exhaustMap()
+          <ul>
+            <li>Amíg egy belső Observable fut, figyelmen kívül hagyja az új bejövő eseményeket</li>
+            <li>Akkor jó, ha például egy gombra kattintásnál el akarjuk kerülni, hogy a felhasználó többször is
+              elindítson egy HTTP kérést, amíg az előző nem futott le</li>
+            <pre>
+  import &#123; fromEvent, interval } from 'rxjs';
+  import &#123; exhaustMap, take } from 'rxjs/operators';
+
+  const button = document.getElementById('myButton') as HTMLButtonElement;
+  const click$ = fromEvent(button, 'click');
+
+  click$.pipe(
+    exhaustMap(() => interval(1000).pipe(take(5))) // 5 másodpercig figyelmen kívül hagyja az új kattintásokat
+  ).subscribe(console.log);
+
+  // ha véget ér az első folyamat, akkor a következő kattintás indít új számlálót
+              </pre>
+          </ul>
+        </li>
+      </ol>
+      <br>
+      <table style="border-collapse: collapse; width: 100%;">
+        <tr>
+          <th></th>
+          <th>Előző Observable</th>
+          <th>Új Observable</th>
+          <th>Mikor használjuk?</th>
+        </tr>
+        <tr>
+          <td>switchMap()</td>
+          <td>Megszakítja az előzőt</td>
+          <td>Elindítja az újat</td>
+          <td>Keresőmező, HTTP kérések, ha csak a legutóbbi fontos</td>
+        </tr>
+        <tr>
+          <td>mergeMap()</td>
+          <td>Párhuzamosan futtatja</td>
+          <td>Új Observable-t mindig elindít</td>
+          <td>Több async kérés egyszerre (például több API hívás)</td>
+        </tr>
+        <tr>
+          <td>concatMap()</td>
+          <td>Sorban dolgozza fel</td>
+          <td>Csak az előző befejezése után indít újat</td>
+          <td>Ha a kéréseknek sorrendben kell futniuk</td>
+        </tr>
+        <tr>
+          <td>exhaustMap()</td>
+          <td>Figyelmen kívül hagyja az új kéréseket</td>
+          <td>Csak az elsőt futtatja, amíg be nem fejeződik</td>
+          <td>Gombkattintásos HTTP hívás megelőzése (például dupla kattintás tiltása)</td>
+        </tr>
+      </table>
+    </li>
+    <br>
+    <li>Filtering operátorok
+      <ul>
+        <li>Szűrő operátorok</li>
+        <li>Csak bizonyos értékeket engednek át</li>
+      </ul>
+      <br>
+      <ol>
+        <li>filter()
+          <ul>
+            <li>Csak azokat az értékeket engedi tovább, amelyek megfelelnek egy feltételnek</li>
+            <li>Használatos, ha adott értékeket ki akarunk szűrni egy adathalmazból</li>
+            <pre>
+  import &#123; of } from 'rxjs';
+  import &#123; filter } from 'rxjs/operators';
+
+  const obs$ = of(1, 2, 3, 4, 5).pipe(
+    filter(value => value % 2 === 0)
+  );
+
+  obs$.subscribe(console.log);
+
+  ↓↓↓↓↓
+
+  2, 4
+            </pre>
+          </ul>
+        </li>
+        <li>debounceTime()
+          <ul>
+            <li>Egy esemény után vár egy adott időintervallumot, mielőtt továbbítaná az értéket</li>
+            <li>Például API kéréseknél, keresési mezők optimalizálásánál előnyös</li>
+            <pre>
+  import &#123; fromEvent } from 'rxjs';
+  import &#123; debounceTime } from 'rxjs/operators';
+
+  const input = document.getElementById('searchBox') as HTMLInputElement;
+
+  fromEvent(input, 'input').pipe(
+    debounceTime(300) // csak akkor küldi az eseményt, ha 300 ms-ig nem történik karakterleütés a mezőbe
+  ).subscribe(event => console.log(input.value));
+            </pre>
+          </ul>
+        </li>
+        <li>distinctUntilChanged()
+          <ul>
+            <li>Csak akkor engedi át az új értéket, ha az különbözik az előzőtől</li>
+            <li>Például form validációs esemény optimalizálásánál használatos</li>
+            <pre>
+  import &#123; of } from 'rxjs';
+  import &#123; distinctUntilChanged } from 'rxjs/operators';
+
+  const obs$ = of(1, 1, 2, 2, 3, 3, 3, 4).pipe(
+    distinctUntilChanged()
+  );
+
+  obs$.subscribe(console.log);
+
+  ↓↓↓↓↓
+
+  1, 2, 3, 4
+            </pre>
+          </ul>
+        </li>
+      </ol>
+    </li>
+    <br>
+    <li>Combination operátorok
+      <ul>
+        <li>Kombinációs operáorok</li>
+        <li>Lehetővé teszik több Observable egyesítését, vagy egyes Observable-ok értékeinek egyidejű kezelését</li>
+      </ul>
+      <br>
+      <ol>
+        <li>merge()
+          <ul>
+            <li>Több Observable-t egyesíthetünk, és azokat párhuzamosan figyelhetjük</li>
+            <li>Minden kibocsátott értéket egyesít, tehát nem várja meg, hogy az előző Observable befejeződjön</li>
+            <li>Használjuk, ha több aszinkron folyamatot párhuzamosan szeretnénk kezelni, és az összes eseményt
+              egyszerre akarjuk figyelni</li>
+            <pre>
+  import &#123; of, merge } from 'rxjs';
+
+  const obs1 = of('A', 'B', 'C');
+  const obs2 = of(1, 2, 3);
+
+  merge(obs1, obs2).subscribe(val => console.log(val));
+
+  ↓↓↓↓↓
+
+  A
+  B
+  C
+  1
+  2
+  3
+            </pre>
+          </ul>
+        </li>
+        <li>combineLatest()
+          <ul>
+            <li>Csak akkor küldi el az adatokat, ha mindegyik Observable legalább egyszer kibocsátott egy értéket</li>
+            <li>Hasznos, ha több Observable-t szeretnénk kombinálni, és mindig a legutolsó értéket szeretnénk megkapni
+              mindegyikből</li>
+            <pre>
+  import &#123; combineLatest, of } from 'rxjs';
+
+  const obs1 = of(1, 2, 3);
+  const obs2 = of('A', 'B', 'C');
+
+  combineLatest([obs1, obs2]).subscribe(([val1, val2]) => &#123;
+    console.log(`obs1: $&#123;val1}, obs2: $&#123;val2}`);
+  });
+
+  ↓↓↓↓↓
+
+  obs1: 3, obs2: C
+              </pre>
+          </ul>
+        </li>
+        <li>forkJoin()
+          <ul>
+            <li>Akkor használatos, ha több Observable-t szeretnénk párhuzamosan futtatni, és csak akkor szeretnénk az
+              eredményeket megkapni, amikor mindegyik Observable befejeződött</li>
+            <pre>
+  import &#123; forkJoin, of } from 'rxjs';
+
+  const obs1 = of('A', 'B', 'C');
+  const obs2 = of(1, 2, 3);
+
+  forkJoin([obs1, obs2]).subscribe(([val1, val2]) => &#123;
+    console.log(`obs1: $&#123;val1}, obs2: $&#123;val2}`);
+  });
+
+  ↓↓↓↓↓
+
+  obs1: C, obs2: 3
+
+  // különbség a combineLatest-hez képest, hogy a forkJoin csak akkor adja vissza az értékeket, ha minden Observable befejeződött
+              </pre>
+          </ul>
+        </li>
+      </ol>
+    </li>
+    <table style="border-collapse: collapse; width: 100%;">
+      <tr>
+        <th></th>
+        <th>Mit csinál?</th>
+        <th>Példa</th>
+      </tr>
+      <tr>
+        <td>of()</td>
+        <td>Értékekből Observable-t hoz létre</td>
+        <td>Egyszerű adatok</td>
+      </tr>
+      <tr>
+        <td>from()</td>
+        <td>Tömbből vagy Promise-ból Observable-t hoz létre</td>
+        <td>Lista, Promise</td>
+      </tr>
+      <tr>
+        <td>interval()</td>
+        <td>Időzített eseményeket generál</td>
+        <td>Timer, animációk</td>
+      </tr>
+      <tr>
+        <td>map()</td>
+        <td>Minden kibocsátott értéket átalakít</td>
+        <td>Formázás, számítás</td>
+      </tr>
+      <tr>
+        <td>switchMap()</td>
+        <td>Megszakítja az előzőt, és újat indít</td>
+        <td>HTTP keresés, autocomplete</td>
+      </tr>
+      <tr>
+        <td>mergeMap()</td>
+        <td>Párhuzamosan több kérést futtat</td>
+        <td>Több aszinkron művelet egyszerre</td>
+      </tr>
+      <tr>
+        <td>concatMap()</td>
+        <td>Sorban dolgozza fel a kéréseket</td>
+        <td>HTTP kérések sorrendben</td>
+      </tr>
+      <tr>
+        <td>exhaustMap()</td>
+        <td>Ha egy kérés aktív, az újakat figyelmen kívül hagyja</td>
+        <td>Dupla kattintás tiltása</td>
+      </tr>
+      <tr>
+        <td>filter()</td>
+        <td>Csak a feltételnek megfelelő elemeket engedi át</td>
+        <td>Adatszűrés</td>
+      </tr>
+      <tr>
+        <td>debounceTime()</td>
+        <td>Csak a késleltetett eseményeket továbbítja</td>
+        <td>Keresőmező optimalizálás</td>
+      </tr>
+      <tr>
+        <td>distinctUntilChanged()</td>
+        <td>Csak az eltérő értékeket engedi tovább</td>
+        <td>Form validáció optimalizálás</td>
+      </tr>
+      <tr>
+        <td>merge()</td>
+        <td>Több Observable-t párhuzamosan figyel</td>
+        <td>Több esemény egyszerre történő kezelése</td>
+      </tr>
+      <tr>
+        <td>combineLatest()</td>
+        <td>Az utolsó értéket minden Observable-ból kibocsátja</td>
+        <td>Formok, amelyeket a felhasználó egyszerre módosít</td>
+      </tr>
+      <tr>
+        <td>forkJoin()</td>
+        <td>Csak akkor küldi el az adatokat, amikor az összes Observable befejeződött</td>
+        <td>Több aszinkron művelet, mindegyik eredménye egyetlen objektumban</td>
+      </tr>
+    </table>
   </ul>
 </div>

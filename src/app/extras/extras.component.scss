@@ -74,3 +74,13 @@ td {
   background: lightblue;
   color: black;
 }
+
+.visibility-tracked-element {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  margin-bottom: 30px;
+  border: 1px solid black;
+  border-radius: 5px;
+}

@@ -8,10 +8,17 @@ import { ScrollingService } from 'src/shared/services/scrolling.service';
 })
 export class SsrComponent {
   @ViewChildren(`
+    introduction,
+
     todo
     `) sections!: QueryList<ElementRef>;
 
   anchorButtons: any[] = [
+    {
+      title: 'Introduction', anchor: 'introduction', subtitles: [
+        { title: 'Implementation', anchor: 'implementation' }
+      ]
+    },
     {
       title: 'TODO', anchor: 'todo', subtitles: [
         { title: 'TODO', anchor: 'todo' }

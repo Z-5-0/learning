@@ -1,4 +1,4 @@
-import { Component, ElementRef, QueryList, ViewChildren, OnInit, AfterViewInit, OnDestroy, afterRender } from '@angular/core';
+import { Component, ElementRef, QueryList, ViewChildren, OnInit, AfterViewInit, OnDestroy, afterRender, ViewChild } from '@angular/core';
 import { ScrollingService } from "../../shared/services/scrolling.service";
 import { BehaviorSubject, catchError, of, Subject, Subscription, switchMap, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -116,13 +116,16 @@ export class ExtrasComponent implements OnInit, AfterViewInit, OnDestroy {
     trackby,
     newdirectives,
     callbackfunction,
-    rxjs,
     fontsizes,
     handlingimages,
     routerinrouter,
     lineheight1,
-    
-    todo
+    host,
+    visibilitytracking,
+    navigationevent,
+    httperrors,
+
+    // todo
     `) sections!: QueryList<ElementRef>;
 
   anchorButtons: any[] = [
@@ -223,12 +226,15 @@ export class ExtrasComponent implements OnInit, AfterViewInit, OnDestroy {
     { title: 'trackBy', anchor: 'trackby', subtitles: [] },
     { title: 'New directives', anchor: 'newdirectives', subtitles: [] },
     { title: 'Callback function', anchor: 'callbackfunction', subtitles: [] },
-    { title: 'RxJS', anchor: 'rxjs', subtitles: [] },
     { title: 'Font sizes', anchor: 'fontsizes', subtitles: [] },
     { title: 'Router in router', anchor: 'routerinrouter', subtitles: [] },
     { title: 'line-height: 1', anchor: 'lineheight1', subtitles: [] },
-    
-    { title: 'TODO', anchor: 'todo', subtitles: [] },
+    { title: ':host', anchor: 'host', subtitles: [] },
+    { title: 'Visibility tracking', anchor: 'visibilitytracking', subtitles: [] },
+    { title: 'Navigation event', anchor: 'navigationevent', subtitles: [] },
+    { title: 'HTTP errors', anchor: 'httperrors', subtitles: [] },
+
+    // { title: 'TODO', anchor: 'todo', subtitles: [] },
   ];
 
   elems: string[] = [];
@@ -388,7 +394,13 @@ export class ExtrasComponent implements OnInit, AfterViewInit, OnDestroy {
     { number: 1, name: 'First' },
     { number: 2, name: 'Second' },
     { number: 3, name: 'Third' },
-  ]
+  ];
+
+  @ViewChild('visibilityObservedElement') visibilityObservedElement!: ElementRef;
+  observedElementIsVisible!: boolean;
+
+  @ViewChildren('visibilityObservedElements') visibilityObservedElements!: QueryList<ElementRef>;
+  observedElementsVisibility: boolean[] = [];
 
   constructor(private anchor: ScrollingService, private http: HttpClient, private activeRoute: ActivatedRoute) {
     /* afterRender(() => {
@@ -478,6 +490,25 @@ export class ExtrasComponent implements OnInit, AfterViewInit, OnDestroy {
     this.subscriptions = [...this.subscriptions, refreshSub, deleteSub, createSub];
     // @ts-ignore
     this.refresh$.next();
+
+    const observer = new IntersectionObserver(([entry]) => {
+      this.observedElementIsVisible = entry.isIntersecting
+    }, { threshold: 0.2 });
+
+    observer.observe(this.visibilityObservedElement.nativeElement);
+
+    const elements = this.visibilityObservedElements.toArray(); // az Angular ElementRef listát tömbbé alakítjuk
+    const observers = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const realIndex = elements.findIndex(el => el.nativeElement === entry.target);
+
+        // console.log(realIndex, `Elem látható: ${entry.isIntersecting}`, entry.target); // entry.target: HTMLElement
+
+        this.observedElementsVisibility[realIndex] = entry.isIntersecting;
+      });
+    }, { threshold: 0.2 });
+
+    this.visibilityObservedElements.forEach(element => observers.observe(element.nativeElement)); // az összes figyelt elem hozzáadása
   }
 
   removeElemReactive(index: number) {

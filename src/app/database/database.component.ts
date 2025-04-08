@@ -8,26 +8,18 @@ import { ScrollingService } from 'src/shared/services/scrolling.service';
 })
 export class DatabaseComponent {
   @ViewChildren(`
+    introduction
     relational,
     nonrelational,
-    comparison,
-    todo
+    comparison
     `
   ) sections!: QueryList<ElementRef>;
 
   anchorButtons: any[] = [
-    {
-      title: 'Relational database', anchor: 'relational',
-    },
-    {
-      title: 'Non-relational database', anchor: 'nonrelational',
-    },
-    {
-      title: 'Comparison', anchor: 'comparison',
-    },
-    {
-      title: 'TODO', anchor: 'todo',
-    },
+    { title: 'Introduction', anchor: 'introduction' },
+    { title: 'Relational database', anchor: 'relational' },
+    { title: 'Non-relational database', anchor: 'nonrelational' },
+    { title: 'Comparison', anchor: 'comparison' },
   ]
   constructor(private anchor: ScrollingService) { }
 

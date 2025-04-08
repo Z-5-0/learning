@@ -10,7 +10,7 @@ import { StudentService } from 'src/shared/services/student.service';
 export class PipingComponent implements OnInit {
   private _studentService: StudentService = inject(StudentService);
 
-  students: Student[] = []
+  students: Student[] = [];
   totalMarks: number = 0;
 
   filterDropdown: any[] = [
