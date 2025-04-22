@@ -37,8 +37,7 @@ export class CssscssComponent implements AfterViewInit {
     operators,
     pxemrem,
     vhvwdvhlvhsvh,
-    aspectratio,
-    todo
+    aspectratio
     `) sections!: QueryList<ElementRef>;
 
   anchorButtons: any[] = [
@@ -73,7 +72,6 @@ export class CssscssComponent implements AfterViewInit {
         { title: 'px / em / rem', anchor: 'pxemrem', subtitles: [] },
         { title: 'vh / vw / dvh / lvh / svh', anchor: 'vhvwdvhlvhsvh', subtitles: [] },
         { title: 'aspect-ratio', anchor: 'aspectratio', subtitles: [] },
-        { title: 'TODO', anchor: 'todo', subtitles: [] },
       ]
     }
   ]

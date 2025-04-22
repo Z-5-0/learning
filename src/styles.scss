@@ -143,3 +143,30 @@ pre {
   border-radius: 5px;
   padding: 10px;
 }
+
+.info-header {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+
+  >span {
+    position: relative;
+    display: inline-flex;
+    height: 26px;
+    width: 26px;
+    background: rgb(214 51 132);
+    border-radius: 13px;
+    font-size: 20px;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    &:after {
+      content: "i";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+}

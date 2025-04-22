@@ -33,8 +33,7 @@ export class SeoComponent {
     algorithms,
     angular,
     angularmetadata,
-    angularjsonld,
-    // todo
+    angularjsonld
     `) sections!: QueryList<ElementRef>;
 
   anchorButtons: any[] = [
@@ -79,13 +78,7 @@ export class SeoComponent {
         { title: 'JSON-LD', anchor: 'angularjsonld' }
 
       ]
-    },
-
-    /* {
-      title: 'TODO', anchor: 'todo', subtitles: [
-        { title: 'TODO', anchor: 'todo' }
-      ]
-    }, */
+    }
   ]
 
   constructor(private anchor: ScrollingService) { }

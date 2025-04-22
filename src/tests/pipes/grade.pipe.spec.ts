@@ -3,7 +3,7 @@ import { GradePipe } from "./grade.pipe";
 describe('GradePipe', () => {
     it('create an instance', () => {
         const pipe = new GradePipe();
-        expect(pipe).toBeTruthy(); // ??? todo
+        expect(pipe).toBeTruthy();
     });
 
     it('should assign A when the mark is at least 90', () => {

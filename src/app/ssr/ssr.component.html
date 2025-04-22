@@ -1,4 +1,6 @@
-<h1>SSR</h1>
+<h1 class="info-header">SSR
+    <span placement="end" ngbTooltip="A témakör tartalmaz hiányosságokat"></span>
+</h1>
 
 <div class="anchor-navi-container">
     <div *ngFor="let mainButton of anchorButtons" class="btn-group">
@@ -26,21 +28,26 @@
         <li>Server-Side Rendering</li>
         <li>Lehetővé teszi, hogy az Angular alkalmazásokat a szerveren rendereljük le, mielőtt azok a böngészőhöz
             kerülnek</li>
-        <li>Javítja
+        <li>Előnyei például
             <ol>
-                <li>az alkalmazás sebességét
+                <li>Gyorsabb első betöltés
                     <ul>
-                        <li>Az alkalmazásnak nem kell megvárnia a JavaScript betöltődését és az alkalmazás
-                            inicializálását, mielőtt az oldal megjelenik a felhasználó számára</li>
+                        <li>FCP = First Contentful Paint</li>
+                        <li>A böngésző hamarabb megkapja a teljes oldalt a szervertől, és az oldal tartalmát gyorsan
+                            megjeleníti, ami javítja a felhasználói élményt, mivel nem kell várni a JavaScript
+                            betöltésére, és a kliensoldali alkalmazás inicializálására</li>
                     </ul>
                 </li>
-                <li>a keresőoptimalizálást (SEO)
+                <li>Keresőoptimalizálás (SEO)
                     <ul>
+                        <li>SSR nélkül a HTML dinamikusan generálódik JavaScript segítségével, ami azt jelenti,
+                            hogy a keresőrobotok nem látják az alkalmazás tényleges tartalmát, így a robotok nem tudják
+                            megfelelően indexálni az oldalt</li>
                         <li>Mivel a szerveren renderelt oldalak teljes HTML-t tartalmaznak, a keresőrobotok könnyebben
                             indexálhatják őket</li>
                     </ul>
                 </li>
-                <li>az általános felhasználói élményt
+                <li>Jobb felhasználói élmény (UX)
                     <ul>
                         <li>Lassabb eszközön, lassabb internet elérés esetében a user gyorsabban láthatja a tartalmat
                         </li>
@@ -71,6 +78,56 @@
                     renderelődnek, azok pedig, amelyek interaktív elemeket tartalmaznak, általában kliens oldalon</li>
             </ul>
         </li>
+    </ul>
+    <br>
+    <h5 #csrvsssr data-anchor="csrvsssr">CSR vs SSR</h5>
+    <ul>
+        <table style="border-collapse: collapse; width: 100%;">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>CSR (Client Side Rendering)</th>
+                    <th>SSR (Server Side Rendering)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Első oldalbetöltés</td>
+                    <td>A böngésző letölti a JS fájlokat, majd építi fel az oldalt</td>
+                    <td>A szerver elküldi az előre renderelt HTML-t</td>
+                </tr>
+                <tr>
+                    <td>SEO</td>
+                    <td>Nem ideális - kevésbé látható tartalom a keresőrobotok számára</td>
+                    <td>SEO-barát - teljes HTML elérhető azonnal</td>
+                </tr>
+                <tr>
+                    <td>Felhasználói élmény</td>
+                    <td>Lassabb első megjelenés</td>
+                    <td>Gyorsabb megjelenés, az oldal "ott van" elsőre</td>
+                </tr>
+                <tr>
+                    <td>Oldalforrás</td>
+                    <td>Üres &#60;app-root>, mert a JS építi fel</td>
+                    <td>Már az első válasz tartalmazza a HTML-t</td>
+                </tr>
+                <tr>
+                    <td>Hydration</td>
+                    <td>Nincs - minden DOM újraépül</td>
+                    <td>Van - a szerverről jött HTML-t csak "aktiválja"</td>
+                </tr>
+                <tr>
+                    <td>Szükséges szerver</td>
+                    <td>Statikus fájlok is elegek (például Firebase)</td>
+                    <td>Kell egy Node.js szerver, ami futtatja az SSR-t</td>
+                </tr>
+                <tr>
+                    <td>Komplexitás</td>
+                    <td>Egyszerűbb</td>
+                    <td>Összetettebb build és futtatási környezet</td>
+                </tr>
+            </tbody>
+        </table>
     </ul>
     <br>
     <h5 #implementation data-anchor="implementation">Implementation</h5>
@@ -105,30 +162,11 @@
                 <li>Szerver oldali renderelésért felelős kód létrehozása
                     <ul>
                         <pre>
-    ng generate universal &#60;app-name> // korábbi megvalósítás
+    ng generate universal &#60;app-name>    // Angular 17-ig
 
-    ng add @angular/ssr
+    ng add @angular/ssr                 // Angular 17-től
                         </pre>
-                        <li>Létrejönnek szerver oldali fájlok
-                            <ol>
-                                <li>server.ts: A szerver belépési pontja</li>
-                                <li>main.server.ts: Az Angular alkalmazás szerver oldali bootstrap fájlja</li>
-                                <li>app.server.module.ts: A szerver oldali alkalmazásmodul (a meglévő AppModule alapján
-                                    kiegészítve)</li>
-                                <li>tsconfig.server.json: Külön TypeScript konfiguráció a szerver oldali buildhez</li>
-                                <li>environment.server.ts: A környezet-specifikus fájl szerver oldali változata</li>
-                                <pre>
-    root/
-    ├── server.ts
-    ├── tsconfig.server.json
-    └── src/
-        ├── main.server.ts
-        ├── app.config.server.ts
-        └── environments/
-            └── environment.server.ts
-                                </pre>
-                            </ol>
-                        </li>
+                        <li>Létrejönnek szerver oldali fájlok</li>
                         <li>Frissítésre kerül az angular.json fájl
                             <ul>
                                 <pre>
@@ -141,7 +179,11 @@
                         </li>
                     </ul>
                 </li>
-                <li>Szerver konfigurálása</li>
+                <li>Konfigurálás (Express-engine esetében)
+                    <ul>
+                        <li>Az új SSR esetében mindent a CLI és az Angular saját SSR engine-je intéz</li>
+                    </ul>
+                </li>
                 <li>Node.js vagy a cloud platformon deploy
                     <ul>
                         <pre>
@@ -162,6 +204,25 @@
                     használhatók</li>
                 <li>Angular 14-től elérhető (standalone), és a 17-es verziótól hivatalosan is támogatott
                 </li>
+                <li>Would you like to use the Server Routing and App Engine APIs (Developer Preview) for this server
+                    application?
+                    <ul>
+                        <li>Az új, Angular-native SSR megoldást használatára kérdez rá
+                            <ul>
+                                <li>Yes = új SSR, Angular-native (preview)</li>
+                                <li>No = régi SSR, Express-engine (stabil, bevált)</li>
+                            </ul>
+                        </li>
+                        <li>Developer Preview
+                            <ul>
+                                <li>Azt jelenti, hogy, az adott funkció már elérhető, kipróbálható, de még nem
+                                    tekinthető teljesen stabilnak vagy véglegesnek, előfordulhat, hogy API változni fog,
+                                    vagy még vannak ismert hibák, hiányzó funkciók
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </li>
         <li>Ha nem adunk meg projektnevet, akkor a CLI folyamat megkérdezi
@@ -173,28 +234,3476 @@
             </ul>
         </li>
     </ul>
+    <br>
+    <h5 #versiondifferences data-anchor="versiondifferences">Version differences</h5>
+    <ul>
+        <li>@nguniversal/express-engine
+            <ul>
+                <pre>
+    ng add @nguniversal/express-engine
+                </pre>
+                <li>Új fájlok
+                    <ul>
+                        <li>server.ts (klasszikus Express szerver)</li>
+                        <li>app.server.module.ts</li>
+                        <li>main.server.ts</li>
+                        <li>tsconfig.server.json</li>
+                    </ul>
+                </li>
+                <li>Az Express middleware-eket, route-okat mi írjuk meg</li>
+            </ul>
+        </li>
+        <li>@angular/ssr
+            <ul>
+                <pre>
+    ng add @angular/ssr
+                </pre>
+                <li>Nincs külön Express szerver</li>
+                <li>A server.ts saját Angular handleRequest() metódust hív</li>
+            </ul>
+        </li>
+        <br>
+        <table style="border-collapse: collapse; width: 100%;">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>@nguniversal/express-engine (régi)</th>
+                    <th>@angular/ssr (új)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Angular verzió támogatás</td>
+                    <td>Angular 16 és korábbi</td>
+                    <td>Angular 17+</td>
+                </tr>
+                <tr>
+                    <td>Express szerver használata</td>
+                    <td>Igen (kötelező)</td>
+                    <td>Nem (saját SSR handler)</td>
+                </tr>
+                <tr>
+                    <td>Telepítendő csomag</td>
+                    <td>@nguniversal/express-engine</td>
+                    <td>@angular/ssr</td>
+                </tr>
+                <tr>
+                    <td>Szerver entrypoint fájl</td>
+                    <td>server.ts + Express</td>
+                    <td>server.ts (Angular-native handler)</td>
+                </tr>
+                <tr>
+                    <td>Streaming támogatás</td>
+                    <td>Nem</td>
+                    <td>Igen</td>
+                </tr>
+                <tr>
+                    <td>Kódmennyiség</td>
+                    <td>Több boilerplate (Express setup)</td>
+                    <td>Kisebb, egyszerűbb setup</td>
+                </tr>
+                <tr>
+                    <td>Rugalmasság</td>
+                    <td>Nagyobb, egyedi Express middleware-eket írhatunk</td>
+                    <td>Kisebb, de natívan Angularhoz igazított</td>
+                </tr>
+                <tr>
+                    <td>Stabilitás</td>
+                    <td>Stabil, régóta használt</td>
+                    <td>Fejlesztői előnézet (Developer Preview)</td>
+                </tr>
+            </tbody>
+        </table>
+    </ul>
+    <br>
+    <h5 #conversion data-anchor="conversion">Conversion</h5>
+    <ul>
+        <li>Átállhatunk az Express-engine-ről az új preview SSR-re
+            <ul>
+                <pre>
+    npm uninstall @nguniversal/express-engine
+                </pre>
+                <li>Fájlok törlése
+                    <ul>
+                        <li>server.ts</li>
+                        <li>tsconfig.server.json</li>
+                    </ul>
+                </li>
+                <li>Az angular.json fájlból az architect / server szekció eltávolítása</li>
+                <pre>
+    ng add @angular/ssr
+                </pre>
+                <li>"Would you like to use the Server Routing and App Engine APIs (Developer Preview)?" Y</li>
+                <li>ng add @angular/ssr</li>
+            </ul>
+        </li>
+    </ul>
 </div>
 
 <div>
-    <h3 #todo data-anchor="todo">TODO</h3>
+    <h3 #expressengine data-anchor="expressengine">Express-engine</h3>
     <ul>
-        <li>todo</li>
-    </ul>
-    <br>
-    <h5 #todo data-anchor="todo">TODO</h5>
-    <ul>
-        <li>todo</li>
+        <li>Az Express egy gyors, és minimalista Node.js alapú backend keretrendszer
+        <li>Lehetővé teszi saját HTTP szerver indítását</li>
+        <li>REST API-k, és szerveroldali alkalmazások írására használják</li>
+        <li>Fontos része az Angular SSR megvalósításának
+            <ul>
+                <li>lehetővé teszi, hogy Angular alkalmazásokat szerveren rendereljünk</li>
+            </ul>
+        </li>
+        <li>A ng add @nguniversal/express-engine parancs automatikusan konfigurálja az Express szervert az Angular
+            projekthez, létrehozva a megfelelő fájlokat, és beállításokat</li>
+        <li>Az Express szerver minden beérkező HTTP GET kérésre válaszol</li>
+        <li>A létrehozott, és módosított fájlok
+            <ol>
+                <li>server.ts: A szerver belépési pontja</li>
+                <li>main.server.ts: Az Angular alkalmazás szerver oldali bootstrap fájlja</li>
+                <li>app.server.module.ts: A szerver oldali alkalmazásmodul (a meglévő AppModule alapján
+                    kiegészítve)</li>
+                <li>tsconfig.server.json: Külön TypeScript konfiguráció a szerver oldali buildhez</li>
+                <pre>
+    root/
+    ├── server.ts
+    ├── tsconfig.server.json
+    └── src/
+        ├── main.server.ts
+        ├── app.config.server.ts
+        └── environments/
+            └── environment.server.ts
+
+
+    CREATE src/main.server.ts (677 bytes)
+    CREATE src/app/app.server.module.ts (318 bytes)
+    CREATE tsconfig.server.json (396 bytes)
+    CREATE server.ts (2038 bytes)
+    UPDATE angular.json (5195 bytes)
+    UPDATE src/main.ts (531 bytes)
+    UPDATE src/app/app.module.ts (622 bytes)
+    UPDATE package.json (1442 bytes)
+    UPDATE src/app/app-routing.module.ts (470 bytes)
+
+    <b>// main.server.ts</b>
+
+    import '@angular/platform-server/init';
+
+    import &#123; enableProdMode } from '@angular/core';
+
+    import &#123; environment } from './environments/environment';
+
+    if (environment.production) &#123;
+    enableProdMode();
+    }
+
+    export &#123; AppServerModule } from './app/app.server.module';
+    export &#123; renderModule } from '@angular/platform-server';
+
+    <b>// app.server.module.ts</b>
+
+    @NgModule(&#123;
+        imports: [
+          AppModule,
+          ServerModule,
+        ],
+        bootstrap: [AppComponent],
+    })
+
+    export class AppServerModule &#123;}
+
+    <b>// tsconfig.server.json</b>
+
+    &#123;
+        "extends": "./tsconfig.app.json",
+        "compilerOptions": &#123;
+          "outDir": "./out-tsc/server",
+          "target": "es2019",
+          "types": [
+            "node"
+          ]
+        },
+        "files": [
+          "src/main.server.ts",
+          "server.ts"
+        ],
+        "angularCompilerOptions": &#123;
+          "entryModule": "./src/app/app.server.module#AppServerModule"
+        }
+      }
+
+    <b>// server.ts</b>
+
+    import 'zone.js/dist/zone-node';
+
+    import &#123; ngExpressEngine } from '@nguniversal/express-engine';
+    import * as express from 'express';
+    import &#123; join } from 'path';
+
+    import &#123; AppServerModule } from './src/main.server';
+    import &#123; APP_BASE_HREF } from '@angular/common';
+    import &#123; existsSync } from 'fs';
+
+    // The Express app is exported so that it can be used by serverless Functions.
+    export function app(): express.Express &#123;
+    const server = express();
+    const distFolder = join(process.cwd(), 'dist/angular13/browser');
+    const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index';
+
+    // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
+    server.engine('html', ngExpressEngine(&#123;
+        bootstrap: AppServerModule,
+    }));
+
+    server.set('view engine', 'html');
+    server.set('views', distFolder);
+
+    // Example Express Rest API endpoints
+    // server.get('/api/**', (req, res) => &#123; });
+    // Serve static files from /browser
+    server.get('*.*', express.static(distFolder, &#123;
+        maxAge: '1y'
+    }));
+
+    // All regular routes use the Universal engine
+    server.get('*', (req, res) => &#123;
+        res.render(indexHtml, &#123; req, providers: [&#123; provide: APP_BASE_HREF, useValue: req.baseUrl }] });
+    });
+
+    return server;
+    }
+
+    function run(): void &#123;
+    const port = process.env['PORT'] || 4000;
+
+    // Start up the Node server
+    const server = app();
+    server.listen(port, () => &#123;
+        console.log(`Node Express server listening on http://localhost:$&#123;port}`);
+    });
+    }
+
+    // Webpack will replace 'require' with '__webpack_require__'
+    // '__non_webpack_require__' is a proxy to Node 'require'
+    // The below code is to ensure that the server is run only when not requiring the bundle.
+    declare const __non_webpack_require__: NodeRequire;
+    const mainModule = __non_webpack_require__.main;
+    const moduleFilename = mainModule && mainModule.filename || '';
+    if (moduleFilename === __filename || moduleFilename.includes('iisnode')) &#123;
+    run();
+    }
+
+    export * from './src/main.server';
+
+    <b>// angular.json (changed)</b>
+
+    ...
+    "projects": &#123;
+        "architect": &#123;
+            "build": &#123;
+                "options": &#123;
+                    "outputPath": "dist/angular13/browser", // from "outputPath": "dist/angular13"
+                } 
+            }
+
+            ...
+
+            "server": &#123;
+                "builder": "@angular-devkit/build-angular:server",
+                "options": &#123;
+                    "outputPath": "dist/angular13/server",
+                    "main": "server.ts",
+                    "tsConfig": "tsconfig.server.json",
+                    "inlineStyleLanguage": "scss"
+                },
+                "configurations": &#123;
+                    "production": &#123;
+                    "outputHashing": "media",
+                    "fileReplacements": [
+                        &#123;
+                        "replace": "src/environments/environment.ts",
+                        "with": "src/environments/environment.prod.ts"
+                        }
+                    ]
+                    },
+                    "development": &#123;
+                        "optimization": false,
+                        "sourceMap": true,
+                        "extractLicenses": false
+                    }
+                },
+                "defaultConfiguration": "production"
+            },
+            "serve-ssr": &#123;
+                "builder": "@nguniversal/builders:ssr-dev-server",
+                "configurations": &#123;
+                    "development": &#123;
+                        "browserTarget": "angular13:build:development",
+                        "serverTarget": "angular13:server:development"
+                    },
+                    "production": &#123;
+                        "browserTarget": "angular13:build:production",
+                        "serverTarget": "angular13:server:production"
+                    }
+                },
+                "defaultConfiguration": "development"
+            },
+            "prerender": &#123;
+                "builder": "@nguniversal/builders:prerender",
+                "options": &#123;
+                    "routes": [
+                    "/"
+                    ]
+                },
+                "configurations": &#123;
+                    "production": &#123;
+                        "browserTarget": "angular13:build:production",
+                        "serverTarget": "angular13:server:production"
+                    },
+                    "development": &#123;
+                        "browserTarget": "angular13:build:development",
+                        "serverTarget": "angular13:server:development"
+                    }
+                },
+                "defaultConfiguration": "production"
+            }
+        }
+    }
+
+    <b>// main.ts (changed)</b>
+
+    function bootstrap() &#123;
+        platformBrowserDynamic().bootstrapModule(AppModule)
+        .catch(err => console.error(err));
+      };
+      
+      
+      if (document.readyState === 'complete') &#123;
+        bootstrap();
+      } else &#123;
+        document.addEventListener('DOMContentLoaded', bootstrap);
+      }function bootstrap() &#123;
+        platformBrowserDynamic().bootstrapModule(AppModule)
+        .catch(err => console.error(err));
+      };
+      
+      
+      if (document.readyState === 'complete') &#123;
+        bootstrap();
+      } else &#123;
+        document.addEventListener('DOMContentLoaded', bootstrap);
+      }
+
+      <b>// app.module.ts (changed)</b>
+
+      @NgModule(&#123;
+        ...
+        imports: [
+            BrowserModule.withServerTransition(&#123; appId: 'serverApp' }) // from BrowserModule
+        ]
+        ...
+      })
+
+      <b>// package.json</b>
+
+      &#123;
+        ...
+        "scripts": &#123;
+            ...
+            "dev:ssr": "ng run angular13:serve-ssr",
+            "serve:ssr": "node dist/angular13/server/main.js",
+            "build:ssr": "ng build && ng run angular13:server",
+            "prerender": "ng run angular13:prerender"
+        }
+        ...
+        "dependencies": &#123;
+            ...
+            "@nguniversal/express-engine": "^13.1.1",
+            "express": "^4.15.2",
+        }
+        "devDependencies": &#123;
+            ...
+            "@nguniversal/builders": "^13.1.1",
+            "@types/express": "^4.17.0",
+        }
+      }
+
+    <b>// app-routing.module.ts (changed)</b>
+
+    @NgModule(&#123;
+    imports: [RouterModule.forRoot(routes, &#123;
+        ...
+        initialNavigation: 'enabledBlocking'
+    })],
+                </pre>
+            </ol>
+        </li>
     </ul>
 </div>
 
 <div>
-    <h3 #todo data-anchor="todo">TODO</h3>
+    <h3 #nativeangularssr data-anchor="nativeangularssr">Native Angular SSR</h3>
     <ul>
-        <li>todo</li>
+        <li>Angular 17-től elérhető</li>
+        <li>Nincs szükség külön Express szerverre, azaz nem igényel 3rd-party könyvtárat</li>
+        <li>Célja, hogy leegyszerűsítse a szerveroldali renderelés konfigurációját</li>
+        <li>Támogatja az úgynevezett "hydration"-t is
+            <ul>
+                <li>Csak az első oldalbetöltésre vonatkozik</li>
+                <li>A szerveroldalon előre legenerált HTML oldalt a böngésző nem dobja el a Javascript betöltődése után
+                    (mind az hidratáció nélkül történik), csak újraaktiválja JavaScript segítségével, hogy interaktívvá
+                    váljon
+                    <ul>
+                        <li>Sebességet növel, mivel nem kell újraépíteni az oldalt</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>Kevesebb boilerplate kódot generál, mint az Express-engine</li>
+        <pre>
+    ng add @angular/ssr
+        </pre>
+        <li>A létrehozott, és módosított fájlok
+            <ul>
+                <li>main.server.ts: A bootstrapApplication() hívás szerveroldali megfelelője, itt indul az Angular SSR
+                    app</li>
+                <li>server.ts: A natív Node szerver, ami az Angular SSR HTML-t generálja, és kiszolgálja</li>
+                <li>app.config.server.ts: Itt lehet SSR-specifikus szolgáltatókat megadni</li>
+                <li>app.routes.server.ts: A routes SSR-oldali verziója, amivel például withServerTransition(), vagy
+                    provideRouter() SSR-specifikusan állítható be</li>
+                <pre>
+    src/
+    ├── main.server.ts              // a szerveroldali belépési pont (bootstrap)
+    ├── server.ts                   // Node.js szerverindító fájl
+    └── app/
+        ├── app.config.server.ts    // külön konfiguráció SSR-re
+        └── app.routes.server.ts    // SSR-specifikus route-ok
+
+
+    CREATE src/main.server.ts (264 bytes)
+    CREATE src/app/app.config.server.ts (495 bytes)
+    CREATE src/app/app.routes.server.ts (166 bytes)
+    CREATE src/server.ts (1636 bytes)
+    UPDATE angular.json (2931 bytes)
+    UPDATE tsconfig.app.json (489 bytes)
+    UPDATE package.json (1234 bytes)
+    UPDATE src/app/app.config.ts (438 bytes)
+
+    <b>// main.server.ts</b>
+
+    const bootstrap = () => bootstrapApplication(AppComponent, config);
+
+    export default bootstrap;
+
+    <b>// app.config.server.ts</b>
+
+    const serverConfig: ApplicationConfig = &#123;
+        providers: [
+            provideServerRendering(),
+            provideServerRouting(serverRoutes)
+        ]
+    };
+        
+    export const config = mergeApplicationConfig(appConfig, serverConfig);
+
+    <b>// app.routes.server.ts</b>
+
+    export const serverRoutes: ServerRoute[] = [
+        &#123;
+            path: '**',
+            renderMode: RenderMode.Prerender
+        }
+    ];
+
+    <b>// server.ts</b>
+
+    const serverDistFolder = dirname(fileURLToPath(import.meta.url));
+    const browserDistFolder = resolve(serverDistFolder, '../browser');
+
+    const app = express();
+    const angularApp = new AngularNodeAppEngine();
+
+    /**
+    * Example Express Rest API endpoints can be defined here.
+    * Uncomment and define endpoints as necessary.
+    *
+    * Example:
+    * ```ts
+    * app.get('/api/**', (req, res) => &#123;
+    *   // Handle API request
+    * });
+    * ```
+    */
+
+    /**
+    * Serve static files from /browser
+    */
+    app.use(
+    express.static(browserDistFolder, &#123;
+        maxAge: '1y',
+        index: false,
+        redirect: false,
+    }),
+    );
+
+    /**
+    * Handle all other requests by rendering the Angular application.
+    */
+    app.use('/**', (req, res, next) => &#123;
+    angularApp
+        .handle(req)
+        .then((response) =>
+        response ? writeResponseToNodeResponse(response, res) : next(),
+        )
+        .catch(next);
+    });
+
+    /**
+    * Start the server if this module is the main entry point.
+    * The server listens on the port defined by the `PORT` environment variable, or defaults to 4000.
+    */
+    if (isMainModule(import.meta.url)) &#123;
+    const port = process.env['PORT'] || 4000;
+    app.listen(port, () => &#123;
+        console.log(`Node Express server listening on http://localhost:$&#123;port}`);
+    });
+    }
+
+    /**
+    * Request handler used by the Angular CLI (for dev-server and during build) or Firebase Cloud Functions.
+    */
+    export const reqHandler = createNodeRequestHandler(app);
+
+
+    <b>// angular.json</b>
+
+    "projects": &#123;
+        "angular19": &#123;
+            "architect": &#123;
+                "build": &#123;     // jelen esetben a build-be került
+                    "options": &#123;
+                        ...
+                        "server": "src/main.server.ts", 
+                        "outputMode": "server",
+                        "ssr": &#123;
+                        "entry": "src/server.ts"
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    <b>// tsconfig.app.json (changed)</b>
+
+    &#123;
+        ...
+        "compilerOptions": &#123;
+            "outDir": "./out-tsc/app",
+            "types": [
+            "node"                  // new
+            ]
+        },
+        "files": [
+            ...
+            "src/main.server.ts",     // new
+            "src/server.ts"           // new
+        ],
+        ...
+    }
+
+    <b>// package.json</b>
+
+    ...
+    "scripts": &#123;
+        ...
+        "serve:ssr:angular19": "node dist/angular19/server/server.mjs"
+    }
+    ...
+    "dependencies": &#123;
+        ...
+        "@angular/platform-server": "^19.2.0",
+        "@angular/ssr": "^19.2.6",
+        "express": "^4.18.2",
+        ...
+    }
+    "devDependencies": &#123;
+        ...
+        "@types/express": "^4.17.17",
+        "@types/node": "^18.18.0",
+        ...
+    }
+
+    <b>// app.config.ts</b>
+
+    export const appConfig: ApplicationConfig = &#123;
+        providers: [
+            provideZoneChangeDetection(&#123; eventCoalescing: true }),
+            provideRouter(routes),
+            provideClientHydration(
+            withEventReplay()
+            ),
+        ]
+        };
+                </pre>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<div>
+    <h3 #firststart data-anchor="firststart">First start</h3>
+    <ul>
+        <pre>
+    npm start
+        </pre>
+        <li>Tulajdonképpen alapértelmezetten az ng serve-t indítja</li>
+        <li>Memóriában futtatja a buildet</li>
+        <li>Nem hoz létre dist/ mappát</li>
+        <li>Dev módot indítunk, ami előállít egy renderelt HTML-t
+            <ul>
+                <li>Automatikusan előrenderel egy snapshotot, amit (fejlesztési célból) betesz az index.html-be</li>
+            </ul>
+        </li>
+        <li>Nem "teljes" SSR, de HTML snapshotot küld</li>
+        <li>Kliens oldali bundle-t hoz létre</li>
+        <pre>
+    Browser bundles     
+    Initial chunk files  | Names            |  Raw size
+    polyfills.js         | polyfills        |  90.20 kB | 
+    main.js              | main             |  23.23 kB | 
+    styles.css           | styles           |  96 bytes | 
+
+                        | Initial total    | 113.53 kB
+
+    Server bundles      
+    Initial chunk files  | Names            |  Raw size
+    polyfills.server.mjs | polyfills.server | 570.97 kB | 
+    main.server.mjs      | main.server      |  24.55 kB | 
+    server.mjs           | server           |   1.86 kB | 
+        </pre>
+        <li>Amennyiben a package.json-ben szervert állítottunk be
+            <ul>
+                <pre>
+    ...
+    "server": "src/main.server.ts",
+    "outputMode": "server",
+    "ssr": &#123;
+    "entry": "src/server.ts"
+    }
+    ...
+                </pre>
+                <li>Úgy developer üzennódban (ng s) is látszódni fog a forráskódban a konkrét HTML tartalom</li>
+            </ul>
+        </li>
+        <pre>
+    npm run serve:ssr:angular19
+        </pre>
+        <li>Valódi szerveroldali renderelést indít</li>
+        <li>Lefordítja a kliens oldali (browser) bundle-t, és a szerver oldali (server) bundle-t, valamint elindítja a
+            Node.js szervert (natív SSR, vagy Express-engine alapú), ami futtatja az Angular SSR-t</li>
+        <li>A lépések, amivel idáig el tudunk jutni
+            <ol>
+                <li>Új Angular projekt létrehozása
+                    <ul>
+                        <li>SSR nélkül, de a --ssr kapcsolóval az SSR-t is hozzáadjuk / telepítjük</li>
+                        <pre>
+    ng new &#60;project-name>
+                        </pre>
+                    </ul>
+                </li>
+                <li>SSR hozzáadása a projekthez
+                    <ul>
+                        <pre>
+    ng add @nguniversal/ssr 
+                        </pre>
+                    </ul>
+                </li>
+                <li>Build parancs hozzáadása a package.json scripts tömbjéhez, majd ezen parancs futtatása
+                    <ul>
+                        <pre>
+    "build:ssr:angular19": "ng build && ng run angular19:server"
+                        </pre>
+                        <li>(CSR) kliens build - dist/angular19/browser/</li>
+                        <li>(SSR) szerver build - dist/angular19/server/</li>
+                    </ul>
+                </li>
+                <li>Node.js szerver futtatása
+                    <ul>
+                        <li>Amennyiben port ütközés van, akkor azt a server.ts fájlban átállíthatjuk</li>
+                        <li>A változtatás érvényre juttatásához töröljük a dist mappát, és build-eljünk újra</li>
+                        <pre>
+    Node Express server listening on http://localhost:4800
+                        </pre>
+                    </ul>
+                </li>
+            </ol>
+        </li>
+    </ul>
+</div>
+
+<div>
+    <h3 #httpclientcaching data-anchor="httpclientcaching">HTTP client caching</h3>
+    <ul>
+        <li>Az Angular alkalmazás HTML kódját SSR használatakor a szerveren generáljuk le, majd azt küldjük el a
+            kliensnek
+            <ul>
+                <li>A böngésző nem egy üres HTML-t kap, amit aztán majd a JavaScript a kliens oldalon tölt fel</li>
+                <li>A kliens nem várja meg a JavaScript betöltését, és futtatását, hogy a tartalom megjelenjen</li>
+            </ul>
+        </li>
+        <li>A megfelelő HTTP fejlécekkel (például Cache-Control) beállíthatjuk, hogy a válaszokat a böngésző cache-elje
+            <ul>
+                <li>Cache-Control: A válaszban található Cache-Control fejléc segítségével a szerver utasíthatja a
+                    böngészőt, hogy mennyi ideig tárolja a válaszokat</li>
+                <li>ETag: Az ETag fejléc segít a kliensnek meghatározni, hogy a tartalom frissült-e, és ha igen, akkor
+                    újra kell kérni a szervertől</li>
+                <li>Last-Modified: Megadja, hogy mikor módosult a válasz utoljára</li>
+                <li>Expires: Meghatározza, hogy a válasz meddig érvényes, ami dátum, ha lejár, akkor a válasz nem
+                    érvényes, és újra kell kérni a szervertől</li>
+            </ul>
+        </li>
+        <li>Az SSR alkalmazása önállóan nem biztosítja, hogy az adatokat a böngésző cache-elje</li>
+        <li>A böngésző cache-elés beállítása azt jelenti, hogy a böngésző tárolja a weboldal elemeit (például HTML, CSS,
+            JavaScript fájlok, képek, stb...) a lokális tárolójában (cache) egy meghatározott ideig, hogy a következő
+            alkalommal gyorsabban elérje azokat, anélkül, hogy újra letöltené őket a szerverről
+            <ul>
+                <li>Gyorsabb lesz a betöltés, csökken a szerver leterheltsége</li>
+                <li>Ha a weboldal tartalma idő közben frissül, akkor viszont csak a cache "lejárta" után kapjuk meg a
+                    friss tartalmmat</li>
+            </ul>
+        </li>
+        <li>Ha a válaszokhoz nem tartozik cache-elési fejléc, akkor a böngésző minden alkalommal újra letölti a fájlokat
+            a szerverről, amikor az oldalt újra megnyitják</li>
+        <li>A böngésző az első betöltésnél is ellenőrzi, hogy van-e érvényes cache az adott válaszokhoz
+            <ul>
+                <li>Ha a felhasználó újra meglátogatja ugyanazt az oldalt, a böngésző ellenőrzi a cache-t a
+                    válaszfejlécekben meghatározott szabályok szerint</li>
+            </ul>
+        </li>
+        <li>A cache-elés lépései
+            <ol>
+                <li>(Amikor egy felhasználó először látogat meg egy weboldalt, akkor a böngésző minden erőforrást (HTML,
+                    CSS, JS, képek stb...) elkér a szervertől)</li>
+                <li>A böngésző kérést küld a szervernek (a felhasználó begépelt egy url-t, és entert nyomott)</li>
+                <li>A böngésző a szerver válasza alapján megnézi, hogy a kért fájl, vagy erőforrás már el van-e mentve a
+                    cache-ben, illetve, hogy egyáltalán használhatja-e még a cache-ben tárolt adatokat</li>
+                <li>Ha az erőforrás cache-elt verziója még érvényes (például nem telt le a max-age vagy expires idő),
+                    akkor a böngésző nem küld új kérést a szerverhez, hanem a cache-ből szolgálja ki az erőforrást</li>
+                <li>Ha a cache-elt erőforrás már lejárt (például a max-age időtartam letelt), vagy ha a szerver jelzi,
+                    hogy az erőforrás változott (például az ETag, vagy Last-Modified alapján), akkor a böngésző újra
+                    kéri a fájlt/fájlokat a szervertől</li>
+            </ol>
+        </li>
+        <pre>
+    export interface Post &#123;
+        id: number;
+        title: string;
+        body: string;
+    }
+
+    export class HttpCacheComponent implements OnInit &#123;
+        posts$: Observable&#60;Post[]> | null ;
+
+        http = inject(HttpClient);
+
+        ngOnInit() &#123;
+            this.getReq();
+        }
+        
+        getReq() &#123;
+        this.posts$ = this.http.get&#60;Post[]>('https://jsonplaceholder.typicode.com/posts')
+        }
+    } 
+
+    &#60;button class="btn btn-primary" (click)="getReq()">GET&#60;/button>
+
+    &#60;div>
+        @for (post of posts$ | async; track post.id) &#123;
+            &#60;div>&#123; &#123;post | json}}&#60;/div>
+            &#60;br>
+        }
+    &#60;/div>
+        </pre>
+        <li>Nem történik az első betöltés után újabb GET request
+            <ul>
+                <li>Automatikus cache-elés történik</li>
+                <li>Igen, alapértelmezetten csak a GET kérések cache-elődnek automatikusan a böngészőben</li>
+                <li>Initial render esetében természetesen történik kérés</li>
+                <li>Természetesen a többi request is beállítható cache-elésre</li>
+                <br>
+                <img src="assets/imgs/ssr_get_cache.png" width="100%">
+                <br>
+                <br>
+            </ul>
+        </li>
+        <li>A cache-elés beállítása
+            <ul>
+                <pre>
+    <b>// app.config.ts</b>
+
+    export const appConfig: ApplicationConfig = &#123;
+        providers: [
+            provideZoneChangeDetection(&#123; eventCoalescing: true }),
+            provideRouter(routes),
+            provideClientHydration(
+                withEventReplay(),
+                withHttpTransferCacheOptions(&#123;      // az includePostRequests true hozzáadásával a POST request is cache-elve van
+                    includePostRequests: true
+                })
+            ),
+        ]
+    };
+                </pre>
+                <li>withEventReplay(): Az alkalmazás eseményeit ("events") a kliensoldali újratöltés után (például SSR
+                    után) újra lejátsza</li>
+                <li>withHttpTransferCacheOptions(): Lehetővé teszi a HTTP kérések cache-elését, beleértve a POST
+                    kéréseket is</li>
+                <br>
+                <li>Természetesen az oldal újratöltésekor nem történik HTTP kérés, ha például a GET (vagy a POST) az
+                    OnInit lifecycle hook-ban van, de amennyiben mondjuk gombnyomásra intéznénk request-et, az minden
+                    gond nélkül megtörténik</li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<div>
+    <h3 #browseronlylogic data-anchor="browseronlylogic">Browser-only logic</h3>
+    <ul>
+        <li>Server-Side Rendering során az alkalmazás HTML, és JavaScript előállítása a szerveren történik, mielőtt a
+            felhasználó böngészője megkapja az oldalt</li>
+        <li>Azonban van olyan kód, ami a böngészőre van szabva, például a DOM manipulálás, a localStorage, a window
+            objektum, a böngésző-specifikus API-k, amelyek a szerver oldalon nem elérhetőek
+            <ol>
+                <li>DOM Manipuláció
+                    <ul>
+                        <li>Egy elem stílusának módosítása, nem lehetséges SSR alatt, mivel a szervernek nincs
+                            hozzáférése a felhasználó böngészőjéhez</li>
+                    </ul>
+                </li>
+                <li>Böngésző API-k
+                    <ul>
+                        <li>A localStorage, sessionStorage, navigator vagy window, csak a böngészőben érhetők el</li>
+                    </ul>
+                </li>
+                <li>Event Listener-ek
+                    <ul>
+                        <li>A felhasználói események (például kattintások vagy görgetés) kezelése böngésző specifikus
+                        </li>
+                    </ul>
+                </li>
+                <li>CSS animációk
+                    <ul>
+                        <li>Nem érdemes a szerveren előre kiszámolni</li>
+                    </ul>
+                </li>
+            </ol>
+        </li>
+        <li>A Browser-Only Logic tehát azt jelenti, hogy az adott kód csak a böngészőben fut, és nem kerül végrehajtásra
+            a szerveren</li>
+        <li>Az Angular SSR alkalmazásában, ha van olyan kód, ami a böngészőhöz van kötve, el kell különíteni, és
+            biztosítani, hogy az a kód ne fusson le a szerveren
+            <ul>
+                <li>Általában egy platformId-val lehet kezelni, ami lehetővé teszi a kód megkülönböztetését a szerver,
+                    és a böngésző között</li>
+            </ul>
+        </li>
+        <br>
+        <table style="border-collapse: collapse; width: 100%;">
+            <thead>
+                <tr>
+                    <th>API / Objektum</th>
+                    <th>Mire való?</th>
+                    <th>Miért csak böngészőben?</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>window</td>
+                    <td>Globális böngészőobjektum (például méret, események)</td>
+                    <td>A szerveren nincs "ablak"</td>
+                </tr>
+                <tr>
+                    <td>document</td>
+                    <td>DOM objektum (például getElementById)</td>
+                    <td>Nincs DOM a szerveren</td>
+                </tr>
+                <tr>
+                    <td>localStorage</td>
+                    <td>Helyi kulcs-érték alapú tár</td>
+                    <td>Nem elérhető szerveren</td>
+                </tr>
+                <tr>
+                    <td>sessionStorage</td>
+                    <td>Munkameneti tár</td>
+                    <td>Csak kliens oldalon van</td>
+                </tr>
+                <tr>
+                    <td>navigator</td>
+                    <td>Böngésző, eszköz adatai</td>
+                    <td>Nincs kliensoldali környezet</td>
+                </tr>
+                <tr>
+                    <td>location</td>
+                    <td>URL és navigációs adatok</td>
+                    <td>Nem minden SSR környezet tudja</td>
+                </tr>
+                <tr>
+                    <td>matchMedia()</td>
+                    <td>Media query figyelés</td>
+                    <td>Szerveren nincs viewport</td>
+                </tr>
+                <tr>
+                    <td>setTimeout / setInterval</td>
+                    <td>Időzített műveletek</td>
+                    <td>SSR alatt nem praktikus</td>
+                </tr>
+                <tr>
+                    <td>ResizeObserver, IntersectionObserver</td>
+                    <td>DOM figyelés (például láthatóság)</td>
+                    <td>DOM hiánya miatt nem működik</td>
+                </tr>
+                <tr>
+                    <td>addEventListener</td>
+                    <td>Eseményfigyelés elemekre</td>
+                    <td>Nincs mire rákötni</td>
+                </tr>
+            </tbody>
+        </table>
+        <pre>
+    import &#123; Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+    import &#123; isPlatformBrowser } from '@angular/common';
+
+    @Component(&#123;
+        selector: 'app-browser-check',
+        templateUrl: './browser-check.component.html'
+    })
+    export class BrowserCheckComponent implements OnInit &#123;
+        isBrowser = false;
+
+        constructor(@Inject(PLATFORM_ID) private platformId: Object) &#123;}
+
+        ngOnInit(): void &#123;
+            this.isBrowser = isPlatformBrowser(this.platformId);
+
+            if (this.isBrowser) &#123;
+                // window object
+                console.log('Window width:', window.innerWidth);
+
+                // document object
+                const el = document.getElementById('example');
+                console.log('Found element:', el);
+
+                // localStorage
+                localStorage.setItem('theme', 'dark');
+                const theme = localStorage.getItem('theme');
+                console.log('Theme from localStorage:', theme);
+
+                // navigator
+                console.log('Browser language:', navigator.language);
+
+                // location
+                console.log('Current URL:', location.href);
+
+                // matchMedia
+                const isMobile = window.matchMedia('(max-width: 600px)').matches;
+                console.log('Is mobile view:', isMobile);
+
+                // Observer example
+                const observer = new ResizeObserver(() => &#123;
+                    console.log('Resized!');
+                });
+                observer.observe(document.body);
+            }
+        }
+    }
+
+    &#60;p id="example">Example ID DOM element&#60;/p>
+        </pre>
+        <li>A platformId visszaadja, hogy milyen platformon vagyunk
+            <ul>
+                <li>Egy Angular által biztosított token, ami alapján eldönthetjük, hogy böngészőben, vagy szerveren
+                    fut-e a kód</li>
+                <li>Az értéke "browser", vagy "server" lehet</li>
+            </ul>
+        </li>
+        <li>A isPlatformBrowser(this.platformId) egy boolean értéket ad vissza
+            <ul>
+                <li>Böngésző esetében true</li>
+                <li>Server esetében false</li>
+            </ul>
+        </li>
+        <li>Anélkül, hogy a fenti feltételt szabnánk bizonyos kódoknak, hibát fogunk kapni SSR használata közben</li>
+    </ul>
+</div>
+
+<div>
+    <h3 #prerendering data-anchor="prerendering">Prerendering</h3>
+    <ul>
+        <li>Más néven Static Site Generation (SSG)</li>
+        <li>Olyan folyamat, amikor build időben a megadott route-okból az Angular statikus HTML fájlokat generál
+            <ul>
+                <li>Ezeket a böngésző megkapja</li>
+                <li>Ilyen módon a betöltés gyorsul, SEO-friendly-bbé válik az oldalunk, és nincs szükség Node.js
+                    futtatására</li>
+                <li>A Node.js szükségtelensége az egyik legnagyobb előnye az SSR-hez
+                    <ul>
+                        <li>Csak egy statikus fájlokat kiszolgáló szerver kell (például Firebase sHosting, Apache,
+                            nginx)
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>A beállított útvonalak kapcsán generálódik build során egy HTML a dist/browser/&#60;route> mappába
+            <ul>
+                <li>A szerver ezeket a - prerenderelt - HTML-eket fogja kiszolgálni a kliens felé</li>
+            </ul>
+        </li>
+        <li>Nem alkalmas dinamikusan generált route-okhoz (/user/:id)
+            <ul>
+                <li>Maximum akkor, ha legeneráljuk őket külön routeként</li>
+            </ul>
+        </li>
+        <li>Nem képes runtime friss adatok lekérdezésére, a build idején lévő állapotot tükrözi</li>
+        <pre>
+    npm run build:ssr:angular19
+    npm run prerender
+        </pre>
+        <li>A prerender a projekt gyökerében keres egy fájlt (prerender.routes.ts)
+            <ul>
+                <li>Alapértelmezetten ezt a fájlt keresi, de átkonfigurálható</li>
+            </ul>
+        </li>
+        <pre>
+    <b>// angular.json</b>
+
+    ...
+    "projects": &#123;
+        "angular19": &#123;
+            "architect": &#123;
+                "build": &#123;...}         // az alkalmazás build-ért felelős
+                "serve": &#123;...}         // az alkalmazás fejlesztési szerveren történő futtatása
+                "extract-i18n": &#123;...}  // a nemzetköziesítéshez szükséges nyelvi fájlok kinyerésére szolgál
+                "test": &#123;...}          // tesztelésére szolgál (például karma tesztek futtatása)
+                "server": &#123;...}
+                "prerender": &#123;
+                    "builder": "@angular-devkit/build-angular:prerender",
+                    "options": &#123;
+                        "browserTarget": "angular19:build:production",
+                        "serverTarget": "angular19:server:production",
+                        "routesFile": "src/routes.txt",
+                        "discoverRoutes": false
+                    }
+                }
+            }
+        }
+    }
+
+    <b>// routes.txt</b>
+
+    /about      // ha több route van megadva, nem szabad vesszőt rakni a sorok végére
+        </pre>
+        <li>A hivatalos dokumentáció a build-be teszi a prerender kulcsot</li>
+        <li>Amennyiben a build-ben szerepel az "outputMode": "server", úgy az Angular ng build esetében automatikusan
+            generál statikus HTML fájlokat az ismert route-okhoz</li>
+        <li>A folyamat
+            <ol>
+                <li>A user beírja az URL-t (https://example.com/about)</li>
+                <li>A böngésző GET kérést küld (GET /about)</li>
+                <li>A szerver kiszolgálja a build során generált fájlt (dist/browser/about/index.html)</li>
+                <li>A user azonnal látja a HTML-tartalmat, amit az Angular már előre legenerált build időben</li>
+                <li>a böngésző letölti a main.js, polyfills.js, styles.css stb... fájlokat, és az Angular
+                    "bootstrap-elődik"</li>
+                <li>Mostantól SPA-ként működik</li>
+            </ol>
+        </li>
+        <li>Amíg a user nem tölti újra az oldalt, addig a böngésző saját maga kezeli a navigációt (SPA)</li>
+        <br>
+        <table style="border-collapse: collapse; width: 100%">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Prerender</th>
+                    <th>SSR</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Renderelés időpontja</td>
+                    <td>Build időben (statikusan)</td>
+                    <td>Futásidőben (kérésenként újra)</td>
+                </tr>
+                <tr>
+                    <td>Szerver szükséges?</td>
+                    <td>Nem, elég statikus tárhely (például Firebase)</td>
+                    <td>Igen, Node.js környezet szükséges</td>
+                </tr>
+                <tr>
+                    <td>Teljesítmény</td>
+                    <td>Nagyon gyors, csak HTML-t szolgál ki</td>
+                    <td>Lassabb, mert a szerver renderel élőben</td>
+                </tr>
+                <tr>
+                    <td>Frissíthető adat</td>
+                    <td>Nem (buildkor rögzített adatok)</td>
+                    <td>Igen (minden render friss adatot kérhet)</td>
+                </tr>
+                <tr>
+                    <td>SEO kompatibilitás</td>
+                    <td>Igen</td>
+                    <td>Igen</td>
+                </tr>
+                <tr>
+                    <td>Route kiszolgálás</td>
+                    <td>Csak előre megadott route-ok</td>
+                    <td>Bármilyen dinamikus route is működik</td>
+                </tr>
+                <tr>
+                    <td>Skálázhatóság</td>
+                    <td>Magas (nincs háttérlogika)</td>
+                    <td>Korlátozottabb (szerverterhelés)</td>
+                </tr>
+                <tr>
+                    <td>Használható dinamikus tartalommal?</td>
+                    <td>Nem ideális</td>
+                    <td>Igen</td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <li>Az első betöltés után a fájlok (bundle-ök) elérhetők lesznek a böngészőben
+            <ul>
+                <li>Eager loading esetében a bundle minden komponenst tartalmaz, így nincsenek új kérések a szerver felé
+                </li>
+                <li>Lazy loading-kor pedig, ha navigálunk, akkor kérünk új JS fájlt a szervertől (például
+                    contact.chunk.js), de HTML-t nem, mert azt már átadtuk a böngészőnek a prerendering miatt</li>
+            </ul>
+        </li>
+        <br>
+        <table style="border-collapse: collapse; width: 100%;">
+            <thead>
+                <tr>
+                    <th>Angular &lt;17 (ng build)</th>
+                    <th>Angular 17+ + outputMode: "server"</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Csak browser build</td>
+                    <td>browser + server + prerender</td>
+                </tr>
+                <tr>
+                    <td>about/index.html csak shell (pl. &lt;app-root&gt;&lt;/app-root&gt;)</td>
+                    <td>about/index.html tartalmaz előre renderelt tartalmat</td>
+                </tr>
+                <tr>
+                    <td>SSR vagy prerender: külön parancs kell</td>
+                    <td>Automatikusan beépül a build fázisba</td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <li>Példa architect-ek az angular.jsonfájlban</li>
+        <pre>
+    &#123;
+        "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+        "version": 1,
+        "newProjectRoot": "projects",
+        "projects": &#123;
+            "angular19": &#123;
+            "projectType": "application",
+            "schematics": &#123;
+                "@schematics/angular:component": &#123;
+                    "style": "scss"
+                }
+            },
+            "root": "",
+            "sourceRoot": "src",
+            "prefix": "app",
+            "architect": &#123;
+                "build": &#123;
+                "builder": "@angular-devkit/build-angular:application",
+                "options": &#123;
+                    "outputPath": "dist/angular19",
+                    "index": "src/index.html",
+                    "browser": "src/main.ts",
+                    "polyfills": [
+                        "zone.js"
+                    ],
+                    "tsConfig": "tsconfig.app.json",
+                    "inlineStyleLanguage": "scss",
+                    "assets": [
+                    &#123;
+                        "glob": "**/*",
+                        "input": "public"
+                    }
+                    ],
+                    "styles": [
+                    "src/styles.scss"
+                    ],
+                    "scripts": [],
+                    // "server": "src/main.server.ts",  // build esetében az alábbi sorokkal szépen működik a prerender
+                    // "outputMode": "server",
+                    // "ssr": &#123;
+                    //    "entry": "src/server.ts"
+                    // },
+                    // "prerender": false               // ennek ellenére történt prerender-elés
+                },
+                "configurations": &#123;
+                    "production": &#123;
+                    "budgets": [
+                        &#123;
+                            "type": "initial",
+                            "maximumWarning": "500kB",
+                            "maximumError": "1MB"
+                        },
+                        &#123;
+                            "type": "anyComponentStyle",
+                            "maximumWarning": "4kB",
+                            "maximumError": "8kB"
+                        }
+                    ],
+                    "outputHashing": "all"
+                    },
+                    "development": &#123;
+                        "optimization": false,
+                        "extractLicenses": false,
+                        "sourceMap": true
+                    }
+                },
+                "defaultConfiguration": "production"
+                },
+                "serve": &#123;
+                "builder": "@angular-devkit/build-angular:dev-server",
+                "configurations": &#123;
+                    "production": &#123;
+                        "buildTarget": "angular19:build:production"
+                    },
+                    "development": &#123;
+                        "buildTarget": "angular19:build:development"
+                    }
+                },
+                "defaultConfiguration": "development"
+                },
+                "extract-i18n": &#123;
+                    "builder": "@angular-devkit/build-angular:extract-i18n"
+                },
+                "test": &#123;
+                "builder": "@angular-devkit/build-angular:karma",
+                "options": &#123;
+                    "polyfills": [
+                        "zone.js",
+                        "zone.js/testing"
+                    ],
+                    "tsConfig": "tsconfig.spec.json",
+                    "inlineStyleLanguage": "scss",
+                    "assets": [
+                    &#123;
+                        "glob": "**/*",
+                        "input": "public"
+                    }
+                    ],
+                    "styles": [
+                        "src/styles.scss"
+                    ],
+                    "scripts": []
+                }
+                },
+                "server": &#123;
+                "builder": "@angular-devkit/build-angular:server",
+                "options": &#123;
+                    "outputPath": "dist/angular19/server",
+                    "main": "src/main.server.ts",
+                    "tsConfig": "tsconfig.server.json"
+                },
+                "configurations": &#123;
+                    "production": &#123;
+                        "outputHashing": "media",
+                        "sourceMap": false,
+                        "optimization": true
+                    }
+                }
+                },
+                "prerender": &#123;
+                "builder": "@angular-devkit/build-angular:prerender",
+                "options": &#123;
+                    "browserTarget": "angular19:build:production",
+                    "serverTarget": "angular19:server:production",
+                    "routesFile": "routes.txt"
+                }
+                }
+            }
+            }
+        }
+    }
+        </pre>
+        <ul>Architects
+            <li>build
+                <ul>
+                    <li>ng build / ng build --configuration=development / npm run build</li>
+                    <li>SPA-t készít, nem generál szerver fájlokat a dist mappába, és természetesen prerender-elés sem
+                    </li>
+                    <pre>
+    dist/
+    └── angular19/
+        ├── browser/
+            ├── favicon.ico
+            ├── index.html
+            ├── main-PQES6YLA.js
+            ├── polyfills-FFHMD2TL.js
+            └── styles-5INURTSO.css
+        ├── 3rdpartylicenses.txt
+        └── prerendered-routes.json
+                    </pre>
+                    <li>A build-hez hozzáadva az SSR beállításait, automatikus prerenderelés történik</li>
+                    <pre>
+    "server": "src/main.server.ts",
+    "outputMode": "server",
+    "ssr": &#123;
+        "entry": "src/server.ts"
+    }
+                    </pre>
+                    <pre>
+    dist/
+    └── angular19/
+        ├── browser/
+            ├── about/
+                └── index.html
+            ├── favicon.ico
+            ├── index.csr.html
+            ├── main-PQES6YLA.js
+            ├── polyfills-FFHMD2TL.js
+            └── styles-5INURTSO.css
+        ├── server/    
+            ├── assets-chunks
+                ├── about_index_html.mjs
+                ├── index_csr_html.mjs
+                ├── index_server_html.mjs
+                └── style_5INURTSO_css.mjs
+            ├── angular-app-engine-manifest.mjs
+            ├── angular-app.manifest.mjs
+            ├── chunk-EJSJJTUO.mjs
+            ├── chunk-GFUZYSQG.mjs
+            ├── chunk-TNO4MGIL.mjs
+            ├── chunk-X2SEQXRR.mjs
+            ├── index.server.html
+            ├── main.server.mjs
+            ├── polyfills.server.mjs
+            └── server.mjs
+        ├── 3rdpartylicenses.txt
+        └── prerendered-routes.json
+                    </pre>
+                </ul>
+            </li>
+            <li>serve
+                <ul>
+                    <li>ng s / ng serve angular19</li>
+                    <li>Dev szerver indítása lokális fejlesztéshez</li>
+                </ul>
+            </li>
+            <li>extract-i18n
+                <ul>
+                    <li>ng extract-i18n</li>
+                    <li>A fordításra szánt szövegek (i18n) kinyerése a kódból messages.xlf vagy más formátumba</li>
+                </ul>
+            </li>
+            <li>test
+                <ul>
+                    <li>ng test / ng test angular19</li>
+                    <li>Egységtesztek futtatása Karma + Jasmine segítségével</li>
+                </ul>
+            </li>
+            <li>server
+                <ul>
+                    <li>ng run angular19:server</li>
+                    <li>Az SSR Node.js oldali részének fordítása</li>
+                    <pre>
+    dist/
+    └── angular19/
+        └── server/
+            ├── 3rdpartylicenses.txt
+            ├── 327.js
+            └── main.js
+                    </pre>
+                    <li>Kizárólag abban az esetben működik rendesen, ha a main.server.ts fájlom módosítunk</li>
+                    <pre>
+    <b>main.server.ts</b>
+    export default function render(url: string, document: string): Promise&#60;string> &#123;
+        return renderApplication(() =>
+            bootstrapApplication(AppComponent, &#123;
+                providers: [
+                    provideRouter(routes),
+                    provideHttpClient(),
+                    &#123; provide: APP_BASE_HREF, useValue: url }
+                ]
+            }), &#123;
+            document,
+            url
+        });
+    }
+                    </pre>
+                </ul>
+            </li>
+            <li>prerender
+                <ul>
+                    <li>ng run angular19:prerender</li>
+                    <li>Előrenderelés statikus HTML oldalakká</li>
+                    <li><code>Sajnos nem sikerült úgy beállítani, hogy valójában prerendering-et végezzen</code>
+                        <ul>
+                            <li>Talán tényleg a build opcióban muszáj megírni (a hivatalos dookumentáció is ezt írja)
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <br>
+        <li>Idő közben az is kiderült, hogy a gyökér könyvtárban szükség lehet egy tsconfig.server.ts fájlra
+            <ul>
+                <li>A server-side rendering (SSR) implementációjának konfigurációja</li>
+                <li>Tartalmazza azokat a TypeScript beállításokat, amelyek biztosítják, hogy a szerveroldali kód
+                    megfelelően legyen lefordítva és működjön Node.js környezetben</li>
+                <pre>
+    <b>// tsconfig.server.json</b>
+    &#123;
+        "compilerOptions": &#123;
+            "target": "ES2022",
+            "module": "ES2022",
+            "moduleResolution": "node",
+            "lib": [
+            "ES2022",
+            "dom"
+            ],
+            "declaration": true,
+            "noImplicitAny": true,
+            "skipLibCheck": true,
+            "esModuleInterop": true,
+            "useDefineForClassFields": true,
+            "experimentalDecorators": true,
+            "emitDecoratorMetadata": true
+        },
+        "include": [
+            "src/**/*.ts",
+            "src/**/*.d.ts"
+        ]
+    }                        
+                </pre>
+            </ul>
+        </li>
     </ul>
     <br>
-    <h5 #todo data-anchor="todo">TODO</h5>
+    <h5 #staticroutes data-anchor="staticroutes">Static routes</h5>
     <ul>
-        <li>todo</li>
+        <li>Teszteljük le, hogy működik a prerender</li>
+        <li>Szervernek egy nagyon egyszerű Node.js szervert készítünk</li>
+        <pre>
+    const express = require("express");
+
+    const cors = require("cors");
+
+    const app = express();
+
+    app.use(cors());
+
+    app.get("/api/products/:id", (req, res) => &#123;
+        const product = &#123;
+            id: req.params.id,
+            title: `product title $&#123;req.params.id}`,
+            description: `product description $&#123;req.params.id}`
+        };
+    
+        res.send(product);
+    });
+
+    app.listen(3000, () => &#123;
+        console.log("Server listening to port 3000");
+    })
+        </pre>
+        <li>Ezt követően telepítjük a szükséges npm csomagokat</li>
+        <pre>
+    npm install express cors
+        </pre>
+        <li>Győződjünk meg arról, hogy a "miniszerver" futtatható, és működik</li>
+        <pre>
+    node node.server.js         // Server listening to port 3000
+
+    http://localhost:3000/api/products/123
+        </pre>
+        <img src="assets/imgs/ssr_nodejs_server.png" width="100%">
+        <br>
+        <br>
+        <li>Navigáljunk el a megfelelő route-ra, és a szerver válaszolni fog</li>
+        <pre>
+    <b>// app.component.html</b>
+    &#60;div class="mb-5">
+        &#60;h3>APP.COMPONENT&#60;/h3>
+        &#60;button class="btn btn-secondary" [routerLink]="['/']">/&#60;/button>
+        &#60;button class="btn btn-secondary" [routerLink]="['/', 'about']">ABOUT&#60;/button>
+        &#60;button class="btn btn-secondary" [routerLink]="['/', 'product', '234']">Product 234&#60;/button>
+        &#60;button class="btn btn-secondary" [routerLink]="['/', 'product', '789']">Product 789&#60;/button>
+    &#60;/div>
+    &#60;br>
+    &#60;br>
+    &#60;router-outlet />
+
+    <b>// product.component.html</b>
+    &#60;div *ngIf="product$ | async as product">
+        &#60;div>#&#123; &#123;product.id}} - &#123; &#123;product.title}}&#60;/div>
+        &#60;div>&#123; &#123;product.description}}&#60;/div>
+    &#60;/div>
+
+    <b>// product.component.ts</b>
+    interface Product &#123;
+        id: number;
+        title: string;
+        description: string
+        }
+        
+        @Component(&#123;
+        selector: 'app-product',
+        imports: [
+            CommonModule,
+            HttpClientModule,
+        ],
+        templateUrl: './product.component.html',
+        styleUrl: './product.component.scss'
+        })
+        export class ProductComponent &#123;
+        private http = inject(HttpClient);
+        private activeRoute = inject(ActivatedRoute);
+        product$: Observable&#60;Product> | null = null;
+        
+        ngOnInit() &#123;
+            this.product$ = this.activeRoute.params.pipe(switchMap(param => &#123;
+            const id = param['id'];
+            return this.http.get&#60;Product>(`http://localhost:3000/api/products/$&#123;id}`);
+            }));
+        }
+        }
+
+    <b>// app.routes.ts</b>
+    export const routes: Routes = [
+        &#123; path: '', component: AppComponent },
+        &#123; path: 'about', component: AboutComponent },
+        &#123; path: 'product/:id', component: ProductComponent }
+    ];
+        </pre>
+        <img src="assets/imgs/ssr_nodejs_server_2.png" width="100%">
+        <br>
+        <br>
+        <li>Oldalfrissítés esetén azt láthatjuk, hogy nem történt API call, működik a cache</li>
+        <img src="assets/imgs/ssr_nodejs_server_3.png" width="100%">
+        <br>
+        <br>
+        <li>Ezután pedig a prerender-elést nézzük meg
+            <ul>
+                <li>Mint az korábban dokumentálásra került, az Angular dokumentáció szerint a build architect-ben
+                    állíthatjuk be a prerender-t az option kulcs alatt
+                    <ul>
+                        <li>Az alapértelmezett értéke true, de természetese false értéket is felvehet</li>
+                        <li>Valamint objektumként is megadhatjuk
+                            <ul>
+                                <li>Ebben az esetben, ha csak a "discoverRoutes": "true"-t adjuk meg, ugyanazt kapjuk
+                                    végeredményül, mintha csak a "prerender": true kulcs-érték párost használtuk voltna
+                                </li>
+                                <pre>
+    ...
+    "prerender": &#123;
+        "discoverRoutes": true // false esetén pedig = "prerender": "false"
+    }
+    ...
+                                </pre>
+                            </ul>
+                            <ol>
+                                <li>discoverRoutes: True esetén az Angular automatikusan előállítja az összes nem
+                                    paraméterezett (avagy statikus) útvonalhoz tartozó HTML-oldalt</li>
+                                <li>routesFile: Egy külső fájlban (például routes.txt) felsorolhatjuk azokat az
+                                    útvonalakat, amelyeket előre szeretnél renderelni</li>
+                            </ol>
+                        </li>
+                    </ul>
+                </li>
+                <pre>
+    <b>// angular.json (build architect)</b>
+
+    "build": &#123;
+        "builder": "@angular-devkit/build-angular:application",
+        "options": &#123;
+            "outputPath": "dist/angular19",
+            "index": "src/index.html",
+            "browser": "src/main.ts",
+            "polyfills": [
+            "zone.js"
+            ],
+            "tsConfig": "tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+            &#123;
+                "glob": "**/*",
+                "input": "public"
+            }
+            ],
+            "styles": [
+            "src/styles.scss"
+            ],
+            "scripts": [],
+            "server": "src/main.server.ts",
+            "outputMode": "server",           // The "prerender" option is not considered when "outputMode" is specified - ezért töröltem
+            "prerender": false
+            "ssr": &#123;
+            "entry": "src/server.ts"
+            },
+        },
+        "configurations": &#123;
+            "production": &#123;
+            "budgets": [
+                &#123;
+                "type": "initial",
+                "maximumWarning": "500kB",
+                "maximumError": "1MB"
+                },
+                &#123;
+                "type": "anyComponentStyle",
+                "maximumWarning": "4kB",
+                "maximumError": "8kB"
+                }
+            ],
+            "outputHashing": "all"
+            },
+            "development": &#123;
+            "optimization": false,
+            "extractLicenses": false,
+            "sourceMap": true
+            }
+        },
+        "defaultConfiguration": "production"
+        },
+                </pre>
+                <li>A "prerender": "false" esetében valóban nem jön létre route-okból előre renderelt html
+                    <ul>
+                        <li>Az outputMode-dal együtt hibára fut a kód</li>
+                        <pre>
+        [ERROR] The 'product/:id' route uses prerendering and includes parameters, but 'getPrerenderParams' is missing.
+        Please define 'getPrerenderParams' function for this route in your server routing configuration or specify a different 'renderMode'.
+                        </pre>
+                        <li>Ha az outputMode értéke "server", akkor a prerender, és appShell beállítások figyelmen kívül
+                            lesznek hagyva, ezért ha statikus oldalak előre renderelésére van szükség, akkor az
+                            outputMode értékét "static"-ra kell állítani (vagy elhagyni)</li>
+                    </ul>
+                </li>
+                <li>A routesFile-ban állíthatjuk be, hogy melyek legyenek azok az általunk választott útvonalak, amik
+                    prerender-elésre kerülnek</li>
+            </ul>
+        </li>
+    </ul>
+    <br>
+    <h5 #parameterizedroutes data-anchor="parameterizedroutes">Parameterized routes</h5>
+    <ul>
+        <li>Más néven a dinamikus route-okkal fogunk itt foglalkozni</li>
+        <li>Amennyiben a routes.txt fájlban az alábbi 2 route-ot meghatározzuk, akkor build időben megtörténik mindkettő
+            prerender-elése</li>
+        <pre>
+    /product/234
+    /product/789
+        </pre>
+        <li>Ha direkt URL-lel érkezünk ezekre az útvonalakra, akkor a prerenderelt verzió fog megjelenni.</li>
+        <li><code>Nem sikerült a build után a serve:ssr-t elindítani</code>
+            <ul>
+                <li>Angular app engine manifest is not set. Please ensure you are using the '@angular/build:application'
+                    builder to build your server application.</li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<div>
+    <h3 #hybridrendering data-anchor="hybridrendering">Hybrid rendering</h3>
+    <ul>
+        <li>Az Angular 19-cel mutatták be (@angular/ssr csomag használatával)</li>
+        <li>Kombinálja az SSR-t (Server Side Rendering), a CSR-t (Client Side Rendering), és az SSG-t (Static Site
+            Generation / Prerender)</li>
+        <li>Az alkalmazás egyes részei előre renderelt HTML-ként érkeznek a szerverről, míg más részek dinamikusan
+            töltődnek be a kliensoldalon JavaScript segítségével</li>
+        <li>A különböző route-k különböző renderelési stratégiákat kaphatnak</li>
+        <li>Rugalmasabban optimalizálható a teljesítmény, SEO, és a felhasználói élmény</li>
+        <pre>
+    <b>// angular.json (intact)</b>
+    &#123;
+        "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+        "version": 1,
+        "newProjectRoot": "projects",
+        "projects": &#123;
+            "angular19": &#123;
+            "projectType": "application",
+            "schematics": &#123;
+                "@schematics/angular:component": &#123;
+                "style": "scss"
+                }
+            },
+            "root": "",
+            "sourceRoot": "src",
+            "prefix": "app",
+            "architect": &#123;
+                "build": &#123;
+                "builder": "@angular-devkit/build-angular:application",
+                "options": &#123;
+                    "outputPath": "dist/angular19",
+                    "index": "src/index.html",
+                    "browser": "src/main.ts",
+                    "polyfills": [
+                    "zone.js"
+                    ],
+                    "tsConfig": "tsconfig.app.json",
+                    "inlineStyleLanguage": "scss",
+                    "assets": [
+                    &#123;
+                        "glob": "**/*",
+                        "input": "public"
+                    }
+                    ],
+                    "styles": [
+                    "src/styles.scss"
+                    ],
+                    "scripts": [],
+                    "server": "src/main.server.ts",
+                    "outputMode": "server",
+                    "ssr": &#123;
+                    "entry": "src/server.ts"
+                    }
+                },
+                "configurations": &#123;
+                    "production": &#123;
+                    "budgets": [
+                        &#123;
+                        "type": "initial",
+                        "maximumWarning": "500kB",
+                        "maximumError": "1MB"
+                        },
+                        &#123;
+                        "type": "anyComponentStyle",
+                        "maximumWarning": "4kB",
+                        "maximumError": "8kB"
+                        }
+                    ],
+                    "outputHashing": "all"
+                    },
+                    "development": &#123;
+                    "optimization": false,
+                    "extractLicenses": false,
+                    "sourceMap": true
+                    }
+                },
+                "defaultConfiguration": "production"
+                },
+                "serve": &#123;
+                "builder": "@angular-devkit/build-angular:dev-server",
+                "configurations": &#123;
+                    "production": &#123;
+                    "buildTarget": "angular19:build:production"
+                    },
+                    "development": &#123;
+                    "buildTarget": "angular19:build:development"
+                    }
+                },
+                "defaultConfiguration": "development"
+                },
+                "extract-i18n": &#123;
+                ...
+                },
+                "test": &#123;
+                ...
+                }
+            }
+            }
+        }
+        }
+
+    <b>// package.json (intact)</b>
+    ...
+    "scripts": &#123;
+        "ng": "ng",
+        "start": "ng serve",
+        "build": "ng build",
+        "watch": "ng build --watch --configuration development",
+        "test": "ng test",
+        "serve:ssr:angular19": "node dist/angular19/server/server.mjs"
+        },
+    ...
+        </pre>
+        <li>Az angular.json és a package.json új projekt létrehozását követően érintetlen maradt, azaz nem történt
+            rajtuk változtatás</li>
+        <pre>
+    npx @angular/cli@19 new angular19 --ssr --server-routing
+
+    ng build
+    
+    npm run serve:ssr:angular19 (--> node dist/angular19/server/server.mjs)
+        </pre>
+        <li>Amennyiben a 4000-res poort használatban van, a server.ts fájlban átírhatjuk, és egy újabb build után
+            próbálkozhatunk a serve:ssr-rel</li>
+        <li>Az utolsó parancs Node.js-t használja a szerveroldali renderelés (SSR) futtatására
+            <ul>
+                <li>A server.mjs fájl a szerveroldali alkalmazás belépési pontja, amely általában egy Express.js
+                    szervert indít el, és az Angular alkalmazást szerveroldalon rendereli</li>
+                <li>Lehetővé teszi, hogy a szerver előre renderelje az alkalmazás HTML-jét, mielőtt azt a kliens
+                    böngészője betöltené</li>
+            </ul>
+        </li>
+        <pre>
+    dist/
+    └── angular19/
+        ├── browser/
+            ├── about/              // az app-routes.ts-ben megadott route-ok utáni build-ben jelenik meg
+                └── index.html
+            ├── favicon.ico
+            ├── index.csr.html
+            ├── index.html
+            ├── main-PQES6YLA.js
+            ├── polyfills-FFHMD2TL.js
+            └── styles-5INURTSO.css
+        ├── server/    
+            ├── assets-chunks
+                ├── about_index_html.mjs
+                ├── index_csr_html.mjs
+                ├── index_server_html.mjs
+                └── style_5INURTSO_css.mjs
+            ├── angular-app-engine-manifest.mjs
+            ├── angular-app.manifest.mjs
+            ├── chunk-EJSJJTUO.mjs
+            ├── chunk-GFUZYSQG.mjs
+            ├── chunk-TNO4MGIL.mjs
+            ├── chunk-X2SEQXRR.mjs
+            ├── index.server.html
+            ├── main.server.mjs
+            ├── polyfills.server.mjs
+            └── server.mjs
+        ├── 3rdpartylicenses.txt
+        └── prerendered-routes.json
+        </pre>
+        <li>A buildben jelenleg nem szerepel a prerender kulcs</li>
+        <br>
+        <li>Hozzunk létre 2 komponents
+            <ol>
+                <li>HomeComponent</li>
+                <li>AboutComponent</li>
+            </ol>
+            <pre>
+    <b>// app-routes.ts</b>
+
+    export const routes: Routes = [
+        &#123; path: '', component: HomeComponent },
+        &#123; path: 'about', component: AboutComponent },
+    ];
+
+    <b>// app.config.ts</b>
+
+    export const appConfig: ApplicationConfig = &#123;
+        providers: [
+            provideZoneChangeDetection(&#123; eventCoalescing: true }),
+            provideRouter(routes),
+            provideClientHydration(withEventReplay()),
+            provideHttpClient(withFetch())                // adjuk hozzá
+        ]
+        };
+
+    <b>// app.component.html</b>
+
+    &#60;ul>
+        &#60;li>
+            &#60;a [routerLink]="['/']">Home&#60;/a>
+        &#60;/li>
+        &#60;li>
+            &#60;a [routerLink]="['/', 'about']">About&#60;/a>
+        &#60;/li>
+    &#60;/ul>
+        
+    &#60;router-outlet />
+
+    <b>// home.component.ts</b>
+
+    export class HomeComponent &#123;
+        private http = inject(HttpClient)
+      
+        ngOnInit() &#123;
+          this.http.get('https://jsonplaceholder.typicode.com/posts').subscribe(response => &#123;
+            console.log(response);
+          });
+        }
+    }
+        </pre>
+        </li>
+        <li>app-config.ts
+            <ul>
+                <li>Kulcsszerepet játszik az alkalmazás konfigurációjában, különösen a modul nélküli (standalone)
+                    komponensalapú architektúrában</li>
+                <li>Az ApplicationConfig objektum meghatározza az alkalmazás globális szolgáltatóit (providers)</li>
+
+                <li>Konfiguráció
+                    <ul>
+                        <li>provideZoneChangeDetection(&#123; eventCoalescing: true })
+                            <ul>
+                                <li>Az Angular NgZone mechanizmusát konfigurálja, amely az aszinkron műveletek után
+                                    végzi el a változások detektálását, és a komponensek frissítését</li>
+                            </ul>
+                        </li>
+                        <li>provideRouter(routes)
+                            <ul>
+                                <li>Az Angular útvonalkezelőjét (router) konfigurálja az alkalmazásban</li>
+                            </ul>
+                        </li>
+                        <li>provideClientHydration(withEventReplay())
+                            <ul>
+                                <li>A kliensoldali hidratációt teszi lehetővé</li>
+                                <li>A withEventReplay() opció biztosítja, hogy a felhasználó által a hidratáció
+                                    befejezése előtt végrehajtott események (például kattintások) ne vesszenek el, hanem
+                                    a hidratáció után újra lejátszásra kerüljenek, így az alkalmazás zökkenőmentesen
+                                    működik tovább</li>
+                            </ul>
+                        </li>
+                        <li>provideHttpClient(withFetch()) (új)
+                            <ul>
+                                <li>Az Angular HTTP kliensét konfigurálja, amely lehetővé teszi az alkalmazás számára,
+                                    hogy HTTP kéréseket küldjön, és fogadjon</li>
+                                <li>A withFetch() opció azt jelenti, hogy a HTTP kérések a modern fetch API-n keresztül
+                                    történnek, ami egy egyszerűbb és hatékonyabb alternatívája a korábbi
+                                    HttpClientModule-nek</li>
+                                <li>Angular 18-tól kezdődően, ahol a HttpClientModule már elavultnak számít (deprecated)
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <br>
+        <li>Hybrid fejlesztői környezet
+            <ul>
+                <pre>
+    npm run watch
+                </pre>
+                <li>Folyamatosan figyeli az Angular projektet fejlesztői módban, és újrafordítja a
+                    <ol>
+                        <li>browser bundle-t</li>
+                        <li>server bundle-t</li>
+                        <li>valamint előrendereli route-okat ("Prerendered 2 static routes")</li>
+                    </ol>
+                </li>
+                <li>A .ts vagy .html fájl módosításakor automatikusan újraindul a háttérben, de nem indítja újra magát a
+                    node szervert</li>
+                <pre>
+    npm run serve:ssr:angular19
+
+    "Node Express server listening on http://localhost:5000"
+                </pre>
+                <li>Elindítjuk a node szervert, ami az SSR Angular appot szolgálja ki</li>
+                <li>A böngészőből az http://localhost:5000 címen elérhetjük az alkalmazást, ahol
+                    <ol>
+                        <li>az első betöltés SSR módon történik</li>
+                        <li>majd utána a kliens oldali kód lép működésbe (client hydration)</li>
+                    </ol>
+                </li>
+                <br>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>1.</td>
+                            <td>npm run watch</td>
+                            <td>Figyeli a fájlokat, újraépíti a böngésző, és szerver bundle-öket</td>
+                        </tr>
+                        <tr>
+                            <td>2.</td>
+                            <td>npm run serve:ssr:angular19</td>
+                            <td>Elindítja az SSR Node szervert (például http://localhost:5000)</td>
+                        </tr>
+                        <tr>
+                            <td>.3</td>
+                            <td>http://localhost:5000</td>
+                            <td>Itt érhető el az SSR + Hydration Angular alkalmazás</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                <li>Amennyiben a page source oldalon látjuk az oldal HTML tartalmát, akkor működik az SSR
+                    <ul>
+                        <li>CSR esetében az &#60;app-root>&#60;/app-root> fog a szemünk elé tárulni HTML content helyett
+                        </li>
+                    </ul>
+                </li>
+                <li>Azt láthatjuk, hogy amikor a watch-ot követően elindítjuk a serve:ssr-t, akkor az első betöltődésnél
+                    a Home komponens osztályban lévő HTTP kérés kilogolja a választ, ugyanakkor a Network tab-en nem
+                    történik request
+                    <ul>
+                        <li>Ugyanakkor, ha elnavigálunk, majd vissza a Homa page-re, már nem első betöltésről beszélünk,
+                            így az Angular kliensoldali routere veszi át az irányítást, lefut a Home-ban az OnInit
+                            lifecycle, és megtörténik a HTTP kérés a távoli szerver felé</li>
+                        <li>Az első betöltésnél a (például) Node.js rendereli az oldalt, és végrehajtja a HTTP-kérést,
+                            így az nem látszik a Network tab-en</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>Az app.routes.server.ts fájlban állíthatjuk be az egyes úvonalakhoz a renderelési módot
+            <ul>
+                <pre>
+    export const serverRoutes: ServerRoute[] = [
+        &#123;
+            path: '**',
+            renderMode: RenderMode.Prerender
+        }
+    ];
+                </pre>
+                <li>Láthatjuk, hogy alapértelmezetten minden útvonal előre renderelt</li>
+                <pre>
+    export const serverRoutes: ServerRoute[] = [
+        &#123; path: '', renderMode: RenderMode.Client },            // CSR
+        &#123; path: 'about', renderMode: RenderMode.Server },       // SSR
+        &#123; path: 'contact', renderMode: RenderMode.Prerender },  // SSG
+        // &#123; path: '**', renderMode: RenderMode.Prerender }
+    ];
+
+    Prerendered 1 static route.
+
+    dist/
+    └── angular19/
+        ├── browser/
+            ├── contact/
+                └── index.html
+            ├── favicon.ico
+            ├── index.csr.html
+            ├── index.html
+            ├── main.js
+            ├── main.js.map
+            ├── polyfills.js
+            ├── polyfills.js.map
+            ├── styles.css
+            └── styles.css.map
+        ├── server/    
+            ├── assets-chunks
+                ├── contact_index_html.mjs
+                ├── index_csr_html.mjs
+                ├── index_server_html.mjs
+            ├── angular-app-engine-manifest.mjs
+            ├── angular-app.manifest.mjs
+            ├── chunk-3II4UTYF.mjs
+            ├── chunk-3II4UTYF.mjs.map
+            ├── chunk-5QGJSQRS.mjs
+            ├── chunk-5QGJSQRS.mjs.map
+            ├── chunk-DTEGX4RB.mjs
+            ├── chunk-DTEGX4RB.mjs.map
+            ├── chunk-FLBTPLIQ.mjs
+            ├── chunk-FLBTPLIQ.mjs.map
+            ├── index.server.html
+            ├── main.server.mjs
+            ├── main.server.mjs.map
+            ├── polyfills.server.mjs
+            ├── polyfills.server.mjs.map
+            ├── server.mjs
+            └── server.mjs.map
+        └── prerendered-routes.json
+
+        <b>// prerendered-routes.json</b>
+
+        &#123;
+            "routes": &#123;
+              "/contact": &#123;}
+            }
+        }
+                </pre>
+                <li>Mindhárom renderelésre adtunk meg útvonalat immáron az app.routes.server.ts fájlban</li>
+                <br>
+                <li>Első betöltődés (direkt linkre érkezés / oldal frissítés)
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Útvonal</th>
+                                <th>Renderelési mód</th>
+                                <th>Első betöltés viselkedése</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>/</td>
+                                <td>Client (CSR)</td>
+                                <td>A böngésző tölti be és rendereli az oldalt JavaScript segítségével</td>
+                            </tr>
+                            <tr>
+                                <td>/about</td>
+                                <td>Server (SSR)</td>
+                                <td>A szerver rendereli az oldalt minden kérésre, majd küldi a HTML-t a kliensnek
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>/contact</td>
+                                <td>Prerender (SSG)</td>
+                                <td>Az oldal előre renderelve van a build során, és statikus HTML-ként szolgálja ki
+                                    a szerver</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </li>
+                <br>
+                <li>Első betöltődést követő navigáció</li>
+                <br>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Útvonal</th>
+                            <th>Renderelési mód</th>
+                            <th>Viselkedés navigáció után</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>/</td>
+                            <td>Client (CSR)</td>
+                            <td>A komponens újra inicializálódik, és a szükséges adatokat a kliensoldalon tölti be</td>
+                        </tr>
+                        <tr>
+                            <td>/about</td>
+                            <td>Server (SSR)</td>
+                            <td>A komponens újra inicializálódik, és a szükséges adatokat a kliensoldalon tölti be. Az
+                                SSR előnyei itt csak az első betöltéskor érvényesülnek</td>
+                        </tr>
+                        <tr>
+                            <td>/contact</td>
+                            <td>Prerender (SSG)</td>
+                            <td>A statikus HTML betöltődik, és az Angular alkalmazás hidratálja azt, azaz interaktívvá
+                                teszi a kliensoldalon</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+            </ul>
+        </li>
+        <li>Az Angular alkalmazásban a navigációk általában kliensoldalon történnek, azaz a böngészőben JavaScript
+            segítségével
+            <ul>
+                <li>Az első betöltés után a további navigációk során az Angular router kezeli az útvonalakat, és a
+                    komponensek újra inicializálódnak</li>
+            </ul>
+            <ol>
+                <li>CSR oldalra navigálás (/)
+                    <ul>
+                        <li>A komponens újra inicializálódik, és a szükséges adatokat a kliensoldalon tölti be</li>
+                    </ul>
+                </li>
+                <li>SSR oldalra navigálás (/about)
+                    <ul>
+                        <li>A komponens újra inicializálódik, és a szükséges adatokat a kliensoldalon tölti be</li>
+                        <li>Az SSR bizonyos előnyei itt csak az első betöltéskor érvényesülnek</li>
+                    </ul>
+                </li>
+                <li>SSG oldalra navigálás (/contact)
+                    <ul>
+                        <li>A statikus HTML betöltődik, és az Angular alkalmazás hidratálja azt, azaz interaktívvá teszi
+                            a kliensoldalon</li>
+                    </ul>
+                </li>
+            </ol>
+        </li>
+        <br>
+        <table>
+            <thead>
+                <tr>
+                    <th>Renderelési mód</th>
+                    <th>Leírás</th>
+                    <th>Előnyök</th>
+                    <th>Hátrányok</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Client (CSR)</td>
+                    <td>A tartalom a böngészőben renderelődik JavaScript segítségével</td>
+                    <td>Egyszerű fejlesztés, dinamikus tartalom kezelése</td>
+                    <td>Lassabb első betöltés, SEO szempontból kevésbé előnyös</td>
+                </tr>
+                <tr>
+                    <td>Server (SSR)</td>
+                    <td>A tartalom a szerveren renderelődik minden kérésre, majd a HTML-t küldi a kliensnek</td>
+                    <td>Gyorsabb első betöltés, jobb SEO, dinamikus tartalom kezelése</td>
+                    <td>Nagyobb szerverterhelés, bonyolultabb fejlesztés</td>
+                </tr>
+                <tr>
+                    <td>Prerender (SSG)</td>
+                    <td>A tartalom előre renderelve van a build során, és statikus HTML-ként szolgálja ki a szerver
+                    </td>
+                    <td>Nagyon gyors betöltés, alacsony szerverterhelés, kiváló SEO</td>
+                    <td>Csak statikus tartalom esetén alkalmazható, dinamikus tartalom kezelése nehézkes</td>
+                </tr>
+            </tbody>
+        </table>
+    </ul>
+</div>
+
+<div>
+    <h3 #customizingbuildtime data-anchor="customizingbuildtime">Customizing build-time</h3>
+    <ul>
+        <li>A kezdő konfigunk
+            <ul>
+                <pre>
+    <b>// app.component.html</b>
+
+    &#60;ul>
+        &#60;li>
+            &#60;a [routerLink]="['/']">Home&#60;/a>
+        &#60;/li>
+        &#60;li>
+            &#60;a [routerLink]="['/', 'about']">About&#60;/a>
+        &#60;/li>
+        &#60;li>
+            &#60;a [routerLink]="['/', 'contact']">Contact&#60;/a>
+        &#60;/li>
+        &#60;li>
+            &#60;a [routerLink]="['/', 'product', '789']">Product 789&#60;/a>
+        &#60;/li>
+    &#60;/ul>
+        
+    &#60;router-outlet />
+
+    <b>// product.component.html</b>
+
+    &#60;div *ngIf="product$ | async as product">
+        &#60;div>#&#123; &#123;product.id}} - &#123; &#123;product.title}}&#60;/div>
+        &#60;div>&#123; &#123;product.description}}&#60;/div>
+    &#60;/div>
+
+    <b>// product.component.ts</b>
+
+    interface Product &#123;
+        id: number;
+        title: string;
+        description: string
+    }
+        
+    @Component(&#123;
+        selector: 'app-product',
+        imports: [
+            CommonModule,
+            HttpClientModule,
+        ],
+        templateUrl: './product.component.html',
+        styleUrl: './product.component.scss'
+    })
+    export class ProductComponent &#123;
+        private http = inject(HttpClient);
+        private activeRoute = inject(ActivatedRoute);
+        product$: Observable&#60;Product> | null = null;
+        
+        ngOnInit() &#123;
+            this.product$ = this.activeRoute.params.pipe(switchMap(param => &#123;
+            const id = param['id'];
+            return this.http.get&#60;Product>(`http://localhost:3000/api/products/$&#123;id}`);
+            }));
+        }
+    }
+
+    <b>// app.routes.ts</b>
+
+    export const routes: Routes = [
+        &#123; path: '', component: HomeComponentComponent },
+        &#123; path: 'about', component: AboutComponentComponent },
+        &#123; path: 'contact', component: ContactComponentComponent },
+        &#123; path: 'product/:id', component: ProductComponent }
+    ];
+
+    <b>// node.server.js</b>
+
+    ...
+    app.get("/api/products/:id", (req, res) => &#123;
+        const product = &#123;
+            id: req.params.id,
+            title: `product title $&#123;req.params.id}`,
+            description: `product description $&#123;req.params.id}`
+        };
+    
+        res.send(product);
+    });
+    ...
+                </pre>
+                <li>A következőket szeretnénk futtatni
+                    <ol>
+                        <li>npm run watch
+                            <ul>
+                                <li>Hibát kapunk a terminálban</li>
+                                <li>"The 'product/:id' route does not match any route defined in the server routing
+                                    configuration. Please ensure this route is added to the server routing
+                                    configuration."</li>
+                            </ul>
+                        </li>
+                        <li>serve:ssr:angular19</li>
+                        <li>node node.server.js
+                            <ul>
+                                <li>A korábbi Node.js szerverünket a 3000-res porton fut, a product/:id útvonal majdani
+                                    kiszolgálása miatt</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </li>
+                <li>Ahhoz, hogy lefusson a build, az app.routes.server.ts fájlt kell módosítanunk
+                    <ul>
+                        <pre>
+    export const serverRoutes: ServerRoute[] = [
+        &#123; path: '', renderMode: RenderMode.Client },            // CSR
+        &#123; path: 'about', renderMode: RenderMode.Server },       // SSR
+        &#123; path: 'contact', renderMode: RenderMode.Prerender },  // SSG
+        &#123; path: 'product/:id', renderMode: RenderMode.Server }, // új útvonal, .Client esetén a böngésző tölti be az oldalt, és az ngOnInit() metódus csak a JavaScript betöltése után fut le
+        // &#123; path: '**', renderMode: RenderMode.Prerender }
+    ];
+                        </pre>
+                        <img src="assets/imgs/ssr_dynamic_route.png" width="100%">
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <br>
+    <h5 #getprerenderparams data-anchor="getprerenderparams">getPrerenderParams</h5>
+    <ul>
+        <li>Nézzük meg, miképp prerender-elhetünk konkrét product ID-kat
+            <ul>
+                <li>Ehhez egyrészt át szükséges írni a renderMode-ot Prerender-re, másrészt ezt követően felsorolni az
+                    előre renderel-endő útvonalakat</li>
+                <pre>
+    export const serverRoutes: ServerRoute[] = [
+        &#123; path: '', renderMode: RenderMode.Client },            // CSR
+        &#123; path: 'about', renderMode: RenderMode.Server },       // SSR
+        &#123; path: 'contact', renderMode: RenderMode.Prerender },  // SSG
+        &#123;
+            path: 'product/:id',
+            renderMode: RenderMode.Prerender,                   // SSG
+            async getPrerenderParams() &#123;
+                return [
+                    &#123; id: '234' },    // nem szám, string
+                    &#123; id: '789' }
+                ];
+            },
+            fallback: PrerenderFallback.Server
+        }
+        // &#123; path: '**', renderMode: RenderMode.Prerender }
+    ];
+
+    "Prerendered 3 static routes."
+
+    dist/
+    └── angular19/
+        ├── browser/
+            ├── contact/
+                └── index.html
+            ├── product/                // új prerenderelt oldalak
+                ├── 234/
+                    └── index.html
+                └── 789/
+                    └── index.html
+            ├── favicon.ico
+            ├── index.csr.html
+            ├── index.html
+            ├── main.js
+            ├── main.js.map
+            ├── polyfills.js
+            ├── polyfills.js.map
+            ├── styles.css
+            └── styles.css.map
+        ├── server/    
+            ├── assets-chunks
+                ├── contact_index_html.mjs
+                ├── index_csr_html.mjs
+                ├── index_server_html.mjs
+            ├── angular-app-engine-manifest.mjs
+            ├── angular-app.manifest.mjs
+            ├── chunk-3II4UTYF.mjs
+            ├── chunk-3II4UTYF.mjs.map
+            ├── chunk-5QGJSQRS.mjs
+            ├── chunk-5QGJSQRS.mjs.map
+            ├── chunk-DTEGX4RB.mjs
+            ├── chunk-DTEGX4RB.mjs.map
+            ├── chunk-FLBTPLIQ.mjs
+            ├── chunk-FLBTPLIQ.mjs.map
+            ├── index.server.html
+            ├── main.server.mjs
+            ├── main.server.mjs.map
+            ├── polyfills.server.mjs
+            ├── polyfills.server.mjs.map
+            ├── server.mjs
+            └── server.mjs.map
+        └── prerendered-routes.json
+
+    <b>// prerendered-routes.json</b>
+
+    &#123;
+        "routes": &#123;
+            "/contact": &#123;},
+            "/product/234": &#123;},
+            "/product/789": &#123;}
+        }
+    }
+                </pre>
+            </ul>
+        </li>
+        <li>Lehetőségünk van arra, hogy service útján dinamikusan töltsük fel a getPrerenderParams() függvény által
+            visszaadott ID-kat
+            <ul>
+                <li>Ehhez létre kell hoznunk egy service-t</li>
+                <pre>
+    <b>// // product.service.ts</b>
+
+    @Injectable(&#123; providedIn: 'root' })
+    export class ProductService &#123;
+        async getProductIds(): Promise&#60;string[]> &#123;
+            // API hívás
+            return ['234', '789'];
+        }
+    }
+
+    <b>// // app.routes.server.ts</b>
+
+    export const serverRoutes: ServerRoute[] = [
+    ...
+        &#123;
+            path: 'product/:id',
+            renderMode: RenderMode.Prerender,
+            async getPrerenderParams() &#123;
+                const productService = inject(ProductService);      // caz inject függvény csak szinkron módon hívható
+                const ids = await productService.getProductIds();
+                return ids.map(id => (&#123; id }));
+            }
+        }
+    ];
+                </pre>
+                <li>A következő egy egyszerűen megvalósítható példa
+                    <ul>
+                        <pre>
+    <b>// product.service.ts</b>
+
+    @Injectable(&#123; providedIn: 'root' })
+
+    export class ProductService &#123;
+        getProductIds() &#123;
+            return Promise.resolve(['5', '234', '789']);
+        }
+    }
+
+    <b>// app.routes.server.ts</b>
+
+    export const serverRoutes: ServerRoute[] = [
+        &#123; path: '', renderMode: RenderMode.Client },            // CSR
+        &#123; path: 'about', renderMode: RenderMode.Server },       // SSR
+        &#123; path: 'contact', renderMode: RenderMode.Prerender },  // SSG
+        &#123;
+            path: 'product/:id',
+            renderMode: RenderMode.Prerender,                   // SSG
+            async getPrerenderParams() &#123;
+                const products = inject(ProductService);
+                const ids = await products.getProductIds();
+                return ids.map(id => (&#123; id }));
+            },
+            fallback: PrerenderFallback.Server
+        }
+        // &#123; path: '**', renderMode: RenderMode.Prerender }
+    ];
+                        </pre>
+                        <li>Build közben megtörtént a prerender-elés</li>
+                        <li>Mivel a fallback stratégia .Server, ezért, ha például a 6-os ID-jú oldalt gépeljük be a
+                            böngészőbe, a szerver az adott útvonalhoz tartozó tartalmat a kérés pillanatában állítja elő
+                            <ul>
+                                <li>Client fallback esetében pedig az első betöltődéskor már a böngésző kezeli az appot,
+                                    így API call fog történni</li>
+                                <br>
+                                <img src="assets/imgs/ssr_client_fallback_route.png" width="100%">
+                                <br>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <br>
+    <h5 #prerenderfallbackstrategy data-anchor="prerenderfallbackstrategy">Prerender fallback strategy</h5>
+    <ul>
+        <li>Lehetővé teszi, hogy meghatározzuk, hogy mi történjen, ha egy előre renderelt oldal nem található</li>
+        <li>A beállítás a ServerRoute konfigurációban alkalmazható</li>
+        <li>Az alapértelmezett viselkedés a PrerenderFallback.Server, azaz, ha az előre renderelt oldal nem található, a
+            szerveroldali renderelés veszi át a szerepet</li>
+    </ul>
+    <pre>
+        export const serverRoutes: ServerRoute[] = [
+            &#123; path: '', renderMode: RenderMode.Client },
+            &#123; path: 'about', renderMode: RenderMode.Prerender },
+            &#123; path: 'profile', renderMode: RenderMode.Server },
+            &#123; path: '**', renderMode: RenderMode.Server, prerenderFallback: PrerenderFallback.Client },
+        ];
+    </pre>
+    <ol>
+        <li>PrerenderFallback.Client
+            <ul>
+                <li>Ha az oldal nem található, a kliensoldali renderelés veszi át a szerepet</li>
+            </ul>
+        </li>
+        <li>PrerenderFallback.Server
+            <ul>
+                <li>Ha az oldal nem található, a szerveroldali renderelés veszi át a szerepet</li>
+            </ul>
+        </li>
+        <li>PrerenderFallback.None
+            <ul>
+                <li>Ha az oldal nem található, a szerver nem küld választ (404-es hibát ad)</li>
+            </ul>
+        </li>
+    </ol>
+    <ul>
+        <li>A fallback mechanizmus csak azokra az útvonalakra vonatkozik, amelyek előre rendereltek a build során</li>
+    </ul>
+</div>
+
+<div>
+    <h3 #contexttokens data-anchor="contexttokens">Context tokens</h3>
+    <ul>
+        <li>Olyan speciális injektálható objektumokra utal, amelyek lehetővé teszik a szerveroldali renderelés (SSR)
+            során a HTTP kérés, és válasz objektumok elérését, dinamikus kérések, válaszok, és kontextusok alkalmazását
+        </li>
+        <br>
+        <li>Kulcsfontosságú tokenek
+            <ol>
+                <li>REQUEST
+                    <ul>
+                        <li>Lehetővé teszi a szerveroldali HTTP kérés objektum elérését</li>
+                        <li>Használatával hozzáférhetünk a bejövő HTTP kéréshez, például annak fejléceihez, vagy a kérés
+                            URL-jéhez</li>
+                        <pre>
+    <b>// app.component.ts</b>
+
+    export class AppComponent &#123;
+        constructor() &#123;
+            const request = inject(REQUEST, &#123; optional: true }); // az injektálás nem kötelező, ha a token nem található, az Angular nem dob hibát, hanem null értéket ad vissza
+        
+            if (request) &#123;
+            console.log('SERVER REQUEST:', request);
+            } else &#123;
+            console.log('NO REQUEST - client');
+            }
+        }
+        }
+
+    <b>// app.routes.server.ts</b>
+
+    export const serverRoutes: ServerRoute[] = [
+        ...
+        &#123; path: 'about', renderMode: RenderMode.Server },
+        ...
+    ];
+
+
+    npm run build
+    npm run serve:ssr:angular19
+                        </pre>
+                        <li>Az első oldalbetöltéskor a szerver rendereli az oldalt, és a REQUEST token tartalmazza a
+                            HTTP-kérés adatait</li>
+                        <li>Amennyiben direkt linken érkezünk, vagy ráfrissítünk az about page-re, úgy szerver oldalon
+                            láthatjuk a request-et</li>
+                        <br>
+                        <img src="assets/imgs/ssr_request_token_server.png" width="100%">
+                        <br>
+                        <br>
+                        <li>Kliens oldalon pedig megkapjuk, hogy nincs request objektum</li>
+                        <br>
+                        <img src="assets/imgs/ssr_request_token_client.png" width="100%">
+                        <br>
+                        <br>
+                    </ul>
+                </li>
+                <li>RESPONSE_INIT
+                    <ul>
+                        <li>A válasz inicializálásához szükséges információkat tartalmazza</li>
+                        <li>Segítségével beállíthatók a válasz állapot kódja, és fejlécei a szerver oldali renderelés
+                            során
+                        </li>
+                        <pre>
+    <b>// app.component.ts</b>
+
+    export class AppComponent &#123;
+        title = 'angular19';
+        
+        constructor() &#123;
+            const response_init = inject(RESPONSE_INIT, &#123; optional: true });
+        
+            if (response_init) &#123;
+            console.log('RESPONSE INIT:', response_init);
+            response_init.status = 202;
+            response_init.headers = &#123; 'content-type': 'text/html', custom_header: 'ok' };
+            } else &#123;
+            console.log('NO RESPONSE INIT - client');
+            }
+        }
+    }
+
+    <b>// app.routes.server.ts</b>
+
+    export const serverRoutes: ServerRoute[] = [
+        ...
+        &#123; path: 'about', renderMode: RenderMode.Server },
+        ...
+    ];
+
+
+    npm run build
+    npm run serve:ssr:angular19
+                        </pre>
+                        <li>Ha nem állítjuk be a Content-Type fejlécet, vagy helytelenül teszed, a böngésző nem tudja
+                            megfelelően értelmezni a válasz tartalmát, és előfordulhat, hogy a nyers HTML helyett csak
+                            szöveget jelenít meg</li>
+                        <li>Ha direkt linken érkezünk, vagy ráfrissítünk az about oldalra, úgy a Network tab-en
+                            láthatjuk a 202-es status kódot, és a custom header-t</li>
+                        <br>
+                        <img src="assets/imgs/ssr_response_init_token.png" width="100%">
+                        <br>
+                        <br>
+                        <li>A no response console.log mindeközben megjelenik a Console fülön</li>
+                        <br>
+                    </ul>
+                </li>
+                <li>REQUEST_CONTEXT
+                    <ul>
+                        <li>Egyéni metainformációk vagy kontextus átadására szolgál az aktuális kéréshez kapcsolódóan
+                        </li>
+                        <li>Ezek az adatok csak szerveroldali renderelés közben érhetők el, és más környezetekben null
+                            értéket adnak vissza</li>
+                        <pre>
+    <b>// app.component.ts</b>
+
+    export class AppComponent &#123;
+        title = 'angular19';
+        
+        constructor() &#123;
+            const response_init = inject(RESPONSE_INIT, &#123; optional: true });
+        
+            if (response_init) &#123;
+            console.log('RESPONSE INIT:', response_init);
+            response_init.status = 202;
+            response_init.headers = &#123; 'content-type': 'text/html', custom_header: 'ok' };
+            } else &#123;
+            console.log('NO RESPONSE INIT - client');
+            }
+        }
+    }
+
+    <b>// app.routes.server.ts</b>
+
+    export const serverRoutes: ServerRoute[] = [
+        ...
+        &#123; path: 'about', renderMode: RenderMode.Server },
+        ...
+    ];
+
+    <b>// app.config.server.ts</b>
+
+    const serverConfig: ApplicationConfig = &#123;
+        providers: [
+          provideServerRendering(),
+          provideServerRouting(serverRoutes),
+          &#123;                                       // új elem
+            provide: REQUEST_CONTEXT,
+            useValue: &#123; customContext: 'This is the value' } // itt adhatjuk meg a kívánt kontextust
+          }
+        ]
+    };
+      
+    export const config = mergeApplicationConfig(appConfig, serverConfig);
+
+
+    npm run build
+    npm run serve:ssr:angular19
+                            </pre>
+                        <img src="assets/imgs/ssr_request_context_token.png" width="100%">
+                        <br>
+                    </ul>
+                </li>
+            </ol>
+        </li>
+    </ul>
+</div>
+
+<div>
+    <h3 #hydration data-anchor="hydration">Hydration</h3>
+    <ul>
+        <li>A szerver oldali renderelés (SSR) egyik kulcsfontosságú folyamata, amely lehetővé teszi, hogy a szerverről
+            érkező statikus HTML-t a kliensoldalon interaktívvá alakítsuk
+            <ul>
+                <li>Ezáltal az alkalmazás gyorsabban töltődik be, és zökkenőmentes felhasználói élményt biztosít</li>
+                <li>A cél, hogy a szerveroldalon renderelt alkalmazás a kliensoldalon is teljes funkcionalitással
+                    rendelkezzen, anélkül hogy újra renderelnénk a DOM-ot</li>
+            </ul>
+        </li>
+        <li>A hidratáció lépései
+            <ol>
+                <li>Kérés elküldése
+                    <ul>
+                        <li>A felhasználó böngészője HTTP kérést küld a szervernek</li>
+                    </ul>
+                </li>
+                <li>Szerveroldali renderelés
+                    <ul>
+                        <li>A szerver Angular Universal segítségével legenerálja a teljes HTML-t, beleértve a dinamikus
+                            adatokat is</li>
+                    </ul>
+                </li>
+                <li>HTML átvitele a kliensre
+                    <ul>
+                        <li>A szerver által generált statikus HTML a böngészőbe kerül</li>
+                    </ul>
+                </li>
+                <li>JavaScript betöltése
+                    <ul>
+                        <li>A böngésző letölti, és betölti az alkalmazás JavaScript kódját</li>
+                        <li>Az Angular "aktiválja" a statikus HTML-t, azaz hozzáadja az eseménykezelőket, helyreállítja
+                            az alkalmazás állapotát, és biztosítja a dinamikus interaktivitást</li>
+                    </ul>
+                </li>
+            </ol>
+        </li>
+        <li>Előnyei
+            <ol>
+                <li>Gyorsabb a betöltési idő</li>
+                <li>Javul általa a SEO</li>
+                <li>A felhasználók gyorsan interaktívvá váló alkalmazást tapasztalnak</li>
+            </ol>
+        </li>
+        <li>Flickering
+            <ul>
+                <li>Vizuális villanás, amikor a böngésző először megjeleníti a statikus tartalmat, majd
+                    frissíti azt a dinamikus tartalomra</li>
+                <li>A hidratáció során a már meglévő DOM-ot használja fel újra
+                    <ul>
+                        <li>Futási időben frissül</li>
+                        <li>Ha túl nagy az eltérés a jelenlegi és az aktuálisan letöltött DOM között, akkor előfordulhat
+                            villanás</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <br>
+        <table style="border-collapse: collapse; width: 100%;">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Hidratáció ON</th>
+                    <th>Hidratáció OFF</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>DOM kezelés</td>
+                    <td>A szerver által renderelt DOM-ot a kliensoldali JavaScript "aktiválja" anélkül, hogy újra
+                        renderelné azt</td>
+                    <td>A kliens oldali JavaScript újra rendereli a DOM-ot a szerver által küldött HTML alapján</td>
+                </tr>
+                <tr>
+                    <td>Flickering</td>
+                    <td>Nincs flickering, mivel a DOM nem kerül újrarenderelésre</td>
+                    <td>Előfordulhat flickering, mivel a DOM újrarenderelése vizuális villanást eredményezhet</td>
+                </tr>
+                <tr>
+                    <td>Teljesítmény</td>
+                    <td>Javul a teljesítmény, mivel kevesebb JavaScript kódot kell letölteni, és végrehajtani</td>
+                    <td>Csökkenhet a teljesítmény, mivel több JavaScript kódot kell letölteni, és végrehajtani</td>
+                </tr>
+                <tr>
+                    <td>Felhasználói élmény</td>
+                    <td>Zökkenőmentes felhasználói élmény, mivel a tartalom gyorsan és interaktívan jelenik meg</td>
+                    <td>Lehet, hogy a felhasználói élmény rosszabb, mivel a tartalom késlekedve és újrarenderelve
+                        jelenik
+                        meg</td>
+                </tr>
+                <tr>
+                    <td>Kompatibilitás</td>
+                    <td>Angular 16 és újabb verziók</td>
+                    <td>Angular 16 és korábbi verziók</td>
+                </tr>
+            </tbody>
+        </table>
+    </ul>
+    <br>
+    <h5 #enabling data-anchor="enabling">Enabling</h5>
+    <ul>
+        <li>Hidratáció nélkül a kliens oldali JavaScript újra rendereli a DOM-ot a szerver által küldött HTML alapján
+            <ul>
+                <li>Első betöltésnél flickering-et okoz</li>
+            </ul>
+        </li>
+        <li>A hidratációs eljárásnak szüksége van arra, hogy a kliens oldalon lévő DOM, és a szerver által küldött HTML
+            megegyezzen
+            <ul>
+                <li>Beleértve például a whitespace-eket</li>
+            </ul>
+        </li>
+        <li>A hidratáció aktiválása
+            <ol>
+                <li>SSR beállítása</li>
+                <li>provideClientHydration() függvény hozzáadásaa provider-ekhez
+                    <ul>
+                        <pre>
+    <b>// main.ts</b>
+
+    bootstrapApplication(AppComponent, appConfig) // ide töltődik be az app.config.ts alapértelmezett állandója
+        .catch((err) => console.error(err));
+
+    <b>// app.config.ts</b>
+    
+    export const appConfig: ApplicationConfig = &#123;
+        providers: [
+            provideZoneChangeDetection(&#123; eventCoalescing: true }),
+            provideRouter(routes),
+            provideClientHydration(withEventReplay()),    // a kliensoldali hidratációt teszi lehetővé
+            provideHttpClient(withFetch())
+        ]
+    };
+                        </pre>
+                        <li>Amennyiben nem standalone, hanem ngModule koncepciót használunk, akkor az app.module.ts
+                            fájlban szükséges megadni (providers array)</li>
+                        <li>A withEventReplay() opció biztosítja, hogy a felhasználó által a hidratáció befejezése előtt
+                            végrehajtott események (például kattintások) ne vesszenek el, hanem a hidratáció után újra
+                            lejátszásra kerüljenek, így az alkalmazás zökkenőmentesen működik tovább</li>
+                    </ul>
+                </li>
+            </ol>
+        </li>
+
+        <li>A DevToolsban ellenőrizhető, hogy működik-e a hidratáció
+            <ul>
+                <li>Ehhez az <a
+                        href="https://chromewebstore.google.com/detail/angular-devtools/ienfalfjdbdpebioblfackkekamfmbnh"
+                        target="_blank">Angular DevTools</a> bővítmény telepítése szükséges</li>
+                <pre>
+    npm run watch   // ng build --watch --configuration development
+
+    npm run serve:ssr:angular19
+
+
+    Angular is running in development mode.
+
+    Angular hydrated 2 component(s) and 19 node(s), 0 component(s) were skipped. Learn more at https://angular.dev/guide/hydration.
+                </pre>
+                <li>Fontos, hogy dev módban buildeljünk (tehát az ng build nem megfelelő), mert a bővítmény ellenkező
+                    esetben jelzi, hogy production módban nem működik</li>
+                <li>Illetve az is fontos, hogy olyan URL-lel ne próbálkozzunk, amire RenderMode.Client-et adtunk meg
+                </li>
+                <li>Amennyiben működik a hidratálás, az Angular DevTools-ban az elemek mellett egy vízcseppet látunk
+                </li>
+                <pre>
+    <b>// app.component.html</b>
+
+    &#60;ul>
+        &#60;li>
+            &#60;a [routerLink]="['/']">Home&#60;/a>
+        &#60;/li>
+        &#60;li>
+            &#60;a [routerLink]="['/', 'about']">About&#60;/a>
+        &#60;/li>
+        &#60;li>
+            &#60;a [routerLink]="['/', 'contact']">Contact&#60;/a>
+        &#60;/li>
+        &#60;li>
+            &#60;a [routerLink]="['/', 'product', '789']">Product 789&#60;/a>
+        &#60;/li>
+        &#60;app-product ngSkipHydration />
+    &#60;/ul>
+        
+    &#60;router-outlet />
+                </pre>
+                <img src="assets/imgs/ssr_hydrate_1.png" width="100%">
+                <br>
+                <br>
+                <li>Az app-product komponensre / DOM elemre rákerült a ngSkipHydration attribute
+                    <ul>
+                        <li>ngSkipHydration
+                            <ul>
+                                <li>Egy adott komponens, és annak gyermekkomponensei kimaradnak a hidratációs
+                                    folyamatból
+                                </li>
+                                <li>Kizárólag komponens host elemekre alkalmazható
+                                    <ul>
+                                        <li>Ellenkező esetben a teljes hidratációt megakadályozhatjuk</li>
+                                        <pre>
+    &#60;example-component ngSkipHydration />
+                                        </pre>
+                                    </ul>
+                                </li>
+                                <li>Néhány komponens nem biztos, hogy megfelelően működik hidratációt használva, ahol
+                                    például közvetlen DOM manipulációt használunk, vagy például innerHTML-t
+                                    <ul>
+                                        <li>Az Angular nem figyel ezekre a DOM változásokra, és nem tudja "feloldani"
+                                            őket a hidratációs folyamat során</li>
+                                        <pre>
+    export class ExampleComponent implements AfterViewInit &#123;
+        constructor(private el: ElementRef, private renderer: Renderer2) &#123;}
+        
+        ngAfterViewInit() &#123;
+            const div = this.el.nativeElement.querySelector('div');
+            this.renderer.setStyle(div, 'color', 'red');      // közvetlen DOM manipuláció
+        }
+    }
+
+    &#60;div [innerHTML]="htmlContent">&#60;/div>
+                                        </pre>
+                                    </ul>
+                                </li>
+                                <li>Ilyen esetekben érdemes alkalmazni a ngSkipHydration-t</li>
+                                <li>Alternatívaképp a komponens host elemére is alkalmazhatjuk a skip-elést
+                                    <ul>
+                                        <pre>
+    <b>// contact.component.ts</b>
+
+    @Component(&#123;
+        selector: 'app-contact',
+        imports: [],
+        templateUrl: './contact-component.component.html',
+        styleUrl: './contact-component.component.scss',
+        host: &#123;ngSkipHydration: 'true'},    // ez a sor kerül be
+        })
+        export class ContactComponent &#123;
+        
+        }
+                                        </pre>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <br>
+                <img src="assets/imgs/ssr_hydrate_2.png" width="100%">
+                <br>
+                <br>
+            </ul>
+        </li>
+        <li>Ha az Angular alkalmazásodban engedélyezed a hidratációt, de a kliensoldali HTML nem egyezik meg teljesen a
+            szerver által generált HTML-lel, akkor a hidratációs folyamat során problémák léphetnek fel
+            <ul>
+                <li>A hidratáció célja, hogy a szerveroldalon előállított DOM-ot a kliensoldali Angular újrahasznosítsa,
+                    elkerülve a teljes újrarenderelést</li>
+                <li>Ehhez azonban elengedhetetlen, hogy a szerver, és a kliens DOM-struktúrája teljesen megegyezzen,
+                    beleértve a whitespace-eket, és a kommenteket is</li>
+                <li>Az eltérések hibákhoz vezethetnek
+                    <ul>
+                        <li>NG0500: Hydration Node Mismatch
+                            <ul>
+                                <li>Eltérést észlel a szerver és a kliens DOM-fája között (gyakran innerHTML, vagy
+                                    outerHTML használata okozza)</li>
+                                <pre>
+    <b>// contact.component.html</b>
+
+    &#60;table>
+        &#60;tr>
+            &#60;td>Hello!&#60;/td>
+        &#60;/tr>
+    &#60;/table>
+                                </pre>
+                                <img src="assets/imgs/ssr_hydration_issue_1.png" width="100%">
+                                <br>
+                                <br>
+                                <img src="assets/imgs/ssr_hydration_issue_2.png" width="100%">
+                                <br>
+                                <br>
+                                <li>Ebben a példában csak a HTML szabványnak nem feleltünk meg</li>
+                                <li>A Component dekorátor host objektumában a ngSkipHydration: 'true'-val kiküszöbölhető
+                                </li>
+                            </ul>
+                        </li>
+                        <li>NG0507: HTML content was altered after server-side rendering
+                            <ul>
+                                <li>Jelentkezik, ha a szerver oldali renderelés után a HTML-t módosítottuk</li>
+                                <li><code>Nem sikerült előidézni a hibát</code></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>A tsconfig.app.json és a tsconfig.server.json fájlokban található angularCompilerOptions szekcióban a
+            preserveWhitespaces kulcs értékét érdemes egységesen false-ra állítani
+            <ul>
+                <li>Ha az egyik fájlban true, a másikban false érték szerepel, az Angular nem tudja megfelelően
+                    összehangolni a szerver, és a kliens DOM-struktúráját, ami hidratációs hibához vezethet</li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<div>
+    <h3 #defer data-anchor="defer">@defer</h3>
+    <ul>
+        <li>Angular direktíva</li>
+        <li>A deffered loading segítségével komponensek, direktívák, pipe-ok betöltődését késleltethetjük</li>
+        <li>Csökkenti a kezdeti bundle méretét, ami gyosítja a betöltést</li>
+        <li>A @defer blokkokban található elemek külön JavaScript fájlokba kerülnek, és csak akkor töltődnek be, amikor
+            szükséges</li>
+        <li>Használatával csökkenthető az First Content Paint (az első tartalom oldalon való megjelenítése) ideje, mert
+            csak a legfontosabb dolgokat rendereljük először, a többit utólag</li>
+        <br>
+        <img src="assets/imgs/ssr_defer_chunk.png" width="100%">
+        <pre>
+    <b>// app.component.html</b>
+
+    &#60;ul>
+        &#60;li>
+            &#60;a [routerLink]="['/']">Home&#60;/a>
+        &#60;/li>
+        &#60;li>
+            &#60;a [routerLink]="['/', 'about']">About&#60;/a>
+        &#60;/li>
+        &#60;li>
+            &#60;a [routerLink]="['/', 'contact']">Contact&#60;/a>
+        &#60;/li>
+        &#60;li>
+            &#60;a [routerLink]="['/', 'product', '789']">Product 789&#60;/a>
+        &#60;/li>
+        &#60;br>
+        &#60;br>
+
+        @defer&#123;                                                // defer block syntax
+            &#60;app-large-component>&#60;/app-large-component>
+        } @placeholder(minimum 5000ms) &#123;
+            &#60;div>*** placeholder ***&#60;/div>
+        } @loading(after 1000ms; minimum 5000ms) &#123;             // pontosvessző
+            &#60;div>*** loading ***&#60;/div>
+        } @error&#123;
+            &#60;div>*** error ***&#60;/div>
+        }
+
+        &#60;br>
+        &#60;br>
+        &#60;app-product ngSkipHydration />
+        &#60;/ul>
+        
+        &#60;router-outlet />
+        </pre>
+        <li>A folyamat
+            <ul>
+                <li>Amikor a komponens renderelése megkezdődik, a @placeholder tartalma jelenik meg, és legalább
+                    500ms-ig látható marad</li>
+                <li>Ha a betöltés meghaladja az after paraméterben megadott 100ms-os időtartamot, akkor a @loading
+                    blokk tartalma jelenik meg, és legalább 1 másodpercig jelen van</li>
+                <li>Miután a betöltés befejeződött, a fő tartalom jelenik meg</li>
+            </ul>
+        </li>
+        <li>Tulajdonképpen lazy load-olja a komponenst</li>
+        <li>Lehetőségünk van különféle állapotok kezelésére is
+            <ul>
+                <li>@placeholder
+                    <ul>
+                        <li>A betöltődés előtti időre megadhatjuk, mi jelenjen meg a tartalom helyett</li>
+                        <li>Azonnal betöltődik</li>
+                        <li>Megszabhatjuk azt a minimális időt is, amíg a placeholder jelen van</li>
+                        <li>A minimum 5000ms azt jelenti, hogy legalább ennyi ideig nem tűnik el a placeholder</li>
+                        <li>Nem kötelező, de ajánlott a jobb felhasználói élmény érdekében</li>
+                        <br>
+                        <img src="assets/imgs/ssr_defer_1.png" width="100%">
+                        <br>
+                        <br>
+                    </ul>
+                </li>
+                <li>@loading
+                    <ul>
+                        <li>A betöltés alatt megjelenő tartalom, miután a betöltés elindult, de még nem fejeződött be
+                        </li>
+                        <li>Azonnal betöltődik</li>
+                        <li>Paraméterei
+                            <ol>
+                                <li>minimum
+                                    <ul>
+                                        <li>A loading tartalom megjelenítésének minimális ideje</li>
+                                    </ul>
+                                </li>
+                                <li>after
+                                    <ul>
+                                        <li>A betöltés kezdete után mennyi idővel jelenjen meg a loading tartalom</li>
+                                    </ul>
+                                </li>
+                            </ol>
+                        </li>
+                        <br>
+                        <img src="assets/imgs/ssr_defer_2.png" width="100%">
+                        <br>
+                        <br>
+                    </ul>
+                </li>
+                <li>@error
+                    <ul>
+                        <li>Ha a késleltetett tartalom betöltése sikertelen, ez jelenik meg</li>
+                        <br>
+                        <img src="assets/imgs/ssr_defer_3.png" width="100%">
+                        <br>
+                        <br>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>Trigger
+            <ul>
+                <li>Logikailag 2 fő trigger típus létezik
+                    <ol>
+                        <li>"Specific conditions" (on)
+                            <ul>
+                                <li>"Gyári" triggerek, azaz olyan események, amelyekre az Angular core figyel</li>
+                            </ul>
+                        </li>
+                        <li>"Custom conditions" (when)
+                            <ul>
+                                <li>A when kulcsszóval történik a feltétel megadása</li>
+                                <li>Bármilyen logikai feltételt írhatunk</li>
+                                <pre>
+    @defer when isDataLoaded &#123;
+        &#60;daily-list-component />
+     }
+                                </pre>
+                                <li>Az isDataLoaded egy boolean a komponens class-ban</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <br>
+                    <ul>
+                        <li>A két típus kombinálható
+                            <ul>
+                                <pre>
+    &#60;div #variableForViewport>&#60;/div>
+
+    ...
+
+    @defer when isBooleanVariable on viewport(variableForViewport) prefetch &#123;
+        &#60;app-large-component />
+    } @placeholder &#123;
+        &#60;p>Dashboard betöltése...&#60;/p>
+    }
+                                </pre>
+                                <li>Az &#60;app-large-component /> csak akkor töltődik be, amikor az a isAuthenticated
+                                    értéke true, és az #observeMe elem láthatóvá válik a viewportban
+                                    <ul>
+                                        <li>Előtte csak a placeholder látható</li>
+                                    </ul>
+                                </li>
+                                <li><code>Ezt a gyakorlatban nem sikerült megvalósítani, az isBooleanVariable-nek fixen false értéket adtam, mégis megjelent a komponens</code>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <br>
+            <ol>
+                <li>prefetch
+                    <ul>
+                        <li>A komponens előre betöltődik, mielőtt a felhasználó ténylegesen elérné azt a nézetet</li>
+                        <pre>
+    @defer (prefetch) &#123;
+        &#60;app-component />
+    }
+                        </pre>
+                    </ul>
+                </li>
+                <li>on idle
+                    <ul>
+                        <li>Akkor triggerelődik, amikor a felhasználó inaktív (például nem történik interakció a
+                            képernyőn egy meghatározott időintervallumig)</li>
+                        <pre>
+    @defer (on idle) &#123;
+        &#60;app-component />
+    }
+                        </pre>
+                    </ul>
+                </li>
+                <li>on viewport
+                    <ul>
+                        <li>Figyeli, hogy egy elem látható-e a viewportban</li>
+                        <pre>
+    @defer (on viewport(element)) &#123;
+        &#60;app-component />
+    }
+                        </pre>
+                    </ul>
+                </li>
+                <li>on hover
+                    <ul>
+                        <li>Akkor aktiválódik, amikor az adott elem fölé ér az egér kurzor</li>
+                        <pre>
+    @defer (on hover(element)) &#123;
+        &#60;app-component />
+    }
+                        </pre>
+                    </ul>
+                </li>
+                <li>on interaction
+                    <ul>
+                        <li>Ha felhasználó interakcióba lép az oldallal, mondjuk kattint, vagy görget</li>
+                        <pre>
+    @defer (on interaction) &#123;
+        &#60;app-component />
+    }
+                        </pre>
+                    </ul>
+                </li>
+                <li>on immediate
+                    <ul>
+                        <li>Azonnal aktiválódik, amikor az adott komponens betöltődik</li>
+                        <pre>
+    @defer (on immediate) &#123;
+        &#60;app-component />
+    }
+                        </pre>
+                    </ul>
+                </li>
+                <li>on timer
+                    <ul>
+                        <li>Aktiválódik, amikor egy időzítő elér egy bizonyos időt</li>
+                        <pre>
+    @defer (on timer(5000)) &#123;
+        &#60;app-component />
+    }
+                        </pre>
+                    </ul>
+                </li>
+            </ol>
+        </li>
+    </ul>
+</div>
+
+<div>
+    <h3 #testing data-anchor="testing">Testing</h3>
+    <ul>
+        <pre>
+
+    npm test
+
+    <b>// app.component.html</b>
+
+    &#60;h1>&#123; &#123;title}}&#60;/h1>
+    ...
+    @defer &#123;
+        &#60;app-large-component>&#60;/app-large-component>
+        } @placeholder (minimum 500ms) &#123;
+        &#60;div>*** placeholder ***&#60;/div>
+        } @loading (after 100ms; minimum 1s) &#123;
+        &#60;div>*** loading ***&#60;/div>
+        } @error &#123;
+        &#60;div>*** error ***&#60;/div>
+    }
+    ...
+
+    <b>// app.component.spec.ts</b>
+
+    fdescribe('AppComponent', () => &#123;
+        beforeEach(async () => &#123;
+            await TestBed.configureTestingModule(&#123;
+            deferBlockBehavior: DeferBlockBehavior.Manual,
+            imports: [AppComponent],
+            providers: [
+                &#123;
+                    provide: ActivatedRoute,
+                    useValue: &#123;
+                        params: from([&#123; id: 1 }])
+                    },
+                },
+            ]
+            }).compileComponents();
+        
+            const fixture = TestBed.createComponent(AppComponent);
+            fixture.detectChanges();
+        });
+        
+        it('should create the app', () => &#123;
+            const fixture = TestBed.createComponent(AppComponent);
+            const app = fixture.componentInstance;
+            expect(app).toBeTruthy();
+        });
+        
+        it(`should have the 'angular19' title`, () => &#123;
+            const fixture = TestBed.createComponent(AppComponent);
+            const app = fixture.componentInstance;
+            expect(app.title).toBe('Angular 19');
+        });
+        
+        it('should render title', () => &#123;
+            const fixture = TestBed.createComponent(AppComponent);
+            fixture.detectChanges();
+            const compiled = fixture.nativeElement as HTMLElement;
+            expect(compiled.querySelector('h1')?.textContent).toContain('Angular 19');
+        });
+        
+        it('should render the defer block in different states', async () => &#123;
+            const fixture = TestBed.createComponent(AppComponent);
+            const deferBlockFixtureArray = await (fixture.getDeferBlocks());
+            const deferBlockFixture = deferBlockFixtureArray[0];
+        
+            expect(fixture.nativeElement.innerHTML).toContain('*** placeholder ***');
+        
+            await deferBlockFixture.render(DeferBlockState.Loading);
+            expect(fixture.nativeElement.innerHTML).toContain('*** loading ***');
+        
+            await deferBlockFixture.render(DeferBlockState.Complete);
+            const fixture2 = TestBed.createComponent(LargeComponentComponent);
+            const largeComp = fixture2.componentInstance;
+            expect(largeComp).toBeTruthy();
+        
+            await deferBlockFixture.render(DeferBlockState.Error);
+            expect(fixture.nativeElement.innerHTML).toContain('*** error ***');
+        })
+    });
+        </pre>
+        <li>Elérhető, hogy a @defer ne aktiválódjon automatikusan, hanem manuálisan irányítsuk a viselkedését a teszt
+            során
+            <ul>
+                <li>A DeferBlockBehavior.Manual manuális vezérlést ad a defer blokk viselkedéséhez, tehát mi dönthetjük
+                    el, mikor és hogyan jelenjen meg a blokkok (.Placeholder, .Loading, .Error, .Complete)</li>
+            </ul>
+        </li>
+        <li>Az ActivatedRoute szolgáltatást mockoljuk a tesztben</li>
+        <li>A beforeEach() blokk minden teszt futtatása előtt lefut</li>
+        <li>A DeferBlockState.Placeholder az alapértelmezett, ami előszö megjelenik, így nincs szükség, hogy beállítsuk
+            az állapotot</li>
+        <br>
+        <img src="assets/imgs/ssr_unit_test.png" width="100%">
+        <br>
+    </ul>
+</div>
+
+<div>
+    <h3 #incrementalhydration data-anchor="incrementalhydration">Incremental hydration</h3>
+    <ul>
+        <li>A hidráció továbbfejlesztett változata, ahol Az egész oldal egyszerre hidratálódik, és azonnal "rengeteg"
+            JavaScript fut le</li>
+        <li>A szerver oldali renderelés, és a kliens oldali interaktivitás kombinálásának hatékonyabb módja
+            <ul>
+                <li>Kisebb kiindulási bundle-t kapunk (amit leküld a szerver első körben a browser-nek)
+                    <ul>
+                        <li>Csökkenti az oldal betöltési sebességét</li>
+                        <li>Csökken a First Input Delay (FID)
+                            <ul>
+                                <li>Az az idő, ami eltelik az első felhasználói interakció, és a böngésző válasza között
+                                </li>
+                                <li>A Google Core Web Vitals része</li>
+                                <li>100 ms alatt jónak számíts</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>Hasznos nagyobb, összetett webalkalmazásoknál, ahol a teljes oldal egyszerre történő "hidratálása" nem
+            hatékony</li>
+        <li>Célja, hogy csak azokat a komponenseket hidratáljuk, amelyek ténylegesen szükségesek, és csak akkor, amikor
+            valóban szükség van rájuk
+            <ul>
+                <li>Ahelyett, hogy egyszerre hidratálnánk a teljes applikációt, inkrementáció történik, komponensről
+                    komponensre</li>
+            </ul>
+        </li>
+        <li>Hidratáció során a @defer fő blokkja renderelődik, a placeholderek helyett</li>
+        <li>Előfeltételek
+            <ol>
+                <li>SSR használata</li>
+                <li>Hydratation használata</li>
+            </ol>
+        </li>
+        <li>Engedélyezése
+            <ul>
+                <pre>
+    <b>// app.config.server.ts</b>
+
+    const serverConfig: ApplicationConfig = &#123;
+        providers: [
+            provideServerRendering(),
+            provideServerRouting(serverRoutes),
+            &#123;                                       
+                provide: REQUEST_CONTEXT,
+                useValue: &#123; customContext: 'This is the value' }
+            },
+            provideClientHydration(withIncrementalHydration())    // új elem
+        ],
+    };
+        
+    export const config = mergeApplicationConfig(appConfig, serverConfig);
+                </pre>
+                <li>Az Event Replay ebben az esetben automatikusan aktív
+                    <ul>
+                        <li>a felhasználó által a még nem hidratált komponensre leadott eseményeket (például kattintás,
+                            görgetés) a böngésző eltárolja, majd a komponens hidratációja után újrajátssza őket, mintha
+                            akkor történtek volna meg</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>Működése
+            <ul>
+                <li>Szerver oldalról renderelt HTML azonnal megjelenik a böngészőben</li>
+                <li>A JavaScript csak fokozatosan töltődik le, és komponensenként, vagy blokkonként aktiválódik</li>
+                <li>A hidratációt esemény indítja el, például
+                    <ul>
+                        <li>a komponens láthatóvá válik</li>
+                        <li>a felhasználó click-el</li>
+                        <li>explicit utasítás alapján</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <br>
+    <h5 #triggers data-anchor="triggers">Triggers</h5>
+    <ul>
+        <li>Feltételek, vagy események, amik hatására egy adott komponens hidratálódik</li>
+        <li>Meghatározzák, mikor, és hogyan indul el a komponensek JavaScript általi aktiválása</li>
+        <li>@defer direktíva esetén 3 trigger típust különböztetünk meg
+            <ol>
+                <li>hydrate on
+                    <ul>
+                        <li>Esemény-alapú hidratáció</li>
+                        <br>
+                        <table style="border-collapse: collapse; width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>Trigger</th>
+                                    <th>Leírás</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>hydrate on idle</td>
+                                    <td>Amikor a böngésző tétlen állapotba kerül (idle)</td>
+                                </tr>
+                                <tr>
+                                    <td>hydrate on viewport</td>
+                                    <td>Amikor a deferred tartalom belép a viewportba (láthatóvá válik a képernyőn)</td>
+                                </tr>
+                                <tr>
+                                    <td>hydrate on interaction</td>
+                                    <td>Amikor a felhasználó interakciót kezdeményez (például kattint, vagy scroll)</td>
+                                </tr>
+                                <tr>
+                                    <td>hydrate on hover</td>
+                                    <td>Amikor a felhasználó az adott terület fölé viszi az egeret</td>
+                                </tr>
+                                <tr>
+                                    <td>hydrate on immediate</td>
+                                    <td>Azonnal, amint a nem-deferred tartalom betöltődött</td>
+                                </tr>
+                                <tr>
+                                    <td>hydrate on timer(x)</td>
+                                    <td>Adott idő elteltével történik meg a hidratáció</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br>
+                    </ul>
+                </li>
+                <li>hydrate when
+                    <ul>
+                        <li>Állapot-, vagy logika-alapú hidratáció</li>
+                    </ul>
+                </li>
+                <li>hydrate never
+                    <ul>
+                        <li>Kézi hidratáció</li>
+                        <li>A komponens nem hidratálódik automatikusan, csak akkor, ha kézzel utasítjuk</li>
+                    </ul>
+                </li>
+            </ol>
+        </li>
     </ul>
 </div>

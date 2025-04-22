@@ -124,8 +124,16 @@ export class ExtrasComponent implements OnInit, AfterViewInit, OnDestroy {
     visibilitytracking,
     navigationevent,
     httperrors,
-
-    // todo
+    phpnodeversions,
+    slimphp,
+    laravel,
+    eloquent,
+    vite,
+    innerhtml,
+    outerhtml,
+    fcp,
+    selfclosingsyntax,
+    xss
     `) sections!: QueryList<ElementRef>;
 
   anchorButtons: any[] = [
@@ -233,8 +241,19 @@ export class ExtrasComponent implements OnInit, AfterViewInit, OnDestroy {
     { title: 'Visibility tracking', anchor: 'visibilitytracking', subtitles: [] },
     { title: 'Navigation event', anchor: 'navigationevent', subtitles: [] },
     { title: 'HTTP errors', anchor: 'httperrors', subtitles: [] },
-
-    // { title: 'TODO', anchor: 'todo', subtitles: [] },
+    {
+      title: 'PHP / Node versions', anchor: 'phpnodeversions', subtitles: [
+        { title: 'Slim PHP', anchor: 'slimphp' },
+        { title: 'Laravel', anchor: 'laravel' },
+        { title: 'Eloquent', anchor: 'eloquent' }
+      ]
+    },
+    { title: 'Vite', anchor: 'vite', subtitles: [] },
+    { title: 'innerHTML', anchor: 'innerhtml', subtitles: [] },
+    { title: 'outerHTML', anchor: 'outerhtml', subtitles: [] },
+    { title: 'FCP', anchor: 'fcp', subtitles: [] },
+    { title: 'Self-closing syntax', anchor: 'selfclosingsyntax', subtitles: [] },
+    { title: 'XSS', anchor: 'xss', subtitles: [] }
   ];
 
   elems: string[] = [];

@@ -59,7 +59,6 @@
             <li>A vanilla Javascript / jQuery kódok elég kezelhetetlenné váltak</li>
             <li>A vanilla Javascript / jQuery kódokat nehéz tesztelni</li>
             <li>Beépített funkcionalitásokkal rendelkezik, amiket nulláról kellene megírnunk</li>
-            <li></li>
           </ul>
         </li>
       </ul>
@@ -415,7 +414,6 @@
     <li>gitignore
       <ul>
         <li>Kizárásokat lehet meghatározni (fájlok, mappák), amik nem kerülnek fel a Git repository-ba</li>
-        <li></li>
       </ul>
     </li>
     <li>angular.json
@@ -541,7 +539,6 @@
         <li>Az app komponensnek lehetnek gyerekei, így az Angular applikációk tulajdonképpen fa struktúrájúak</li>
       </ul>
     </li>
-    <li></li>
     <li>Alapértelmezetten az index.html-ben találjuk az app-root tag-et, ami az app komponenst rendereli</li>
     <li>Az app.module.ts nem része az app komponensnek</li>
     <li>Komponens létrehozásakor 4 fájl generálódik
@@ -3141,7 +3138,6 @@
     })
   }
     </pre>
-    <li></li>
   </ul>
 </div>
 
@@ -3517,7 +3513,6 @@
             <li>Amikor HTTP kérés történik</li>
           </ol>
         </li>
-        <li></li>
         <div class="rounded-border">
           <div>
             // Parent
@@ -3751,7 +3746,6 @@
           okból kifolyólag nem érzékel változást (és nem hívódik meg az OnChange), vagy esetleg csak szeretnénk minden
           egyes user interakciókor valamit ellenőrizni
         </li>
-        <li></li>
         <br>
         <input #oninitinput3>
         <button class="btn btn-secondary" (click)="addElemToDoCheckObject(oninitinput3.value)">
@@ -5033,7 +5027,6 @@
     <li>
       <h5 #eventbindingvshostlistener data-anchor="eventbindingvshostlistener">Event binding vs HostListener</h5>
       <ul>
-        <li></li>
         <app-child [shownData]="'listener'"></app-child>
         <br>
         <pre>
@@ -5047,7 +5040,6 @@
         <li>Ahányszor megtörténik a focus az input mezőn, le fog futni a 'onTextInputFocus' függvény</li>
         <li>Amennyiben a direktívából szeretnénk kezelni a focus event-et, nem használhatunk event binding-ot</li>
         <li>Oldjuk meg azt, hogy a focus event-re a direktívánkban futtassunk valamilyen logikát</li>
-        <li></li>
       </ul>
     </li>
   </ul>
@@ -5389,7 +5381,6 @@
             <li>A subscription logic-nak semmi köze a UI-hoz (business logic)</li>
           </ul>
         </li>
-        <li></li>
       </ul>
     </li>
     <li>Egy különálló, centralizált helyre érdemes elhelyeznünk a logikát, amit service-szel tudunk elérni</li>
@@ -6170,7 +6161,6 @@
             <li>Nem blokkolja a fő szálat</li>
             <li>Amennyiben HTTP kérést intézünk, az meg tud történni a háttérben, majd a következő sor futtatásra kerül
               a fő szálon</li>
-            <li></li>
           </ul>
         </li>
         <li>Az aszinkron kód egy bizonyos idő után adatot nyújt
@@ -8098,7 +8088,6 @@
           </li>
         </ul>
       </li>
-      <li></li>
       <app-subject [tempSwitcher]="'asyncSubject'"></app-subject>
       <pre>
   <b>// subject.html</b>
@@ -9964,7 +9953,6 @@
         <li>Attribute binding (elvileg!)</li>
         <li>A fragment-nek azt az 'id' értéket adjuk meg, ahová az oldalon navigálni/ugrani szeretnénk</li>
         <li>Mivel az URL-ben helyezzük el a fragmentet, így bekerül az ActivatedRoute-ba</li>
-        <li></li>
         <pre>
   this._activeRouter.fragment.subscribe(id => &#123;
     this.jumpToSection(id ?? '');
@@ -10660,7 +10648,6 @@
       return CanActivate();
   }
             </pre>
-            <li></li>
           </ul>
         </li>
       </ol>
@@ -11259,7 +11246,6 @@
   Result: 1993-08-12
         </pre>
         <li>Amikor pipe-nak paramétert akarunk átadni, kettősponttal tesszük</li>
-        <li></li>
       </ul>
     </li>
     <li>percent pipe
@@ -11687,11 +11673,7 @@
         <li>Amennyiben alkalmazásszerte szeretnénk használni, létrehozhatunk egy service-t</li>
       </ul>
     </li>
-    <li>A student service-ben fogjuk megvalósítani a filter-t
-      <ul>
-        <li></li>
-      </ul>
-    </li>
+    <li>A student service-ben fogjuk megvalósítani a filter-t</li>
     <pre>
   <b>// piping.component.html</b>
   &#60;div class="filter-dropdown">
@@ -12234,7 +12216,6 @@ showConfirmDelete(user: User) &#123;
                 <li>Angularban manuálisan előállítható</li>
               </ul>
             </li>
-            <li></li>
           </ul>
         </li>
         <li>Request body
@@ -12936,7 +12917,6 @@ showConfirmDelete(user: User) &#123;
         </li>
       </ul>
     </li>
-    <li></li>
   </ul>
   <br>
   <h5 #httpclientput data-anchor="httpclientput">PUT</h5>
@@ -13012,8 +12992,6 @@ showConfirmDelete(user: User) &#123;
 
   updateTask(form: Task) &#123;
     
-    TODO
-
     this.isCollapsed = true;
     this.isEdit = false;
   }
@@ -14112,7 +14090,6 @@ showConfirmDelete(user: User) &#123;
     </li>
     <li>Hozzunk létre még egy Interceptort, hogy lássuk, miképp működnek, ha többet használunk
       <ul>
-        <li></li>
         <pre>
   @NgModule(&#123;
     ...
@@ -15229,7 +15206,6 @@ showConfirmDelete(user: User) &#123;
         <li>Az Interceptor hatására az api service-ben nincs szükség sem a take(1), sem az exhhaustMap operátor
           használatára, mert az Interceptor gondoskodik
           <ul>
-            <li></li>
             <li>Miután az interceptor elvégezte a feladatát, a getTasks() metódusban az HttpClient.get() hívása már
               tartalmazza a megfelelő tokent</li>
             <li>Az api szervizben lévő Observable lánc kizárólag a válasz feldolgozására koncentrál (pl. map,
@@ -20073,7 +20049,6 @@ showConfirmDelete(user: User) &#123;
     <li>Amikor a whenStable() Promise teljesül, akkor biztosak lehetünk benne, hogy az alkalmazás stabil állapotban van,
       és az UI változások vagy navigációk végbementek</li>
     <li>A default path-re való navigálás tesztje így lefut hiba nélkül</li>
-    <li></li>
     <pre>
   <b>// testing-routing.module.spec.ts</b>
   fdescribe('TestsRouting', () => &#123;
@@ -20319,7 +20294,6 @@ showConfirmDelete(user: User) &#123;
           érdemes utólag véglegesíteni</li>
       </ul>
     </li>
-    <li></li>
   </ul>
   <br>
   <h5 #jestutilities data-anchor="jestutilities">Jest utilities</h5>

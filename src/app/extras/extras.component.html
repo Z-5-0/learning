@@ -3113,7 +3113,6 @@
     <li>length()
       <ul>
         <li>Egy string vagy tömb hosszát adja vissza</li>
-        <li></li>
         <pre>
   let arr = [1, 2, 3];
   console.log(arr.length);
@@ -3301,7 +3300,6 @@
     <li>toLowerCase()
       <ul>
         <li>A string összes betűjét kisbetűssé alakítja</li>
-        <li></li>
         <pre>
   let str = "HELLO";
   console.log(str.toUpperCase());
@@ -4826,6 +4824,11 @@
           renderelési módok alkalmazását, növelve a rugalmasságot és a teljesítményt</li>
         <li>Fejlesztették a Hot Module Replacement (HMR) támogatást, gyorsabbá téve a fejlesztési ciklust és javítva a
           fejlesztői élményt</li>
+        <li>Minden komponens alapértelmezetten standalone komponens
+          <ul>
+            <li>Ezt a standalone: false meta adattal tudjuk tiltani</li>
+          </ul>
+        </li>
       </ul>
     </li>
   </ul>
@@ -5102,7 +5105,7 @@
 </div>
 
 <div>
-  <h3 #cicd data-anchor="cicd">TODO</h3>
+  <h3 #cicd data-anchor="cicd">CI/CD pipeline</h3>
   <ul>
     <li>Fejlesztési és üzemeltetési gyakorlatok sorozata, amelyeket a szoftverfejlesztésben használnak annak érdekében,
       hogy a kód folyamatosan integrálódjon, tesztelődjön, és gyorsan a felhasználók számára elérhetővé váljon</li>
@@ -7376,6 +7379,498 @@
         <li>504 Gateway Timeout: A szerver nem kapott időben választ egy másik szervertől, amely közvetítő szerepet
           látott el</li>
         <li>505 HTTP Version Not Supported: A kérésben szereplő HTTP verziót a szerver nem támogatja</li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #phpnodeversions data-anchor="phpnodeversions">PHP / Node versions</h3>
+  <ul>
+    <li>Node.js
+      <ul>
+        <li>Angular CLI, buildelés, fejlesztői szerver, csomagkezelés mind-mind Node.js-t használ</li>
+        <li>SSR esetében a szerver is Node.js környezetben fut (server.ts)</li>
+        <pre>
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+  source ~/.bashrc  # vagy ~/.zshrc
+
+  nvm install 20
+  nvm install 18
+
+  nvm use 18
+  nvm alias default 18
+
+  node -v
+        </pre>
+      </ul>
+    </li>
+    <li>PHP
+      <ul>
+        <li>Ha az Angular app nem csupán statikus, hanem adatokat kér egy szervertől (API), akkor kell backend</li>
+        <li>Ha a backend PHP, szükséges a PHP telepítése, ha nem, hanem mondjuk Node.js, vagy Firebase, akkor nincs
+          szükség rá</li>
+        <li>A futtatásához szerverre van szükség (Apache / Nginx / XAMPP / MAMP)
+          <ul>
+            <li>Vagy lehet használni beépített szervert
+              <ul>
+                <pre>
+  php -S localhost:8000
+                </pre>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>Illetve webhosting környezetben (például cPanel), ami csak PHP-t támogat</li>
+
+        <pre>
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+  brew install php@7.4
+  brew install php@8.2
+
+  brew unlink php
+  brew link php@8.2
+
+  php -v
+        </pre>
+        <li>A 7.4 biztonsági támogatása 2022 végén véget ért</li>
+      </ul>
+    </li>
+  </ul>
+  <br>
+  <h5 #slimphp data-anchor="slimphp">Slim PHP</h5>
+  <ul>
+    <li>PHP-s backend keretrendszer</li>
+    <li>Teljes értékű framework</li>
+    <li>MVC (Model-View-Controller) struktúra</li>
+    <li>Ideális nagyobb projekteknél</li>
+    <li>A Laravel + Angular együtt népszerű full-stack kombináció</li>
+  </ul>
+  <br>
+  <h5 #laravel data-anchor="laravel">Laravel</h5>
+  <ul>
+    <li>Szintén PHP-s backend keretrendszer</li>
+    <li>Egyszerű, minimalista framework</li>
+    <li>Csak a legszükségesebb komponenseket tartalmazza (például routing, middleware, stb...)</li>
+    <li>Ideális kis appokhoz</li>
+  </ul>
+  <br>
+  <h5 #eloquent data-anchor="eloquent">Eloquent</h5>
+  <ul>
+    <li>A Laravel beépített ORM-je (Object-Relational Mapping) / része, de elvileg más projektekben is használható
+      <ul>
+        <li>ORM
+          <ul>
+            <li>Egy programozási technika, amely lehetővé teszi, hogy objektumorientált nyelvben (mint a PHP,
+              JavaScript, Java, stb...) adatbázis-táblákkal dolgozzunk úgy, mintha objektumok lennének</li>
+            <li>Az adatbázis táblák (például users, posts) osztályokká alakulnak (például User, Post)</li>
+            <li>A rekordok objektumokká alakulnak (például $user->name)</li>
+            <li>Az SQL lekérdezések metódushívásokká alakulnak</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li>Lehetővé teszi, hogy PHP osztályokkal (modellekkel) kezelj adatbázistáblákat</li>
+    <li>SQL helyett objektumorientált módszerekkel tudunk lekérdezni, beszúrni, frissíteni</li>
+    <pre>
+      $user = User::find(1); // lekérünk egy felhasználót ID alapján
+      
+      $users = User::all(); // lekérjük az összes felhasználót
+
+      $user = new User;  // létrehozunk, és elmentünk egy új felhasználót
+      $user->name = 'John';
+      $user->email = 'john@example.com';
+      $user->save();
+    </pre>
+  </ul>
+</div>
+
+<div>
+  <h3 #vite data-anchor="vite">Vite</h3>
+  <ul>
+    <li>Az Angular 17+ támogatja a Vite-ot, mint fejlesztői szervert az alapértelmezett Webpack helyett
+      <ul>
+        <li>Eredetileg a React / Vue / VanillaJS projektekhez készült</li>
+      </ul>
+    </li>
+    <li>Gyorsabb hot-reloadot, és build időt jelent
+      <ul>
+        <li>Különösen SSR, és SSG terén gyorsít</li>
+      </ul>
+    </li>
+    <li>Alapból az Angular CLI nem használ Vite-ot, hanem a Webpackra épül
+      <ul>
+        <li>Vite használatával az Angular-CLI-t sem használjuk</li>
+        <li>Nincs ng build, ng serve, ng generate, stb... parancs</li>
+      </ul>
+    </li>
+    <br>
+    <table style="border-collapse: collapse; width: 100%;">
+      <thead>
+        <tr>
+          <th>Előny</th>
+          <th>Leírás</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Villámgyors dev szerver</td>
+          <td>On-demand modulbetöltés (ESM), nincs teljes újrafordítás</td>
+        </tr>
+        <tr>
+          <td>HMR (Hot Module Replacement)</td>
+          <td>Instant frissítés komponens módosítás után</td>
+        </tr>
+        <tr>
+          <td>Kis bundle méret</td>
+          <td>Tree-shaking és optimalizálás Rollup segítségével</td>
+        </tr>
+        <tr>
+          <td>Könnyű konfigurálhatóság</td>
+          <td>vite.config.ts által könnyen szabályozható viselkedés</td>
+        </tr>
+        <tr>
+          <td>Plugin rendszer</td>
+          <td>Vite pluginokkal egyszerűen bővíthető</td>
+        </tr>
+        <tr>
+          <td>Gyorsabb tesztelés</td>
+          <td>Vitest támogatás, gyors tesztfuttatás, snapshot lehetőségek</td>
+        </tr>
+        <tr>
+          <td>SSR támogatás</td>
+          <td>Egyszerűbb szerveroldali renderelés (bár Angularban még külön setup kell)</td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <li>Új projekt lépései
+      <ul>
+        <pre>
+  npm create vite@latest angular-vite
+        </pre>
+        <img src="assets/imgs/angular_vite_install.png" width="100%">
+        <br>
+        <li>Ezt követően még telepíthetjük a Tailwind CSS framework-öt, és eldönthetjük, hogy full-stack, blog, vagy
+          minimal applikációt
+          hozunk létre</li>
+        <pre>
+  npm install
+
+  <b>// minimalista app</b>
+
+  angular-vite-app/
+  │
+  ├── .vscode/                      // VS Code specifikus konfigurációs fájlok
+  │   ├── extensions.json
+  │   ├── launch.json
+  │   └── tasks.json
+  │
+  ├── node_modules/                 // összes telepített npm csomag
+  │   └── ...
+  │
+  ├── public/                       // nyilvános (statikus) fájlok
+  │   ├── .gitkeep
+  │   └── favicon.ico
+  │
+  ├── src/                          // forráskód
+  │   ├── app/                      // applikáció
+  │   │   ├── pages/                // komponensek / oldalak
+  │   │   │     └── index.page.ag   // komponensek / oldalak
+  │   │   │
+  │   │   ├── app-root.ag           // az alkalmazás fő komponense
+  │   │   ├── app.config.server.ts  // szerveroldali konfigurációs fájl (SSR)
+  │   │   └── app.config.ts         // app konfigurációs fájl
+  │   │        
+  │   ├── analog.env.d.ts
+  │   ├── main.server.ts
+  │   ├── main.ts
+  │   ├── styles.css
+  │   └── vite-env.d.ts             // a Vite környezet típusdefiníciója
+  │
+  ├── editorconfig
+  ├── .gitignore
+  ├── angular.json
+  ├── index.html
+  ├── package-lock.json
+  ├── package.json
+  ├── postcss.config.cjs              // PostCSS konfiguráció
+  ├── README.md
+  ├── tailwind.config.html            // Tailwind konfiguráció
+  ├── tsconfig.app.json
+  ├── tsconfig.json
+  └── vite.config.ts                  // a Vite konfigurációs fájlja
+
+
+  npm run dev
+        </pre>
+      </ul>
+    </li>
+    <br>
+    <img src="assets/imgs/angular_vite_improvements.png" width="100%">
+    <br>
+    <br>
+    <li>Az Analog egy Vite-alapú (full-stack) keretrendszer Angularhoz
+      <ul>
+        <li>Beépített SSR, routing, Vitest, és nem használ Angular CLI-t</li>
+      </ul>
+    </li>
+    <li>Teszteléshez használhatjuk alternatívaképp a Vitest-et
+      <ul>
+        <li>Gyors, modern</li>
+        <li>A Jest API-ra épít, amely a Karma + Jasmine kombinációjától eltérő, de hasonló tesztelési megközelítést
+          biztosít</li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #innerhtml data-anchor="innerhtml">innerHTML</h3>
+  <ul>
+    <li>Egy DOM elem belső HTML-jét reprezentálja</li>
+    <pre>
+  &#60;div id="greetings">
+    &#60;span>Hi there!&#60;/span>
+  &#60;/div>
+  
+  &#60;script>
+    const div = document.getElementById('greetings');
+    console.log(div.innerHTML); // &#60;span>Hi there!&#60;/span>
+    div.innerHTML = '&#60;b>Good bye!&#60;/b>'; //  // lecseréljük a belső HTML-t
+  &#60;/script>
+    </pre>
+    <li>Használata biztonsági rést nyithat, ha dinamikus, felhasználótól származó adatot írunk be
+      <ul>
+        <li>Soha nem szabad validálás/szűrés nélkül megtenni</li>
+      </ul>
+    </li>
+    <li>Angular esetében a template-ben használható
+      <ul>
+        <pre>
+  &#60;div [innerHTML]="htmlContent">&#60;/div>
+
+  htmlContent = this.sanitizer.bypassSecurityTrustHtml('&#60;span>Content&#60;/span>');
+        </pre>
+        <li>Alapesetben az Angular sanitize-olja az értéket, így például a &#60;script> tag automatikusan eltávolításra
+          kerül
+          <ul>
+            <li>Security bypass esetében nincs sanitize</li>
+          </ul>
+        </li>
+        <li>Bevállt gyakorlat a bypassSecurity használatára a pipe alkalmazása
+          <ul>
+            <pre>
+  @Pipe(&#123;
+    name: 'safeHtml'
+  })
+  export class SafeHtmlPipe implements PipeTransform &#123;
+    constructor(private sanitized: DomSanitizer) &#123; }
+    transform(value) &#123;
+      return this.sanitized.bypassSecurityTrustHtml(value);
+    }
+  }
+
+  &#60;div [innerHTML]="htmlContent | safeHtml">&#60;/div>
+            </pre>
+          </ul>
+        </li>
+        <li>A bypassSecurityTrustHtml alkalmazásával az Angular nem "védi meg" a DOM-ot</li>
+        <br>
+        <li>DomSanitizer függvények
+          <ol>
+            <li>bypassSecurityTrustHtml() - HTML tartalom</li>
+            <li>bypassSecurityTrustStyle() - CSS stílus</li>
+            <li>bypassSecurityTrustScript() - JS kód</li>
+            <li>bypassSecurityTrustUrl() - URL-ek</li>
+            <li>bypassSecurityTrustResourceUrl() - iframe, object src, stb...</li>
+          </ol>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #outerhtml data-anchor="outerhtml">outerHTML</h3>
+  <ul>
+    <li>Az egész DOM elem HTML-jét adja vissza, beleértve magát az elemet is</li>
+    <li>Lecserélhető az egész node, nemcsak a belseje</li>
+    <pre>
+  &#60;div id="templateVariable">
+    outer&#60;b>HTML&#60;/b>
+  &#60;/div>
+  
+  &#60;script>
+    const div = document.getElementById('templateVariable');
+    console.log(div.outerHTML);
+    div.outerHTML = '&#60;section>Section&#60;/section>';  // az egész div lecserélődik
+  &#60;/script>
+    </pre>
+    <li>Használata biztonsági rést nyithat, ha dinamikus, felhasználótól származó adatot írunk be
+      <ul>
+        <li>Soha nem szabad validálás/szűrés nélkül megtenni</li>
+      </ul>
+    </li>
+    <li>Az Angularban nincs direkt [outerHTML] binding
+      <ul>
+        <li>A komponens class-ban manipulálató a DOM, de nem ajánlott, helyette ott van az *ngIf, vagy az *ngSwitch
+          stuktúrális direktíva</li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #fcp data-anchor="fcp">FCP</h3>
+  <ul>
+    <li>First Contentful Paint</li>
+    <li>azt az időpontot jelenti, amikor a böngésző először jelenít meg bármilyen tartalmi elemet (szöveget, képet,
+      SVG-t, stb...) a képernyőn</li>
+    <li>Fontos web performance mérőszám a Core Web Vitals metrikák között
+      <ul>
+        <li>Core Web Vitals
+          <ul>
+            <li>A Google által meghatározott webes teljesítménymutatók összessége, amelyek a felhasználói élményt mérik
+            </li>
+            <li>Ezeket figyeli például a Google PageSpeed Insights, a Lighthouse, és a Chrome böngésző is</li>
+            <li>3 fő metrikát foglal magában
+              <br>
+              <table style="border-collapse: collapse; width: 100%;">
+                <thead>
+                  <tr>
+                    <th>Metrika</th>
+                    <th>Jelentés</th>
+                    <th>Jó érték</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>LCP (Largest Contentful Paint)</td>
+                    <td>A legnagyobb látható tartalom betöltésének ideje</td>
+                    <td>&lt; 2.5 másodperc</td>
+                  </tr>
+                  <tr>
+                    <td>FID (First Input Delay)</td>
+                    <td>Első interakcióra adott válaszidő</td>
+                    <td>&lt; 100 ms</td>
+                  </tr>
+                  <tr>
+                    <td>CLS (Cumulative Layout Shift)</td>
+                    <td>Váratlan elmozdulások mértéke az oldalon</td>
+                    <td>&lt; 0.1</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <br>
+            <li>Az Angular SSR (@defer) segíti a LCP csökkentését azáltal, hogy gyorsabban megjelenik a fő tartalom</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li>Ha gyors az FCP, a felhasználó azt érzi, hogy az oldal gyorsan reagál</li>
+  </ul>
+</div>
+
+<div>
+  <h3 #selfclosingsyntax data-anchor="selfclosingsyntax">Self-closing syntax</h3>
+  <ul>
+    <li>A forma a standalone komponensek, és az Angular enhanced template parser-ének megjelenésével vált hivatalosan
+      támogatottá</li>
+    <li>Angular 17-től elérhető</li>
+    <pre>
+  &#60;app-test-component /> // self-closing
+
+  =====
+
+  &#60;app-heavy-component>&#60;/app-heavy-component>
+    </pre>
+    <li>Kényelmi újítás, ami az alábbi feltételekkel használható
+      <ol>
+        <li>A komponens standalone</li>
+        <li>Nem használunk content projection-t (&#60;ng-content>)</li>
+      </ol>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #xss data-anchor="xss">XSS</h3>
+  <ul>
+    <li>Cross-Site Scripting</li>
+    <li>biztonsági hiba, amely lehetővé teszi, hogy támadók káros JavaScript kódot injektáljanak egy weboldalba, amit
+      más felhasználók böngészője hajt végre</li>
+    <li>Űrlapokba, URL paraméterekbe injektálható</li>
+    <li>A támadók érzékeny adatokhoz férhetnek hozzá</li>
+    <br>
+    <li>Típusai
+      <ol>
+        <li>Reflected XSS
+          <ul>
+            <li>A támadó egy manipulált URL-t küld a felhasználónak, amely tartalmazza a káros JavaScript kódot</li>
+            <li>Ha a felhasználó rákattint, az oldal a kódot visszatükrözi, és a böngésző végrehajtja azt</li>
+            <li>Ez jellemzően egy keresési vagy űrlap beküldésével történik</li>
+          </ul>
+        </li>
+        <li>Stored / Persistent XSS
+          <ul>
+            <li>A támadó egy webalkalmazásba szúr be kártékony kódot, például egy hozzászólás vagy üzenet formájában
+            </li>
+            <li>A kódot a szerver tárolja, és a későbbi felhasználók böngészője végrehajtja, amikor megjeleníti a
+              szkriptet</li>
+          </ul>
+        </li>
+        <li>DOM-based XSS
+          <ul>
+            <li>Akkor fordul elő, amikor a támadó a JavaScript kódot manipulálja közvetlenül a böngészőben, anélkül hogy
+              a szervernek közvetlenül módosítania kellene a választ</li>
+            <li>A DOM (Document Object Model) manipulálásával történik, és akkor aktiválódik, amikor a felhasználó egy
+              linkre vagy gombra kattint</li>
+          </ul>
+        </li>
+      </ol>
+    </li>
+    <br>
+    <li>Megelőzése
+      <ul>
+        <li>Minden inputot érdemes validálni
+          <ul>
+            <li>Ha például számot várunk, ne engedjük meg a betűket, és egyéb speciális karaktereket</li>
+          </ul>
+        </li>
+        <li>Alkalmazzunk HTML karakterkódolást, mert a böngésző a &#60;, >, &, ', " karaktereket speciális módon
+          értelmezi
+          <ul>
+            <li>&#60; helyett &lt ;</li>
+            <li>> helyett &gt ;</li>
+            <li>& helyett &amp ;</li>
+            <li>' helyett &apos ;</li>
+            <li>" helyett &quot ;</li>
+          </ul>
+        </li>
+        <li>Content Security Policy (CSP)
+          <ul>
+            <li>Biztonsági intézkedés, amely korlátozza, hogy milyen forrásokból tölthetők be szkriptek és egyéb
+              tartalmak</li>
+          </ul>
+        </li>
+        <li>HTTPOnly cookie használata
+          <ul>
+            <li>Megakadályozza, hogy a JavaScript hozzáférjen a cookie-khoz</li>
+            <li>Ha valaki XSS-t hajt végre, nem tudja ellopni a cookie-t, mivel azt a böngésző nem engedi JavaScript-ből
+              elérni</li>
+          </ul>
+        </li>
+        <li>Secure cookie
+          <ul>
+            <li>Biztosítja, hogy a cookie-k csak HTTPS kapcsolaton keresztül kerüljenek átadásra, így nem lesznek
+              elérhetők egy nem titkosított (HTTP) kapcsolaton</li>
+          </ul>
+        </li>
+        <li>Például az Angular, és a React gyakran automatikusan megakadályozza az XSS támadásokat azáltal, hogy az
+          adatokat megfelelően kódolják</li>
       </ul>
     </li>
   </ul>

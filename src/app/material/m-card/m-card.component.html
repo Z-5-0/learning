@@ -91,7 +91,7 @@
             <mat-card-header>
                 <mat-card-title-group>
                     <mat-card-title>Shiba Inu</mat-card-title>
-                    <mat-card-subtitle>Small</mat-card-subtitle>
+                    <mat-card-subtitle>{{ cardImgSize }}</mat-card-subtitle>
                     <img *ngIf="cardImgSize === 'small'" mat-card-sm-image
                         src="https://picsum.photos/600/300?grayscale">
                     <img *ngIf="cardImgSize === 'medium'" mat-card-md-image

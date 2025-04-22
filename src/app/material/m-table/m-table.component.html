@@ -948,6 +948,19 @@
         moveItemInArray(this.tableAllColumns, event.previousIndex, event.currentIndex);
     }
         </pre>
+        <li>Amennyiben azt szeretnénk, hogy a fejlécek sorrendjének változtatásával a táblázat adatai is együtt
+            mozogjanak, némi változtatásra van szükség
+            <ul>
+                <pre>
+    <tr mat-row *matRowDef="let row; columns: ['position', 'title', 'year', 'genre', 'rating'];"></tr>
+
+    ↓↓↓↓↓
+
+    <tr mat-row *matRowDef="let row; columns: tableAllColumns;"></tr>
+                </pre>
+                <li>Jelenleg fixen be van állítva, és nem veszi figyelembe a tableAllColumns változó értékét</li>
+            </ul>
+        </li>
     </ul>
 
     <br>
@@ -1202,12 +1215,5 @@
             &#60;/table>
         </pre>
         <li>Az első oszlop, a header, és a footer sticky</li>
-    </ul>
-
-    <br>
-    <h6>TODO</h6>
-    <ul class="element">
-        <pre></pre>
-        <li></li>
     </ul>
 </form>

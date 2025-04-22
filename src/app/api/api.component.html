@@ -69,14 +69,14 @@
         <li>Skalázható és könnyen implementálható</li>
         <li>Webes, mobilalkalmazások fejlesztésénél, CRUD (Create, Read, Update, Delete) elvű alkalmazásoknál</li>
         <pre>
-            GET https://api.example.com/users
+    GET https://api.example.com/users
 
-            ↓↓↓↓↓
+    ↓↓↓↓↓
 
-            [
-                &#123; "id": 1, "name": "Alice", "email": "alice@example.com" },
-                &#123; "id": 2, "name": "Bob", "email": "bob@example.com" }
-            ]
+    [
+        &#123; "id": 1, "name": "Alice", "email": "alice@example.com" },
+        &#123; "id": 2, "name": "Bob", "email": "bob@example.com" }
+    ]
         </pre>
         <li>Tekinthetünk úgy rá, mint egy web applikációra
             <ul>
@@ -91,7 +91,7 @@
                         <li>Ide küldjük a request-et</li>
                         <li>API esetében API endpointnak is nevezzük</li>
                         <pre>
-                    https://domain.com/api/users/id
+    https://domain.com/api/users/id
                   </pre>
                         <li>Nem HTML-t fog visszaadni, hanem - leggyakrabban - JSON-t</li>
                         <li>Ahhoz, hogy kérést küldjünk, ismernünk kell az API endpoint URL-jét</li>
@@ -241,13 +241,13 @@
         <li>Komplex üzleti folyamatoknál használatos, vagy ahol nagyobb biztonság szükséges</li>
         <li>Nagyon biztonságos, ezért banki rendszerekben népszerű</li>
         <pre>
-            &#60;soap:Envelope>
-                &#60;soap:Body>
-                    &#60;GetUser>
-                        &#60;UserId>123&#60;/UserId>
-                    &#60;/GetUser>
-                &#60;/soap:Body>
-            &#60;/soap:Envelope>
+    &#60;soap:Envelope>
+        &#60;soap:Body>
+            &#60;GetUser>
+                &#60;UserId>123&#60;/UserId>
+            &#60;/GetUser>
+        &#60;/soap:Body>
+    &#60;/soap:Envelope>
         </pre>
     </ul>
 </div>
@@ -265,7 +265,7 @@
             </ul>
         </li>
         <pre>
-            ws://example.com/socket
+    ws://example.com/socket
         </pre>
         <li>A WebSocket kapcsolat biztosítja a kétirányú, folyamatos kommunikációt</li>
         <pre>
@@ -296,12 +296,12 @@
         <li>Csökkenti a szükségtelen adatlekérdezést</li>
         <li>Mobilalkalmazásoknál használatos, ahol minimalizálni kell a hálózati terhelést</li>
         <pre>
-            query &#123;
-                user(id: 123) &#123;
-                  name
-                  email
-                }
-              }              
+    query &#123;
+        user(id: 123) &#123;
+            name
+            email
+        }
+    }              
         </pre>
     </ul>
 </div>
