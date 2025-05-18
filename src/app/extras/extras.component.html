@@ -1159,8 +1159,8 @@
       <tbody>
         <tr>
           <td>Jelentés</td>
-          <td>Az érték <strong>módosítható</strong></td>
-          <td>Az érték <strong>nem módosítható</strong>, csak új hozható létre</td>
+          <td>Az érték módosítható</td>
+          <td>Az érték nem módosítható, csak új hozható létre</td>
         </tr>
         <tr>
           <td>Módosítás</td>
@@ -4841,12 +4841,12 @@
       <ul>
         <li>Singleton pattern
           <ul>
-            <li>Biztosítja, hogy egy adott osztályból csak egy példány létezzen a program futása során&#123;</li>
-            <li>Globális hozzáférést biztosít az osztály példányához&#123;</li>
-            <li>Általában statikus változókat használ a példány tárolására&#123;</li>
-            <li>Elkerüli a példányok többszörös létrehozását, ami memóriát takarít meg&#123;</li>
-            <li>Hasznos, ha a rendszerben egy központi, megosztott erőforrásra van szükség (pl&#123; konfigurációk,
-              adatbázis-kapcsolatok)&#123;</li>
+            <li>Biztosítja, hogy egy adott osztályból csak egy példány létezzen a program futása során</li>
+            <li>Globális hozzáférést biztosít az osztály példányához</li>
+            <li>Általában statikus változókat használ a példány tárolására</li>
+            <li>Elkerüli a példányok többszörös létrehozását, ami memóriát takarít meg</li>
+            <li>Hasznos, ha a rendszerben egy központi, megosztott erőforrásra van szükség (például konfigurációk,
+              adatbázis-kapcsolatok)</li>
             <br>
             <li>Angularban gyakran alkalmazzuk a szolgáltatások (services) esetében, hogy egyetlen
               példányban tároljuk őket, és ezt a példányt az egész alkalmazásban használjuk</li>
@@ -7873,6 +7873,365 @@
           adatokat megfelelően kódolják</li>
       </ul>
     </li>
+  </ul>
+</div>
+
+<div>
+  <h3 #websocketandmqtt data-anchor="websocketandmqtt">Websocket & MQTT</h3>
+  <ul>
+    <li>Websocket
+      <ul>
+        <li>Kommunikációs protokoll</li>
+        <li>Kétirányú, állandó kapcsolatot tesz lehetővé a kliens (például böngésző), és a szerver között</li>
+        <li>Valós idejű alkalmazásokhoz használatos, ahol gyors, folyamatos adatáramlásra van szükség
+          <ul>
+            <li>Chat</li>
+            <li>Élő értesítések</li>
+            <li>Stb...</li>
+          </ul>
+        </li>
+        <li>A kliens létrehozza egy kapcsolatot a szerverrel, ami nyitva marad, így nem kell újra, és újra HTTP kérést
+          küldeni</li>
+        <li>A szerver bármikor küldhet adatot a kliensnek</li>
+        <br>
+        <div class="input-group mb-3">
+          <input #websocketinput type="text" class="form-control">
+          <button class="btn btn-outline-secondary" type="button"
+            (click)="sendWebsocketMessage(websocketinput.value); websocketinput.value = ''">
+            Send
+          </button>
+        </div>
+        <div style="display: block; max-height: 100px; overflow: auto;">
+          <ul>
+            <li *ngFor="let message of websocketMessages">
+              {{ message }}
+            </li>
+          </ul>
+        </div>
+        <br>
+        <img src="assets/imgs/websocket_2.png" width="100%">
+        <br>
+        <pre>
+  <b>// websocket.service.ts</b>
+
+  @Injectable(&#123;
+    providedIn: 'root'
+  })
+  export class WebSocketService &#123;
+      private socket$: WebSocketSubject&#60;any>;
+  
+      constructor() &#123;
+          this.socket$ = webSocket('wss://ws.postman-echo.com/raw');
+      }
+  
+      sendMessage(message: any) &#123;     // üzenetküldés a szervernek
+          this.socket$.next(message);
+      }
+  
+      getMessages(): Observable&#60;any> &#123;        // szerver felől érkező üzenet fogadása
+          return this.socket$.asObservable();
+      }
+  
+      closeConnection() &#123;     // WebSocket kapcsolat bezárása
+          this.socket$.complete();
+      }
+  }
+
+  <b>// extras.component.html</b>
+
+  &#60;div class="input-group mb-3">
+    &#60;input #websocketinput type="text" class="form-control">
+    &#60;button class="btn btn-outline-secondary" type="button" (click)="sendWebsocketMessage(websocketinput.value); websocketinput.value = ''">   // küldés, majd mező törlés
+      Send
+    &#60;/button>
+  &#60;/div>
+
+  &#60;div
+    &#60;ul>
+      &#60;li *ngFor="let message of websocketMessages">
+        &#123; &#123; message}}
+      &#60;/li>
+    &#60;/ul>
+  &#60;/div>
+
+  <b>// extras.component.ts</b>
+
+  export class ExtrasComponent implements OnInit, OnDestroy &#123;
+    ...
+
+    websocket: WebSocketService = inject(WebSocketService);
+    websocketMessages: any[] = [];
+    private messageSubscription!: Subscription;
+
+    ngOnInit() &#123;
+      this.messageSubscription = this.websocket.getMessages().subscribe(
+        (message) => &#123;
+          this.websocketMessages.push(message);
+        }
+      );
+      this.subscriptions = [...this.subscriptions, this.messageSubscription];
+    }
+
+    ...
+
+    sendWebsocketMessage(message: string) &#123;
+      const messageToSend = &#123; type: 'message', data: message };
+      this.websocket.sendMessage(messageToSend);
+    }
+
+    ngOnDestroy() &#123;
+      for (let subscription of this.subscriptions) &#123;
+        subscription.unsubscribe();
+      };
+      this.websocket.closeConnection();
+    }
+  }
+        </pre>
+        <li>Echo server, amit küldünk neki, visszaküldi ugyanannak a kapcsolatnak, nem broadcastol más klienseknek, mint
+          például más böngésző ablakoknak</li>
+        <li>Ahhoz, hogy valós üzenetváltás történhessen, Node.js szerverre lesz szükségünk</li>
+        <pre>
+  <b>// websocket.server.js</b>
+
+  const WebSocket = require('ws');
+
+  const PORT = 3000;
+  const wss = new WebSocket.Server(&#123; port: PORT });
+
+  console.log(`WebSocket server is running on ws://localhost:$&#123;PORT}`);
+
+  wss.on('connection', (ws) => &#123;
+      console.log('New client connected');
+
+      ws.on('message', (message) => &#123;
+          console.log(`Received: $&#123;message}`);
+
+          if (Buffer.isBuffer(message)) &#123;     // ellenőrizzük, hogy a kapott üzenet egy Buffer típusú adat-e
+              const textMessage = message.toString('utf-8');      // ha bináris üzenet érkezett, alakítsuk szöveggé
+              // Broadcast minden kliensnek
+              wss.clients.forEach((client) => &#123;
+                  if (client !== ws && client.readyState === WebSocket.OPEN) &#123;   // client !== ws --> ez mondja meg, hogy a küldő ne kapja vissza az üzenetét
+                      client.send(textMessage);       // szöveges üzenet küldése
+                  }
+              });
+          } else &#123;
+              wss.clients.forEach((client) => &#123;       // ha szöveges üzenet jött, broadcast szöveges üzenetként
+                  if (client !== ws && client.readyState === WebSocket.OPEN) &#123;
+                      client.send(message);
+                  }
+              });
+          }
+      });
+
+      ws.on('close', () => &#123;
+          console.log('Client disconnected');
+      });
+  });
+
+  <b>// websocket.service.ts</b>
+
+  @Injectable(&#123;
+    providedIn: 'root'
+  })
+  export class WebSocketService &#123;
+      private socket$: WebSocketSubject&#60;any>;
+
+      constructor() &#123;
+          // this.socket$ = webSocket('wss://ws.postman-echo.com/raw');
+          this.socket$ = webSocket('ws://localhost:3000');    // itt fut a Node.js szerver
+      }
+
+      sendMessage(message: any) &#123;     // üzenetküldés a szervernek
+          this.socket$.next(message);
+      }
+
+      getMessages(): Observable&#60;any> &#123;        // szerver felől érkező üzenet fogadása
+          return this.socket$.asObservable();
+      }
+
+      closeConnection() &#123;     // WebSocket kapcsolat bezárása
+          this.socket$.complete();
+      }
+  }
+
+  <b>// extras.component.ts</b>
+
+  this.messageSubscription = this.websocket.getMessages().subscribe(
+    (message) => &#123;
+      console.log(message);
+      this.websocketMessages.push(message.data);    // csak az változott, hogy a data kerül ki
+    }
+  );
+        </pre>
+        <li>Általában a WebSocket szerver úgy van beállítva, hogy a szerver válaszait csak más klienseknek küldi el, nem
+          pedig annak a kliensnek, aki az üzenetet küldte</li>
+        <br>
+        <img src="assets/imgs/websocket_1.png" width="100%">
+        <br>
+        <br>
+        <li>Aktív az echo szerver maradt</li>
+        <br>
+      </ul>
+    </li>
+    <li>MQTT
+      <ul>
+        <li>Message Queuing Telemetry Transport</li>
+        <li>Bináris protokoll, tehát a teljes csomagolás bináris</li>
+        <li>Publish-subscribe (közzététel-feliratkozás) elvű üzenetküldő protokoll, amit főleg IoT (Internet of
+          Things) eszközöknél használnak</li>
+        <li>Van egy központi broker, ami fogadja, és továbbítja az üzeneteket a feliratkozott "küldőknek"</li>
+        <li>Bizonyos időközönként (alapesetben 60 másodperc) az MQTT kliens keep-alive üzenetet küld a brókernek, amire
+          utóbbi (optimális esetben) válaszol is
+          <ul>
+            <li>Így történik a kapcsolat ellenőrzése, hogy él-e még</li>
+          </ul>
+        </li>
+        <pre>
+  npm install mqtt
+        </pre>
+        <br>
+        <div class="input-group mb-3">
+          <input #mqttinput type="text" class="form-control">
+          <button class="btn btn-outline-secondary" type="button"
+            (click)="sendMqttMessage(mqttinput.value); mqttinput.value = ''">
+            Send
+          </button>
+        </div>
+
+        <div style="display: block; max-height: 100px; overflow: auto;">
+          <ul>
+            <li *ngFor="let msg of mqttMessages">
+              {{ msg }}
+            </li>
+          </ul>
+        </div>
+        <br>
+        <img src="assets/imgs/mqtt.png" width="100%">
+        <br>
+        <pre>
+  <b>// mqtt.service.ts</b>
+
+  @Injectable(&#123;
+    providedIn: 'root'
+  })
+  export class MqttService &#123;
+      private client: mqtt.MqttClient;
+      private readonly topic = 'mqtt/Z-5-0';
+  
+        constructor() &#123;
+          this.client = mqtt.connect('ws://broker.hivemq.com:8000/mqtt', &#123;        // második paraméterben lehet beeállításokat végrehajtai
+              keepalive: 10,      // így például 10 másodpercenként ellenőrizzük a kapcsolatot
+          });
+  
+          this.client.on('connect', () => &#123;
+              // console.log('MQTT connected');
+              this.client.subscribe(this.topic);
+          });
+  
+          this.client.on('error', err => &#123;
+              // console.error('MQTT error', err);
+          });
+      }
+  
+      publishMessage(msg: string): void &#123;
+          // console.log(msg);
+          this.client.publish(this.topic, msg);
+      }
+  
+      onMessage(callback: (msg: string) => void) &#123;
+          this.client.on('message', (topic, payload) => &#123;
+            const message = payload.toString();
+            callback(message);
+          });
+        }  
+  }
+
+  <b>// extras.component.html</b>
+
+  &#60;div class="input-group mb-3">
+    &#60;input #mqttinput type="text" class="form-control">
+    &#60;button class="btn btn-outline-secondary" type="button"
+      (click)="sendMqttMessage(mqttinput.value); mqttinput.value = ''">
+      Send
+    &#60;/button>
+  &#60;/div>
+
+  &#60;div>
+    &#60;ul>
+      &#60;li *ngFor="let msg of mqttMessages">
+        &#123; &#123; msg }}
+      &#60;/li>
+    &#60;/ul>
+  &#60;/div>
+
+  <b>// extras.component.ts</b>
+
+  export class ExtrasComponent implements OnInit, AfterViewInit, OnDestroy &#123;
+    ...
+
+    mqtt: MqttService = inject(MqttService);
+    mqttMessages: string[] = [];
+
+    ngOnInit() &#123;
+      this.mqtt.onMessage((msg) => &#123;
+        console.log('mqtt: ', msg);
+        this.mqttMessages.push(msg);
+      });
+    }
+
+    ...
+
+    sendMqttMessage(message: any): void &#123;
+      this.mqtt.publishMessage(message);
+      message = '';
+    }
+  }
+        </pre>
+        <li>A bróker felé küldött üzeneteket minden feliratkozott megkapja</li>
+      </ul>
+    </li>
+    <br>
+    <table style="border-collapse: collapse; width: 100%;">
+      <thead>
+        <tr>
+          <th>Különbségek és kapcsolat</th>
+          <th>WebSocket</th>
+          <th>MQTT</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Fogalom</td>
+          <td>Kommunikációs protokoll</td>
+          <td>Üzenetküldő protokoll (publish-subscribe)</td>
+        </tr>
+        <tr>
+          <td>Szint</td>
+          <td>Alacsonyabb szintű (Transport Layer felett)</td>
+          <td>Magasabb szintű protokoll WebSocket vagy TCP felett</td>
+        </tr>
+        <tr>
+          <td>Használat</td>
+          <td>Valós idejű kommunikáció (például chat, multiplayer játék)</td>
+          <td>IoT, szenzoradatok, gép-gép közti kommunikáció</td>
+        </tr>
+        <tr>
+          <td>Adatmozgás</td>
+          <td>TCP felett működik</td>
+          <td>Általában TCP, de lehet WebSocket felett is</td>
+        </tr>
+        <tr>
+          <td>Üzenet formátum</td>
+          <td>Nincs kötött formátum (például JSON)</td>
+          <td>Kötött, kis méretű bináris üzenet</td>
+        </tr>
+        <tr>
+          <td>Közvetítő</td>
+          <td>Nincs közvetítő (direkt kapcsolat kliens, és szerver között)</td>
+          <td>Van közvetítő, az MQTT broker</td>
+        </tr>
+      </tbody>
+    </table>
   </ul>
 </div>
 

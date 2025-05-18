@@ -39,8 +39,21 @@
             @include xxl() {
                 font-size: 120px;
             }
+        }
 
-
+        img {
+            @include xs() {
+                height: 60px;
+            }
+            @include sm() {
+                height: 60px;
+            }
+            @include xl() {
+                height: 90px;
+            }
+            @include xxl() {
+                height: 120px;
+            }
         }
     }
 }

@@ -42,9 +42,11 @@
     &#60;tag />
                 </pre>
                 <li>A tag-ek hierarchiája nem sérülhet</li>
-                <li>Az attribútumoknak mindig idézőjelek között kell lenniük</li>
+                <li>Az attribútumok értékeinek mindig idézőjelek között kell lenniük</li>
                 <pre>
     id="value"
+
+    &#60;item id="123">&#60;/item>
                 </pre>
             </ul>
         </li>
@@ -53,19 +55,12 @@
                 <li>&#60;Name> és &#60;name> két különböző elem</li>
             </ul>
         </li>
-        <li>Az attribútumok értékei mindig idézőjelek között vannak
-            <ul>
-                <pre>
-    &#60;item id="123">&#60;/item>
-                </pre>
-            </ul>
-        </li>
         <li>A HTML lazább verziója az XML-nek, amelyet a weboldalakra optimalizáltak</li>
         <li>A XHTML (Extensible HTML) a HTML egy XML-kompatibilis változata volt, de ma már ritkán használják</li>
-        <li>A JSON-hoz képest nehezebb feldolgozni, és általában lassabb is</li>
-        <li>Az XML-t sok esetben felváltotta a JSON, mert a JSON könnyebben olvasható és gyorsabb feldolgozást tesz
+        <li>A JSON-höz képest nehezebb feldolgozni, és általában lassabb is</li>
+        <li>Az XML-t sok esetben felváltotta a JSON, mert könnyebben olvasható, és gyorsabb feldolgozást tesz
             lehetővé, különösen JavaScript alapú környezetekben</li>
-        <li>Az XML-nek mindig csak egy gyökérelme lehet</li>
+        <li>Az XML-nek mindig csak egy gyökéreleme lehet</li>
         <li>Az ékezeteket, és speciális karaktereket karakterkódolni szükséges</li>
         <br>
         <table style="border-collapse: collapse; width: 100%;">
@@ -80,12 +75,12 @@
                 <tr>
                     <td>&lt;</td>
                     <td>&amp;lt;</td>
-                    <td>kisebb mint jel</td>
+                    <td>kisebb mint jel (less than)</td>
                 </tr>
                 <tr>
                     <td>&gt;</td>
                     <td>&amp;gt;</td>
-                    <td>nagyobb mint jel</td>
+                    <td>nagyobb mint jel (greater than)</td>
                 </tr>
                 <tr>
                     <td>&amp;</td>
@@ -95,12 +90,12 @@
                 <tr>
                     <td>'</td>
                     <td>&amp;apos;</td>
-                    <td>egyszeres idézőjel (aposztróf)</td>
+                    <td>egyszeres idézőjel (apostrophe)</td>
                 </tr>
                 <tr>
                     <td>"</td>
                     <td>&amp;quot;</td>
-                    <td>kettős idézőjel</td>
+                    <td>kettős idézőjel (quote)</td>
                 </tr>
             </tbody>
         </table>

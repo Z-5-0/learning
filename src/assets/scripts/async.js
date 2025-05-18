@@ -19,12 +19,13 @@ login2.onsubmit = function (event) {
 async function loginAndFetchUsers() {
     // await
 
-    var body = JSON.stringify({email, password});
+    var body = JSON.stringify({ email, password });
     var loginResponse = await fetch('https://reqres.in/api/login', {
         method: 'POST',
         body,
         headers: {
-            'Content-type': 'application/json'
+            'Content-type': 'application/json',
+            'x-api-key': 'reqres-free-v1'
         }
     });
 
@@ -41,7 +42,7 @@ async function loginAndFetchUsers() {
 
     console.log('token: ', tokenObj.token);
 
-    var usersResponse = await fetch('https://reqres.in/api/users');
+    var usersResponse = await fetch('https://reqres.in/api/users', { headers: { 'x-api-key': 'reqres-free-v1' } });
 
     if (!usersResponse.ok) {
         alert('Nincsenek userek (ERROR)');

@@ -15,24 +15,17 @@ var state = {
     users: [],
     isLoggedIn: false,
     isLoginPending: false,
+    errorMsg: ''
 };
 
 window.onload = renderForm;
 
 function renderForm() {
-    console.log(state.isLoggedIn);
+    console.log('state.isLoggedIn: ', state.isLoggedIn);
     if (state.isLoggedIn) {
         document.getElementById("login-component").innerHTML = "";
 
-        if (document.getElementById('fetch-logout')) {
-            document.getElementById('fetch-logout').addEventListener('click', function (event) {
-                state.isLoggedIn = false;
-                state.users = [];
-                document.getElementById('user-list-container').innerHTML = '';
-                renderForm();
-            });
-        }
-        return;
+
     }
 
     document.getElementById("login-component").innerHTML = `
@@ -49,18 +42,30 @@ function renderForm() {
                     <input type="password" name="password" class="form-control" ${state.isLoginPending ? "disabled" : ""}/>
                 </label>      
             </div>
-            <div>
-                <button id="fetchSubmit" type="submit" ${state.isLoginPending ? "disabled" : ""}
+            <div style="display: flex; justify-content: space-between">
+                <button id="fetchSubmit" class="btn btn-secondary" type="submit" ${(state.isLoginPending || state.isLoggedIn) ? "disabled" : ""}
                     style="margin-top: 20px">
                         Bejelentkezés
                 </button>
+                <button id="fetch-logout" class="btn btn-danger" style="margin-top: 20px" type="button" ${(state.isLoginPending || !state.isLoggedIn) ? "disabled" : ""}>
+                    Kijelentkezés
+                </button>
             </div>
           <div id="fetchErrorMessage">
-            ${state.isLoginPending ? "Bejelentkezés folyamatban..." : ""}
+            ${state.isLoginPending ? "Bejelentkezés folyamatban..." : state.errorMsg}
           </div>
         </form>
       </div>
     `;
+
+    if (document.getElementById('fetch-logout')) {
+        document.getElementById('fetch-logout').addEventListener('click', function (event) {
+            state.isLoggedIn = false;
+            state.users = [];
+            document.getElementById('user-list-container').innerHTML = '';
+            renderForm();
+        });
+    }
 
     var fetchForm = document.getElementById('log-in');
 
@@ -75,39 +80,41 @@ function renderForm() {
         var email = event.target.elements.email.value;
         var password = event.target.elements.password.value;
 
-        var body = JSON.stringify({email, password});
+        var body = JSON.stringify({ email, password });
 
         state.isLoginPending = true;
         renderForm();
 
         fetch('https://reqres.in/api/login', {
             method: 'POST', body, headers: {
-                'Content-type': 'application/json'
+                'Content-type': 'application/json',
+                'x-api-key': 'reqres-free-v1'
             }
         }).then(function (response) {
             if (!response.ok) {
-                return Promise.reject({error: 'Login failed'});
+                return Promise.reject({ error: 'Login failed' });
             }
+            // console.log('response.json() ', response.json().then(resp => console.log(resp))); // {token: 'QpwL5tke4Pnpja7X4'}
             return response.json();
         }).then(function (response) {
             state.isLoggedIn = true;
             state.isLoginPending = false;
             renderForm();
-            return fetch('https://reqres.in/api/users')
+            return fetch('https://reqres.in/api/users', { headers: { 'x-api-key': 'reqres-free-v1' } })
         }).then(function (response) {
             if (!response.ok) {
-                return Promise.reject({error: 'Get user list failed'});
+                return Promise.reject({ error: 'Get user list failed' });
             }
+            // console.log(await response.json());
             return response.json();
-        }).then(function (userPage) {
-            state.users = userPage.data;
+        }).then(function (users) {
+            state.users = users.data;
             renderUsers();
         }).catch(function (error) {
             state.isLoginPending = false;
             renderErrors(error.error);
         });
     }
-
 }
 
 function renderUsers() {
@@ -115,14 +122,17 @@ function renderUsers() {
 
     var newList = '';
 
+    console.log('usr render');
+
     newList = '<ul class="list-group">'
-    for (var s of state.users) {
+    for (var s of state?.users) {
         newList += `<li class="list-group-item">${s.first_name} ${s.last_name}</li>`;
     }
     newList += `
         </ul>
-        <button id="fetch-logout" style="margin-top: 20px">Kijelentkezés</button>
     `;
+
+    console.log('usr render: ', newList);
 
     userListContainer.innerHTML = newList;
 
@@ -133,8 +143,11 @@ function renderUsers() {
 }
 
 function renderErrors(errorMsg) {
-    var errorContainer = document.getElementById('fetchErrorMessage');
-    errorContainer.innerHTML = errorMsg;
+    // var errorContainer = document.getElementById('fetchErrorMessage');
+    // errorContainer.innerHTML = errorMsg;
+    state.errorMsg = errorMsg;
+    state.isLoginPending = false;
+    renderForm();
 }
 
 // + FELADAT 1

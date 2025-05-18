@@ -1,6 +1,14 @@
 console.log('---------------- IF / ELSE / SWITCH ----------------');
 
-window.addEventListener('DOMContentLoaded', function () {
+if (document.readyState === 'loading') {
+    window.addEventListener('DOMContentLoaded', initializeListeners);
+} else {
+    // Ha a DOM már teljesen betöltődött
+    initializeListeners();
+}
+
+
+function initializeListeners() {
 
     const promptYourAge = document.getElementById("promptYourAge");
     promptYourAge.addEventListener("click", promptYourAgeFunction);
@@ -14,7 +22,7 @@ window.addEventListener('DOMContentLoaded', function () {
     const ticketingListenerWithSwitch = document.getElementById("ticketingListenerWithSwitch");
     ticketingListenerWithSwitch.addEventListener("click", ticketingListenerWithSwitchFunction); // Függvényreferencia (showTicketingPrompt) szükséges, nem függvényhívás (showPrompt())
 
-})
+}
 
 function promptYourAgeFunction() {
     promptYourAgeWithSwitchNonExplicit

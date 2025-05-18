@@ -28,11 +28,18 @@ import { FourofourComponent } from './fourofour/fourofour.component';
 import { YouCantActivate } from 'src/shared/guards/fourofour.guard';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { GruntComponent } from './grunt/grunt.component';
+import { JqueryComponent } from './jquery/jquery.component';
+import { PrimengComponent } from './primeng/primeng.component';
+import { AntDesignComponent } from './ant-design/ant-design.component';
+import { LeafletComponent } from './leaflet/leaflet.component';
+import { AgmComponent } from './agm/agm.component';
+import { FontAwesomeComponent } from './font-awesome/font-awesome.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
   { path: 'js', component: JsComponent },
   { path: 'typescript', component: TypescriptComponent },
+  { path: 'jquery', component: JqueryComponent, canActivate: [YouCantActivate] },
   { path: 'regex', loadChildren: () => import('./regex/regex.module').then(mod => mod.RegexModule) },
   { path: 'extras', loadChildren: () => import('./extras/extras.module').then(mod => mod.ExtrasModule) },
   { path: 'json', component: JsonComponent },
@@ -47,7 +54,9 @@ const routes: Routes = [
   { path: 'ionic', component: IonicComponent, canActivate: [YouCantActivate] },
   { path: 'rxjs', component: RxjsComponent },
   { path: 'redux', component: ReduxComponent, canActivate: [YouCantActivate] },
+  { path: 'lodash', component: LodashComponent, canActivate: [YouCantActivate] },
   { path: 'cssscss', component: CssscssComponent },
+  { path: 'primeng', component: PrimengComponent, canActivate: [YouCantActivate] },
   {
     path: 'material',
     loadChildren: () => import('./material/material.module').then(m => m.MaterialModule),
@@ -56,15 +65,18 @@ const routes: Routes = [
   // { path: 'material', loadComponent: () => import('./material/material.component').then(mod => mod.MaterialComponent) },
   { path: 'bootstrap', component: BootstrapComponent },
   { path: 'tailwind', component: TailwindComponent, canActivate: [YouCantActivate] },
+  { path: 'antdesign', component: AntDesignComponent, canActivate: [YouCantActivate] },
+  { path: 'leaflet', component: LeafletComponent, canActivate: [YouCantActivate] },
+  { path: 'agm', component: AgmComponent, canActivate: [YouCantActivate] },
   { path: 'webpack', component: WebpackComponent },
   { path: 'grunt', component: GruntComponent, canActivate: [YouCantActivate] },
   { path: 'gulp', component: GulpComponent, canActivate: [YouCantActivate] },
   { path: 'ssr', component: SsrComponent },
   { path: 'seo', component: SeoComponent },
-  { path: 'lodash', component: LodashComponent, canActivate: [YouCantActivate] },
   { path: 'api', component: ApiComponent },
   { path: 'database', component: DatabaseComponent },
   { path: 'dart', component: DartComponent, canActivate: [YouCantActivate] },
+  { path: 'fontawesome', component: FontAwesomeComponent, canActivate: [YouCantActivate] },
   { path: 'vscode', component: VscodeComponent },
   { path: 'newsfeed', component: NewsFeedComponent },
   // { path: 'ngrx', component: NgrxComponent },

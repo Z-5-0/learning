@@ -39,7 +39,7 @@ document.getElementById('fetch-posts').onclick = function () {
 // ---------------------------------- //
 
 document.getElementById('fetch-anything').onclick = function () {
-    var url = 'http://jsonplaceholder.typicode.com/posts';
+    var url = 'https://jsonplaceholder.typicode.com/posts';
     var method = 'GET';
     var body = null;
     var callback = function (posts) {
@@ -69,6 +69,7 @@ function sendRequest(url, method, body, callback) {
     var xhr = new XMLHttpRequest;
 
     xhr.onreadystatechange = function () {
+        console.log('onreadystatechange');
         if (xhr.readyState === 4 && xhr.status === 200) {
             callback(JSON.parse(xhr.responseText));
         }
@@ -76,7 +77,9 @@ function sendRequest(url, method, body, callback) {
 
     xhr.open(method, url);
 
-    xhr.setRequestHeader('content-type', 'application/json')
+    xhr.setRequestHeader('content-type', 'application/json');
+
+    xhr.setRequestHeader('x-api-key', 'reqres-free-v1');
 
     xhr.send(body);
 }
@@ -89,6 +92,7 @@ document.getElementById('login').onclick = function () {
         email: 'eve.holt@reqres.in',
         password: 'cityslicka'
     });
+    var headers = { 'x-api-key': 'reqres-free-v1' };
 
     sendRequest(url, 'POST', body, function (token) {
         console.log(token);
@@ -117,7 +121,8 @@ function sendRequest2(url, method, body) {
         }
 
         xhr.open(method, url);
-        xhr.setRequestHeader('content-type', 'application/json')
+        xhr.setRequestHeader('content-type', 'application/json');
+        xhr.setRequestHeader('x-api-key', 'reqres-free-v1');
         xhr.send(body);
     });
 }
@@ -128,21 +133,22 @@ document.getElementById('login2').onclick = function () {
         email: 'eve.holt@reqres.in',
         password: 'cityslicka'
     });
+    var headers = { 'x-api-key': 'reqres-free-v1' };
 
-    sendRequest2(url, 'POST', body)
+    sendRequest2(url, 'POST', body, headers)
         .then(function (response) {
             console.log('Promise response: ', response);
             document.getElementById('login-token-id2').innerHTML = response.token;
             return sendRequest2('https://reqres.in/api/users', 'GET', null);
         })
         .then(function (elozoThenVisszateresiErteke) {
-            console.log(elozoThenVisszateresiErteke);
+            console.log('Another than 1', elozoThenVisszateresiErteke);
             return sendRequest2('https://reqres.in/api/tovabbiEroforras1', 'GET', null);
         })
         .then(function (elozoThenVisszateresiErteke) {
-            console.log(elozoThenVisszateresiErteke);
+            console.log('Another than 2', elozoThenVisszateresiErteke);
         })
-        .catch(function(error) {
+        .catch(function (error) {
             console.log(error);
         });
 }

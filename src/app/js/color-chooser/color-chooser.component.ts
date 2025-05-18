@@ -16,6 +16,7 @@ export class ColorChooserComponent {
     e.preventDefault();
     console.log(e.target.elements.color.value);
     const newColor = e.target.elements.color.value;
+    console.log(newColor);
     this.newColorSelected.emit(newColor);
   }
 }

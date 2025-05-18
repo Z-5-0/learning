@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   Component,
   ContentChild,
   ContentChildren,
@@ -8,7 +9,7 @@ import {
   Output,
   QueryList
 } from '@angular/core';
-import {ChildComponent} from "../child/child.component";
+import { ChildComponent } from "../child/child.component";
 
 @Component({
   selector: 'app-ng-hyphen',
@@ -37,11 +38,15 @@ export class NgHyphenComponent {
   @ContentChildren('contentChildrenProjection') projectedChildrenRef!: QueryList<ElementRef>
   childrenContentProjection: any[] = [];
 
-  @Input()
+  /* @Input()
   set clearChildrenContentProjection(value: any) {
     if (value) {
-      this.childrenContentProjection = [];
+      // this.childrenContentProjection = [];
     }
+  } */
+
+  @Input() set ChildrenContentProjection(value: any) {
+    this.getProjectedMultiContentReference();
   }
 
   @ContentChildren(ChildComponent) projectedChildrenColorRef!: QueryList<ChildComponent>
@@ -58,10 +63,13 @@ export class NgHyphenComponent {
 
   getProjectedMultiContentReference() {
     this.childrenContentProjection = [];
-    this.projectedChildrenRef.forEach(child => {
-      this.childrenContentProjection.push(child);
-    })
+    setTimeout(() => {
+      this.projectedChildrenRef.forEach(child => {
+        this.childrenContentProjection.push(child);
+      });
+    }, 0)
   }
+
   getProjectedMultiComponentReference() {
     this.projectedChildrenColorRef.forEach(color => {
       this.childrenComponentProjection.push(color);

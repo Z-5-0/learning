@@ -107,13 +107,9 @@
     <br>
     <div>// child content</div>
     Number of projected elements: {{ projectedChildrenRef.length }}
-    <br>
-    <button type="button" class="btn btn-secondary" (click)="getProjectedMultiContentReference()">
-      Get content children
-    </button>
     <pre>
-      // ContentChildren tartalma (gombra frissül):
-      {{ childrenContentProjection | json }}
+      // childrenContentProjection tartalma
+      <div *ngFor="let ccp of childrenContentProjection"  [innerHTML]="ccp?.nativeElement?.innerHTML"></div>
     </pre>
   </div>
 </div>

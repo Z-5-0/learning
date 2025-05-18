@@ -1,9 +1,8 @@
 <form (submit)="formSubmit($event)" style="text-align: right">
-  <select name="color">
-    <option selected></option>
+  <select class="form-select" name="color">
     <option value="blue">blue</option>
-    <option value="red">red</option>
+    <option value="red" selected>red</option>
     <option value="green">green</option>
   </select>
-  <button type="submit">SEND</button>
+  <button class="btn btn-secondary" type="submit">Send</button>
 </form>

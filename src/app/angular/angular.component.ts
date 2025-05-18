@@ -6,7 +6,7 @@ import { LoggerService } from 'src/shared/services/logger.service';
 import { USER_TOKEN } from 'src/shared/shared.module';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { filter, Subscription } from 'rxjs';
+import { concat, concatMap, filter, finalize, interval, map, Observable, of, Subscription, take, tap, timer } from 'rxjs';
 import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
 
 @Component({
@@ -111,6 +111,7 @@ export class AngularComponent implements OnDestroy {
   injectingserviceintoservice,
   injectiontoken,
   observable,
+  promisevsobservable,
   createanduseobservable,
   errorandcomplete,
   rxjs,
@@ -214,23 +215,23 @@ export class AngularComponent implements OnDestroy {
   servicesinstandalonecomponents,
   routingandlazyloadingwithstandalonecomponents,
   angularanimations,
-    enterandleave,
-    keyframe,
-    queryingandstaggering,
-    animationevents,
-    multipleanimations,
-    unknownheight,
-    flexibilitywithparams,
-    reusableanimations,
-    disableanimations,
-    routingtransition,
-    slideinout,
-    flip,
-    crossfade,
-    expandandcollapse,
-    hostbinding,
-    cdkoverlay,
-    routetransition,
+  enterandleave,
+  keyframe,
+  queryingandstaggering,
+  animationevents,
+  multipleanimations,
+  unknownheight,
+  flexibilitywithparams,
+  reusableanimations,
+  disableanimations,
+  routingtransition,
+  slideinout,
+  flip,
+  crossfade,
+  expandandcollapse,
+  hostbinding,
+  cdkoverlay,
+  routetransition,
   `) sections!: QueryList<ElementRef>;
 
   anchorButtons: any[] = [
@@ -257,8 +258,8 @@ export class AngularComponent implements OnDestroy {
         { title: 'String interpolation', anchor: 'stringinterpolationops' },
         { title: 'ngIf', anchor: 'ngifops' },
         { title: 'ngFor', anchor: 'ngforops' },
-        { title: 'ng-container', anchor: 'ngcontainerops' },
-        { title: 'ng-content', anchor: 'ngcontentops' },
+        { title: '<ng-container>', anchor: 'ngcontainerops' },
+        { title: '<ng-content>', anchor: 'ngcontentops' },
       ]
     },
     { title: 'Data binding', anchor: 'databinding' },
@@ -346,6 +347,7 @@ export class AngularComponent implements OnDestroy {
     },
     {
       title: 'Observable', anchor: 'observable', subtitles: [
+        { title: 'Promise vs Observable', anchor: 'promisevsobservable' },
         { title: 'Create and use', anchor: 'createanduseobservable' },
         { title: 'Error and complete', anchor: 'errorandcomplete' }
       ]
@@ -618,6 +620,7 @@ export class AngularComponent implements OnDestroy {
 
   hostListenerMouseEventCounter: any = { in: 0, out: 0 };
 
+  textInputFocusCounter0: number = 0;
   textInputFocusCounter: number = 0;
   textInputFocusCounter2: number = 0;
 
@@ -644,6 +647,10 @@ export class AngularComponent implements OnDestroy {
   private _router: Router = inject(Router);
   private _activeRouter: ActivatedRoute = inject(ActivatedRoute);
   currentRoute: any = '';
+
+  public timeLeft$: Observable<any> | null = null;
+  countdownSeconds: number = 15;
+  withCountdown: boolean = true;
 
   subscriptions: Subscription[] = [];
 
@@ -708,6 +715,7 @@ export class AngularComponent implements OnDestroy {
   }
 
   getFullNameFromQueryList() {
+    this.fullNameFromQueryList = '';
     this.inputElRef.forEach(input => {
       this.fullNameFromQueryList += (' ' + input.nativeElement.value);
     })
@@ -766,6 +774,20 @@ export class AngularComponent implements OnDestroy {
 
   jumpToSection(id: string) {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  disableMenuService() {
+    this.menuService.setWorkingState(false);
+
+    if (this.withCountdown) {
+      this.timeLeft$ = concat(
+        interval(1000).pipe(
+          take(this.countdownSeconds + 1),
+          map(i => ({ secondsLeft: this.countdownSeconds - i }))
+        ),
+        of(null)    // végén null
+      );
+    }
   }
 
   ngOnDestroy(): void {

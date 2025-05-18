@@ -84,6 +84,12 @@ import { HeaderComponent } from './extras/anime/header/header.component';
 import { Slider2Component } from './extras/slider2/slider2.component';
 import { FlipComponent } from './extras/flip/flip.component';
 import { FadeComponent } from './extras/fade/fade.component';
+import { JqueryComponent } from './jquery/jquery.component';
+import { PrimengComponent } from './primeng/primeng.component';
+import { AntDesignComponent } from './ant-design/ant-design.component';
+import { LeafletComponent } from './leaflet/leaflet.component';
+import { AgmComponent } from './agm/agm.component';
+import { FontAwesomeComponent } from './font-awesome/font-awesome.component';
 
 @NgModule({
   declarations: [
@@ -153,7 +159,13 @@ import { FadeComponent } from './extras/fade/fade.component';
     HeaderComponent,
     Slider2Component,
     FlipComponent,
-    FadeComponent
+    FadeComponent,
+    JqueryComponent,
+    PrimengComponent,
+    AntDesignComponent,
+    LeafletComponent,
+    AgmComponent,
+    FontAwesomeComponent,
   ],
   imports: [
     BrowserModule,

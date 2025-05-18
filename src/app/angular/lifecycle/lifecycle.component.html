@@ -1,8 +1,10 @@
 <ng-container *ngIf="cycleSelector === 'onchanges'">
   <div>Message: {{ onChangesMessage }}</div>
-  <div>First change of message property: <span
-    [attr.color]="simpleChangeFirstChange ? '#9d2626' : '#208020'">{{ simpleChangeFirstChange }}</span></div>
-  <div>Number of changes: {{ simpleChangeCounter }}</div>
+  <div>First change of message property:
+    <span [style.color]="simpleChangeFirstChange ? '#208020' : '#9d2626'">
+      {{ simpleChangeFirstChange }}</span>
+  </div>
+  <div>Number of ngOnChanges hooks: {{ simpleChangeCounter }}</div>
 </ng-container>
 
 <ng-container *ngIf="cycleSelector === 'oninit'">
@@ -17,7 +19,7 @@
 <ng-container *ngIf="cycleSelector === 'oninit2'">
   <div class="rounded-border">
     <pre>
-      {{ onInitObject |json }}
+  {{ onInitObject |json }}
     </pre>
     <div>Number of changes: {{ simpleChangeCounter3 }}</div>
   </div>
@@ -26,7 +28,7 @@
 <ng-container *ngIf="cycleSelector === 'docheck'">
   <div class="rounded-border">
     <pre>
-      {{ onInitObject2 |json }}
+  {{ onInitObject2 |json }}
     </pre>
     <div>Number of changes: {{ changeCounter }}</div>
     <div>Number of doChecks: {{ doCheckCounter }}</div>
@@ -45,8 +47,7 @@
 
 <ng-container *ngIf="cycleSelector === 'aftercontentchecked'">
   <div class="rounded-border">
-    <ng-content></ng-content>
-    <br>
+    <ng-content select=".acc"></ng-content>
     <div>ngAfterContentChecked run counter: {{ afterContentCheckedInputChangeCounter }}</div>
   </div>
 </ng-container>
@@ -65,4 +66,3 @@
     <ng-content></ng-content>
   </div>
 </ng-container>
-

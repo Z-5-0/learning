@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +9,17 @@ export class ScrollingService {
   }
 
   scrollTo(target: HTMLElement): void {
-    return target.scrollIntoView({behavior: 'smooth'});
+    const openDropdown = document.querySelector('.dropdown-menu.show');
+    if (openDropdown) {
+      openDropdown.classList.remove('show');
+    }
+
+    const toggle = document.querySelector('.dropdown-toggle.show');
+    if (toggle) {
+      toggle.classList.remove('show');
+      (toggle as HTMLElement).setAttribute('aria-expanded', 'false');
+    }
+
+    return target.scrollIntoView({ behavior: 'smooth' });
   }
 }

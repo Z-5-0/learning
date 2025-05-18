@@ -1,5 +1,6 @@
 <div class="rounded-border">
-    Data from parent component [state]
+    <div>Data from parent component [state]</div>
+    <div>(JSON does not update by next and previous button)</div>
     <br>
     {{dataFromRoute | json}}
     <br>
@@ -11,12 +12,14 @@
     </ng-container>
     <button [routerLink]="['/', 'angular', 'about', (aboutData.id - 1)]" class="btn btn-secondary"
         [disabled]="aboutData.id === 1">
-        Previous ({{aboutData.id - 1}})
+        <span *ngIf="aboutData.id === 1">Start</span>
+        <span *ngIf="aboutData.id !== 1">Previous ({{aboutData.id - 1}})</span>
     </button>
     <button [routerLink]="['..']" class="btn btn-secondary">Go to angular route</button>
     <button [routerLink]="['/', 'angular', 'about', (aboutData.id + 1)]" class="btn btn-secondary"
         [disabled]="aboutData.id > 4">
-        Next ({{aboutData.id + 1}})
+        <span *ngIf="aboutData.id > 4">End</span>
+        <span *ngIf="aboutData.id <= 4">Next ({{aboutData.id + 1}})</span>
     </button>
 </div>
 

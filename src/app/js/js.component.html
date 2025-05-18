@@ -1,4 +1,7 @@
-<h1>Javascript</h1>
+<h1 class="info-header">JavaScript
+  <span placement="end" ngbTooltip="A console.log()-ok nem kerültek kikommentezésre"></span>
+  <span placement="end" ngbTooltip="A reqres.in 100 request-et engedélyez napnta ingyenesen"></span>
+</h1>
 
 <div class="anchor-navi-container">
   <div *ngFor="let mainButton of anchorButtons" class="btn-group">
@@ -36,7 +39,7 @@
       beküldeni az Engine-nek, és meg tudjuk nézni, amit az Engine válaszként visszaküld
     </li>
     <li>Az Engine HTTP kéréseket is tud küldeni, és a válaszokat fel tudja dolgozni (AJAX kérések)</li>
-    <li>Az Engine-en keresztül adatot is tudunk tárolni (local storage), ahol elhelyezhetünk adatot, és onnan
+    <li>Az Engine-en keresztül adatot is tudunk tárolni (localStorage), ahol elhelyezhetünk adatot, és onnan
       újabb oldalletöltéskor ki tudjuk olvasni
     </li>
     <ul>
@@ -44,41 +47,68 @@
       </li>
       <li>Objektum tárolása
         <ul>
-          <li>localStorage.setItem("user", JSON.stringify(userJSON));</li>
-          <li>let userJSON = JSON.parse(localStorage.getItem("user"));</li>
-          <li>A JSON.stringify() és JSON.parse() javascript függvények</li>
-          <ul>
-            <li>JSON.stringify() : JSON formátumba alakítható az objektum</li>
-            <li>JSON.parse(): JSON formátumból JS objektumba alakítás</li>
-          </ul>
-          <li>localStorage.setItem("fruits", JSON.stringify(["alma", "banán", "narancs"]));</li>
+          <pre>
+  let userJSON = &#123; name: "Johnny", age: 30 };
+  localStorage.setItem("user", JSON.stringify(userJSON));
+
+  let savedUser = JSON.parse(localStorage.getItem("user"));
+
+  console.log(savedUser);
+
+  ↓↓↓↓↓
+
+  &#123; name: "Johnny", age: 30 }
+          </pre>
+          <li>A JSON.stringify() és JSON.parse() JavaScript függvények
+            <ul>
+              <li>JSON.stringify()
+                <ul>
+                  <li>JSON formátumba alakítása az objektumnak</li>
+                </ul>
+              </li>
+              <li>JSON.parse()
+                <ul>
+                  <li>JSON formátumból JS objektumba alakítás</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <pre>
+  localStorage.setItem("fruits", JSON.stringify(["alma", "banán", "narancs"]));
+          </pre>
         </ul>
       </li>
     </ul>
-    <li>JS Engine ma már szerver oldalon is futtatható (nodejs), ami a kéréseket fogadja, és erre válaszokat
+    <li>JS Engine ma már szerver oldalon is futtatható (Node.js), ami a kéréseket fogadja, és erre válaszokat
       küld, így feladatát tekintve merőben eltér a kliens oldali Engine-től
     </li>
-    <li>A kliens oldalon a Javascriptnek 2 fő feladata van
+    <li>A kliens oldalon a JavaScript-nek 2 fő feladata van
       <ul>
         <li>HTML elemek módosítása révén interakció fokozás</li>
-        <li>AJAX kérésekkel küldése révén oldalletöltés nélkül tudunk kis mennyiségű adatért folyamodni a
+        <li>AJAX kérések küldése révén oldalletöltés nélkül tudunk kis mennyiségű adatért folyamodni a
           szerver felé
         </li>
       </ul>
     </li>
-    <li>Létrehozhatunk olyan user interface-eket, amik oldalletöltés nélkül kommunikálnak a szerverrel, és
+    <li>Létrehozhatunk olyan User Interface-eket, amik oldalletöltés nélkül kommunikálnak a szerverrel, és
       interaktív hatásokat hoznak létre
     </li>
   </ul>
 </div>
 
 <div>
-  <h3 #javascriptandconsole data-anchor="javascriptandconsole">Javascript and Console</h3>
+  <h3 #javascriptandconsole data-anchor="javascriptandconsole">JavaScript & Console</h3>
   <ul>
     <li>A fejlesztői eszközök közé tartozik a Console</li>
-    <li>A Google kereső egyik id attribútumát leressük ki a DOM-ban
+    <li>A <a href="http://google.com" target="_blank">Google kereső</a> egyik id attribútumát keressük ki a DOM-ban
+      (Inspect),
+      vagy ha nincs, adjunk hozzá valamelyik DOM elemhez egy tetszőleges id attribútumot
       <ul>
-        <li>document.getElementById(ID).style.backgroundColor = "green";</li>
+        <li>document.getElementById(ID).style.backgroundColor = "green";
+          <ul>
+            <li>Zöldre fog változni a háttér</li>
+          </ul>
+        </li>
         <li>fetch("https://jsonplaceholder.typicode.com/posts").then(res => res.json()).then(res =>
           console.log(res));
           <ul>
@@ -89,7 +119,10 @@
         <li>fetch("https://jsonplaceholder.typicode.com/posts").then(res => res.json()).then(res =>
           document.getElementById(ID).innerHTML = res[0].title);
           <ul>
-            <pre>
+            <li>A zöld hátteret követően pedig egy kis szöveget is kiírtunk</li>
+          </ul>
+        </li>
+        <pre>
   window.onload = async function () &#123;
       fetch("https://jsonplaceholder.typicode.com/posts")
       .then(res => res.json())
@@ -97,43 +130,68 @@
   &#125;
             </pre>
 
-            <li>A body-ban elhelyezhető egy script tag
-              <pre>
+        <li>A body-ban elhelyezhető egy script tag
+          <pre>
   &#60;script&#62;
       fetch("https://jsonplaceholder.com.typicode.com/posts")
       .then(res => res.json()).then(console.log(res));
   &#60;/script&#62;
             </pre>
-            </li>
-            <li>Az ilyen parancsokat külön script fájlban szokás tárolni, és a böngészőt utasítani arra,
-              hogy a script fájlt szerezze meg a szerverről, és futtassa le
-              <ul>
-                <li>index.html-ben
-                  <ul>
-                    <li>&#60;script src="./src/basic.js"&#62;&#60;/script&#62;</li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-            <li>Async nélkül nem kapjuk meg a HTML-be a fetch eredményét</li>
-            <li>A fenti onloadra lefutó fetch az alábbi sort eredményezi
-              <ul>
-                <li id="fetchFirstPostTitle"></li>
-              </ul>
-            </li>
-            <li>A böngészőben megnyitva az index.html-t, láthatjuk, hogy kiment az AJAX kérés</li>
-            <li>A böngésző fentről lefelé dolgozza fel a HTML dokumentumot, és amint script tagre fut,
-              végrehajtja a benne lévő kódot
-            </li>
-            <li>Először a HTML töltődött be, majd megérkezett a script fájl (megérkezett a
-              forrásfájljaink közé), majd vegrehajtódott, és lefutott az AJAX kérés
+        </li>
+        <li>Az ilyen parancsokat külön script fájlban szokás tárolni, és a böngészőt utasítani arra,
+          hogy a script fájlt szerezze meg a szerverről, és futtassa le
+          <ul>
+            <li>index.html-ben
+              <pre>
+  &#60;script src="./src/basic.js"&#62;&#60;/script&#62;
+                </pre>
             </li>
           </ul>
         </li>
+        <li>Async nélkül nem kapjuk meg a fetch eredményét</li>
+        <li>A fenti onload-ra lefutó fetch az alábbi sort eredményezi
+          <ul>
+            <li id="fetchFirstPostTitle"></li>
+            <pre>
+  &#60;li id="fetchFirstPostTitle">&#60;/li>
+            </pre>
+            <li>Ehhez persze Angularban el kellett távolítani a basic.js fájlból az onload függvényt
+              <ul>
+                <li>Ennek oka, hogy nem fog már lefutni
+                  <ol>
+                    <li>Az Angular inicializálódik, betölt az oldal</li>
+                    <li>Valamelyik lifecycle hook-ban hozzáadjuk egy új &#60;script>-et a DOM-hoz</li>
+                    <li>A böngésző már rég túl van az onload eseményen, így a script tartalma már sosem fog lefutni</li>
+                    <pre>
+  this.loadScript('assets/scripts/basic.js');
+
+  private loadScript(src: string) &#123;
+    const script = document.createElement('script');
+    script.src = src;
+    script.onload = () => &#123;
+      console.log('Script loaded and ready.', src);
+    };
+    document.body.appendChild(script);
+  }
+
+  // window.onload = async function () &#123;
+    fetch("https://jsonplaceholder.typicode.com/posts").then(res => res.json()).then(res => document.getElementById('fetchFirstPostTitle').innerHTML = res[0].title);
+  // }
+                    </pre>
+                  </ol>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>A böngészőben megnyitva az index.html-t, láthatjuk, hogy kiment az AJAX kérés</li>
+        <li>A böngésző fentről lefelé dolgozza fel a HTML dokumentumot, és amint script tagre fut,
+          végrehajtja a benne lévő kódot
+        </li>
+        <li>Először a HTML töltődött be, majd megérkezett a script fájl (megérkezett a
+          forrásfájljaink közé), majd végrehajtódott, lefutott az AJAX kérés
+        </li>
       </ul>
-    </li>
-    <li>VSCodeban, üres HTML fájlban egy ! írva, majd a TAB-ot megnyomva a VSC létrehozz egy default HTML5
-      snippetet
     </li>
   </ul>
 </div>
@@ -146,7 +204,7 @@
         <li>Az adat értékéből meg lehet mondani (determinálja), hogy milyen típus, és hogy milyen műveletek
           hajthatók végre rajta
         </li>
-        <li>A boolean "dobozkából" true vagy false érték választható csak</li>
+        <li>A boolean "dobozkából" true, vagy false érték választható csak</li>
       </ul>
     </li>
     <br>
@@ -161,45 +219,55 @@
         </li>
       </ul>
     </li>
-    <li>Szöveges adattipus (string)
-      <ul>
-        <li>Szimpla, vagy dupla (az engine-t nem érdekli) idézőjelek közé írt karakterlánc</li>
-        <li>Műveletek például: karakterek megszámolása, szöveg hozzáfűzése, nagybetűssé tétel</li>
-        <li>"Szia" => String típusú, szia értékű...érték</li>
-      </ul>
-    </li>
-    <li>Szám (number) adattípus
-      <ul>
-        <li>JS nem tesz különbséget tört és egész szám között</li>
-        <li>Műveletek például: hozzádás, kivonás, osztás utáni maradék számítás</li>
-      </ul>
-    </li>
-    <li>Boolean adattípus
-      <ul>
-        <li>Igaz/hamis értékeket reprezentál</li>
-        <li>Két értéket vehet fel: true/false</li>
-        <li>Műveletek például
-          <ul>
-            <li>Logikai és: Két boolean a bemenete, és akkor tér vissza true-val, ha mindkét bemeneti
-              paraméter true
-            </li>
-            <li>Negálás: Az adott boolean értéket változtatja az ellentettjévé</li>
-          </ul>
-        </li>
-        <li>Undefined adattípus
-          <ul>
-            <li>Egy érték a rendszerünkben nincs definiálva</li>
-          </ul>
-        </li>
-        <li>null adattípus
-          <ul>
-            <li>Az érték definiálva van a rendszerünkben, csak null az értéke</li>
-          </ul>
-        </li>
-      </ul>
-    </li>
     <br>
-    <li>A Javascriptben ezeket a típusokat nevezik primitív típusoknak</li>
+    <li>Primitív adattípusok
+      <ul>
+        <li>Szöveges adattípus (string)
+          <ul>
+            <li>Szimpla, vagy dupla (az engine-t nem érdekli) idézőjelek közé írt karakterlánc</li>
+            <li>Műveletek például: karakterek megszámolása, szöveg hozzáfűzése, nagybetűssé tétel</li>
+            <li>"Szia" => String típusú, szia értékű...érték</li>
+          </ul>
+        </li>
+        <li>Szám (number) adattípus
+          <ul>
+            <li>JS nem tesz különbséget tört, és egész szám között</li>
+            <li>Műveletek például: hozzádás, kivonás, osztás utáni maradék számítás</li>
+          </ul>
+        </li>
+        <li>Boolean adattípus
+          <ul>
+            <li>Igaz/hamis értékeket reprezentál</li>
+            <li>Két értéket vehet fel: true/false</li>
+            <li>Műveletek például
+              <ul>
+                <li>Logikai és
+                  <ul>
+                    <li>Két boolean a bemenete, és akkor tér vissza true-val, ha mindkét bemeneti
+                      paraméter true</li>
+                  </ul>
+                </li>
+                <li>Negálás
+                  <ul>
+                    <li>Az adott boolean értéket változtatja az ellentettjévé</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>Undefined adattípus
+              <ul>
+                <li>Egy érték a rendszerünkben nincs definiálva</li>
+              </ul>
+            </li>
+            <li>Null adattípus
+              <ul>
+                <li>Az érték definiálva van a rendszerünkben, csak null az értéke</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
   </ul>
 </div>
 
@@ -209,28 +277,32 @@
     <li>Nem primitív típus</li>
     <li>Azt reprezentálja, hogy valamiből sok van</li>
     <li>Kéz a kézben jár egy másik típussal</li>
-    <li>Array&#60;T&#62; (pl.: Array&#60;string&#62; - tehát sok string)</li>
-    <li>Szintaktika: ['a','b', 'c'] / [1, 2, 3]</li>
+    <li>Array&#60;T&#62; (például Array&#60;string&#62; - tehát sok string)</li>
+    <li>Szintaktika: ['a', 'b', 'c'] / [1, 2, 3]</li>
     <li>A benne lévő értékek a tömb elemei</li>
-    <li>Indexált lista, mindegyik tömbelem rendelkezik indexel, ami 0-ról indul, egyesével növekszik</li>
+    <li>Indexált lista, mindegyik tömbelem rendelkezik index-szel, ami 0-ról indul, egyesével növekszik</li>
     <li>Műveletek például
       <ul>
         <li>Szűrés</li>
         <li>Sorba rendezés</li>
         <li>Új elem hozzáadása</li>
-        <li>Aggregálás: Az adott tömb elemeit egyetlen értékbe vagy összefoglaló értékbe állítjuk össze</li>
+        <li>Aggregálás
+          <ul>
+            <li>Az adott tömb elemeit egyetlen értékbe vagy összefoglaló értékbe állítjuk össze</li>
+          </ul>
+        </li>
         <li>Index alapú kikérés</li>
       </ul>
     </li>
     <li>A műveleteket nem érdekli, hogy a tömbben milyen típusú elemek vannak</li>
-    <li>Javascriptben semmi sem akadályozza meg, hogy eltérő típusokkal tölts fel egy tömböt, de ez a tömbnek
+    <li>JavaScript-ben semmi sem akadályozza meg, hogy eltérő típusokkal töltsünk fel egy tömböt, de ez a tömbnek
       nem a tipikus felhasználása, sőt, veszélyes, más nyelveken ez hibára is fut
     </li>
     <li>Lehetnek többdimenziósak
       <ul>
         <li>A tömb elemei lehetnek további tömbök: Array&#60;Array&#60;number&#62;&#62;</li>
-        <li>Olyan tömb, aminek az elemei számok tömbjek</li>
-        <li>[ [1,2], [3,4], [5,6] ]</li>
+        <li>Olyan tömb, aminek az elemei számok tömbjei</li>
+        <li>[ [1, 2], [3, 4], [5, 6] ]</li>
       </ul>
     </li>
   </ul>
@@ -240,7 +312,7 @@
   <h3 #object data-anchor="object">Object</h3>
   <ul>
     <li>Kulcs-érték párok sorozata</li>
-    <li>Tekinthetünk rá, mint egyfajta szótár (Pythonban dictionary a neve)</li>
+    <li>Tekinthetünk rá, mint egyfajta szótár (Python-ban dictionary a neve)</li>
     <li>A kulcsoknak egyedieknek kell lennie</li>
     <pre>
   &#123;
@@ -254,13 +326,16 @@
     <li>Az adat felcímkézhető, explicit kulcs lévén juthatunk hozzá az értékhez</li>
     <li>Műveletek például
       <ul>
-        <li>lookup: Magyarul kulcs alapú kikérés
+        <li>"lookup"
           <ul>
-            <li>
-              Javascriptben kétféleképpen tehető meg
+            <li>Magyarul kulcs alapú kikérés
               <ul>
-                <li>Pont szintaxis: user.lastName</li>
-                <li>user['lastName']</li>
+                <li> JavaScript-ben kétféleképpen tehető meg
+                  <ul>
+                    <li>Pont szintaxis: user.lastName</li>
+                    <li>user['lastName']</li>
+                  </ul>
+                </li>
               </ul>
             </li>
           </ul>
@@ -274,9 +349,10 @@
       firstName: 'Gábor',
       lastName: 'Kenő',
       age: 30,
+      single: false,
       phoneNumbers: [
-      '+36501234567',
-      '+36508765432'
+        '+36501234567',
+        '+36508765432'
       ]
       address: &#123;
           street: 'Király utca',
@@ -285,6 +361,16 @@
   &#125;
         </pre>
         <li>user.address.street / user['address']['street']</li>
+      </ul>
+    </li>
+    <li>Részben garantált a kulcsok sorrendje (ES6-től), de nem 100%-ig
+      <ul>
+        <li>Általános szabály
+          <ul>
+            <li>Szám kulcsok növekvő sorrendben (de stringként), szöveg kulcsok a beszúrás sorrendjében, szimbólumok a
+              legvégén</li>
+          </ul>
+        </li>
       </ul>
     </li>
   </ul>
@@ -324,7 +410,7 @@
         </li>
         <li>Hajt-e végre mellékhatást (side effect)
           <ul>
-            <li>Amellett, hogy leképez valamit, a rendszerben valami változást
+            <li>Amellett, hogy leképez valamit, a rendszerben valami változást okoz
               <ul>
                 <li>Kiírhat a console-ba</li>
                 <li>Beolvashat, vagy kiírhat adatot a memóriába</li>
@@ -346,7 +432,7 @@
     <br>
     <li>Aritmetikai operátor
       <ul>
-        <li>bináris, infix, side effectet nem végrehajtó
+        <li>bináris, infix, side effect-et nem végrehajtó
           <ul>
             <li>Következetesen jellemző rájuk, hogy két number-t vár bemenetként, és egy number-t ad
               vissza
@@ -357,12 +443,12 @@
         <li>+ - * / %</li>
         <li>
           <pre>
-                            console.log(2 + 4); => 6
-                            console.log(2 - 4); => -2
-                            console.log(2 * 4); => 8
-                            console.log(2 / 4); => 0.5
-                            console.log(7 % 3); => 1
-                        </pre>
+  console.log(2 + 4); => 6
+  console.log(2 - 4); => -2
+  console.log(2 * 4); => 8
+  console.log(2 / 4); => 0.5
+  console.log(7 % 3); => 1    // maradék = 1
+           </pre>
         </li>
         <li>A matematika szabályait követik, tehát a szorzás művelet előbb hajtósik végre, mint az
           összeadás, de zárójellel felülírható
@@ -377,23 +463,27 @@
         <li>== (equality)
           <ul>
             <li>Megnézi, hogy két érték megegyezik-e, vagy sem</li>
-            <li>Ha számot stringgel hasonlítunk össze, és egyezés van, akkor true-t kapunk vissza</li>
+            <li>Ha számot string-gel hasonlítunk össze, és egyezés van, akkor true-t kapunk vissza</li>
             <li>console.log(2 == '2') => true</li>
-            <li>A nyelv gyenge típusosságából adódik, átkonvertálja a stringet számmá</li>
-            <li>console.log(1 == true) => true, mert a true-t átalakítja 1-esre</li>
+            <li>A nyelv gyenge típusosságából adódik, átkonvertálja a -et számmá</li>
+            <li>console.log(1 == true) => true, mert a true-t átalakítja 1-esre
+              <ul>
+                <li>A false értéke pedig 0-vá alakul</li>
+              </ul>
+            </li>
           </ul>
         </li>
         <li>!=
           <ul>
-            <li>Azt vizsgálja, hogy a két érték nem egyenlő-e</li>
+            <li>Azt vizsgálja, hogy a két érték nem egyenlő-e (tehát eltér)</li>
           </ul>
         </li>
         <li>=== (identity)
           <ul>
             <li>A típusátalakítást nem csinálja meg</li>
             <li>Szigorúbb, mint az equality</li>
-            <li>console.log(2 == '2') => false</li>
-            <li>Stringek összehasonlítására is lehet használni</li>
+            <li>console.log(2 === '2') => false</li>
+            <li>String-ek összehasonlítására is lehet használni</li>
           </ul>
         </li>
         <li>!==
@@ -429,19 +519,19 @@
     </li>
     <li>Logikai operátorok
       <ul>
-        <li>Bemenetként booleant várnak, és a kimenetük is boolean</li>
+        <li>Bemenetként boolean-t várnak, és a kimenetük is boolean</li>
         <li>(boolean, boolean) => boolean</li>
         <li>Lesz köztük egy, ami unary (boolean) => boolean</li>
         <br>
         <li>Logikai ÉS
           <ul>
-            <li>console.log(true && false)</li>
+            <li>console.log(true && false) (false)</li>
             <li>Csak akkor ad vissza true-t, ha minden bemeneti értéke true</li>
           </ul>
         </li>
         <li>Logikai VAGY
           <ul>
-            <li>console.log(true || false)</li>
+            <li>console.log(true || false) (true)</li>
             <li>Két pipe karakter</li>
             <li>A beérkező boolean-ok közül az egyik true, akkor a kimenet is true</li>
           </ul>
@@ -457,10 +547,12 @@
     </li>
     <li>String operátor
       <ul>
-        <li>Szövegek összefűzésére/konkatenálás (concatenate)</li>
-        <li>Tulajdonképpen az aritmetikai operátorok + jele, csak stringet fűz össze</li>
+        <li>Szövegek összefűzésére/konkatenálására (concatenate) alkalmas</li>
+        <li>Tulajdonképpen az aritmetikai operátorok + jele, csak string-et fűz össze</li>
         <li>
-          <pre>console.log('Hello' + ' World') => Hello World</pre>
+          <pre>
+  console.log('Hello' + ' World') => Hello World
+          </pre>
         </li>
       </ul>
     </li>
@@ -471,22 +563,25 @@
         <li>(boolean, any, any) => any</li>
         <li>A boolean dönti el, hogy a kimenet a második, vagy a harmadik bemeneti paraméter legyen</li>
         <li>
-          <pre>console.log(true ? 'második' : 'harmadik') => "második"</pre>
-          <pre>console.log(false ? 'második' : 'harmadik') => "harmadik"</pre>
+          <pre>
+  console.log(true ? 'második' : 'harmadik') => "második"
+
+  console.log(false ? 'második' : 'harmadik') => "harmadik"
+          </pre>
         </li>
       </ul>
     </li>
-    <br>
     <li>Az egyes operátor családok kompatibilisek lehetnek egymással
       <ul>
         <li>Több operátor felhasználásával nagyobb kifejezések is építhetők</li>
-        <li>console.log(2 === 2 && 1 > 5) => console.log(true && false) => console.log(false)</li>
-        <li>Ha több operátorral dolgozunk egyszerre, az operátoroknak van egy precedenciájuk
+        <li>console.log(2 === 2 && 1 > 5) => console.log(true && false) => false</li>
+        <li>Ha több operátorral dolgozunk egyszerre, az operátoroknak van egy precedenciájuk (elsőség)
           <ul>
-            <li>A Végrehajtódás sorrendje meg van határozva</li>
+            <li>A végrehajtódás sorrendje meg van határozva</li>
             <li>Az && operátor előbb hajtódik végre, mint az ||</li>
             <li>Zárójelekkel felülírható</li>
-            <li>console.log(2 === 2 && (1 > 5) || true)</li>
+            <li>console.log(2 === 2 && (1 > 5) || true) ==> console.log(true && false || true) ==> console.log(false ||
+              true) ==> true</li>
           </ul>
         </li>
       </ul>
@@ -506,24 +601,31 @@
             <li>Típus annotációját tekintve, vár egy változót, és egy bármilyen adattípust</li>
             <li>(var, any) => any</li>
             <li>Példa</li>
-            <pre>var valtozo;</pre>
+            <pre>
+  var valtozo;
+            </pre>
             <li>A valtozo a memóriában létrehozott kulcs, amihez értékek fűzhetők hozzá</li>
             <li>Később, futásidőben elő lehet szedni a kulcs értékét</li>
             <li>A fenti változóhoz automatikusan hozzárendelődik egy undefined érték</li>
-            <pre>valtozo = 'hello'</pre>
+            <pre>
+  valtozo = 'hello'
+            </pre>
             <li>Innentől kezdve a változó már nem undefined, hanem egy string (hello)</li>
             <li>Az értéke nem determinisztikus</li>
             <li>Az assignment operátorral már az időt is bevittük a rendszerbe</li>
-            <li>A Javascriptre jellemző, hogy dinamikus típusos nyelv
+            <li>A JavaScript-re jellemző, hogy dinamikus típusos nyelv
               <ul>
                 <li>A változókba más típusú érték is beköthető</li>
                 <li>Statikus típusú nyelvekben ilyet nem lehet</li>
-                <pre>valtozo = 3</pre>
-                <li>Fentebb stringet helyeztünk a változóba, az imént pedig numbert</li>
+                <pre>
+  valtozo = 3
+                </pre>
+                <li>Fentebb string-et helyeztünk a változóba, az imént pedig number-t</li>
               </ul>
             </li>
           </ul>
         </li>
+        <br>
         <li>Increment operátor
           <ul>
             <li>++</li>
@@ -538,6 +640,15 @@
             <li>postfix</li>
             <li>valtozo--</li>
             <li>A változó értékét csökkenti eggyel</li>
+            <li>Pre-dekrementális operáció is létezik (csak úgy, mint pre-inkrementális)
+              <ul>
+                <pre>
+  let valtozo = 5;
+  console.log(valtozo--);  // a kimenet: 5, mert először használja az értéket, és csak utána csökkenti
+  console.log(valtozo);    // a kimenet: 4, mert utána csökkentette
+                </pre>
+              </ul>
+            </li>
           </ul>
         </li>
         <li>+=
@@ -546,7 +657,7 @@
             <li>A memóriában egy meghatározott, explicit értékkel változtatja meg az értéket</li>
             <pre>szam += 10; => 15</pre>
             <li>Tehát a szam valtozó értéke immáron 15</li>
-            <li>Stringekkel is működik, olyan, mint a hozzáfűzés
+            <li>String-ekkel is működik, olyan, mint a hozzáfűzés
               <ul>
                 <li>var nemszam = 'hello'</li>
                 <li>nemszam += ' world'</li>
@@ -576,7 +687,7 @@
   <h3 #ticketbuyingapp data-anchor="ticketbuyingapp">Ticket app</h3>
   <ul>
     <li>
-      <button id="promptListener">Prompt</button>
+      <button class="btn btn-secondary" id="promptListener">Prompt</button>
       <pre>
   const promptButton = document.getElementById("promptListener");
   promptButton.addEventListener("click", showPrompt);
@@ -587,7 +698,7 @@
       </pre>
     </li>
     <li>
-      <button id="alertListener">Alert</button>
+      <button class="btn btn-secondary" id="alertListener">Alert</button>
       <pre>
   const alertButton = document.getElementById("alertListener");
   promptButton.addEventListener("click", showAlert);
@@ -598,7 +709,8 @@
       </pre>
     </li>
     <li>
-      <button id="ticketingListener">Jegyvásárlás</button>
+      <button class="btn btn-secondary" id="ticketingListener">Jegyvásárlás</button>
+      <br>
       <ul>
         <li>Beolvastatjuk a prompt-tal a felhasználóval, hogy
           <ul>
@@ -625,12 +737,12 @@
           <pre>
   function showTicketingPrompt() &#123;
     const quantity = prompt('Hány darab jegyet szeretnél?');
-    const type = prompt('Felnőtt, vagy diákjegyet szeretnél vásárolni? (adult | student)');
+    const type = prompt('Felnőtt, diák, vagy nyugdíjas jegyet szeretnél vásárolni? (adult | student | retired)');
 
     var types = &#123;
           student: 300,
           adult: 350,
-          retired: 280
+          retired: 250
       &#125;
 
       var price = types[type]
@@ -650,37 +762,48 @@
 <div>
   <h3 #loops data-anchor="loops">Loops</h3>
   <ul>
-    <li>Kontroll stuktúra, avagy vezérkési szerkezet: Olyan nyelvi eszközök, amelyek a kód futását befolyásolja
+    <li>Kontroll struktúra, avagy vezérlési szerkezet
       <ul>
+        <li>Olyan nyelvi eszközök, amelyek a kód futását befolyásolják</li>
         <li>Ciklikus működést eredményez</li>
-        <li>Szabályozza, hogy bizonyos sorok lefussanak-e vagy sem</li>
+        <li>Szabályozza, hogy bizonyos sorok lefussanak-e, vagy sem</li>
       </ul>
     </li>
-    <li>Adott egy tömb, amiben számok vannak, és mi szeretnénk megkapni azt, hogy hány darab páros számot
+    <li>Adott egy tömb, amiben számok vannak, és szeretnénk megkapni azt, hogy hány darab páros számot
       tartalmaz a tömb
       <ul>
-        <pre>var szamok = [2, 4, 13, 4, 6, 42];</pre>
-        <pre>var parosakSzama = 0;</pre>
-        <pre>parosakSzama += szamok[0] % 2 === 0 ? 1 : 0;</pre>
-        <li>Ha lefolytatjuk az utolsó sort minden elemre, akkor megkapjuk az ereményt</li>
-        <li>A probléma, hogy így a kódunk nagyon repetitív lett</li>
-        <li>A kontroll struktúrák automatizálást valósítanak meg, tehát futtassa addig a kódot, amíg
-          bizonyos feltétel meg nem valósul
-        </li>
+        <pre>
+  var szamok = [2, 4, 13, 4, 6, 42];
+
+  var parosakSzama = 0;
+
+  parosakSzama += szamok[0] % 2 === 0 ? 1 : 0;
+
+  console.log(parosakSzama);
+
+  ↓↓↓↓↓
+
+  1
+        </pre>
+        <li>Ha lefuttatjuk az utolsó sort minden elemre, akkor megkapjuk az ereményt</li>
+        <li>A probléma, hogy így a kódunk nagyon repetitív lesz</li>
+        <li>A kontroll struktúrák automatizálást valósítanak meg, tehát addig futtatják kódot, amíg bizonyos feltétel
+          meg nem valósul</li>
       </ul>
     </li>
+    <br>
     <li>A kontroll egyik családja
       <ul>
-        <li>Ciklusok (loop)
+        <li>Ciklusok (loops)
           <ul>
             <li>While ciklus (loop)
               <ul>
                 <pre>
-while() &#123;
+  while() &#123;
 
-&#125;
+  &#125;
                 </pre>
-                <li>A kapcsos zárójelen belüli rész a ciklus bodyja</li>
+                <li>A kapcsos zárójelen belüli rész a ciklus body-ja</li>
                 <li>A while-nak szüksége van egy bemeneti értékre</li>
                 <li>Addig fogja a body-t futtatni, amíg a feltétel hamis nem lesz</li>
                 <li>Végtelen ciklus hozható létre
@@ -704,6 +827,12 @@ while() &#123;
     paratlanokSzama += szamok[index] % 2 === 1 ? 1 : 0;
     index++;
   &#125;
+
+  console.log(paratlanokSzama);
+
+  ↓↓↓↓↓
+
+  1
                     </pre>
                     <li>Az eredmény 1 lesz</li>
                   </ul>
@@ -734,6 +863,12 @@ while() &#123;
   for (var i = 0; i &#60; 6; i++) &#123;
     paratlanokSzamaUjra += szamok[i] % 2 === 1 ? 1 : 0;
   &#125;
+
+  console.log(paratlanokSzamaUjra);
+
+  ↓↓↓↓↓
+
+  1
                   </pre>
                 </li>
                 <li>Saját megoldás rá úgy, hogy a tömb elemeinek számát nézzük a ciklusnál
@@ -742,23 +877,19 @@ while() &#123;
   var paratlanokSzamaSajat = 0;
   
   for (var i = 0; i &#60; (szamok.length); i++) &#123;
-      console.log(i); debugger;
+      console.log(i);
+      debugger;         // itt fog megállni a futás
       paratlanokSzamaSajat += szamok[i] % 2 === 1 ? 1 : 0;
   &#125;
                     </pre>
-                    <li>A debuggerrel a DevTools Source fülén követhetjük nyomon, hogy jelen
-                      példa esetében milyen érték szerepel az i-ben
-                    </li>
-                    <li>A ciklus feltételét a videóban is megváltozott
+                    <li>A debugger-rel a DevTools Source fülén követhetjük nyomon a ciklust
                       <ul>
-                        <li>Futásidőben hozzájuthatunk a tömbök elemszámához</li>
-                        <li>A length kulcs alapú kikéréssel megkapjuk a tömb elemszámát
-                          (szamok.length)
-                        </li>
-                        <li>While ciklus kapcsán is végrehajtható ez a praktikus művelet
-                        </li>
+                        <li>A Source fülön a Global accordion-t lenyitva látható, hogy az i értéke növekszik
+                          ciklusonként</li>
                       </ul>
                     </li>
+                    <li>Futásidőben hozzájuthatunk a tömbök elemszámához</li>
+                    <li>A length kulcs alapú kikéréssel megkapjuk a tömb elemszámát (szamok.length)</li>
                   </ul>
                 </li>
               </ul>
@@ -766,7 +897,7 @@ while() &#123;
             <li>For - of ciklus
               <ul>
                 <li>A legspecifikusabb működésű ciklus</li>
-                <li>Dedikáltan arra jó, hogy egy tömb elemein végigiteráljunk</li>
+                <li>Dedikáltan arra jó, hogy egy tömb elemein végig iteráljunk</li>
                 <li>A struktúra minden elemet számba vesz, és biztosít egy változót, ahol hozzá
                   lehet jutni az adott tömbelemhez
                 </li>
@@ -808,7 +939,7 @@ while() &#123;
 <div>
   <h3 #conditionalstatements data-anchor="conditionalstatements">Conditional statements</h3>
   <ul>
-    <li>A kontroll stuktúrák másik családja</li>
+    <li>A kontroll struktúrák másik családja</li>
     <li>Bizonyos sor kódok lefussanak-e, vagy sem</li>
     <li>Típusai
       <ul>
@@ -822,25 +953,24 @@ while() &#123;
   &#125;
             </pre>
             <li>A zárójelek közé jön a boolean feltétel</li>
-            <li>Amennyiben igaz, az if statement bodyja lefut</li>
+            <li>Amennyiben igaz, az if statement body-ja lefut</li>
             <li>Az else ág opcionális</li>
             <li>Boolean-ra kiértékelődő kifejezés kerül a feltételbe</li>
-            <li>
-              <button id="promptYourAge">Életkor propt</button>
-            </li>
+            <br>
+            <button class="btn btn-secondary" id="promptYourAge">Életkor propt</button>
             <pre>
   function promptYourAgeFunction() &#123;
       var age = prompt('Add meg az életkorod:')
 
       if (age &#60;= 20) &#123;
-                alert('Fiatal vagy!');
-                else if (age == 20) &#123; // Három egyenlőségjel esetén (identity) nem működik, ezekszerint a beírt érték string
-                    alert('Pont 20 éves vagy!');
-                &#125;
-                else &#123;
-      alert('Öreg vagy!');
-                &#125;
-            &#125;
+          alert('Fiatal vagy!');
+
+          else if (age == 20) &#123; // Három egyenlőségjel esetén (identity) nem működik, ezekszerint a beírt érték string
+              alert('Pont 20 éves vagy!');
+          &#125; else &#123;
+              alert('Öreg vagy!');
+          &#125;
+      &#125;
   &#125;
             </pre>
             <li>Az if statement kiegészíthető else if ágakkal
@@ -859,35 +989,35 @@ while() &#123;
         </li>
         <li>Switch statement
           <ul>
-            <li>Nagyon hasonló az if statementhez</li>
+            <li>Nagyon hasonló az if statement-hez</li>
             <li>Tulajdonképpen kapcsoló</li>
             <li>Esetszétválasztásra alkalmatos</li>
             <li>Két módon lehet használni
               <ul>
                 <li>Explicit egyezőség vizsgálata
                   <ul>
-                    <li>String vagy szám egyezőségét vizsgáljuk</li>
-                    <li>A bemeneti értéket meg kell adni, majd az egyes eseteket megadni</li>
+                    <li>String, vagy szám egyezőségét vizsgáljuk</li>
+                    <li>A bemeneti értéket, majd az egyes eseteket meg kell adni</li>
                     <pre>
   function promptYourAgeWithSwitchFunction() &#123;
       var age = prompt('Add meg az életkorod:')
 
       switch (age) &#123;
-                case 18:
-                    alert('18 éves vagy!')
-                    break;
-                case 20:
-                    alert('20 éves vagy!')
-                    break;
-                default:
-                    alert('Sem 18, sem 20 éves nem vagy!');
+          case 18:
+            alert('18 éves vagy!')
+            break;
+          case 20:
+            alert('20 éves vagy!')
+            break;
+          default:
+             alert('Sem 18, sem 20 éves nem vagy!');
       &#125;
   &#125;
                     </pre>
-                    <li>
-                      <button id="promptYourAgeWithSwitch">Switch age prompt</button>
-                    </li>
-                    <li>Az egyes state-ekbe break statementet kell írni, mert különben a
+                    <button class="btn btn-secondary" id="promptYourAgeWithSwitch">Switch age prompt</button>
+                    <br>
+                    <br>
+                    <li>Az egyes state-ekbe break statement-et kell írni, mert különben a
                       végrehajtódás
                       átesik a következő case-be
                     </li>
@@ -896,17 +1026,27 @@ while() &#123;
                       esetében az else)
                     </li>
                     <li>Defaulthoz nem szükséges break;</li>
-                    <li>Kilogolva az age-t, láthatjuk, hogy a prompt string értéket visz be
+                    <li>Kilogolva az age-et, láthatjuk, hogy a prompt string értéket visz be
                       <ul>
-                        <li>Vagy átalakítjuk a case-eket, hogy stringeket figyeljen ('18',
+                        <li>Vagy átalakítjuk a case-eket, hogy string-eket figyeljen ('18',
                           '20')
                         </li>
-                        <li>Vagy az age-t alakítjuk át number típusra
+                        <li>Vagy az age-et alakítjuk át number típusra
                           <ul>
-                            <li>Helytelen: switch (age as number) => Type assertion csak
-                              typescriptben van
+                            <li>Helytelen
+                              <ul>
+                                <li>switch (age as number)
+                                  <ul>
+                                    <li>Type Assertion csak TypeScript-ben van</li>
+                                  </ul>
+                                </li>
+                              </ul>
                             </li>
-                            <li>Helyes: switch (Number(age))</li>
+                            <li>Helyes
+                              <ul>
+                                <li>switch (Number(age))</li>
+                              </ul>
+                            </li>
                           </ul>
                         </li>
                       </ul>
@@ -915,12 +1055,12 @@ while() &#123;
                 </li>
                 <li>Másik féle mód, amikor true kerül a switch bemenetére, és a case-eknek
                   feltételeket adunk
+                  <br>
+                  <br>
                   <ul>
-                    <li>
-                      <button id="promptYourAgeWithSwitchNonExplicit">Switch age prompt
-                        2
-                      </button>
-                    </li>
+                    <button class="btn btn-secondary" id="promptYourAgeWithSwitchNonExplicit">
+                      Switch age prompt 2
+                    </button>
                     <pre>
   function promptYourAgeWithSwitchNonExplicit() &#123;
         var age = prompt('Add meg az életkorod:');
@@ -941,11 +1081,10 @@ while() &#123;
                     </pre>
                     <li>A jegyvásárlós projekt felokosítása
                       <ul>
-                        <li>
-                          <button id="ticketingListenerWithSwitch">Ticketing
-                            felokosítva
-                          </button>
-                        </li>
+                        <br>
+                        <button class="btn btn-secondary" id="ticketingListenerWithSwitch">
+                          Ticketing felokosítva
+                        </button>
                         <pre>
   function ticketingListenerWithSwitchFunction(firstTime = true) &#123;
       var userExit;
@@ -985,7 +1124,7 @@ while() &#123;
                         <li>Ha nem adult, student, vagy retired közül választunk típust,
                           akkor a price-unk undefined
                         </li>
-                        <li>Kiegészítettem függvény bemeneti értékkel, ami alapból true</li>
+                        <li>Kiegészíthető a függvény bemeneti értékkel, ami alapból true</li>
                         <li>Amennyiben rossz jegytípust választ a user, úgy újra meghívódik
                           a prompt függvény, viszont az első kérdés az, hogy ki akar-e
                           lépni
@@ -1043,7 +1182,7 @@ while() &#123;
             <li>Előnye, hogy a "receptet" csak egyszer tároltuk el a memóriába, innentől, ha szükségünk
               van rá, újra lefuttatjuk
             </li>
-            <li>Azzal, hogy elneveztük a függvényt, az utasítások listája fölött egy absztrakciós réteg
+            <li>Azzal, hogy elneveztük a függvényt, az utasítások listája fölött egy absztrakciós réteget
               is készítettünk
             </li>
             <li>
@@ -1057,7 +1196,7 @@ while() &#123;
   function susdMegARantottat() &#123;
       console.log('Önts olajat a serpenyőbe');
       console.log('Adj hozzá 3 tojást');
-      console.log('Adj hozzá fűszereket'); => Kicserélhető: adjHozzaFuszereket();
+      console.log('Adj hozzá fűszereket');      // Kicserélhető: adjHozzaFuszereket();
       console.log('Süsd meg');
       console.log('Kész');
   &#125;
@@ -1100,6 +1239,10 @@ while() &#123;
                 <li>(number) => number</li>
                 <pre>
   console.log(addOne(5));
+
+  ↓↓↓↓↓
+
+  6
                  </pre>
                 <li>A függvény csak leképezi az input adatot output adattá, nem lép interakcióba
                   semmivel
@@ -1111,13 +1254,17 @@ while() &#123;
                   <ul>
                     <pre>
   console.log(addOne(addOne(addOne(3))));
+
+  ↓↓↓↓↓
+
+  6
                     </pre>
                     <li>A visszatérő értéket újra odaadjuk az addOne függvénynek</li>
                   </ul>
                 </li>
               </ul>
             </li>
-            <li>Bizonyos tekintetben table lookup-ként is felfogható (táblázatból való kikeresést)
+            <li>Bizonyos tekintetben table lookup-ként is felfogható (táblázatból való kikeresés)
               <ul>
                 <pre>
   function addTwo(szam)&#123;
@@ -1127,6 +1274,20 @@ while() &#123;
           2: 4,
       &#125;[szam];
   &#125;
+
+  // SAME AS
+
+  anonimObj = &#123;
+    0: 2,
+    1: 3,
+    2: 4,
+  }
+
+  console.log(anonimObj[1])
+
+  ↓↓↓↓↓
+
+  3
                 </pre>
                 <li>Objektumból dinamikus kulcs alapján kikeresett értékkel térünk vissza</li>
                 <li>Beérkezik a szám, és kikeresi a táblázatból, hogy mi a teendője, és
@@ -1136,7 +1297,11 @@ while() &#123;
                 <li>Egyfajta kulcs alapú kikérés az objektumból</li>
                 <li>Szintén építhető pipeline
                   <pre>
-  console.log(addTwo(addTwo(0))); => 4 lesz az eredménye
+  console.log(addTwo(addTwo(0)));
+
+  ↓↓↓↓↓
+
+  4
                 </pre>
                 </li>
               </ul>
@@ -1146,9 +1311,9 @@ while() &#123;
       </ul>
     </li>
   </ul>
-  <li>A javascriptben a function az egy úgynevezett first class citizen
+  <li>A JavaScript-ben a function az egy úgynevezett First Class Citizen
     <ul>
-      <li>A függvény úgy viselkedik, mint az összes több típus (number, string, object...)</li>
+      <li>A függvény úgy viselkedik, mint az összes többi típus (number, string, object, stb...)</li>
       <li>Tehát változóhoz köthetőek, anonim function formájában</li>
       <li>Egy függvény bemeneti paramétere lehet egy másik függvény</li>
       <li>Függvényből visszatérni is lehet függvénnyel</li>
@@ -1161,7 +1326,11 @@ while() &#123;
       return szam + 3;
   &#125;
 
-  console.log(addThree(4)); // 7
+  console.log(addThree(4));
+  
+  ↓↓↓↓↓
+
+  7
            </pre>
           <li>A különbség az a nem anonim függvényekkel szemben, hogy amíg a deklarált, névvel
             ellátott függvények bármikor meghívhatók, a névtelen függvények esetében csak a
@@ -1171,6 +1340,7 @@ while() &#123;
             memóriába)
             <pre>
   // addThree
+
   ƒ (szam) &#123;
       return szam + 3;
   &#125;
@@ -1196,40 +1366,40 @@ while() &#123;
         <li>Hozzáférést ad a böngésző egyes komponenseihez</li>
         <li>Futásidőben él a memóriában, és hozzá lehet férni</li>
         <pre>
-  console.log(window.object)
+  console.log(window)   // objektum
         </pre>
         <ul>
           <li>Megtalálhatjuk a console nevű kulcsát</li>
           <li>A console.log() függvényt is itt található meg</li>
+          <br>
+          <img src="assets/imgs/js_window_console.png" width="100%">
+          <br>
+          <br>
         </ul>
         <li>Az egyes kulcsok által hozzáférhetünk egyes részlegekhez</li>
         <li>Egyes funkcionalitások a kulcsok alatt függvények formájában is megjelennek (hozzárendelhetjük
           változóhoz, be lehet dobni függvénybe, vissza lehet térni vele függvényből, vagy objektumban be
           lehet kötni kulcsként)
         </li>
-        <li>
-          <pre>
+        <pre>
   var window = &#123;
-  console: &#123;
+      console: &#123;
           log: function(msg) &#123;
-      // kilogolja az üzenetet
+              // kilogolja az üzenetet
           &#125;
       &#125;
   &#125;
           </pre>
-          <ul>
-            <li>Ha meg akarnánk hívni ezt a függvényt</li>
-            <pre>
+        <li>Ha meg akarnánk hívni ezt a függvényt</li>
+        <pre>
   window.console.log('Szia');
             </pre>
-            <li>A window objektum kulcsaira nem kell külön hivatkoznunk, működik a console.log('Szia');
-              is
-            </li>
-            <li>A window globális objektum a böngésző kontextusában</li>
-            <li>Minden más funkcionalitás, ami a böngésző egy-egy részét vezérli, A window object alatt
-              található meg
-            </li>
-          </ul>
+        <li>A window objektum kulcsaira nem kell külön hivatkoznunk, működik a console.log('Szia');
+          is
+        </li>
+        <li>A window globális objektum a böngésző kontextusában</li>
+        <li>Minden más funkcionalitás, ami a böngésző egy-egy részét vezérli, a window object alatt
+          található meg
         </li>
       </ul>
     </li>
@@ -1239,9 +1409,11 @@ while() &#123;
   <ul>
     <li>A document kulcs alatt lévő objektum</li>
     <li>A HTML dokumentumot tudjuk vele vezérelni</li>
-    <li>A document objecten keresztül minden egyes element minden egyes attribútumához hozzáférésük van
+    <li>A document object-en keresztül minden egyes element minden egyes attribútumához hozzáférésük van
     </li>
     <li>Hozzunk létre a HTML body-jában egy div-et
+      <br>
+      <br>
       <div style="width: 100px; height: 100px; background-color: aqua">box1 (original)</div>
       <div style="width: 100px; height: 100px; background-color: aqua">box2 (modified)</div>
       <div style="width: 100px; height: 100px; background-color: aqua">box2 (click)</div>
@@ -1250,25 +1422,34 @@ while() &#123;
   &#60;div style="width: 100px; height: 100px; background-color: aqua"&#62;&#60;/div&#62;
         </pre>
         <li>Ha megvizsgáljuk a window.document alatt lévő értéket (console-ba: window), lejjebb
-          görgőzve az all tartalmazza az összes HTML element javascriptes reprezentacióját
+          görgőzve az all tartalmazza az összes HTML element JavaScript-es reprezentacióját
           <ul>
-            <li>Köztük van a létrehozott a létrehozott element, aminek a style kulcsa alatt
-              láthatjuk a div-be írt stílusokat
+            <pre>
+  window // a document kulcs alatti all kulcsban találjuk az összes elemet
+            </pre>
+            <li>Köztük van a létrehozott (box1) element is, aminek a style kulcsa alatt
+              láthatjuk a div-be írt inline stílust, az aqua háttérszínt
             </li>
-            <li>Ha javascript kóddal megváltoztatjuk a kulcsok alatt lévő értékeket, vagy
+            <br>
+            <img src="assets/imgs/js_document_box1.png" width="100%">
+            <br>
+            <br>
+            <li>Ha JavaScript kóddal megváltoztatjuk a kulcsok alatt lévő értékeket, vagy
               bármely más attribútum kapcsán valami értéket, a böngésző ezt észreveszi, és
-              újra renderelt az oldalt
+              újra rendereli az oldalt
             </li>
             <li>Az egyes kulcsok fölé húzva az egeret a DevTools Console fülén, miután beírtuk a
-              window parancsot, megjelenik a kulcsos index alapú kikéréseket
+              window parancsot, megjelenik a kulcsos index alapú kikérés
             </li>
             <li>JS fájlban változtassuk meg a dobozunk háttérszínét
               <ul>
-                <li>document.all[647].style.backgroundColor = "red"</li>
-                <li>Megjegyzés: A módosítást settimeout-ba raktam</li>
+                <pre>
+  document.all[800].style.backgroundColor = "red";
+                </pre>
+                <li>A stílusmódosítás a valóságban setTimeout-ba került</li>
                 <li>Villanás erejéig látszik, hogy kék színnel kezdte a doboz a
-                  pályafutását, de mi javascript kóddal megmódosítottuk a színét ennek az
-                  elemnek (settimeout nélkül is)
+                  pályafutását, de mi JavaScript kóddal megmódosítottuk a színét ennek az
+                  elemnek (setTimeout nélkül is)
                 </li>
                 <li>Mindig arra van szükség, hogy hozzájussunk az adott elementet
                   reprezentáló objektumhoz, hogy bekössünk értékeket
@@ -1279,12 +1460,12 @@ while() &#123;
                     <li>Ilyen például az onclick kulcs</li>
                     <li>Ha azt szeretnénk, hogy gombnyomásra legyen piros a doboz</li>
                     <pre>
-  document.all[648].onclick = function() &#123;
-      // Itt bármi futtatható
-      document.all[648].style.backgroundColor = "Red"
+  document.all[801].onclick = function() &#123;
+      // itt bármi futtatható
+      document.all[801].style.backgroundColor = "green"
   &#125;
                     </pre>
-                    <li>Szintén kellett egy kis settimeout</li>
+                    <li>Szintén kellett egy kis setTimeout</li>
                     <li>Az elem onclick kulcsa alá bekötöttünk egy funkcionalitást, de ez még nem futott le, nem lett
                       még meghívva
                     </li>
@@ -1296,11 +1477,11 @@ while() &#123;
         </li>
       </ul>
     </li>
-    <li>Bármikor, amikor interaktivitást szeretnél javascripttel, három dologra van szükség
+    <li>Bármikor, amikor interaktivitást szeretnénk JavaScript-tel, három dologra van szükség
       <ul>
-        <li>Az adott element javascriptes reprezentációjára</li>
-        <li>Milyen esemény kapcsán akarsz kódot futtatni</li>
-        <li>Milyen kódot akarsz futtatni</li>
+        <li>Az adott element JavaScript-es reprezentációjára</li>
+        <li>Milyen esemény kapcsán akarunk kódot futtatni</li>
+        <li>Milyen kódot akarunk futtatni</li>
       </ul>
     </li>
     <li>A document.all[5] nem a legpraktikusabb módja az egyes elementek document object kiválasztására,
@@ -1312,9 +1493,9 @@ while() &#123;
 <div>
   <h3 #uiflow data-anchor="uiflow">UI flow</h3>
   <ul>
-    <li>User interface
+    <li>User Interface
       <ul>
-        <li>Amit a böngészőben látunk, az a User interface, avagy UI</li>
+        <li>Amit a böngészőben látunk, az a User Interface, avagy UI</li>
         <li>Az a felület, amivel a felhasználó interakcióba lép</li>
       </ul>
     </li>
@@ -1326,15 +1507,15 @@ while() &#123;
         <li>Egy egyszerű drag&drop esetén, ahol 3 dobozt húzogathatunk a képernyőn, a state tartalmazza a
           dobozok koordinátáit (x, y, z), és azt, hogy melyik van éppen drag-elve
         </li>
-        <li>A programjainkban mindig van state definiálva, és a User interface-en változtatható dolgok a
+        <li>A programjainkban mindig van state definiálva, és a User Interface-en változtatható dolgok a
           state leképződései
         </li>
         <li>Bármilyen adatstruktúra lehet, nem feltétlenül objektum</li>
         <li>A state nem egy statikus adatstruktúra, hanem futás időben a memóriában folyamatosan felülíródik
-          a user interface eseményei alapján
+          a User Interface eseményei alapján
         </li>
         <li>Ha a felhasználó különféle elemmel interakcióba lép, manipulálja az alkalmazás állapotát</li>
-        <li>Nekünk kell megírni, hogy a felhasználó tevékenységei milyen értékváltozást okozzon</li>
+        <li>Nekünk kell megírni, hogy a felhasználó tevékenységei milyen értékváltozást okozzanak</li>
         <li>Controller
           <ul>
             <li>Az eseménykezelőket, és a state-et nevezzük így</li>
@@ -1342,11 +1523,12 @@ while() &#123;
         </li>
       </ul>
     </li>
+    <br>
     <li>Template (sablon)
       <ul>
         <li>Eléri, hogy az adatstruktúrából konkrét elemek legyenek</li>
         <li>Alapvetően HTML elemek vannak itt</li>
-        <li>Az itt leírt elemek képzik a UI statikus részét, tehát a 3 dobozos drag&drop-ot tekintve a
+        <li>Az leírt elemek képzik a UI statikus részét, tehát a 3 dobozos drag&drop-ot tekintve a
           dobozokat, a dobozok színeit, méretét, tehát a kirajzolt tartalmat
         </li>
         <li>A dobozok pozíciója viszont változik, dinamikus</li>
@@ -1357,7 +1539,7 @@ while() &#123;
         </li>
         <li>A sablonban egyszerű control struktúrák is lehetnek
           <ul>
-            <li>Akár if statementek, ciklusok</li>
+            <li>Akár if statement-ek, ciklusok</li>
             <li>Tipikusan, ha az állapotban egy tömbnyi elem van jelen, akkor azok állapotát ciklussal
               szokás kirajzolni
             </li>
@@ -1368,27 +1550,29 @@ while() &#123;
     <br>
     <li>Renderelés
       <ul>
-        <li>
-          Az egész művelet sorozatot, tehát a state-et alapul véve, egy sablon összeollúzunk, dinamikus
-          adatokat felhasználva, és akár control struktúrákat is futtatva
+        <li>Művelet sorozat</li>
+        <li>A state-et alapul véve egy sablont összeollózunk, dinamikus adatokat felhasználva, és akár control
+          struktúrákat is futtatva
         </li>
       </ul>
     </li>
+    <br>
     <li>Komponens
       <ul>
-        <li>A controllert és a sablon logikát összefoglalóan komponensnek hívjuk</li>
+        <li>A controller-t, és a sablon logikát összefoglalóan komponensnek hívjuk</li>
         <li>Angular
           <ul>
-            <li>A controller és a template 2 külön fájlban van definiálva (tipikusan)</li>
+            <li>A controller, és a template 2 külön fájlban van definiálva (tipikusan)</li>
           </ul>
         </li>
         <li>React
           <ul>
-            <li>A controllert és a template-et 1 fáljban kell definiálni (tipikusan)</li>
+            <li>A controller-t, és a template-et 1 fáljban kell definiálni (tipikusan)</li>
           </ul>
         </li>
       </ul>
     </li>
+    <br>
     <li>A folyamat
       <ul>
         <li>Végfelhasználóként letöltve az oldalt az alábbi folyamatok játszódnak le
@@ -1398,20 +1582,18 @@ while() &#123;
               interface-en a tartalom
             </li>
             <li>A felhasználó interakcióba lép az oldallal, ami állapotmódosítást okoz, amit renderelés
-              követ, a frissített adatokkal, aminek következtében a UI-on frissül a tartalom
+              követ a frissített adatokkal, aminek következtében a UI-on frissül a tartalom
             </li>
           </ul>
         </li>
       </ul>
     </li>
-    <br>
-    <li>Megjegyzés: Javascript 3. gyakorló feladatsor a drag&drop</li>
   </ul>
 </div>
 
 <div>
   <h3 #boxes1 data-anchor="boxes1">Boxes I</h3>
-  <div class="container" style="display: inline-block; padding-bottom: 50px;">
+  <div class="container" style="row-gap: 70px; column-gap: 35px; margin-bottom: 70px; padding-bottom: 70px;">
     <div class="shape" id="element-one">
       <span class="text">
         1
@@ -1442,15 +1624,15 @@ while() &#123;
         6
       </span>
       <form id="box-6">
-        <input class="w-95" type="number" name="boxNumber" style="width: 40%">
-        <button class="w-100" type="submit" style="width: 50%;">Küldés</button>
+        <input class="w-95" type="number" name="boxNumber" class="form-control">
+        <button class="w-100" type="submit" class="btn btn-secondary w-100">Küldés</button>
       </form>
     </div>
     <div class="shape" id="element-seven">
       <span class="text">
         7
       </span>
-      <input class="w-95" type="text" name="boxNumber" id="box7-input">
+      <input class="form-control" type="text" name="boxNumber" id="box7-input">
     </div>
     <div class="shape parent-table" id="element-eight">
       <span class="child-table">
@@ -1462,30 +1644,30 @@ while() &#123;
         9
       </span>
       <form id="box-9">
-        <select name="operator">
+        <select class="form-select w-100" name="operator">
           <option value="mult">×</option>
           <option value="div">/</option>
           <option value="add">+</option>
           <option value="sub">-</option>
         </select>
-        <input class="w-95" type="number" name="operand" style="width: 50%">
-        <button class="w-100" type="submit" style="width: 50%;">Küldés</button>
+        <input type="number" name="operand" class="form-control w-100">
+        <button type="submit" class="btn btn-secondary w-100">Küldés</button>
       </form>
     </div>
   </div>
   <ul>
     <li>Megjegyzések
       <ul>
-        <li>Ha a scripteket a body után helyezzük el az index.html-ben, akkor a scriptek akkor fognak
+        <li>Ha a script-eket a body után helyezzük el az index.html-ben, akkor a script-ek akkor fognak
           lefutni, ha a HTML elemek már kirajzolódtak
         </li>
-        <li>Ha mindenképp a fájl elejére szeretnénk tenni a scripteket, akkor használhatunk a JS-ben
+        <li>Ha mindenképp a fájl elejére szeretnénk tenni a script-eket, akkor használhatunk a JS-ben
           DOMContentLoaded eseményt, ami szintén csak akkor fut le, amikor a DOM már betöltődött
         </li>
-        <li>a console.log() egy adott változó vagy érték általános kimenetét adja meg, míg a console.dir()
+        <li>A console.log() egy adott változó, vagy érték általános kimenetét adja meg, míg a console.dir()
           az objektumok részletes tulajdonságait és metódusait jeleníti meg
         </li>
-        <li>getElementById() függvény esetében a console.log() a HTML elemet adja vissza
+        <li>A getElementById() függvény esetében a console.log() a HTML elemet adja vissza
           <pre>
   &#60;div class="shape" id="element-one"&#62;
       &#60;span class="text"&#62;
@@ -1536,7 +1718,7 @@ while() &#123;
             blur class az elemen, vagy sem
           </li>
           <li>Az isBlured állapotát módosítgatjuk</li>
-          <li>Kint van a doboz a User interface-en, az alkalmazásunkban történik valami esemény
+          <li>Kint van a doboz a User Interface-en, az alkalmazásunkban történik valami esemény
             (rákattintunk az 1-es számú dobozra), ennek hatására megváltozik az alkalmazásunk belső
             állapota (boolean-t negálunk), és ez után történik egy renderelés (a state change miatt)
           </li>
@@ -1597,11 +1779,11 @@ while() &#123;
           számot
         </li>
         <li>A kiszelektált 'element-three'-nek van egy olyan kulcsa, hogy firstElementChild (console.dir-rel
-          láthatjuk), ezt is változtathatjuk a scriptben
+          láthatjuk), ezt is változtathatjuk a script-ben
           <ul>
             <li>A firstElementChild értéke egy referencia a belső értékre</li>
-            <li>Általánosságban elmondható, hogy az elemek alatt találhatók olyan kulcsok, amikre
-              további elemekre mutató referenciák vannak (pl.: childNodes)
+            <li>Általánosságban elmondható, hogy az elemek alatt találhatók olyan kulcsok, amikben
+              további elemekre mutató referenciák vannak (például childNodes)
             </li>
           </ul>
         </li>
@@ -1634,7 +1816,7 @@ while() &#123;
   setTimeout(function () &#123;console.log('Hi')&#125;, 1000);
            </pre>
             <li>Bemenetként vár egy névtelen függvényt, és egy számértéket (number)</li>
-            <li>A függvény akkor fog lefutni, ha letelt a milliszekundumban meghatározott</li>
+            <li>A függvény akkor fog lefutni, ha letelt a milliszekundumban meghatározott érték</li>
             <li>Célszerűbb class-okat használni, mint az elemek style attribútumát piszkálni</li>
           </ul>
         </li>
@@ -1674,8 +1856,11 @@ while() &#123;
             <li>querySelector(.class) / querySelector(#id)</li>
             <li>document.querySelector('.container').children;
               <ul>
-                <li>Láthatjuk, hogy mivel tér vissza: &#60;div class="container"&#62;...&#60;/div&#62;
-                  (HTMLCollection, nem tudunk rajta csak úgy végig iterálni!)
+                <li>Láthatjuk, hogy mivel tér vissza
+                  <ul>
+                    <li>&#60;div class="container"&#62;...&#60;/div&#62;</li>
+                    <li>HTMLCollection, nem tudunk rajta csak úgy végig iterálni</li>
+                  </ul>
                 </li>
                 <li>Benne vannak a child elemek</li>
                 <li>Tudjuk azt, hogy az elem rendelkezik olyan kulcsokkal, ami ilyen-olyan
@@ -1702,15 +1887,15 @@ while() &#123;
                 <li>Az első ciklus "tartalma"
                   <pre>
   &#60;div class="shape box5style" id="element-one"&#62;
-      #>60span class="text"&#62;
+      &#60;span class="text"&#62;
           1
-      #>60/span&#62;
+      &#60;/span&#62;
   &#60;/div&#62;
                </pre>
                 </li>
               </ul>
             </li>
-            <li>Debugger toolal végigkövethető minden egyes változás
+            <li>Debugger tool-al végigkövethető minden egyes változás
               <ul>
                 <li>DevTools -> Sources -> boxes.js</li>
                 <li>Majd azoknak a soroknak a számaira kell kattintani, ahol meg akarjuk állítani a
@@ -1730,78 +1915,75 @@ while() &#123;
         <li>Meg kell tanulnunk, mi az az event object</li>
         <li>Event handler function
           <ul>
-            <li>Amikor meghívódnál bármilyen esemény kapcsán, paramétert is kapnak</li>
+            <li>Amikor meghívódnak bármilyen esemény kapcsán, paramétert is kapnak</li>
             <li>Ez a paraméter az event object</li>
             <li>Adatcsomag, ami az adott esemény kapcsán generálódik ki, és tartalmaz mindenféle
               információt az esemény kapcsán
             </li>
-            <li>
-              <pre>
+            <pre>
     elementSixFormItem.onsubmit = function (event) &#123;
         event.preventDefault();
         console.log('Element 6 event: ', event);
         console.log('Element 6 event: ', event.target);
     &#125;;
              </pre>
+            <li>A form submitolásával az oldalunk befrissülne, így az alap JavaScript-es működést
+              felül kell írnunk
+            </li>
+            <li>Tulajdonképpen egy HTTP kérés történne</li>
+            <li>Jelenleg ez egy nemkívánatos effekt</li>
+            <li>Az event.preventDefault(); megakadályozza a default JavaScript-es működést</li>
+            <li>Az event object target kulcsa mutat azon elemre, amire az esemény bekövetkezett
               <ul>
-                <li>A form submitolásával az oldalunk befrissülne, így az alap javascriptes működést
-                  felül kell írnunk
-                </li>
-                <li>Tulajdonképpen egy HTTP kérés történne</li>
-                <li>Jelenleg ez egy nemkívánatos effekt</li>
-                <li>Az event.preventDefault(); megakadályozza a default javascriptes működést</li>
-                <li>Az event object target kulcsa mutat azon elemre, amire az esemény bekövetkezett
-                  <ul>
-                    <li>Jelen esetben az egész form elementre</li>
-                    <pre>
+                <li>Jelen esetben az egész form elementre</li>
+                <pre>
   &#60;form id="box-6"&#62;
       &#60;input class="w-95" type="number" name="boxNumber" style="width: 40%"&#62;
       &#60;button class="w-100" type="submit" style="width: 50%;"&#62;Küldés&#60;/button&#62;
   &#60;/form&#62;
                    </pre>
+              </ul>
+            </li>
+            <br>
+            <li>Nekünk az input mező értékére van szükségünk
+              <ul>
+                <li>Az event.target.elements kulcs tartalmaz egy
+                  HTMLFormControlsCollection-t
+                  <ul>
+                    <li>Indexált formában benne van az input mező, és a gomb</li>
+                    <li>A 0, és az 1 index mellett szerepel jelen esetben még egy kulcs:
+                      boxNumber
+                      <ul>
+                        <li>Ez nem más, mint az input mező name attribútuma</li>
+                        <li>event.target.elements.boxNumber.value => Így kérhető ki
+                          az input értéke
+                        </li>
+                      </ul>
+                    </li>
                   </ul>
                 </li>
-                <br>
-                <li>Nekünk az input mező értékére van szükségünk
-                  <ul>
-                    <li>Az event.target.elements kulcs tartalmaz egy
-                      HTMLFormControlsCollection-t
-                      <ul>
-                        <li>Indexált formában benne van az input mező, és a gomb</li>
-                        <li>A 0, és az 1 index mellett szerepel jelen esetben még egy kulcs:
-                          boxNumber
-                          <ul>
-                            <li>Ez nem más, mint az input mező name attribútuma</li>
-                            <li>event.target.elements.boxNumber.value => Így kérhető ki
-                              az input értéke
-                            </li>
-                          </ul>
-                        </li>
-                      </ul>
-                    </li>
-                    <li>Az input mező elérése: event.target.elements[0]
-                      <pre>
+                <li>Az input mező elérése: event.target.elements[0]
+                  <pre>
   &#60;input class="w-95" type="number" name="boxNumber" style="width: 40%"&#62;
                    </pre>
+                </li>
+                <li>A két kikérési mód ugyanúgy jó
+                  <ul>
+                    <li>event.target.elements[0].value (Az input mező a 0 index alatt
+                      szerepel)
                     </li>
-                    <li>A két kikérési mód ugyanúgy jó
-                      <ul>
-                        <li>event.target.elements[0].value (Az input mező a 0 index alatt
-                          szerepel)
-                        </li>
-                        <li>event.target.elements.boxNumber.value</li>
-                      </ul>
-                    </li>
-                    <li> HTML
-                      <pre>
+                    <li>event.target.elements.boxNumber.value</li>
+                  </ul>
+                </li>
+                <li> HTML
+                  <pre>
   &#60;form id="box-6"&#62;
       &#60;input class="w-95" type="number" name="boxNumber" style="width: 40%"&#62;
       &#60;button class="w-100" type="submit" style="width: 50%;">Küldés&#60;/button&#62;
   &#60;/form&#62;
                     </pre>
-                    </li>
-                    <li>
-                      <pre>
+                </li>
+                <pre>
   var elementSixFormItem = document.getElementById('box-6');
 
   elementSixFormItem.onsubmit = function (event) &#123;
@@ -1816,18 +1998,12 @@ while() &#123;
       elementSixFormItem.parentElement.firstElementChild.innerHTML = elementSixFormItemInputValue;
   &#125;;
                       </pre>
-                      <ul>
-                        <li>A parentElement.firstElement (ezzel próbálkoztam először) mást
-                          ad vissza, és nem működik az innetHTML!
-                        </li>
-                        <li>A parentElement.firstElementChild a következőt adja vissza
-                          <pre>
+                <li>A parentElement.firstElement mást ad vissza, és nem működik az innerHTML
+                </li>
+                <li>A parentElement.firstElementChild a következőt adja vissza
+                  <pre>
   &#60;span class="text"&#62;1&#60;/span&#62;
                         </pre>
-                        </li>
-                      </ul>
-                    </li>
-                  </ul>
                 </li>
               </ul>
             </li>
@@ -1843,7 +2019,7 @@ while() &#123;
   var elementSevenFormInputValue = document.getElementById('box7-input');
   var character = '';
 
-  elementSevenFormInputValue.onkeypress = function (event) &#123; // Az onkeypress deprecated!
+  elementSevenFormInputValue.onkeypress = function (event) &#123; // az onkeypress deprecated
       var currentCharacter = event.key;
       if (currentCharacter.length &#60; 2) &#123;
           elementSevenFormInputValue.parentElement.firstElementChild.innerHTML = currentCharacter;
@@ -1856,44 +2032,50 @@ while() &#123;
       elementSevenFormInputValue.value = '';
   &#125;);
       </pre>
-        <li>Itt nincs formban az input mező, és az inputnak van ID-ja, így explicite kiszelektálhatjuk az
+        <li>Itt nincs form-ban az input mező, és az input-nak van ID-ja, így explicite kiszelektálhatjuk az
           input mezőt
         </li>
         <li>Közvetlenül az input mező event handler eseményére kell reagálnunk</li>
-        <li>Az onkeypress-nek van eventje (KeyboardEvent object)</li>
+        <li>Az onkeypress-nek van event-je (KeyboardEvent object)</li>
         <li>Az eseményben key kulcs alatt érhető el a leütött billentyű</li>
         <br>
-        <li>A feladatot annyival egészítettem ki, hogy egy karakternél többet nem lehet beírni a kockába,
-          illetve kapott egy event listenert az input, és blur-re visszakerül a kocka eredeti értéke,
-          illetve az input mező value-ja kap egy üres stringet
+        <li>A feladatot annyival van kiegészítve, hogy EventListener segítségével blur-re visszakerül a kocka eredeti
+          értéke,
+          illetve az input mező value-ja kap egy üres string-et
         </li>
       </ul>
     </li>
+    <br>
     <li>8. doboz
       <ul>
-        <li>Egérmozdítás eseményre írjuk be az egér pozíciójának x és y koordinátáját, a következő séma szerint: "X:
-          &#123;x-koordináta&#125;, Y: &#123;y-koordináta&#125;"</li>
+        <li>Egérmozdítás eseményre írjuk be az egér pozíciójának x és y koordinátáját, a következő séma szerint
+          <ul>
+            <li>
+              "X: &#123;x-koordináta&#125;, Y: &#123;y-koordináta&#125;"</li>
+          </ul>
+        </li>
         <pre>
   var elementEightText = document.getElementById('element-eight').firstElementChild;
 
   elementEightText.innerHTML = '10';
 
   document.onmousemove = function (event) &#123;
-      elementEightText.innerHTML = '<div>X: ' + event.x + '</div><div>Y: ' + event.y + '</div>'
+      elementEightText.innerHTML = '&#60;div>X: ' + event.x + '&#60;/div>&#60;div>Y: ' + event.y + '&#60;/div>'
   &#125;
        </pre>
         <li>Összekonkatenáltuk a doboz szövegének tartalmát</li>
       </ul>
     </li>
+    <br>
     <li>9. doboz
       <ul>
         <li>Submit eseményre módosítsuk a doboz tartalmát azzal az értékkel ami úgy áll elő, hogy végrehajtjuk a select
-          inputban kiválasztott operációt, a state-en és number inputba beírt értéken</li>
+          input-ban kiválasztott operációt a state-en és number input-ba beírt értéken</li>
         <li>Az előállt végeredményt tároljuk el új state-ként</li>
         <li>Például
           <ul>
             <li>Number input mezőbe írt érték: 5</li>
-            <li>Select inputban kiválasztott érték: "mult"</li>
+            <li>Select input-ban kiválasztott érték: "mult" (multiplication)</li>
             <li>Aktuális state: 9</li>
             <li>Operáció: 9 * 5</li>
             <li>Dobozba és state-be beírandó érték: 45</li>
@@ -1906,8 +2088,8 @@ while() &#123;
 
   elementNineForm.onsubmit = function (event) &#123;
       event.preventDefault();
-      var operand = Number(event.target.elements.operand.value); // Inputba írt szám
-      var operator = event.target.elements.operator.value; // Művelet
+      var operand = Number(event.target.elements.operand.value); // inputba írt szám
+      var operator = event.target.elements.operator.value; // művelet
       var currentNumber = Number(elementNineForm.parentElement.firstElementChild.textContent.trim()); // vagy .innerHTML
       elementNineForm.parentElement.firstElementChild.innerHTML = eredmeny(currentNumber, operator, operand);
   &#125;
@@ -1932,7 +2114,7 @@ while() &#123;
       </pre>
         </li>
         <li> Az alap működést felülírjuk az event.preventDefault() függvénnyel</li>
-        <li> A szám number inputból érkezik, mégis string
+        <li> A szám number input-ból érkezik, mégis string
           <ul>
             <li> A számot a továbbiakban márpedig aritmetikai műveletekre akarjuk használni</li>
             <li> Number() függvénnyel a sting számmá alakítható (numberrel tér vissza a függvény)</li>
@@ -1943,58 +2125,24 @@ while() &#123;
   </ul>
 </div>
 
-<div class="template-literal-container">
-  <div class="mb-3"></div>
-  <div class="container">
-    <div class="row">
-      <div class="col-3">
-      </div>
-      <div class="col-6">
-        <div id="photos-list-container">
-
-        </div>
-      </div>
-      <div class="col-3">
-      </div>
-    </div>
-  </div>
-</div>
-
 <div>
   <h3 #templateliteral data-anchor="templateliteral">Template literal</h3>
   <ul>
     <li> Nyelvi eszköz, amivel egyszerűen lehet HTML tartalmat összeállítani</li>
-    <li> Javascript kóddal generáljuk a HTML - t</li>
-    <li> Dinamikus tartalom csak a Javascript kód futásakor érhető el(nem statikus tartalom), tehát csak
+    <li> JavaScript kóddal generáljuk a HTML-t</li>
+    <li> Dinamikus tartalom csak a JavaScript kód futásakor érhető el (nem statikus tartalom), tehát csak
       futásidőben lesz elérhető az adat
     </li>
-    <li> Az ilyen adatok tipikusan szerver oldali kérések révén érkezik meg a klienshez</li>
-    <li> A HTML - ben biztosítani kell egy belépési pontot(photo - list - container class)</li>
-    <pre>
-      &#60;div class="template-literal-container">
-        &#60;div class="mb-3">&#60;/div>
-        &#60;div class="container">
-            &#60;div class="row">
-                &#60;div class="col-3">&#60;/div>
-    
-                &#60;div class="col-6">
-                    &#60;div id="photos-list-container">&#60;/div>
-                &#60;/div>
-    
-                &#60;div class="col-3">&#60;/div>
-            &#60;/div>
-        &#60;/div>
-      &#60;/div>
-    </pre>
+    <li> Az ilyen adatok tipikusan szerver oldali kérések révén érkeznek meg a klienshez</li>
+    <li> A HTML-ben biztosítani kell egy belépési pontot(photo-list-container class)</li>
+    <br>
     <li> Létrehozunk egy változót
       <ul>
-        <li>
-          <pre>
-          var photoListTemplate = '';
-          </pre>
-        </li>
-        <li> A string - et a javascript nyelvben nem lehet tördelni(szintaktikailag nem helyes), így
-          kényelmetlen a következőképp dolgozni</li>
+        <pre>
+  var photoListTemplate = '';
+        </pre>
+        <li> A string-et JavaScript nyelvben nem lehet tördelni (szintaktikailag nem helyes), így
+          kényelmetlen vagyunk a következőképp dolgozni</li>
         <pre>
   for(var photo of photos) &#123;
       photoListTemplate = photoListTemplate + '&#60;div class="card p-5"&#62;' + card.title + '&#60;/div&#62;'
@@ -2005,19 +2153,21 @@ while() &#123;
             <li> Itt jön a képbe a template literal</li>
             <li> Két dologra jó
               <ul>
-                <li> Betördelhető, tehát átláthatóbbá tehetők a string - ek</li>
-                <li> A dinamikus adatokat könnyebb beleírni, nem kell + jelekkel folyamatosan
-                  megszakítani a kódot
-                </li>
+                <li>Betördelhető, tehát átláthatóbbá tehetők a string-ek</li>
+                <li>A dinamikus adatokat könnyebb beleírni, nem kell + jelekkel folyamatosan megszakítani a kódot</li>
               </ul>
             </li>
           </ul>
         </li>
-        <li> Backtick karakter
+        <li> Backtick karakter (ALT + 7)
           <ul>
-            <li>Úgy néz ki, mint egy idézőjel, de nem az(ALT + 7)</li>
-            <li> Két backtick közé jön a tartalom(template)</li>
-            <li> A dinamikus tartalom $&#123;&#125; karakterek közé írt változóval valósítható meg</li>
+            <li>Úgy néz ki, mint egy idézőjel, de nem az</li>
+            <li> Két backtick közé jön a tartalom (template)</li>
+            <li> A dinamikus tartalom $&#123;&#125; karakterek közé írt változóval valósítható meg
+              <ul>
+                <li>` $&#123; var &#125; `</li>
+              </ul>
+            </li>
             <li> Kifejezéseket is létre lehet hozni</li>
             <pre>
   ...
@@ -2026,28 +2176,86 @@ while() &#123;
             </pre>
           </ul>
         </li>
-        <pre>
-  var photoListTemplate = '';
+        <br>
+        <li>Példa használatra
+          <ul>
+            <div class="template-literal-container">
+              <div class="mb-3"></div>
+              <div class="container">
+                <div class="row" style="border: 1px solid black; border-radius: 3px;">
+                  <div class="col-3">col-3</div>
+                  <div class="col-6">
+                    <div>col-6 - photos-list-container</div>
+                    <div id="photos-list-container">
+
+                    </div>
+                  </div>
+                  <div class="col-3">col-3</div>
+                </div>
+              </div>
+            </div>
+            <pre>
+  <b>// html</b>
+
+  &#60;div class="template-literal-container">
+    &#60;div class="mb-3">&#60;/div>
+    &#60;div class="container">
+        &#60;div class="row">
+            &#60;div class="col-3">col-3&#60;/div>
+
+            &#60;div class="col-6">
+                col-6 - photos-list-container class
+                &#60;div id="photos-list-container">&#60;/div>
+            &#60;/div>
+
+            &#60;div class="col-3">col-3&#60;/div>
+        &#60;/div>
+    &#60;/div>
+  &#60;/div>
+
+  <b>// js</b>
+
+  var photos = [
+      &#123;
+          id: 1,
+          title: "accusamus beatae ad facilis cum similique qui sunt",
+          thumbnailUrl: "https://picsum.photos/id/99/150/150/?blur=2"
+      },
+      &#123;
+          id: 2,
+          title: "reprehenderit est deserunt velit ipsam",
+          thumbnailUrl: "https://picsum.photos/id/149/150/150/?blur=2"
+      },
+      &#123;
+          id: 3,
+          title: "officia porro iure quia iusto qui ipsa ut modi",
+          thumbnailUrl: "https://picsum.photos/id/199/150/150/?blur=2"
+      },
+      &#123;
+          id: 4,
+          title: "culpa odio esse rerum omnis laboriosam voluptate repudiandae",
+          thumbnailUrl: "https://picsum.photos/id/249/150/150/?blur=2"
+      }
+  ];
+
+  var photoListTemplate = ''; 
 
   for (var photo of photos) &#123;
-      photoListTemplate += `
-      &#60;div id="$&#123;photo.id}" class="card p-5"
-          style="border: 1px solid grey;
-                border-radius: 5px;
-                padding: 10px;
-                $&#123;photo.id === 3 ? 'background-color: pink' : ''}">
-          &#60;div>
-              &#60;small>$&#123;photo.title}&#60;/small>
-          &#60;/div>
+      photoListTemplate = photoListTemplate + `
+      &#60;div id="$&#123;photo.id}" class="card p-1" 
+          style="border: 1px solid grey; border-radius: 5px; padding: 5px; $&#123;photo.id === 3 ? 'background-color: pink' : ''}">
+          &#60;div>&#60;small>$&#123;photo.title}&#60;/small>&#60;/div>
           &#60;br>
-          &#60;img src="$&#123;photo.thumbnailUrl}" />
+          &#60;img src="$&#123;photo.thumbnailUrl}">
       &#60;/div>
       &#60;br>
-      `;
+      `
   }
 
   document.getElementById('photos-list-container').innerHTML = photoListTemplate;
-        </pre>
+            </pre>
+          </ul>
+        </li>
       </ul>
     </li>
   </ul>
@@ -2113,6 +2321,7 @@ while() &#123;
         </li>
       </ul>
     </li>
+    <br>
     <li> Create
       <ul>
         <li> A felhasználónak képesnek kell lennie új adatokat bevinni a rendszerbe</li>
@@ -2120,10 +2329,11 @@ while() &#123;
   document.getElementById('create-product').onsubmit = function(event) &#123;
       event.preventDefault();
       state.products.push(&#123;
-      name: event.target.elements.name.value,
-      price: Number(event.target.elements.price.value),
-      isInStock: event.target.elements.isInStock.checked,
-  &#125;);
+        name: event.target.elements.name.value,
+        price: Number(event.target.elements.price.value),
+        isInStock: event.target.elements.isInStock.checked,
+      &#125;);
+  }
 
   renderProducts();
   &#125;
@@ -2133,6 +2343,7 @@ while() &#123;
         <li> A state change után újra kell renderelnünk a listát</li>
       </ul>
     </li>
+    <br>
     <li> Delete
       <ul>
         <li> Ehhez megmódosítjuk a product tömbünk minden elemét, mégpedig úgy, hogy ellátjuk őket ID - val
@@ -2150,7 +2361,7 @@ while() &#123;
           <ul>
             <li>
               <pre>
-  productsHTML = '';
+  let productsHTML = '';
   for (var prod of state.products) &#123;
       productsHTML += `
           &#60;div class="card m-2 p-2 $&#123;!prod.isInStock ? 'bg-danger' : ''}">
@@ -2164,45 +2375,51 @@ while() &#123;
   }                
               </pre>
               <ul>
-                <li> A gombnak továbbá adtunk egy delete - product class - t</li>
-                <li> Tömbből úgy tudunk törölni, ha megkeressük azt a tömbelem indexét, aminek az az
-                  ID - ja,
-                  amit a gombra nyomáskor kaptunk(data - productid)
-                </li>
-                <li>
-                  <pre>
-  let productsHTML = '';
-  for (var prod of state.products) &#123;
-      productsHTML += `
-      &#60;div class="card m-2 p-2 $&#123;!prod.isInStock ? 'bg-danger' : ''}">
-          &#60;i class="fas fa-check">&#60;/i>
-          &#60;p>ID: $&#123;prod.id}&#60;/p>
-          &#60;p>Terméknév: $&#123;prod.name}&#60;/p>
-          &#60;p>Ár: $&#123;prod.price}&#60;/p>
-          &#60;button class="btn btn-danger float-right delete-product" data-productid="$&#123;prod.id}" onclick="deleteProduct('$&#123;prod.id}')">Törlés&#60;/button>
-      &#60;/div>
-      `;
+                <li>A gombnak továbbá adtunk egy delete-product class-t</li>
+                <pre>
+  function createRandomID() &#123;
+    return Math.random().toString(36).substring(2, 9);
   }
-                  </pre>
+
+  const deleteButtons = document.querySelectorAll('.delete-product');
+
+  for (let button of deleteButtons) &#123;
+    button.onclick = function () &#123;
+      const id = this.dataset.productid;
+
+      for (let i = 0; i &#60; state.products.length; i++) &#123; // index megkeresése, és törlés splice-szal
+        if (state.products[i].id === id) &#123;
+          state.products.splice(i, 1);
+          break; // kilépünk a ciklusból
+        }
+      }
+
+      renderProducts(); // újrarenderelés
+    };
+  }
+                </pre>
+                <li>Tömbből úgy tudunk törölni, ha megkeressük azt a tömbelem indexét, aminek az az
+                  ID-ja,
+                  amit a gombra nyomáskor kaptunk (data-productid)
                 </li>
-                <li> Végigmegyünk a delete - product class - okon, és minden elem onclick - jéhez adunk egy
+                <li>Végigmegyünk a delete-product class-okon, és minden elem onclick-jéhez adunk egy
                   függvényt
                 </li>
-                <li> A datasetben az adott elem 'data-' - val kezdődő attribútumai vannak felsorolva
+                <li>A dataset-ben az adott elem 'data-'-val kezdődő attribútumai vannak felsorolva
                 </li>
-                <li> Kikerestük az megfelelő ID - t</li>
-                <li> Használhatunk egy statementet az iteráción belül
+                <li> Kikerestük az megfelelő ID-t</li>
+                <li> Használhatunk egy statement-et az iteráción belül
                   <ul>
-                    <li> break;</li>
-                    <li> Kilépteti a ciklust a működésből</li>
+                    <li>break;</li>
+                    <li>Kilépteti a ciklust a működésből</li>
                   </ul>
                 </li>
-                <li> Végül a splice függvény használatával unset - eljük a tömbelemet a tömbből</li>
+                <li>Végül a splice függvény használatával unset-eljük a tömbelemet a tömbből</li>
                 <li>.splice(hányadik elem, a hányadik elemtől hány elem)
                 </li>
               </ul>
             </li>
-            <li>Én külön egy onclick függvényt is hozzáadtam, így a deleteProduct függvénybe megérkezik az azonosító
+            <li>Külön egy onclick függvényt is hozzáadhatunk, így a deleteProduct függvénybe megérkezik az azonosító
               <ul>
                 <pre>
   function deleteProduct(id) &#123;
@@ -2220,37 +2437,36 @@ while() &#123;
         </li>
       </ul>
     </li>
+    <br>
     <li>Update
       <ul>
-        <li>Biztosítani kell egy eszközt a user interface-en, amivel a user tud frissíteni</li>
+        <li>Biztosítani kell egy eszközt a User Interface-en, amivel a user tud frissíteni</li>
         <li>Szükség van egy szerkesztés gombra, amire ki kell renderelni egy form-ot, ahol frissíthető a
           state
         </li>
-        <li>
-          <pre>
-                        productsHTML = ''
-                            for (var prod of state.products) &#123;
-                                productsHTML += `
-                                &#60;div class="card m-2 p-2 $&#123;!prod.isInStock ? 'bg-danger' : ''&#125;">
-                                    &#60;i class="fas fa-check">&#60;/i&#62;
-                                    &#60;p&#62;ID: $&#123;prod.id&#125;&#60;/p&#62;
-                                    &#60;p&#62;Terméknév: $&#123;prod.name&#125;&#60;/p&#62;
-                                    &#60;p&#62;Ár: $&#123;prod.price&#125;&#60;/p&#62;
-                                    &#60;button class="btn btn-success mb-1 float-right edit-product" data-productid="$&#123;prod.id&#125;" onclick="editProduct('$&#123;prod.id&#125;')">Szerkesztés&#60;/button&#62;
-                                    &#60;button class="btn btn-danger float-right delete-product" data-productid="$&#123;prod.id&#125;" onclick="deleteProduct('$&#123;prod.id&#125;')">Törlés&#60;/button&#62;
-                                &#60;/div>
-                            `
-                            &#125;
+        <pre>
+  productsHTML = ''
+      for (var prod of state.products) &#123;
+          productsHTML += `
+          &#60;div class="card m-2 p-2 $&#123;!prod.isInStock ? 'bg-danger' : ''&#125;">
+              &#60;i class="fas fa-check">&#60;/i&#62;
+              &#60;p&#62;ID: $&#123;prod.id&#125;&#60;/p&#62;
+              &#60;p&#62;Terméknév: $&#123;prod.name&#125;&#60;/p&#62;
+              &#60;p&#62;Ár: $&#123;prod.price&#125;&#60;/p&#62;
+              &#60;button class="btn btn-success mb-1 float-right edit-product" data-productid="$&#123;prod.id&#125;" onclick="editProduct('$&#123;prod.id&#125;')">Szerkesztés&#60;/button&#62;
+              &#60;button class="btn btn-danger float-right delete-product" data-productid="$&#123;prod.id&#125;" onclick="deleteProduct('$&#123;prod.id&#125;')">Törlés&#60;/button&#62;
+          &#60;/div>
+      `
+      &#125;
 
-                        for (var editBtn of document.querySelectorAll('.edit-product')) &#123;
-                            editBtn.onclick = function () &#123;
-                                state.editId = event.target.dataset.productid;
-                            &#125;
-                        &#125;
+  for (var editBtn of document.querySelectorAll('.edit-product')) &#123;
+      editBtn.onclick = function () &#123;
+          state.editId = event.target.dataset.productid;
+      &#125;
+  &#125;
                     </pre>
-        <li>Azzal, hogy a gombok onclick kulcsának függvényt határozunk meg javascriptben, az inline írt
+        <li>Azzal, hogy a gombok onclick kulcsának függvényt határozunk meg JavaScript-ben, az inline írt
           onclick-et felülírjuk
-        </li>
       </ul>
     </li>
     <li>A state-hez hozzáillesztettünk egy editId kulcsot
@@ -2265,7 +2481,7 @@ while() &#123;
       editId: ''
   &#125;
         </pre>
-        <li>A célunk, hogy a egy formot az edit-product id-jú komponensbe beillesszünk, és ezt feldobjuk
+        <li>A célunk, hogy egy formot az edit-product id-jú komponensbe beillesszünk, és ezt feldobjuk
           a UI-ban
           <pre>
   function renderEditProduct() &#123;
@@ -2345,8 +2561,8 @@ while() &#123;
       aminek az adatait változtatni szeretnénk
     </li>
     <li>A form megjelenítéséhez kimásolhatjuk a projektünk form részét</li>
-    <li>A checked attribútum nálam valamiért nem működött, pedig a megfelelő helyen true értéket kaptam, még
-      sem pipálódott be a checkbox...
+    <li>A checked attribútum valamiért nem működik, pedig a megfelelő helyen true az érték, még sem pipálódott be a
+      checkbox
     </li>
     <li>Az utolsó feladat, hogy a Módosítás gomb megnyomásakor át meg kell módosítanunk az adatokat a
       state-ben
@@ -2365,53 +2581,39 @@ while() &#123;
       </ul>
     </li>
   </ul>
-  <br>
-  <li>
-    További feladatok
-    <ul>
-      <li>Gomb, amire kattintva kiíródik az összes termék ára összeadva
-      </li>
-      <li>Szűrés, 3 input mezővel, és keresés gombbal
-        <ul>
-          <li>Az első input mező névre keres</li>
-          <li>Az második két input mező ár intervallumra keres</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
 </div>
 
 <div>
-  <h3 #callstack data-anchor="callstack">Call stack</h3>
+  <h3 #callstack data-anchor="callstack">Call Stack</h3>
   <ul>
-    <li>A Javascript Engine felfogható úgy is, mint egy program a programban
+    <li>A JavaScript Engine felfogható úgy is, mint egy program a programban
       <ul>
         <li>A böngészőbe van beágyazva, és abban működik</li>
       </ul>
     </li>
-    <li>A javascript nyelv szinkron végrehajtódású nyelv
+    <li>A JavaScript nyelv szinkron végrehajtódású nyelv
       <ul>
         <li>Két programkód egyszerre sosem hajtódik végre (egy szálon futnak a dolgok)</li>
         <li>A kód fentről lefelé, sorról sorra hajtódik végre</li>
         <li>A script mindig a main (fő) kontextusban kezd el futni (a böngésző szűkebb kontextusa)</li>
-        <li>Ha a mainben function hívás történik, a JS átadja a kontrollt annak a függvénynek, ami meg lett
+        <li>Ha a main-ben function hívás történik, a JS átadja a kontrollt annak a függvénynek, ami meg lett
           hívva
           <ul>
-            <li>Ilyenkor a call stack-hez hozzáadósik ez a függvény</li>
+            <li>Ilyenkor a Call Stack-hez hozzáadódik ez a függvény</li>
             <li>Amennyiben a meghívott függvényben újabb függvényt hívunk meg, újabb függvény adódik
-              hozzá a call stackhez
+              hozzá a Call Stack-hez
             </li>
             <li>Ha pedig az újabb függvény lefut, visszaadja a kontrollt a korábbi függvénynek, majd ha
               az a függvény is lefutott, akkor visszaadja a kontrollt a main-nek
             </li>
-            <li>A mainben pedig történhet további kód futás, akár függvényhívás is</li>
-            <li>Ha a teljes script lefutott, akkor a call stack-ből kikerül a main is, és a rendszerbe
-              beáll egy alap állapot, ami nem zárja ki, hogy a későbbiekben a call stack-be újabb
+            <li>A main-ben pedig történhet további kód futás, akár függvényhívás is</li>
+            <li>Ha a teljes script lefutott, akkor a Call Stack-ből kikerül a main is, és a rendszerbe
+              beáll egy alap állapot, ami nem zárja ki, hogy a későbbiekben a Call Stack-be újabb
               elemek kerüljenek
             </li>
           </ul>
         </li>
-        <li>Fontos látni, hogy miután a végrehajtás szinkron, így a call stack-et nem blokkolhatja egy
+        <li>Fontos látni, hogy miután a végrehajtás szinkron, így a Call Stack-et nem blokkolhatja egy
           hosszan tartó művelet
           <ul>
             <li>Ha ez mégis megtörténik, addig, amíg a művelet le nem fut, további sor kódok nem
@@ -2433,7 +2635,7 @@ while() &#123;
         </li>
         <li>A böngésző tágabb kontextusába kihelyezhető párhuzamosan futó feladat
           <ul>
-            <li>Legegyszerűbb példa a settimeout() függvény
+            <li>Legegyszerűbb példa a setTimeout() függvény
               <ul>
                 <li>Függvényt vár a bemenetére első paraméternek</li>
                 <li>Aszinkron művelet
@@ -2444,7 +2646,7 @@ while() &#123;
                     <li>Ha bizonyos esemény bekövetkezik a jövőben, akkor mi az a
                       funkcionalitás, amit futtatni kell
                     </li>
-                    <li>A jövőbeli esemény a settimeout-nál az idő (második paraméter) lejárása
+                    <li>A jövőbeli esemény a setTimeout-nál az idő (második paraméter)
                     </li>
                     <li>A jövőbeli esemény lehet egy click event is, egy form submit, vagy egy
                       input mező keypress eseménye
@@ -2460,29 +2662,28 @@ while() &#123;
                 </li>
               </ul>
             </li>
-            <li>Ide tartoznak a szerver oldali kérések is (AJAX pl.)
+            <li>Ide tartoznak a szerver oldali kérések is (pl.: AJAX)
               <ul>
                 <li>Szintén nem szinkron időben akarjuk megvárni a választ</li>
                 <li>Rábízzuk a böngészőre, ha majd kész a hívás, akkor szólj, és a funkcionalitást
-                  (függvényt, amit megadtunk) rakd be a stackbe
+                  (függvényt, amit megadtunk) rakd be a stack-be
                 </li>
-                <li>Amíg a call stack-ben nem hajtódott végre minden művelet, addig a "kihelyezett"
-                  műveletek sem hajtódhatnak végre, akkor sem, ha már azok végrehajtódtak
+                <li>Amíg a Call Stack-ben lévő szinkron feladatok nem futnak le, addig a külön sorban várakozó aszinkron
+                  feladatok sem kerülhetnek sorra, még akkor sem, ha azok idő közben "elkészültek"
                 </li>
                 <li>A Web API-k csak annyit csinálnak, hogy amint elvégeztek valami feladatot, az
-                  adott elemet (amit visszaadnak) behelyezik egy úgynevezett callback queue-ba
+                  adott elemet (amit visszaadnak) behelyezik egy úgynevezett Callback Queue-ba
                   <ul>
-                    <li>Az oktató videó Web API-nak mutatja pl a settimeout-ot is</li>
                     <li>A queue ismérve, hogy az első elem, ami bekerült, az távozik először
                     </li>
                     <li>A Web API-k az egyik oldalon pakolják be az elemeket, a másik oldalon
-                      pedig kerülnek ki az elemek a callback queue-ból
+                      pedig kerülnek ki az elemek a Callback Queue-ból
                     </li>
-                    <li>Ennek körforgásáról az event loop gondoskodik
+                    <li>Ennek körforgásáról az Event Loop gondoskodik
                       <ul>
-                        <li>Az event loop ránéz a call stack-re, és amennyiben a szinkron
+                        <li>Az Event Loop ránéz a Call Stack-re, és amennyiben a szinkron
                           működés már lefutott, akkor amit a queue-ban talál, berakja a
-                          stackbe
+                          stack-be
                         </li>
                         <li>Az így behelyezett művelet szintén le fog futni, és újra kiürül
                           a stack
@@ -2491,18 +2692,165 @@ while() &#123;
                     </li>
                   </ul>
                 </li>
-                <li>settimeout(function, 0) használatakor, main futásakor a művelet/funkcionalitás
-                  ugyanúgy kikerül (a Web API-k közé), majd, ha a settimeoutban lévő elem
-                  végrehajtódott, bekerül a callback queue-ba, és az event loop csak abban az
+                <li>setTimeout(function, 0) használatakor, main futásakor a művelet/funkcionalitás
+                  ugyanúgy kikerül (a Web API-k közé), majd, ha a setTimeout-ban lévő elem
+                  végrehajtódott, bekerül a Callback Queue-ba, és az Event Loop csak abban az
                   esetben fogja berakni a funkcionalitást a stack-be, amennyiben a main műveletek
                   lefutottak
                   <ul>
-                    <li>A különbség csak annyi 0ms-mal, hogy a Web API-k közé gyorsabban bekerül
-                      az adott elem, hiszen a "hosszú ideig" tartó művelet 0ms alatt
+                    <li>A különbség csak annyi 0 ms-mal, hogy a Web API-k közé gyorsabban bekerül
+                      az adott elem, hiszen a "hosszú ideig" tartó művelet 0 ms alatt
                       bekövetkezik
                     </li>
                   </ul>
                 </li>
+                <img src="assets/imgs/js_event_loop.png" width="100%">
+                <br>
+                <table style="border-collapse: collapse; width: 100%;">
+                  <thead>
+                    <tr>
+                      <th>Elem</th>
+                      <th>Feladat</th>
+                      <th>Lényeg</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Heap</td>
+                      <td>A dinamikus memória, ide kerülnek az objektumok</td>
+                      <td>"Adattár"</td>
+                    </tr>
+                    <tr>
+                      <td>Call Stack</td>
+                      <td>Szinkron függvényhívások verme, a motor mindig a stack tetején lévő keretet futtatja</td>
+                      <td>Amíg nem üres, semmi más nem "juthat szóhoz"</td>
+                    </tr>
+                    <tr>
+                      <td>Web- / Node-API-k</td>
+                      <td>Böngésző vagy Node C++ rétege futtatja az időigényes/aszinkron műveleteket (például
+                        setTimeout, fetch, DOM-esemény)</td>
+                      <td>Ezek nem a stack-be kerülnek</td>
+                    </tr>
+                    <tr>
+                      <td>Task&nbsp;queue<br>(macro&nbsp;queue)</td>
+                      <td>Készen álló „nagy” feladatok: setTimeout, DOM-esemény, I/O-callback</td>
+                      <td>FIFO-elv</td>
+                    </tr>
+                    <tr>
+                      <td>Microtask&nbsp;queue</td>
+                      <td>Apró, prioritásos feladatok: Promise.then, queueMicrotask</td>
+                      <td>Minden makró feladat után teljesen kiürül</td>
+                    </tr>
+                    <tr>
+                      <td>Event&nbsp;loop</td>
+                      <td>Folyamatosan figyel: ha a verem üres, először a microtask queue-t üríti, majd egy feladatot a
+                        task queue-ból a verembe tesz</td>
+                      <td>Ütemezés, priorizálás</td>
+                    </tr>
+                    <tr>
+                      <td>Main&nbsp;thread</td>
+                      <td>Maga a JavaScript motor + az Event Loop + Call Stack; a kód itt fut (single-thread)</td>
+                      <td>Párhuzamosság helyett konkurencia</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <br>
+                <li>A folyamat
+                  <ol>
+                    <li>A szinkron kód betöltődik
+                      <ul>
+                        <li>A függvények egymás után hívása bekerül a Call Stack-be</li>
+                      </ul>
+                    </li>
+                    <li>Egy aszinkron hívás (például fetch, setTimeout) elindul
+                      <ul>
+                        <li>Az engine átadja a Web-API-nak, majd kiveszi a stack-ből
+                        </li>
+                        <li>A stack "folytatódik"</li>
+                      </ul>
+                    </li>
+                    <li>Amikor az API elkészült, a callback bejegyződik a megfelelő queue-ba (macro vagy micro)</li>
+                    <li>Az Event Loop figyel
+                      <ul>
+                        <li>Ha a Call Stack üres, előbb a microtask queue-t üríti (Promises), aztán a Task Queue
+                          (macrotask) első elemét átemeli a stack-be</li>
+                      </ul>
+                    </li>
+                    <li>A kivett callback szinkron kódként fut, újra tölti a veremet</li>
+                    <li>A kör újraindul</li>
+                  </ol>
+                </li>
+                <pre>
+  <b>// példa</b>
+
+  console.log('A');
+  Promise.resolve().then(() => console.log('B'));
+  console.log('C');
+                </pre>
+                <table style="border-collapse: collapse; width: 100%;">
+                  <thead>
+                    <tr>
+                      <th>Lépés</th>
+                      <th>Call Stack</th>
+                      <th>Queue</th>
+                      <th>Konzol kimenet</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <tr>
+                      <td>1</td>
+                      <td>console.log('A') lefut, keret lekerül</td>
+                      <td>-</td>
+                      <td><strong>A</strong></td>
+                    </tr>
+
+                    <tr>
+                      <td>2</td>
+                      <td>Promise.resolve() szinkron része → a .then callback microtask-ba kerül</td>
+                      <td>Microtask:<br>[ () → console.log('B') ]</td>
+                      <td>-</td>
+                    </tr>
+
+                    <tr>
+                      <td>3</td>
+                      <td>console.log('C') lefut, keret lekerül</td>
+                      <td>-</td>
+                      <td><strong>C</strong></td>
+                    </tr>
+
+                    <tr>
+                      <td>4</td>
+                      <td>Stack üres → Event Loop először a microtask queue-t üríti</td>
+                      <td>-</td>
+                      <td>-</td>
+                    </tr>
+
+                    <tr>
+                      <td>5</td>
+                      <td>Microtask callback fut → console.log('B')</td>
+                      <td>-</td>
+                      <td><strong>B</strong></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <li>Az eredmény A, C, B</li>
+                <li>A Promise mindig megelőzi a setTimeout(..., 0)-t, mert a microtask-sor prioritást élvez
+                  <ul>
+                    <li>A Promise chain-ek mindig microtask-ként futnak, ezért gyorsabban sorra kerülnek, mint például
+                      egy setTimeout(fn, 0)</li>
+                  </ul>
+                </li>
+                <br>
+                <li>Amíg a call stack nem üres, semmilyen aszinkron callback nem futhat</li>
+                <li>Ha a stack kiürül, az Event Loop először minden microtaskot lefuttat, majd egyet a Task Queue-ból
+                  <ul>
+                    <li>A macro-taskok egyesével érkeznek, hogy ne blokkolják tartósan a felhasználói felületet, és
+                      minden aszinkron forrás rendszeresen sorra kerülhessen</li>
+                  </ul>
+                </li>
+                <li>A Web- / Node-API csak “parkoltatja” az időzített/fetch/hardware munkát, és amikor kész, a
+                  callbacket sorba rakja</li>
               </ul>
             </li>
           </ul>
@@ -2512,24 +2860,31 @@ while() &#123;
   </ul>
 </div>
 
-<div>
-  <button id="fetch-posts">Fetch posts with AJAX call</button>
-  <div id="post-list-container" style="max-height: 200px; overflow: auto; border-radius: 5px;"></div>
-</div>
 
 <div>
   <h3 #ajax1 data-anchor="ajax1">AJAX I</h3>
   <ul>
-    <li>Az AJAX kérések aszinkron műveletek, nem blokkolják a call stack-et, hanem a böngésző stack futásával
-      párhuzamosan végeznek műveletet, és a szerver válasza után futtat további elemeket, amikor a szinkron
+    <li>Az AJAX kérések aszinkron műveletek, nem blokkolják a Call Stack-et, hanem a böngésző stack futásával
+      párhuzamosan végeznek műveletet, és a szerver válasza után futtatnak további elemeket, amikor a szinkron
       működés véget ér
     </li>
-    <li>Egy szerver oldali kérés akár több 100ms-ig is tarthat, és addig nem blokkolhatjuk a kód szinkron
+    <li>Egy szerver oldali kérés akár több 100 ms-ig is tarthat, és addig nem blokkolhatjuk a kód szinkron
       futását
     </li>
+    <br>
+    <div>
+      <button id="fetch-posts" class="btn btn-secondary">Fetch posts with AJAX call</button>
+      <div id="post-list-container" class="mt-3" style="max-height: 200px; overflow: auto; border-radius: 5px;"></div>
+    </div>
+
+    <pre>
+  &#60;button id="fetch-posts" class="btn btn-secondary">Fetch posts with AJAX call&#60;/button>
+  &#60;div id="post-list-container" class="mt-3" style="max-height: 200px; overflow: auto; border-radius: 5px;">&#60;/div>
+    </pre>
+
     <li>http://jsonplaceholder.typicode.com/posts
       <ul>
-        <li>Nem HTML tartalmat tölt be az oldal, hanem javascriptes struktúrához hasonló szerkezet</li>
+        <li>Nem HTML tartalmat tölt be az oldal, hanem JavaScript-es struktúrához hasonló szerkezet (JSON)</li>
         <pre>
   [
       &#123;
@@ -2541,11 +2896,11 @@ while() &#123;
       ...
   ]
         </pre>
-        <li>Nyers adat, önmagában nem alkalmas a felhasználó felé megjelenítésnek</li>
+        <li>Nyers adat, önmagában nem alkalmas a felhasználó felé megjelenítésre</li>
         <li>Voltaképp JSON string
           <ul>
-            <li>Olyan adatformátum, amit a Javascript ihletett</li>
-            <li>Formai megkötése, hogy akulcsokat kötelező (kettős!) idézőjelbe tenni</li>
+            <li>Olyan adatformátum, amit a JavaScript ihletett</li>
+            <li>Formai megkötése, hogy a kulcsokat kötelező (kettős) idézőjelbe tenni</li>
             <li>A neten tipikusan ebben a formátumban áramlik az adat</li>
             <li>Régebben az XML formátum volt elterjedve</li>
           </ul>
@@ -2589,22 +2944,22 @@ while() &#123;
         </pre>
         <li>Létre kell hozni egy XMLHttpRequest object-et
           <ul>
-            <li>A 'new XMLHttpRequest' objektum reprezentál egy szerver oldali kérést</li>
+            <li>A 'new XMLHttpRequest' objektum kliens által indított, szerver felé irányuló kérést reprezentál</li>
             <li>Ennek kulcsait / funkcionalitásait lehet felhasználni a kérés küldésére</li>
             <li>Az objektum 'onreadystatechange' eseményére kell reagálni
               <ul>
                 <li>Mindig lefut akkor, amikor a kérés életciklusában valami változás történik</li>
                 <li>Összesen 4 ciklusa van egy ilyen kérésnek (XMLHttpRequest.readyState)
-                  <ol>
+                  <ul>
                     <li>0. - Ha a kérés nem inicializált</li>
                     <li>1. - Ha a kapcsolat létrejött a szerverrel</li>
                     <li>2. - Ha a kérés fogadva van</li>
                     <li>3. - Ha a kérés feldolgozása folyamatban van</li>
                     <li>4. - Ha a kérés kész, a válasz is kész</li>
-                  </ol>
+                  </ul>
                 </li>
                 <li>Minket most az érdekel, ha kész a válasz</li>
-                <li>Az onreadystatechange-hez bekötött függvény minden állapotváltozásnál lefut</li>
+                <li>Az onreadystatechange-hez bekötött callback függvény minden állapotváltozásnál lefut</li>
                 <li>A XMLHttpRequest.readyState változik stádiumonként</li>
                 <li>Kiegészíthető azzal, hogy az objektumban a status legyen egyenlő 200-zal (tehát
                   a response status sikeres)
@@ -2617,21 +2972,28 @@ while() &#123;
                 <li>Első paraméternek metódust vár, második paraméternek url-t</li>
               </ul>
             </li>
-            <li>Az xhr.send() függvény meghívásával kiküldhető a kérés</li>
-          </ul>
-        </li>
-        <li>A válaszban, amit a console-log-gal kiírtunk, látható, hogy egy JSON stringet kaptunk vissza,
-          tehát a Javascript részéről ez csak egy string
-          <ul>
-            <li>Át kell alakítanunk Javascriptes adatstruktúrává</li>
-            <li>JSON.parse() függvény
+            <li>Az xhr.send() függvény meghívásával kiküldhető a kérés
               <ul>
-                <li>JSON stringet parse-ol, és visszatér Javascriptes adatstruktúrával</li>
+                <li>Elindítja a hálózati kérést a böngésző</li>
+                <li>A korábban beállított xhr.onreadystatechange = () = &#123; } csak egy függvényreferencia, a böngésző
+                  később, minden állapotváltozáskor (readyState 0 → 4) meghívja</li>
+                <li>Jelen esetben a callback csak akkor fut tovább, ha readyState === 4 és status === 200</li>
               </ul>
             </li>
           </ul>
         </li>
-        <li>A függvényben végig iterálunk az immáron Javascriptes objektumunkon, és tetszés szerinti HTML-t
+        <li>A válaszban, amit a console-log-gal kiírtunk, látható, hogy egy JSON string-et kaptunk vissza,
+          tehát a JavaScript részéről ez csak egy string
+          <ul>
+            <li>Át kell alakítanunk JavaScript-es adatstruktúrává</li>
+            <li>JSON.parse() függvény
+              <ul>
+                <li>JSON string-et parse-ol, és visszatér JavaScript-es adatstruktúrával</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>A függvényben végig iterálunk az immáron JavaScript-es objektumunkon, és tetszés szerinti HTML-t
           készíthetünk belőle
         </li>
         <li>Ez egy olyan kérés volt, amihez nem kellett az oldalt befrissíteni, tehát az oldal újra
@@ -2646,43 +3008,43 @@ while() &#123;
 </div>
 
 <div>
-  <button id="fetch-anything">Fetch posts with AJAX call</button>
-  <div id="anything-container" style="max-height: 200px; overflow: auto; border-radius: 5px;"></div>
-</div>
-
-<div>
   <h3 #ajax2 data-anchor="ajax2">AJAX II</h3>
   <ul>
     <li>A korábbiakban megírt AJAX kérést fogjuk kiszervezni egy külön függvénybe, amit felparaméterezünk, hogy
       bárhova tudjunk kéréseket küldeni
     </li>
-    <li>
-      <pre>
-        function sendRequest(url, method, body, callback) &#123;
-          document.getElementById('fetch-posts').onclick = function () &#123;
-              var xhr = new XMLHttpRequest();
-      
-              xhr.onreadystatechange = function () &#123;
-                  if (xhr.readyState === 4 && xhr.status === 200) &#123;
-                      callback(JSON.parse(xhr.responseText));
-                  }
-              };
-      
-              xhr.open(method, url);
-              xhr.send(body);
-          };
-        }      
+    <br>
+    <div>
+      <button id="fetch-anything" class="btn btn-secondary">Fetch posts with AJAX call</button>
+      <div id="anything-container" class="mt-3" style="max-height: 200px; overflow: auto; border-radius: 5px;"></div>
+    </div>
+    <pre>
+  &#60;button id="fetch-anything" class="btn btn-secondary">Fetch posts with AJAX call&#60;/button>
+  &#60;div id="anything-container" class="mt-3" style="max-height: 200px; overflow: auto; border-radius: 5px;">&#60;/div>
+    </pre>
+    <pre>
+  function sendRequest(url, method, body, callback) &#123;
+    document.getElementById('fetch-posts').onclick = function () &#123;
+        var xhr = new XMLHttpRequest();
+
+        xhr.onreadystatechange = function () &#123;
+            if (xhr.readyState === 4 && xhr.status === 200) &#123;
+                callback(JSON.parse(xhr.responseText));
+            }
+        };
+
+        xhr.open(method, url);
+        xhr.send(body);
+    };
+  }      
       </pre>
+    <li>A függvényünk 4. paramétere a callback
       <ul>
-        <li>A függvényünk 4. paramétere a callback
-          <ul>
-            <li>Callback: function típusú; mit csináljon a függvény, ha készen van</li>
-            <li>A sendRequest function meg fogja hívni a callback function-ünket, amikor eljön az ideje
-            </li>
-            <li>Ennek ideje jelen példában akkor jön el, amikor a readyState-ünk 4-es, és a status-unk
-              200-as
-            </li>
-          </ul>
+        <li>Callback: function típusú, azaz mit csináljon a függvény, ha készen van</li>
+        <li>A sendRequest function meg fogja hívni a callback function-ünket, amikor eljön az ideje
+        </li>
+        <li>Ennek ideje jelen példában akkor jön el, amikor a readyState-ünk 4-es, és a status-unk
+          200-as
         </li>
       </ul>
     </li>
@@ -2690,7 +3052,7 @@ while() &#123;
     <li>
       <pre>
   document.getElementById('fetch-anything').onclick = function () &#123;
-    var url = 'http://jsonplaceholder.typicode.com/posts';
+    var url = 'https://jsonplaceholder.typicode.com/posts';   // http-vel CORS error
     var method = 'GET';
     var body = null;
 
@@ -2725,8 +3087,8 @@ while() &#123;
         }
     };
 
-    xhr.open(method, url);
-    xhr.send(body);
+    xhr.open(method, url);  // 'GET', 'http://jsonplaceholder.typicode.com/posts'
+    xhr.send(body);         // a body null, 'POST' esetén lenne rá szükség
   }          
       </pre>
       <ul>
@@ -2735,17 +3097,17 @@ while() &#123;
           function paraméterénél látunk)
         </li>
         <li>Jelen példánkban request body-t nem küldünk (nem is kell), csak azt adtuk meg a
-          setRequestHeader-ben (beégetve), hogy a content-type az json
+          setRequestHeader-ben (beégetve), hogy a content-type az JSON
         </li>
         <li>Jelen példánkban nincs működésbeli különbség a többször felhasználhatóságot tekintve</li>
       </ul>
     </li>
+    <br>
     <li>Bejelentkezés flow
-
       <br>
       <br>
       <div>
-        <button id="login">Bejelentkezés</button>
+        <button id="login" class="btn btn-secondary">Bejelentkezés</button>
         <br>
         <br>
         Token: <span id="login-token-id"></span>
@@ -2776,15 +3138,32 @@ while() &#123;
         email: 'eve.holt@reqres.in',
         password: 'cityslicka'
     });
-
     sendRequest(url, 'POST', body, function (token) &#123;
         console.log(token);
         document.getElementById('login-token-id').innerHTML = token.token;
     });
-  };          
+  };  
+  
+  function sendRequest(url, method, body, callback) &#123;
+    var xhr = new XMLHttpRequest;
+
+    xhr.onreadystatechange = function () &#123;
+        if (xhr.readyState === 4 && xhr.status === 200) &#123;
+            callback(JSON.parse(xhr.responseText));
+        }
+    }
+
+    xhr.open(method, url);
+
+    xhr.setRequestHeader('content-type', 'application/json');
+
+    xhr.setRequestHeader('x-api-key', 'reqres-free-v1');
+
+    xhr.send(body);
+  }
           </pre>
           <ul>
-            <li>A body egy JSON-né alakított adat (Javascript objektumból)</li>
+            <li>A body egy JSON-né alakított adat (JavaScript objektumból)</li>
             <li>A loginhoz szükséges adatokat ezúttal beégettük</li>
             <li>A kérésből érkezett válasz (token) a callback function-ben jelenik meg</li>
             <li>Először szükséges meghívni az open() függvényt, és csak utána lehet a header információt
@@ -2802,8 +3181,7 @@ while() &#123;
         <li>A további lekérdezésekhez abban a scope-ban kell meghívnunk (újra) a sendRequest függvényt, ahol
           a token-t megkaptuk
         </li>
-        <li>
-          <pre>
+        <pre>
   document.getElementById('login').onclick = function () &#123;
     var url = 'https://reqres.in/api/login';
     var body = JSON.stringify(&#123;
@@ -2811,7 +3189,7 @@ while() &#123;
         password: 'cityslicka'
     });
 
-    sendRequest(url, 'POST', body, function (token) &#123;
+    sendRequest(url, 'POST', body, function (token) &#123;  // arrow függvénnyel érthetőbb sendRequest( url, 'POST', body, (token) => &#123; *logika* } )
         console.log(token);
         document.getElementById('login-token-id').innerHTML = token.token;
 
@@ -2820,23 +3198,42 @@ while() &#123;
         });
     });
   };          
-          </pre>
+
+  function sendRequest(url, method, body, callback) &#123;
+    var xhr = new XMLHttpRequest;
+
+    xhr.onreadystatechange = function () &#123;
+        if (xhr.readyState === 4 && xhr.status === 200) &#123;
+            callback(JSON.parse(xhr.responseText));
+        }
+    }
+
+    xhr.open(method, url);
+
+    xhr.setRequestHeader('content-type', 'application/json');
+
+    xhr.setRequestHeader('x-api-key', 'reqres-free-v1');
+
+    xhr.send(body);
+  }
+        </pre>
+        <li>Két network kérés ment ki, sorrendben</li>
+        <li>A token megléte után újra meghívtuk a sendRequest függvényt</li>
+        <li>A user-ekkel semmi mást nem csináltunk, csak kilogoltuk console-ba</li>
+        <br>
+        <img src="assets/imgs/js_ajax_login_users.png" width="100%">
+        <br>
+        <br>
+        <li>A kódra jellemző a beágyazottság, mert az egymástól függő aszinkron kérésekre igaz, hogy
+          mindig csak a bedobott callback function scope-jában tudunk dolgozni a végeredménnyel
+        </li>
+        <li>Ha újabb kérést kellene kiküldenünk, aminek előfeltétele a users erőforrás, az további
+          beágyazottságot eredményezne
+        </li>
+        <li>Ez vezet át a következő témakörbe, a Promise-okhoz
           <ul>
-            <li>Két network kérés ment ki, sorrendben</li>
-            <li>A token megléte után újra meghívtuk a sendRequest függvényt</li>
-            <li>A user-ekkel semmi mást nem csináltunk, csak kilogoltuk console-ba</li>
-            <li>A kódra jellemző a beágyazottság, mert az egymástól függő aszinkron kérésekre igaz, hogy
-              mindig csak a bedobott callback function scope-jában tudunk dolgozni a végeredménnyel
-            </li>
-            <li>Ha újabb kérést kellene kiküldenünk, aminek előfeltétele a users erőforrás, az további
-              beágyazottságot eredményezne
-            </li>
-            <li>Ez vezet át a következő témakörbe, a Promise-okhoz
-              <ul>
-                <li>Egy újabb nyelvi eszköz, aminek keretében megtanuljuk, hogyan lehet kiküszöbölni
-                  a beágyazottságot, és szebb formába önteni a kódot
-                </li>
-              </ul>
+            <li>Egy újabb nyelvi eszköz, aminek keretében megtanuljuk, hogyan lehet kiküszöbölni
+              a beágyazottságot, és szebb formába önteni a kódot
             </li>
           </ul>
         </li>
@@ -2854,7 +3251,7 @@ while() &#123;
 <div>
   <h3 #promise data-anchor="promise">Promise</h3>
   <ul>
-    <li>Az aszinkron kéréseim miatt a kódunk egy ilyen mintázatot kezd el követni
+    <li>Az aszinkron kéréseink miatt a kódunk egy ilyen mintázatot kezd el követni
       <ul>
         <pre>
   sendRequest(url, 'POST', body, function (token) &#123;
@@ -2916,27 +3313,35 @@ while() &#123;
         </li>
         <li>Szükségessé vált egy nyelvi konstrukció, ami elejét veszi a kód ilyen módú beágyazásának
           <ul>
-            <li>Elkéri csak a szükséges részeket, minimális információt</li>
+            <li>Elkéri a szükséges részeket, minimális információt</li>
             <li>A háttérben összefűzi a szükséges egységeket</li>
             <li>Ugyanezt a működést eredményezi</li>
-            <li>Az absztrakció neve: Promise</li>
+            <li>Az absztrakció neve Promise</li>
           </ul>
         </li>
       </ul>
     </li>
-    <li>A promise jellemző
+    <li>A Promise jellemzői
       <ul>
-        <li>Csak úgy, mint a több, mindig kéz a kézben jár egy másik értékkel
+        <li>Egy Promise mindig egy (jövőbeli) értékkel, és annak állapotával együtt jelenik meg
           <ul>
-            <li>Önmaga nem mondja, hogy milyen értéket fog szolgáltatni</li>
-            <li>Promise&#60; _ &#62;</li>
-            <li>Valami érték aszinkron működés révén szinkron időben a kezünkbe kerül</li>
-            <li>Bármilyen típus megadható</li>
+            <li>Állapot (state): pending → fulfilled / rejected</li>
+            <li>Érték (value): ha fulfilled, akkor megkapjuk at eredményt
+              <ul>
+                <li>A rejected hiba okjektumot ad</li>
+              </ul>
+            </li>
+            <li>Alapvetően nem mondja, hogy milyen értéket fog szolgáltatni</li>
+            <li>Valami érték aszinkron működés révén szinkron időben a kezünkbe kerül (Promise&#60;*type*&#62;)
+              <ul>
+                <li>Bármilyen típus megadható</li>
+              </ul>
+            </li>
           </ul>
         </li>
       </ul>
     </li>
-    <li>A sendRequest függvény becsomagolása promise-os interface-be
+    <li>A sendRequest függvény becsomagolása Promise-os interface-be
       <ul>
         <li>Legyen egy függvényünk, ami vár paramétereket</li>
         <li>A callback function már nincs jelen</li>
@@ -2946,13 +3351,12 @@ while() &#123;
           <ul>
             <li>resolve és reject</li>
             <li>Ezek tulajdonképpen függvények</li>
-            <li>Amikor meghívjuk őket a belső scope-ban, akkor futtatjuk a promise-t sikeres, vagy
+            <li>Amikor meghívjuk őket a belső scope-ban, akkor futtatjuk a Promise-t sikeres, vagy
               sikertelen állapotba
             </li>
           </ul>
         </li>
-        <li>
-          <pre>
+        <pre>
   function sendRequest2(url, method, body) &#123;
     return new Promise(function (resolve, reject) &#123;
         var xhr = new XMLHttpRequest();
@@ -2972,15 +3376,12 @@ while() &#123;
         xhr.send(body);
     });
   }          
-          </pre>
-          <ul>
-            <li>Meg kell néznünk, hogy a status sikeres-e, azaz 2-essel kezdődik-e</li>
-            <li>Ha ez teljesül, akkor a sikeres állapotba futást a resolve() függvénnyel hajthatjuk végre
-            </li>
-            <li>A resolve a futásidőben már elérhető, szerverről érkező választ kapja meg</li>
-            <li>Reject esetén is átadjuk a szerverről érkező választ</li>
-          </ul>
+        </pre>
+        <li>Meg kell néznünk, hogy a status sikeres-e, azaz 2-essel kezdődik-e</li>
+        <li>Ha ez teljesül, akkor a sikeres állapotba futást a resolve() függvénnyel hajthatjuk végre
         </li>
+        <li>A resolve a futásidőben már elérhető, szerverről érkező választ kapja meg</li>
+        <li>Reject esetén is átadjuk a szerverről érkező választ</li>
       </ul>
     </li>
     <li>Hívjuk meg a sendRequest2 függvényt
@@ -2991,26 +3392,26 @@ while() &#123;
         console.log(response);
   &#125;)
         </pre>
-        <li>A promise-t úgy tudjuk használni, hogy ami visszatér promise objektum, annak van egy 'then' kulcsa,
+        <li>A Promise-t úgy tudjuk használni, hogy ami visszatér Promise objektum, annak van egy 'then' kulcsa,
           amiben egy függvény van
         </li>
         <li>A függvényben adhatjuk meg, hogy az aszinkron művelet révén a kezünkbe került értékkel mi történjen
         </li>
         <li>A sendRequest2 then kulcsában megadott függvényben elérhető lesz a kérésből kapott válasz</li>
-        <li>Ha a then()-ből visszatérünk, az mindenképp egy promise lesz</li>
+        <li>Ha a then()-ből visszatérünk, az mindenképp egy Promise lesz</li>
       </ul>
     </li>
     <br>
-    <li>
-      <div>
-        <button id="login2">Bejelentkezés</button>
-        <br>
-        <br>
-        Token: <span id="login-token-id2"></span>
-      </div>
-    </li>
-    <li>
-      <pre>
+    <div>
+      <button id="login2" class="btn btn-secondary">Bejelentkezés</button>
+      <br>
+      <br>
+      Token: <span id="login-token-id2"></span>
+    </div>
+    <pre>
+  &#60;button id="login2" class="btn btn-secondary">Bejelentkezés&#60;/button>
+  Token: &#60;span id="login-token-id2">&#60;/span>
+
   document.getElementById('login2').onclick = function () &#123;
     var url = 'https://reqres.in/api/login';
     var body = JSON.stringify(&#123;
@@ -3027,59 +3428,105 @@ while() &#123;
             console.error('Request failed', error);
         });
   }
-      </pre>
-      <ul>
-        <li>Így néz ki a response: &#123;token: 'QpwL5tke4Pnpja7X4'&#125;</li>
-      </ul>
-    </li>
-    <li>
-      <pre>
+    </pre>
+    <li>Így néz ki a response: &#123;token: 'QpwL5tke4Pnpja7X4'&#125;</li>
+    <pre>
   sendRequest2(url, 'POST', body)
       .then(function (response) &#123;
           console.log(response);
-          return 'Visszatérési érték';  // A válasz után visszaadunk egy értéket.
+          return 'Visszatérési érték';  // a válasz után visszaadunk egy értéket
       })
       .then(function (elozoThenVisszateresiErteke) &#123;
-          console.log(elozoThenVisszateresiErteke);  // Kiíratjuk az előző `then` visszatérési értékét.
+          console.log(elozoThenVisszateresiErteke);  // kiíratjuk az előző `then` visszatérési értékét
       })
       .catch(function (error) &#123;
-          console.error('Request failed', error);  // Hibakezelés
+          console.error('Request failed', error);  // hibakezelés
       });    
-      </pre>
+    </pre>
+    <li>A második then függvényben az első then visszatérési értékéhez jutunk hozzá
       <ul>
-        <li>A második then függvényben az első then visszatérési értékéhez jutunk hozzá</li>
+        <li>Ha az első then nem Promise-t adna vissza, akkor már ott tudjuk használni result-ot, nem csak a következő
+          then blokkban, mint Promise visszatérés esetében</li>
+        <li>A következő then akkor is megkapja az előző then által visszaadott értéket, ha nem Promise-t adtunk vissza
+        </li>
       </ul>
     </li>
-    <li>
-      <pre>
+    <pre>
   sendRequest2(url, 'POST', body)
-      .then(function (response) &#123;
+      .then(function (response) &#123;    // itt első körben csak a token-t kérjük el a szervertől
           console.log('Promise response: ', response);
           document.getElementById('login-token-id2').innerHTML = response.token;
-          return sendRequest2('https://reqres.in/api/users', 'GET', null);
+          return sendRequest2('https://reqres.in/api/users', 'GET', null);  // Promise-szal térünk vissza, így ennek visszatérési értékét csak a következő then blokkban kapjuk meg
       })
       .then(function (elozoThenVisszateresiErteke) &#123;
-          console.log(elozoThenVisszateresiErteke);
+          console.log(elozoThenVisszateresiErteke); // már nincs szükség parse-olásra JSON esetében, mert a sendRequest2 függvény resolve-álásánál megtörténik → JSON.parse(xhr.responseText);
       });
-      </pre>
+    </pre>
+    <li>Gondolhatnánk, hogy ebben az esetben az 'elozoThenVisszateresiErteke' egy
+      Promise&#60;Promise&#60;any&#62;&#62;
+    </li>
+    <li>A gondolat téves, mert a then() function megszabadul egy rétegnyi Promise-tól, tehát biztosítja,
+      hogy ami a kezünkbe kerül, mindenképpen egy egyszeresen becsomagolt Promise legyen
+    </li>
+    <br>
+    <li>A then() függvény tehát kétféleképpen tud működni
       <ul>
-        <li>Gondolhatnánk, hogy ebben az esetben az 'elozoThenVisszateresiErteke' egy
-          Promise&#60;Promise&#60;any&#62;&#62;
+        <li>Ha egyszerű adattal térünk vissza, ami nem Promise, akkor a then blokk becsomagolja az adatot Promise-ba
+          <ul>
+            <li>A visszatérő értékre meg lehet hívni egy újabb then() függvényt, ami "leveszi" a Promise-t</li>
+          </ul>
+          <pre>
+  aPromise
+    .then(function(response) &#123;
+        return 'Simple string';  // ez egy sima érték, amit a then automatikusan Promise-ként kezel
+    })
+    .then(function(result) &#123;
+        console.log(result);  // 'Simple string'
+    });
+          </pre>
         </li>
-        <li>A gondolat téves, mert a then() function megszabadul egy rétegnyi promise-tól, tehát biztosítja,
-          hogy ami a kezünkbe kerül, mindenképpen egy egyszeresen becsomagolt promise legyen
+        <li>Ha pedig egy Promise-szal térünk vissza, akkor a következő then() megszabadul egy rétegnyi Promise-tól
+          <ul>
+            <li>Azaz ebben az esetben is Promise&#60;valami>-vel térünk vissza, ami szintén "lekerül" az adatról a
+              következő blokkban</li>
+            <pre>
+  let anotherPromise = new Promise((resolve, reject) => &#123;
+    setTimeout(() => resolve('Simple string in a Promise'), 1000);
+  });
+
+  aPromise
+    .then(function(response) &#123;
+        return anotherPromise;  // visszatérünk egy Promise-szal
+    })
+    .then(function(result) &#123;
+        console.log(result);  // "Simple string in a Promise"
+    });
+            </pre>
+          </ul>
         </li>
       </ul>
     </li>
     <br>
-    <li>A then() függvény tehát kétféleképpen tud működni:
+    <li>Megeshet az is például, hogy egy Promise-ba ágyazott Promise-szal van dolgunk
       <ul>
-        <li>Ha egyszerű adattal térünk vissza, ami nem promise, akkor becsomagolja promise-ba (a visszatérő
-          értékre meg lehet hívni egy újabb then() függvényt)
-        </li>
-        <li>Ha pedig egy promise-szal térünk vissza, akkor megszabadul egy rétegnyi promise-tól (azaz ebben az
-          esetben is Promise&#60;valami&#62;-vel térünk vissza)
-        </li>
+        <li>Ha többszörösen beágyazott Promise-t adunk vissza (azaz egy Promise egy másik Promise-t tartalmaz), akkor
+          a chain folytatásaként az első Promise teljesülése után a következő then() blokkban már csak egy Promise-t
+          kapunk</li>
+        <pre>
+  let promiseOfPromise = new Promise((resolve, reject) => &#123; // Promise&#60;Promise&#60;string>>
+    resolve(new Promise((resolve, reject) => &#123;
+        resolve('Inner promise resolved');
+    }));
+  });
+
+  aPromise
+    .then(function(response) &#123;   // Promise&#60;Promise&#60;string>> => Promise&#60;string>
+        return response;              // visszaadja a Promise&#60;string>-et
+    })
+    .then(function(result) &#123;     // feloldja a megmaradt Promise-t
+        console.log(result);          // "Inner Promise resolved"
+    });
+          </pre>
       </ul>
     </li>
     <br>
@@ -3104,7 +3551,7 @@ while() &#123;
           console.log('Error: ', error);
       });
                 </pre>
-                <li> Akkor fog lefutni, ha a promise hibára fut(reject)</li>
+                <li> Akkor fog lefutni, ha a Promise hibára fut(reject)</li>
                 <li>Átláthatatlanná teszi a kódot</li>
                 <li> Nem használatos</li>
               </ul>
@@ -3120,18 +3567,16 @@ while() &#123;
           console.log(error);
       &#125;);
                 </pre>
-                <li>Az összes hibaág lekezdehető egy bizonyos pontig vele</li>
+                <li>Az összes hibaág lekezelhető egy bizonyos pontig vele</li>
                 <li>A then() függvényhez nagyon hasonlatos</li>
                 <li>Függvény, amit meg lehet hívni</li>
                 <li>Bemeneti paraméterként függvényt fogad</li>
-                <li>A függvény fogja paraméterként megkapni a hiba értékét (amit a promise a reject
-                  során megkap)
+                <li>A függvény fogja paraméterként megkapni a hiba értékét, amit a Promise a reject során megkap
                 </li>
                 <li>A catch() blokkot úgy helyezgetjük, ahogy akarjuk a chainben, és ahova tettük, addig
                   a pontig kezeli le a hibákat, legalábbis olyan módon, ahogy azt a bemeneti
                   függvényben megadjuk, tehát több catch is lehet egy chainben
                 </li>
-                <li>Több catch esetén, a hibára futást követően az összes catch() le fog futni</li>
                 <li>A best practice, hogy a chain végén van egy darab catch()</li>
               </ul>
             </li>
@@ -3146,7 +3591,7 @@ while() &#123;
           return Promise.reject('Hiba');
       })
       .catch(function (error) &#123;
-          console.log(error);
+          console.log(error); // 'Hiba'
       });          
             </pre>
             <li>Vissza kell térnünk egy olyan Promise objektummal, ami reject-elve van</li>
@@ -3161,35 +3606,137 @@ while() &#123;
 <div>
   <h3 #fetch data-anchor="fetch">Fetch</h3>
   <ul>
-    <li>
+    <div>
       <div>
-        <div class="">
-          <div class="row" style="display: grid; grid-template-columns: 1fr 1fr; margin-bottom: 20px">
-            <div id="login-component">
-            </div>
-            <div>
-              <div id="user-list-container">
-              </div>
+        <div class="row" style="display: grid; grid-template-columns: 1fr 1fr; margin-bottom: 20px">
+          <div id="login-component">
+          </div>
+          <div>
+            <div id="user-list-container">
             </div>
           </div>
         </div>
       </div>
-    </li>
+    </div>
+    <pre>
+  &#60;div class="row">
+    &#60;div id="login-component">&#60;/div>
+    &#60;div id="user-list-container">&#60;/div>
+  &#60;/div>
+
+  var state = &#123;
+      users: [],
+      isLoggedIn: false,
+      isLoginPending: false,
+      errorMsg: ''
+  };
+
+  window.onload = renderForm;
+
+  function renderForm() &#123;
+      console.log('state.isLoggedIn: ', state.isLoggedIn);
+      if (state.isLoggedIn) &#123;
+          document.getElementById("login-component").innerHTML = "";
+      }
+
+      document.getElementById("login-component").innerHTML = `
+        &#60;div class="card p-3">    
+          &#60;b id="log-in-title">Bejelentkezés&#60;/b>   
+          &#60;form id="log-in">
+              &#60;div>
+                  &#60;label class="w-100">Email:
+                      &#60;input type="text" name="email" class="form-control" $&#123;state.isLoginPending ? "disabled" : ""}/>
+                  &#60;/label>
+              &#60;/div>
+              &#60;div>
+                  &#60;label class="w-100">Jelszó:
+                      &#60;input type="password" name="password" class="form-control" $&#123;state.isLoginPending ? "disabled" : ""}/>
+                  &#60;/label>      
+              &#60;/div>
+              &#60;div>
+                  &#60;button id="fetchSubmit" class="btn btn-secondary" type="submit" $&#123;(state.isLoginPending || state.isLoggedIn) ? "disabled" : ""}>
+                          Bejelentkezés
+                  &#60;/button>
+                  &#60;button id="fetch-logout" class="btn btn-danger"type="button" $&#123;(state.isLoginPending || !state.isLoggedIn) ? "disabled" : ""}>
+                      Kijelentkezés
+                  &#60;/button>
+              &#60;/div>
+            &#60;div id="fetchErrorMessage">
+              $&#123;state.isLoginPending ? "Bejelentkezés folyamatban..." : state.errorMsg}
+            &#60;/div>
+          &#60;/form>
+        &#60;/div>
+      `;
+
+      if (document.getElementById('fetch-logout')) &#123;
+          document.getElementById('fetch-logout').addEventListener('click', function (event) &#123;
+              state.isLoggedIn = false;
+              state.users = [];
+              document.getElementById('user-list-container').innerHTML = '';
+              renderForm();
+          });
+      }
+
+      var fetchForm = document.getElementById('log-in');
+
+      fetchForm.querySelectorAll('input')[0].value = 'eve.holt@reqres.in';
+      fetchForm.querySelectorAll('input')[1].value = 'ok';
+
+      fetchForm.onsubmit = function (event) &#123; } // a logika lentebb
+
+  function renderUsers() &#123;
+      var userListContainer = document.getElementById('user-list-container');
+
+      var newList = '';
+
+      newList = '&#60;ul class="list-group">'
+      for (var s of state.users) &#123;
+          newList += `&#60;li class="list-group-item">$&#123;s.first_name} $&#123;s.last_name}&#60;/li>`;
+      }
+      newList += `
+          &#60;/ul>
+      `;
+
+      userListContainer.innerHTML = newList;
+
+      state.isLoginPending = false;
+      renderForm();
+
+      console.log('state: ', state);
+  }
+
+  function renderErrors(errorMsg) &#123;
+      // var errorContainer = document.getElementById('fetchErrorMessage');
+      // errorContainer.innerHTML = errorMsg;
+      state.errorMsg = errorMsg;
+      state.isLoginPending = false;
+      renderForm();
+  }
+    </pre>
     <li>Célunk, hogy login után lekérjük a user listát
       <ul>
         <li>A kérés elküldéséhez a beépített fetch függvényt fogjuk használni
           <ul>
             <li>A fetch első paramétere az URL</li>
             <li>A második paramétere pedig egy konfigurációs objektum</li>
-            <li>A típus annotációját tekintve a fetch függvény visszatérése
-              &#60;Promise&#60;Response&#62;&#62; (egy később elérhető Response objektummal)
+            <li>A típus annotációját tekintve a fetch függvény visszatérése &#60;Promise&#60;Response&#62;&#62;
+              <ul>
+                <li>Egy később elérhető Response objektum</li>
+              </ul>
             </li>
             <li>A szervertől érkező válasz több paramétert is tartalmaz(hat)</li>
-            <li>A loginhoz a helyes email cím: eve.holt@reqres.in / a jelszó: `lehet akármi`
+            <li>A login-hoz a helyes credetial
+              <ul>
+                <li>eve.holt@reqres.in / *bármi*</li>
+              </ul>
             </li>
-            <li>Az első then() response-a a következőt adja vissza (console.log(response))
+            <li>Az első then() válasza a következőt adja vissza
               <ul>
                 <pre>
+  console.log(response);
+
+  ↓↓↓↓↓
+
   &#123;
       body: ReadableStream
       bodyUsed: false
@@ -3205,30 +3752,32 @@ while() &#123;
               </ul>
             </li>
             <li>A body egy úgynevezett ReadableStream, mert potenciálisan hatalmas adat is lehet
-              (adatfolyamként van reprezentálva, amit ki lehet olvasni)
+              <ul>
+                <li>Adatfolyamként van reprezentálva, amit ki lehet olvasni</li>
+              </ul>
             </li>
             <li>Ha tudjuk, hogy JSON adatunk van, akkor a kiolvasás nagyon egyszerű</li>
             <li>A response.json() típusát tekintve Promise&#60;any&#62;
               <ul>
-                <li>Tudjuk, hogy a promise így működik, ha a then() blokkba bedobott functionben
-                  visszatérünk egy újabb promise-szal ( return response.json() ), akkor a következő
-                  then() blokkban tudjuk használni az abból az előző promise-ból resolválódó értéket
+                <li>Tudjuk, hogy a Promise így működik, ha a then() blokkba bedobott function-ben
+                  visszatérünk egy újabb Promise-szal ( return response.json() ), akkor a következő
+                  then() blokkban tudjuk használni az abból az előző Promise-ból resolve-álódó értéket
                 </li>
               </ul>
             </li>
             <li>Hibás email vagy jelszó esetén egy &#123;error: string&#125; objektumot kapunk
               <ul>
                 <li>400-as státusz kódot kapunk, a fetch() függvény úgy működik, hogy nem futtatja a
-                  rendszert promise szintjén hibára, ezért lehet szükség egy catch() blokkra
+                  rendszert Promise szintjén hibára, ezért lehet szükség egy catch() blokkra
                 </li>
                 <li>Az 'ok' kulcsot kell használnunk, hogy belefuttassuk a rendszert a catch() blokkba,
-                  és a promise-t így tudjuk rejected állapotba átállítani, amit egy Promise.reject()
+                  és a Promise-t így tudjuk rejected állapotba átállítani, amit egy Promise.reject()
                   függvénnyel tudunk megtenni
                 </li>
                 <li>A reject függvénybe bedobhatunk hibakezelésre alkalmas információt
                   <ul>
                     <li>Promise.reject('login error')</li>
-                    <li>Ez a string fog kibukkanni a catch() blokk függvényének paramétereként</li>
+                    <li>Ez a string fog felbukkanni a catch() blokk függvényének paramétereként</li>
                   </ul>
                 </li>
               </ul>
@@ -3236,9 +3785,9 @@ while() &#123;
             <li>A második then() blokkban a kezünkbe kerül a user token, és lehetőségünk nyílik a második
               API hívás kiküldésére
             </li>
-            <li>Visszatérhetünk fetch() függvény által visszaküldött promise-szal
+            <li>Visszatérhetünk fetch() függvény által visszaküldött Promise-szal
               <ul>
-                <li>A fetch() függvény esetében a 'GET' method a default, 'GET' esetében body sincs, és
+                <li>A fetch() függvény esetében a 'GET' method a default, 'GET' esetében body nincs, és
                   header információt sem akarunk küldeni, így nincs szükség megadni
                   semmi mást, csak a userek url-jét
                 </li>
@@ -3265,66 +3814,67 @@ while() &#123;
             </li>
           </ul>
         </li>
-        <li>A végeredmény</li>
+        <li>Adatlekérés</li>
         <pre>
-            var state = [];
-            var fetchSubmitButton = document.getElementById('log-in');
-            
-            fetchSubmitButton.onsubmit = function (event) &#123;
-                event.preventDefault();
-            
-                renderErrors('');
-            
-                var email = event.target.elements.email.value;
-                var password = event.target.elements.password.value;
-            
-                var body = JSON.stringify(&#123; email, password });
-            
-                fetch('https://reqres.in/api/login', &#123;
-                    method: 'POST',
-                    body: body,
-                    headers: &#123;
-                        'Content-type': 'application/json'
-                    }
-                }).then(function (response) &#123;
-                    if (!response.ok) &#123;
-                        return Promise.reject(&#123; error: 'Login failed' });
-                    }
-                    return response.json();
-                }).then(function (response) &#123;
-                    return fetch('https://reqres.in/api/users');
-                }).then(function (response) &#123;
-                    if (!response.ok) &#123;
-                        return Promise.reject(&#123; error: 'Get user list failed' });
-                    }
-                    return response.json();
-                }).then(function (userPage) &#123;
-                    state = userPage.data;
-                    renderUsers();
-                }).catch(function (error) &#123;
-                    console.log(error);
-                    renderErrors(error.error);
-                });
-            };
-            
-            function renderUsers() &#123;
-                var userListContainer = document.getElementById('user-list-container');
-            
-                var newList = '&#60;ul class="list-group">';
-                for (var s of state) &#123;
-                    newList += `&#60;li class="list-group-item">$&#123;s.first_name} $&#123;s.last_name}&#60;/li>`;
-                }
-                newList += '&#60;/ul>';
-            
-                userListContainer.innerHTML = newList;
-            
-                console.log('state: ', state);
+  ...
+
+  fetchForm.onsubmit = function (event) &#123;    // a form elküldésekor lefut a callback függvény
+        event.preventDefault();   // megakadályozzuk az alapértelmezett HTML működést
+
+        renderErrors('');   // lényegében eltávolítjuk a korábbi hibákat
+
+        var email = event.target.elements.email.value;    // bekérjük a form email mező értékét
+        var password = event.target.elements.password.value;    // bekérjük a password mező értékét
+
+        var body = JSON.stringify(&#123; email, password });    // a credential-t JSON formátumba csomagoljuk
+
+        state.isLoginPending = true;    // a bejelentkezési állapot elkezdődött
+        renderForm();   // form frissítése
+
+        fetch('https://reqres.in/api/login', &#123;   // API hívás
+            method: 'POST', body, headers: &#123;
+                'Content-type': 'application/json',   // JSON-t küldünk
+                'x-api-key': 'reqres-free-v1'
             }
-            
-            function renderErrors(errorMsg) &#123;
-                var errorContainer = document.getElementById('fetchErrorMessage');
-                errorContainer.innerHTML = errorMsg;
-            }            
+        })
+        .then(function (response) &#123;
+            if (!response.ok) &#123;    // ha a válasz nem sikeres, hibát dobunk
+                return Promise.reject(&#123; error: 'Login failed' });    
+            }
+            // console.log('response.json() ', response.json().then(resp => console.log(resp))); // &#123;token: 'QpwL5tke4Pnpja7X4'}
+
+            return response.json();   // sikeres válasz esetén a választ JSON-ra konvertáljuk
+        })
+        .then(function (response) &#123;
+            state.isLoggedIn = true;
+            state.isLoginPending = false;
+            renderForm();
+            return fetch('https://reqres.in/api/users', &#123; headers: &#123; 'x-api-key': 'reqres-free-v1' } });    // felhasználók lekérdezése
+        })
+        .then(function (response) &#123;
+            if (!response.ok) &#123;
+                return Promise.reject(&#123; error: 'Get user list failed' });
+            }
+            return response.json();   // az előző then blokkbeli fetch válasza Response objektum, ezéert szükséges a .json()
+        })
+        .then(function (userPage) &#123;
+            state.users = userPage.data;    // lekért felhasználók state objektumba mentése
+            renderUsers();    // felhasználók renderelése
+        })
+        .catch(function (error) &#123;
+            state.isLoginPending = false;
+            renderErrors(error.error);
+        });
+  }
+  
+  ...          
+        </pre>
+        <li>Mivel egyébként nem használjuk a user lista lekérésére a credential-t, nagyon leegyszerűsítve az alábbi
+          módon hozzájuk férhetünk</li>
+        <pre>
+  fetch('https://reqres.in/api/users')    // + , &#123; headers: &#123; 'x-api-key': 'reqres-free-v1' } }
+    .then(resp => resp.json())
+    .then(users => console.log(users));
         </pre>
       </ul>
     </li>
@@ -3339,7 +3889,7 @@ while() &#123;
       <ul>
         <li>Callback function
           <ul>
-            <li>Legrégebbi, a javascript készülésétől kezdve elérhető megoldás</li>
+            <li>Legrégebbi, a JavaScript készülésétől kezdve elérhető megoldás</li>
           </ul>
         </li>
         <li>Promise láncolat
@@ -3351,7 +3901,7 @@ while() &#123;
     </li>
     <br>
     <li>Az async egy szintaktikai könnyítés</li>
-    <li>A motorháztető alatt ugyanúgy promise-okat használ</li>
+    <li>A motorháztető alatt ugyanúgy Promise-okat használ</li>
     <li>Ha egy függvényt async kulcsszóval deklarálunk, akkor a body-n belül használni lehet az await kulcsszót
       <ul>
         <pre>
@@ -3362,14 +3912,14 @@ while() &#123;
         <li>A fejlesztő számára azt a látszatot kelti az await, mintha szinkron időben leblokkolnánk a kód
           futását
         </li>
-        <li> (Szinkron időben ugye nem blokkolhatjuk a futást, hiszen a js engine egyszerre csak egy dolgot tud
-          végrehajtani)
+        <li>Szinkron időben ugye nem blokkolhatjuk a futást, hiszen a JavaScript engine egyszerre csak egy dolgot tud
+          végrehajtani
         </li>
       </ul>
     </li>
     <br>
-    <li style="display: flex; gap: 20px;">
-      <div class="card p-6">
+    <li style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+      <div class="card p-1">
         <b id="log-in-title" style="display: block;padding-bottom: 20px">Belépés</b>
         <form id="log-in-2">
           <div>
@@ -3383,44 +3933,54 @@ while() &#123;
             </label>
           </div>
           <div>
-            <button id="fetchSubmit" type="submit" style="margin-top: 20px">
+            <button id="fetchSubmit" type="submit" class="btn btn-secondary" style="margin-top: 20px">
               Bejelentkezés
             </button>
           </div>
 
         </form>
       </div>
-      <div class="card p-6">
+      <div class="card p-1">
+        <b id="log-in-title" style="display: block;padding-bottom: 20px">Felhasználók</b>
         <div id="user-list"></div>
       </div>
     </li>
     <br>
-    <li>
-      <pre>
+    <pre>
+  var email = '';
+  var pass = '';
+
+  login2.onsubmit = function (event) &#123;
+      event.preventDefault();
+
+      email = event.target.elements.email.value;
+      password = event.target.elements.password.value;
+
+      loginAndFetchUsers();
+  }
+
   async function loginAndFetchUsers() &#123;
     var loginResponse = await fetch('https://reqres.in/api/login', &#123;
         method: 'POST',
         body,
         headers: &#123;
-            'Content-type': 'application/json'
+            'Content-type': 'application/json',
+            'x-api-key': 'reqres-free-v1'
         }
     });
   }      
-       </pre>
+    </pre>
+    <li>A fetch function egy Promise of Response-szal tér vissza</li>
+    <li>Az await kulcsszó megvárja, amíg a Promise resolve-álódik
       <ul>
-        <li>A fetch function egy Promise of response-zal tér vissza</li>
-        <li>Az await kulcsszó megvárja, amíg a Promise resolve-álódik
-          <ul>
-            <li>Promise&#60;T&#62; típusból csinál T típust</li>
-            <li>Tehát végrehajtja az aszinkron műveletet</li>
-            <li>A loginResponse változóban szinkron formában tudjuk kezelni</li>
-          </ul>
-        </li>
-        <li>A callback function nem engedi meg, hogy bekössük változóba a visszatérési értéket</li>
-        <br>
-        <li>A loginResponse változónk megléte után szinkron időben tudjuk a választ kezelni</li>
+        <li>Promise&#60;T&#62; típusból csinál T típust</li>
+        <li>Tehát végrehajtja az aszinkron műveletet</li>
+        <li>A loginResponse változóban szinkron formában tudjuk kezelni</li>
       </ul>
     </li>
+    <li>A callback function nem engedi meg, hogy bekössük változóba a visszatérési értéket</li>
+    <br>
+    <li>A loginResponse változónk megléte után szinkron időben tudjuk a választ kezelni</li>
     <pre>
   async function loginAndFetchUsers() &#123;
     // await
@@ -3431,7 +3991,8 @@ while() &#123;
         method: 'POST',
         body,
         headers: &#123;
-            'Content-type': 'application/json'
+            'Content-type': 'application/json',
+            'x-api-key': 'reqres-free-v1'
         }
     });
 
@@ -3448,7 +4009,7 @@ while() &#123;
 
     console.log('token: ', tokenObj.token);
 
-    var usersResponse = await fetch('https://reqres.in/api/users');
+    var usersResponse = await fetch('https://reqres.in/api/users', &#123; headers: &#123; 'x-api-key': 'reqres-free-v1' } });
 
     if (!usersResponse.ok) &#123;
         alert('Nincsenek userek (ERROR)');
@@ -3463,10 +4024,12 @@ while() &#123;
 
     usersPage.data.map(m => &#123;
         console.log(m);
-        listOfUsers.innerHTML += `<div>$&#123;m.first_name} $&#123;m.last_name}</div>`;
+        listOfUsers.innerHTML += `&#60;div>$&#123;m.first_name} $&#123;m.last_name}&#60;/div>`;
     });
   }    
     </pre>
+    <img src="assets/imgs/js_async.png" width="100%">
+    <br>
   </ul>
 </div>
 
@@ -3474,17 +4037,29 @@ while() &#123;
   <h3 #movieproject data-anchor="movieproject">Movie project</h3>
   <br>
   <ul>
-    <li>A keresésre használhatunk callback function-t, Promise-t, vagy async function-t
+    <li>A keresésre használhatunk
+      <ol>
+        <li>callback function-t</li>
+        <li>Promise-t</li>
+        <li>async function-t</li>
+      </ol>
       <ul>
+        <br>
+        <li>Az eredmény minden esetben a 3 megvalósítás alatt jelenik meg</li>
+        <br>
+      </ul>
+      <ol>
         <li>Callback megvalósítás
           <ul>
-            <li>
-              <form class="search-movie-form" id="callback-search">
-                <input type="search" name="title" placeholder="Title" value="vinny" />
-                <input type="text" maxlength="4" name="year" placeholder="Year" value="1992" />
-                <button type="submit" id="callback-submit" class="movie-search-button">search</button>
-              </form>
-            </li>
+            <form id="callback-search" class="input-group mt-3 mb-3 search-movie-form">
+              <input type="text" aria-label="Field 1" class="form-control" type="search" name="title"
+                placeholder="Title" value="vinny">
+              <input type="text" aria-label="Field 2" class="form-control" type="number" maxlength="4" name="year"
+                placeholder="Year" value="1992">
+              <button id="callback-submit" class="btn btn-secondary movie-search-button" type="submit">
+                Search
+              </button>
+            </form>
             <pre>
   var callbackSubmitButton = document.getElementById('callback-search');
   var searchObj = &#123;};
@@ -3502,7 +4077,7 @@ while() &#123;
               console.error('Error: ', error);
               document.getElementById('movie-list').textContent = 'Error fetching data';
           } else &#123;
-              console.error('Data: ', data);
+              console.error('Data: ', data); // nincs hiba, csak piros háttérrel írjuk ki a data-t a Console-ba
               console.log(data);
               if (!data.Response) &#123;
                   document.getElementById('movie-list').textContent = JSON.stringify(data.Error, null, 2);
@@ -3519,12 +4094,12 @@ while() &#123;
       // fetch(`http://www.omdbapi.com/?s=$&#123;searchObj.title}&y=$&#123;searchObj.year}&apikey=9606ae0f`);
   
       var xhr = new XMLHttpRequest();
-      xhr.open("GET", url, true);
+      xhr.open("GET", url, true);   // true = aszinkron kérés / false = szinkron kérés
       xhr.onreadystatechange = function () &#123;
-          if (xhr.readyState === 4) &#123; // A kérés befejeződött
-              if (xhr.status === 200) &#123; // A válasz státusza OK
+          if (xhr.readyState === 4) &#123;    // a kérés befejeződött
+              if (xhr.status === 200) &#123;    // a válasz státusza OK
                   var data = JSON.parse(xhr.responseText);
-                  callback(null, data);
+                  callback(null, data);   // function (error, data) &#123; }
               } else &#123;
                   callback(new Error("Error fetching data"));
               }
@@ -3535,17 +4110,20 @@ while() &#123;
              </pre>
             <li>A fetchData 3. bemeneti paramétere callback function</li>
             <br>
+            <img src="assets/imgs/js_movie_callback.png" width="100%">
+            <br>
+            <br>
           </ul>
         </li>
         <li>Promise megvalósítás
           <ul>
-            <li>
-              <form class="search-movie-form" id="promise-search">
-                <input type="search" name="title" placeholder="Title" value="beverly" />
-                <input type="text" maxlength="4" name="year" placeholder="Year" value="2024" />
-                <button type="submit" id="promise-submit" class="movie-search-button">search</button>
-              </form>
-            </li>
+            <form id="promise-search" class="input-group mt-3 mb-3 search-movie-form">
+              <input type="search" aria-label="Field 1" class="form-control" name="title" placeholder="Title"
+                value="beverly" />
+              <input type="text" aria-label="Field 2" type="number" maxlength="4" class="form-control" name="year"
+                placeholder="Year" value="2024" />
+              <button id="promise-submit" class="btn btn-secondary movie-search-button" type="submit">Search</button>
+            </form>
             <pre>
   var promiseSubmitButton = document.getElementById('promise-search');
   var searchObj = &#123;};
@@ -3589,18 +4167,17 @@ while() &#123;
         </li>
         <li> Async megvalósítás
           <ul>
-            <li>
-              <div class="main-header">
-                <div class="inner">
-                  <form class="search-movie-form" id="async-movie">
-                    <input type="search" name="title" placeholder="Title" value="back to the future" />
-                    <input type="text" maxlength="4" name="year" placeholder="Year" value="1989" />
-                    <button type="submit" id="async-submit" class="movie-search-button"> search
-                    </button>
-                  </form>
-                </div>
+            <div class="main-header">
+              <div class="inner">
+                <form id="async-movie" class="input-group mt-3 mb-3 search-movie-form">
+                  <input type="search" aria-label="Field 1" class="form-control" name="title" placeholder="Title"
+                    value="back to the future" />
+                  <input type="number" aria-label="Field 2" maxlength="4" class="form-control" name="year"
+                    placeholder="Year" value="1989" />
+                  <button id="async-submit" class="btn btn-secondary movie-search-button" type="submit">Search</button>
+                </form>
               </div>
-            </li>
+            </div>
             <pre>
   movieSubmitButton.onsubmit = async (event) => &#123;
     event.preventDefault();
@@ -3628,20 +4205,18 @@ while() &#123;
             </pre>
           </ul>
         </li>
-      </ul>
+      </ol>
     </li>
-    <div id="movie-list" style="display: flex; gap: 30px; overflow-x: auto;"></div>
+    <div id="movie-list" style="display: flex; gap: 30px; overflow-x: auto; padding-bottom: 15px;"></div>
     <li>A renderMovies függvény
       <ul>
-        <li>
-          <pre>
+        <pre>
+  &#60;div id="movie-list" style="display: flex; gap: 30px; overflow-x: auto; padding-bottom: 15px;">&#60;/div>
+
   function getMovies() &#123;
-      return fetch(`http://www.omdbapi.com/?s=$&#123;searchObj.title&#125;&y=$&#123;searchObj.year&#125;&apikey=9606ae0f`);
+        return fetch(`http://www.omdbapi.com/?s=$&#123;searchObj.title&#125;&y=$&#123;searchObj.year&#125;&apikey=9606ae0f`);
   &#125;
-           </pre>
-        </li>
-        <li>
-          <pre>
+
   function renderMovies(movies) &#123;
     var list = document.getElementById('movie-list');
     list.innerHTML = '';
@@ -3671,8 +4246,8 @@ while() &#123;
 
     if (!clearPostersButton) &#123;
         list.insertAdjacentHTML('afterend', `
-            &#60;div style="text-align: center; padding: 20px;">
-                &#60;button id="clear-posters" style="background: red; border-color: red; box-shadow: none; color: white;">
+            &#60;div id="clear-posters" style="text-align: center; padding: 20px;">
+                &#60;button style="background: red; border-color: red; box-shadow: none; color: white;">
                     CLEAR
                 &#60;/button>
             &#60;/div>
@@ -3751,66 +4326,66 @@ while() &#123;
         }
     });
   }
-           </pre>
-        </li>
+          </pre>
       </ul>
-    </li>
   </ul>
 </div>
 
 <div>
-  <h3 #paragigms data-anchor="paragigms">Paragigms</h3>
+  <h3 #paradigms data-anchor="paradigms">Paradigms</h3>
   <ul>
-    <li>A programozás során felmerölő problémákra szemlélet(ek)</li>
+    <li>A programozás során felmerölő problémák, szemléletek</li>
     <li>Mindegyik merőben eltérő megközelítést alkalmaz, a maga eszközeivel, előnyeivel, hátrányaival</li>
     <li>3 típusát különböztetjük meg
       <ul>
         <li>Procedurális
           <ul>
-            <li>Ez van a legközelebb a hardverher</li>
-            <li>Legvékonyabb absztrakciós réteg</li>
-            <li>Ez van a legközelebb ahhoz, ami valójában történik (a számítógépnek utasításokat adunk)</li>
-            <li>
+            <li>Ez van a legközelebb (a hardverhez) ahhoz, ami valójában történik
               <ul>
-                <pre>
+                <li>A számítógépnek utasításokat adunk</li>
+              </ul>
+            </li>
+            <li>Legvékonyabb absztrakciós réteg</li>
+            <pre>
   var product = &#123;
       name: 'Fűnyíró',
       price: 45000,
       isInStock: true,
   &#125;
-                </pre>
-                <li>Két operációt fogunk megvalósítani
-                  <ul>
-                    <li>Leértékelés és üzenet előállítás
-                      <ul>
-                        <li>Közvetlenül a memóriában módosítást hajtunk végre</li>
-                        <pre>
+            </pre>
+            <ul>
+              <li>Két operációt fogunk megvalósítani
+                <ul>
+                  <li>Leértékelés, és üzenet előállítás
+                    <ul>
+                      <li>Közvetlenül a memóriában módosítást hajtunk végre</li>
+                      <pre>
   product.price *= 0.9;
                           </pre>
-                        <pre>
+                      <pre>
   var message = `A termék neve: $&#123;product.name&#125;, ára: $&#123;product.price&#125;
                           és $&#123;product.isInStock ? 'elérhető' : 'nem elérhető'&#125;`
                          </pre>
-                        <li>A kód sorrendiségének nagyon nagy szerepe van</li>
-                        <li>Nyelvek, amik ilyenek
-                          <ul>
-                            <li>C</li>
-                            <li>Php</li>
-                            <li>Javascript</li>
-                          </ul>
-                        </li>
-                      </ul>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
+                      <li>A kód sorrendiségének nagyon nagy szerepe van</li>
+                      <li>Nyelvek, amik ilyenek
+                        <ul>
+                          <li>C</li>
+                          <li>Php</li>
+                          <li>JavaScript</li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </ul>
           </ul>
         </li>
+        <br>
         <li>Funkcionális
           <ul>
             <li>A programunkat pure function-ökből építjük fel, tehát side-effekt nélküli függvényekből,
-              fekete dobozok, amik valami értékből generálnak valami kimenő értéket
+              fekete dobozok, amik valamilyen bemenő értékből generálnak valami kimenő értéket
             </li>
             <li>A rendszer állapotán nem hajt végre változtatást</li>
             <li>Ilyen nyelvek például
@@ -3819,17 +4394,15 @@ while() &#123;
                 <li>Haskell</li>
                 <li>Clojure</li>
                 <li>F#</li>
-                <li>(Javascript)</li>
+                <li>(JavaScript)</li>
               </ul>
             </li>
             <li>Akár változók használata nélkül, és side-effektek nélkül lehet az egész kódot megírni,
               úgynevezett moládok segítségével
             </li>
-            <li>Javascriptben pipeline-okat építünk, amik tulajdonképpen pure-function-ökből összerakott
-              csővezetékek, mint például a Promise chain, vagy az Array methodok (pl.: map, filter,
-              reduce), ahol higher order függvények segítségével egy csővezetéket hozunk létre, amiben az
-              adat átalakul
-            </li>
+            <li>JavaScript-ben pipeline-okat építünk, amik tulajdonképpen pure function-ökből összerakott csővezetékek,
+              mint például a Promise chain, vagy az Array method-ok (például map, filter, reduce), ahol higher order
+              függvények segítségével egy csővezetéket hozunk létre, amiben az adat átalakul </li>
             <pre>
   function withDiscount(product, discount) &#123;
     return &#123;
@@ -3839,38 +4412,29 @@ while() &#123;
     };
   }              
             </pre>
-            <li>
-              <pre>
-  function withDiscount(product, discount) &#123;
-    return &#123;
-        name: product.name,
-        price: product.price * discount,
-        isInStock: product.isInStock
-    };
-  }              
-              </pre>
-              <ul>
-                <li>Stringet képez a bemenő termék objektumból</li>
-              </ul>
-            </li>
+            <li>String-et képez a bemenő termék objektumból</li>
             <li>Az így összeállt "legókockákat" akár össze is építhetjük
               <ul>
-                <li>
-                  <pre>console.log(toMessage(withDiscount(product, 0.9)));</pre>
-                </li>
+                <pre>
+  function toMessage(product) &#123;
+      return `A termék neve: $&#123;product.name}, ára: $&#123;product.price} és $&#123;product.isInStock ? 'elérhető' : 'nem elérhető'}`
+  }
+
+  console.log(toMessage(withDiscount(product, 0.9)));
+                </pre>
                 <li>A futási időnek nincs akkora szerepe</li>
                 <li>Ugyanaz állt elő, mint procedurális szemlélettel</li>
                 <li>A sorrendiséget nem lehet felcserélni</li>
                 <li>Nem a memóriában változnak az értékek</li>
                 <li>A koncepció, hogy kisebb darabokból összeépítesz egy nagyobb egységet</li>
                 <li>Az egyes "darabok" / "részegységek" között a kapcsolatot a function-ök típus
-                  annotációi teremtik meg
-                </li>
+                  annotációi teremtik meg</li>
                 <li>Nem módosíthatunk értéket, csak a régiből hozhatunk létre újat</li>
               </ul>
             </li>
           </ul>
         </li>
+        <br>
         <li>OOP / Objektum orientált
           <ul>
             <li>Jellemző nyelvek
@@ -3878,7 +4442,7 @@ while() &#123;
                 <li>Java</li>
                 <li>C#</li>
                 <li>Php</li>
-                <li>Javascript</li>
+                <li>JavaScript</li>
               </ul>
             </li>
             <li>Az adatokat, és a műveleteket "összezárja" egy kontextusba, tehát az adatot ruházza fel az
@@ -3893,31 +4457,32 @@ while() &#123;
             </li>
             <li>Konvenció szerint nagybetűvel írjuk a változót
               <ul>
-                <li>
-                  <pre>
+                <pre>
   var Product = &#123;
       name: 'Fűnyíró',
       price: 45000,
       isInStock: true,
       applyDiscount: function (discount) &#123; // function (discount) &#123;&#125;
-
       &#125;
   &#125;
-                  </pre>
-                </li>
+                </pre>
                 <li>A megközelítés lényege, hogy ő saját magán belül ki tudja számolni a leértékelést
                 </li>
                 <li>Az applyDiscount egy olyan függvény, ami vár egy számot, és nem küld vissza semmit
-                  (number -> void)
+                  <ul>
+                    <li>number -> void</li>
+                  </ul>
                 </li>
                 <li>Belső állapotváltozást hoz létre magán belül, és a külvilág felé nem közvetít
                   semmit
                 </li>
-                <li>A getMessage pedig egy olyan függvény, ami nem vár paramétert, és stringet ad vissza
-                  ( () -> string )
+                <li>A getMessage (lásd lentebb) pedig egy olyan függvény, ami nem vár paramétert, és string-et ad vissza
+                  <ul>
+                    <li>() -> string</li>
+                  </ul>
                 </li>
                 <li>A két függvény operáció, ami össze van zárva az adattal</li>
-                <li>Az adatmezőket az objektuk 'property'-jeinek, vagy más nével 'field'-jeinek, a
+                <li>Az adatmezőket az objektum 'property'-jeinek, vagy más névvel 'field'-jeinek, a
                   függvényeket, amik pedig rá vannak csatlakoztatva az adatokra, 'method'-oknak
                   nevezik
                 </li>
@@ -3927,57 +4492,88 @@ while() &#123;
                     <li>A this kulcsszóval a többi method-hoz is hozzá lehet férni</li>
                   </ul>
                 </li>
-                <li>
-                  <pre>
+                <pre>
   applyDiscount: function (discount) &#123; // function (discount) &#123;&#125;
       this.price = this.price * discount;
-  &#125;,
-                  </pre>
-                  <ul>
-                    <li>Az objektum megváltozik, de mi nem kapunk belőle értéket</li>
-                  </ul>
-                  <pre>
-  getMessage: function () &#123; // function () &#123;&#125;
-      return `A termék neve: $&#123;this.name&#125;, ára: $&#123;this.price&#125; és $&#123;
-      this.isInStock ? 'elérhető' : 'nem elérhető'&#125;`
   &#125;
-                  </pre>
-                </li>
+                </pre>
+                <li>Az objektum megváltozik, de mi nem kapunk belőle értéket</li>
+                <pre>
+  var Product = &#123;
+      name: 'Fűnyíró',
+      price: 45000,
+      isInStock: true,
+      applyDiscount: function (discount) &#123; // function (discount) &#123;}
+          this.price = this.price * discount;
+      },
+      getMessage: function () &#123;
+          return `A termék neve: $&#123;this.name}, ára: $&#123;this.price} és $&#123;this.isInStock ? 'elérhető' : 'nem elérhető'}`
+      }
+  }
+                </pre>
                 <li>Ha használni szeretnénk az objektum methodjait, meg kell őket hívni</li>
                 <pre>
   Product.applyDiscount(0.8)
   console.log('getMessage: ', Product.getMessage());
+
+  ↓↓↓↓↓
+
+  "A termék neve: Fűnyíró, ára: 36000 és elérhető"
                 </pre>
-                <li>Arrow function-ök (() => &#123; &#125;) esetén a this nem a globális vagy objektum kontextusra
+                <li>A kedvezmény alkalmazása után a termék ára 20%-kal csökkent (*0.8), így az új ár 9800 lesz</li>
+                <li>Arrow function-ök ( () => &#123; } ) esetén a this nem a globális vagy objektum kontextusra
                   mutat, hanem a létrehozásukkor érvényes környezetre
                 </li>
-                <li>Ezért objektum metódusainál általában hagyományos function definíciót használunk, hogy biztosítsuk a
-                  helyes this kontextust
-                </li>
+                <pre>
+  <b>// működő</b>
+
+  const product = &#123;
+    price: 1000,
+    applyDiscount: function(discount) &#123;
+      this.price = this.price * discount;
+    }
+  };
+  
+  product.applyDiscount(0.9);
+  console.log(product.price); // 900
+
+  <b>// nem működő</b>
+
+  const product = &#123;
+    price: 1000,
+    applyDiscount: (discount) => &#123;
+      this.price = this.price * discount; // a this nem a product objektumra mutat
+    }
+  };
+  
+  product.applyDiscount(0.9);
+  console.log(product.price); // 1000 marad
+                </pre>
+                <li>Ezért az objektum metódusainál általában hagyományos function definíciót használunk, hogy
+                  biztosítsuk a helyes this kontextust</li>
               </ul>
             </li>
           </ul>
         </li>
       </ul>
     </li>
-    <li>A javascript többparadigmás nyelv, mindhármat támogatja</li>
+    <li>A JavaScript többparadigmás nyelv, mindhármat támogatja</li>
   </ul>
 </div>
 
 <div>
   <h3 #objectdesign data-anchor="objectdesign">Object design</h3>
-  <br>
   <ul>
     <li>Két módon valósítható meg
       <ul>
         <li>1) Constructor function létrehozása
           <ul>
-            <li>A Javascript létrejötte óta elérhető</li>
+            <li>A JavaScript létrejötte óta elérhető</li>
             <li>Egyszerű mezei függvény, amit koncepció szerint nagybetűvel szokás elnevezni</li>
             <li>A függvény mindig lefut, amikor tervrajz alapján példányosítani akarunk egy új objecktumot,
               tehát hozzájutni egy adatokkal felpopulált egységhez
             </li>
-            <li>Bemenetként várni a kell az adott objektumra specifikus adatokat</li>
+            <li>A konstruktor bemenetként várja azokat az adatokat, amelyek az adott objektumra jellemzőek</li>
             <ul>
               <pre>
   function Termek(name, price, isInStock) &#123;
@@ -3986,7 +4582,7 @@ while() &#123;
       this.isInStock = isInStock;
   &#125;
               </pre>
-              <li>A függvényből nem kell this-el return-ölni, a Javascript automatikusan megcsinálja</li>
+              <li>A függvényből nem kell this-el return-ölni, a JavaScript automatikusan megcsinálja</li>
               <pre>
    console.log(new Termek('kolbasz', 1000, true));
               </pre>
@@ -4008,49 +4604,42 @@ while() &#123;
                   <li>Ha ugyanabba a kontextusba helyezzük el, mint a Termek() függvényt, akkor a
                     methodnak hozzáférése van a property-khez, tud velük dolozni
                   </li>
-                  <li>
-                    <pre>
+                  <pre>
   var termekek = [
       new Termek('kolbasz', 1000, true),
       new Termek('kenyér', 800, true),
       new Termek('hagyma', 300, true),
   ]
                     </pre>
-                    <ul>
-                      <li>Biztosak lehetünk benne, hogy a method-ok minden elemre elérhetők</li>
-                    </ul>
-                    <pre>
+                  <li>Biztosak lehetünk benne, hogy a method-ok minden elemre elérhetők</li>
+                  <pre>
   for (var product of termekek) &#123;
       console.log(product.getMessage());
   &#125;
                     </pre>
-                    <ul>
-                      <li>Így minden termék nevét, árát, és elérhetőségét kiírtuk console log-ba
-                      </li>
-                    </ul>
+                  <li>Így minden termék nevét, árát, és elérhetőségét kiírtuk console log-ba
                   </li>
-                  <li>new Termek('kolbasz', 1000, true)
-                    <ul>
-                      <li>Létrehoztunk egy új instance-t, avagy új példányt (instantiation =
-                        példányosítás)
-                      </li>
-                    </ul>
+                  <pre>
+  new Termek('kolbasz', 1000, true)
+                  </pre>
+                  <li>Létrehoztunk egy új instance-t, avagy új példányt (instantiation =
+                    példányosítás)
                   </li>
                 </ul>
               </li>
             </ul>
           </ul>
         </li>
+        <br>
         <li>2) Class declaration
           <ul>
             <li>Az ES6 létrejötte óta elérhető</li>
             <li>Szintaktikai könnyítés, de a motorháztető alatt ugyanazt a módszert használja, mint a
               Constructor function
             </li>
-            <li>
-              <pre>
+            <pre>
   class Termek_ &#123;
-      quantity = 1;
+      quantity = 1;   // default value
 
       constructor(name, price, isInStock) &#123;
           this.name = name;
@@ -4067,35 +4656,32 @@ while() &#123;
           this.isInStock ? 'elérhető' : 'nem elérhető'&#125;`;
       &#125;
   &#125;
-              </pre>
-              <ul>
-                <li>Egy kontextusban leírható, amit Constructor function esetében leírtunk</li>
-                <li>Nem kell szétválasztani constructorra, és egyéb function-ökre</li>
-                <li>Baráti az objektum orientált szemléletű fejlesztők számára</li>
-                <li>A construtor dedikált megnevezésű függvény</li>
-                <li>Ugyanúgy lehet példányosítani</li>
-                <pre>
+            </pre>
+            <li>Egy kontextusban leírható, amit Constructor function esetében leírtunk</li>
+            <li>Nem kell szétválasztani constructor-ra, és egyéb function-ökre</li>
+            <li>Baráti az objektum orientált szemléletű fejlesztők számára</li>
+            <li>A construtor dedikált megnevezésű függvény</li>
+            <li>Ugyanúgy lehet példányosítani</li>
+            <pre>
   const paprika = new Termek_('paprika', 600, false);
   console.log(paprika);
-                </pre>
-                <li>A constructor előtt property-ket is felsorolhatunk
-                  <ul>
-                    <li>Futási időben később használható</li>
-                    <pre>
+            </pre>
+            <li>A constructor előtt property-ket is felsorolhatunk
+              <ul>
+                <li>Futási időben később használható</li>
+                <pre>
   paprika.quantity = 3;
-                    </pre>
-                    <li>A quantity 1 default érték</li>
-                  </ul>
-                </li>
-                <li>A method-ok a constructor alatti függvények
-                  <ul>
-                    <li>Nincs szükség a function és prototype kulcsszóra</li>
-                    <pre>
+                </pre>
+                <li>A quantity 1 default érték</li>
+              </ul>
+            </li>
+            <li>A method-ok a constructor alatti függvények
+              <ul>
+                <li>Nincs szükség a function, és prototype kulcsszóra</li>
+                <pre>
   paprika.applyDiscount(0.8);
-  console.log('Paaprika aktuálisan: ', paprika.getMessage());
-                    </pre>
-                  </ul>
-                </li>
+  console.log('Paprika aktuálisan: ', paprika.getMessage());
+                </pre>
               </ul>
             </li>
           </ul>
@@ -4107,7 +4693,7 @@ while() &#123;
         <li>Az Angular, a React, és a Vue előszeretettel használnak class deklarációkat arra, hogy a programnak
           a moduláris felépítését elérjék
         </li>
-        <li>Ezekben a rendszerekben tipikusan class deklarációkkal lehet leírni azt, hogy a user interface-ek
+        <li>Ezekben a rendszerekben tipikusan class deklarációkkal lehet leírni azt, hogy a User Interface-ek
           egyes komponensei hogyan működjenek, hogyan nézzenek ki
         </li>
       </ul>
@@ -4132,17 +4718,17 @@ while() &#123;
       return szam + 1;
   &#125;
         </pre>
-        <ul>
-          <li>Arrow function használatával ez a következőképpen néz ki:</li>
-          <li>
-            <pre>var addTwo = szam => szam + 2;</pre>
-          </li>
-        </ul>
+        <li>Arrow function használatával ez a következőképpen néz ki:</li>
+        <pre>
+  var addTwo = szam => szam + 2;
+
+  var headers = &#123; 'x-api-key': 'reqres-free-v1' };
+        </pre>
         <li>A function és a return szótól is megszabadultunk, de ugyanazt a funkcionalitást értük el</li>
-        <li>Promise chainben nagyon hasznos
+        <li>Promise chain-ben nagyon hasznos
           <ul>
             <pre>
-  fetch('https://reqres.in/api/users')
+  fetch('https://reqres.in/api/users', &#123; headers })
       .then(function (response) &#123;
           return response.json();
       &#125;).then(function (content) &#123;
@@ -4151,15 +4737,15 @@ while() &#123;
             </pre>
             <li>Átláthatóbbá, rövidebbé lehet tenni arrow function használatával</li>
             <pre>
-  fetch('https://reqres.in/api/users')
+  fetch('https://reqres.in/api/users', &#123; headers })
       .then(response => response.json())
       .then(content => &#123;
-      console.log(content)
-  &#125;);
+          console.log(content)
+      &#125;);
             </pre>
             <li>További .then() blokkok ugyanígy leírhatók</li>
             <pre>
-  fetch('https://reqres.in/api/users')
+  fetch('https://reqres.in/api/users', &#123; headers })
       .then(response => response.json())
       .then(page => page.data[0])
       .then(user => `$&#123;user.first_name&#125; $&#123;user.last_name&#125;`)
@@ -4171,29 +4757,27 @@ while() &#123;
         </li>
         <li>Az arrow function-nek is lehet body-ja
           <ul>
-            <li>
-              <pre>
-  // ...
-  .then((content) => &#123;
-      console.log(content);
-  &#125;);
-  // ...
+            <pre>
+    ...
+    .then((content) => &#123;
+        console.log(content);
+    &#125;);
+    ...
               </pre>
-            </li>
             <li>Body nélküli</li>
             <pre>
-  // ...
-  .then(page => page.data[0])
-  // ...
+    ...
+    .then(page => page.data[0])
+    ...
             </pre>
-            <li>Body-val nem return-ölünk egyből az értékkel, ehhez szükséges a return kulcsszó</li>
+            <li>A body-val nem tér vissza automatikusan az értékkel, ehhez szükséges a return kulcsszó</li>
             <pre>
-  // ...
-  .then((content) => &#123;
-      console.log(content)
-      return content;
-  &#125;);
-  // ...
+    ...
+    .then((content) => &#123;
+        console.log(content)
+        return content;
+    &#125;);
+    ...
             </pre>
             <li>Használatos, ha valamilyen kalkulációhoz egy részeredményt létre akarunk hozni, deklarálni
               változóként csak a függvény scope-ján belül
@@ -4212,13 +4796,13 @@ while() &#123;
                 </li>
               </ul>
             </li>
-            <li>Mi történik akkor, ha arrow function esetén object-tel szeretnénk return-ölni?
+            <li>Mi történik akkor, ha arrow function használatakor object-tel szeretnénk return-ölni?
               <ul>
                 <li>A &#123;&#125; alkalmas az objektum leírására, viszont jelen esetben megnyitjuk vele a
                   function body-t
                 </li>
                 <pre>
-  fetch("https://reqres.in/api/users")
+  fetch("https://reqres.in/api/users", &#123; headers })
       .then(response => response.json())
       .then(page => page.data[0])
       .then(user => &#123;
@@ -4241,15 +4825,19 @@ while() &#123;
       .map(szam => szam / 2)
       .reduce((acc, cr) => acc + cr);
                 </pre>
-                <li>A filter functionbe bedobott függvény is lehet arrow függvény</li>
+                <li>A filter function-be bedobott függvény is lehet arrow függvény</li>
                 <li>A filterrel kiszedjük a tömbből a páros számokat</li>
-                <li>a map-pel az összes így kapott páros számot elosztjuk kettővel</li>
-                <li>Végül, ha az összegét akarnánk kiszámolni, használhatnánk a redure function-t
+                <li>A map-pel az összes így kapott páros számot elosztjuk kettővel</li>
+                <li>Végül, ha az összegét akarnánk kiszámolni, használhatjuk a reduce function-t
                   <ul>
                     <li>Mindig, amikor érkezik egy szám (acc), azt hozzáadjuk az addig összeadott
                       számokhoz
                     </li>
-                    <li>Aggregált (különböző részekből összegyűjtött) értéket hozunk létre</li>
+                    <li>Aggregált értéket hozunk létre
+                      <ul>
+                        <li>Különböző részekből összegyűjtött</li>
+                      </ul>
+                    </li>
                   </ul>
                 </li>
               </ul>
@@ -4266,34 +4854,32 @@ while() &#123;
   <br>
   <ul>
     <li>Hibakezelés, amivel szinkron futási időben keletkező hibákat lehet lekezelni</li>
-    <li>Ahol a hiba történik - legyen ez a call stack-en bárhol - ott az egész kód futás megáll, és a call stack-en
+    <li>Ahol a hiba történik - legyen ez a Call Stack-en bárhol - ott az egész kód futás megáll, és a Call Stack-en
       a keletkezett hibát elkezdi visszafelé passzolgatni, a hiba elkezd visszafelé propagálódni
     </li>
-    <li>Amennyiben a hiba a call stack egyik elemében sincs lekezelve, végül visszakerülünk a main-be (legfelsőbb
-      futási szintre), és fatális hibára futunk (uncaught error, "senki sem kapta el")
+    <li>Amennyiben a hiba a Call Stack egyik elemében sincs lekezelve, végül visszakerülünk a main-be (legfelsőbb
+      futási szintre), és fatális hibára futunk ()
+      <ul>
+        <li>Uncaught error, azaz senki sem kapta el</li>
+      </ul>
     </li>
-    <li>Megkapjuk a stack trace-t, vagyis, hogy a call stack-en hol keletkezett ez a hiba</li>
-    <li>
-      <pre>
+    <li>Megkapjuk a Stack Trace-t, vagyis, hogy a Call Stack-en hol keletkezett ez a hiba</li>
+    <pre>
   try &#123;
 
   &#125; catch (error) &#123;
 
   &#125;
-      </pre>
-      <ul>
-        <li>Ezzel a szintaktikával kell körülvenni azt a kódrészletet, amit le akarunk kezelni</li>
-        <li>Így a hiba nem propagálódik fel a main-be, hanem a hibát a megfelelő scope-ban elkapjuk</li>
-        <li>A catch blockban lévő kód fut le</li>
-        <li>A hiba lekezelése után a kód futása folytatódik sorról sorra</li>
-        <li>A kód futása a catch blokk futása után folytatódik sorról sorra, így nagyon nem mindegy, hova
-          teszünk try/catch hibakezelést
-        </li>
-      </ul>
-    </li>
+    </pre>
+    <li>Ezzel a szintaktikával kell körülvenni azt a kódrészletet, amit le akarunk kezelni</li>
+    <li>Így a hiba nem propagálódik fel a main-be, hanem a hibát a megfelelő scope-ban megfogjuk</li>
+    <li>A catch blockban lévő kód fut le</li>
+    <li>A hiba lekezelése után a kód futása folytatódik sorról sorra, ezért nagyon nem mindegy, hova teszünk try/catch
+      hibakezelést</li>
+    <br>
     <li>Mi történik, ha a hiba aszinkron működéskor keletkezik?
       <ul>
-        <li>Mivel a try/catch szinkron hibakezelésre alkalmas, és az aszinkron művelet (pl.: setTimeout())
+        <li>Mivel a try/catch szinkron hibakezelésre alkalmas, és az aszinkron művelet (például setTimeout())
           sokkal később keletkezik, így nem lehet lekezelni, kifutunk a mainbe
         </li>
         <li>A hiba csakis kizárólag az aszinkron művelet scope-jában kezelhető le</li>
@@ -4309,7 +4895,7 @@ while() &#123;
         </pre>
       </ul>
     </li>
-    <li>Mi magunk is generálhatunk hibák
+    <li>Mi magunk is generálhatunk hibát
       <ul>
         <pre>
   throw 'Fatális hiba';
@@ -4338,11 +4924,9 @@ while() &#123;
   <div class="theater"
     style="display: grid; gap: 5px; width: 600px; max-width: 100%; height: 700px; background-color: #1e2b37; border-radius: 5px; padding: 10px">
     <div style="text-align: center">
-      <label for="movie-select">
-        <select id="movie-select" style="width: 50%; padding: 5px">
-          <option value="" disabled selected>Válassz egy filmet</option>
-        </select>
-      </label>
+      <select id="movie-select" class="form-select">
+        <option value="" disabled selected>Válassz egy filmet</option>
+      </select>
     </div>
     <div style="width: 75%;perspective: 1000px;justify-self: center;">
       <div
@@ -4364,30 +4948,74 @@ while() &#123;
     </div>
     <div style="text-align: center;">
       <form id="send-reservation" method="post">
-        <input id="person-count" placeholder="Név">
-        <button type="submit">Foglalás</button>
+        <input id="person-count" class="form-control mb-3" placeholder="Név">
+        <button type="submit" class="btn btn-secondary">Foglalás</button>
       </form>
     </div>
   </div>
+  <br>
   <ul>
     <li>Az ES2015-ös verziója óta az objektum megőrzi a sorrendiséget, kivéve, hogy ha valamilyen numerikus kulcs
       fordul elő
     </li>
-    <li>A Map() class példányosításával lehet reprezentálni olyan kulcs-érték párok sorozatát, ahol a sorrend is
-      meg van őrizve
+    <li>Map() class
       <ul>
-        <pre>
+        <li>Különleges gyűjtemény</li>
+        <li>Rendezett objektum</li>
+        <li>Példányosításával reprezentálható olyan kulcs-érték párok sorozata, ahol a kulcsok mindig megőrzik
+          hozzáadási sorrendjét, pontosan úgy, ahogy beszúrtuk</li>
+        <li>Nem számít, hogy a kulcs szám, szöveg vagy akár objektum</li>
+      </ul>
+    </li>
+    <pre>
   const test = new Map();
   test.set("A", 123); // A Map-nek a set() egy method-ja
         </pre>
-        <li>Így numerikus érték esetén is megmarad a sorrend</li>
-        <pre>
+    <li>Így numerikus érték esetén is megmarad a sorrend</li>
+    <pre>
   test.set("A", 123);
   test.set("999", 456); // Mindig a második helyen fog elhelyezkedni
   test.set("B", 789);
-        </pre>
-      </ul>
-    </li>
+    </pre>
+    <li>A Map kulcsai sorrendben lesznek, ahogy set()-tel hozzáadjuk őket</li>
+    <li>Ha egy kulcsot újra set()-elünk, nem változik a helye, csak az értéke</li>
+    <br>
+    <table style="border-collapse: collapse; width: 100%;">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Objektum (&#123;})</th>
+          <th>Map (new Map())</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Kulcs típusa</td>
+          <td>String vagy Symbol</td>
+          <td>Bármilyen típus (akár objektum is)</td>
+        </tr>
+        <tr>
+          <td>Sorrend</td>
+          <td>Számkulcsok növekvően, majd szövegkulcsok beszúrási sorrendben, végül szimbólumok</td>
+          <td>Beszúrási sorrend 100%-ban garantált</td>
+        </tr>
+        <tr>
+          <td>Iterálás módja</td>
+          <td>for...in, Object.keys(), Object.entries()</td>
+          <td>for...of, map.entries(), map.keys()</td>
+        </tr>
+        <tr>
+          <td>Használat célja</td>
+          <td>Általános adatstruktúra (kulcs-érték tárolás)</td>
+          <td>Kulcs-érték párok sorrenddel, komplex kulcsokkal</td>
+        </tr>
+        <tr>
+          <td>Garancia sorrendre</td>
+          <td>Részben, szabvány szerint, de nem abszolút</td>
+          <td>Teljesen garantált</td>
+        </tr>
+      </tbody>
+    </table>
   </ul>
 </div>
 

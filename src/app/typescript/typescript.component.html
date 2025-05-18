@@ -1,4 +1,7 @@
-<h1>Typescript</h1>
+<h1 class="info-header">TypeScript
+  <span placement="end" ngbTooltip="A console.log()-ok nem kerültek kikommentezésre"></span>
+  <span placement="end" ngbTooltip="A kis képek miatt rengeteg API hívás történik"></span>
+</h1>
 
 <div class="anchor-navi-container">
   <div *ngFor="let mainButton of anchorButtons" class="btn-group">
@@ -21,35 +24,57 @@
 </div>
 
 <div>
-  <h3 #ts data-anchor="ts">Typescript</h3>
+  <h3 #ts data-anchor="ts">TypeScript</h3>
   <ul>
     <li>Kiegészíti a JavaScript-et</li>
-    <li>Statikus típusosságot ad a javascripthez, tehát nem generál a böngésző JS engine-je által értelmezhető
-      JS kódot, ha 2 különböző típussal (pl. szám és string) próbálunk meg műveletet (pl. szorzás)
-      végrehajtani
-    </li>
-    <li>npm I -g typescript a compiler telepítése</li>
-    <li>tsc --init tsconfig JSON filet- generál, itt a rootDir (src) és a outDir (public/dist) fontos</li>
-    <li>Előbbiből utóbbiba compile-ol a typescript</li>
-    <li>tsc -w watch-ot eredményez, változáskor/mentéskor javascriptet generál, amire pl html fájlból lehet
-      hivatkozni, ilyen módon a typescript compilerrel generált JS fájlt fogunk majd futtatni
-    </li>
+    <li>Statikus típusosságot ad a JavaScript-hez</li>
+    <li>A böngésző (vagy bármely JavaScript környezet) nem értelmezi közvetlenül a TypeScript kódot</li>
+    <pre>
+  let a: number = 5;
+  let b: string = "hello";
+  let result = a * b;  // hibát eredményez, mert TypeScript nem engedi, hogy leforduljon
+    </pre>
+    <li>A TypeScript kódot először le kell fordítani (transpile) JavaScript kódra, mielőtt a böngésző végrehajtaná</li>
+    <li>A böngésző a lefordított JavaScript kódot futtatja</li>
+    <ul>
+      <pre>
+  npm i -g typescript   // install
+      </pre>
+      <li>A compiler inicializálása</li>
+      <pre>
+  tsc --init tsconfig
+    </pre>
+      <li>JSON file-t generál</li>
+      <li>A rootDir (src) és a outDir (public/dist) fontos</li>
+      <li>Előbbiből utóbbiba compile-ol a TypeScript</li>
+      <pre>
+  tsc -w
+    </pre>
+      <li>Watch</li>
+      <li>Változáskor/mentéskor JavaScript-et generál, amire például HTML fájlból lehet hivatkozni, ilyen módon a
+        TypeScript compiler-rel generált JS fájlt fogunk majd futtatni</li>
+    </ul>
   </ul>
 </div>
 
 <div>
   <h3 #typeinterface data-anchor="typeinterface">Type inference</h3>
   <ul>
-    <li>A typescript abból, hogy pl. stringet adunk meg egy változónak, tudja, hogy a változó stringként
+    <li>A TypeScript abból, hogy például string-et adunk meg egy változónak, tudja, hogy a változó stringként
       definiált, így nem szükséges külön deklarálni a típusát
     </li>
-    <li>Ha eltérünk a típustól, a typescript szól</li>
-    <li>Függvények bemeneti paramétereinek típusa is megválasztható, pl function getText(bemenetiParameter:
-      string) &#123;&#125; A függvény innentől megköveteli az ilyen típusú (string) paramétert bemenetként
-    </li>
-    <li>function fuggveny(bemenet: string): number &#123;return 15 string.length&#125; A number pedig a függvény
-      kimeneti paramétere
-    </li>
+    <li>Ha eltérünk a típustól, a TypeScript szól</li>
+    <li>Függvények bemeneti paramétereinek típusa is megválasztható </li>
+    <pre>
+  function getText(bemenetiParameter: string) &#123; };
+    </pre>
+    <li>A függvény innentől megköveteli az ilyen típusú (string) paramétert bemenetként</li>
+    <pre>
+  function fuggveny(bemenet: string): number &#123;
+    return string.length;
+  }
+    </pre>
+    <li>A number pedig a függvény visszatérési értékének típusa</li>
     <li>A length-re egyébként le van fektetve, hogy number, így a függvény végén a kimeneti típus tulajdonképpen
       redundáns, így az inference miatt felesleges
     </li>
@@ -61,20 +86,31 @@
   <ul>
     <li>Típusok uniója</li>
     <li>Létre lehet hozni saját típus halmazt (string | number - az összes szám és betű halmaza)</li>
-    <li>let valtozo = string | number = "szia" // A változó értéke mindkét halmazból kikerülhet</li>
-    <li>A bemeneti érték deklarációjakor is használjuk // function fuggveny(bemenet: string | number) &#123;&#125;</li>
-    <li>Ha ugyanígy a bemenet.length-tel térnénk vissza, hibát kapnánk</li>
-    <li>typeof clothing.length === 'string' =&gt; false // Szóval a length típusa szám</li>
-    <li>Ilyenkor kell narrowing-et (leszűkítés) használni</li>
-    <li>Type guard: if (typeof val === "string") &#123;&#125;</li>
-    <li>Ellenőrizzük az adott változó típusát</li>
+    <pre>
+  let valtozo = string | number = "szia" // a változó értéke mindkét halmazból kikerülhet
+    </pre>
+    <li>A bemeneti érték deklarációjakor is használjuk</li>
+    <pre>
+  function fuggveny(bemenet: string | number) &#123; }
+    </pre>
+    <li>Ha ugyanígy a bemenet.length-el térnénk vissza, hibát kapnánk</li>
+    <pre>
+  typeof clothing.length === 'string' =&gt; false // szóval a length típusa szám
+    </pre>
+    <li>Ilyenkor kell narrowing-ot (leszűkítést) használni</li>
+    <pre>
+  if (typeof val === "string") &#123; } // type guard
+    </pre>
+    <li>A blokkon belül a TypeScript tudni fogja, hogy a val változó típusának értéke mostantól string, tehát a változó
+      típusát szűkítjük</li>
     <pre>
   function fuggveny(bemenet: string | number) &#123;
     if (typeOf(bemenet) === "string") &#123;
             return bemenet.length // string a visszatérési érték
-        &#125;
-        return bemenet // Ezen a ponton a bemenet nem lehet más, mint number
-  &#125;
+    }
+
+    return bemenet // ezen a ponton a bemenet nem lehet más, mint number
+  }
     </pre>
   </ul>
 </div>
@@ -83,8 +119,10 @@
   <h3 #literal data-anchor="literal">Literal type</h3>
   <ul>
     <li>A típus definicióban leszűkítünk mondjuk egy típust bizonyos részhalmazra</li>
-    <li>let ertek: 1 | 42 | 3.2 = 42</li>
-    <li>Halmazokat uniózunk össze, és ebben az esetben minden szám egy halmaz (1, 42, 3.2)</li>
+    <pre>
+  let ertek: 1 | 42 | 3.2 = 42
+    </pre>
+    <li>Halmazokat "uniózunk" össze, és ebben az esetben minden szám egy halmaz (1, 42, 3.2)</li>
   </ul>
 </div>
 
@@ -96,21 +134,36 @@
       használni
     </li>
     <li>Erre akkor lehet szükség, hogy ha egy típust több helyen akarjuk használni</li>
-    <li>type Szamok: 1 | 42 | 3.2</li>
-    <li>Innentől használhatók a fentiek így is:</li>
-    <li>let ertek: Számok = 42</li>
-    <li>function fuggveny(bemenet: Szamok): Szamok &#123;&#125;</li>
-    <li>AJAX kérés esetében akár lehet type Status = "Elkezdett" | "Folyamatban..." | "Befejezett"', és akkor
-      ennek megfelelő értéket vesz fel pl. egy progress változó (let progress: Status)
+    <pre>
+  type Szamok = 1 | 42 | 3.2;
+    </pre>
+    <li>A type kulcsszó az új típusok definíciójára szolgál TypeScript-ben</li>
+    <li>Innentől használható a típus</li>
+    <pre>
+  let ertek: Szamok = 42;
+    </pre>
+    <li>Akár függvényeknél is megadhatjuk a Szamok típust</li>
+    <pre>
+  function fuggveny(bemenet: Szamok): Szamok &#123; }
+    </pre>
+    <li>AJAX kérés esetében megadhatunk egy státsusz halmazt, és ennek megfelelő értéket vesz fel például egy progress
+      változó
     </li>
+    <pre>
+  type Status = "Elkezdett" | "Folyamatban..." | "Befejezett"
+
+  let progress: Status
+    </pre>
   </ul>
 </div>
 
 <div>
-  <h3 #array data-anchor="array">Tömb</h3>
+  <h3 #array data-anchor="array">Array</h3>
   <ul>
-    <li>Annotáció: Módszer, amellyel a változók, függvények és osztályok típusát nyilváníthatjuk ki kódbeli
-      megjegyzésként
+    <li>Annotáció
+      <ul>
+        <li>Módszer, amellyel a változók, függvények és osztályok típusát nyilváníthatjuk ki kódbeli megjegyzésként</li>
+      </ul>
     </li>
     <pre>
   function calculateTotal(price: number, quantity: number): number &#123;
@@ -120,10 +173,11 @@
     <li>A fenti példában a függvénynek két bemeneti paramétere van, amelyek típusát annotációk segítségével
       adjuk meg
     </li>
-    <li>let szamok: Array&#60;number&#62; = [];</li>
-    <li>Üres Tömb esetében érdemes megadni az Array&#60;number&#62;-t, ha azt mondjuk azt mondjuk, hogy let
-      szamok = [42], akkor a Typescript tudni fogja, hogy ez egy számokból álló tömb
-    </li>
+    <pre>
+  let szamok: Array&#60;number&#62; = [];
+    </pre>
+    <li>Üres Tömb esetében érdemes megadni az Array&#60;number&#62;-t</li>
+    <li>Ha azt mondjuk, hogy let szamok = [42], akkor a TypeScript tudni fogja, hogy ez egy számokból álló tömb</li>
     <li>Az Array&#60;number&#62; ugyanaz, mint a number[]</li>
   </ul>
 </div>
@@ -133,22 +187,33 @@
   <ul>
     <li>Értéktöbbes</li>
     <li>Olyan tömb, ami típusaiban eltér, és kevés elemből áll</li>
-    <li>let szemely: [string, number];</li>
-    <li>type Szemely = [string, number] és let szemely1: Szemely = ["Kiss Péter", 25];</li>
-    <li>szemely1[1] // Nem más, mint a 25</li>
-    <li>A való életben distructuring révén lehet használni</li>
-    <li>const [nev, eletkor] = szemely2</li>
-    <li>A tuple definíciójához is be lehet építeni címkét, így egyértelművé válik, mit értünk string és number
-      alatt
-      <ul>
-        <li>type Szemely = [nev: string, kor: number]</li>
-      </ul>
+    <pre>
+  let szemely: [string, number];
+
+  type Szemely = [string, number]
+  
+  let szemely1: Szemely = ["Kiss Péter", 25];
+
+  szemely1[1]
+
+  ↓↓↓↓↓
+
+  25
+    </pre>
+    <li>A való életben destructuring révén lehet használni</li>
+    <pre>
+  const [nev, eletkor] = szemely2
+    </pre>
+    <li>A tuple definíciójához is be lehet építeni "címkét", így egyértelművé válik, mit értünk string, és number alatt
     </li>
+    <pre>
+  type Szemely = [nev: string, kor: number]
+    </pre>
   </ul>
 </div>
 
 <div>
-  <h3 #object data-anchor="object">Objektum</h3>
+  <h3 #object data-anchor="object">Object</h3>
   <ul>
     <li>Ha 2-3 értéknél többünk van, objektumot használunk, nem tuplet</li>
     <pre>
@@ -159,12 +224,25 @@
   &#125;
     </pre>
     <li>Innentől a TS tudni fogja, hogy melyik kulcshoz milyen értéket lehet megadni, szóval csak ilyen
-      felépítésű objektumok adhatok meg az album objektumnak
+      felépítésű objektumot adhatunk meg az album objektumnak
     </li>
-    <li>A TS a Structural Typing eljárást követi, tehát a felépítésre figyel</li>
-    <li>Type alias készíthető:</li>
-    <li>type Album: &#123;id: number, userID: number, title: string, photo: Photo&#125;</li>
-    <li>Amikor egy ilyen objektum struktúráját fektetjük le, akkor van lehetőség interfacet létrehozni
+    <li>A TS a structural typing eljárást követi, tehát a felépítésre figyel
+      <ul>
+        <li>Strukturális típusosság</li>
+        <li>Típusellenőrzési megközelítés, amely alapján a típusok összehasonlítása nem a típus neve alapján történik,
+          hanem az objektum szerkezete, vagy tulajdonságai alapján</li>
+      </ul>
+    </li>
+    <li>Type alias készíthető</li>
+    <pre>
+      type Album: &#123; 
+          id: number,
+          userID: number,
+          title: string,
+          photo: Photo
+      }
+    </pre>
+    <li>Amikor egy ilyen objektum struktúráját fektetjük le, akkor van lehetőség interface-t létrehozni
       <pre>
   interface Photo: &#123;
     id: number;
@@ -175,36 +253,87 @@
     </pre>
     </li>
     <li>A ? azt jelenti, hogy nem kötelező</li>
-    <li>Az interface bővíthető, ha leírjuk még egyszer, hogy interface Album2, és adunk neki egy újabb kulcsot,
-      a type viszont nem bővíthető
+    <li>Az interface bővíthető
+      <ul>
+        <li>Csak leírjuk még egyszer, hogy interface Photo, és adunk neki egy újabb kulcsot</li>
+        <pre>
+  interface ExtendedPhoto extends Photo &#123;
+    url: string;    // új tulajdonságot adtunk hozzá
+  }
+        </pre>
+      </ul>
     </li>
+    <li>A type viszont nem bővíthető</li>
   </ul>
 </div>
 
 <div>
-  <h3 #generictyping data-anchor="generictyping">Generic typing</h3>
+  <h3 #generictype data-anchor="generictype">Generic type</h3>
   <ul>
     <li>A generikus típusmegadás a TypeScript egyik erőteljes eszköze, amely lehetővé teszi a típusok
       dinamikus, paraméterezett használatát, így rugalmasabb, újrahasznosítható és típusbiztos kódot írhatsz
     </li>
-    <li>Generikus típusokat általában akkor használnak, ha egy függvénynek, osztálynak vagy interfésznek többféle
-      típuson is működnie kell, de a típusokat előre nem akarod fixálni
+    <li>Generikus típusokat általában akkor használunk, ha egy függvénynek, osztálynak, vagy interfésznek többféle
+      típuson is működnie kell, de a típusokat előre nem akarjuk fixálni
     </li>
     <li>A generikus típusmegadás során a típusokat paraméterként adjuk meg a függvényeknek, osztályoknak vagy
       interfészeknek
     </li>
     <li>Ezeket a paramétereket általában T, U, V stb. szimbólumokkal jelöljük, de bármi lehet, ami
       beszédes a kontextusban
+      <ul>
+        <li>Nem muszáj egyetlen betűnem lennie</li>
+      </ul>
     </li>
     <li>Generikus típus előnyei
       <ul>
-        <li>Típusbiztonság: A típusok helyessége futásidő előtt ellenőrizhető, csökkentve a hibákat</li>
-        <li>Újrahasznosíthatóság: Ugyanazt a kódot több különböző típusra is használhatod, anélkül, hogy új függvényt
-          vagy osztályt kellene írnod
+        <li>Típusbiztonság
+          <ul>
+            <li>A típusok helyessége futásidő előtt ellenőrizhető, csökkentve a hibákat</li>
+          </ul>
         </li>
-        <li>Rugalmasság: A generikus típusok lehetővé teszik, hogy a kód különböző típusokkal rugalmasan működjön</li>
+        <li>Újrahasznosíthatóság
+          <ul>
+            <li>Ugyanazt a kódot több különböző típusra is használhatjuk anélkül, hogy új függvényt, vagy osztályt
+              kellene írnunk</li>
+          </ul>
+        </li>
+        <li>Rugalmasság
+          <ul>
+            <li>A generikus típusok lehetővé teszik, hogy a kód különböző típusokkal rugalmasan működjön</li>
+          </ul>
+        </li>
       </ul>
     </li>
+    <pre>
+  function print&#60;T>(value: T): T &#123;
+    console.log(value);
+    return value;
+  }
+  
+  print(42);
+
+  ↓↓↓↓↓
+
+  42
+
+  print("Hello");
+
+  ↓↓↓↓↓
+
+  "Hello"
+  
+  print([1, 2, 3]);
+  
+  ↓↓↓↓↓
+
+  [1, 2, 3]
+    </pre>
+    <li>A print függvény egy generikus függvény, amely a T típusparamétert használja</li>
+    <li>A T a függvény bemeneteként bármilyen, és a típusparamétert a függvény visszatérési értékében is használjuk</li>
+    <li>Amikor meghívjuk a print függvényt, a TypeScript automatikusan kitalálja, hogy melyik típus legyen a T, az
+      alapján, hogy milyen típusú adatot adunk át</li>
+    <br>
   </ul>
 </div>
 
@@ -221,7 +350,7 @@
   let numberValue = identity&#60;number>(42); // numberValue: number
   let stringValue = identity&#60;string>("Hello"); // stringValue: string
       </pre>
-    <li>T itt egy generikus típus, amely bármi lehet, amit a függvény meghívásakor átadsz neki</li>
+    <li>T itt egy generikus típus, amely bármi lehet, amit a függvény meghívásakor átadunk neki</li>
     <li>Ez a függvény bármilyen típusú adatot visszaad, amelyet megkap, de típusbiztosan</li>
   </ul>
 </div>
@@ -247,7 +376,7 @@
   let numberBox = new Box&#60;number>(123); // numberBox.content: number
   let stringBox = new Box&#60;string>("Generics are cool!"); // stringBox.content: string
       </pre>
-    <li>A Box&#60;T> osztály különböző típusú adatokat kezel, attól függően, hogy milyen típusú adatot adsz meg a
+    <li>A Box&#60;T> osztály különböző típusú adatokat kezel, attól függően, hogy milyen típusú adatot adunk meg a
       példányosításnál
     </li>
   </ul>
@@ -256,7 +385,7 @@
 <div>
   <h3 #genericinterface data-anchor="genericinterface">Generic interface</h3>
   <ul>
-    <li>Interfészeknél is használhatsz generikus típusokat</li>
+    <li>Interfészeknél is használhatunk generikus típusokat</li>
     <pre>
   interface Pair&#60;T, U> &#123;
       first: T;
@@ -277,7 +406,7 @@
   fetch("https://jsonplaceholder.typicode/albums").then(response => &#123;&#125;)
     </pre>
     <li>A kimeneti adat Promise&#60;Response&#62;</li>
-    <li>Promise: Valamilyen típus asszinkron művelet révén kerül a kezünkbe</li>
+    <li>A Promise valamilyen típusú asszinkron művelet révén kerül a kezünkbe</li>
     <li>Promise-ok esetében az asszinkron adathoz a then()-nel lehet hozzájutni, ahol ténylegesen megkapjuk a
       Response objektumot
     </li>
@@ -292,7 +421,7 @@
       console.log(albumok);
   &#125;)
     </pre>
-    <li>&#60;Promise&#60;Album[]&#62;&#62; Ezt nevezik type assertion-nek</li>
+    <li>Type assertion: &#60;Promise&#60;Album[]&#62;&#62;</li>
     <li>Kétféle megadási módja van
       <ul>
         <li>&#60;Promise&#60;Album[]&#62;&#62;response.json();</li>
@@ -303,57 +432,118 @@
 </div>
 
 <div>
-  <h3 #promiseandasync data-anchor="promiseandasync">Promise és Async függvény</h3>
+  <h3 #promiseandasync data-anchor="promiseandasync">Promise & Async</h3>
   <ul>
-    <li>Az async függvények visszatérési típusa Promise</li>
     <pre>
-  album.map((album,i) => (&#123;...album&#125;)) // A ... a 'spread operátor'
+  album.map((album,i) => (&#123;...album&#125;)) // ... a spread operátor
 
-  album.map((album,i) => (&#123;...album, id.i&#125;)) // Hozzáfűzzük az objektumhoz az id kulcsot, és i, mint index értéket
+  album.map((album,i) => (&#123;...album, id: i&#125;)) // hozzáfűzzük az objektumhoz az id kulcsot, benne pedig az index értékét
     </pre>
-    <li>A fentieket egy async függvényen belül végezzük el</li>
+    <li>Az async függvények visszatérési típusa Promise
+      <ul>
+        <li>Még akkor is, ha a függvény nem explicit módon ad vissza egy Promise-t</li>
+        <pre>
+          async function foo() &#123;
+            return 42;    // a JavaScript motor a 42 értéket automatikusan egy Promise-ba csomagolja, tehát Promise.resolve(42)-val egyenértékű
+          }
+          
+          foo().then(result => console.log(result));
+
+          ↓↓↓↓↓
+
+          42
+
+          OR
+
+          async function foo() &#123;
+            return Promise.resolve(42);
+          }
+          
+          foo().then(result => console.log(result));
+
+          ↓↓↓↓↓
+
+          42
+        </pre>
+      </ul>
+    </li>
+    <li>Nézzünk gyakorlatiasabb példát</li>
     <pre>
-  async getAlbums() &#123;
+  getAlbums() &#123;
       fetch("https://jsonplaceholder.typicode/albums").then(response => &#123;
-          return &#60;Promise&#60;Album[]&#62;&#62;response.json();
+          return &#60;Promise&#60;Album[]&#62;&#62;response.json();   // az esetek döntő többségében a then blokkban return-t használunk
       &#125;)
   &#125;
     </pre>
-    <li>Az async function visszatérési típusa mindig egy Promise (of valami)</li>
-    <li>A fenti példában Promise of Album tömb (Promise&#60;Album[]&#62;)</li>
+    <li>A fenti példában egy Promise of Album tömböt láthatunk (Promise&#60;Album[]&#62;)</li>
     <li>Mielőtt visszatérnénk vele, be kell kötni a Photo-t is</li>
     <pre>
-  async getAlbums() &#123;
-      fetch("https://jsonplaceholder.typicode/albums").then(response => &#123;
-          return &#60;Promise&#60;Album[]&#62;&#62;response.json();
-      &#125;)
-  &#125;
-      </pre>
-    <li>TS fájlban a kód</li>
-    <pre>
-  async function getAlbums() &#123;
-    const allAlbums = await fetch('https://jsonplaceholder.typicode.com/albums')
-      .then(response => &#123;
-          return response.json() as Promise&#60;Album[]&#62;; // A response-ból json() függvénnyel szedhető ki a JSON adat
-              // return &#60;Promise&#60;Album[]&#62;&#62;response.json(); // Mindkettő type assertion
-          &#125;)
-      .then(albums => &#123; // Az albums már tudja, hogy albumok tömbjével tudunk majd visszatérni
-          return albums.slice(0,5).map(async album => &#123;
-              album.photos = await fetch(`https://jsonplaceholder.typicode.com/photos/?albumId=$&#123;album.id&#125;`).then(photo => photo.json() as Promise&#60;Photo[]&#62;);
-              return album;
-          &#125;);
-      &#125;);
+  interface Album &#123;
+    userID: number,
+    id: number,
+    title: string,
+    photos: Photo[],
+  }
+  
+  interface Photo &#123;
+    id: number,
+    title: string,
+    url: string,
+    thumbnailUrl: string,
+  }
+  
+  <b>// Then blokkok (Promise)</b>
 
-      return await Promise.all(allAlbums); // Megőrzi a sorrendet, tehát az indexek is maradnak
-    &#125;
-      </pre>
+  function getAlbums() &#123;
+    return fetch('https://jsonplaceholder.typicode.com/albums')
+      .then(response => response.json() as Promise&#60;Album[]>)     // a response-ból json() függvénnyel szedhető ki a JSON adat
+        // return &#60;Promise&#60;Album[]&#62;&#62;response.json(); // ez is type assertion, ugyanúgy jó
+      .then(albums => &#123;    // az albums már tudja, hogy albumok tömbjével tudunk majd visszatérni
+        const allAlbums = albums.slice(0, 5).map(album => &#123;
+          return fetch(`https://jsonplaceholder.typicode.com/photos/?albumId=$&#123;album.id}`)
+            .then(photoResponse => photoResponse.json() as Promise&#60;Photo[]>)
+            .then(photos => &#123;
+              album.photos = photos;
+              return album;
+            });
+        });
+        return Promise.all(allAlbums); // megőrzi a sorrendet, tehát az indexek is maradnak
+      });
+  }
+
+  <b>// async-await (Await)</b>
+
+  async function getAlbums() &#123;
+    const response = await fetch('https://jsonplaceholder.typicode.com/albums');
+    const albums = await response.json() as Album[];
+
+    const albumsWithPhotos = await Promise.all(
+      albums.slice(0, 5).map(async album => &#123;
+        const photoResponse = await fetch(`https://jsonplaceholder.typicode.com/photos/?albumId=$&#123;album.id}`);
+        const photos = await photoResponse.json() as Photo[];
+        album.photos = photos;
+        return album;
+      })
+    );
+
+    return albumsWithPhotos;
+  }
+    </pre>
+    <li>A Promise.all szükséges akkor, amikor több aszinkron műveletet szeretnémk párhuzamosan futtatni, és meg akarjuk
+      várni, hogy mindegyik befejeződjön, mielőtt továbblépünk</li>
+    <li>Az async function visszatérési típusa mindig egy Promise (of valami)</li>
+    <li>Elméletben keverhetők a then blokkok, és az async-await-ek, de nem ajánlott, rossz gyakorlat
+      <ul>
+        <li>Vagy tiszta .then() és .catch()</li>
+        <li>Vagy tiszta async-await, és try-catch</li>
+      </ul>
+    </li>
   </ul>
 </div>
 
 <div>
   <h3 #optionalchaining data-anchor="optionalchaining">Optional chaining operátor</h3>
   <ul>
-    <li>TS fájlban a kód</li>
     <pre>
   albumContainer.innerHTML = `
       $&#123;albums.map(album => `
@@ -372,40 +562,59 @@
     `).join('')&#125;
   `;
     </pre>
-    <li>Template literál az aposztróf (`karakterek`) és a benne lévő rész</li>
+    <li>Template literal az aposztróf (`karakterek`) és a benne lévő rész</li>
     <li>A ? neve az optional chaining operátor</li>
     <li>Ha egy adott kulcs nem létezik az adott objektumban, undefined-dal tér vissza, és nem hívja meg a
       mögötte lévő függvényt
     </li>
-    <li>Join: A tömb miatt szeparátor karakterek (vessző) jelennének meg, ezt vesszük ki a renderelésből</li>
+    <li>Join: A tömb miatt szeparátor karakterek (vessző) jelennének meg, ezeket a join() függvénnyel kivesszük a
+      renderelésből</li>
   </ul>
 </div>
 
 <div>
-  <h3 #typescriptandrxjs data-anchor="typescriptandrxjs">TypeScript és RxJS</h3>
+  <h3 #typescriptandrxjs data-anchor="typescriptandrxjs">TypeScript & RxJS</h3>
   <ul>
-    <li>Tömb: Reprezentálja, hogy valamelyik másik típusból több van: &#60;Array&#60;T&#62;&#62;</li>
-    <li>Promise: Reprezentálja, hogy valamelyik másik típus asszinkron időben érhető el
-      &#60;Promise&#60;T&#62;&#62;
-    </li>
-    <li>Observable: Reprezentálja, hogy sok érték az idő múlásával adatcsomagok formájában érhető el, és
-      mindegyik érték ugyanabba a típusba tartozik &#60;Observable&#60;T&#62;&#62;
-    </li>
-    <li>RxJS:
+    <li>Array
       <ul>
-        <li>Third party library</li>
-        <li>ES6 module formájában tudjuk használni (Typescript compiler kevés)</li>
-        <li>Praktikusan webpack-et lehet használni, és azon keretein belül használni a typescript compilert
+        <li>Reprezentálja, hogy valamelyik típusból több van</li>
+        <li>&#60;Array&#60;T&#62;&#62;</li>
+      </ul>
+    </li>
+    <li>Promise
+      <ul>
+        <li>Reprezentálja, hogy valamelyik típus asszinkron időben érhető el</li>
+        <li>&#60;Promise&#60;T&#62;&#62;</li>
+      </ul>
+    </li>
+    <li>Observable
+      <ul>
+        <li>Reprezentálja, hogy sok érték az idő múlásával adatcsomagok formájában érhető el, és mindegyik érték
+          ugyanabba a típusba tartozik</li>
+        <li>&#60;Observable&#60;T&#62;&#62;</li>
+      </ul>
+    </li>
+    <li>RxJS
+      <ul>
+        <li>Third-party library</li>
+        <li>ES6 module formájában tudjuk használni
+          <ul>
+            <li>A TypeScript compiler kevés</li>
+          </ul>
         </li>
-        <li>npm i webpack webpack-cli ts-loader --save-dev</li>
-        <li>Ennek hatására létrejött a könyvtárstruktúrában:
+        <li>Praktikusan Webpack-et lehet használni, és azon keretein belül a TypeScript compiler-t
+        </li>
+        <pre>
+  npm i webpack webpack-cli ts-loader --save-dev
+        </pre>
+        <li>Ennek hatására létrejött a könyvtárstruktúrában
           <ul>
             <li>node_modules</li>
             <li>package.json</li>
             <li>package-lock.json</li>
           </ul>
         </li>
-        <li>A package.json tartalma:
+        <li>A package.json tartalma
           <ul>
             <pre>
   &#123;
@@ -416,7 +625,7 @@
       &#125;
   &#125;
             </pre>
-            <li>A package.json-ben indító scripteket lehet létrehozni</li>
+            <li>A package.json-ben indító script-eket lehet létrehozni</li>
             <pre>
   &#123;
   "scripts": &#123;
@@ -430,40 +639,49 @@
   &#125;
             </pre>
             <li>A kulcs (dev) szabadon választható</li>
-            <li>A parancs annyit tesz, hogy a webpack induljon el fejleszői üzemmódban, és figyelje a
-              fájlrendszert, és minden változtatáskor futtassa a typescript compilert, másrészt
-              illessze össze az összes ES6 modult egy darab javascript bundle-é
+            <li>A parancs annyit tesz, hogy a Webpack induljon el fejleszői üzemmódban, és figyelje a
+              fájlrendszert, és minden változtatáskor futtassa a TypeScript compiler-t, másrészt
+              illessze össze az összes ES6 modult egy darab JavaScript bundle-é
             </li>
-            <li>Létre kell hoznunk a webpack konfig fájlját, hogy a webpack tudja, mit hol kell
+            <li>Létre kell hoznunk a Webpack konfig fájlját, hogy a Webpack tudja, mit hol kell
               keresnie
             </li>
-            <li>A webpack indítása, miután beállítottuk a webpack configot:
+            <li>A Webpack indítása, miután beállítottuk a Webpack configot:
               <ul>
-                <li>npm run dev</li>
+                <pre>
+  npm run dev
+                </pre>
               </ul>
             </li>
             <li>Ha működik, feltelepíthető például az RxJS
               <ul>
-                <li>npm i rxjs</li>
-                <li>Bekerül a package.json fájlunkba (dependencies)</li>
+                <pre>
+  npm i rxjs
+                </pre>
+                <li>Bekerül a package.json fájlunkba, a dependencies közé</li>
                 <li>Innentől a teljes RxJS eszköztár rendelkezésre áll</li>
-                <li>ajax function
+                <li>Ajax function
                   <ul>
-                    <li>import &#123; ajax &#125; from "rxjs/ajax"</li>
+                    <pre>
+  import &#123; ajax &#125; from "rxjs/ajax"
+                    </pre>
                     <li>Hasonló, mint az Angularban használt HTTPClient</li>
-                    <li>basic-using-webpack.ts-ben látszik a használata</li>
                     <li>Az Observable-öket $ annotációval szokás ellátni (const albums$),
                       innentől tudjuk, hogy ez egy adatfolyam, amire fel lehet iratkozni
                     </li>
                     <li>Az Observable-ökhöz csőrendszert lehet illeszteni ( .pipe() ).</li>
-                    <li>A csőrendszerben használhatjuk az RxJS-es operátorokat (pl.: map())</li>
+                    <li>A csőrendszerben használhatjuk az RxJS-es operátorokat (például map())</li>
                   </ul>
                 </li>
                 <li>A forkJoin ugyanarra jó (csak RxJS), mint a Promise.all(), tehát Observable-ök
                   tömbjét várja, és vissza fog térni egy Observable-lel, és akkor bocsát ki
-                  adatot, ha az összes Observable benne complete állapotba futott
+                  adatot, ha a benne lévő összes Observable complete állapotba fut
                 </li>
-                <li>A forkJoin bemetene: Array&#60;Observable&#62;</li>
+                <li>A forkJoin bemetene
+                  <ul>
+                    <li>Array&#60;Observable&#62;</li>
+                  </ul>
+                </li>
               </ul>
             </li>
           </ul>
@@ -473,7 +691,7 @@
     <pre>
   const albums$ = ajax('https://jsonplaceholder.typicode.com/albums').pipe(
       map(response => (response.response as Album[]).splice(0,5)),
-      // map(reduce => reduce.splice(0,5));
+      // map(reduce => reduce.splice(0, 5));
       switchMap(albums => forkJoin([
           of(albums),
           ...albums.map(album => ajax(`https://jsonplaceholder.typicode.com/photos/?albumId=$&#123;album.id&#125;`).pipe(
@@ -507,13 +725,20 @@
     <li>Promise
       <ul>
         <li>Aszinkron műveletek végrehajtására való</li>
-        <li>Csak egyszeri értéket ad vissza, amikor az Aszinkron művelet befejeződik, vagy hibára fut
-          (reject / resolve)
+        <li>Csak egyszeri értéket ad vissza, amikor az aszinkron művelet befejeződik, vagy hibára fut
+          <ul>
+            <li>reject / resolve</li>
+          </ul>
         </li>
-        <li>Csak két állapota lehet: teljesült és elutasított</li>
-        <li>Létrejötte után azonnal megkezdi a működését, és ereményt, vagy hibát ad vissza</li>
+        <li>Csak két állapota lehet
+          <ol>
+            <li>elutasított (reject)</li>
+            <li>teljesült (resolve)</li>
+          </ol>
+        </li>
+        <li>Létrejötte után azonnal megkezdi a működését, és eredményt, vagy hibát ad vissza</li>
         <li>Nem használhatók műveletek</li>
-        <li>Nem lehet róla leiratkozni, akkor is lefur, ha esetleg már nincs rá szükség</li>
+        <li>Nem lehet róla "leiratkozni", akkor is lefut, ha esetleg már nincs rá szükség</li>
       </ul>
     </li>
     <li>Observable
@@ -522,10 +747,17 @@
         <li>Több értéket képes visszaadni az idő múlásával</li>
         <li>Használható akkor is, ha az adatfolyam folyamatosan változik</li>
         <li>Lehetővé teszi az adatok kombinálását, transzformálását, szűrését</li>
-        <li>subscribe() függvénnyel feliratkozva kapjuk meg az adatokat (le is kell iratkozni: unsubscribe()
-          ), addig le sem fut (ezért lazy-nel is nevezik)
+        <li>subscribe() függvénnyel feliratkozva kapjuk meg az adatokat
+          <ul>
+            <li>Lazy-nek is nevezik</li>
+            <li>Le kell/érdemes róla iratkozni
+              <ul>
+                <li>unsubscribe()</li>
+              </ul>
+            </li>
+          </ul>
         </li>
-        <li>Rugalmasabb a Promise-nál (gyakrabban használatos)</li>
+        <li>Rugalmasabb a Promise-nál, így gyakrabban használatos</li>
         <li>Az operátorok segítségével műveletek lánca hozható létre, mielőtt megkapnánk az adatokat</li>
       </ul>
     </li>
@@ -533,45 +765,149 @@
 </div>
 
 <div>
-  <h3 #albumswithpromise data-anchor="albumswithpromise">Albumok kirenderelése (Promise megoldással)</h3>
+  <h3 #albumswithpromise data-anchor="albumswithpromise">Albums by Promise</h3>
   <ul>
-  <pre>
+    <pre>
   &#60;div id="renderedAlbums"&#62;&#60;/div&#62;
 
   ngOnInit() &#123;
     this.PromiseSolution();
   &#125;
 
+  PromiseSolution() &#123;
+    this.albums = this.getAlbums().then(albums => &#123;
+      this.albums = albums;
+      this.rendererFromPromise(this.albums, false);
+    });
+  &#125;
+
+  getAlbums(): Promise&#60;Album[]> &#123;
+    return fetch('https://jsonplaceholder.typicode.com/albums')
+      .then(response => response.json() as Promise&#60;Album[]>)    // a response-ból json() függvénnyel szedhető ki a JSON adat
+      // return &#60;Promise&#60;Album[]>>response.json(); // mindkettő type assertion
+      .then(albums => &#123;   // az albums már tudja, hogy albumok tömbjével tudunk majd visszatérni
+        const albumPromises = albums.slice(0, 5).map(album => &#123;
+          return fetch(`https://jsonplaceholder.typicode.com/photos/?albumId=$&#123;album.id}`)
+            .then(photoResponse => photoResponse.json() as Promise&#60;Photo[]>)
+            .then(photos => &#123;
+              album.photos = photos.map(p => (&#123;   // azért a map-elés, mert a képek a https://via.placeholder.com/-re mutatnak, ami "can't be reached"
+                ...p,
+                thumbnailUrl: `https://placehold.co/50x50/3d90d7/212121?text=$&#123;p.id}`
+              }));
+              return album;
+            });
+        });
+        return Promise.all(albumPromises);    // megőrzi a sorrendet, tehát az indexek is maradnak
+      })
+      .then(arrayAlbums => &#123;
+        console.log('arrayAlbums: ', arrayAlbums);
+        return arrayAlbums;
+      });
+  }
+
+  <b>// async/await</b>
+
   async PromiseSolution() &#123;
     this.albums = await this.getAlbums();
-    this.albumsAlter = await this.getAlbumsAlter();
-    this.rendererFromPromise(this.albums);
-  &#125;
+    this.rendererFromPromise(this.albums, false);
+  }
 
-  async getAlbums(): Promise&#60;Album[]&#62; &#123;
-    const allAlbums = await fetch('https://jsonplaceholder.typicode.com/albums')
-      .then(response => &#123;
-        return response.json() as Promise&#60;Album[]&#62;; // A response-ból json() függvénnyel szedhető ki a JSON adat
-        // return &#60;Promise&#60;Album[]&#62;&#62;response.json(); // Mindkettő type assertion
-      &#125;)
-      .then(albums => &#123; // Az albums már tudja, hogy albumok tömbjével tudunk majd visszatérni
-        return albums.slice(0, 5).map(async album => &#123;
-        album.photos = await fetch(`https://jsonplaceholder.typicode.com/photos/?albumId=$&#123;album.id&#125;`).then(photo => photo.json() as Promise&#60;Photo[]&#62;);
-          return album;
-        &#125;);
-      &#125;);
-
-    return await Promise.all(allAlbums); // Megőrzi a sorrendet, tehát az indexek is maradnak
-  &#125;
+  async getAlbums(): Promise&#60;Album[]> &#123;
+    const response = await fetch('https://jsonplaceholder.typicode.com/albums');
+    const albums = await response.json() as Album[];
+  
+    const slicedAlbums = albums.slice(0, 5);
+  
+    const albumPromises = slicedAlbums.map(async album => &#123;
+      const photoResponse = await fetch(`https://jsonplaceholder.typicode.com/photos/?albumId=$&#123;album.id}`);
+      const photos = await photoResponse.json() as Photo[];
+  
+      album.photos = photos.map(photo => (&#123;
+        ...photo,
+        thumbnailUrl: `https://placehold.co/50x50/3d90d7/212121?text=$&#123;photo.id}`
+      }));
+  
+      return album;
+    });
+  
+    const albumsWithPhotos = await Promise.all(albumPromises);
+    console.log('arrayAlbums: ', albumsWithPhotos);
+    return albumsWithPhotos;
+  }  
   </pre>
+    <div id="renderedAlbums" style="max-height: 300px;overflow-y: auto;"></div>
+    <br>
+    <pre>
+  &#60;div id="renderedAlbums">&#60;/div>
+
+  ngOnInit() &#123;
+    this.PromiseSolution();
+  }
+
+  async PromiseSolution() &#123;
+    this.albumsAlter = await this.getAlbumsAlter();
+    this.rendererFromPromise(this.albumsAlter, true);
+  }
+
+  async getAlbumsAlter() &#123;
+    const fetchedAlbums = await fetch('https://jsonplaceholder.typicode.com/albums').then((albums) => &#123;
+      return albums.json() as Promise&#60;Album[]>
+    });
+
+    const albums = fetchedAlbums.slice(0, 5);
+
+    const promisesOfAllPhotos = albums.map((album) =>
+      fetch('https://jsonplaceholder.typicode.com/photos/?albumId=' + album.id)
+        .then((photos) => photos.json() as Promise&#60;Photo[]>)
+    )
+
+    const allPhotos = await Promise.all(promisesOfAllPhotos); // típusa egy tömb, amiben fotók tömbje sorakozik
+
+    console.log(allPhotos);
+
+    return albums.map((album, i) => (&#123;
+      ...album, photos: allPhotos[i].map((p: any) => &#123;   // azért a map-elés, mert a képek a https://via.placeholder.com/-re mutatnak, ami "can't be reached"
+      return &#123; ...p, thumbnailUrl: `https://placehold.co/50x50/9d2626/212121?text=$&#123;p.id}` };
+      })
+    }));
+  }
+    </pre>
+    <div id="renderedAlterAlbums" style="max-height: 300px;overflow-y: auto;"></div>
+    <pre>
+  rendererFromPromise(albums: Album[], alter: boolean = false) &#123;
+    const albumContainer = document.getElementById(alter ? 'renderedAlterAlbums' : 'renderedAlbums');
+
+    if (!albumContainer) &#123; // narrowing technika
+      return;
+    }
+
+    albumContainer.innerHTML = `
+        $&#123;albums.map(album => `
+            &#60;div>
+                &#60;div>
+                    &#60;span>#$&#123;album.id}&#60;/h4>
+                    &#60;span>$&#123;album.title}&#60;/span>
+                &#60;/div>
+
+                &#60;div class="d-flex flex-wrap gap-1">
+                  $&#123;album.photos?.map((photo: any) => `
+                    &#60;img src="$&#123;photo.thumbnailUrl}">
+                  `).join('')}
+                &#60;/div>
+                &#60;/br>
+            &#60;/div>
+        `).join('')}
+    `;
+  }
+    </pre>
+    <br>
   </ul>
-  <div id="renderedAlbums" style="max-height: 250px;overflow-y: auto;"></div>
 </div>
 
 <div>
-  <h3 #albumswithobservable data-anchor="albumswithobservable">Albumok kirenderelése 2 (Observable megoldással)</h3>
+  <h3 #albumswithobservable data-anchor="albumswithobservable">Albums by Observable</h3>
   <ul>
-  <pre>
+    <pre>
   &#60;div id="renderedAlbumsWithObservable"&#62;&#60;/div&#62;
 
   ngOnInit() &#123;
@@ -580,17 +916,23 @@
 
   ObservableSolution() &#123;
   this.albums$ = ajax('https://jsonplaceholder.typicode.com/albums').pipe(
-      map(response => (response.response as Album[]).splice(0, 5)), // A lenti map az itteni splice-szal egyenértékű
-      // map(reduce => reduce.splice(0,5))
+      map(response => (response.response as Album[]).splice(0, 5)),
+      // map(reduce => reduce.splice(0, 5))    // a felette lévő sorral egyenértékű kód
       switchMap(albums => forkJoin([ // switchMap-pel összekapcsoljuk az egyes Observable folyamatokat (ajax), a ForkJoin operátor pedig csak akkor fut le, ha minden fotó lekérdezésre került
-        of(albums), // Olyan observable lesz belőle, ami azonnal kibocsát adatcsomagot successful állapotban
+        of(albums), // olyan observable lesz belőle, ami azonnal kibocsát adatcsomagot successful állapotban
         ...albums.map(album => ajax(`https://jsonplaceholder.typicode.com/photos/?albumId=$&#123;album.id&#125;`).pipe(
+      tap(p => console.log(`Album $&#123;index}: `, p)),
       map(response => &#60;Photo[]&#62;response.response)
       ))
     ])),
-      map(([albums, ...allPhotos]) => &#123;
-        return albums.map((album, index) => (&#123; ...album, photos: allPhotos[index] &#125;))
-      &#125;)
+      map(([albums, ...allAlbums]) => &#123;
+        console.log('allPhotos: ', allAlbums);
+        return albums.map((album, index) => (&#123;
+          ...album, photos: allAlbums[index].map(p => &#123;    // szintén azért volt szükség a map függvényre, mert a képek a https://via.placeholder.com/-re mutatnak, ami nem elérhető
+            return &#123; ...p, thumbnailUrl: `https://placehold.co/50x50/ffc107/212121?text=$&#123;p.id}` }
+          })
+        }))
+      })
     );
 
     this.albums$.subscribe(data => &#123;
@@ -602,7 +944,7 @@
   rendererFromObservable(albums: Album[]) &#123;
         const albumContainer = document.getElementById('renderedAlbumsWithObservable');
 
-        if (!albumContainer) &#123; // Narrowing technika
+        if (!albumContainer) &#123; // narrowing technika
       return;
     &#125;
 
@@ -623,6 +965,6 @@
     `;
   &#125;
   </pre>
+    <div id="renderedAlbumsWithObservable" style="max-height: 300px;overflow-y: auto;"></div>
   </ul>
-  <div id="renderedAlbumsWithObservable" style="max-height: 250px;overflow-y: auto;"></div>
 </div>

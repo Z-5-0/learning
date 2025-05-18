@@ -63,21 +63,21 @@
                             <tr>
                                 <td><b>Atomicity (Atomitás)</b></td>
                                 <td>A tranzakciók vagy teljesen végrehajtódnak, vagy egyáltalán nem (ROLLBACK
-                                    lehetőség).</td>
+                                    lehetőség)</td>
                             </tr>
                             <tr>
                                 <td><b>Consistency (Konzisztencia)</b></td>
                                 <td>Az adatbázis mindig érvényes állapotban marad, biztosítva az
-                                    adatintegritást.</td>
+                                    adatintegritást</td>
                             </tr>
                             <tr>
                                 <td><b>Isolation (Elszigeteltség)</b></td>
                                 <td>Párhuzamos tranzakciók nem zavarják meg egymást, az adatok inkonzisztens
-                                    állapota elkerülhető.</td>
+                                    állapota elkerülhető</td>
                             </tr>
                             <tr>
                                 <td><b>Durability (Tartósság)</b></td>
-                                <td>A végrehajtott tranzakciók nem vesznek el rendszerhiba esetén sem.</td>
+                                <td>A végrehajtott tranzakciók nem vesznek el rendszerhiba esetén sem</td>
                             </tr>
                         </table>
                         <br>
@@ -158,7 +158,39 @@
                     adatmezőket</li>
                 <li>Nagy skálázhatóság: Horizontálisan skálázható, több szerveren könnyen megosztható</li>
                 <li>BASE elv: Ellentétben az SQL ACID modelljével, inkább az elérhetőséget és teljesítményt helyezi
-                    előtérbe</li>
+                    előtérbe
+                    <ul>
+                        <li>a BASE nem betűszó, ahol minden betű egy szó kezdőbetűjét jelöli</li>
+                        <br>
+                        <table style="border-collapse: collapse; width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>Rövidítés</th>
+                                    <th>Jelentés</th>
+                                    <th>Magyarázat</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>B</td>
+                                    <td>Basically Available</td>
+                                    <td>Az adatbázis mindig válaszol, még ha részlegesen is működik</td>
+                                </tr>
+                                <tr>
+                                    <td>A</td>
+                                    <td>Soft State</td>
+                                    <td>Az állapot időben változhat, még akkor is, ha nem történik új művelet</td>
+                                </tr>
+                                <tr>
+                                    <td>SE</td>
+                                    <td>Eventually Consistent</td>
+                                    <td>A rendszer idővel konzisztenssé válik, nem garantált azonnal</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br>
+                    </ul>
+                </li>
                 <li>Gyors írás-olvasás műveletek: Nagy adatforgalmat igénylő alkalmazásokhoz kiváló</li>
             </ol>
         </li>

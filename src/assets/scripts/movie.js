@@ -103,14 +103,17 @@ movieSubmitButton.onsubmit = async (event) => {
         return;
     }
 
-    // const response = await fetch(`http://www.omdbapi.com/?s=${searchObj.title}&y=${searchObj.year}&apikey=9606ae0f`);
-    // const movies = await response.json();
+    const response = await fetch(`http://www.omdbapi.com/?s=${searchObj.title}&y=${searchObj.year}&apikey=9606ae0f`);
+    const movies = await response.json();
 
-    var response = await getMovies(searchObj);
-    console.log('Resp: ', response);
+    // console.log('typeof getMovies:', typeof getMovies);
+    // console.dir(getMovies);
 
-    var movies = await response.json();
-    console.log('Movies: ', movies);
+    // var response = await getMovies(searchObj);
+    // console.log('Resp: ', response);
+
+    // var movies = await response.json();
+    // console.log('Movies: ', movies);
 
     if (movies.Response === 'False') {
         alert(movies.Error);
@@ -132,22 +135,24 @@ function renderMovies(movies) {
     movies.map(m => {
         var hasPoster = (m.Poster !== 'N/A');
         list.innerHTML +=
-            `<div style="display: grid; width: min-content;">
-                <span>
-                    ${hasPoster ? `<img src="${m.Poster}" height="240px" width="162px">` : `<div style="height:240px; width: 162px; background: gray"></div>`}
-                </span>
-                <span>
-                    <a href="https://imdb.com/title/${m.imdbID}" style="text-decoration: none; font-weight: bold" target="_blank">
-                        ${m.Title}
-                    </a> 
-                    (${m.Year})
-                    <div data-imdbid="${m.imdbID}" class="movie-info-button" style="
+            `<div style="display: grid; width: min-content; grid-template-rows: auto 1fr;">
+                <div>
+                    ${hasPoster ? `<img src="${m.Poster}" style="max-width: 160px;">` : `<div style="height:240px; width: 162px; background: gray"></div>`}
+                </div>
+                <div style="display: grid; grid-template-rows: 1fr auto;">
+                    <div>
+                        <a href="https://imdb.com/title/${m.imdbID}" style="text-decoration: none; font-weight: bold" target="_blank">
+                            ${m.Title}
+                        </a> 
+                        (${m.Year})
+                    </div>
+                    <div data-imdbid="${m.imdbID}" class="btn btn-outline-secondary movie-info-button" style="
                         text-align: CENTER;
                         cursor: pointer;
                         MARGIN-TOP: 10px;
                         border-radius: 5px;
                         border: 1px solid grey;">INFO</div>
-                </span>
+                </div>
             </div>`;
     });
 
@@ -155,8 +160,8 @@ function renderMovies(movies) {
 
     if (!clearPostersButton) {
         list.insertAdjacentHTML('afterend', `
-                <div style="text-align: center;padding: 20px;">
-                    <button id="clear-posters" style="background: red;border-color: red;box-shadow: none;color: white;">CLEAR</button>
+                <div id="clear-posters" style="text-align: center;padding: 20px;">
+                    <button class="btn btn-danger">CLEAR</button>
                 </div>
             `);
     }
@@ -164,6 +169,7 @@ function renderMovies(movies) {
     document.getElementById('clear-posters').addEventListener('click', () => {
         list.innerHTML = '';
         const clearPostersButton = document.getElementById('clear-posters');
+        console.log('clearPostersButton: ', clearPostersButton);
         clearPostersButton.remove();
     });
 
@@ -184,7 +190,7 @@ function renderMovies(movies) {
 
             console.log(movieInfoData);
 
-            const modalElem = document.createElement('div', {is: "imdb-movie-info-box"});
+            const modalElem = document.createElement('div', { is: "imdb-movie-info-box" });
             modalElem.setAttribute('id', 'imdb-movie-info-box');
             modalElem.style.cssText = 'position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 50%; height: 50%; background: #f5c519; border-radius: 5px; border: 3px solid black; padding: 10px; z-index: 2;';
             document.body.appendChild(modalElem);
@@ -218,7 +224,7 @@ function renderMovies(movies) {
                 </div>
             `;
 
-            const modalOverlayElem = document.createElement('div', {is: "imdb-movie-info-box-overlay"});
+            const modalOverlayElem = document.createElement('div', { is: "imdb-movie-info-box-overlay" });
             modalOverlayElem.setAttribute('id', 'imdb-movie-info-box-overlay');
             modalOverlayElem.style.cssText = 'position: fixed; top: 0; left: 0; bottom: 0; right:0; background: #000000; opacity: .7; z-index: 1';
             document.body.appendChild(modalOverlayElem);

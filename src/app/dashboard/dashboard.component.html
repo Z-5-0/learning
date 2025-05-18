@@ -1,5 +1,12 @@
 <div class="dev-icons">
     <a *ngFor="let icon of devIcons" [routerLink]="icon.route" [ngClass]="{'colored': icon.colored}">
-        <i class="{{icon.class}}" [ngClass]="{'colored': icon.colored}" [style.opacity]="icon.opacity"></i>
+        <ng-container [ngSwitch]="icon.isIcon">
+            <ng-container *ngSwitchCase="true">
+                <i class="{{icon.class}}" [ngClass]="{'colored': icon.colored}" [style.opacity]="icon.opacity"></i>
+            </ng-container>
+            <ng-container *ngSwitchCase="false">
+                <img [src]="(icon.colored ? icon.url : (icon.url + '_disabled')) + '.svg'" [style.opacity]="icon.opacity">
+            </ng-container>
+        </ng-container>
     </a>
 </div>

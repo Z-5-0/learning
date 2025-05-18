@@ -9,7 +9,7 @@ import { ScrollingService } from 'src/shared/services/scrolling.service';
 export class ApiComponent {
   @ViewChildren(`
   webapi,
-  restapi
+  restapi,
   openapi,
   soapapi,
   websocketapi,

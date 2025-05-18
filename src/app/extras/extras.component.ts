@@ -1,10 +1,12 @@
-import { Component, ElementRef, QueryList, ViewChildren, OnInit, AfterViewInit, OnDestroy, afterRender, ViewChild } from '@angular/core';
+import { Component, ElementRef, QueryList, ViewChildren, OnInit, AfterViewInit, OnDestroy, afterRender, ViewChild, inject } from '@angular/core';
 import { ScrollingService } from "../../shared/services/scrolling.service";
 import { BehaviorSubject, catchError, of, Subject, Subscription, switchMap, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { KeyValue } from '@angular/common';
 import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
 import { ActivatedRoute, Route, Router } from '@angular/router';
+import { WebSocketService } from 'src/shared/services/websocket.service';
+import { MqttService } from 'src/shared/services/mqtt.service';
 
 interface Hero {
   name: string;
@@ -133,7 +135,8 @@ export class ExtrasComponent implements OnInit, AfterViewInit, OnDestroy {
     outerhtml,
     fcp,
     selfclosingsyntax,
-    xss
+    xss,
+    websocketandmqtt
     `) sections!: QueryList<ElementRef>;
 
   anchorButtons: any[] = [
@@ -253,7 +256,8 @@ export class ExtrasComponent implements OnInit, AfterViewInit, OnDestroy {
     { title: 'outerHTML', anchor: 'outerhtml', subtitles: [] },
     { title: 'FCP', anchor: 'fcp', subtitles: [] },
     { title: 'Self-closing syntax', anchor: 'selfclosingsyntax', subtitles: [] },
-    { title: 'XSS', anchor: 'xss', subtitles: [] }
+    { title: 'XSS', anchor: 'xss', subtitles: [] },
+    { title: 'Websocket & MQTT', anchor: 'websocketandmqtt', subtitles: [] }
   ];
 
   elems: string[] = [];
@@ -421,6 +425,13 @@ export class ExtrasComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChildren('visibilityObservedElements') visibilityObservedElements!: QueryList<ElementRef>;
   observedElementsVisibility: boolean[] = [];
 
+  websocket: WebSocketService = inject(WebSocketService);
+  websocketMessages: any[] = [];
+  private messageSubscription!: Subscription;
+
+  mqtt: MqttService = inject(MqttService);
+  mqttMessages: string[] = [];
+
   constructor(private anchor: ScrollingService, private http: HttpClient, private activeRoute: ActivatedRoute) {
     /* afterRender(() => {
       if (this.activeRoute.snapshot.queryParamMap.get('jump') === 'routetransition') {
@@ -443,6 +454,19 @@ export class ExtrasComponent implements OnInit, AfterViewInit, OnDestroy {
   // PROCEDURÁLIS
   ngOnInit() {
     this.getContent();
+
+    this.messageSubscription = this.websocket.getMessages().subscribe(
+      (message) => {
+        // console.log(message);
+        this.websocketMessages.push(message.data);
+      }
+    );
+    this.subscriptions = [...this.subscriptions, this.messageSubscription];
+
+    this.mqtt.onMessage((msg) => {
+      console.log('mqtt: ', msg);
+      this.mqttMessages.push(msg);
+    });
   }
 
   getContent() {
@@ -558,9 +582,20 @@ export class ExtrasComponent implements OnInit, AfterViewInit, OnDestroy {
     this.testArray = this.testArray.slice(0, 3);
   }
 
+  sendWebsocketMessage(message: string) {
+    const messageToSend = { type: 'message', data: message };
+    this.websocket.sendMessage(messageToSend);
+  }
+
+  sendMqttMessage(message: any): void {
+    this.mqtt.publishMessage(message);
+    message = '';
+  }
+
   ngOnDestroy() {
     for (let subscription of this.subscriptions) {
       subscription.unsubscribe();
-    }
+    };
+    this.websocket.closeConnection();
   }
 }

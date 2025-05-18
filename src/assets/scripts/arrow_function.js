@@ -9,20 +9,22 @@ var addTwo = szam => szam + 2;
 console.log(addOne(3));
 console.log(addTwo(4));
 
-fetch('https://reqres.in/api/users')
+var headers = { 'x-api-key': 'reqres-free-v1' };
+
+fetch('https://reqres.in/api/users', { headers })
     .then(function (response) {
         return response.json();
     }).then(function (content) {
-    console.log(content)
-});
+        console.log(content)
+    });
 
-fetch('https://reqres.in/api/users')
+fetch('https://reqres.in/api/users', { headers })
     .then(response => response.json())
     .then(content => {
         console.log(content)
     });
 
-fetch('https://reqres.in/api/users')
+fetch('https://reqres.in/api/users', { headers })
     .then(response => response.json())
     .then(page => page.data[0])
     .then(user => `${user.first_name} ${user.last_name}`)
@@ -30,14 +32,14 @@ fetch('https://reqres.in/api/users')
         console.log(content)
     });
 
-fetch("https://reqres.in/api/users")
+fetch("https://reqres.in/api/users", { headers })
     .then(response => response.json())
     .then(page => page.data[0])
     .then(user => {
         const name = `${user.first_name} ${user.last_name}`;
         return name;
     })
-    .then(name => ({userName: name}))
+    .then(name => ({ userName: name }))
     .then((content) => {
         console.log(content);
     });

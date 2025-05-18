@@ -89,6 +89,7 @@ export class AppComponent {
   menus: any[] = [
     { label: 'Javascript', link: 'js', buttonClass: 'warning', disabled: false },
     { label: 'Typescript', link: 'typescript', buttonClass: 'warning', disabled: false },
+    { label: 'jQuery', link: 'jquery', buttonClass: 'secondary', disabled: true },
     { label: 'Regex', link: 'regex', buttonClass: 'secondary', disabled: true },
     { label: 'Extras', link: 'extras', buttonClass: 'warning', disabled: false },
     { label: 'JSON', link: 'json', buttonClass: 'warning', disabled: false },
@@ -99,19 +100,24 @@ export class AppComponent {
     { label: 'Ionic', link: 'ionic', buttonClass: 'secondary', disabled: true },
     { label: 'RxJS', link: 'rxjs', buttonClass: 'warning', disabled: false },
     { label: 'Redux', link: 'redux', buttonClass: 'secondary', disabled: true },
+    { label: 'Lodash', link: 'lodash', buttonClass: 'secondary', disabled: true },
     { label: 'CSS/SCSS', link: 'cssscss', buttonClass: 'warning', disabled: false },
+    { label: 'PrimeNG', link: 'primeng', buttonClass: 'secondary', disabled: true },
     { label: 'Material', link: 'material', buttonClass: 'warning', disabled: false },
     { label: 'Bootstrap', link: 'bootstrap', buttonClass: 'warning', disabled: false },
     { label: 'Tailwind', link: 'tailwind', buttonClass: 'secondary', disabled: true },
+    { label: 'Ant Design', link: 'antdesign', buttonClass: 'secondary', disabled: true },
+    { label: 'Leaflet', link: 'leaflet', buttonClass: 'secondary', disabled: true },
+    { label: 'AGM', link: 'agm', buttonClass: 'secondary', disabled: true },
     { label: 'Webpack', link: 'webpack', buttonClass: 'warning', disabled: false },
     { label: 'Grunt', link: 'grunt', buttonClass: 'secondary', disabled: true },
     { label: 'Gulp', link: 'gulp', buttonClass: 'secondary', disabled: true },
     { label: 'SSR', link: 'ssr', buttonClass: 'warning', disabled: false },
     { label: 'SEO', link: 'seo', buttonClass: 'warning', disabled: false },
-    { label: 'Lodash', link: 'lodash', buttonClass: 'secondary', disabled: true },
     { label: 'API', link: 'api', buttonClass: 'warning', disabled: false },
     { label: 'Database', link: 'database', buttonClass: 'warning', disabled: false },
     { label: 'Dart', link: 'dart', buttonClass: 'secondary', disabled: true },
+    { label: 'FontAwesome', link: 'fontawesome', buttonClass: 'secondary', disabled: true },
     { label: 'VS Code', link: 'vscode', buttonClass: 'warning', disabled: false },
     { label: 'News feed', link: 'newsfeed', buttonClass: 'warning', disabled: false }
   ];
@@ -148,10 +154,10 @@ export class AppComponent {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         this.pageIsLoading = true;
-
       }
       if (event instanceof NavigationEnd) {
         this.url = event.url;
+        // this.pageIsLoading = false;
       }
     });
   }
@@ -161,6 +167,15 @@ export class AppComponent {
   pageIsLoading: boolean = false;
 
   start(event: any) {
+    const fromStateArray = event.fromState.split('/').filter((f: any) => f);
+    const toStateArray = event.toState.split('/').filter((f: any) => f);
+
+    for (const f of fromStateArray) {
+      if (toStateArray.includes(f)) {
+        return;
+      }
+    }
+
     const content = document.getElementById('content');
     content?.scrollTo(0, 0);
   }
@@ -179,7 +194,6 @@ export class AppComponent {
     // const content = document.getElementById('content');
     // content?.scrollTo(0, 0);
   }
-
 
   scrollToBottom(target: HTMLElement) {
     this.scroll.scrollTo(target);

@@ -2,12 +2,12 @@ console.log('---------------- WINDOW ----------------');
 
 console.log(window);
 setTimeout(() => {
-    document.all[642].style.backgroundColor = "red";
-}, 100)
+    document.all[800].style.backgroundColor = "red";
+}, 1000);
 
 setTimeout(() => {
-    document.all[643].onclick = function () {
+    document.all[801].onclick = function () {
         // Itt bármi futtatható
-        document.all[643].style.backgroundColor = "green"
+        document.all[801].style.backgroundColor = "green";
     }
-}, 100);
+}, 1000);

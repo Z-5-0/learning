@@ -2,9 +2,9 @@
     <app-header></app-header>
     <div class="navi">
         <div class="navi-content">
-            <router-outlet></router-outlet>
             <router-outlet name="navi"></router-outlet>
             <router-outlet name="test"></router-outlet>
+            <router-outlet></router-outlet>
         </div>
         <div *ngIf="showLoader" class="navi-overlay">
             <div class="navi-loader">

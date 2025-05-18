@@ -33,16 +33,17 @@ export class JsComponent implements OnInit, AfterViewInit, AfterContentInit {
       fetch,
       asyncfunction,
       movieproject,
-      paragigms,
+      paradigms,
       objectdesign,
       arrowfunction,
+      trycatch,
       movieticketbooking,
       boxes2
       `) sections!: QueryList<ElementRef>;
 
   anchorButtons: any[] = [
     { title: 'HTTP protocol', anchor: 'httpprotocol', subtitles: [] },
-    { title: 'Javascript and Console', anchor: 'javascriptandconsole', subtitles: [] },
+    { title: 'JavaScript & Console', anchor: 'javascriptandconsole', subtitles: [] },
     { title: 'Data types', anchor: 'datatypes', subtitles: [] },
     { title: 'Array', anchor: 'array', subtitles: [] },
     { title: 'Object', anchor: 'object', subtitles: [] },
@@ -63,14 +64,14 @@ export class JsComponent implements OnInit, AfterViewInit, AfterContentInit {
     { title: 'Boxes I', anchor: 'boxes1', subtitles: [] },
     { title: 'Template literal', anchor: 'templateliteral', subtitles: [] },
     { title: 'Workshop project', anchor: 'workshopproject', subtitles: [] },
-    { title: 'Call stack', anchor: 'callstack', subtitles: [] },
+    { title: 'Call Stack', anchor: 'callstack', subtitles: [] },
     { title: 'AJAX I', anchor: 'ajax1', subtitles: [] },
     { title: 'AJAX II', anchor: 'ajax2', subtitles: [] },
     { title: 'Promise', anchor: 'promise', subtitles: [] },
     { title: 'Fetch', anchor: 'fetch', subtitles: [] },
     { title: 'Async function', anchor: 'asyncfunction', subtitles: [] },
     { title: 'Movie project', anchor: 'movieproject', subtitles: [] },
-    { title: 'Paragigms', anchor: 'paragigms', subtitles: [] },
+    { title: 'Paradigms', anchor: 'paradigms', subtitles: [] },
     { title: 'Object design', anchor: 'objectdesign', subtitles: [] },
     { title: 'Arrow function', anchor: 'arrowfunction', subtitles: [] },
     { title: 'Try/Catch', anchor: 'trycatch', subtitles: [] },
@@ -104,23 +105,7 @@ export class JsComponent implements OnInit, AfterViewInit, AfterContentInit {
   }
 
   ngOnInit() {
-    this.loadScript('assets/scripts/basic.js');
-    this.loadScript('assets/scripts/prompt.js');
-    this.loadScript('assets/scripts/loops.js');
-    this.loadScript('assets/scripts/if.js');
-    this.loadScript('assets/scripts/functions.js');
-    this.loadScript('assets/scripts/window.js');
-    this.loadScript('assets/scripts/boxes.js');
-    this.loadScript('assets/scripts/template-literal.js');
-    this.loadScript('assets/scripts/ajax.js');
-    this.loadScript('assets/scripts/fetch.js');
-    this.loadScript('assets/scripts/async.js');
-    this.loadScript('assets/scripts/movie.js');
-    this.loadScript('assets/scripts/paradigms.js');
-    this.loadScript('assets/scripts/object_blueprint.js');
-    this.loadScript('assets/scripts/arrow_function.js');
-    this.loadScript('assets/scripts/try-catch.js');
-    this.loadScript('assets/scripts/ticket.js');
+
 
     this.loadStyle(`
           #element-one {
@@ -164,8 +149,11 @@ export class JsComponent implements OnInit, AfterViewInit, AfterContentInit {
       }
 
       .container {
-        width: 400px;
-        padding-bottom: 40px;
+        display: flex;
+        gap: 30px;
+        flex-wrap: wrap;
+        margin-bottom: 30px;
+        padding-bottom: 30px;
       }
 
       .shape {
@@ -190,7 +178,7 @@ export class JsComponent implements OnInit, AfterViewInit, AfterContentInit {
       }
 
       .child-table {
-        font-size: 30px;
+        font-size: 20px;
         display: table-cell;
         vertical-align: middle;
       }
@@ -236,9 +224,10 @@ export class JsComponent implements OnInit, AfterViewInit, AfterContentInit {
 
             .row-label {
               position: absolute;
-              left: -20px;
-              top: 50%;
-              transform: translateY(-50%);
+              left: -20px !important;
+              top: 50% !important;
+              transform: translateY(-50%) !important;
+              width: min-content;
               color: #b1dfbb;
             }
 
@@ -358,6 +347,25 @@ export class JsComponent implements OnInit, AfterViewInit, AfterContentInit {
   ngAfterViewInit() {
     this.boxWidth = this.box.nativeElement.clientWidth;
     this.boxHeight = this.box.nativeElement.clientHeight;
+
+    this.loadScript('assets/scripts/basic.js');
+    console.log('oninit');
+    this.loadScript('assets/scripts/prompt.js');
+    this.loadScript('assets/scripts/loops.js');
+    this.loadScript('assets/scripts/if.js');
+    this.loadScript('assets/scripts/functions.js');
+    this.loadScript('assets/scripts/window.js');
+    this.loadScript('assets/scripts/boxes.js');
+    this.loadScript('assets/scripts/template-literal.js');
+    this.loadScript('assets/scripts/ajax.js');
+    this.loadScript('assets/scripts/fetch.js');
+    this.loadScript('assets/scripts/async.js');
+    this.loadScript('assets/scripts/movie.js');
+    this.loadScript('assets/scripts/paradigms.js');
+    this.loadScript('assets/scripts/object_blueprint.js');
+    this.loadScript('assets/scripts/arrow_function.js');
+    this.loadScript('assets/scripts/try-catch.js');
+    this.loadScript('assets/scripts/ticket.js');
   }
 
   ngAfterContentInit() {
@@ -367,7 +375,7 @@ export class JsComponent implements OnInit, AfterViewInit, AfterContentInit {
     const script = document.createElement('script');
     script.src = src;
     script.onload = () => {
-      console.log('Script loaded and ready.');
+      console.log('Script loaded and ready.', src);
     };
     document.body.appendChild(script);
   }

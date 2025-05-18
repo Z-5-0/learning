@@ -1,46 +1,57 @@
 <div *ngIf="shownInput === 'learning'">
   <div>
-    <input [value]="searchText" (input)="onSearch($event)">
+    <div class="d-inline-flex mt-3 mb-3">
+      <input type="text" class="form-control" [value]="searchText" (input)="onSearch($event)">
+    </div>
     <pre>
-      &#60;input [value]="searchText" (input)="onSearch($event)"
+  &#60;input [value]="searchText" (input)="onSearch($event)"
 
-      // [value] - Property binding - Az input mező megkapja a class property-jének default értékét.
-      // (input) - Event binding - Ha történik event, egy event object emittálódik, ami a $event változóban érhető el.
-      // A fenti két binding ötvözése two-way data binding-ot eredményez.
+  // [value] - Property binding - Az input mező megkapja a class property-jének default értékét
+  // (input) - Event binding - Ha történik event, egy event object emittálódik, ami a $event változóban érhető e
+
+  // A fenti két binding ötvözése two-way data binding-ot eredményez
     </pre>
   </div>
   <div>
-    <input [(ngModel)]="searchText">
+    <div class="d-inline-flex mt-3 mb-3">
+      <input type="text" class="form-control" [(ngModel)]="searchText">
+    </div>
     <pre>
-      &#60;input [(ngModel)]="searchText">
-      // Beépített direktíva.
+  &#60;input [(ngModel)]="searchText">
+  // Beépített direktíva
     </pre>
   </div>
   <div>
-    <input [ngModel]="searchText" (ngModelChange)="onSearch($event)">
+    <div class="d-inline-flex mt-3 mb-3">
+      <input type="text" class="form-control" [ngModel]="searchText" (ngModelChange)="searchText = $event">
+    </div>
     <pre>
-      &#60;input [ngModel]="searchText" (ngModelChange)="searchText = $event"> // = [(ngModel)]="searchText"
-      // Ebben az esetben szétszedtük a kimenetet és a bemenetet, de mivel ugyanazt a változót (searchText) használjuk, így megmarad a two-way data binding!
+  &#60;input [ngModel]="searchText" (ngModelChange)="searchText = $event"> // = [(ngModel)]="searchText"
+  // Ebben az esetben szétszedtük a kimenetet és a bemenetet, de mivel ugyanazt a változót (searchText) használjuk, így megmarad a two-way data binding
     </pre>
   </div>
-  <button class="btn btn-search">Search</button>
-  <div><p><strong>Search result for:</strong> {{ searchText }}</p></div>
+  <div>
+    <p><strong>searchText value:</strong> {{ searchText }}</p>
+  </div>
 </div>
 
 <div *ngIf="shownInput === 'inputOnly'">
-  <input placeholder="search"
-         [ngModel]="searchText2"
-         (ngModelChange)="searchText2 = $event; searchText2Change.emit($event)">
+  <div class="d-inline-flex mt-3 mb-3">
+    <input type="text" class="form-control" placeholder="search" [ngModel]="searchText2"
+      (ngModelChange)="searchText2 = $event; searchText2Change.emit($event)">
+  </div>
 </div>
 
 <div *ngIf="shownInput === 'searchWithButton'">
-  <input #searchInput placeholder="search">
-  <br>
+  <div class="d-inline-flex mt-3 mb-3">
+    <input #searchInput type="text" class="form-control" placeholder="search">
+  </div>
   <button type="button" class="btn btn-light" (click)="onSearchClick(searchInput)">Search</button>
 </div>
 
 <div *ngIf="shownInput === 'viewchildsearch'">
-  <input #searchInput placeholder="search">
-  <br>
+  <div class="d-inline-flex mt-3 mb-3">
+    <input #searchInput type="text" class="form-control" placeholder="search">
+  </div>
   <button type="button" class="btn btn-light" (click)="onSearchClickWithViewChild()">Search</button>
 </div>
