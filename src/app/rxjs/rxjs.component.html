@@ -23,9 +23,9 @@
 <div>
   <h3 #rxjs data-anchor="rxjs">RxJS</h3>
   <ul>
-    <li>Az Angulartól teljesen független könyvtár</li>
+    <li>Az Angular-tól teljesen független könyvtár</li>
     <li>Ugyanakkor az Angular felhasználja, és sok RxJS alapú eszközt szolgáltat számunkra</li>
-    <li>Az Appunk futása közben, bizonyos időpillanatokban események következnek be (pl.: click valamire), és ezen
+    <li>Az Appunk futása közben, bizonyos időpillanatokban események következnek be (például click valamire), és ezen
       eseményekkor tipikusan valamilyen adatcsomag is generálódik
     </li>
     <li>Az RxJS segítségével ezt a végtelen számú csomagot lehet reprezentálni, még mielőtt ténylegesen
@@ -35,26 +35,31 @@
       <ul>
         <li>Az operátorok láncolásával kifejező és olvasható kódot írhatunk</li>
         <li>Az operátorok használatával összetett adatfolyamokat hozhatunk létre és kezelhetünk könnyedén</li>
-        <li>Egységesíti az aszinkron adatkezelést különböző forrásokból (pl.: események, időzítők, HTTP
+        <li>Egységesíti az aszinkron adatkezelést különböző forrásokból (például események, időzítők, HTTP
           kérések)
         </li>
       </ul>
     </li>
     <li>Főbb elemei
-      <ul>
+      <ol>
         <li>Observable (Megfigyelhető)
           <ul>
             <li>Amikor létrehozunk egy Observable-t, például egy element click eseménye kapcsán, akkor azzal
-              azt mondjuk, hogy reprezentáljuk az ezen elementre bekövetkező összes jövőbeli click
-              eseményre bekövetkező adatcsomagot
+              azt mondjuk, hogy reprezentáljuk az ezen element-re bekövetkező összes jövőbeli click
+              esemény hatására létrejövő adatcsomagot
             </li>
-            <li>A tényleges adatcsomagokat úgy tudjuk kezelni, hogy valamikor időben feliratkozunk az
+            <li>A tényleges adatcsomagokat úgy tudjuk kezelni, hogy időben valamikor feliratkozunk az
               adatfolyamra egy úgynevezett Observer-rel (megfigyelővel)
             </li>
             <li>A feliratkozást bármikor megtehetjük, akár az Observable létrehozásakor, vagy egy későbbi
               időpillanatban
             </li>
-
+            <li>A $ konvenció, Observable típusok mögé kell rakni
+              <ul>
+                <li>Olyan, mint egy 'S' betű, többesszámra utal, pl.: click$, azaz click-ekből álló adatfolyam
+                </li>
+              </ul>
+            </li>
             <li>Az Observable 3 féle működést tud reprezentálni
               <ul>
                 <li>next
@@ -76,6 +81,7 @@
             </li>
           </ul>
         </li>
+        <br>
         <li>Observer (Megfigyelő)
           <ul>
             <li>Olyan objektum, amely fogadja a az Observable által kibocsátott adatokat</li>
@@ -99,7 +105,7 @@
                 <li>Meg lehet mondani, hogy ha érkezik egy adatcsomag, mi történjen, ha hibára futunk,
                   akkor mi történjen, és ha lezárul az adatfolyam, mi történjen
                 </li>
-                <li>A(z adott) Observer le is tud iratkozni az adatfolyamról unsubscribe() methoddal
+                <li>A(z adott) Observer le is tud iratkozni az adatfolyamról unsubscribe() method-dal
                   <ul>
                     <li>Ettől függetlenül az Observable továbbra is bocsáthat ki adatcsomagokat,
                       amiket más, még feliratkozott Observerek megkapnak
@@ -113,6 +119,7 @@
             </li>
           </ul>
         </li>
+        <br>
         <li>Subscription (Feliratkozás)
           <ul>
             <li>A Subscription kezeli a kapcsolatot az Observable és az Observer között</li>
@@ -121,6 +128,7 @@
             </li>
           </ul>
         </li>
+        <br>
         <li>Operators (Operátorok)
           <ul>
             <li>Az egész adatfolyam működése befolyásolható operátorokkal</li>
@@ -132,58 +140,63 @@
             <li>A műveletek lehetnek kihatással közvetlenül az érkező adatcsomagra, vagy az adatcsomag
               működésére
               <ul>
-                <li>map: Leképezi az érkező adatot valami más adattá
+                <li>map
                   <ul>
+                    <li>Leképezi az érkező adatot valami más adattá</li>
                     <pre>
-  const source$ = of(1, 2, 3, 4, 5);
-  const result$ = source$.pipe(
+  const source$ = of(1, 2, 3, 4, 5);    // Observable
+
+  const result$ = source$.pipe(   // erre a stream-re fel is kell iratkozni
     map(value => value * 10)
   );
                       </pre>
                     <li>Minden kibocsátott értéket megszoroz tízzel</li>
                   </ul>
                 </li>
-                <li>take: Egy megadott számú adatcsomag kibocsátása után completed állapotba futtatja a
-                  rendszert
-                </li>
-                <li>filter: Szűri az Observable kibocsátásait egy feltétel alapján
+                <li>take
                   <ul>
+                    <li>Egy megadott számú adatcsomag kibocsátása után completed állapotba futtatja arendszert</li>
+                  </ul>
+                </li>
+                <li>filter
+                  <ul>
+                    <li>Szűri az Observable kibocsátásait egy feltétel alapján</li>
                     <pre>
   const source$ = of(1, 2, 3, 4, 5);
   const result$ = source$.pipe(
-    filter(value => value % 2 === 0)
+    filter(value => value % 2 === 0)    // Csak a páros számokat engedi át
   );
                       </pre>
-                    <li>Csak a páros számokat engedi át</li>
                   </ul>
                 </li>
                 <li>merge</li>
                 <li>concat</li>
-                <li>switchMap:
+                <li>mergeMap
                   <ul>
-                    <pre>
-  const result$ = input$.pipe(
-    map(event => event.target.value),
-    switchMap(query => ajax.getJSON(`https://api.example.com/search?q=$&#123;query&#125;`))
-  );
-                       </pre>
-                    <li>Hasonló a mergeMap-hez</li>
-                  </ul>
-                </li>
-                <li>mergeMap: Kiterjeszti az adatfolyamot egy új Observable-re, és összeolvassa az
-                  összes kibocsátást
-                  <ul>
+                    <li>Kiterjeszti az adatfolyamot egy új Observable-re, és összeolvassza az összes kibocsátást</li>
                     <pre>
   const source$ = of('https://jsonplaceholder.typicode.com/posts/1', 'https://jsonplaceholder.typicode.com/posts/2');
   const result$ = source$.pipe(
     mergeMap(url => ajax.getJSON(url))
   );
                      </pre>
-                    <li>Egy HTTP kérés indítása minden kibocsátott értéknél</li>
+                    <li>Egy HTTP kérést indít minden kibocsátott értéknél</li>
                   </ul>
                 </li>
-                <li>debounceTime: Késlelteti az Observable kibocsátásait egy adott időtartammal
+                <li>switchMap
                   <ul>
+                    <li>Hasonló a mergeMap-hez</li>
+                    <pre>
+  const result$ = input$.pipe(
+    map(event => event.target.value),
+    switchMap(query => ajax.getJSON(`https://api.example.com/search?q=$&#123;query&#125;`))
+  );
+                    </pre>
+                  </ul>
+                </li>
+                <li>debounceTime
+                  <ul>
+                    <li>Késlelteti az Observable kibocsátásait egy adott időtartammal</li>
                     <pre>
   const result$ = input$.pipe(
     debounceTime(300),
@@ -204,8 +217,12 @@
                     <li>of
                       <ul>
                         <pre>
-  const array$ = from([10, 20, 30]);
+  const array$ = of([10, 20, 30]);
   array$.subscribe(value => console.log(value));
+
+  ↓↓↓↓↓
+
+  [10, 20, 30]
                          </pre>
                         <li>Visszaadja a számokat egymás után</li>
                       </ul>
@@ -215,8 +232,16 @@
                         <pre>
   const array$ = from([1, 2, 3, 4, 5]);
   array$.subscribe(value => console.log(value));
+
+  ↓↓↓↓↓
+
+  1
+  2
+  3
+  4
+  5
                          </pre>
-                        <li>Tömböt, stringet, map-et, set-et, vagy promise vesz át, és egy
+                        <li>Tömböt, string-et, Map-et, Set-et, vagy Promise-t vesz át, és egy
                           Observable-t hoz létre
                         </li>
                         <li>Visszaadja őket egymás után</li>
@@ -235,6 +260,12 @@
       &#125;)
     );
   array$.subscribe(value => console.log(value));
+
+  ↓↓↓↓↓
+
+  10
+  20
+  'Hello'
                          </pre>
                         <li>A tömb egyik eleme egy Promise, a mergeMap-pal laposítjuk a tömb
                           másik két értékéhez, és benne feldolgozzuk a Promise-t, így lesz az
@@ -260,57 +291,24 @@
   const timer$ = timer(2000, 1000);
   timer$.subscribe(value => console.log(value));
                         </pre>
-                        <li>2 másodpercig vár, majd 0-tól indulva számokat ad vissza (0, 1, 2
-                          ...)
+                        <li>2 másodpercig vár, majd 0-tól indulva másodpercenként számokat ad vissza (0, 1, 2, ...)
                         </li>
                       </ul>
                     </li>
                     <li>fromEvent
                       <ul>
-                        <pre>
-  const click$ = fromEvent(document, 'click');
-  click$.subscribe(event => console.log(event));
-                        </pre>
                         <li>Például DOM eseményből hoz létre Observable-t</li>
-                      </ul>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-        <li>Subject
-          <ul>
-            <li>A Subject egy speciális típusú Observable, amely lehetővé teszi, hogy több Observer
-              csatlakozzon hozzá, és közvetlenül küldhet adatokat az Observer-eknek
-            <li>A Subject lehet multicasting, azaz több Observer-t is kiszolgálhat egyszerre</li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-    <br>
-    <li>fromEvent
-      <ul>
-        <li>A $ konvenció, Observable típusok mögé kell rakni
-          <ul>
-            <li>Olyan, mint egy 'S' betű, többesszámra utal, pl.: click$, azaz click-ekből álló adatfolyam
-            </li>
-          </ul>
-        </li>
-        <li>
-          <pre>
+                        <pre>
   const buttonClicked = document.getElementById('clickButton');
   let buttonClickedObservable$ = new Observable();
   if (this.clickButton) &#123;
       const buttonClickedObservable$ = fromEvent(buttonClicked, 'click');
   &#125;
-          </pre>
-          <ul>
-            <li>A fromEvent első paramétere egy elem (HTMLElement-et vár), a második maga az event</li>
-            <li>ViewChild használatakor nativeElement-et szükséges neki adni, mert alapvetően 'ElementRef'
-              típus képződik, ami Angular specifikus
-              <pre>
+                          </pre>
+                        <li>A fromEvent első paramétere egy elem (HTMLElement-et vár), a második maga az event</li>
+                        <li>ViewChild használatakor nativeElement-et szükséges neki adni, mert alapvetően 'ElementRef'
+                          típus képződik, ami Angular specifikus</li>
+                        <pre>
   @ViewChild('clickButton') clickButton!: ElementRef&#60;HTMLButtonElement&#62;;
     let buttonClickedObservable$ = fromEvent(this.clickButton.nativeElement, 'click');
     buttonClickedObservable$.subscribe(&#123;
@@ -322,11 +320,24 @@
         complete: () => &#123;
           &#125;,
     &#125;);
-            </pre>
+                        </pre>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
             </li>
           </ul>
         </li>
-      </ul>
+        <br>
+        <li>Subject
+          <ul>
+            <li>A Subject egy speciális típusú Observable, amely lehetővé teszi, hogy több Observer
+              csatlakozzon hozzá, és közvetlenül küldhet adatokat az Observer-eknek
+            <li>A Subject lehet multicasting, azaz több Observer-t is kiszolgálhat egyszerre</li>
+          </ul>
+        </li>
+      </ol>
     </li>
   </ul>
 </div>
@@ -336,10 +347,16 @@
   <ul>
     <li>fromEvent
       <ul>
-        <li>Jelen példában gombnyomásra létrehozott Observable</li>
-        <button #clickButton id="clickButton" class="clickButton btn btn-secondary">CLICK</button>
+        <li>Gombnyomásra létrehozott Observable</li>
+        <div class="d-inline-flex align-items-center gap-1">
+          <button #clickButton id="clickButton" class="clickButton btn btn-secondary">CLICK</button>
+          {{buttonClickedObservable$ | async}}
+          <span *ngIf="buttonClickedObservableSteamCompleted">(steam completed)</span>
+        </div>
         <pre>
   &#60;button #clickButton class="clickButton"&#62;CLICK&#60;/button&#62;
+  &#123; &#123; buttonClickedObservable$ | async }}
+  &#60;span *ngIf="buttonClickedObservableSteamCompleted">(steam completed)&#60;/span>
 
   @ViewChild('clickButton') clickButton!: ElementRef&#60;HTMLButtonElement&#62;;
 
@@ -355,7 +372,7 @@
               console.log(data);
         &#125;,
         error: (err) => &#123;
-              &#125;,
+        &#125;,
         complete: () => &#123;
           console.log('fromEvent completed!');
         &#125;,
@@ -368,9 +385,13 @@
           </pre>
         </li>
         <li>A map() a feliratkozottaknak a next ágba csak a click event clientX property-jét adja tovább</li>
-        <li>A take() pedig azt eredményezi, hogy 5 datab click után completed ágba fut az adatfolyam</li>
+        <li>A take() pedig azt eredményezi, hogy 5 darab click után completed ágba fut az adatfolyam
+          <ul>
+            <li>Nem bocsát ki több értéket</li>
+          </ul>
+        </li>
         <br>
-        <li>Az error ágat letesztelhetjük úgy, hogy a map() body-ját megnyitjuk, és manuálisan idézünk elő errort
+        <li>Az error ágat letesztelhetjük úgy, hogy a map() body-ját megnyitjuk, és manuálisan idézünk elő error-t
           <pre>
   let buttonClickedObservable$ = fromEvent(this.clickButton.nativeElement, 'click')
     .pipe(
@@ -395,7 +416,7 @@
     </li>
     <li>interval
       <ul>
-        <li>Bizonyos megadott ms-nyi időnként az Observable adatcsomagot fog kibocsátani magából</li>
+        <li>Bizonyos megadott milliszekundumnyi időnként az Observable adatcsomagot fog kibocsátani magából</li>
         <li>Gyakori, hogy a fejlesztők csak a next ágat dobják be, így az alábbi megadási móddal lehet a leggyakrabban
           találkozni
           <ul>
@@ -424,7 +445,7 @@
         <br>
 
         <form #colorForm id="colorForm">
-          <input type="text" name="color" placeholder="Enter a color!">
+          <input type="text" name="color" class="form-control" placeholder="Enter a color!">
           <button type="submit" class="btn btn-secondary">Send</button>
         </form>
 
@@ -447,7 +468,7 @@
   );
 
   formSent$.subscribe(data => &#123;
-          console.log('%c ' + color, 'color: ' + color);
+          console.log('%c ' + color, 'color: ' + color);    // színt megadva a console.log szövege színes lesz
   &#125;)
         </pre>
         <li>A tap() operátorral nem az adatfolyamra vagyunk hatással, az adatfolyammal nem csinál semmit, viszont
@@ -474,7 +495,7 @@
           operátornak
         </li>
         <li>Ez a művelet a funkcionális programozásban flatMap() (leképezés és kilapítás)</li>
-        <li>A mergeMap megkapja az adatot, ami mi esetünkben a formba begépelt színt
+        <li>A mergeMap megkapja az adatot, esetünkben a formba begépelt színt
           <ul>
             <li>Emiatt: 'map((event: any) => event.target.elements.color.value),'</li>
           </ul>
@@ -483,17 +504,14 @@
         <li>A mergeMap minden egyes belső Observable-re feliratkozik, és bármelyik bocsát ki eseményt, a mergeMap()
           továbbküldi
         </li>
-      </ul>
-      <br>
-
-      <form #colorFormForMergeMap id="colorFormForMergeMap">
-        <input type="text" name="color" placeholder="Enter a color!">
-        <button type="submit" class="btn btn-secondary">Send</button>
-      </form>
-
-      <ul>
+        <br>
+        <form #colorFormForMergeMap id="colorFormForMergeMap">
+          <input type="text" name="color" class="form-control" placeholder="Enter a color!">
+          <button type="submit" class="btn btn-secondary">Send</button>
+        </form>
+        <br>
         <li>Minden egyes submit esetén elindul egy újabb számláló, ami 1 másodpercenként ont ki magából értéket, de a
-          counterben lévő filter miatt mi ebből csak 2 másodpercenként fogunk látni valamit
+          counter-ben lévő filter miatt mi ebből csak 2 másodpercenként fogunk látni valamit
         </li>
         <pre>
   const formSent$ = fromEvent(this.colorFormForMergeMap.nativeElement, "submit").pipe(
@@ -520,14 +538,14 @@
   &#125;);
         </pre>
         <li>A gyakorlatban ezt arra szokás használni, hogy a külső Observable-ből megkaparintott adatot a belső
-          Observable kapcsán fel lehet használni
+          Observable kapcsán fel lehessen használni
         </li>
         <li>A mergeMap() egy Observable-t vár, amit kedvünk szerint alakíthatunk pipe használatával
           <ul>
             <li>Jelen esetben a map() operátor segítségével egy tömböt küldünk tovább a csőben, aminek az első eleme a
               külső Observable-ből származik (color), és nem más, mint az 'event.target.elements.color.value'-ban lévő
               szín, a második eleme pedig a counter$ Observable-ből származó data + " másodperc telt el", ami egy
-              megszűrt szám, concatolva statikus szöveggel
+              megszűrt szám, concat-olva statikus szöveggel
             </li>
           </ul>
         </li>
@@ -542,7 +560,7 @@
         <li>Az egyetlen különbség, hogy csak egyetlen egy belső Observable-t hagy érvényesülni, mindig a legkésőbbit, és
           a többiről automatikusan leiratkozik
         </li>
-        <li>A subscription next ágbába mindig csak a legutóbbi belső Observable által kibocsátott adat jut el, a
+        <li>A subscription next ágába mindig csak a legutóbbi belső Observable által kibocsátott adat jut el, a
           korábbiakról automatikusan leiratkozik
         </li>
         <li>Angularban a HTTPClient használatakor, AJAX kérések kiküldésekor nagy szükség van rá
@@ -572,13 +590,15 @@
         </ul>
         <br>
         <button #switchMapButton class="btn btn-secondary">AJAX request</button>
-        <br>
+        <pre>
+  {{ switchMapArray | json }}
+        </pre>
         <li>A switchMap úgy jöhet képbe, ha mondjuk nem akarjuk, hogy az AJAX kérés bekövetkezzen, csak ha mondjuk
           történik egy gombnyomás
           <ul>
             <li>Ilyenkor nem az ajaxRequest$ Observable-re akarunk feliratkozni</li>
-            <li>switchMap() segítségével hozzunk létre gombnyomásra egy belső feliratkozót, amiből, ha jön az adat, az
-              érkezzem meg az 'ajaxRequest.subscribe' next ágába
+            <li>switchMap() segítségével hozzuk létre gombnyomásra a belső feliratkozót, amiből, ha jön az adat, az
+              megérkezik az 'ajaxRequest.subscribe' next ágába
             </li>
             <pre>
   this.switchMapTesting();
@@ -598,8 +618,10 @@
     &#125;);
   &#125;
             </pre>
-            <li>A switchMap() meg tud szakítani folyamatban lévő adatkérést, ha új click event érkezik, mivel
-              megcsinálja a leiratkozást automatikusan
+            <li>A switchMap külső Observable-ből (például fromEvent) érkező értékre reagál, és visszatér egy belső
+              Observable-lel (például ajaxRequest)</li>
+            <li>A switchMap() meg tud szakítani folyamatban lévő adatkérést (ha közben jön egy újabb érték a külsőből),
+              ha új click event érkezik, mivel megcsinálja a leiratkozást automatikusan
               <ul>
                 <li>mergeMap()-et használva a fenti példában, az összes AJAX kérés végbemenne</li>
               </ul>
@@ -629,7 +651,7 @@
       )
     });
 
-    this.album$.subscribe(&#123; // Az Observable akkor kezdi el az adatfolyamot (pl. a HTTP-kérést), amikor valaki feliratkozik rá.
+    this.album$.subscribe(&#123; // az Observable akkor kezdi el az adatfolyamot (például a HTTP-kérést), amikor valaki feliratkozik rá
       next: photos => &#123;
             console.log('PHOTOS: ', photos);
       },
@@ -692,14 +714,13 @@
         <li>Referencia, amely az Observable és az Observer közötti kapcsolatot jelöli</li>
         <li>Lehetővé teszi, hogy az Observer feliratkozzon, vagy leiratkozzon az Observable-ről
           <ul>
-            <li>Az unsubscribe() metódus segítségével leiratkozhatunk az Observable-ról</li>
+            <li>Az unsubscribe() metódus segítségével leiratkozhatunk az Observable-ről</li>
           </ul>
         </li>
         <pre>
   const subscription = observable.subscribe(observer);
 
-  // ha már nem akarjuk figyelni, akkor leiratkozunk
-  subscription.unsubscribe();
+  subscription.unsubscribe();   // ha már nem akarjuk figyelni, akkor leiratkozunk
         </pre>
       </ul>
     </li>
@@ -708,7 +729,7 @@
         <li>Különleges típusú Observable, amely képes egyszerre adattárolásra, és Subscription kezelésére</li>
         <li>Egyszerre Observer, és Observable is lehet, így képes adatokat fogadni (mint Observer), és ugyanazokat az
           adatokat más Observer-eknek átadni (mint Observable)</li>
-        <li>Nagyon hasznos például az event stream-ek kezelésére, vagy ha egy Observable értékeit más Observable-oknak
+        <li>Nagyon hasznos például az event stream-ek kezelésére, vagy ha egy Observable értékeit más Observable-öknek
           kell továbbítani</li>
         <pre>
   const subject = new Subject();
@@ -718,6 +739,8 @@
 
   subject.next('Hello from Subject');  // mindkét observer megkapja
         </pre>
+        <li>Típusai</li>
+        <br>
         <table style="border-collapse: collapse; width: 100%;">
           <tr>
             <th></th>
@@ -726,23 +749,23 @@
           </tr>
           <tr>
             <td>Subject</td>
-            <td>Alapértelmezett Subject, minden új Subscriber csak az újonnan érkező értékeket kapja meg.</td>
-            <td>Ha több Observer-nek kell egyszerre adatot küldeni.</td>
+            <td>Alapértelmezett Subject, minden új Subscriber csak az újonnan érkező értékeket kapja meg</td>
+            <td>Ha több Observer-nek kell egyszerre adatot küldeni</td>
           </tr>
           <tr>
             <td>BehaviorSubject</td>
-            <td>Az utolsó kibocsátott értéket is eltárolja, így az újonnan feliratkozók is megkapják ezt.</td>
-            <td>Ha mindig szükség van az utolsó ismert értékre (pl. állapotkezelés).</td>
+            <td>Az utolsó kibocsátott értéket is eltárolja, így az újonnan feliratkozók is megkapják ezt</td>
+            <td>Ha mindig szükség van az utolsó ismert értékre (például állapotkezelés)</td>
           </tr>
           <tr>
             <td>ReplaySubject</td>
-            <td>Az összes korábbi értéket eltárolja és minden új Subscriber-nek elküldi ezeket.</td>
-            <td>Ha minden új Observer-nek vissza kell adni az előzményeket is.</td>
+            <td>Az összes korábbi értéket eltárolja és minden új Subscriber-nek elküldi ezeket</td>
+            <td>Ha minden új Observer-nek vissza kell adni az előzményeket is</td>
           </tr>
           <tr>
             <td>AsyncSubject</td>
-            <td>Csak az utolsó értéket küldi ki, de csak akkor, ha az Observable befejeződött.</td>
-            <td>Ha csak a végső eredmény érdekes (pl. egy HTTP kérés után).</td>
+            <td>Csak az utolsó értéket küldi ki, de csak akkor, ha az Observable befejeződött</td>
+            <td>Ha csak a végső eredmény érdekes (például egy HTTP kérés után)</td>
           </tr>
         </table>
       </ul>
@@ -813,7 +836,11 @@
 
   ↓↓↓↓↓
 
-  1, 2, 3, 4, 5
+  1
+  2
+  3
+  4
+  5
             </pre>
           </ul>
         </li>
@@ -829,7 +856,9 @@
 
   ↓↓↓↓↓
 
-  10, 20, 30
+  10
+  20
+  30
             </pre>
           </ul>
         </li>
@@ -845,7 +874,10 @@
 
   ↓↓↓↓↓
 
-  0, 1, 2, 3, 4, ...
+  0
+  1
+  2
+  ...
             </pre>
           </ul>
         </li>
@@ -875,7 +907,9 @@
 
   ↓↓↓↓↓
 
-  10, 20, 30
+  10
+  20
+  30
             </pre>
           </ul>
         </li>
@@ -894,15 +928,14 @@
   click$.pipe(
     switchMap(() => interval$)
   ).subscribe(console.log);
-
-  // minden kattintás elindít egy számlálót, de az előzőt megszakítja
             </pre>
+            <li>Minden kattintás elindít egy számlálót, de az előzőt megszakítja</li>
           </ul>
         </li>
         <li>mergeMap()
           <ul>
             <li>Az összes új Observable-t megtartja, nem szakítja meg az előzőket</li>
-            <li>Haszbnáljuk, ha minden új eseményt párhuzamosan akarunk kezelni</li>
+            <li>Használjuk, ha minden új eseményt párhuzamosan akarunk kezelni</li>
             <pre>
   import &#123; of } from 'rxjs';
   import &#123; mergeMap } from 'rxjs/operators';
@@ -915,7 +948,12 @@
 
   ↓↓↓↓↓
 
-  A1, A2, B1, B2, C1, C2
+  A1
+  A2
+  B1
+  B2
+  C1
+  C2
             </pre>
           </ul>
         </li>
@@ -935,7 +973,9 @@
 
   ↓↓↓↓↓
 
-  X, Y, Z // 1 másodpercenként
+  X   // utána 1 mp delay
+  Y   // utána 1 mp delay
+  Z 
             </pre>
           </ul>
         </li>
@@ -954,9 +994,8 @@
   click$.pipe(
     exhaustMap(() => interval(1000).pipe(take(5))) // 5 másodpercig figyelmen kívül hagyja az új kattintásokat
   ).subscribe(console.log);
-
-  // ha véget ér az első folyamat, akkor a következő kattintás indít új számlálót
               </pre>
+            <li>Ha véget ér az első folyamat, akkor a következő kattintás indít új számlálót</li>
           </ul>
         </li>
       </ol>
@@ -1018,7 +1057,8 @@
 
   ↓↓↓↓↓
 
-  2, 4
+  2
+  4
             </pre>
           </ul>
         </li>
@@ -1054,7 +1094,10 @@
 
   ↓↓↓↓↓
 
-  1, 2, 3, 4
+  1
+  2
+  3
+  4
             </pre>
           </ul>
         </li>
@@ -1063,7 +1106,7 @@
     <br>
     <li>Combination operátorok
       <ul>
-        <li>Kombinációs operáorok</li>
+        <li>Kombinációs operátorok</li>
         <li>Lehetővé teszik több Observable egyesítését, vagy egyes Observable-ok értékeinek egyidejű kezelését</li>
       </ul>
       <br>
@@ -1110,7 +1153,8 @@
 
   ↓↓↓↓↓
 
-  obs1: 3, obs2: C
+  obs1: 3
+  obs2: C
               </pre>
           </ul>
         </li>
@@ -1130,10 +1174,11 @@
 
   ↓↓↓↓↓
 
-  obs1: C, obs2: 3
-
-  // különbség a combineLatest-hez képest, hogy a forkJoin csak akkor adja vissza az értékeket, ha minden Observable befejeződött
+  obs1: C
+  obs2: 3
               </pre>
+            <li>Különbség a combineLatest-hez képest, hogy a forkJoin csak akkor adja vissza az értékeket, ha minden
+              Observable befejeződött</li>
           </ul>
         </li>
       </ol>

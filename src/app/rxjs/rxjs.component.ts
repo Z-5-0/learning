@@ -47,6 +47,11 @@ export class RxjsComponent implements OnInit, AfterViewInit {
   @ViewChild('colorFormForMergeMap') colorFormForMergeMap!: ElementRef<HTMLFormElement>;
   @ViewChild('switchMapButton') switchMapButton!: ElementRef<HTMLButtonElement>;
 
+  buttonClickedObservable$: rxjs.Observable<number> | null = null;
+  buttonClickedObservableSteamCompleted: boolean = false;
+
+  switchMapArray: any[] = [];
+
   constructor(private anchor: ScrollingService) {
   }
 
@@ -99,7 +104,7 @@ export class RxjsComponent implements OnInit, AfterViewInit {
     }
     */
 
-    let buttonClickedObservable$ = fromEvent(this.clickButton.nativeElement, 'click')
+    this.buttonClickedObservable$ = fromEvent(this.clickButton.nativeElement, 'click')
       .pipe(
         map((event: any) => {
           // throw new Error('Manuális hiba: throw new Error()');
@@ -108,7 +113,7 @@ export class RxjsComponent implements OnInit, AfterViewInit {
         take(5)
       );
 
-    buttonClickedObservable$.subscribe({
+    this.buttonClickedObservable$.subscribe({
       next: (data) => {
         console.log(data);
       },
@@ -117,6 +122,7 @@ export class RxjsComponent implements OnInit, AfterViewInit {
       },
       complete: () => {
         console.log('fromEvent completed!');
+        this.buttonClickedObservableSteamCompleted = true;
       },
     });
   }
@@ -178,7 +184,8 @@ export class RxjsComponent implements OnInit, AfterViewInit {
     );
 
     formSent$.subscribe(([color, text]) => {
-      console.log('%c ' + color, 'color: ' + text);
+      // console.log('%c ' + color, 'color: ' + text);
+      console.log('%c ' + text, 'color: ' + color);
     });
   }
 
@@ -194,6 +201,7 @@ export class RxjsComponent implements OnInit, AfterViewInit {
 
     switchMapButtonClicked$.subscribe((resp) => {
       console.log(resp);
+      this.switchMapArray = resp as [];
     });
   }
 
