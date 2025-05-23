@@ -1039,7 +1039,7 @@ document.getElementById('sample-button-container').appendChild('btn'); // közve
               DOM-hoz, és befrissíti azt</li>
             <li>A ReactDOM.render() egy elemet renderel a virtuális DOM-ból a valódi DOM-ba
               <ul>
-                <li>Az első argomentum az az elem, amit renderelni szeretnénk
+                <li>Az első argumentum az az elem, amit renderelni szeretnénk
                   <ul>
                     <li>Ez az elem az app komponens</li>
                     <li>Az app komponensnek lehetnek gyerekei</li>
@@ -2487,7 +2487,7 @@ document.getElementById('sample-button-container').appendChild('btn'); // közve
         props.children
   }
         </pre>
-        <li>A createElement első argomentuma a tag, a második a tag attribútumai, a harmadik pedig a tartalma, ami a
+        <li>A createElement első argumentuma a tag, a második a tag attribútumai, a harmadik pedig a tartalma, ami a
           nyitó- és záró tag-ek között található</li>
         <li>Itt is wrap-eltük az elemeket egy div-be
           <ul>
@@ -2667,7 +2667,7 @@ document.getElementById('sample-button-container').appendChild('btn'); // közve
     useState(0);
   }
             </pre>
-            <li>A useState első argomentuma a kiindulási érték
+            <li>A useState első argumentuma a kiindulási érték
               <ul>
                 <li>A kezdőértéke lehet szám, string, objektum, vagy akár null</li>
               </ul>
@@ -3095,7 +3095,7 @@ document.getElementById('sample-button-container').appendChild('btn'); // közve
     ...
   });
     </pre>
-    <li>Ahányszor lefut az onChange, a 'nameInputHandler' függvény megkapja az event objektumot argomentumként</li>
+    <li>Ahányszor lefut az onChange, a 'nameInputHandler' függvény megkapja az event objektumot argumentumként</li>
   </ul>
   <br>
   <h5 #multiplestates data-anchor="multiplestates">Multiple states</h5>
@@ -3228,7 +3228,7 @@ document.getElementById('sample-button-container').appendChild('btn'); // közve
             <li>Holott csak a name property-t szeretnénk frissíteni</li>
             <li>Ehelyett callback function-t is adhatunk az update függvényünknek
               <ul>
-                <li>Argomentumként a frissítő függvényünk a korábbi state-et kapja meg</li>
+                <li>Argumentumként a frissítő függvényünk a korábbi state-et kapja meg</li>
                 <li>Majd visszatérhetünk a spread operátor segítségével a függvényből</li>
                 <pre>
   function priceInputHandler(event) &#123;
@@ -3654,7 +3654,7 @@ document.getElementById('sample-button-container').appendChild('btn'); // közve
             />
   })}
         </pre>
-        <li>Új tömböt hoz létre a map(), és a függvény első argomentuma egy callback function</li>
+        <li>Új tömböt hoz létre a map(), és a függvény első argumentuma egy callback function</li>
         <pre>
   array.map(function(element, index, array) &#123; // harmadik paramétere az eredeti tömb
     // transformation
@@ -4270,12 +4270,12 @@ document.getElementById('sample-button-container').appendChild('btn'); // közve
     <li>Ahhoz, hogy a root-portal id-val rendelkező DOM elem kapja meg a PortalComponent tartalmát, a createPortal
       függvényt szükséges használnunk
       <ul>
-        <li>Az első argomentuma tulajdonképpen bármi lehet, ami kirenderelhető
+        <li>Az első argumentuma tulajdonképpen bármi lehet, ami kirenderelhető
           <ul>
             <li>Szám, szöveg, JSX, komponens</li>
           </ul>
         </li>
-        <li>A második argomentum az a DOM node, ahova renderelni szeretnénk a JSX kódot</li>
+        <li>A második argumentum az a DOM node, ahova renderelni szeretnénk a JSX kódot</li>
         <pre>
   <b>// PortalComponent</b>
   import ReactDOM from 'react-dom';
@@ -4771,7 +4771,7 @@ document.getElementById('sample-button-container').appendChild('btn'); // közve
             <li>???</li>
           </ul>
         </li>
-        <li>A useEffect függvény 2 argomentumot fogad
+        <li>A useEffect függvény 2 argumentumot fogad
           <ol>
             <li>Callback function
               <ul>
@@ -4794,7 +4794,7 @@ document.getElementById('sample-button-container').appendChild('btn'); // közve
           esetben logoljuk ezt az értéket</li>
         <li>Változatlan érték esetén a nem történik újabb logolás</li>
         <li>Amennyiben csak az első rendereléskor szeretnék valamilyen logikát lefuttatni, akkor egyszerűen csak egy
-          üres tömböt szükséges adnunk a useEffect második argomentumának</li>
+          üres tömböt szükséges adnunk a useEffect második argumentumának</li>
         <pre>
   useEffect(() => (
       console.log('First render')
@@ -5142,7 +5142,7 @@ document.getElementById('sample-button-container').appendChild('btn'); // közve
         <li>Array destructoring-ot érdemes használni a kezelésére</li>
       </ul>
     </li>
-    <li>Két argomentumot vár
+    <li>Két argumentumot vár
       <ol>
         <li>reducer: Függvény, amely megkapja a jelenlegi állapotot és egy akciót, majd visszaad egy új állapotot</li>
         <li>initialState: Kezdeti érték</li>
@@ -5161,7 +5161,7 @@ document.getElementById('sample-button-container').appendChild('btn'); // közve
     return ...
   }
     </pre>
-    <li>A reducer függvénynek 2 argomentuma van
+    <li>A reducer függvénynek 2 argumentuma van
       <ol>
         <li>currentState: Az adott állapotot tárolja</li>
         <li>action: reducer függvénynek átadott paraméter</li>
@@ -5545,7 +5545,7 @@ document.getElementById('sample-button-container').appendChild('btn'); // közve
                 <pre>
   import React from 'react';
 
-  let AuthContext = React.createContext(&#123; isLoggedIn: false }); // kezdő értéket adhatunk meg argomentumnak (number, string, boolean, array, object)
+  let AuthContext = React.createContext(&#123; isLoggedIn: false }); // kezdő értéket adhatunk meg argumentumnak (number, string, boolean, array, object)
 
   export default AuthContext;
                 </pre>
@@ -5789,7 +5789,7 @@ document.getElementById('sample-button-container').appendChild('btn'); // közve
     )
 
     <b>// AuthContext.js</b>
-    let AuthContext = React.createContext( // kezdő értéket adhatunk meg argomentumnak (number, string, boolean, array, object)
+    let AuthContext = React.createContext( // kezdő értéket adhatunk meg argumentumnak (number, string, boolean, array, object)
         &#123;
             isLoggedIn: false, // alapértelmezett állapot
             onLogin: undefined,
@@ -6092,7 +6092,7 @@ document.getElementById('sample-button-container').appendChild('btn'); // közve
               </ul>
             </li>
             <li>Ahelyett, hogy visszaadnánk a custom komponens függvényünket a szokott módon, odaadhatjuk a függvényt
-              egy másik függvény argomentumának</li>
+              egy másik függvény argumentumának</li>
             <pre>
   const Input = (props) => &#123;
     return (
@@ -6118,7 +6118,7 @@ document.getElementById('sample-button-container').appendChild('btn'); // közve
 
   ↓↓↓↓↓
 
-  const Input = React.forwardRef((props, ref) => &#123; // második argomentuma a custom elemnek átadott ref
+  const Input = React.forwardRef((props, ref) => &#123; // második argumentuma a custom elemnek átadott ref
     return (
         &#60;>
             &#60;div className=&#123;`input-group mb-3 $&#123;styles.input_container}`}>
@@ -6149,7 +6149,7 @@ document.getElementById('sample-button-container').appendChild('btn'); // közve
             </li>
             <li>useImperativeHandle hook
               <ul>
-                <li>2 argomentumot fogad
+                <li>2 argumentumot fogad
                   <ol>
                     <li>ref props, ami a forwardRef második paramétere</li>
                     <li>callback függvény, ami objektummal tér vissza
@@ -6641,7 +6641,7 @@ document.getElementById('sample-button-container').appendChild('btn'); // közve
       <ul>
         <li>A tovább adott függvényt képes eltárolni, így megmondhatjuk a React-nak, hogy ne futtassa le újra a gyerek
           komponens függvényt</li>
-        <li>Két argomentumot fogad
+        <li>Két argumentumot fogad
           <ol>
             <li>A első a függvény, amit szeretnénk eltárolni</li>
             <li>A második a dependenciák tömbje
@@ -6772,7 +6772,7 @@ document.getElementById('sample-button-container').appendChild('btn'); // közve
   };
         </pre>
         <li>A (prevCount) => prevCount - 1 egy callback függvény, amely az aktuális állapotot (amit meg szeretnénk
-          változtatni) megkapja paraméterként, majd ezt a callback függvényt átadjuk a setCount első argomentumaként
+          változtatni) megkapja paraméterként, majd ezt a callback függvényt átadjuk a setCount első argumentumaként
           <ul>
             <li>Ezzel (function form) azt is garantálni tudjuk, hogy biztosan a legutolsó state-en változtassunk</li>
           </ul>
@@ -6865,7 +6865,7 @@ document.getElementById('sample-button-container').appendChild('btn'); // közve
     &#123;numberArray}
   &#60;/Span>
         </pre>
-        <li>Callback függvényt adhatunk át neki, majd második argomentumnak szintén egy dependecia tömböt</li>
+        <li>Callback függvényt adhatunk át neki, majd második argumentumnak szintén egy dependecia tömböt</li>
         <li>A React belső memóriájában eltárolódik a tömb a useMemo segítségével, és a tömb nem inicializálódik újra
         </li>
         <li>A numberArray property nem fog változni, ugyanaz marad a referencia, és emiatt a gyereke, a Span.js a
@@ -7277,7 +7277,7 @@ document.getElementById('sample-button-container').appendChild('btn'); // közve
             <li>Mounting-kor fut le, azaz, amikor a komponens először bekerül a DOM-ba</li>
             <li>Ez a metódus felel meg a useEffect hook-nak, csak dependencia tömb nélkül
               <ul>
-                <li>Ha a useEffect dependencia tömbje üres, akkor az első argomentumban átadott callback függvény csak
+                <li>Ha a useEffect dependencia tömbje üres, akkor az első argumentumban átadott callback függvény csak
                   egyszer fut le, amikor a komponens renderelésre kerül</li>
                 <li>Ugyanezt az eredményt érhetjük el a componentDidMount metódussal</li>
               </ul>
@@ -8022,7 +8022,7 @@ document.getElementById('sample-button-container').appendChild('btn'); // közve
         });
   }
             </pre>
-            <li>A POST metódus 2 argomentumot fogad
+            <li>A POST metódus 2 argumentumot fogad
               <ol>
                 <li>URL, ahova a request-et küldjük</li>
                 <li>Az adat, amit el kívánunk küldeni
@@ -8955,7 +8955,7 @@ document.getElementById('sample-button-container').appendChild('btn'); // közve
   }
     </pre>
     <li>Beállíthatunk a custom hook-nak alapértelmezett bemeneti értéket is, arra az esetre, ha nem adnánk át semmilyen
-      argomentumot a hook-nak</li>
+      argumentumot a hook-nak</li>
     <pre>
   <b>// useCounter.js</b>
   function useCounter(direction = true) &#123; // alapértelmezetten true, azaz növekvő lesz

@@ -176,7 +176,7 @@ export class AngularRxjsComponent implements AfterViewInit, OnDestroy {
 
   // ----- FROMEVENT ----- //
 
-  @ViewChild('createbutton') // alias, vagy referencia változó, argomentumként átadva
+  @ViewChild('createbutton') // alias, vagy referencia változó, argumentumként átadva
   createButton!: // a gomb referenciáját tárolja - megmondtuk a Typescriptnek, hogy higyje el, hogy lesz értéke
     ElementRef // gomb, úgyhogy ElementRef
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-let AuthContext = React.createContext( // kezdő értéket adhatunk meg argomentumnak (number, string, boolean, array, object)
+let AuthContext = React.createContext( // kezdő értéket adhatunk meg argumentumnak (number, string, boolean, array, object)
     {
         isLoggedIn: false,
         onLogin: undefined,

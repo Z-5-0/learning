@@ -1582,7 +1582,7 @@
           betölti a lazy load modulokat</li>
         <li>A fő modulunkban tudjuk bekonfigurálni
           <ul>
-            <li>A forRoot metódusnak átadhatunk egy második argomentumot</li>
+            <li>A forRoot metódusnak átadhatunk egy második argumentumot</li>
             <li>Objektum</li>
             <li>Az egész alkalmazásra hatással van az itteni konfig</li>
           </ul>
@@ -4979,9 +4979,9 @@
       <ul>
         <li>A propertybinding direktívának szeretnénk értéket adni, nem pedig az input property-jeinek</li>
         <li>Amennyiben a szelektornak értéket adunk, az az érték kerüljön bele a direktíva property-jébe</li>
-        <li>Ennek megvalósítása érdekében az @Input dekorátornak átadunk egy argomentumot, ami a property alias-a lesz
+        <li>Ennek megvalósítása érdekében az @Input dekorátornak átadunk egy argumentumot, ami a property alias-a lesz
         </li>
-        <li>Az argomentum egyezzen meg a szelektrorral</li>
+        <li>Az argumentum egyezzen meg a szelektrorral</li>
         <li>Ez után már nem használhatjuk property bindingra a direktívában lévő property-t, az alias-szal tudunk
           tovább dolgozni</li>
         <li>Ezek után a direktíva szelektorokat már nem szükséges használni</li>
@@ -5096,7 +5096,7 @@
     <li>A direktívában az input property-n setter metódust használunk
       <ul>
         <li>Amikor 'set' kulcsszót használunk egy property előtt, akkor a property-t használhatjuk method-ként</li>
-        <li>Az érkező értéket argomentumként tovább t udjuk adni a metódusnak</li>
+        <li>Az érkező értéket argumentumként tovább t udjuk adni a metódusnak</li>
       </ul>
     </li>
     <pre>
@@ -5130,7 +5130,7 @@
     }
   }
       </pre>
-    <li>A 'boxIsDisabled' értékét megkapja a setter method 'disable' argomentuma</li>
+    <li>A 'boxIsDisabled' értékét megkapja a setter method 'disable' argumentuma</li>
     <li>Így lehet feltételesen használni egy direktívát</li>
   </ul>
   <br>
@@ -5540,7 +5540,7 @@
         <li>Minden DOM elemnek van style property-je</li>
       </ul>
     </li>
-    <li>A HostBinding argomentuma egy DOM elem property
+    <li>A HostBinding argumentuma egy DOM elem property
       <ul>
         <li>Például 'style.backgroundColor' (DOM property)</li>
       </ul>
@@ -6851,13 +6851,13 @@
 
   });
       </pre>
-    <li>A callback függvény argomentumot kap</li>
+    <li>A callback függvény argumentumot kap</li>
     <pre>
   dataObservable = new Observable((observer) => &#123;
 
   });
       </pre>
-    <li>Az argomentum (Observer) az RxJS által a callback függvénybe injektált
+    <li>Az argumentum (Observer) az RxJS által a callback függvénybe injektált
       <ul>
         <li>Az 'observer' nem más, mint a Subscriber/Observer</li>
         <li>Tehát azok a feliratkozók, akik az Observerre feliratkoznak</li>
@@ -7087,9 +7087,9 @@
     <li>Adat, és error emit-álás mellett complete jelet is kiadhatunk
       <ul>
         <li>Azt jelenti, hogy az Observable sikeresen befejezte az adatfolyamot</li>
-        <li>A complete method-nak nincs argomentuma</li>
+        <li>A complete method-nak nincs argumentuma</li>
         <li>Módunkban áll valamilyen logikát futtatni, ha az Observable befejezte az adatok küldését</li>
-        <li>Az Observernél a 3. (argomentum nélküli )callback function-t használhatjuk erre
+        <li>Az Observernél a 3. (argumentum nélküli )callback function-t használhatjuk erre
           <ul>
             <li>Névtelen függvény</li>
           </ul>
@@ -7285,7 +7285,7 @@
           <br>
           <app-angular-rxjs [tempSwitcher]="'of'" (subscriptionsChanged)="testFunction($event)"></app-angular-rxjs>
           <br>
-          <li>Átadhatunk több argomentumot is az of()-nak
+          <li>Átadhatunk több argumentumot is az of()-nak
             <ul>
               <li>Az alábbi példában két tömb kerül kiküldédre</li>
               <li>Végül egy completed string egy tömbben</li>
@@ -7314,7 +7314,7 @@
       <br>
       <li>from
         <ul>
-          <li>Egyetlen iterálható (array, string, Promise) argomentumot/értéket fogad, amit Observable típussá
+          <li>Egyetlen iterálható (array, string, Promise) argumentumot/értéket fogad, amit Observable típussá
             konvertál</li>
           <li>Az of() operátor tömbként küldte volna ki egyszerre, de itt nem ezt láthatjuk</li>
           <li>A tömb elemei egymás után kerülnek emit-álásra</li>
@@ -7452,7 +7452,7 @@
       <pre>
   &#60;button #createbutton class="btn btn-secondary" (click)="fromClicked5()">Create new item&#60;/button>
 
-  @ViewChild('createbutton')    // alias, vagy referencia változó, argomentumként átadva
+  @ViewChild('createbutton')    // alias, vagy referencia változó, argumentumként átadva
   createButton!:    // a gomb referenciáját tárolja  - megmondtuk a Typescriptnek, hogy higyje el, hogy lesz értéke
   ElementRef;   // ElementRef típusú
         </pre>
@@ -7495,7 +7495,7 @@
 
   &#60;button #createbutton class="btn btn-secondary">Create new item&#60;/button>
 
-  @ViewChild('createbutton') // alias, vagy referencia változó, argomentumként átadva
+  @ViewChild('createbutton') // alias, vagy referencia változó, argumentumként átadva
   createButton!: // a gomb referenciáját tárolja - megmondtuk a Typescriptnek, hogy higyje el, hogy lesz értéke
     ElementRef // gomb, úgyhogy ElementRef
 
@@ -7586,7 +7586,7 @@
       <li>Szeretnénk mondjuk elérni, hogy az emit-ált adat minden értéke legyen 5-tel megszorozva
         <ul>
           <li>A pipe metódusnak operátorokat tudunk megadni</li>
-          <li>A map operátor argomentumaként callback function-t kell megadnunk</li>
+          <li>A map operátor argumentumaként callback function-t kell megadnunk</li>
           <pre>
   map(() => &#123; })
           </pre>
@@ -7839,7 +7839,7 @@
     taskService: TaskService = inject(TaskService);
   
     ngOnInit(): void &#123;
-      this.taskService.createTask.subscribe((taskName) => &#123; // callback function, a taskName a névtelen függvény argomentuma
+      this.taskService.createTask.subscribe((taskName) => &#123; // callback function, a taskName a névtelen függvény argumentuma
         this.tasks.push(taskName);
       })
     }
@@ -8465,7 +8465,7 @@
       <li>Subject, ami megismétli a korábbi értékeket sorban az új feliratkozók számára</li>
       <li>Buffer-ben tárolja az összes kiküldött értékét
         <ul>
-          <li>A bufferSize és windowTime argomentumokkal állítható a buffer mérete
+          <li>A bufferSize és windowTime argumentumokkal állítható a buffer mérete
             <ul>
               <li>bufferSize: Értékek darabszáma (alapértelmezett: végtelen)
                 <ul>
@@ -8786,7 +8786,7 @@
       </li>
       <pre>
   <b>// Promise</b>
-  promise: Promise&#60;any> = new Promise&#60;any>((resolve, reject) => &#123; // 2 argomentumot fogad a callback function
+  promise: Promise&#60;any> = new Promise&#60;any>((resolve, reject) => &#123; // 2 argumentumot fogad a callback function
     // logic
   }); 
 
@@ -9264,7 +9264,7 @@
     <li>A signal objektumot fog visszaadni, aminek van néhány metódusa
       <ul>
         <li>A number típusunk ezen túl Signal&#60;number> lesz</li>
-        <li>Argomentumként meg kell adnunk kezdeti értéket</li>
+        <li>Argumentumként meg kell adnunk kezdeti értéket</li>
         <li>Aritmetikus operátorokat (-- / ++) nem tudunk a továbbiakban használni</li>
         <li>String interpolációt használva láthatjuk, hogy egy függvényt tartalmaz</li>
         <pre>
@@ -9379,7 +9379,7 @@
         </pre>
         <li>Update esetében az új érték nem függ az előző értéktől (mint set esetében)
           <ul>
-            <li>Az update metódus callback függvényének argomentumában lesz benne az aktuális értéke a signal-nak</li>
+            <li>Az update metódus callback függvényének argumentumában lesz benne az aktuális értéke a signal-nak</li>
           </ul>
         </li>
         <li>A mutate metódus is frissítésre való
@@ -10043,7 +10043,7 @@
     </pre>
     <li>A Router navigate() metódusát használva elnavigálhatunk egyik route-ról egy másikra
       <ul>
-        <li>Tömböt fogad argomentumnak</li>
+        <li>Tömböt fogad argumentumnak</li>
         <pre>
   this._router.navigate(['angular', 'contact']); // absolute path
         </pre>
@@ -10051,7 +10051,7 @@
     </li>
     <li>A router navigateByUrl metódusa szintén útvonal változtatásra használható
       <ul>
-        <li>Argomentumnak string-et fogad</li>
+        <li>Argumentumnak string-et fogad</li>
         <li>A root URL utáni teljes útvonalat várja</li>
         <pre>
   this._router.navigateByUrl('angular/contact'); // absolute path
@@ -10060,12 +10060,12 @@
     </li>
     <li>Mindkét fenti metódus abszolút útvonal
       <ul>
-        <li>Ezért nem szükséges egyik argomentumát sem / jellel kezdeni</li>
+        <li>Ezért nem szükséges egyik argumentumát sem / jellel kezdeni</li>
       </ul>
     </li>
     <li>A router navigateByUrl metódusa szintén útvonal változtatásra használható
       <ul>
-        <li>Argomentumnak string-et fogad</li>
+        <li>Argumentumnak string-et fogad</li>
         <li>A root URL utáni teljes útvonalat várja</li>
         <pre>
   this._router.navigateByUrl('angular/contact'); // absolute path
@@ -10074,7 +10074,7 @@
     </li>
     <li>Mindkét fenti metódus alapértelmezetten abszolút útvonal
       <ul>
-        <li>Ezért nem szükséges egyik argomentumát sem / jellel kezdeni</li>
+        <li>Ezért nem szükséges egyik argumentumát sem / jellel kezdeni</li>
         <li>Amennyiben relatív útvonalat szeretnénk a navigate metódus a tömb mellett egy objektumban megadhatjuk
           <ul>
             <li>A relativeTo kulcsot kell használnunk</li>
@@ -10502,9 +10502,9 @@
         </li>
         <li>A komponens class-ban is megvalósítható a route és param összeállítása
           <ul>
-            <li>A Router service navigate metódusának első argomentuma egy tömb, ahol a route-ot határozzuk meg, a
+            <li>A Router service navigate metódusának első argumentuma egy tömb, ahol a route-ot határozzuk meg, a
               második
-              argomentum pedig egy objektum, ahol meghatározható a queryParams property</li>
+              argumentum pedig egy objektum, ahol meghatározható a queryParams property</li>
             <pre>
   export class HomeComponent &#123;
     router: Router = inject(Router);
@@ -12064,15 +12064,15 @@
         </pre>
         <li>A transform első paramptere az az érték, amin a pipe-ot használjuk, a második paramétere pedig a
           template-ben a pipe-nak megadott paraméterek</li>
-        <li>A ...args argomentum azt segíti, hogy ne kelljen meghatározni, hogy hány paramétere van a pipe-nek
+        <li>A ...args argumentum azt segíti, hogy ne kelljen meghatározni, hogy hány paramétere van a pipe-nek
           <ul>
             <li>Spread operátor a ...</li>
             <li>A pipe-nak átadott második, harmadik, és így tovább, paramétereket gyűjti össze</li>
-            <li>Akkor van rá szükség, ha változó számú argomentumot kap/kaphat a pipe</li>
-            <li>Az alábbi módon lokálisan eltárolhatjuk az első paraméter (value) után érkező argomentumokat</li>
+            <li>Akkor van rá szükség, ha változó számú argumentumot kap/kaphat a pipe</li>
+            <li>Az alábbi módon lokálisan eltárolhatjuk az első paraméter (value) után érkező argumentumokat</li>
             <pre>
   transform(value: any, ...args: any[]) &#123;
-    const [arg1, arg2] = args; // arg1 a pipe 2. argomentuma, arg2 a pipe 3. argomentuma
+    const [arg1, arg2] = args; // arg1 a pipe 2. argumentuma, arg2 a pipe 3. argumentuma
   }
             </pre>
             <li>Ez a teljesen általános használata, de nyugodtan személyre is szabhatjuk a pipe transform paramétereit,
@@ -12100,23 +12100,23 @@
       return (((value / total) * 100).toFixed(fraction || 0)).toString() + '%';
   }
 
-    /* transform(value: any, ...args: any[]) &#123; // változó számú argomentum esetén
+    /* transform(value: any, ...args: any[]) &#123; // változó számú argumentum esetén
       const [total, fraction] = args;
       return (((value / total) * 100).toFixed(fraction || 0)).toString() + '%';
     } */
 
   <b>// piping.component.ts</b>
-  &#123; &#123; student.marks | procent: [totalMarks, 2] }} // fix számú argomentum esetén
+  &#123; &#123; student.marks | procent: [totalMarks, 2] }} // fix számú argumentum esetén
 
-  &#123; &#123; student.marks | procent: totalMarks: 2 }} // változó számú argomentum esetén
+  &#123; &#123; student.marks | procent: totalMarks: 2 }} // változó számú argumentum esetén
         </pre>
         <li>A toFixed egy olyan függvény, ami integer-t fogad, és a paraméterével azt határozzuk meg, hogy hány digit
           jelenjen meg a tizedesvessző után</li>
         <li>A [number, number?] típusmegadással úgy is működőképes marad a pipe-unk, ha nem adunk meg második tömbelemet
-          a második argomentumban [totalMarks]
+          a második argumentumban [totalMarks]
           <ul>
             <li>Ebben az esetben a fraction 0 lesz</li>
-            <li>Illetve ezen típus definiálásával meghatároztuk, hogy a pipe-unk argomentumként egy tömböt vár, két
+            <li>Illetve ezen típus definiálásával meghatároztuk, hogy a pipe-unk argumentumként egy tömböt vár, két
               elemmel
               <ul>
                 <li>Egy kötelezőt (első), és egy opcionálisat (második)</li>
@@ -12412,7 +12412,7 @@
   <b>// piping.component.ts</b>
   // ez esetben csak a template betöltődésekor kapjuk meg az értéket, új student hozzáadásánál nem frissül
   /* totalStudents: Promise&#60;any> = new Promise&#60;any>((resolve, reject) => &#123; // a resolve, és a reject is callback függvény
-    setTimeout(() => &#123; // a setTimeout első argomentuma egy anonym callback function  
+    setTimeout(() => &#123; // a setTimeout első argumentuma egy anonym callback function  
       resolve(this.students.length);
     }, 2000);
   }); */
@@ -13108,7 +13108,7 @@ showConfirmDelete(user: User) &#123;
       ├── status: "open"
       └── user: "Joe Iron"
     </pre>
-    <li>A POST method-nak van egy harmadik, opcionális argomentuma is
+    <li>A POST method-nak van egy harmadik, opcionális argumentuma is
       <ul>
         <li>Header-t tudunk beállítani</li>
         <pre>
@@ -13178,7 +13178,7 @@ showConfirmDelete(user: User) &#123;
   <ul>
     <li>GET request-tel tudjuk megvalósítani az adatok fetch-elését</li>
     <li>Ugyanúgy, mint POST-nál, HTTPClient példényra van szükségünk</li>
-    <li>Ezen metódus esetében csak az első argomentum kötelező</li>
+    <li>Ezen metódus esetében csak az első argumentum kötelező</li>
     <li>Az endpoint-unk ezesetben az alábbi</li>
     <pre>
   https://angular-api-c8412-default-rtdb.europe-west1.firebasedatabase.app/tasks.json // a kollekciónk neve az URL vége
@@ -13399,7 +13399,7 @@ showConfirmDelete(user: User) &#123;
         <li>A tasks kollekcióban meg kell találnunk a dokumentum azonosítót, amit az id kulcs alatt tárolunk</li>
         <li>A DELETE metódust használjuk ez alkalommal
           <ul>
-            <li>Az első, és egyetlen kötelező argomentuma az URL</li>
+            <li>Az első, és egyetlen kötelező argumentuma az URL</li>
           </ul>
         </li>
         <li>A törlés URL-je az alábbi
@@ -13704,7 +13704,7 @@ showConfirmDelete(user: User) &#123;
     </li>
     <li>Annak érdekében, hogy egy rekordot frissítsünk, a PUT metódust használjuk
       <ul>
-        <li>Két kötelező argomentuma van
+        <li>Két kötelező argumentuma van
           <ol>
             <li>URL</li>
             <li>Adat, amit felküldünk</li>
@@ -14572,7 +14572,7 @@ showConfirmDelete(user: User) &#123;
         <li>Például a GET-nél, második paraméternek, ahol opcionálisan megadhatjuk a header-öket, param-okat, olyan,
           mintha szerepelne egy observe kulcs is, body kulccsal
           <ul>
-            <li>Mint utolsó argomentuma a get függvénynek, egy anonymous objektumban</li>
+            <li>Mint utolsó argumentuma a get függvénynek, egy anonymous objektumban</li>
           </ul>
         </li>
         <pre>
@@ -19494,12 +19494,12 @@ showConfirmDelete(user: User) &#123;
         <pre>
   it('should multiply', () => &#123;
     const shared = new SharedService();
-    const calc = new CalcService(shared); // az argomentum azt feltételezi, hogy a CalcService konstuktorában ShardService DI történt  
+    const calc = new CalcService(shared); // az argumentum azt feltételezi, hogy a CalcService konstuktorában ShardService DI történt  
     ...
   });
   it('should add', () => &#123;
     const shared = new SharedService();
-    const calc = new CalcService(shared); // az argomentum azt feltételezi, hogy a CalcService konstuktorában ShardService DI történt  
+    const calc = new CalcService(shared); // az argumentum azt feltételezi, hogy a CalcService konstuktorában ShardService DI történt  
     ...
   });
         </pre>
@@ -19513,12 +19513,12 @@ showConfirmDelete(user: User) &#123;
   
     beforeEach(() => &#123;
       sharedService = new SharedService();
-      calcService = new CalcService(sharedService);// az argomentum azt feltételezi, hogy a CalcService konstuktorában ShardService DI történt
+      calcService = new CalcService(sharedService);// az argumentum azt feltételezi, hogy a CalcService konstuktorában ShardService DI történt
     });
   });
         </pre>
         <li>Ha új példányát hoznánk létre az osztálynak, és a CalcService konstruktorán keresztü injektáltuk volna a
-          SharedService-t, akkor lenne szükség rá, hogy az új osztály argomentumában megadjuk a SharedService-t
+          SharedService-t, akkor lenne szükség rá, hogy az új osztály argumentumában megadjuk a SharedService-t
           <ul>
             <li>Egyébként nem</li>
             <pre>
@@ -20134,7 +20134,7 @@ showConfirmDelete(user: User) &#123;
   }
     </pre>
     <li>Ahhoz, hogy a router-outlet miatt ne legyen hibánk, a spec fájl TestBed.configureTestingModule függvényének
-      objektum argomentumának import kulcsa alatt a tömbben deklarálni szükséges a RouterTestingModule-t</li>
+      objektum argumentumának import kulcsa alatt a tömbben deklarálni szükséges a RouterTestingModule-t</li>
     <li>A funkcionalitás teszteléséhez hozzá kell férnünk a DOM elemekhez
       <pre>
   fdescribe('HometestComponent', () => &#123;
@@ -20925,7 +20925,7 @@ showConfirmDelete(user: User) &#123;
             <li>npm test parancsra fut le a jest test</li>
             <li>A parancs begépelése után a folyamat az alábbi
               <ol>
-                <li>Az npm meghívja a jest parancsot azzal az argomentummal, hogy test</li>
+                <li>Az npm meghívja a jest parancsot azzal az argumentummal, hogy test</li>
                 <li>Az npm elindítja a Jest tesztfuttatót az aktuális projektre</li>
                 <li>A Jest betölti a konfigurációs fájlt (általában jest.config.js, jest.config.ts)</li>
                 <li>A Jest megkeresi az összes tesztfájlt a projektben a konfiguráció alapján (pl. fájlnevek vagy mappák
@@ -22028,7 +22028,7 @@ showConfirmDelete(user: User) &#123;
       <ul>
         <li>Marad egyrészt a providedIn property</li>
         <li>Vagy a main.ts fájlban, amikor bootstrap-eljük az AppComponent-et, mintt root komponenst, megadhatunk egy
-          második argomentumot
+          második argumentumot
           <ul>
             <li>Objektum</li>
             <li>Provide-olhatjuk a szervizeinket</li>

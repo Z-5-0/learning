@@ -11,7 +11,7 @@ export class ShowTaskComponent implements OnInit {
   taskService: TaskService = inject(TaskService);
 
   ngOnInit(): void {
-    this.taskService.createTask.subscribe((taskName) => { // callback function, a taskName a névtelen függvény argomentuma
+    this.taskService.createTask.subscribe((taskName) => { // callback function, a taskName a névtelen függvény argumentum
       // console.log('taskName: ', taskName);
       this.tasks.push(taskName);
     })

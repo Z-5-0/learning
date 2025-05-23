@@ -21,7 +21,7 @@ export class PipingComponent implements OnInit {
   filterLabel: string = 'none';
 
   /* totalStudents: Promise<any> = new Promise<any>((resolve, reject) => { // a resolve, és a reject is callback függvény
-    setTimeout(() => { // a setTimeout első argomentuma egy anonym callback function  
+    setTimeout(() => { // a setTimeout első argumentuma egy anonym callback function  
       resolve(this.students.length);
     }, 2000);
   }); */
