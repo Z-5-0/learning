@@ -1,7 +1,28 @@
 <div *ngIf="tempSwitcher === 'api'" class="rounded-border">
     // Példa API hívásra 1
-    <br>
-    <br>
+    <div class="btn-toolbar" role="toolbar" class="d-flex justify-content-end mt-3 mb-3">
+        <div class="btn-group" role="group">
+            <div class="input-group">
+                <span class="input-group-text" style="border-top-right-radius: 0; border-bottom-right-radius: 0;">
+                    Limit
+                </span>
+            </div>
+            <button *ngFor="let val of [1,2,3,4,5]" type="button" class="btn"
+                [ngClass]="limit === val ? 'btn-warning' : 'btn-secondary'" (click)="limit = val">
+                {{ val }}
+            </button>
+            <input type="checkbox" class="btn-check" id="btn-check" autocomplete="off" [(ngModel)]="hasError">
+            <label class="btn btn-danger" for="btn-check">
+                <div class="d-flex">
+                    <span>Error</span>
+                    <span><i class="bi" [ngClass]="hasError ? 'bi-check' : 'bi-x'"></i></span>
+                </div>
+            </label>
+            <button class="btn btn-light" (click)="refreshPosts()">
+                <i class="bi bi-arrow-clockwise"></i>
+            </button>
+        </div>
+    </div>
     <div *ngIf="fetchCompleted; else loading">
         <ng-container *ngIf="posts.length; else error">
             <div *ngFor="let p of posts; let last = last" [ngStyle]="{
@@ -13,9 +34,9 @@
                 <small style="display: block;"><b>Title: </b>{{p.title}}</small>
                 <small style="display: block;"><b>Body: </b>{{p.body}}</small>
             </div>
+            <br>
+            <div>{{fetchCompleted ? 'Fetch was successful' : 'Error'}}</div>
         </ng-container>
-        <br>
-        <div>{{fetchCompleted ? 'Fetch was successful' : 'Error'}}</div>
     </div>
 
     <ng-template #loading>

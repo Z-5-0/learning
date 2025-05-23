@@ -18,7 +18,9 @@ interface Post {
 export class ApiAngularComponent {
   @Input() tempSwitcher: '' | 'api' | 'api2' = '';
 
-  private apiUrl = 'https://jsonplaceholder.typicode.com/posts?_limit=5';
+  limit: number = 3;
+  hasError: boolean = false;
+  private apiUrl = `https://jsonplaceholder.typicode.com/posts`;
 
   posts: Post[] = [];
 
@@ -27,18 +29,10 @@ export class ApiAngularComponent {
 
   posts$: Observable<Post[]> = new Observable();
 
+  
+
   constructor(private http: HttpClient) {
-    this.fetchPosts().subscribe({
-      next: (val) => {
-        this.posts = val;
-      },
-      error: (err) => {
-        this.posts = [err.message]
-      },
-      complete: () => {
-        this.fetchCompleted = true;
-      }
-    });
+    this.refreshPosts();
 
     this.posts$ = this.fetchPosts().pipe(
       tap(() => {
@@ -52,6 +46,25 @@ export class ApiAngularComponent {
 
   // API hívás, amely Observable-t ad vissza
   fetchPosts(): Observable<Post[]> { // Érdemes rest-api.service.ts-be elhelyezni 
-    return this.http.get<Post[]>(this.apiUrl); // Az Observable közvetlenül visszatér
+    this.posts = [];
+    const url = this.apiUrl + `?_limit=${this.limit}`;
+    return this.hasError ? throwError(() => new Error('Error')) : this.http.get<Post[]>(url); // Az Observable közvetlenül visszatér
+  }
+
+  refreshPosts() {
+    this.fetchCompleted = false;
+    this.fetchPosts().subscribe({
+      next: (val) => {
+        this.posts = val;
+      },
+      error: (err) => {
+        console.log(err);
+        this.fetchCompleted = true;
+        // this.posts = [err.message];
+      },
+      complete: () => {
+        this.fetchCompleted = true;
+      }
+    });
   }
 }

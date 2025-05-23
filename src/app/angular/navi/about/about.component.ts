@@ -25,7 +25,7 @@ export class AboutComponent {
     // this.searchString = this._activeRoute.snapshot.queryParams['search'];
     this.searchString = this._activeRoute.snapshot.queryParamMap.get('search') ?? '';
 
-    /* this._activeRoute.queryParams.subscribe((data) => { // depricated !
+    /* this._activeRoute.queryParams.subscribe((data) => { // deprecated !
       this.searchString = data['search'] ?? '';
     }); */
 

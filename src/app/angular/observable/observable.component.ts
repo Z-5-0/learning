@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./observable.component.scss']
 })
 export class ObservableComponent {
-  @Input() tempSwitcher: '' | 'array' | 'arrayStream' | 'arraySteamWithTimeOut' | 'error' | 'complete' | 'depricated' = '';
+  @Input() tempSwitcher: '' | 'array' | 'arrayStream' | 'arraySteamWithTimeOut' | 'error' | 'complete' | 'deprecated' = '';
 
   // --------- Array --------- // 
 
@@ -134,7 +134,7 @@ export class ObservableComponent {
     )
   }
 
-  // --------- Without depricated subscribe --------- // 
+  // --------- Without deprecated subscribe --------- // 
 
   data6: any[] = [];
 

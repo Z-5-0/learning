@@ -170,6 +170,13 @@ export class AppComponent {
     const fromStateArray = event.fromState.split('/').filter((f: any) => f);
     const toStateArray = event.toState.split('/').filter((f: any) => f);
 
+    const toState = event.toState;
+    const fromState = event.fromState;
+
+    if (fromState.includes('#') || toState.includes('#')) {
+      return;
+    }
+
     for (const f of fromStateArray) {
       if (toStateArray.includes(f)) {
         return;
@@ -187,12 +194,14 @@ export class AppComponent {
   onActivate(event: any) {
     // const content = document.getElementById('content');
     // content?.scrollTo(0, 0);
+    console.log('onActivate');
     this.pageIsLoading = true;
   }
 
   onDeactivate(event: any) {
     // const content = document.getElementById('content');
     // content?.scrollTo(0, 0);
+    console.log('onDeactivate');
   }
 
   scrollToBottom(target: HTMLElement) {

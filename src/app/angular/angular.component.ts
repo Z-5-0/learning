@@ -8,6 +8,7 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { concat, concatMap, filter, finalize, interval, map, Observable, of, Subscription, take, tap, timer } from 'rxjs';
 import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-angular',
@@ -34,6 +35,8 @@ import { animate, query, stagger, style, transition, trigger } from '@angular/an
 })
 export class AngularComponent implements OnDestroy {
   protected readonly Object = Object;
+
+  appUrl = environment.appUrl;
 
   @ViewChildren(`
   angular,

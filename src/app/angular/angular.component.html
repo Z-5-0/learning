@@ -1481,7 +1481,7 @@
         <pre>
   // import &#123; NaviModule } from './angular/navi/navi.module';
         </pre>
-        <li>A lazy loading modulok esetében csak a routingban szükséges megadni a modult</li>
+        <li>A lazy loading modulok esetében csak a routing-ban szükséges megadni a modult</li>
         <li>Az alkalmazás felépítése miatt az app.module.ts-ben importálva van a NaviModule</li>
       </ul>
     </li>
@@ -4177,7 +4177,7 @@
     <li>Csak egyszer hívódik meg (ebben hasonlít az OnInit-re, de egyébként az összes Init-re ez a jellemző), akkor
       is, ha nincs projected content a komponensben
     </li>
-    <li>Ebben a lifecycle hookban már elérhető a @ContentChild és @ContentChildren</li>
+    <li>Ebben a lifecycle hook-ban már elérhető a @ContentChild és @ContentChildren</li>
     <br>
     <app-lifecycle [cycleSelector]="'aftercontentinit'">
       <div #aftercontentinitprojection> This is a projected DIV element to child's ng-content</div>
@@ -4344,7 +4344,7 @@
   <h5 #afterviewichecked data-anchor="afterviewichecked">ngAfterViewChecked</h5>
   <ul>
     <li>Amikor a komponens view-ja inicializálóik, vagy megváltozik, lefut</li>
-    <li>A ViewChild és ViewChildren frissített értékeit ebben a hookban érjük el</li>
+    <li>A ViewChild és ViewChildren frissített értékeit ebben a hook-ban érjük el</li>
   </ul>
   <br>
   <h5 #ondestroy data-anchor="ondestroy">ngOnDestroy</h5>
@@ -4415,7 +4415,7 @@
     <li>ngDoCheck:
       <ul>
         <li>Minden change detection cycle-ben lefut</li>
-        <li>Ebben a hookban sem az ngAfterContentChecked-ben, sem pedig az ngAfterViewChecked-ben már megtörténő
+        <li>Ebben a hook-ban sem az ngAfterContentChecked-ben, sem pedig az ngAfterViewChecked-ben már megtörténő
           változások nem elérhetők
         </li>
       </ul>
@@ -6984,7 +6984,7 @@
   <app-observable [tempSwitcher]="'arrayStream'"></app-observable>
   <br>
   <li>Az értékek nagyon gyorsan hozzáadódnak a data2 tömbhöz, ezért tűnik úgy, mintha egy az egyben csak átadná az
-    Observable az Observernek az összes értéket, egyszerre, de a valóságban egymás után történik a pusholás</li>
+    Observable az Observer-nek az összes értéket, egyszerre, de a valóságban egymás után történik a pusholás</li>
   <pre>
   dataObservable3 = new Observable&#60;number>((observer) => &#123;
     setTimeout(() => &#123;
@@ -7074,10 +7074,10 @@
         </li>
         <li>A console-ba kiírjuk a hibaüzenetet ('Something went wrong')</li>
         <li>Amennyiben a new Error('Something went wrong') kóddal operálunk, az Observer error ágában a message kulcs
-          alatt találjuk a stringet</li>
+          alatt találjuk a string-et</li>
       </ul>
     </li>
-    <li>A kódban a subscribe method-ot az IDE depricated-nek (elavult) jelöli
+    <li>A kódban a subscribe method-ot az IDE deprecated-nek (elavult) jelöli
       <ul>
         <li>Integrated Development Environment, azaz integrált fejlesztőkörnyezet</li>
         <li>Ennek oka, hogy a legutóbbi RxJS verziók esetében nem javasolt a callback function-ök ilyen módú megadása
@@ -7128,7 +7128,7 @@
     <li>Ha az error és a complete event-et egyszerre emit-áljuk, az error érkezik meg előbb, és a complete sem fog
       érvényesülni, ugyanúgy, ahogy a maradék adatcsomag</li>
     <br>
-    <li>Nézzük meg a callback function átadást úgy, hogy az IDE ne panaszkodjon, hogy depricated
+    <li>Nézzük meg a callback function átadást úgy, hogy az IDE ne panaszkodjon, hogy deprecated
       <ul>
         <li>A 3 különálló callback függvény helyett objektumot adunk át, és ebben az objektumban van 3 függvény
           <ol>
@@ -7138,7 +7138,7 @@
           </ol>
         </li>
         <pre>
-<b>// Depricated</b>
+<b>// Deprecated</b>
   getAsyncDataByClick6() &#123;
     this.dataObservable6.subscribe(
       (next: number) => &#123;
@@ -7155,7 +7155,7 @@
 
   // ----- VS ----- //
 
-  <b>// Not depricated</b>
+  <b>// Not deprecated</b>
   getAsyncDataByClick6() &#123;
     this.dataObservable6.subscribe(&#123;
       next(value: any) &#123;
@@ -7220,7 +7220,7 @@
             </ol>
           </li>
         </ul>
-        <app-observable [tempSwitcher]="'depricated'"></app-observable>
+        <app-observable [tempSwitcher]="'deprecated'"></app-observable>
       </ul>
     </li>
   </ul>
@@ -7237,8 +7237,7 @@
         <ul>
           <li>Lényege az, hogy a paraméterként átadott értékekből egy Observable-t hoz létre, amely azokat az értékeket
             egymás után kibocsátja</li>
-          <li>Az adatfolyam végén complete event-et küld</li>
-          <li>Automatikusan complete event-et küld</li>
+          <li>Az adatfolyam végén automatikusan complete event-et küld</li>
           <pre>
   data: any[] = [];
   data2: any[] = [];
@@ -7269,14 +7268,20 @@
     })
   }
           </pre>
-          <li>
-            <ol>
-              <li>Spread operátor használata: Minden egyes szám külön-külön elemként kerül a data tömbbe, mint pl. [1,
-                3, 5, 7, 9, 'completed']</li>
-              <li>Spread operátor nélküli használat: Az array1 tömb egyetlen elemként kerül a data tömbbe, tehát a
-                kimenet [ [1, 3, 5, 7, 9], 'completed' ] lesz, ahol az első elem egy tömb</li>
-            </ol>
-          </li>
+          <ol>
+            <li>Spread operátor nélküli használat ( of(this.array1) )
+              <ul>
+                <li>Az array1 tömb egyetlen elemként kerül a data tömbbe, tehát a kimenet [ [1, 3, 5, 7, 9], 'completed'
+                  ] lesz, ahol az első elem egy tömb</li>
+              </ul>
+            </li>
+            <li>Spread operátor használata ( of(...this.array1) )
+              <ul>
+                <li>Minden egyes szám külön-külön elemként kerül a data tömbbe, mint például [1, 3, 5, 7, 9,
+                  'completed']</li>
+              </ul>
+            </li>
+          </ol>
           <br>
           <app-angular-rxjs [tempSwitcher]="'of'" (subscriptionsChanged)="testFunction($event)"></app-angular-rxjs>
           <br>
@@ -7309,10 +7314,10 @@
       <br>
       <li>from
         <ul>
-          <li>Egyetlen iterálható (array, string, Promises) argomentumot/értéket fogad, amit Observable típussá
+          <li>Egyetlen iterálható (array, string, Promise) argomentumot/értéket fogad, amit Observable típussá
             konvertál</li>
           <li>Az of() operátor tömbként küldte volna ki egyszerre, de itt nem ezt láthatjuk</li>
-          <li>A tömb elemei egymás után kerülnek emit-álásrs</li>
+          <li>A tömb elemei egymás után kerülnek emit-álásra</li>
           <li>Lényegében ez a különbség az of() és a from() operátor között</li>
           <li>Ez az operátor is automatikusan kiküldi a complete jelzést a stream végén</li>
           <pre>
@@ -7339,8 +7344,10 @@
             <pre>
   data5: any[] = [];
   data6: any[] = [];
+  data7: any[] = [];
+
   promiseData: Promise&#60;any> = new Promise((resolve, reject) => &#123;
-    resolve([10, 20, 30]); // A Promise ezzel az adattal tér vissza
+    resolve([10, 20, 30]); // a Promise ezzel az adattal tér vissza
   });
 
   ownObservable5 = from(this.promiseData);
@@ -7359,7 +7366,7 @@
 
     this.promiseData.then((resolvedValue) => &#123;
       this.ownObservable6 = from(resolvedValue);
-      // this.ownObservable6 = of(...resolvedValue); // Ugyanazt az eredményt adja
+      // this.ownObservable6 = of(...resolvedValue); // ugyanazt az eredményt adja
 
       this.ownObservable6.subscribe(&#123;
         next: (val) => &#123;
@@ -7371,10 +7378,22 @@
           this.data6.push('completed');
         }
       });
+
+    this.ownObservable7.subscribe(&#123;
+      next: (val) => &#123;   // itt a val egy Promise, lefut, elindul az async művelet, és már complete ágban is vagyunk, de az eredmény még nem érkezett meg
+        val.then(promiseValue => &#123;
+          this.data7.push(...promiseValue);
+        })
+      },
+      error: (err) => &#123; },
+      complete: () => &#123;
+        this.data7.push('completed');
+      }
     });
+  });
             </pre>
             <ul>
-              <li>A 'promiseData' egy Promise; egy aszinkron művelet, ami a későbbiekben [10, 20, 30] tömböt szolgáltat
+              <li>A 'promiseData' egy Promise, egy aszinkron művelet, ami a későbbiekben [10, 20, 30] tömböt szolgáltat
               </li>
               <li>Amikor a 'promiseData' beteljesedik (resolve), akkor az értéke [10, 20, 30] lesz</li>
               <li>Hozzáférni az értékhez a then metódussal lehetséges</li>
@@ -7386,24 +7405,39 @@
                 objektumban lévő complete kulcsok alatt található függvények futnak le, és a logika alapján a megfelelő
                 tömbbe bekerülnek a complete szavak</li>
               <br>
-              <li>from(this.promiseData): A Promise feloldása után a teljes tömb egyetlen értékként kerül az Observable
-                adatfolyamába</li>
-              <li>of(this.promiseData): A Promise objektum maga kerül az Observable adatfolyamába, így a data7
-                tartalmazni fogja a [object Promise] értéket, és nem a Promise feloldása után visszakapott tömb elemeit
+              <li>from(this.promiseData)
+                <ul>
+                  <li>A Promise feloldása után a teljes tömb egyetlen értékként kerül az Observable adatfolyamába</li>
+                </ul>
+              </li>
+              <li>of(this.promiseData)
+                <ul>
+                  <li>A Promise objektum maga kerül az Observable adatfolyamába, így a data7 tartalmazni fogja a [object
+                    Promise] értéket, és nem a Promise feloldása után visszakapott tömb elemeit</li>
+                </ul>
               </li>
             </ul>
           </li>
+          <br>
           <app-angular-rxjs [tempSwitcher]="'promise'" (subscriptionsChanged)="testFunction($event)"></app-angular-rxjs>
+          <br>
           <li>A data7 esetében azt látjuk, hogy az Observable előbb kerül complete állapotba, mint ahogy feloldódna a
-            Promise (.then())
+            Promise ( .then() )
           </li>
           <li>Az 'ownObservable7' esetében a feloldásnál használt spread operátor miatt az elemek egyesével kerülnek be
             a data7 tömbbe</li>
           <li>Az of nem oldja fel a Promise-t
             <ul>
-              <li>from(promise): A Promise feloldódik, és a feloldott értéket kapod meg az Observable adatfolyamban</li>
-              <li>of(promise): A Promise nem oldódik fel; a Promise objektumot magát kapod meg az Observable
-                adatfolyamban</li>
+              <li>from(promise)
+                <ul>
+                  <li>A Promise feloldódik, és a feloldott értéket kapjuk meg az Observable adatfolyamban</li>
+                </ul>
+              </li>
+              <li>of(promise)
+                <ul>
+                  <li>A Promise nem oldódik fel, magát a Promise objektumot kapjuk meg az Observable adatfolyamban</li>
+                </ul>
+              </li>
             </ul>
           </li>
         </ul>
@@ -7418,9 +7452,9 @@
       <pre>
   &#60;button #createbutton class="btn btn-secondary" (click)="fromClicked5()">Create new item&#60;/button>
 
-  @ViewChild('createbutton') // alias, vagy referencia változó, argomentumként átadva
-  createButton!: // a gomb referenciáját tárolja - megmondtuk a Typescriptnek, hogy higyje el, hogy lesz értéke
-  ElementRef // gomb, úgyhogy ElementRef
+  @ViewChild('createbutton')    // alias, vagy referencia változó, argomentumként átadva
+  createButton!:    // a gomb referenciáját tárolja  - megmondtuk a Typescriptnek, hogy higyje el, hogy lesz értéke
+  ElementRef;   // ElementRef típusú
         </pre>
       <li>A fromEvent() operátor paraméterei
         <ul>
@@ -7450,20 +7484,16 @@
   }
         </pre>
       <li>Amikor az 'onCreateButtonClicked' metódust meghívjuk, egy Observable keletkezik a click event-ből, és
-        feliratkorunk erre az Observable-re</li>
+        feliratkozunk erre az Observable-re</li>
       <li>Az ngAfterViewInit életciklusban akár meg is lehet hívni a függvényt, mert akkor már a view inicializálódott
       </li>
       <li>Minden kattintásnál elkapjuk az event-et, és hozzáadunk az item-container class-szal rendelkező elemhez egy
         div-et</li>
       <li>A counter változóval az elemek szövege számozott lesz</li>
       <pre>
-  &#60;ng-container *ngIf="tempSwitcher === 'fromevent'">
-    &#60;div class="rounded-border">
-        &#60;div #itemContainer class="item-container">&#60;/div>
+  &#60;div #itemContainer class="item-container">&#60;/div>
 
-        &#60;button #createbutton class="btn btn-secondary">Create new item&#60;/button>
-    &#60;/div>
-  &#60;/ng-container>
+  &#60;button #createbutton class="btn btn-secondary">Create new item&#60;/button>
 
   @ViewChild('createbutton') // alias, vagy referencia változó, argomentumként átadva
   createButton!: // a gomb referenciáját tárolja - megmondtuk a Typescriptnek, hogy higyje el, hogy lesz értéke
@@ -7487,7 +7517,7 @@
   }
 
   ngAfterViewInit(): void &#123;
-    if (this.tempSwitcher === 'fromevent') &#123; // Különben elszállna a JS futás
+    if (this.tempSwitcher === 'fromevent') &#123; // különben elszállna a JS futás
       this.onCreateButtonClicked();
     }
   }
@@ -7515,7 +7545,7 @@
     <h5 #mapoperator data-anchor="mapoperator">Map</h5>
     <ul>
       <li>A kibocsátott adat valamilyen módú transformálására ad lehetőséget</li>
-      <li>from() operátor segítségével számokat létrehozunk egy Observable-t, ami elemenként fogja kibocsátani az
+      <li>from() operátor segítségével létrehozunk egy Observable-t, ami elemenként fogja kibocsátani az
         adatokat</li>
       <pre>
   data8: any[] = [];
@@ -7535,22 +7565,23 @@
     })
   }
 
-  &#60;ng-container *ngIf="tempSwitcher === 'map'">
-    &#60;div class="rounded-border">
-        &#60;div>
-          &#60;span>Data 8+:&#60;/span>
-            &#60;span *ngFor="let d of data8">
-                &#123; &#123;d}}
-            &#60;/span>
-            &#60;span *ngFor="let d of data8_trans">
-                &#123; &#123;d}}
-            &#60;/span>
-        &#60;/div>
+  &#60;div>
+    &#60;span>Data 8+:&#60;/span>
+      &#60;span>[ &#60;/span>
+      &#60;span *ngFor="let d of data8">
+          &#123; &#123; d  | json }}
+      &#60;/span>
+      <span> ]</span>
+      &#60;div>&#60;/div>
+      &#60;span>[ &#60;/span>
+      &#60;span *ngFor="let d of data8_trans">
+          &#123; &#123; d  | json }}
+      &#60;/span>
+      &#60;span> ]&#60;/span>
+  &#60;/div>
 
-        &#60;button class="btn btn-secondary" (click)="fromClicked8()">FROM + MAP&#60;/button>
-        &#60;button class="btn btn-danger" (click)="data8 = []; data8_trans = []">Clear data&#60;/button>
-    &#60;/div>
-  &#60;/ng-container>
+  &#60;button class="btn btn-secondary" (click)="fromClicked8()">FROM + MAP&#60;/button>
+  &#60;button class="btn btn-danger" (click)="data8 = []; data8_trans = []">Clear data&#60;/button>
         </pre>
       <li>Szeretnénk mondjuk elérni, hogy az emit-ált adat minden értéke legyen 5-tel megszorozva
         <ul>
@@ -7576,7 +7607,7 @@
     });
   }
           </pre>
-          <li>A 'transformObservable8' Observable a map operátor segítségével az logika szerinti értékeket fogja egymás
+          <li>A 'transformObservable8' Observable a map operátor segítségével a logika szerinti értékeket fogja egymás
             után kibocsátani</li>
           <li>A map operátor egy értéket fog kapni
             <ul>
@@ -7641,6 +7672,7 @@
   }
       </pre>
       <app-angular-rxjs [tempSwitcher]="'filter'" (subscriptionsChanged)="testFunction($event)"></app-angular-rxjs>
+      <br>
       <li>Bármilyen operátort is akarunk használni egy Observable-ön, először a pipe metódust kell alkalmaznunk
         <ul>
           <li>Az operátorok láncba fűzése is lehetséges</li>
@@ -7668,6 +7700,7 @@
           </pre>
           <app-angular-rxjs [tempSwitcher]="'mapfilter'"
             (subscriptionsChanged)="testFunction($event)"></app-angular-rxjs>
+          <br>
           <li>A sorrend rendkívül fontos, mert az adott operátor mindig az előző operátor végeredményével dolgozik</li>
           <li>Természetesen az Observable deklarálása, és az operátorok használata egy lépésben is tökéletesen működik
           </li>
@@ -7679,11 +7712,13 @@
           </pre>
         </ul>
       </li>
-      <li>A feliratkozásokat egyrészt érdemes elrakni, másrészt pedig OnDestroy lifecycle hookban leiratkozni róluk
+      <li>A feliratkozásokat egyrészt érdemes "elrakni" (változóba), másrészt pedig OnDestroy lifecycle hook-ban
+        leiratkozni róluk
         <ul>
-          <li>Téves! Az error() és complete() ágakba futáskor automatikusan megtörténik a leiratkozás</li>
+          <li>Az error() és complete() ágakba futáskor - elvileg - automatikusan megtörténik a leiratkozás</li>
         </ul>
       </li>
+      <br>
       <li>RxJS komponens feliratkozások száma: {{rxjsSubscriptionsCounter}}</li>
       <pre>
   subscriptions: Subscription[] = [];
@@ -7773,7 +7808,7 @@
   <b>// app-new-task.html</b>
 
   &#60;div class="rounded-border">
-    &#60;input type="text" [(ngModel)]="newTask"> <!-- Two-way data binding -->
+    &#60;input type="text" class="form-control" [(ngModel)]="newTask"> <!-- Two-way data binding -->
     &#60;button type="button" class="btn btn-secondary" (click)="onCreateNewTask()">Create task&#60;/button>
   &#60;/div>
 
@@ -7805,7 +7840,6 @@
   
     ngOnInit(): void &#123;
       this.taskService.createTask.subscribe((taskName) => &#123; // callback function, a taskName a névtelen függvény argomentuma
-        console.log('taskName: ', taskName);
         this.tasks.push(taskName);
       })
     }
@@ -7846,13 +7880,13 @@
         </li>
         <li>Lényegében ennyi létrehozni egy Subject-et (ami nem más, mint egy speciális Observable)
           <ul>
-            <li>Property, ami egy Subject, megadni neki a típusát</li>
+            <li>Property, ami egy Subject, és típust is megadhatunk</li>
             <li>Érték emit-áláshoz pedig a Subject-en a next() method-ot kell használni</li>
           </ul>
         </li>
         <li>Mi most csak egy Observer-t szolgáltunk ki adattal
           <ul>
-            <li>Ahány komponensnek szeretnénk továbbítani ezt az adatot, annyiban szükséges Observer-t létrehozni</li>
+            <li>Ahány komponensnek szeretnénk továbbítani ezt az adatot, annyi Observer-t szükséges létrehozni</li>
           </ul>
         </li>
         <li>Fontos megjegyezni, hogy Observable létrehozására nagyon ritkán van szükség
@@ -7860,7 +7894,7 @@
             <li>Nem arról van szó, hogy nem dolgozunk Observable-ökkel, de inkább bizonyos logika megírása után
               Observable-t kapunk, semmint, hogy létrehozzuk
               <ul>
-                <li>Pl.: HTTP request / response (Observable-lel térnek vissza)</li>
+                <li>Például HTTP request / response (Observable-lel térnek vissza)</li>
               </ul>
             </li>
           </ul>
@@ -7905,17 +7939,17 @@
           </li>
           <pre>
   <b>// Observable</b>
-  let obs = new Observable((observer: Observer&#60;string>) => &#123; // Explicit típusú a paraméter
-    observer.next('Hello');    // Küldi a "Hello" adatot
-    observer.next('World');    // Küldi a "World" adatot
-    observer.complete();       // Lezárja az Observable-t
+  let obs = new Observable((observer: Observer&#60;string>) => &#123; // explicit típusú a paraméter
+    observer.next('Hello');    // küldi a "Hello" adatot
+    observer.next('World');    // küldi a "World" adatot
+    observer.complete();       // lezárja az Observable-t
   });
 
   <b>// Observer</b>
   obs.subscribe(&#123;
-    next: (val) => console.log(val),              // Megkapjuk az adatot
-    error: (err) => console.error('Error:', err), // Kezelhetjük a hibát
-    complete: () => console.log('Completed')      // Az Observable lezárult
+    next: (val) => console.log(val),              // megkapjuk az adatot
+    error: (err) => console.error('Error:', err), // kezelhetjük a hibát
+    complete: () => console.log('Completed')      // az Observable lezárult
   });
           </pre>
           <li>Nem tud közvetlenül adatokat küldeni, feliratkozáskor a forrás csak akkor küld adatokat, ha az adatok
@@ -7930,8 +7964,8 @@
           <pre>
   const httpObservable = this.http.get('/api/data'); // Observable-t ad vissza
 
-  httpObservable.subscribe(data => console.log('Feliratkozó 1:', data)); // Új HTTP kérés
-  httpObservable.subscribe(data => console.log('Feliratkozó 2:', data)); // Új HTTP kérés
+  httpObservable.subscribe(data => console.log('Feliratkozó 1:', data)); // új HTTP kérés
+  httpObservable.subscribe(data => console.log('Feliratkozó 2:', data)); // új HTTP kérés
           </pre>
           <li>Observable létrehozásakor egy (névtelen) callback function-t kell átadni az Observable
             konstruktorának, és ez a függvény egy observer objektumot kap paraméterként
@@ -7958,7 +7992,7 @@
   <b>// subject.html</b>
   &#60;div>Observer 1 value: &#123; &#123;observer1}}&#60;/div>
   &#60;div>Observer 2 value: &#123; &#123;observer2}}&#60;/div>
-  &#60;button class="btn btn-secondary" (click)="onSubscribeObservable()">Subscribe obervers&#60;/button>
+  &#60;button class="btn btn-secondary" (click)="onSubscribeObservable()">Subscribe Observers&#60;/button>
 
   <b>// subject.ts</b>
   obs = new Observable((observer: Observer&#60;number>) => &#123;
@@ -7993,20 +8027,41 @@
           <pre>
   <b>// Példa API hívásra 1</b>
 
+   &#60;div class="btn-toolbar" role="toolbar">
+        &#60;div class="btn-group" role="group">
+            &#60;div class="input-group">
+                &#60;span class="input-group-text">
+                    Limit
+                &#60;/span>
+            &#60;/div>
+            &#60;button *ngFor="let val of [1,2,3,4,5]" type="button" class="btn"
+                [ngClass]="limit === val ? 'btn-warning' : 'btn-secondary'" (click)="limit = val">
+                &#123; &#123; val }}
+            &#60;/button>
+            &#60;input type="checkbox" class="btn-check" id="btn-check" autocomplete="off" [(ngModel)]="hasError">
+            &#60;label class="btn btn-danger" for="btn-check">
+                &#60;div class="d-flex">
+                    &#60;span>Error&#60;/span>
+                    &#60;span>&#60;i class="bi" [ngClass]="hasError ? 'bi-check' : 'bi-x'">&#60;/i>&#60;/span>
+                &#60;/div>
+            &#60;/label>
+            &#60;button class="btn btn-light" (click)="refreshPosts()">
+                &#60;i class="bi bi-arrow-clockwise">&#60;/i>
+            &#60;/button>
+        &#60;/div>
+    &#60;/div>
+
   &#60;div *ngIf="fetchCompleted; else loading">
     &#60;ng-container *ngIf="posts.length; else error">
-        &#60;div *ngFor="let p of posts; let last = last" [ngStyle]="&#123;
-        'padding-bottom': !last ? '10px' : '0',
-        'margin-bottom': !last ? '10px' : '0',
-        'border-bottom': !last ? '1px solid #9d2626' : 'none'}">
+        &#60;div *ngFor="let p of posts; let last = last">
             &#60;small>&#60;b>ID: &#60;/b>&#123; &#123;p.id}}&#60;/small>
             &#60;small>&#60;b>UserID: &#60;/b>&#123; &#123;p.userId}}&#60;/small>
             &#60;small>&#60;b>Title: &#60;/b>&#123; &#123;p.title}}&#60;/small>
             &#60;small>&#60;b>Body: &#60;/b>&#123; &#123;p.body}}&#60;/small>
         &#60;/div>
+        &#60;br>
+        &#60;div>&#123; &#123;fetchCompleted ? 'Fetch was successful' : 'Error'}}&#60;/div>
     &#60;/ng-container>
-    &#60;br>
-    &#60;div>&#123; &#123;fetchCompleted ? 'Fetch was successful' : 'Error'}}&#60;/div>
   &#60;/div>
 
   &#60;ng-template #loading>
@@ -8017,31 +8072,42 @@
       Error
   &#60;/ng-template>
 
-  // -----
+  // ----- ----- ----- ----- -----
 
-  private apiUrl = 'https://jsonplaceholder.typicode.com/posts?_limit=5';
+  limit: number = 1;
+  hasError: boolean = false;
+  private apiUrl = `https://jsonplaceholder.typicode.com/posts`;
 
   posts: Post[] = [];
   
   fetchCompleted: boolean = false;
 
   constructor(private http: HttpClient) &#123;
+    this.refreshPosts();
+  }
+
+  // API hívás, amely Observable-t ad vissza
+  fetchPosts(): Observable&#60;Post[]> &#123;   // érdemes rest-api.service.ts-be elhelyezni (sőt)
+    this.posts = [];
+    const url = this.apiUrl + `?_limit=$&#123;this.limit}`;
+    return this.hasError ? throwError(() => new Error('Error')) : this.http.get&#60;Post[]>(url);   // az Observable közvetlenül visszatér
+  }
+
+  refreshPosts() &#123;
+    this.fetchCompleted = false;
     this.fetchPosts().subscribe(&#123;
       next: (val) => &#123;
         this.posts = val;
       },
       error: (err) => &#123;
-        this.posts = [err.message]
+        console.log(err);
+        this.fetchCompleted = true;
+        // this.posts = [err.message];
       },
       complete: () => &#123;
         this.fetchCompleted = true;
       }
     });
-  }
-
-  // API hívás, amely Observable-t ad vissza
-  fetchPosts(): Observable&#60;Post[]> &#123; // Érdemes rest-api.service.ts-be elhelyezni 
-    return this.http.get&#60;Post[]>(this.apiUrl); // Az Observable közvetlenül visszatér
   }
           </pre>
           <li>Ismételt, vagy frissülő adatok esetén előnyösebb</li>
@@ -8051,35 +8117,33 @@
           <pre>
     <b>// Példa API hívásra 2</b>
 
-    &#60;ng-container *ngIf="tempSwitcher === 'api2'">
-      &#60;div *ngIf="posts$ | async as posts2; else loading">
-          &#60;ng-container *ngIf="posts2.length; else error">
-              &#60;div *ngFor="let p of posts2; let last = last" [ngStyle]="&#123;
-              'padding-bottom': !last ? '10px' : '0',
-              'margin-bottom': !last ? '10px' : '0',
-              'border-bottom': !last ? '1px solid #9d2626' : 'none'}">
-                  &#60;small>&#60;b>ID: &#60;/b>&#123; &#123;p.id}}&#60;/small>
-                  &#60;small>&#60;b>UserID: &#60;/b>&#123; &#123;p.userId}}&#60;/small>
-                  &#60;small>&#60;b>Title: &#60;/b>&#123; &#123;p.title}}&#60;/small>
-                  &#60;small>&#60;b>Body: &#60;/b>&#123; &#123;p.body}}&#60;/small>
-              &#60;/div>
-          &#60;/ng-container>
-          &#60;br>
-          &#60;div>&#123; &#123;fetchCompleted ? 'Fetch was successful' : 'Error'}}&#60;/div>
-      &#60;/div>
+    &#60;div *ngIf="posts$ | async as posts2; else loading">
+        &#60;ng-container *ngIf="posts2.length; else error">
+            &#60;div *ngFor="let p of posts2; let last = last" [ngStyle]="&#123;
+            'padding-bottom': !last ? '10px' : '0',
+            'margin-bottom': !last ? '10px' : '0',
+            'border-bottom': !last ? '1px solid #9d2626' : 'none'}">
+                &#60;small>&#60;b>ID: &#60;/b>&#123; &#123;p.id}}&#60;/small>
+                &#60;small>&#60;b>UserID: &#60;/b>&#123; &#123;p.userId}}&#60;/small>
+                &#60;small>&#60;b>Title: &#60;/b>&#123; &#123;p.title}}&#60;/small>
+                &#60;small>&#60;b>Body: &#60;/b>&#123; &#123;p.body}}&#60;/small>
+            &#60;/div>
+        &#60;/ng-container>
+        &#60;br>
+        &#60;div>&#123; &#123;fetchCompleted ? 'Fetch was successful' : 'Error'}}&#60;/div>
+    &#60;/div>
 
-      &#60;ng-template #loading>
-          Loading posts...
-      &#60;/ng-template>
+    &#60;ng-template #loading>
+        Loading posts...
+    &#60;/ng-template>
 
-      &#60;ng-template #error>
-          Error
-      &#60;/ng-template>
-  &#60;/ng-container>
+    &#60;ng-template #error>
+        Error
+    &#60;/ng-template>
 
-  // -----
+  // ----- ----- ----- ----- -----
 
-  private apiUrl = 'https://jsonplaceholder.typicode.com/posts?_limit=5';
+  private apiUrl = 'https://jsonplaceholder.typicode.com/posts?_limit=3';
 
   posts$: Observable&#60;Post[]> = new Observable();
 
@@ -8097,8 +8161,8 @@
   }
 
   // API hívás, amely Observable-t ad vissza
-  fetchPosts(): Observable&#60;Post[]> &#123; // Érdemes rest-api.service.ts-be elhelyezni 
-    return this.http.get&#60;Post[]>(this.apiUrl); // Az Observable közvetlenül visszatér
+  fetchPosts(): Observable&#60;Post[]> &#123; // érdemes rest-api.service.ts-be elhelyezni 
+    return this.http.get&#60;Post[]>(this.apiUrl); // az Observable közvetlenül visszatér
   }
           </pre>
           <li>Az | async pipe automatikusan feliratkozik az Observable-re, és elvégzi a feliratkozás megszüntetését is
@@ -8109,7 +8173,7 @@
           <br>
           <li>Az Observable használatára csak ritkán, speciális esetekben van szükség
             <ul>
-              <li>A HTTPClient például Observable-lel tér vissza, így máris nincs arra szükség, hogy new Observable-t
+              <li>A HTTPClient például Observable-lel tér vissza, így máris nincs arra szükség, hogy új Observable-t
                 létrehozzunk</li>
             </ul>
           </li>
@@ -8118,10 +8182,14 @@
       <br>
       <li>Subject
         <ul>
-          <li>Lényegében nem más, mint egy Observable</li>
+          <li>Lényegében nem más, mint egy Observable
+            <ul>
+              <li>De például multicast, és nem unicast</li>
+            </ul>
+          </li>
           <li>Lehetővé teszi, hogy új értékeket küldjünk a feliratkozott Observer-eknek
             <ul>
-              <li>Mi magunk is bocsáthatunk ki adatokat az next() metódussal</li>
+              <li>Mi magunk is bocsáthatunk ki adatokat a next() metódussal</li>
             </ul>
           </li>
           <li>Multicast jellegű
@@ -8134,14 +8202,14 @@
   subject.subscribe(data => console.log('Feliratkozó 1:', data)); 
   subject.subscribe(data => console.log('Feliratkozó 2:', data)); 
   
-  subject.next('Hello'); // Mindkét feliratkozó ugyanazt az adatot kapja: "Hello"
+  subject.next('Hello');    // mindkét feliratkozó ugyanazt az adatot kapja: "Hello"
               </pre>
             </ul>
           </li>
           <li>Egyik fő célja a komponensek közti (könnyű) kommunikáció
             <ul>
               <li>Jellemzően akkor használjuk, amikor különböző komponensek közötti kommunikációra van szükség, vagy ha
-                az adatok dinamikusan változnak, és azt az összes Observernek azonnal jelezni kell</li>
+                az adatok dinamikusan változnak, és azt az összes Observer-nek azonnal jelezni kell</li>
             </ul>
           </li>
           <li>A feliratkozottak csak onnantól kapnak üzenetet, hogy feliratkoztak, korábbi eseményekről nincs
@@ -8158,7 +8226,8 @@
                 adatfolyamokat és a memóriaszivárgást</li>
             </ul>
           </li>
-          <li>Az Observable-lel ellentétben egy új Subject nem fogad paraméter</li>
+          <li>Az Observable-lel ellentétben a Subject példányosításakor nem adunk át függvényt (vagyis nem vár
+            paramétert a konstruktor)</li>
           <li>Nem csak adatot kibocsátani, de fogadni is tud</li>
           <br>
           <li>Az alábbi példa szemlélteti, hogy minden feliratkozó ugyanazon az adatfolyamon osztozik</li>
@@ -8172,38 +8241,38 @@
 
   <b>// subject.ts</b>
   subject: Subject&#60;number> = new Subject&#60;number>();
-    sub1: number = 0;
-    sub2: number = 0;
-    subscriptions: Subscription[] = [];
+  sub1: number = 0;
+  sub2: number = 0;
+  subscriptions: Subscription[] = [];
 
-    onSubscribeSubject() &#123; // Subscriber 1
-      let subscriber1 = this.subject.subscribe(&#123;
-        next: (val) => &#123;
-          this.sub1 = val;
-        },
-        error: (err) => &#123; },
-        complete: () => &#123; },
-      });
-  
-      let subscriber2 = this.subject.subscribe(&#123; // Subscriber 2
-        next: (val) => &#123;
-          this.sub2 = val;
-        },
-        error: (err) => &#123; },
-        complete: () => &#123; },
-      });
+  onSubscribeSubject() &#123;   // Subscriber 1
+    let subscriber1 = this.subject.subscribe(&#123;
+      next: (val) => &#123;
+        this.sub1 = val;
+      },
+      error: (err) => &#123; },
+      complete: () => &#123; },
+    });
 
-      this.subscriptions = [...this.subscriptions, subscriber1];
-      this.subscriptions = [...this.subscriptions, subscriber2];
-  
-      this.subject.next(Math.floor(Math.random() * (100 - 0 + 1) + 0));
+    let subscriber2 = this.subject.subscribe(&#123;   // Subscriber 2
+      next: (val) => &#123;
+        this.sub2 = val;
+      },
+      error: (err) => &#123; },
+      complete: () => &#123; },
+    });
 
-      ngOnDestroy(): void &#123;
-        this.subscriptions.forEach(sub => &#123;
-          sub.unsubscribe();
-        });
-      }
-    }
+    this.subscriptions = [...this.subscriptions, subscriber1];
+    this.subscriptions = [...this.subscriptions, subscriber2];
+
+    this.subject.next(Math.floor(Math.random() * (100 - 0 + 1) + 0));
+  }
+
+  ngOnDestroy(): void &#123;
+    this.subscriptions.forEach(sub => &#123;
+      sub.unsubscribe();
+    });
+  }
           </pre>
         </ul>
       </li>
@@ -8211,7 +8280,7 @@
       <li>A Subject adatforrásként, és "adatfogyasztóként" is működik
         <ol>
           <li>Data provider: Továbbküldi az adatokat a rá feliratkozott összes Observer-nek</li>
-          <li>Data consumer: Képes adatokat fogadni más Observable-okból, vagy forrásokból</li>
+          <li>Data consumer: Képes adatokat fogadni más Observable-öktől, vagy forrásokból</li>
         </ol>
         <br>
         <ul>
@@ -8228,7 +8297,7 @@
               <li>Az Observable unicast, minden feliratkozónak külön adatfolyama van</li>
               <li>A randomuser.me sajátosságából adódik, hogy minden requestnél más random generált felhasználót ad
                 vissza</li>
-              <li>(Nem is feltétlen sorrendben érkezik meg a válasz)</li>
+              <li>Nem is feltétlen sorrendben érkezik meg a válasz</li>
             </ul>
           </li>
           <br>
@@ -8264,15 +8333,14 @@
     });
   }
           </pre>
-          <br>
           <ul>
             <li>Ugyanez megoldható Subject-tel</li>
             <li>Ne felejtsük el, hogy a Subject ugyanazt az adatot szolgáltatja minden feliratkozónak</li>
             <li>A Subject-et ebben az esetben, mint consumer használjuk
               <ul>
-                <li>A Subject nem adatot szolgáltat, hanem fogad</li>
-                <li>Az AJAX kérés válaszát fogadja</li>
-                <li>Amit az AJAX kérés visszaad Observable-t, Subjectté transformálódik</li>
+                <li>A Subject nem adatot szolgáltat, hanem az AJAX kérés válaszát fogadja</li>
+                <li>Az AJAX kérés visszaad egy Observable-t, amit továbbadunk egy Subject-nek, amely megosztja
+                  ezt az (egy) értéket több előfizető között</li>
               </ul>
             </li>
             <li>Az API hívás csak egyszer történik meg, és minden feliratkozó ugyanazt az adatot kapja meg</li>
@@ -8386,7 +8454,7 @@
       <li>Mindkét feliratkozó a feliratkozás pillanatában ('Test BehaviorSubject' gomb megnyomásakor) megkapja a kezdeti
         értékét a BehaviorSubject-nek ('Initial data')
       <li>Az ezt követően megjelenő gomb ('New value for BehaviorSubject') megnyomásakor pedig egyrészt új értéket
-        bocsátunk ki ('Next value'), majd ezután feliratkozunk egy újabb Observerrel a BehaviorSubject-re</li>
+        bocsátunk ki ('Next value'), majd ezután feliratkozunk egy újabb Observer-rel a BehaviorSubject-re</li>
       <li>A debug adatokból láthatjuk, hogy az először feliratkozók a kezdeti értéket is megkapják, de miután már újabb
         adatot szolgáltattunk a "csatornán", az ezt követően feliratkozó már csak a legfrisebb értéket kapja meg</li>
       <br>
@@ -8395,7 +8463,7 @@
     <h5 #replaysubject data-anchor="replaysubject">Replay Subject</h5>
     <ul>
       <li>Subject, ami megismétli a korábbi értékeket sorban az új feliratkozók számára</li>
-      <li>Bufferben tárolja az összes kiküldött értékét
+      <li>Buffer-ben tárolja az összes kiküldött értékét
         <ul>
           <li>A bufferSize és windowTime argomentumokkal állítható a buffer mérete
             <ul>
@@ -8405,7 +8473,7 @@
                   <pre>
   replaySubject: ReplaySubject&#60;any> = new ReplaySubject&#60;any>(2);
                   </pre>
-                  <li>Így az utolsó 2 érték lesz a bufferben</li>
+                  <li>Így az utolsó 2 érték lesz a buffer-ben</li>
                 </ul>
               </li>
               <li>windowSize: Értékek megőrzésének ideje (alapértelmezett: végtelen)</li>
@@ -8470,7 +8538,7 @@
   }
       </pre>
       <li>A 'Test ReplaySubject' gombra kattintva láthatjuk, hogy mindhárom feliratkozó megkapta az összes kibocsátott
-        értéket, pedig a harmadik már az első két érték kibocsátása után iratkozott fel'</li>
+        értéket, pedig a harmadik már az első két érték kibocsátása után iratkozott fel</li>
       <br>
       <app-subject [tempSwitcher]="'replaySubject2'"></app-subject>
       <pre>
@@ -8525,14 +8593,37 @@
         értéket tárol, így a Subscriber 1 és 2 már csak a 200-at, és a 300-at kapja meg</li>
       <li>A harmadik feliratkozó előtt történik egy újabb értékkibocsátás, a 400, így a harmadik feliratkozó pedig a
         300-a, és a 400-at fogja megkapni</li>
-      <li>Ha manuálisan akarjuk megadni első paraméternek a "végtelen", a legnagyobb biztonságo értéke a
+      <li>Ha manuálisan akarjuk megadni első paraméternek a "végtelent", a második legnagyobb biztonságos értéke a
         'Number.MAX_SAFE_INTEGER'
         <ul>
           <li>A gyakorlatban végtelenhez közeli buffer méretet biztosít</li>
           <li>Így közel végtelen eltárolt elemszám mellett időablakot is be tudunk állítani</li>
-          <li>Ugyanakkor a angular/core-ban szerepel egy változó: Infinity</li>
         </ul>
       </li>
+      <li>A legnagyobb, - elméletben valóban - végtelen érték az angular/core-ban jelen lévő Infinity</li>
+      <br>
+      <table style="border-collapse: collapse; width: 100%;">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Érték</th>
+            <th>Megjegyzés</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Number.MAX_SAFE_INTEGER</td>
+            <td>9007199254740991</td>
+            <td>Ez a legnagyobb biztonságosan ábrázolható egész szám JavaScript-ben (2<sup>53</sup> - 1)</td>
+          </tr>
+          <tr>
+            <td>Infinity</td>
+            <td>Végtelen</td>
+            <td>Egy speciális konstans, ami minden véges számnál nagyobb</td>
+          </tr>
+        </tbody>
+      </table>
+
       <br>
       <app-subject [tempSwitcher]="'replaySubject3'"></app-subject>
       <pre>
@@ -8542,7 +8633,7 @@
   &#60;div>Subscription status: &#123; &#123;replaySubjectSubscriptionIsDone ? 'active' : 'inactive'}}&#60;/div>
   &#60;br>
   &#60;input [(ngModel)]="newReplaySubjectMessage" placeholder="Type something..." />
-  &#60;button (click)="sendReplaySubjectMessage()">Send&#60;/button>
+  &#60;button class="btn btn-secondary" (click)="sendReplaySubjectMessage()">Send&#60;/button>
   &#60;br>
   &#60;div>Messages from the last 5 secs:&#60;/div>
   &#60;br>
@@ -8601,7 +8692,7 @@
     <ul>
       <li>Csak az utolsó kibocsátott értéket adja tovább a feliratkozóknak, miután a Subject complete állapotba került
         <ul>
-          <li>Az utolsó emitált értékét csak akkor adja tovább a feliratkozóknak, ha meghívjuk a complete() metódusát
+          <li>Az utolsó emit-ált értékét csak akkor adja tovább a feliratkozóknak, ha meghívjuk a complete() metódusát
           </li>
         </ul>
       </li>
@@ -8627,7 +8718,7 @@
     asyncSubValue2: any = '';
 
   onTestAsyncSubject(val1: any, val2: any, val3: any) &#123;
-    /* let asyncSub = this.asyncSubject.subscribe(&#123; // Mindegy, mikor/hol iratkozunk fel
+    /* let asyncSub = this.asyncSubject.subscribe(&#123;    // mindegy, mikor/hol iratkozunk fel
       next: (val) => &#123; this.asyncSubValue = val },
       error: (err) => &#123; },
       complete: () => &#123; },
@@ -8660,7 +8751,7 @@
       </pre>
       <li>Az utolsó input mezőt megváltoztatva is az 555 marad az 'asyncSubValue' változóban, mivel az AsyncSubject
         complete() metódusa már lefutott, így minden feliratkozó az idők végezetéig ezt az értéket kapja majd meg</li>
-      <li>A complete metódus után kibocsátott 400-as érték már nem számít</li>
+      <li>A complete metódus után kibocsátott 666-as érték már nem számít</li>
       <li>A következő feliratkozó is az 555-ös (vagy a módosított 3.) értéket fogja megkapni</li>
       <li>A complete signal emit-álását követően az Observable (Subject) nem tud több értéket kibocsátani magából</li>
     </ul>
@@ -8669,7 +8760,7 @@
     <ul>
       <li>Az Observable-t aszinkron adatok kezelésére használjuk, és Promise-szal is tudunk aszinkron adatot kezelni
         <ul>
-          <li>Azt fogjuk most megnézni, hogy melyiket mikor érdemes használni.</li>
+          <li>Azt fogjuk most megnézni, hogy melyiket mikor érdemes használni</li>
         </ul>
       </li>
       <br>
@@ -8702,7 +8793,7 @@
   <b>// Observable</b>
   import &#123; Observable } from 'rxjs';
   observable: Observable&#60;any> = new Observable&#60;any>(() => &#123; // callback function
-    // Logic
+    // logic
   });
       </pre>
       <table style="width: 100%; table-layout: fixed">
@@ -8899,12 +8990,12 @@
           <li>Nagy rugalmasságot ad a szinkron és aszinkron adatáramlások kezelésében</li>
           <pre>
   const observable = new Observable(subscriber => &#123;
-    subscriber.next('Synchronous data');  // Szinkron kibocsátás
-    setTimeout(() => subscriber.next('Asynchronous data'), 1000);  // Aszinkron kibocsátás
+    subscriber.next('Synchronous data');  // szinkron kibocsátás
+    setTimeout(() => subscriber.next('Asynchronous data'), 1000);  // aszinkron kibocsátás
   });
   
   console.log('Before Observable');
-  observable.subscribe(data => console.log(data));  // Azonnali és késleltetett adat is megérkezik
+  observable.subscribe(data => console.log(data));  // azonnali és késleltetett adat is megérkezik
   console.log('After Observable');
 
   // Before Observable
@@ -8921,7 +9012,7 @@
       <li>Az Observable adatot emit-ál, és amikor feliratkozunk az Observable-re, a Subscriber megkapja az adatot, amit
         az Observable bocsát ki</li>
       <li>Amennyiben nem szeretnénk több adatot kapni/fogadni az Observable-től, leiratkozhatunk</li>
-      <li>Az interval() metódus Observable-t készít ( Observalbe&#123;number> )
+      <li>Az interval() metódus Observable-t készít ( Observalbe&#60;number> )
         <ul>
           <li>Meghatározott időközönként (ms) bocsát ki értékeket</li>
           <li>Az értékek egy folyamatosan növekvő számsor, 0-val kezdve</li>
@@ -9030,10 +9121,54 @@
         <li>Primitív értékeket, és komplex adatokat is tartalmazhat</li>
       </ul>
     </li>
+    <li>3 típusa létezik
+      <ol>
+        <li>Readable signal</li>
+        <li>Computed signal</li>
+        <li>Effect signal</li>
+      </ol>
+    </li>
+    <br>
+    <table style="border-collapse: collapse; width: 100%;">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Használat</th>
+          <th>Írható</th>
+          <th>Olvasható</th>
+          <th>Példa</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>signal()</td>
+          <td>Állapotkezelés</td>
+          <td><i class="bi bi-check"></i></td>
+          <td><i class="bi bi-check"></i></td>
+          <td>counter = signal(0)</td>
+        </tr>
+        <tr>
+          <td>computed()</td>
+          <td>Származtatott érték</td>
+          <td><i class="bi bi-x"></i></td>
+          <td><i class="bi bi-check"></i></td>
+          <td>sum = computed(() => a() + b())</td>
+        </tr>
+        <tr>
+          <td>effect()</td>
+          <td>Mellékhatás</td>
+          <td><i class="bi bi-x"></i></td>
+          <td><i class="bi bi-x"></i></td>
+          <td>effect(() => console.log(counter()))</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <br>
     <li>Az Angular ezelőtt a change detection cycle-re alapozott, ha változás történt, lefutott a cycle, és frissítette
       a UI-t
       <ul>
-        <li>Például, ha egyzerűen csak egyszerűen csak egy property értékét változatjuk gombbal</li>
+        <li>Például, ha egyszerűen csak egy property értékét változatjuk gombbal</li>
         <li>Amikor megváltozik a property értéke, lefut a change detection cycle
           <ul>
             <li>Eközben azonosítja, hogy az adat változott-e, vagy sem</li>
@@ -9074,7 +9209,7 @@
         <li>Egy alternatív megközelítése a change detection-nek, és a UI frissítésnek</li>
         <li>Megszabadulhatunk a zone.js library használatától</li>
         <li>Nincs automatikus változás észlelés, mi mondhatjuk meg az Angular-nak, hogy mikor történt változás</li>
-        <li>Csak azok a részek kerülnek frissítésre, ami valóban változott</li>
+        <li>Csak azok a részek kerülnek frissítésre, amik valóban változtak</li>
         <li>Jobb teljesítményre, és kisebb bundle méretre számíthatunk</li>
       </ul>
     </li>
@@ -9163,7 +9298,7 @@
                 <li>Mindig van egy kezdeti értéke</li>
               </ul>
             </li>
-            <li>Az Angular 3 metódust biztosít signal esetében az érték frissítése végett
+            <li>Az Angular három metódust biztosít signal esetében az érték frissítése végett
               <ol>
                 <li>set()
                   <ul>
@@ -9177,7 +9312,7 @@
                 </li>
                 <li>mutate()
                   <ul>
-                    <li>Közvetlen módosításra, ha az érték egy referencia típus (pl. objektum vagy tömb)</li>
+                    <li>Közvetlen módosításra, ha az érték egy referencia típus (például objektum vagy tömb)</li>
                   </ul>
                 </li>
               </ol>
@@ -9216,7 +9351,7 @@
 
   <b>// signals.component.ts</b>
   export class SignalsComponent implements DoCheck &#123;
-    // counter2: Signal&#60;number> = signal(0); // readonly signal
+    // counter2: Signal&#60;number> = signal(0); // a Signal&#60;T> típus szinten readonly
     // counter2 = computed(() => this.counter2() * 2); // readonly signal
     counter2 = signal(0); // writeable signal
     messages2: string[] = [];
@@ -9244,7 +9379,7 @@
         </pre>
         <li>Update esetében az új érték nem függ az előző értéktől (mint set esetében)
           <ul>
-            <li>Az update metódus callback függvényének argomentumában lesz benne az aktuális értéke a signalnak</li>
+            <li>Az update metódus callback függvényének argomentumában lesz benne az aktuális értéke a signal-nak</li>
           </ul>
         </li>
         <li>A mutate metódus is frissítésre való
@@ -9314,17 +9449,17 @@
             <tr>
               <td>set</td>
               <td>Teljes érték cseréje</td>
-              <td><code>signal.set(newValue)</code></td>
+              <td>signal.set(newValue)</td>
             </tr>
             <tr>
               <td>update</td>
               <td>Érték frissítése egy függvénnyel</td>
-              <td><code>signal.update(value => value + 1)</code></td>
+              <td>signal.update(value => value + 1)</td>
             </tr>
             <tr>
               <td>mutate</td>
               <td>Referenciatípusok közvetlen módosítása</td>
-              <td><code>signal.mutate(obj => obj.key = x)</code></td>
+              <td>signal.mutate(obj => obj.key = x)</td>
             </tr>
           </tbody>
         </table>
@@ -9339,31 +9474,32 @@
     <li>computed() függvény
       <ul>
         <li>Függvény (importálni kell a @angular/core-ból)</li>
-        <li>Arra használjuk, hogy kiszámoljunk egy értéket egy signalból</li>
+        <li>Arra használjuk, hogy kiszámoljunk egy értéket egy signal-ból</li>
         <li>Callback függvényt adunk neki</li>
         <pre>
   counter2 = signal(0);
 
   doubleCounter = computed(() => this.counter2() * 2);
         </pre>
-        <li>Ezen a módon signalból számolunk értéket</li>
-        <li>Signallal tér vissza, amit tárolja a kikalkulált értéket</li>
+        <li>Ezen a módon signal-ból számolunk értéket</li>
+        <li>Signal-lal tér vissza, amit tárolja a kikalkulált értéket</li>
         <li>Akármikor változik a counter2 signal, a doubleCounter property frissül</li>
         <br>
         <app-signals [tempSwitcher]="'computed'"></app-signals>
         <br>
-        <li>A doubleCounter signalnak is megjegyzi a helyét az Angular, és csak azt frissíti, amikor szükséges</li>
+        <li>A doubleCounter signal-nak is megjegyzi a helyét az Angular, és csak azt frissíti, amikor szükséges</li>
         <li>Tehát a computed függvény egy okos, egyszerű módja értékek kiszámításának, amik signal-okon alapulnak</li>
       </ul>
     </li>
+    <br>
     <li>effect() függvény
       <ul>
         <li>Függvény (importálni kell a @angular/core-ból)</li>
         <li>Akkor használjuk, amikor le szeretnénk futtatni valamilyen logikát, amikor egy signal értéke megváltozik
         </li>
         <li>Nem arra használjuk, hogy a signal értékét megváltoztassuk</li>
-        <li>A metódust bárhol használhatjuk, konstruktorban, OnInitben, stb...</li>
-        <li>Amennyiben a függvényben nem használunk signalt, az effekt függvény nem fog meghívódni
+        <li>A metódust bárhol használhatjuk, konstruktorban, OnInit-ben, stb...</li>
+        <li>Amennyiben a függvényben nem használunk signal-t, az effekt függvény nem fog meghívódni
           <ul>
             <li>Nem tudja a metódus, hogy melyik signal esetében hívódjon meg</li>
           </ul>
@@ -9373,7 +9509,7 @@
     effect(() => console.log('counter: ' + this.counter2()));
   }
         </pre>
-        <li>A signalban lévő érték változásakor a console-ba kiíródik a számláló értéke</li>
+        <li>A signal-ban lévő érték változásakor a console-ba kiíródik a számláló értéke</li>
       </ul>
     </li>
     <li>A későbbiekben a signal több funkciót is fog kapni
@@ -9427,7 +9563,7 @@
       <ol>
         <li>A Routes tömbben route objektum definiálása
           <ul>
-            <li>Az adott modul routing.module.ts fájljában definiálhat</li>
+            <li>Az adott modul routing.module.ts fájljában definiálható</li>
             <li>A module.ts fájlban is definiálhatóak a route-ok</li>
             <li>Routes típusú változó</li>
             <li>Egy objektum egy route-ot definiál
@@ -9562,8 +9698,8 @@
   ├── angular
   │   ├── angular.component.ts
   │   └── navi
-  │       ├── navi.module.ts           // Modul, amely tartalmazza a gyerek komponenseket és a hozzájuk tartozó útvonalakat
-  │       ├── navi-routing.module.ts   // A `navi` modul route konfigurációi, ide tartoznak a gyerek komponensek
+  │       ├── navi.module.ts           // modul, amely tartalmazza a gyerek komponenseket és a hozzájuk tartozó útvonalakat
+  │       ├── navi-routing.module.ts   // a `navi` modul route konfigurációi, ide tartoznak a gyerek komponensek
   │       ├── header
   │       │   └── header.component.ts
   │       ├── home
@@ -9622,7 +9758,7 @@
                     <li>'prefix'
                       <ul>
                         <li>Az útvonal akkor aktiválódik, ha az URL a megadott path-el kezdődik</li>
-                        <li>Hasznos, ha több al-útvonal van</li>
+                        <li>Hasznos, ha több alútvonal van</li>
                       </ul>
                     </li>
                   </ol>
@@ -9637,7 +9773,8 @@
       <ul>
         <li>Elődordul(hat), hogy olyan URL-re tévedünk, ami nincs definiálva
           <ul>
-            <li>Pl.: http://localhost:4200/angular/services</li>
+            <li>Például <a [href]="appUrl + 'angular/services'" target="_blank">
+                {{appUrl + 'angular/services'}}</a></li>
             <li>Alapértelmezetten a root URL-re leszünk átirányítva</li>
             <li>Cannot match any routes hibát is kapunk a DevTools Console fülön</li>
           </ul>
@@ -9656,7 +9793,7 @@
             </pre>
             <li>Beírva így egy nem létező route-ot, a 'NotfoundComponent' template-je fog megjelenni</li>
             <li>Csak akkor hívódik meg ez a route, ha a felette lévőkkel nincs egyezés</li>
-            <li>Wildcard route-mnak nevezik</li>
+            <li>Wildcard route-nak nevezik</li>
             <li>Tulajdonképpen minden route path-ra match-el
               <ul>
                 <li>Az Angular felülről lefelé check-olja a tömbben, hogy van-e path egyezés</li>
@@ -9705,7 +9842,7 @@
             <li>A href közvetlenül a böngészőt utasítja az URL megnyitására, ami az oldal teljes újratöltését
               eredményezi</li>
             <pre>
-  &#60;a href="/angular/home" role="'button'">Home&#60;/a>
+  &#60;a href="/angular/home" role="button">Home&#60;/a>
             </pre>
             <li>Érdemes a role attribútumot a fenti értékkel megadni
               <ul>
@@ -9733,7 +9870,7 @@
         </li>
       </ol>
     </li>
-    <li>A routerLink a legelterjedtebb és ajánlott módszer, mivel az Angular routerrel szorosan együttműködik, és
+    <li>A routerLink a legelterjedtebb és ajánlott módszer, mivel az Angular router-rel szorosan együttműködik, és
       újratöltés nélküli navigációt eredményez</li>
     <li>Amennyiben navigáció során frissül az oldal, újratöltődik az applikáció, és elveszítjük az app állapotait</li>
     <br>
@@ -9791,8 +9928,8 @@
           <li>exact: true
             <ul>
               <li>Biztosítja, hogy a link csak akkor kapja meg az aktív osztályt, ha az útvonal pontosan egyezik</li>
-              <li>Különösen akkor hasznos, ha van egy alapútvonal (/angular), és ezen belül további alútvonalak
-                (/angular/about)</li>
+              <li>Különösen akkor hasznos, ha van egy alapútvonal ( /angular ), és ezen belül további alútvonalak
+                ( /angular/about )</li>
             </ul>
           </li>
           <li>exact: false
@@ -9807,7 +9944,7 @@
   <br>
   <h5 #relativevsabsoluteroutepath data-anchor="relativevsabsoluteroutepath">Relative vs absolute route path</h5>
   <ul>
-    <li>routerLinknek kétféleképpen tudunk megadni útvonalat
+    <li>routerLink-nek kétféleképpen tudunk megadni útvonalat
       <ol>
         <li>A path előtt / jellel
           <ul>
@@ -9861,7 +9998,8 @@
   &#60;button [routerLink]="[&#123; outlets: &#123; secondary: ['about'] } }]" class="btn btn-secondary">Relative: About&#60;/button>
   &#60;button [routerLink]="['/', 'angular']" class="btn btn-secondary">Absolute: Angular&#60;/button>
   &#60;app-navi [tempSwitcher]="'relativeabsolute'">&#60;/app-navi>
-  <div>Current route: &#123; &#123; currentRoute }}</div>
+
+  &#60;div>Current route: &#123; &#123; currentRoute }}&#60;/div>
 
   <b>// routing</b>
   &#123;
@@ -9903,17 +10041,17 @@
   // or
   _router: Router = inject(Router);
     </pre>
-    <li>A Router navigate() metódusát használva elnavigálhatunk egyik route-ról másikra
+    <li>A Router navigate() metódusát használva elnavigálhatunk egyik route-ról egy másikra
       <ul>
         <li>Tömböt fogad argomentumnak</li>
         <pre>
-  this._router.navigate(['angular', 'contact']); // abszolute path
+  this._router.navigate(['angular', 'contact']); // absolute path
         </pre>
       </ul>
     </li>
     <li>A router navigateByUrl metódusa szintén útvonal változtatásra használható
       <ul>
-        <li>Argoumentumnak stringet fogad</li>
+        <li>Argomentumnak string-et fogad</li>
         <li>A root URL utáni teljes útvonalat várja</li>
         <pre>
   this._router.navigateByUrl('angular/contact'); // absolute path
@@ -9927,7 +10065,7 @@
     </li>
     <li>A router navigateByUrl metódusa szintén útvonal változtatásra használható
       <ul>
-        <li>Argoumentumnak stringet fogad</li>
+        <li>Argomentumnak string-et fogad</li>
         <li>A root URL utáni teljes útvonalat várja</li>
         <pre>
   this._router.navigateByUrl('angular/contact'); // absolute path
@@ -9960,6 +10098,7 @@
   <b>// parent.html</b>
   &#60;button class="btn btn-secondary" (click)="navigateToContact()">Navigate to Contact&#60;/button>
   &#60;button [routerLink]="['/angular']" class="btn btn-secondary">Back to Angular&#60;/button>
+
   &#60;div>Current route: &#123; &#123; currentRoute }}&#60;/div>
 
   <b>// parent.ts</b>
@@ -9995,7 +10134,7 @@
     <li>A route paraméter a dinamikus része a route-nak
       <ul>
         <li>Változtatható az értéke</li>
-        <li>Kettőspont és válozónév</li>
+        <li>Kettőspont és változónév</li>
       </ul>
     </li>
     <li>Átadhatunk extra információt adott route-oknak</li>
@@ -10083,9 +10222,12 @@
     <li>A dinamikus paraméterek működését a témakör alján lévő példa szemlélteti
       <ul>
         <li>'navigateByUrl'-rel az About oldalra szükséges navigálnunk</li>
+        <br>
         <button type="button" class="btn btn-primary btn-sm anchor" (click)="scrollToAnchor('naviexample')">
           Scroll to example
         </button>
+        <br>
+        <br>
       </ul>
     </li>
     <li>Megvalósítása a következőképpen történt</li>
@@ -10166,7 +10308,7 @@
         <li>Önmagában ez így semmi mást sem csinál, mint az URL-ben változtatja a dinamikus paramétert
           <ul>
             <li>A template nem változik</li>
-            <li>Ez a gond a snapshot propertyvel</li>
+            <li>Ez a gond a snapshot property-vel</li>
             <li>Az aktív route változik, de a snapshot nem</li>
             <li>Amikor megnyitjuk az app-about-details komponenst, akkor létrejön belőle egy instance
               <ul>
@@ -10177,7 +10319,7 @@
             </li>
             <li>A Previous vagy a Next gombra kattintva a route változni fog, de a konstruktor nem fog újra meghívódni
               <ul>
-                <li>Az 'this.id' (ami alapján előre, vagy hátra navigálnánk) értéke nem fog változni</li>
+                <li>A 'this.id' (ami alapján előre, vagy hátra navigálnánk) értéke nem fog változni</li>
               </ul>
             </li>
           </ul>
@@ -10189,7 +10331,7 @@
                 <li>param
                   <ul>
                     <li>Fel lehet rá iratkozni</li>
-                    <li>A subsctibe metódusnak callback function-t adunk át</li>
+                    <li>A subscribe metódusnak callback function-t adunk át</li>
                     <li>A callback függvény minden alkalommal meghívódik, amikor a param értéke megváltozik</li>
                     <pre>
   <b>// about-details.component.html</b>
@@ -10204,8 +10346,8 @@
   <&#60;button>
 
   <b>// about-details.component.ts</b>
-  this._activeRouter.params.subscribe((data) => &#123; // deprecated !
-    this.id = +data['id']; // data.id --> Property 'id' comes from an index signature, so it must be accessed with ['id']
+  this._activeRouter.params.subscribe((data) => &#123;    // deprecated !
+    this.id = +data['id'];    // data.id --> Az 'id' tulajdonság egy index szignatúrából származik, ezért csak ['id'] szintaxissal lehet hozzáférni
     this.aboutData = this.aboutDetailsService.aboutDetailsArray.find(data => data.id === this.id) ?? 0;
   });
                     </pre>
@@ -10250,6 +10392,7 @@
     this.paramMapObs = this._activeRouter.paramMap.subscribe(data => &#123;
       this.id = +(data.get('id') ?? 0);
       this.aboutData = this.aboutDetailsService.aboutDetailsArray.find(data => data.id === this.id) ?? 0;
+      this.dataFromRoute = this._router.getCurrentNavigation()?.extras.state || &#123; id: this.aboutData.id, label: this.aboutData.title };    // ezzel pedig a Previous és Next gombokra is frissülni fog a template-ben a json
     });
   }
 
@@ -10308,7 +10451,7 @@
   &#60;/div>
         </pre>
         <li>A template reference variable használata itt nem a legjobb megoldás, mert ha még benne állunk az input
-          mezőben, és úgy nyomunk a gombra, akkor üres stringet fogunk kapni query paraméterként
+          mezőben, és úgy nyomunk a gombra, akkor üres string-et fogunk kapni query paraméterként
           <ul>
             <li>Az ngModel megoldja a problémát</li>
             <pre>
@@ -10343,7 +10486,7 @@
       this.aboutData = this.aboutDetailsService.aboutDetailsArray.map(data => &#123;
         return &#123; id: data.id, label: data.title };
       });
-    } else &#123; // ha megadtunk search kulcsú query stringet, akkor a filter segítségével szűkítünk
+    } else &#123; // ha megadtunk search kulcsú query string-et, akkor a filter segítségével szűkítünk
       this.aboutData = this.aboutDetailsService.aboutDetailsArray
         .map(data => (&#123; id: data.id, label: data.title }))
         .filter(data => data.label.toLowerCase().includes(this.searchString.toLowerCase()));
@@ -10352,14 +10495,15 @@
         </pre>
         <li>Az about page-re ugorva szerepelni fog a query-nkben a ?search=*begépelt érték*
           <ul>
-            <li>Ha az érték üres string, belefutunk az if statementbe, és minden gomb megjelenik</li>
+            <li>Ha az érték üres string, belefutunk az if statement-be, és minden gomb megjelenik</li>
             <li>Az ActivatedRoute service, és a snapshot, queryParamMap, get metódusokkal hozzájuthatunk a search kulcsú
               query paraméterhez</li>
           </ul>
         </li>
         <li>A komponens class-ban is megvalósítható a route és param összeállítása
           <ul>
-            <li>A Rouer service navigate metódusának első argomentum egy tömb, ahol a route-ot határozzuk meg, a második
+            <li>A Router service navigate metódusának első argomentuma egy tömb, ahol a route-ot határozzuk meg, a
+              második
               argomentum pedig egy objektum, ahol meghatározható a queryParams property</li>
             <pre>
   export class HomeComponent &#123;
@@ -10395,7 +10539,7 @@
                   <ul>
                     <li>A jelenleg aktív route-ot tartalmazza, amit a callback függvény paraméteréből kapunk meg</li>
                     <pre>
-  this._activeRoute.queryParams.subscribe((data) => &#123; // depricated !
+  this._activeRoute.queryParams.subscribe((data) => &#123; // deprecated !
     this.searchString = data['search'] ?? '';
   });
                     </pre>
@@ -10443,7 +10587,7 @@
           <ul>
             <li>A konstruktorban általában nem végzünk komplex logikát, csak a komponens objektumainak inicializálására
               használjuk</li>
-            <li>az ngOnInit() lifecycle hookban már biztosan inicializálva vannak azok a szolgáltatások és
+            <li>az ngOnInit() lifecycle hook-ban már biztosan inicializálva vannak azok a szolgáltatások és
               változók, amelyekre szükség lehet</li>
             <li>Az alkalmazás ezen állapotában van készen arra, hogy megkezdje a navigációs logika kezelését</li>
           </ul>
@@ -10468,9 +10612,9 @@
         <br>
         <li>Ha az URL már tartalmazza a fragment-et, nem görgőz a gomb a megfelelő helyre</li>
         <li>Önmagában nem használható, meg kell adni a routerLinket</li>
-        <li>Attribute binding (elvileg!)</li>
+        <li>Attribute binding (elvileg)</li>
         <li>A fragment-nek azt az 'id' értéket adjuk meg, ahová az oldalon navigálni/ugrani szeretnénk</li>
-        <li>Mivel az URL-ben helyezzük el a fragmentet, így bekerül az ActivatedRoute-ba</li>
+        <li>Mivel az URL-ben helyezzük el a fragment-et, így bekerül az ActivatedRoute-ba</li>
         <pre>
   this._activeRouter.fragment.subscribe(id => &#123;
     this.jumpToSection(id ?? '');
@@ -10491,7 +10635,7 @@
         </pre>
         <li>Amennyiben az adott route-ra úgy érkezünk, hogy már az URL részét képzi a fragment, és az OnInit-ben
           helyeztük el a függvényhívást, ami a görgetés/ugrást végzi, az oldal tetejére érkezünk, mert egy későbbi
-          lifecycle hookra (amikor már betöltődött a tartalom) van szükségünk.</li>
+          lifecycle hook-ra (amikor már betöltődött a tartalom) van szükségünk</li>
         <pre>
   <b>// angular.component.html</b>
   &#60;button [routerLink]="['/angular']" [fragment]="'jumpToExample'" class="btn btn-secondary">
@@ -10513,7 +10657,7 @@
           <ul>
             <li>A konstruktorban általában nem végzünk komplex logikát, csak a komponens objektumainak inicializálására
               használjuk</li>
-            <li>az ngOnInit() lifecycle hookban már biztosan inicializálva vannak azok a szolgáltatások és
+            <li>Az ngOnInit() lifecycle hook-ban már biztosan inicializálva vannak azok a szolgáltatások és
               változók, amelyekre szükség lehet</li>
             <li>Az alkalmazás ezen állapotában van készen arra, hogy megkezdje a navigációs logika kezelését</li>
           </ul>
@@ -10545,7 +10689,7 @@
   // &#123; path: 'about/:id', component: AboutDetailsComponent },
     </pre>
     <li>A children tömbben specifikálhatjuk a gyerek route-okat</li>
-    <li>Ahhoz, hogy a gyerek route megjelenjen az oldalon, az about komponensbe router-outletet kellett elhelyezni</li>
+    <li>Ahhoz, hogy a gyerek route megjelenjen az oldalon, az about komponensbe router-outlet-et kellett elhelyezni</li>
     <pre>
   &#60;h6>About&#60;/h6>
   &#60;button [routerLink]="['..']" type="button" class="btn btn-secondary">
@@ -10576,7 +10720,7 @@
     <li>Egyszerűbbé, és átláthatóbbá tehető az alkalmazásunk</li>
     <li>Egy új module-ban definiálhatjuk az útvonalakat</li>
     <li>Module készítésekor a névkonvenció a *NÉV*.module.ts</li>
-    <li>A mostani új modulunkat a navi modul rootjában helyeztük el</li>
+    <li>A mostani új modulunkat a navi modul root-jában helyeztük el</li>
     <pre>
   const routes: Routes = [
     &#123; path: '', component: HomeComponent },
@@ -10621,7 +10765,7 @@
         <li>Jelen esetben a RouterModule exportálandó</li>
       </ul>
     </li>
-    <li>Az erdeti module fájlban a létrehozott routing module-t importálni szükséges</li>
+    <li>Az eredeti module fájlban a létrehozott routing module-t importálni szükséges</li>
     <br>
     <li>A --routing paranccsal létrehozott module-ok már ilyen szeparált módon keletkeznek</li>
     <pre>
@@ -10634,7 +10778,7 @@
   <ul>
     <li>Egy egyszerű authentikációs szolgáltatást fogunk implementálni</li>
     <pre>
-  <b>// AuthUser interface</b>
+  <b>// AuthUser class</b>
   export class AuthUser &#123;
 
     id: number = 0;
@@ -10669,7 +10813,7 @@
           new AuthUser(54394, 'Max King', 'male', 'maxi05', 'max', 'active'),
           new AuthUser(23740, 'Claire Whitmore', 'female', 'more-claire', 'moremore', 'active'),
           new AuthUser(17669, 'Julia Yellowstone', 'female', 'LiaYeNe', 'lia', 'inactive'),
-          new AuthUser(47590, 'Adam Black', 'male', 'blackadam', 'blad', 'active'), // negyedévente
+          new AuthUser(47590, 'Adam Black', 'male', 'blackadam', 'blad', 'active')
       ];
   }
     </pre>
@@ -10727,6 +10871,7 @@
     <button [routerLink]="['/angular']" [fragment]="'jumpToExample'" class="btn btn-secondary">Jump to
       example</button>
     <br>
+    <br>
     <li>A header komponensben lévő login gombbal átnavigálhatunk arra az oldalra (login), ahol megadhatjuk a
       credential-t</li>
     <pre>
@@ -10779,7 +10924,7 @@
   !user ? this.message = 'Incorrect credentials!' : (this.message = `Hi there $&#123;user.name}!`, this._router.navigate(['..', 'angular', 'about']));
     </pre>
     <li>A logoff funkcionalitást is megvalósítjuk</li>
-    <li>A kiválasztott dinamikus paraméterhez tarozó gomb a routerLinkActive végett piros színű</li>
+    <li>A kiválasztott dinamikus paraméterhez tartozó gomb a routerLinkActive végett piros színű</li>
     <pre>
   <b>// header.component.html</b>
   &#60;button class="btn btn-primary">&#60;a [routerLink]="['/', 'angular', 'login']" [routerLinkActive]="'btn-danger'"
@@ -10858,7 +11003,7 @@
                 <li>Akkor fut le, mielőtt egy komponenshez navigálunk</li>
                 <li>Ellenőrzi, hogy a felhasználó hozzáfér-e az adott útvonalhoz (például jogosultsági szint,
                   bejelentkezés)</li>
-                <li>Az olyan oldalak védelme, amelyekhez csak bejelentkezett felhasználók férhetnek hozzá.</li>
+                <li>Az olyan oldalak védelme, amelyekhez csak bejelentkezett felhasználók férhetnek hozzá</li>
               </ul>
             </li>
             <li>CanActivateChild
@@ -10874,7 +11019,7 @@
                 <li>Akkor fut le, amikor egy komponensből elnavigálunk</li>
                 <li>Ellenőrzi, hogy a felhasználó elhagyhatja-e az oldalt (például ha űrlap adatokat töltött ki, de még
                   nem mentette el)</li>
-                <li>Űrlapok védelme az adatvesztés elkerülése érdekében.</li>
+                <li>Űrlapok védelme az adatvesztés elkerülése érdekében</li>
               </ul>
             </li>
             <li>Resolve
@@ -10893,13 +11038,14 @@
                 <li>Megakadályozza egy modul betöltését, ha a felhasználó nem rendelkezik a szükséges jogosultságokkal
                 </li>
                 <li>Olyan modulok esetében, amelyeket csak speciális jogosultsággal rendelkező felhasználók tölthetnek
-                  be, pl. adminisztrációs felület</li>
+                  be, például adminisztrációs felület</li>
               </ul>
             </li>
           </ol>
         </li>
       </ul>
     </li>
+    <br>
     <li>Angular 15-től kezdve lehetőségünk van egy újabb módon implementálni a Route Guard-okat
       <ol>
         <li>Angular 14
@@ -10929,7 +11075,7 @@
   &#123;
     path: 'protected',
     component: ProtectedComponent,
-    canActivate: [AuthGuard] // Itt rendeljük hozzá a guard szolgáltatást az útvonalhoz
+    canActivate: [AuthGuard] // itt rendeljük hozzá a guard szolgáltatást az útvonalhoz
   }
             </pre>
             <li>Röviden, a guardokat mindig @Injectable szolgáltatásokként kellett megírni különálló osztályok
@@ -10966,7 +11112,7 @@
     <li>canActivate
       <ul>
         <li>A jogosulatlan felhasználókat meggátoljuk a route-ra való lépéstől</li>
-        <li>Angular 14-
+        <li>Angular -14
           <ul>
             <li>Implementálás lépései
               <ol>
@@ -11014,7 +11160,7 @@
     return this.isLogged;
   }
             </pre>
-            <li>A routingban a a canActivate guard egy tömb</li>
+            <li>A routing-ban a canActivate guard egy tömb</li>
             <li>Ha az about page-en a goombokra bejelentkezés nélkül kattintunk, navigáció történik a login oldalra</li>
             <li>A canActivate metódus lefutásakor az AuthService-től elkérjük az isLogged boolean változó értékét</li>
           </ul>
@@ -11083,7 +11229,7 @@
     ]
   },
         </pre>
-        <li>A CanActivate a szülő, és a gyerek route-okat is védi</li>
+        <li>A CanActivate a szülő gyerek route-jait védi</li>
         <li>A CanActivateChild akkor jön jól, ha a szülő komponenshez biztosítani szeretnénk hozzáférést - mondjuk -
           minden felhasználónak, de a gyerekekhez nem</li>
         <pre>
@@ -11096,8 +11242,8 @@
   },
           </pre>
         <li>A valóságban egy szülőnek akár 15-20 gyerek útvonala is lehet</li>
-        <li>Ahelyett, hogy minden egyes gyerek route-on használjuk a canActivate guard-ot, a szülőre helyezhetjük a
-          CanActvateChild guard-ot</li>
+        <li>Ahelyett, hogy minden egyes gyerek route-on használjuk, a szülőre helyezhetjük a CanActvateChild guard-ot
+        </li>
         <pre>
   &#123;
     path: 'about', component: AboutComponent, canActivateChild: [], children: [
@@ -11108,7 +11254,7 @@
         <li>A canActivateChild service class nevet, vagy függvényt fogad</li>
       </ul>
       <ol>
-        <li>Angular 14-
+        <li>Angular -14
           <ul>
             <pre>
   <b>// navi-routing.module.ts</b>
@@ -11179,7 +11325,7 @@
       <ul>
         <li>Azt szeretnénk megvalósítani, hogy ha a user el akar navigálni a contact page-ről úgy, hogy félbehagyja a
           form kitöltését, gátoljuk meg a navigációt, figyelmeztessük a user-t</li>
-        <li>Angular 14-
+        <li>Angular -14
           <ul>
             <pre>
   <b>// contact.coomponent.html</b>
@@ -11240,12 +11386,12 @@
             <li>A CanDeactivate interface típusának ContactComponent-et adtunk meg</li>
             <li>A canDeactivate metódus 4 paramétert fogad
               <ol>
-                <li>Component, aminek a típusa az a komponens, amin használni szeretnénk a guard-ot</li>
-                <li>ActivatedRouteSnapshot, az aktuális útvonal pillanatfelvétele, amely információt ad az aktív route
+                <li>Component: Aminek a típusa az a komponens, amin használni szeretnénk a guard-ot</li>
+                <li>ActivatedRouteSnapshot: Az aktuális útvonal pillanatfelvétele, amely információt ad az aktív route
                   paramétereiről</li>
-                <li>RouterStateSnapshot, A jelenlegi router állapotának pillanatfelvétele, amely tartalmazza az aktuális
+                <li>RouterStateSnapshot: A jelenlegi router állapotának pillanatfelvétele, amely tartalmazza az aktuális
                   útvonal teljes hierarchiáját</li>
-                <li>RouterStateSnapshot (opcionális), A következő router állapotának pillanatfelvétele, amely az útvonal
+                <li>RouterStateSnapshot (opcionális): A következő router állapotának pillanatfelvétele, amely az útvonal
                   célját és annak hierarchiáját jelzi</li>
               </ol>
             </li>
@@ -11253,7 +11399,13 @@
             <li>Amennyiben a felhasználó már beírt valamit a mezőkbe, szeretnénk tudni, hogy valóban el akar-e navigálni
             </li>
             <li>A confirm függvény true value-t ad vissza, ha a felhasználó az 'OK' gombra kattint, és false-t, ha a
-              Cancel-re</li>
+              Cancel-re
+              <ul>
+                <li>Jelen app-ban nincs megoldva, hogy a Cancel gombra kattintva a root komponensünk értesítést kapjon
+                  arról, hogy ugyan megtörtént a NavigationStart esemény, a routing mégsem ment végbe, így a loading
+                  képernyő bent marad</li>
+              </ul>
+            </li>
             <li>A canExit metódus alapján döntjük el, hogy történik-e navigálás</li>
             <li>A canDeactivate metódusunkban van egy példányunk a komponensből
               <ul>
@@ -11280,7 +11432,7 @@
   }
 
   <b>// contact.component.html</b>
-    export class ContactComponent implements DeactivateComponent &#60;
+    export class ContactComponent implements DeactivateComponent &#123;
       ...
       canExit() &#123;
         if ((this.firstName || this.lastName || this.message) && !this.isSubmitted) &#123;
@@ -11413,7 +11565,7 @@
           az adatok</li>
         <li>Resolve guard implementálása
           <ul>
-            <li>Angular 14-
+            <li>Angular -14
               <ol>
                 <li>Service class készítése, ami örökli a Resolve interface-t (implements Resolve)
                   <ul>
@@ -11597,16 +11749,14 @@
 
   ngOnInit(): void &#123;
     this._router.events.subscribe((routerEvent: Event) => &#123; // callback function, ami az event object-et kapja meg
-    if (routerEvent instanceof NavigationStart) &#123;
-      // if (routerEvent.url === '/angular/resolve') &#123; // arra lenne hivatott, hogy ha a contact page-ről elnavigálunk, de a confirm-nél Cancel-re kattintunk, ne jöjjön elő az overlay, de a lenti NavigationCancel sokkal elegánsabb
-      this.showLoader = true;
-      // }
-    }
+      if (routerEvent instanceof NavigationStart) &#123;
+        // if (routerEvent.url === '/angular/resolve') &#123; } // arra lenne hivatott, hogy ha a contact page-ről elnavigálunk, de a confirm-nél Cancel-re kattintunk, ne jöjjön elő az overlay, de a lenti NavigationCancel sokkal elegánsabb
+        this.showLoader = true;
+      }
 
       if (routerEvent instanceof NavigationEnd || routerEvent instanceof NavigationCancel || routerEvent instanceof NavigationError) &#123; // NavigationError, hogy ha hiba történik, ne maradjon ott az overlay
-        // if (routerEvent.url === '/angular/resolve') &#123;
+        // if (routerEvent.url === '/angular/resolve') &#123; }
         this.showLoader = false;
-        //}
       }
     })
   }
@@ -11633,7 +11783,7 @@
         <li>A Router-nek feliratkozunk az event-jeire
           <ul>
             <li>Az event metódus egy Observable, Event típusú adatot fog kibocsátani</li>
-            <li>Bármilyen route event érkezik, és a 'routerEvent' változó tárolja az éppen aktuális eseményt
+            <li>Bármilyen route event érkezik, a 'routerEvent' változó tárolja az éppen aktuális eseményt
               <ul>
                 <li>A 'routerEvent' Event típusú</li>
               </ul>
@@ -11641,7 +11791,8 @@
           </ul>
         </li>
         <li>A végeredmény, hogy ha a resolve page-re navigálunk, akkor amíg le ne telik a 3 másodperc, amit a
-          getAllDetails függvényben van definiálva, addig egy overlay-t láthatunk a content előtt, és spinnerrel a
+          getAllDetails függvényben van definiálva, addig egy overlay-t (kettőt) láthatunk a content előtt, és
+          spinnerrel a
           közepén</li>
       </ul>
     </li>
@@ -11651,7 +11802,7 @@
   <ul>
     <li>Statikus és dinamikus adatot is tudunk átadni</li>
     <li>A query paramétertől (?search=term), és a route paramétertől (/users/:id) eltérő megoldás</li>
-    <li>Az about page-en fogjuk megvalósítani az adat átadást, amikor a goombokra kattinttunk</li>
+    <li>Az about page-en fogjuk megvalósítani az adat átadást, amikor a gombokra kattinttunk</li>
     <li>Stattikus adat
       <ul>
         <pre>
@@ -11679,7 +11830,7 @@
   }
         </pre>
         <li>Statikus adatot adtunk át a '/angular/about/:id' útvonalnak</li>
-        <li>Amikor csak az Observable (data) adatot emit-ál, átadja a statikus adat értékét a callback függvény
+        <li>Amikor az Observable (data) adatot emit-ál, átadja a statikus adat értékét a callback függvény
           paraméterének, amit a data változón keresztül érhetünk el.</li>
       </ul>
     </li>
@@ -11698,13 +11849,13 @@
   ]
 
   <b>// about.component.html</b>
-  &#123;div *ngFor="let data of aboutData">
-    &#123;button [routerLink]="['/', 'angular', 'about', data.id]" [state]="data" // state attribútum
+  &#60;div *ngFor="let data of aboutData">
+    &#60;button [routerLink]="['/', 'angular', 'about', data.id]" [state]="data" // state attribútum
     [routerLinkActive]="'btn-danger'" type="button" class="btn btn-secondary">
         #&#123; &#123;data.id}} &#123; &#123;data.label}}
-    &#123;/button>
-  &#123;/div>
-  &#123;router-outlet>&#123;/router-outlet>
+    &#60;/button>
+  &#60;/div>
+  &#60;router-outlet>&#60;/router-outlet>
 
   <b>// about-details.component.html</b>
   &#123; &#123;dataFromRoute | json}}
@@ -11761,7 +11912,8 @@
         </li>
         <pre>
   Original (new Date()): Thu Aug 12 1993 02:00:00 GMT+0200 (Central European Summer Time)
-  &#123; &#123; student.birth | date: 'yyyy-MM-dd': undefined: undefined }} // timezone és locale marad default érték: undefined
+
+  &#123; &#123; student.birth | date: 'yyyy-MM-dd' : undefined : undefined }} // timezone és locale marad default érték: undefined
   Result: 1993-08-12
         </pre>
         <li>Amikor pipe-nak paramétert akarunk átadni, kettősponttal tesszük</li>
@@ -11769,19 +11921,21 @@
     </li>
     <li>percent pipe
       <ul>
-        <li>Áttranszformálja a számot/stringet egy százalékértékké (string)</li>
+        <li>Áttranszformálja a számot/string-et egy százalékértékké (string)</li>
         <pre>
   Original: 0.5666666666666667
   &#123; &#123; (student.marks / totalMarks) | percent }}
   Result: 57%
 
-  Original:
   &#123; &#123; (student.marks / totalMarks) | percent: '3.1-3' }}
   Result: 057,667%
 
-  Original:
   &#123; &#123; (student.marks / totalMarks) | percent: '2.1-2' }} // minIntegerDigits.minFractionDigits-MaxFractionDigits
   Result: 57,67%
+
+  Original: 0.5   // 1 darab tizedesjegy szerepel, így a minFractionDigits érvényesül
+  &#123; &#123; (student.marks / totalMarks) | percent: '2.1-2' }} // minIntegerDigits.minFractionDigits-MaxFractionDigits
+  Result: 50,0%
         </pre>
         <li>A paraméter első száma azt jelenti, hogy az egész számjegyek számának legalább mennyinek kell lennie</li>
         <li>A pont utáni rész azt jelzi, hogy legalább mennyi, de legfeljebb mennyi tizedesjegyet kell megjeleníteni
@@ -11845,8 +11999,10 @@
         <li>A második pipe az első pipe kimenetét formázza, és így tovább</li>
         <pre>
   Original (new Date()): Thu Aug 12 1993 02:00:00 GMT+0200 (Central European Summer Time)
+
   &#123; &#123; student.birth | date: 'fullDate' }}
   Result: 1993. augusztus 12., csütörtök
+
   &#123; &#123; student.birth | date: 'fullDate' | uppercase }}
   Result: 1993. AUGUSZTUS 12., CSÜTÖRTÖK
         </pre>
@@ -11944,11 +12100,10 @@
       return (((value / total) * 100).toFixed(fraction || 0)).toString() + '%';
   }
 
-    transform(value: any, ...args: any[]) &#123; // változó számú argomentum esetén
+    /* transform(value: any, ...args: any[]) &#123; // változó számú argomentum esetén
       const [total, fraction] = args;
       return (((value / total) * 100).toFixed(fraction || 0)).toString() + '%';
-    }
-  }
+    } */
 
   <b>// piping.component.ts</b>
   &#123; &#123; student.marks | procent: [totalMarks, 2] }} // fix számú argomentum esetén
@@ -13038,7 +13193,7 @@ showConfirmDelete(user: User) &#123;
     </li>
     <li>Alapvetően a dashboard komponens inicializálásánál szeretnénk lekérni az adatokat
       <ul>
-        <li>Emiatt a függvényünket az OnInit lifecycle hookban hívjuk meg</li>
+        <li>Emiatt a függvényünket az OnInit lifecycle hook-ban hívjuk meg</li>
       </ul>
     </li>
     <pre>
@@ -14357,10 +14512,10 @@ showConfirmDelete(user: User) &#123;
   <h5 #sendingquerystring data-anchor="sendingquerystring">Sending query string</h5>
   <ul>
     <li>Query string-gel is tudunk a request-tel együtt adatot küldeni</li>
-    <li>Az URL után ?-lel indítjuk a query stringet
+    <li>Az URL után ?-lel indítjuk a query string-et
       <ul>
         <li>Kulcs-érték párokat tudunk megadni</li>
-        <li>& jellel több query stringet is megadhatunk</li>
+        <li>& jellel több query string-et is megadhatunk</li>
       </ul>
     </li>
     <li>Az adatbázisban akár több szár, több ezer rekordunk is lehet
@@ -19519,7 +19674,7 @@ showConfirmDelete(user: User) &#123;
               </ul>
             </li>
             <li>Az utolsó it is hiba nélkül lefut, mert ebben a specifikációban egy mock példányunk van, ami fixen egy
-              stringet ad vissza, ami 42</li>
+              string-et ad vissza, ami 42</li>
           </ul>
         </li>
       </ul>
@@ -20770,7 +20925,7 @@ showConfirmDelete(user: User) &#123;
             <li>npm test parancsra fut le a jest test</li>
             <li>A parancs begépelése után a folyamat az alábbi
               <ol>
-                <li>Az npm meghívja a jest parancsot azzal az argumentummal, hogy test</li>
+                <li>Az npm meghívja a jest parancsot azzal az argomentummal, hogy test</li>
                 <li>Az npm elindítja a Jest tesztfuttatót az aktuális projektre</li>
                 <li>A Jest betölti a konfigurációs fájlt (általában jest.config.js, jest.config.ts)</li>
                 <li>A Jest megkeresi az összes tesztfájlt a projektben a konfiguráció alapján (pl. fájlnevek vagy mappák

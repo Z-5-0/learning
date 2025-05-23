@@ -12,7 +12,7 @@ export class ShowTaskComponent implements OnInit {
 
   ngOnInit(): void {
     this.taskService.createTask.subscribe((taskName) => { // callback function, a taskName a névtelen függvény argomentuma
-      console.log('taskName: ', taskName);
+      // console.log('taskName: ', taskName);
       this.tasks.push(taskName);
     })
   }

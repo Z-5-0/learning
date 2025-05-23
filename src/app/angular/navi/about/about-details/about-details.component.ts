@@ -29,14 +29,12 @@ export class AboutDetailsComponent implements OnInit, OnDestroy {
     this.paramMapObs = this._activeRouter.paramMap.subscribe(data => {
       this.id = +(data.get('id') ?? 0);
       this.aboutData = this.aboutDetailsService.aboutDetailsArray.find(data => data.id === this.id) ?? 0;
+      this.dataFromRoute = this._router.getCurrentNavigation()?.extras.state || { id: this.aboutData.id, label: this.aboutData.title };
     });
 
-    this.dataFromRoute = this._router.getCurrentNavigation()?.extras.state;
+    // console.log('details constructor')
   }
   ngOnInit(): void {
-    /* this._activeRouter.data.subscribe(data => {
-      this.dataFromRoute = data;
-    }); */
   }
 
   ngOnDestroy(): void {
