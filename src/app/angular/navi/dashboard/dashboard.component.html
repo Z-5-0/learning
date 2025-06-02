@@ -4,7 +4,7 @@
         <ng-container *ngSwitchCase="false">
             <button [routerLink]="['/', 'angular']" (click)="naviHelper = false">Home</button>
             <button [routerLink]="[{ outlets: { auth: ['dashboard', 'contact'] } }]"
-                (click)="naviHelper ? null : naviHelper = !naviHelper">Contact</button>
+                (click)=" naviHelper ? null : naviHelper=!naviHelper">Contact</button>
             <button [routerLink]="[{ outlets: { auth: ['dashboard', 'login'] } }]"
                 (click)="naviHelper ? null : naviHelper = !naviHelper">Login</button>
         </ng-container>

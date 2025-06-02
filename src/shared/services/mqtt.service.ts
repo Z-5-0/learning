@@ -10,7 +10,8 @@ export class MqttService {
     private readonly topic = 'mqtt/Z-5-0';
 
     constructor() {
-        this.client = mqtt.connect('ws://broker.hivemq.com:8000/mqtt', {        // második paraméterben lehet beeállításokat végrehajtai
+        // this.client = mqtt.connect('ws://broker.hivemq.com:8000/mqtt', {        // második paraméterben lehet beeállításokat végrehajtai
+        this.client = mqtt.connect('wss://broker.hivemq.com:8884/mqtt', {        // második paraméterben lehet beeállításokat végrehajtai
             keepalive: 10,      // így például 10 másodpercenként ellenőrizzük a kapcsolatot
         });
 

@@ -150,7 +150,8 @@
 </div>
 
 <div>
-  <h3 #prtoceduralvsreactivethinking data-anchor="prtoceduralvsreactivethinking">Procedural vs reactive thinking</h3>
+  <h3 id="proceduralvsreactivethinking" #proceduralvsreactivethinking data-anchor="proceduralvsreactivethinking">
+    Procedural vs reactive thinking</h3>
   <div
     style="background-color: floralwhite; border: 2px solid saddlebrown; border-radius: 5px;color: black; padding: 10px; overflow: auto">
     <small>Procedural</small>
@@ -163,12 +164,27 @@
         <div style="display: flex; align-items: center; gap: 20px; justify-content: space-between">
           <h4 *ngIf="elems.length > 0; else noElems">{{ elems.length }} elem(s) exist(s)</h4>
           <span>
-            <button [disabled]="elemLocalDeletion" (click)="elemLocalDeletion = !elemLocalDeletion">
+            <!--button [disabled]="elemLocalDeletion" (click)="elemLocalDeletion = !elemLocalDeletion">
               Local delete
-            </button>
-            <button [disabled]="!elemLocalDeletion" (click)="elemLocalDeletion = !elemLocalDeletion">
+            </!--button>
+            <button-- [disabled]="!elemLocalDeletion" (click)="elemLocalDeletion = !elemLocalDeletion">
               API delete
-            </button>
+            </button-->
+
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="deletionMethod" id="local"
+                [checked]="elemLocalDeletion" (change)="elemLocalDeletion = true">
+              <label class="form-check-label" for="local">
+                Local delete
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="deletionMethod" id="api" [checked]="!elemLocalDeletion"
+                (change)="elemLocalDeletion = false">
+              <label class="form-check-label" for="api">
+                API delete
+              </label>
+            </div>
           </span>
         </div>
 
@@ -182,8 +198,14 @@
 
         <form *ngIf="elems.length < 5; else elemsLengthReachedMax"
           (submit)="elemLocalDeletion ? newElem($event) : newAPIElem($event)">
-          <input #formInput name="title" value="" ngModel placeholder="New elem">
-          <button type="submit" [disabled]="formInput.value === ''">Send</button>
+          <!--input #formInput name="title" value="" ngModel placeholder="New elem">
+          <button-- type="submit" [disabled]="formInput.value === ''">Send</button-->
+
+          <div class="input-group mt-3 mb-3">
+            <input #formInput name="title" value="" type="text" class="form-control" placeholder="New elem" ngModel
+              aria-label="New elem" aria-describedby="button-addon">
+            <button class="btn btn-outline-secondary" [disabled]="formInput.value === ''" type="submit">Send</button>
+          </div>
         </form>
 
       </ng-template>
@@ -216,7 +238,7 @@
           {{ elemsReactive.length }} elem(s) exist(s)
         </h4>
         <span>
-          <button [disabled]="true">
+          <button type="button" class="btn btn-secondary" [disabled]="true">
             API delete
           </button>
         </span>
@@ -231,8 +253,13 @@
       </div>
 
       <form *ngIf="elems.length < 5; else elemsLengthReachedMaxReactive" (submit)="newElemReactive($event)">
-        <input #formInput name="title" value="" ngModel placeholder="New elem">
-        <button type="submit" [disabled]="formInput.value === ''">Send</button>
+        <!--input #formInput name="title" value="" ngModel placeholder="New elem">
+        <button-- type="submit" [disabled]="formInput.value === ''">Send</button-->
+        <div class="input-group mt-3 mb-3">
+          <input #formInput name="title" value="" type="text" class="form-control" placeholder="New elem" ngModel
+            aria-label="New elem" aria-describedby="button-addon">
+          <button class="btn btn-outline-secondary" [disabled]="formInput.value === ''" type="submit">Send</button>
+        </div>
       </form>
     </ng-template>
   </div>
@@ -259,12 +286,20 @@
       &#60;div>
         &#60;h4 *ngIf="elems.length > 0; else noElems">&#123; &#123; elems.length }} elem(s) exist(s)&#60;/h4>
         &#60;span>
-          &#60;button [disabled]="elemLocalDeletion" (click)="elemLocalDeletion = !elemLocalDeletion">
-            Local delete
-          &#60;/button>
-          &#60;button [disabled]="!elemLocalDeletion" (click)="elemLocalDeletion = !elemLocalDeletion">
-            API delete
-          &#60;/button>
+            &#60;div class="form-check">
+              &#60;input class="form-check-input" type="radio" name="deletionMethod" id="local"
+                [checked]="elemLocalDeletion" (change)="elemLocalDeletion = true">
+              &#60;label class="form-check-label" for="local">
+                Local delete
+              &#60;/label>
+            &#60;/div>
+            &#60;div class="form-check">
+              &#60;input class="form-check-input" type="radio" name="deletionMethod" id="api" [checked]="!elemLocalDeletion"
+                (change)="elemLocalDeletion = false">
+              &#60;label class="form-check-label" for="api">
+                API delete
+              &#60;/label>
+            &#60;/div>
         &#60;/span>
       &#60;/div>
 
@@ -278,8 +313,11 @@
 
       &#60;form *ngIf="elems.length &#60; 5; else elemsLengthReachedMax"
         (submit)="elemLocalDeletion ? newElem($event) : newAPIElem($event)">
-        &#60;input #formInput name="title" value="" ngModel placeholder="New elem">
-        &#60;button type="submit" [disabled]="formInput.value === ''">Send&#60;/button>
+        &#60;div class="input-group mt-3 mb-3">
+            &#60;input #formInput name="title" value="" type="text" class="form-control" placeholder="New elem" ngModel
+              aria-label="New elem" aria-describedby="button-addon">
+            &#60;button class="btn btn-outline-secondary" [disabled]="formInput.value === ''" type="submit">Send&#60;/button>
+        &#60;/div>
       &#60;/form>
     &#60;/ng-template>
 
@@ -388,8 +426,11 @@
       &#60;/div>
 
       &#60;form *ngIf="elems.length &#60; 5; else elemsLengthReachedMaxReactive" (submit)="newElemReactive($event)">
-        &#60;input #formInput name="title" value="" ngModel placeholder="New elem">
-        &#60;button type="submit" [disabled]="formInput.value === ''">Send&#60;/button>
+        &#60;div class="input-group mt-3 mb-3">
+            &#60;input #formInput name="title" value="" type="text" class="form-control" placeholder="New elem" ngModel
+              aria-label="New elem" aria-describedby="button-addon">
+            &#60;button class="btn btn-outline-secondary" [disabled]="formInput.value === ''" type="submit">Send&#60;/button>
+        &#60;/div>
       &#60;/form>
     &#60;/ng-template>
   &#60;/div>
@@ -6917,6 +6958,183 @@
 </div>
 
 <div>
+  <h3 #asynccontrollers data-anchor="asynccontrollers">Async controllers</h3>
+  <ul>
+    <br>
+    <table style="border-collapse: collapse; width: 100%;">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Callback</th>
+          <th>Promise</th>
+          <th>Observable</th>
+          <th>Subject</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Fogalom</td>
+          <td>függvény, amit meghívunk később</td>
+          <td>egyszeri aszinkron művelet eredménye</td>
+          <td>többször is kibocsáthat értékeket (stream)</td>
+          <td>Observable + külső kézből vezérelhető emitter</td>
+        </tr>
+        <tr>
+          <td>Aszinkron?</td>
+          <td><i class="bi bi-check"></i> igen</td>
+          <td><i class="bi bi-check"></i> igen</td>
+          <td><i class="bi bi-check"></i> igen</td>
+          <td><i class="bi bi-check"></i> igen</td>
+        </tr>
+        <tr>
+          <td>Értékek száma</td>
+          <td>több is lehet</td>
+          <td>csak egy értéket ad vissza</td>
+          <td>több értéket is leadhat</td>
+          <td>több érték, akár külső trigger-rel</td>
+        </tr>
+        <tr>
+          <td>Leiratkozás</td>
+          <td><i class="bi bi-ban"></i> nem szabályozható</td>
+          <td><i class="bi bi-ban"></i> nem leiratkozható</td>
+          <td><i class="bi bi-check"></i> leiratkozható ( .unsubscribe() )</td>
+          <td><i class="bi bi-check"></i> leiratkozható</td>
+        </tr>
+        <tr>
+          <td>Beépített metódusok</td>
+          <td><i class="bi bi-ban"></i> nincs</td>
+          <td>belül resolve() és reject(), kívül .then(), .catch(), .finally()</td>
+          <td>.subscribe(), .pipe()</td>
+          <td>.next(), .error(), .complete()</td>
+        </tr>
+        <tr>
+          <td>Angular-ban használjuk?</td>
+          <td><i class="bi bi-ban"></i> nem jellemző</td>
+          <td><i class="bi bi-check"></i> néha (például HttpClient.toPromise())</td>
+          <td><i class="bi bi-check"></i> igen (HttpClient, Reactive Forms, stb...)</td>
+          <td><i class="bi bi-check"></i> igen (BehaviorSubject, EventBus, stb...)</td>
+        </tr>
+        <tr>
+          <td>Példa</td>
+          <td>fs.readFile(cb)</td>
+          <td>fetch().then()</td>
+          <td>interval(1000).subscribe()</td>
+          <td>subject.next('valami')</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <br>
+  </ul>
+  <br>
+  <h5 #callback data-anchor="callback">Callback</h5>
+  <ul>
+    <li>Függvény, amit egy másik függvény később meghív</li>
+    <li>Gyakran kiváltja a Promise, vagy az Observable</li>
+    <pre>
+  function getData(callback: (result: string) => void) &#123;
+    const data = 'This is the data';
+    callback(data); // itt hívjuk meg a függvényt, amit átadunk
+  }
+
+  function printUpperCase(text: string) &#123;
+    console.log(text.toUpperCase());
+  }
+
+  getData(printUpperCase);
+
+  ↓↓↓↓↓
+
+  THIS IS THE DATA
+    </pre>
+    <li>A printUpperCase függvényt adjuk át paraméterként a getData függvénynek, nem hívjuk meg, csak átadjuk magát a
+      függvényt</li>
+    <li>Olyan, mintha a callback-be a printUpperCase függvényt adnánk át</li>
+    <li>Tulajdonképpen a printUpperCase kapja meg a const datát</li>
+    <pre>
+  (data) === printUpperCase('This is the data')
+    </pre>
+  </ul>
+  <br>
+  <h5 #promise data-anchor="promise">Promise</h5>
+  <ul>
+    <li>Objektum, ami egy jövőbeli értéket képvisel</li>
+    <li>Egyszer teljesül (resolve) vagy hibát dob (reject)</li>
+    <li>Adatlekérésnél, fájlolvasásnál, API-hívásnál használhatjuk</li>
+    <pre>
+  function getData(): Promise&#60;string> &#123;    // string típusú objektumotot ad
+    return new Promise((resolve, reject) => &#123;
+      const success = Math.random() > 0.5;
+      if (success) &#123;
+        resolve('Promise success');
+      } else &#123;
+        reject('Promise error');
+      }
+    });
+  }
+
+  getData()
+    .then(result => console.log('Promise:', result))
+    .catch(error => console.error('Promise error:', error));
+    </pre>
+  </ul>
+  <br>
+  <h5 #observable data-anchor="observable">Observable</h5>
+  <ul>
+    <li>Adatfolyam (stream), ami többször is küldhet értéket</li>
+    <li>Le lehet iratkozni róla</li>
+    <pre>
+      import &#123; Observable } from 'rxjs';
+
+      const customObservable = new Observable&#60;string>(observer => &#123;
+        observer.next('Value 1');
+        observer.next('Value 2');
+        observer.error('Error has happened');   // ezután a complete már nem fut le
+        observer.complete();
+      });
+
+      customObservable.subscribe(&#123;
+        next: val => console.log('Observable:', val),
+        error: err => console.error('Erroor:', err),
+        complete: () => console.log('Done)
+      });
+    </pre>
+  </ul>
+  <br>
+  <h5 #subject data-anchor="subject">Subject</h5>
+  <ul>
+    <li>Egy Observable, és a külső triggerelés lehetősége, azaz saját magunk hívhatjuk meg a .next() metódust, így
+      adhatunk új értékeket</li>
+    <li>Több Subscriber-ünk lehet</li>
+    <li>Vezérelhetjük az adatfolyamot</li>
+    <pre>
+  import &#123; Subject } from 'rxjs';
+
+  const subject = new Subject&#60;string>();
+
+  // feliratkozunk a Subject-re
+  subject.subscribe(&#123;
+    next: (value) => console.log('Value:', value),
+    error: (err) => console.error('Error:', err),
+    complete: () => console.log('Steam completed')
+  });
+
+  // érték kibocsátása
+  subject.next('First value');
+  subject.next('Second value');
+
+  // hiba kibocsátása
+  subject.error('Error has happened');
+
+  // ez már nem fog lefutni, mert error után leáll a stream
+  subject.next('Steam has ended before');
+
+  // subject.complete(); // ha nem lenne feljebb error, akkor 'Steam completed'
+      </pre>
+  </ul>
+</div>
+
+<div>
   <h3 #fontsizes data-anchor="fontsizes">Font sizes</h3>
   <ul>
     <pre>
@@ -8114,8 +8332,12 @@
       private client: mqtt.MqttClient;
       private readonly topic = 'mqtt/Z-5-0';
   
-        constructor() &#123;
-          this.client = mqtt.connect('ws://broker.hivemq.com:8000/mqtt', &#123;        // második paraméterben lehet beeállításokat végrehajtai
+        constructor() &#123;        
+          // this.client = mqtt.connect('ws://broker.hivemq.com:8000/mqtt', &#123;
+          // a ws nem biztonságos kapcsolat, HTTP-nek felel meg, a böngésző letiltja a kérést, mivel HTTPS oldalról nem lehet HTTP vagy ws kapcsolatot nyitni
+          // lokálisan működik, mivel nincs HTTPS 
+
+          this.client = mqtt.connect('wss://broker.hivemq.com:8884/mqtt', &#123;        // második paraméterben lehet beeállításokat végrehajtai
               keepalive: 10,      // így például 10 másodpercenként ellenőrizzük a kapcsolatot
           });
   

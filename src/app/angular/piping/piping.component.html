@@ -49,7 +49,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let student of students | filter: filterLabel">
+                <tr *ngFor="let student of students | filterBy: filterLabel">
                     <td>{{ student.id }}</td>
                     <td>{{ student.name }}</td>
                     <td>{{ student.gender }}</td>
@@ -64,7 +64,8 @@
         </table>
         <div class="no-table">Sorry, but table do not show on mobile view</div>
         <div style="text-align: right;">
-            <button class="btn btn-secondary" (click)="createNewUser()">New static student<i class="bi bi-plus"></i></button>
+            <button class="btn btn-secondary" (click)="createNewUser()">New static student<i
+                    class="bi bi-plus"></i></button>
         </div>
     </div>
     <footer>

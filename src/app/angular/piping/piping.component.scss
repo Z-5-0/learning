@@ -9,6 +9,9 @@ header {
 }
 
 .student-content {
+    max-height: 400px;
+    overflow: auto;
+
     table {
         display: none;
 

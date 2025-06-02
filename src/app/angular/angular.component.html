@@ -25,12 +25,12 @@
 <div>
   <h3 #angular data-anchor="angular">Angular</h3>
   <ul>
-    <li>Az egyik legnépszerűbb Javascript framework kliens oldali applikációk készítéséhez mobilra és desktopra</li>
-    <li>HTML-t, CSS-t (SCSS/SAAS), Javascript-et, és TypeScript-et használ</li>
+    <li>Az egyik legnépszerűbb JavaScript framework kliens oldali applikációk készítéséhez mobilra és desktopra</li>
+    <li>HTML-t, CSS-t (SCSS/SAAS), JavaScript-et, és TypeScript-et használ</li>
     <li>Nem programnyelv, hanem framework, ami programnyelveket használ</li>
-    <li>Tehát mondhatjuk, hogy egy Javascript framework, ami lehetővé teszi Single Page Application-ök készítését
+    <li>Tehát mondhatjuk, hogy egy JavaScript framework, ami lehetővé teszi Single Page Application-ök készítését
       <ul>
-        <li>A Javascript kliens oldali programnyelv</li>
+        <li>A JavaScript kliens oldali programnyelv</li>
       </ul>
     </li>
     <li>Framework
@@ -50,7 +50,7 @@
           </ul>
         </li>
         <li>Az SPA-nak egyetlen HTML oldala van, és amikor navigálunk, csak a tartalom változik benne</li>
-        <li>Amikor navigálunk, nem intézünk a szerver felé kérést, csupán a Javascript megváltoztatja a kontentet az
+        <li>Amikor navigálunk, nem intézünk a szerver felé kérést, csupán a JavaScript megváltoztatja a kontentet az
           oldalon a kért resource alapján
         </li>
         <li>Előnyei
@@ -69,7 +69,7 @@
         </li>
         <li>Miért használjunk Angular-t?
           <ul>
-            <li>A vanilla Javascript / jQuery kódok elég kezelhetetlenné váltak, és nehéz őket tesztelni</li>
+            <li>A vanilla JavaScript / jQuery kódok elég kezelhetetlenné váltak, és nehéz őket tesztelni</li>
             <li>Beépített funkcionalitásokkal rendelkezik, amiket nulláról kellene megírnunk</li>
           </ul>
         </li>
@@ -121,7 +121,7 @@
 <div>
   <h3 #howitworks data-anchor="howitworks">How it works?</h3>
   <ul>
-    <li>Böngészőben működő Javascript alkalmazások működése
+    <li>Böngészőben működő JavaScript alkalmazások működése
       <ul>
         <li>UI / User Interface
           <ul>
@@ -198,7 +198,7 @@
         <br>
         <li>A folyamat
           <ul>
-            <li>Ha végfelhasználóként letöltjük az oldalt, és elindul a Javascript-es alkalmazás, az első, hogy az
+            <li>Ha végfelhasználóként letöltjük az oldalt, és elindul a JavaScript-es alkalmazás, az első, hogy az
               alkalmazásnak van egy kiinduló állapota, ehhez jön hozzá a meghatározott statikus sablon, és ezek
               alapján megtörténik az első renderelés, megjelenik a User Interface-en a tartalom
             </li>
@@ -289,7 +289,7 @@
       <ul>
         <li>React / Angular / Vue</li>
         <li>React és Angular esetén a renderelés teljesen automatikus (amint valamilyen State változás
-          történik), amíg vanilla Javascript esetén a renderelő mechanizmust a fejlesztőnek kell manuálisan
+          történik), amíg vanilla JavaScript esetén a renderelő mechanizmust a fejlesztőnek kell manuálisan
           működésbe léptetni a State változás után
         </li>
         <li>A felhasználói felület külön részegységekre bontható a segítségükkel
@@ -462,7 +462,7 @@
     <li>tsconfig.json
       <ul>
         <li>TypeScript compiler beállításokat tartalmaz</li>
-        <li>Ezek alapján a beállítások alapján történik a compile Javascript nyelvre (amit a böngésző ért)</li>
+        <li>Ezek alapján a beállítások alapján történik a compile JavaScript nyelvre (amit a böngésző ért)</li>
       </ul>
     </li>
     <li>src
@@ -564,7 +564,7 @@
 <div>
   <h3 #components data-anchor="components">Components</h3>
   <ul>
-    <li>Az Angular egy komponens alapú, kliens oldali Javascript framework</li>
+    <li>Az Angular egy komponens alapú, kliens oldali JavaScript framework</li>
     <li>A komponens tulajdonképpen egy (kis) darab felhasználói felület</li>
     <li>Egy komponensre tekinthetünk úgy is, mint egy TypeScript class-ra</li>
     <li>Ezen részegységek összevegyítése adja a komplex User Interface-t</li>
@@ -1358,7 +1358,7 @@
 
   export class AuthModule &#123; }
     </pre>
-    <li>Minden ugyanúgy működőképes marad, csak az authentikáció feature kap egy külön module-t</li>
+    <li>Minden ugyanúgy működőképes marad, csak az autentikáció feature kap egy külön module-t</li>
   </ul>
   <br>
   <h5 #eagerloadingvslazyloading data-anchor="eagerloadingvslazyloading">Eager loading vs lazy loading</h5>
@@ -1489,7 +1489,7 @@
     <li>A main.js-től lehet várni - komplexitástól függően - méretbeli változást (csökkenést)</li>
     <li>A network tab-en is nyomon követhető a route-ra érkezéskor fájlbetöltés
       <ul>
-        <li>Javascript file</li>
+        <li>JavaScript file</li>
         <li>A neve a konfigurációtól függ, illetve production buildben is más nevet kap, mint csak dev szervert futtatva
         </li>
         <pre>
@@ -1660,7 +1660,7 @@
         <pre>
   #60;link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css"&#62;
         </pre>
-        <li>Favágó megoldás, vannak jobb módszerek stílusok alkalmazására Angularban</li>
+        <li>Favágó megoldás, vannak jobb módszerek stílusok alkalmazására Angular-ban</li>
       </ul>
     </li>
   </ul>
@@ -3132,7 +3132,7 @@
 <div>
   <h3 #templatereference data-anchor="templatereference">Template reference variable</h3>
   <ul>
-    <li>Speciális változó Angularban, amelyet a template-ben definiálunk</li>
+    <li>Speciális változó Angular-ban, amelyet a template-ben definiálunk</li>
     <li>Arra használható, hogy hozzáférjünk egy DOM elemhez, egy komponenshez, vagy egy direktívához a HTML kódban</li>
     <li>Ezeket a változókat a # karakterrel definiáljuk, és a template-ben hivatkozhatunk rájuk</li>
   </ul>
@@ -3758,7 +3758,7 @@
     <br>
     <li>Constructor
       <ul>
-        <li>Nem része a lifecycle-nek, nem is Angular specifikus, hanem Javascript sajátosság</li>
+        <li>Nem része a lifecycle-nek, nem is Angular specifikus, hanem JavaScript sajátosság</li>
         <li>A konstruktorban megadhatjuk, milyen logikák valósuljanak meg a komponens indulásakor</li>
         <li>Lefutásakor az @Input paraméterek még nem frissülnek, nem elérhetőek, csak inicializálódnak</li>
         <li>Lefutásakor a gyerek komponensek nem konstruktorai még nem futottak le</li>
@@ -4027,12 +4027,12 @@
         <li>A fenti kódrészlettel a template-ben megszámolhatjuk az objektumban lévő kulcsok számát</li>
         <li>Így a minden esetben 'message' kulcsot kapunk, a +1 hozzáadásával a sorban következő számot</li>
         <li>Viszont a template-ben az Object.keys() csak akkor működik, amennyiben elhelyezzük az alábbi sort a
-          komponens classban
+          komponens class-ban
           <ul>
             <li>protected readonly Object = Object;</li>
           </ul>
         </li>
-        <li>Az Object egy Javascript objektum, automatikusan nem érhető el a template-ben, deklarálni szükséges</li>
+        <li>Az Object egy JavaScript objektum, automatikusan nem érhető el a template-ben, deklarálni szükséges</li>
       </ul>
     </li>
   </ul>
@@ -5743,7 +5743,7 @@
       <ul>
         <li>Ahogy arról már szó esett, az adott komponensben definiált CSS szabályok más komponensekre nem érvényesülne
         </li>
-        <li>Angularban ezt jelenti a view encapsulation</li>
+        <li>Angular-ban ezt jelenti a view encapsulation</li>
       </ul>
     </li>
     <li>A view encapsulation egy viselkedés, ahol is a stílusok az adott komponensbe vannak enkapszulálva, és nincsenek
@@ -5757,7 +5757,7 @@
     encapsulation: ViewEncapsulation.Emulated // default
   })
     </pre>
-    <li>Angularban 3 féle enkapszuláció létezik
+    <li>Angular-ban 3 féle enkapszuláció létezik
       <ol>
         <li>ViewEncapsulation.None
           <ul>
@@ -6652,10 +6652,10 @@
         <li>JavaScript-be épített feature</li>
       </ul>
     </li>
-    <li>Tehát az Angularban az aszinkron adatok kezelésére Observable-t, és Promise-t is használhatunk</li>
+    <li>Tehát az Angular-ban az aszinkron adatok kezelésére Observable-t, és Promise-t is használhatunk</li>
     <li>Mi is az az aszinkron adat / művelet?
       <ul>
-        <li>A Javascript egy egyszálas programozási nyelv
+        <li>A JavaScript egy egyszálas programozási nyelv
           <ul>
             <li>A kód sorról sorra hajtódik végre</li>
             <li>A mennyiben egy sor lefutása hosszú időt vesz igénybe, addig a következő sornak várnia kell</li>
@@ -6725,7 +6725,7 @@
           </ul>
         </li>
         <li>Akkor is visszatér adattal, ha semmi sem használja a visszaadott adatot</li>
-        <li>A Javascript natívan tartalmazza</li>
+        <li>A JavaScript natívan tartalmazza</li>
       </ul>
     </li>
     <li>Observable
@@ -6737,11 +6737,11 @@
             <li>Máskülönben az Observable nem küld adatot</li>
           </ul>
         </li>
-        <li>Az Observable nincs benne sem a JavaScript-ben, sem az Angularban natívan
+        <li>Az Observable nincs benne sem a JavaScript-ben, sem az Angular-ban natívan
           <ul>
-            <li>A Javascript egy könyvtára, az RxJS biztosítja
+            <li>A JavaScript egy könyvtára, az RxJS biztosítja
               <ul>
-                <li>Reactive Extension Library for Javascript</li>
+                <li>Reactive Extension Library for JavaScript</li>
                 <li>Az RxJS Observer pattern-t használ</li>
                 <br>
                 <img src="assets/imgs/observer_pattern.png" style="width: 100%; max-width: 500px;">
@@ -8770,7 +8770,7 @@
           <th>Observable</th>
         </tr>
         <tr>
-          <td>Natív Javascript</td>
+          <td>Natív JavaScript</td>
           <td>RxJS könyvtár szolgáltatja</td>
         </tr>
       </table>
@@ -9771,7 +9771,7 @@
     </li>
     <li>Not found url
       <ul>
-        <li>Elődordul(hat), hogy olyan URL-re tévedünk, ami nincs definiálva
+        <li>Előfordul(hat), hogy olyan URL-re tévedünk, ami nincs definiálva
           <ul>
             <li>Például <a [href]="appUrl + 'angular/services'" target="_blank">
                 {{appUrl + 'angular/services'}}</a></li>
@@ -9814,7 +9814,7 @@
   <br>
   <h5 #routerlink data-anchor="routerlink">routerLink</h5>
   <ul>
-    <li>Az Angularban többféleképpen is meg lehet oldani az alkalmazáson belüli navigációt
+    <li>Az Angular-ban többféleképpen is meg lehet oldani az alkalmazáson belüli navigációt
       <ol>
         <li>routerLink direktíva
           <ul>
@@ -10776,7 +10776,7 @@
   <br>
   <h5 #authservice data-anchor="authservice">Auth service</h5>
   <ul>
-    <li>Egy egyszerű authentikációs szolgáltatást fogunk implementálni</li>
+    <li>Egy egyszerű autentikációs szolgáltatást fogunk implementálni</li>
     <pre>
   <b>// AuthUser class</b>
   export class AuthUser &#123;
@@ -10996,7 +10996,7 @@
         <pre>
   ng generate guard
         </pre>
-        <li>Az Angularban összesen 5 Route Guard létezik
+        <li>Az Angular-ban összesen 5 Route Guard létezik
           <ol>
             <li>CanActivate
               <ul>
@@ -12133,7 +12133,7 @@
     <li>A lentebb lévő példában fogjuk megoldani a filter dropdown szűrését</li>
     <li>A pipe-ot ehhez a students tömbön használjuk
       <ul>
-        <li>A transform függvényünk első paramétereként fog érkezni a student tömb</li>
+        <li>A transform függvényünk első paramétereként fog érkezni a students tömb</li>
       </ul>
     </li>
     <li>Szükségünk lesz továbbá arra az értékre, ami alapján szűrni szeretnénk
@@ -12163,7 +12163,7 @@
     &#60;/ul>
   &#60;/div>
 
-  &#60;tr *ngFor="let student of students | filter: filterLabel">
+  &#60;tr *ngFor="let student of students | filterBy: filterLabel">
     ...
   &#60;/tr>
 
@@ -12188,6 +12188,7 @@
     }
   
     onFilterChange(index = 0) &#123;
+      this.students = this._studentService.students;    // erre azért van szükség, mert később service-szel is szűrünk, és ha az filterez, nem lenne teljes a students tömb
       this.filterDropdown.forEach(f => f.active = false);
       this.filterDropdown[index].active = true;
       this.filterLabel = this.filterDropdown[index].label;
@@ -12196,7 +12197,7 @@
 
   <b>// filter.pipe.ts</b>
   @Pipe(&#123;
-    name: 'filter',
+    name: 'filterBy',
     pure: true
   })
   
@@ -12224,14 +12225,14 @@
   <ol>
     <li>Pure
       <ul>
-        <li>Alapértelmezetten minden pipe pure pipe</li>
+        <li>Alapértelmezetten minden pipe pure</li>
         <li>A pipe csak akkor fut le, ha a bemeneti érték (value) ténylegesen változik</li>
         <li>Ha ugyanazt az adatot kapja, akkor nem hajt végre újraszámítást
           <ul>
-            <li>A pipe első paramétere (value), amin alkalmazzuk a pipe-ot</li>
-            <li>Alkalmazás teljesítmény növelés érdekében</li>
+            <li>Ezzel nő az alkalmazás teljesítménye</li>
           </ul>
         </li>
+        <li>A pipe első paramétere (value), amin alkalmazzuk a pipe-ot</li>
         <li>Bármikor egy primitív típusnak változik meg az értéket, az "pure change"
           <ul>
             <li>Primitív típusok: string , number , bigint , boolean , symbol , null és undefined</li>
@@ -12239,7 +12240,7 @@
         </li>
         <li>Ha referencia típus esetében referencia változás történik, az szintén "pure change"
           <ul>
-            <li>Referencia típusok: object, array, function, map és set</li>
+            <li>Referencia típusok: object, array, function, Map és Set</li>
             <li>Például tömbhöz elemet hozzáadva nem fog lefutni egy pure pipe, mivel az nem egy "pure change", nem
               változik meg vele a tömb referenciája
               <ul>
@@ -12310,7 +12311,8 @@
     <li>A pipe nem javasolt filter-ezésre, sort-olásra
       <ul>
         <li>A pure pipe-ok egyik hátránya, hogy ha éppen szűrve, vagy rendezve van például egy listánk, és változtatunk
-          benne mondjuk a szűrt értéken (pl. a students tömbben az egyik tanuló nemét átállítjuk az ellenkezőre, mint,
+          benne mondjuk a szűrt értéken (például a students tömbben az egyik tanuló nemét átállítjuk az ellenkezőre,
+          mint,
           amire szűrtünk), akkor is jelen marad a listában az elem</li>
         <li>Előnye egyébként, hogy nagyon gyors</li>
         <li>A pipe-ot impure-ra állítva ez a hátrány megszűnik
@@ -12328,11 +12330,11 @@
   let person = &#123; name: 'John', age: 30 };
   let referenceToPerson = person;
 
-  referenceToPerson.age = 31;  // A "person" objektum age tulajdonsága megváltozik, de a referencia ugyanaz marad
+  referenceToPerson.age = 31;  // a "person" objektum age tulajdonsága megváltozik, de a referencia ugyanaz marad
     </pre>
     <li>Ha az objektum referencia változik, akkor az a külső szemlélő számára is világos jele a változásnak, mivel új
       példány jön létre</li>
-    <li>egy referencia típusú adat esetén a változások nem minősülnek "pure change"-nek, ha csak a tulajdonságok
+    <li>Egy referencia típusú adat esetén a változások nem minősülnek "pure change"-nek, ha csak a tulajdonságok
       módosulnak, de az objektum referencia változatlan marad</li>
     <br>
     <li>A tiszta függvények esetében fontos, hogy az adatok módosítása mindig új példányt (referenciát) hozzon létre,
@@ -12351,18 +12353,17 @@
     <pre>
   <b>// piping.component.html</b>
   &#60;div class="filter-dropdown">
-    &#60;button class="btn btn-secondary dropdown-toggle dark" type="button" id="filter2"
-        data-bs-toggle="dropdown" aria-expanded="false">
-    return this.students.filter(student => student.gender === filterBy); // anonym callback function
-        Service filter: &#123; &#123; filterLabel }}
-    &#60;/button>
-    &#60;ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="filter2">
-        &#60;li *ngFor="let fd of filterDropdown; let index = index">
-            &#60;a class="dropdown-item" [ngClass]="&#123;'active': fd.active}" (click)="onFilterChange2(index)">
-                &#123; &#123;fd.label}}
-            &#60;/a>
-        &#60;/li>
-    &#60;/ul>
+      &#60;button class="btn btn-secondary dropdown-toggle dark" type="button" id="filter2"
+          data-bs-toggle="dropdown" aria-expanded="false">
+          Service filter: &#123; &#123; filterLabel }}
+      &#60;/button>
+      &#60;ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="filter2">
+          &#60;li *ngFor="let fd of filterDropdown; let index = index">
+              &#60;a class="dropdown-item" [ngClass]="&#123;'active': fd.active}" (click)="onFilterChange2(index)">
+                  &#123; &#123;fd.label}}
+              &#60;/a>
+          &#60;/li>
+      &#60;/ul>
   &#60;/div>
 
   <b>// piping.component.ts</b>
@@ -12398,7 +12399,7 @@
         <li>Amint az adat elérhető, az async pipe frissíti az értékeket a template-ben</li>
       </ul>
     </li>
-    <li>Az async pipe segítségével nem kell expliciten subscribelni az Observable-ra vagy Promise-ra, és nem kell
+    <li>Az async pipe segítségével nem kell expliciten subscribe-olni az Observable-ra vagy Promise-ra, és nem kell
       manuálisan kezelni az adatot a komponensben</li>
     <li>Szimulálni fogjuk azt, mintha HTTP kérést intéznénk
       <ul>
@@ -12447,6 +12448,8 @@
   <br>
   <h5 #pipeexample data-anchor="pipeexample">Pipe example</h5>
   <app-piping></app-piping>
+  <br>
+  <br>
 </div>
 
 <div>
@@ -12591,7 +12594,7 @@
     ...
     getAllUsersWithFakeAPI() &#123;
       setTimeout(() => &#123;
-          this.usersSubject.next(this.users); // Az adatok elküldése a Subjecten keresztül
+          this.usersSubject.next(this.users); // az adatok elküldése a Subjecten keresztül
       }, 2000);
       return this.usersSubject.asObservable(); // Observable-t adunk vissza
     }
@@ -12623,7 +12626,7 @@
       <ul>
         <li>A new ConfirmDeleteComponent nem fog működni, mert csakis kizárólag egy példány jön létre a komponensről
           <ul>
-            <li>Egy Javascript objektum jön létre pusztán</li>
+            <li>Egy JavaScript objektum jön létre pusztán</li>
           </ul>
         </li>
         <li>Az Angular a háttérben a komponens rendereléséig sok mindent végez a háttérben, nem csak a példányosítást
@@ -12662,11 +12665,11 @@
               <ul>
                 <li>A ViewChild szépen megtalálja az első előfordulását a ViewcontainerDirective szelektorának
                 </li>
-                <li>Az Angular régebbi verzióiban a ViewChildnak meg kellet adni az options objectben a
+                <li>Az Angular régebbi verzióiban a ViewChildnak meg kellet adni az options object-ben a
                   &#123;static: false} kulcs-érték pár</li>
               </ul>
             </li>
-            <li>A container proooperty így tartalmaz egy ViewcontainerDirective referenciát
+            <li>A container property így tartalmaz egy ViewcontainerDirective referenciát
               <ul>
                 <li>Ezt a property-t használva hozzáférhettünk a ViewContainerRef-hez
                   <ul>
@@ -12687,55 +12690,59 @@
       </ul>
     </li>
     <pre>
-// viewcontainer.directive.ts
-@Directive(&#123;
-  selector: '[appContainer]'
-})
-export class ViewContainer&#123;
-    constructor(public viewContainer: ViewContainerRef) &#123;
-    }
-}
+  <b>// viewcontainer.directive.ts</b>
 
-// users.component.html
+  @Directive(&#123;
+    selector: '[appContainer]'
+  })
+  export class ViewContainer&#123;
+      constructor(public viewContainer: ViewContainerRef) &#123;
+      }
+  }
+
+  <b>// users.component.html</b>
+
   ...
   &#60;button class="btn btn-danger" (click)="showConfirmDelete(user)">
     &#60;i class="bi bi-trash">&#60;/i>
   &#60;/button>
   ...
   &#60;div appContainer>
-    <!-- app-confirm-delete component-->
+    &#60;!-- app-confirm-delete component -->
   &#60;/div>
 
-// users.component.ts
-@ViewChild(ViewContainer, &#123; static: false }) container!: ViewContainer;
-private confirmationSubscription: Subscription = new Subscription();
-...
-showConfirmDelete(user: User) &#123;
-  const confirmDeleteComponenetFactory =
-    this._componentFactoryResolver
-      .resolveComponentFactory(ConfirmDeleteComponent);
+  <b>// users.component.ts</b>
 
-  const containerViewRef = this.container.viewContainer;  // a template-ben lévő div referenciáját tartalmazza
+  @ViewChild(ViewContainer, &#123; static: false }) container!: ViewContainer;
+  private confirmationSubscription: Subscription = new Subscription();
+  ...
+  showConfirmDelete(user: User) &#123;
+    const confirmDeleteComponenetFactory =
+      this._componentFactoryResolver
+        .resolveComponentFactory(ConfirmDeleteComponent);
 
-  containerViewRef.clear();  // ha esetleg a div containerünk nem üres, kitöröljük a tartalmát
+    const containerViewRef = this.container.viewContainer;  // a template-ben lévő div referenciáját tartalmazza
 
-  const componentRef = containerViewRef.createComponent(confirmDeleteComponenetFactory); // renderelés
-  componentRef.instance.user = user; // user átadása a példánynak
+    containerViewRef.clear();  // ha esetleg a div container-ünk nem üres, kitöröljük a tartalmát
 
-  this.confirmationSubscription = componentRef.instance.showDeleteConfirmWindow.subscribe((data) => &#123;
-    this.confirmationSubscription.unsubscribe; // egyből le is iratkozunk róla
-    containerViewRef.clear();
+    const componentRef = containerViewRef.createComponent(confirmDeleteComponenetFactory); // renderelés
+    componentRef.instance.user = user; // user átadása a példánynak
 
-    if (data) &#123;
-      this.selectedUser = user;
-      this._userService.deleteUser(this.selectedUser.name);
-    }
-  });
-}
+    this.confirmationSubscription = componentRef.instance.showDeleteConfirmWindow.subscribe((data) => &#123;
+      this.confirmationSubscription.unsubscribe; // egyből le is iratkozunk róla
+      containerViewRef.clear();
+
+      if (data) &#123;
+        this.selectedUser = user;
+        this._userService.deleteUser(this.selectedUser.name);
+      }
+    });
+  }
     </pre>
   </ul>
   <br>
   <app-users></app-users>
+  <br>
 </div>
 
 <div>
@@ -12746,7 +12753,7 @@ showConfirmDelete(user: User) &#123;
       <ul>
         <li>Tartós memória tár lehet a LocalStorage, SessionStorage
           <ul>
-            <li>Kliens oldalon könnyen hozzájuk lehet férni, így érzékeny adatokat nem szabad tárolni</li>
+            <li>Kliens oldalon könnyen hozzájuk lehet férni, így érzékeny adatokat nem szabad tárolni bennük</li>
           </ul>
         </li>
         <li>Minél több, és nagyobb adattal dolgozunk lokálisan, annál jobban lassítjuk az alkalmazásunkat</li>
@@ -12765,7 +12772,7 @@ showConfirmDelete(user: User) &#123;
       <ul>
         <li>Adatbázishoz csatlakozáshoz Login credential-öket szükséges használnunk
           <ul>
-            <li>Amennyiben Angularban tárolnánk, könnyen kiolvasható lenne bárki számára, mivel az Angular egy
+            <li>Amennyiben Angular-ban tárolnánk, könnyen kiolvasható lenne bárki számára, mivel az Angular egy
               client-side framework</li>
           </ul>
         </li>
@@ -12780,7 +12787,7 @@ showConfirmDelete(user: User) &#123;
                 <li>URL-rel fordulhatunk hozzá, és attól függően, hogy mi az URL, küld választ</li>
               </ul>
             </li>
-            <li>JSON-ként kapjuk meg a választ, amit át tudunk alakítani Javascript objektummá</li>
+            <li>JSON-ként kapjuk meg a választ, amit át tudunk alakítani JavaScript objektummá</li>
             <li>API készítéséhez server-side nyelveket használunk
               <ol>
                 <li>Python</li>
@@ -12863,7 +12870,7 @@ showConfirmDelete(user: User) &#123;
                 <li>OPTIONS
                   <ul>
                     <li>Lekéri, hogy egy adott erőforráson milyen műveletek / metódusok érhetők el</li>
-                    <li>API ellenőrzése kiváló</li>
+                    <li>API ellenőrzésre kiváló</li>
                   </ul>
                 </li>
                 <li>TRACE
@@ -12873,7 +12880,7 @@ showConfirmDelete(user: User) &#123;
                 </li>
                 <li>CONNECT
                   <ul>
-                    <li>Egy TCP-alagút létrehozása, például HTTPS forgalomhoz proxykon keresztül</li>
+                    <li>Egy TCP-alagút létrehozása, például HTTPS forgalomhoz proxy-kon keresztül</li>
                   </ul>
                 </li>
               </ul>
@@ -12888,7 +12895,7 @@ showConfirmDelete(user: User) &#123;
                 <li>Általában nem szükséges explicit módon megadni</li>
                 <li>Amennyiben a kérést böngészőből küldjük a szerver felé, akkor a böngésző a kliens, és ő állítja elő
                   a header-üket</li>
-                <li>Angularban manuálisan előállítható</li>
+                <li>Angular-ban manuálisan előállítható</li>
               </ul>
             </li>
           </ul>
@@ -12896,22 +12903,22 @@ showConfirmDelete(user: User) &#123;
         <li>Request body
           <ul>
             <li>Az adat, amit el szeretnénk küldeni a kéréssel</li>
-            <li>Például egy új rekord létrehozásakor el szükséges küldenünk azok az adatokat / paramétereket /
+            <li>Például egy új rekord létrehozásakor el szükséges küldenünk azokat az adatokat / paramétereket /
               tulajdonságokat, amik jellemzik majd ezt az új rekordot</li>
-            <li>Nem minden request-nek kell body-val rendelkeznide, de a POST, PUT, PATCH metódusoknak mindenképpen</li>
+            <li>Nem minden request-nek kell body-val rendelkeznie, de a POST, PUT, PATCH metódusoknak mindenképpen</li>
           </ul>
         </li>
       </ol>
     </li>
-    <li>Frontend developerként nincs ráhatásunk a HTTP response-ra
+    <li>Frontend developer-ként nincs ráhatásunk a HTTP response-ra
       <ul>
         <li>A backend developer-ek feladata</li>
       </ul>
     </li>
-    <li>noSQL adatbázis
+    <li>NoSQL adatbázis
       <ul>
-        <li>Adatbázis-kezelő rendszer, amely nem a hagyományos, relációs modellre (pl. táblák, sorok, oszlopok) épül,
-          hanem másfajta struktúrákat használ az adatok tárolására és kezelésére</li>
+        <li>Adatbázis-kezelő rendszer, amely nem a hagyományos, relációs modellre (például táblák, sorok, oszlopok)
+          épül, hanem másfajta struktúrákat használ az adatok tárolására és kezelésére</li>
         <li>A tervezésük gyakran az egyszerűbb adattárolásra és gyors elérésre fókuszál</li>
         <li>Az adatok különböző formátumúak lehetnek ugyanabban az adatbázisban</li>
         <li>Könnyebben skálázható</li>
@@ -12921,10 +12928,10 @@ showConfirmDelete(user: User) &#123;
     </li>
     <li>Firebase
       <ul>
-        <li>Segítségével noSQL adatbázisokat hozhatunk létre</li>
-        <li>A Firebase endpointokat is létrehoz</li>
+        <li>Segítségével NoSQL adatbázisokat hozhatunk létre</li>
+        <li>A Firebase endpoint-okat is létrehoz</li>
         <li>Nem csak egy adatbázis, hanem egy komplett backend megoldás</li>
-        <li>Realtime adatbázis létrehozásakor kapunk egy URL-t, ami része az API endpointunknak</li>
+        <li>Realtime adatbázis létrehozásakor kapunk egy URL-t, ami része az API endpoint-unknak</li>
         <li>Nem táblákkal, sorokkal, oszlopokkal fogunk dolgozni, hanem kollekciókkal, amik dokumentumokat tartalmaznak,
           és egy dokumentum nem más, mint egy JSON objektum</li>
       </ul>
@@ -12935,7 +12942,7 @@ showConfirmDelete(user: User) &#123;
   <ul>
     <pre>
   <b>// navi.routing.module.ts</b>
-  &#60; path: 'dashboard', component: DashboardComponent, outlet: 'http' },
+  &#123; path: 'dashboard', component: DashboardComponent, outlet: 'http' },
 
   <b>// navi.component.html</b>
   &#60;ng-container *ngIf="tempSwitcher == 'http'">
@@ -12966,7 +12973,7 @@ showConfirmDelete(user: User) &#123;
     &#60;input type="text" class="form-control" name="name" ngModel>
     &#60;textarea class="form-control" name="description" ngModel>&#60;/textarea>
 
-    &#123;input type="text" class="form-control" name="user" ngModel>
+    &#60;input type="text" class="form-control" name="user" ngModel>
 
     &#60;div> // bootstrap dropdown element
       &#60;button class="btn btn-secondary dropdown-toggle dark" type="button"
@@ -13020,7 +13027,7 @@ showConfirmDelete(user: User) &#123;
       const headers = new HttpHeaders(
         &#123; 'My-Header': 'hi-there' }
       );
-      this._http.post&#60; &#123; name: string }>('https://angular-api-c8412-default-rtdb.europe-west1.firebasedatabase.app/tasks.json', form.value, &#123; headers })
+      this._http.post&#60;&#123; name: string }>(`$&#123;firebaseURL + '.json'}`, form.value, &#123; headers })
         .subscribe(&#123;
           next: (val) => console.log(val)
         });
@@ -13055,20 +13062,20 @@ showConfirmDelete(user: User) &#123;
         </li>
         <pre>
   <b>// Adatbázis URL-je</b>
-  https://angular-api-c8412-default-rtdb.europe-west1.firebasedatabase.app
+  https://angular-api-*****-default-rtdb.europe-west1.firebasedatabase.app
 
   <b>// POST metódus az adatbázis felé</b>
-  https://angular-api-c8412-default-rtdb.europe-west1.firebasedatabase.app/tasks.json // task kollekció
+  `$&#123;firebaseURL + '.json'}` // tasks kollekció (a fenti URL /tasks.json)
 
   <b>// POST</b>
-  this._http.post('https://angular-api-c8412-default-rtdb.europe-west1.firebasedatabase.app/tasks.json', form.value); // ebben a formában még nem fog történni request
+  this._http.post(`$&#123;firebaseURL + '.json'}`, form.value); // ebben a formában még nem fog történni request
         </pre>
       </ol>
     </li>
     <li>Amennyiben nem létezett a Firebase-en a kollekciónk, úgy '/tasks.json' URL-lel létrehozzuk</li>
     <li>POST request esetén JSON adatot szükséges küldenünk a body-ban
       <ul>
-        <li>A HTTPClient POST methodja megteszi ezt helyettünk automatikusan</li>
+        <li>A HTTPClient POST method-ja megteszi ezt helyettünk automatikusan</li>
       </ul>
     </li>
     <li>A POST metódus Obsevable-lel tér vissza
@@ -13076,7 +13083,7 @@ showConfirmDelete(user: User) &#123;
         <li>A HTTP-hívás csak akkor hajtódik végre, ha valaki feliratkozik rá</li>
         <li>Az első request vissza térési értéke az alábbi</li>
         <pre>
-  this._http.post&#60; &#123; name: string }>('https://angular-api-c8412-default-rtdb.europe-west1.firebasedatabase.app/tasks.json', form.value)
+  this._http.post&#60; &#123; name: string }>(`$&#123;firebaseURL + '.json'}`, form.value)
     .subscribe(&#123;
       next: (val) => console.log(val)
     });
@@ -13101,7 +13108,7 @@ showConfirmDelete(user: User) &#123;
     <pre>
   tasks (kollekció)
   └── -OC2inGEgSNtiDrp6T9q (dokumentum azonosító)
-      ├── date: "2024-12-01"
+      ├── date: "2023-12-01"
       ├── description: "This is it."
       ├── name: "New task"
       ├── priority: "critical"
@@ -13112,7 +13119,7 @@ showConfirmDelete(user: User) &#123;
       <ul>
         <li>Header-t tudunk beállítani</li>
         <pre>
-  this._http.post&#60; &#123; name: string }>('https://angular-api-c8412-default-rtdb.europe-west1.firebasedatabase.app/tasks.json', form.value, &#123;headers: &#123;myHeader: 'hi-there'}})
+  this._http.post&#60;&#123; name: string }>(`$&#123;firebaseURL + '.json'}`, form.value, &#123;headers: &#123;myHeader: 'hi-there'}})
     .subscribe(&#123;
       next: (val) => console.log(val)
     });
@@ -13122,7 +13129,7 @@ showConfirmDelete(user: User) &#123;
     const headers = new HttpHeaders(
       &#123; 'My-Header': 'hi-there' }
     );
-    this._http.post&#60; &#123; name: string }>('https://angular-api-c8412-default-rtdb.europe-west1.firebasedatabase.app/tasks.json', form.value, &#123; headers })
+    this._http.post&#60;&#123; name: string }>(`$&#123;firebaseURL + '.json'}`, form.value, &#123; headers })
     .subscribe(&#123;
       next: (val) => console.log(val)
     });
@@ -13145,7 +13152,7 @@ showConfirmDelete(user: User) &#123;
         </pre>
       </ul>
     </li>
-    <li>Egy adott kollekcióban (pl.: tasks) a dokumentum kulcsai egyediek lesznek
+    <li>Egy adott kollekcióban (például tasks) a dokumentum kulcsai egyediek lesznek
       <ul>
         <li>A kulcs egyedisége csak az adott kollekción belül garantált</li>
       </ul>
@@ -13153,21 +13160,21 @@ showConfirmDelete(user: User) &#123;
     <pre>
   tasks
   ├── -OC2inGEgSNtiDrp6T9q
-  │   ├── date: "2024-12-01"
+  │   ├── date: "2023-12-01"
   │   ├── description: "This is it."
   │   ├── name: "New task"
   │   ├── priority: "critical"
   │   ├── status: "open"
   │   └── user: "Joe Iron"
   ├── -OC2oB2FhZJx1hrmU0KZ
-  │   ├── date: "2024-11-30"
+  │   ├── date: "2023-11-30"
   │   ├── description: "Don't worry about it."
   │   ├── name: "Leisure task"
   │   ├── priority: "low"
   │   ├── status: "open"
   │   └── user: "Michael Golf"
   └── -OC2p6CWxLRmG4L-YAjD
-      ├── date: "2024-11-04"
+      ├── date: "2023-11-04"
       ├── description: "-"
       ├── name: "Task 2"
       └── priority: "medium"
@@ -13177,11 +13184,11 @@ showConfirmDelete(user: User) &#123;
   <h5 #httpclientget data-anchor="httpclientget">GET</h5>
   <ul>
     <li>GET request-tel tudjuk megvalósítani az adatok fetch-elését</li>
-    <li>Ugyanúgy, mint POST-nál, HTTPClient példényra van szükségünk</li>
+    <li>Ugyanúgy, mint POST-nál, HTTPClient példányra van szükségünk</li>
     <li>Ezen metódus esetében csak az első argumentum kötelező</li>
     <li>Az endpoint-unk ezesetben az alábbi</li>
     <pre>
-  https://angular-api-c8412-default-rtdb.europe-west1.firebasedatabase.app/tasks.json // a kollekciónk neve az URL vége
+  `$&#123;firebaseURL + '.json'}` // a kollekciónk neve az URL vége ( /tasks.json )
     </pre>
     <li>A tasks JSON adatot fog visszaadni, ezért szükséges a kiterjesztés a végére </li>
     <li>A GET metódus második, opcionális paramétere a headers</li>
@@ -13203,7 +13210,7 @@ showConfirmDelete(user: User) &#123;
   }
 
   private getTasks() &#123; // semelyik más osztály sem hívhatja meg, mert private
-    this._http.get&#60; &#123; [key: string]: Task }>('https://angular-api-c8412-default-rtdb.europe-west1.firebasedatabase.app/tasks.json')
+    this._http.get&#60; &#123; [key: string]: Task }>(`$&#123;firebaseURL + '.json'}`)
       .subscribe(&#123;
         next: (response) => console.log(response)
       })
@@ -13212,7 +13219,7 @@ showConfirmDelete(user: User) &#123;
   // response
   &#123;
     "-OC2inGEgSNtiDrp6T9q": &#123;
-      "date": "2024-12-01",
+      "date": "2023-12-01",
       "description": "This is it.",
       "name": "New task",
       "priority": "critical",
@@ -13220,7 +13227,7 @@ showConfirmDelete(user: User) &#123;
       "user": "Joe Iron"
     },
     "-OC2oB2FhZJx1hrmU0KZ": &#123;
-      "date": "2024-11-30",
+      "date": "2023-11-30",
       "description": "Don't worry about it.",
       "name": "Leisure task",
       "priority": "low",
@@ -13228,7 +13235,7 @@ showConfirmDelete(user: User) &#123;
       "user": "Michael Golf"
     },
     "-OC2p6CWxLRmG4L-YAjD": &#123;
-      "date": "2024-11-04",
+      "date": "2023-11-04",
       "description": "-",
       "name": "Task 2",
       "priority": "medium",
@@ -13258,7 +13265,7 @@ showConfirmDelete(user: User) &#123;
   <b>// response</b>
   &#123;
     "-OC2inGEgSNtiDrp6T9q": &#123;
-      "date": "2024-12-01",
+      "date": "2023-12-01",
       "description": "This is it.",
       "name": "New task",
       "priority": "critical",
@@ -13272,7 +13279,7 @@ showConfirmDelete(user: User) &#123;
   [
   &#123;
       "id": "-OC2inGEgSNtiDrp6T9q",
-      "date": "2024-12-01",
+      "date": "2023-12-01",
       "description": "This is it.",
       "name": "New task",
       "priority": "critical",
@@ -13288,8 +13295,7 @@ showConfirmDelete(user: User) &#123;
   <b>// dashboard.component.html</b>
   &#60;div class="refresh"> // frissítés gomb
     &#60;i *ngIf="!isLoading" class="bi bi-arrow-clockwise fs-3" (click)="getTasks()">&#60;/i>
-    &#60;div *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status"
-        style="width: 26.5px; height: 26.5px;">
+    &#60;div *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status">
         &#60;span class="sr-only">&#60;/span>
     &#60;/div>
   &#60;/div>
@@ -13331,12 +13337,11 @@ showConfirmDelete(user: User) &#123;
   // private getTasks() &#123; // semelyik más osztály sem hívhatja meg, és template-ben sem használható
   getTasks() &#123;
   this.isLoading = true; // frissítés funkció
-    this._http.get&#60; &#123; [key: string]: Task }>('https://angular-api-c8412-default-rtdb.europe-west1.firebasedatabase.app/tasks.json')
+    this._http.get&#60;&#123; [key: string]: Task }>(`$&#123;firebaseURL + '.json'}`)
       .pipe(
         map(data => &#123;
           let transformedData: Task[] = []
           Object.entries(data).forEach(([key, task]) => &#123;
-            console.log(key, task);
             transformedData.push(&#123; id: key, ...task });
           });
           return transformedData;
@@ -13350,7 +13355,7 @@ showConfirmDelete(user: User) &#123;
       });
 
     /* private getTasks() &#123; // ugyanúgy jó megoldás, csak a fenti RxJS
-      this._http.get&#60; &#123; [key: string]: Task }>('https://angular-api-c8412-default-rtdb.europe-west1.firebasedatabase.app/tasks.json')
+      this._http.get&#60;&#123; [key: string]: Task }>(`$&#123;firebaseURL + '.json'}`)
         .subscribe(&#123;
           next: (response) => &#123;
             Object.entries(response).forEach(([key, task]) => &#123;
@@ -13363,7 +13368,7 @@ showConfirmDelete(user: User) &#123;
   }
     </pre>
     <li>A frissítés gombbal újra lekérhető az adatbázis tartalma, illetve új task felvitele után frissül a táblánk</li>
-    <li>A prioritások vizuálisan is nmegjelennek</li>
+    <li>A prioritások vizuálisan is megjelennek</li>
     <pre>
   &#60;div *ngFor="let task of firebaseTasks" class="card" [ngClass]="'priority-' + task.priority">
     ...
@@ -13393,7 +13398,7 @@ showConfirmDelete(user: User) &#123;
   <br>
   <h5 #next id="httpclientdelete" data-anchor="httpclientdelete">DELETE</h5>
   <ul>
-    <li>A táblázatban lévő kártyákon lévő kuka gombbal törölni szeretnénk az adott task-ot
+    <li>A táblázatban lévő kártyákon szereplő kuka gombbal törölni tudjuk az adott task-ot
       <ul>
         <li>Törléshez mindig szükséges valamilyen azonosító</li>
         <li>A tasks kollekcióban meg kell találnunk a dokumentum azonosítót, amit az id kulcs alatt tárolunk</li>
@@ -13409,19 +13414,18 @@ showConfirmDelete(user: User) &#123;
           </ul>
         </li>
         <pre>
-  `https://angular-api-c8412-default-rtdb.europe-west1.firebasedatabase.app/tasks/$&#123;id}.json`
+  `$&#123;firebaseURL}/$&#123;id}.json`
         </pre>
-        <li>A DELETE method megintcsak Observable-t ad vissza nekünk, így fel kell rá iratkoznunk, hogy lefutton az API
+        <li>A DELETE method megint csak Observable-t ad vissza nekünk, így fel kell rá iratkoznunk, hogy lefutton az API
           <ul>
             <li>A szervertől kapott válasz - az esetek döntő többségében törlésnél - null</li>
           </ul>
         </li>
         <pre>
   <b>// dashboard.component.ts</b>
-  deleteTask(id: string | undefined) &#123; // szükséges az undefined, mert a Task classban az id optional parameter
-    console.log(id);
+  deleteTask(id: string | undefined) &#123; // szükséges az undefined, mert a Task class-ban az id optional parameter
     this.isLoading = true;
-    this._http.delete(`https://angular-api-c8412-default-rtdb.europe-west1.firebasedatabase.app/tasks/$&#123;id}.json`)
+    this._http.delete(`$&#123;firebaseURL}/$&#123;id}.json`)
       .subscribe(&#123;
         next: (response) => &#123; 
           this.getTasks();
@@ -13481,7 +13485,7 @@ showConfirmDelete(user: User) &#123;
     const updates: &#123; [key: string]: null } = &#123;};
     this.selectedTaskIDs.forEach(id => updates[id] = null);
 
-    this._http.patch('https://angular-api-c8412-default-rtdb.europe-west1.firebasedatabase.app/tasks.json', updates)
+    this._http.patch(`$&#123;firebaseURL + '.json'}`, updates)
       .subscribe((resp) => &#123; // resp-ben visszakapjuk az id-kat
         this.getTasks();
         this.isLoading = false;
@@ -13496,14 +13500,14 @@ showConfirmDelete(user: User) &#123;
       </ul>
     </li>
     <pre>
-  this._http.delete(`https://angular-api-c8412-default-rtdb.europe-west1.firebasedatabase.app/tasks.json).
+  this._http.delete(`$&#123;firebaseURL + '.json'}`).
     subscribe(); // csak feliratkozunk, amúgy sem ad vissza semmi response-t, de így elmegy az API kérés
     </pre>
   </ul>
   <br>
   <h5 #httpservice data-anchor="httpservice">HTTP service</h5>
   <ul>
-    <li>A HTTP request-eket service-ek illik / szokás elhelyezni
+    <li>A HTTP request-eket service-be illik / szokás elhelyezni
       <ul>
         <li>A komponens osztályban is működik, de inkább a UI logika helyezkedik el benne
           <ul>
@@ -13528,22 +13532,22 @@ showConfirmDelete(user: User) &#123;
   export class ApiService &#123;
     private _http: HttpClient = inject(HttpClient);
 
-    private tasksSubject = new BehaviorSubject&#60;Task[]>([]); // Tárolja az aktuális adatokat
+    private tasksSubject = new BehaviorSubject&#60;Task[]>([]); // tárolja az aktuális adatokat
     tasks$ = this.tasksSubject.asObservable(); // Observable a feliratkozáshoz
 
     createTask(task: Task) &#123;
         const headers = new HttpHeaders(
             &#123; 'My-Header': 'hi-there' }
         );
-        this._http.post&#60; &#123; name: string }>('https://angular-api-c8412-default-rtdb.europe-west1.firebasedatabase.app/tasks.json',
+        this._http.post&#60; &#123; name: string }>(`$&#123;firebaseURL + '.json'}`,
             task, &#123; headers })
             .subscribe(() => &#123;
                 this.refreshTasks();
             });
     }
 
-    deleteTask(id: string | undefined) &#123; // szükséges az undefined, mert a Task classban az id optional parameter
-        this._http.delete(`https://angular-api-c8412-default-rtdb.europe-west1.firebasedatabase.app/tasks/$&#123;id}.json`)
+    deleteTask(id: string | undefined) &#123; // szükséges az undefined, mert a Task class-ban az id optional parameter
+        this._http.delete(`$&#123;firebaseURL}/$&#123;id}.json`)
             .subscribe(() => &#123;
                 this.refreshTasks();
             });
@@ -13553,14 +13557,14 @@ showConfirmDelete(user: User) &#123;
         const updates: &#123; [key: string]: null } = &#123;};
         selectedTasks.forEach(id => updates[id] = null);
 
-        this._http.patch('https://angular-api-c8412-default-rtdb.europe-west1.firebasedatabase.app/tasks.json', updates)
+        this._http.patch(`$&#123;firebaseURL + '.json'}`, updates)
             .subscribe(() => &#123;
                 this.refreshTasks();
             });
     }
 
     getTasks(): Observable&#60;Task[]> &#123;
-        return this._http.get&#60;&#123; [key: string]: Task }>('https://angular-api-c8412-default-rtdb.europe-west1.firebasedatabase.app/tasks.json') // Observable-t ad visszs
+        return this._http.get&#60;&#123; [key: string]: Task }>(`$&#123;firebaseURL + '.json'}`) // Observable-t ad vissza
             .pipe(
                 map(data => &#123; // marad Observable, csak átalakítottuk az adatszerkezetet
                     let transformedData: Task[] = []
@@ -13574,16 +13578,17 @@ showConfirmDelete(user: User) &#123;
 
     refreshTasks() &#123;
         this.getTasks().subscribe(tasks => &#123;
-            this.tasksSubject.next(tasks); // Frissítjük a BehaviorSubject értékét
+            this.tasksSubject.next(tasks); // frissítjük a BehaviorSubject értékét
         });
     }
   }
     </pre>
-    <li>A dashboard komponens ngOnInit életciklusában feliratkozunk az api service tasks$ Observable-jére
+    <li>A dashboard komponens OnInit életciklusában feliratkozunk az api service tasks$ Observable-jére
       <ul>
         <li>Ez biztosítja, hogy bármikor, amikor a tasks$ Observable frissül, megkapjuk a frissített értékeket / task
           listát</li>
-        <li>Feliratkozás után meghívjuk a komponensünk refreshTasks() függvényét, ami elindíja a loading-ot, és meghívja
+        <li>Feliratkozás után meghívjuk a komponensünk refreshTasks() függvényét, ami elindítja a loading-ot, és
+          meghívja
           a service-ben található - ugyancsak - refreshTask() függvényt
           <ul>
             <li>A service ezen függvénye feliratkozik a getTasks() method-ra, aminek a visszatérési értéke egy
@@ -13607,7 +13612,7 @@ showConfirmDelete(user: User) &#123;
     ...
     imports: [
       ...
-      NgbCollapseModule // template például az [(ngbCollapse)] direktíva használatát engedélyezi
+      NgbCollapseModule // engedélyezi az [(ngbCollapse)] direktíva használatát a template-ben
     ],
     ...
   })
@@ -13666,7 +13671,6 @@ showConfirmDelete(user: User) &#123;
   }
 
   updateTask(form: Task) &#123;
-    
     this.isCollapsed = true;
     this.isEdit = false;
   }
@@ -13732,16 +13736,16 @@ showConfirmDelete(user: User) &#123;
     private _http: HttpClient = inject(HttpClient);
     private firebaseURL = environment.firebaseURL
 
-    private tasksSubject = new BehaviorSubject&#60;Task[]>([]); // Tárolja az aktuális adatokat
+    private tasksSubject = new BehaviorSubject&#60;Task[]>([]); // tárolja az aktuális adatokat
     tasks$ = this.tasksSubject.asObservable(); // Observable a feliratkozáshoz
 
     refreshTasks(): void &#123;
         this.getTasks().subscribe(&#123;
             next: (tasks) => &#123;
-                this.tasksSubject.next(tasks); // Frissítjük a BehaviorSubject értékét
+                this.tasksSubject.next(tasks); // frissítjük a BehaviorSubject értékét
             },
             /* error: (error) => &#123;
-                console.error('Error fetching tasks', error); // Hibakezelés
+                console.error('Error fetching tasks', error); // hibakezelés
             } */ 
         });
     }
@@ -13750,7 +13754,7 @@ showConfirmDelete(user: User) &#123;
         return this._http.get&#60; &#123; [key: string]: Task }>(`$&#123;this.firebaseURL}.json`).pipe(
             map(data => &#123; // marad Observable, csak átalakítottuk az adatszerkezetet
                 if (!data) &#123;
-                    return []; // Ha nincs adat, üres tömb
+                    return []; // ha nincs adat, üres tömb
                 };
                 let transformedData: any[] = [];
                 Object.entries(data).forEach(([key, task]) => &#123;
@@ -13772,7 +13776,7 @@ showConfirmDelete(user: User) &#123;
         );
     }
 
-    deleteTask(id: string | undefined) &#123; // szükséges az undefined, mert a Task classban az id optional parameter
+    deleteTask(id: string | undefined) &#123; // szükséges az undefined, mert a Task class-ban az id optional parameter
         return this._http.delete(`$&#123;this.firebaseURL}/$&#123;id}.json`).pipe(
             tap(() => &#123;
                 this.refreshTasks();
@@ -13792,7 +13796,7 @@ showConfirmDelete(user: User) &#123;
     }
 
     updataTask(data: Task) &#123;
-        const &#123; id } = data; // objektum destrokturálás
+        const &#123; id } = data; // objektum destrukturálás
         return this._http.put(`$&#123;this.firebaseURL}/$&#123;id}.json`, data).pipe(
             tap(() => &#123;
                 this.refreshTasks();
@@ -13816,7 +13820,6 @@ showConfirmDelete(user: User) &#123;
     this._api.getTasks().subscribe(&#123;
       next: (val) => &#123;
         this.firebaseTasks = val;
-        console.log('createTask: ', val);
         this.onSetDefaultState();
       }
     });
@@ -13825,16 +13828,14 @@ showConfirmDelete(user: User) &#123;
   createTask(form: Task) &#123;
     this._api.createTask(form).subscribe(&#123;
       next: (val) => &#123;
-        console.log('createTask: ', val);
         this.onSetDefaultState();
       }
     });
   }
 
-  deleteTask(id: string | undefined) &#123; // szükséges az undefined, mert a Task classban az id optional parameter
+  deleteTask(id: string | undefined) &#123; // szükséges az undefined, mert a Task class-ban az id optional parameter
     this._api.deleteTask(id).subscribe(&#123;
       next: (val) => &#123;
-        console.log('deleteAllSeledeleteTaskctedTask: ', val);
         this.onSetDefaultState();
       }
     });
@@ -13843,7 +13844,6 @@ showConfirmDelete(user: User) &#123;
   deleteAllSelectedTask() &#123;
     this._api.deleteAllSelectedTask(this.selectedTaskIDs).subscribe(&#123;
       next: (val) => &#123;
-        console.log('deleteAllSelectedTask: ', val);
         this.onSetDefaultState();
       }
     });
@@ -13852,7 +13852,6 @@ showConfirmDelete(user: User) &#123;
   updateTask(form: Task) &#123;
     this._api.updataTask(form).subscribe(&#123;
       next: (val) => &#123;
-        console.log('updateTask: ', val);
         this.onSetDefaultState();
       }
     });
@@ -13877,8 +13876,8 @@ showConfirmDelete(user: User) &#123;
         <pre>
   &#123;
     "rules": &#123;
-      ".read": "now &#60; 1734476400000",  // 2024-12-18
-      ".write": "now &#60; 1734476400000",  // 2024-12-18
+      ".read": "now &#60; 1702851600000",  // 2023-12-18
+      ".write": "now &#60; 1702851600000",  // 2023-12-18
     }
   }
           </pre>
@@ -13888,7 +13887,7 @@ showConfirmDelete(user: User) &#123;
       </ul>
     </li>
     <li>Ha bármilyen hiba adódik, egyelőre csak az isLoading miatt láthatjuk, hogy a spinner nem tűnik el</li>
-    <li>Az API hibásoknál rendre Observable-t kapunk vissza, és a subscribe második callback függvényében kapjuk vissza
+    <li>Az API hívásoknál rendre Observable-t kapunk vissza, és a subscribe második callback függvényében kapjuk vissza
       az esetleges hibát</li>
     <pre>
   <b>// Error message</b>
@@ -13901,21 +13900,21 @@ showConfirmDelete(user: User) &#123;
       "lazyUpdate": null,
       "lazyInit": "ƒ"
     },
-    "message": "Http failure response for https://angular-api-c8412-default-rtdb.europe-west1.firebasedatabase.app/tasks.json: 401 Unauthorized",
+    "message": "Http failure response for https://angular-api-*****-default-rtdb.europe-west1.firebasedatabase.app/tasks.json: 401 Unauthorized",
     "name": "HttpErrorResponse",
     "ok": false,
     "status": 401,
     "statusText": "Unauthorized",
-    "url": "https://angular-api-c8412-default-rtdb.europe-west1.firebasedatabase.app/tasks.json"
+    "url": "https://angular-api-*****-default-rtdb.europe-west1.firebasedatabase.app/tasks.json"
   }
     </pre>
-    <li>
+    <li>Értelmezés
       <ul>
         <li><strong>error</strong>: Az API által visszaküldött hibaüzenet</li>
         <li><strong>headers</strong>: A válaszhoz tartozó HTTP header-ök</li>
         <li><strong>message</strong>: A felhasználó számára olvasható hibaüzenet, amely a hibát, és az URL-t tartalmazza
         </li>
-        <li><strong>name</strong>: A hiba típusa (HttpErrorResponse).</li>
+        <li><strong>name</strong>: A hiba típusa (HttpErrorResponse)</li>
         <li><strong>ok</strong>: A válasz sikerességét jelző flag (hiba esetén false)</li>
         <li><strong>status</strong>: HTTP állapotkód</li>
         <li><strong>statusText</strong>: Az állapotkód szöveges leírása</li>
@@ -13975,10 +13974,11 @@ showConfirmDelete(user: User) &#123;
         <li>Ebben az esetben át kell adnunk a szervizből a komponensnek a hibaüzenetet</li>
       </ul>
     </li>
-    <li>Amennyiben készítünk egy Subjectet, amin keresztül a komponens felé közöljük a hibaüzeneteket, arra feliratkozva
+    <li>Amennyiben készítünk egy Subject-et, amin keresztül a komponens felé közöljük a hibaüzeneteket, arra
+      feliratkozva
       a komponensben is értesülünk a hibákról
       <ul>
-        <li>Az alábbi példában a szervizben iratkoztunk fel a HTTP requestre</li>
+        <li>Az alábbi példában a szervizben iratkoztunk fel a HTTP request-re</li>
         <li>A setErrorMessage függvénybe praktikusan átkerült a toast megjelenítése, és a loading eltűntetése, hiszen
           ezeket minden hibánál el szükséges végezni</li>
       </ul>
@@ -14096,7 +14096,7 @@ showConfirmDelete(user: User) &#123;
     apiState$ = this.apiStateSubject.asObservable();
 
     getTasks() &#123;
-        this._http.get&#60; &#123; [key: string]: Task }>(`$&#123;this.firebaseURL}.json`)
+        this._http.get&#60;&#123; [key: string]: Task }>(`$&#123;this.firebaseURL}.json`)
             .pipe(
                 map(data => this.transformFirebaseData(data)),
                 catchError((error) => this.errorHandler(error)) // megfogja a hibát az Observable láncban
@@ -14117,7 +14117,7 @@ showConfirmDelete(user: User) &#123;
         const headers = new HttpHeaders(
             &#123; 'My-Header': 'hi-there' }
         );
-        this._http.post&#60; &#123; name: string }>(`https://angulars-api-c8412-default-rtdb.europe-west1.firebasedatabase.app/tasks.json`, task, &#123; headers })
+        this._http.post&#60;&#123; name: string }>(`https://angulars-api-c8412-default-rtdb.europe-west1.firebasedatabase.app/tasks.json`, task, &#123; headers })
             .pipe(
                 catchError((error) => this.errorHandler(error)) // megfogja a hibát az Observable láncban
             )
@@ -14127,7 +14127,7 @@ showConfirmDelete(user: User) &#123;
             });
     }
 
-    deleteTask(id: string | undefined) &#123; // szükséges az undefined, mert a Task classban az id optional parameter
+    deleteTask(id: string | undefined) &#123; // szükséges az undefined, mert a Task class-ban az id optional parameter
         this._http.delete(`$&#123;this.firebaseURL}/$&#123;id}.json`)
             .pipe(
                 catchError((error) => this.errorHandler(error)) // megfogja a hibát az Observable láncban
@@ -14166,7 +14166,7 @@ showConfirmDelete(user: User) &#123;
 
     transformFirebaseData(data: &#123; [key: string]: Task }) &#123;
         if (!data) &#123;
-            return []; // Ha nincs adat, üres tömb
+            return []; // ha nincs adat, üres tömb
         };
         let transformedData: any[] = [];
         Object.entries(data).forEach(([key, task]) => &#123;
@@ -14244,7 +14244,7 @@ showConfirmDelete(user: User) &#123;
       this.onSetDefaultState(); // nyitott az accordion, így mindent alaphelyzetbe állítunk
     }
   
-    deleteTask(id: string | undefined) &#123; // szükséges az undefined, mert a Task classban az id optional parameter
+    deleteTask(id: string | undefined) &#123; // szükséges az undefined, mert a Task class-ban az id optional parameter
       this.isLoading = true;
       this._api.deleteTask(id);
     }
@@ -14393,11 +14393,11 @@ showConfirmDelete(user: User) &#123;
   }
 
   <b>// task.component.html</b>
-  <small><b>Name: </b>&#123; &#123;taskDetails.name}}</small>
-  <small><b>User: </b>&#123; &#123;taskDetails.user}}</small>
-  <small><b>Date: </b>&#123; &#123;taskDetails.date}}</small>
-  <small><b>Priority: </b>&#123; &#123;taskDetails.priority}}</small>
-  <small><b>Status: </b>&#123; &#123;taskDetails.status}}</small>
+  &#60;small>&#60;b>Name: &#60;/b>&#123; &#123;taskDetails.name}}&#60;/small>
+  &#60;small>&#60;b>User: &#60;/b>&#123; &#123;taskDetails.user}}&#60;/small>
+  &#60;small>&#60;b>Date: &#60;/b>&#123; &#123;taskDetails.date}}&#60;/small>
+  &#60;small>&#60;b>Priority: &#60;/b>&#123; &#123;taskDetails.priority}}&#60;/small>
+  &#60;small>&#60;b>Status: &#60;/b>&#123; &#123;taskDetails.status}}&#60;/small>
   &#60;button [routerLink]="['/', 'angular']" class="btn btn-sm btn-dark">Back&#60;/button>
 
   <b>// task.component.ts</b>
@@ -14430,12 +14430,13 @@ showConfirmDelete(user: User) &#123;
             <li>Amennyiben igen, feliratkozik rá, és a param-ok közül kiszedi az id-t, amit el is rakunk a
               'selectedTaskDetailsID' változóba
               <ul>
-                <li>Ez alapján fogjuk tudni, hogy melyik id-jú task-unk részleteire vagyun kíváncsiak, és jelenítjük meg
+                <li>Ez alapján fogjuk tudni, hogy melyik id-jú task-unk részleteire vagyunk kíváncsiak, és jelenítjük
+                  meg
                   az adott kártyán azokat</li>
               </ul>
             </li>
             <li>Abban az esetben, ha nincs http a child outlet nevünkben, a 'selectedTaskDetailsID' változót üres
-              stringgel tesszük egyelővé</li>
+              string-gel tesszük egyenlővé</li>
           </ul>
         </li>
       </ul>
@@ -14462,7 +14463,7 @@ showConfirmDelete(user: User) &#123;
         <li>Két paramétert fogad
           <ol>
             <li>Header név (key)</li>
-            <li>Érték</li>
+            <li>Érték (value)</li>
           </ol>
         </li>
         <pre>
@@ -14480,7 +14481,7 @@ showConfirmDelete(user: User) &#123;
           <ul>
             <li>Minden egyes művelet, amely módosítani próbálja, nem az eredeti objektumot módosítja, hanem egy új
               példányt hoz létre, amely tartalmazza a módosításokat</li>
-            <li>Mindig el kell mentened a visszatérő új példányt</li>
+            <li>Mindig el kell menteni a visszatérő új példányt</li>
           </ul>
         </li>
         <li>Mi a különbség a set és az appent method között?
@@ -14491,17 +14492,39 @@ showConfirmDelete(user: User) &#123;
             <pre>
   <b>// set</b>
   let headers = new HttpHeaders();
-  headers = headers.append('content-type', 'application/json');
-  headers = headers.append('content-type', 'text/html');
+  headers = headers.set('content-type', 'application/json');
+  headers = headers.set('content-type', 'text/html');
 
-  Content-Type: text/html
+  console.log('testheader: ', this.testHeaders.get('content-type'));
+
+  ↓↓↓↓↓
+
+  text/html
+
+
+  console.log('testheader: ', this.testHeaders.getAll('content-type'));
+
+  ↓↓↓↓↓
+
+  ['text/html']
 
   <b>// append</b>
   let headers = new HttpHeaders();
   headers = headers.append('content-type', 'application/json');
   headers = headers.append('content-type', 'text/html');
 
-  Content-Type: application/json_text/html
+  console.log('testheader: ', this.testHeaders.get('content-type'));
+
+  ↓↓↓↓↓
+
+  application/json
+
+
+  console.log('testheader: ', this.testHeaders.getAll('content-type'));
+
+  ↓↓↓↓↓
+
+  ['application/json', 'text/html']
             </pre>
           </ul>
         </li>
@@ -14623,9 +14646,9 @@ showConfirmDelete(user: User) &#123;
         </pre>
         <li>Szintén opcionális paraméternek beállíthatjuk a ResponseType-ot</li>
         <ul>
-          <li>json esetében automatikusan javascript objektummá konvertálódik a válasz (általában erre van szükség)</li>
-          <li>json esetében string-ként kapjuk meg a választ</li>
-          <li>blob is lehet, amennyiben fájlt várunk, mint válasz</li>
+          <li>JSON esetében automatikusan javascript objektummá konvertálódik a válasz (általában erre van szükség)</li>
+          <li>JSON esetében string-ként kapjuk meg a választ</li>
+          <li>BLOB is lehet, amennyiben fájlt várunk, mint válasz</li>
         </ul>
         <pre>
   this._http.get&#60; &#123; [key: string]: Task }>(`$&#123;this.firebaseURL}.json?page=1&item=10`, &#123;observe: 'body', responseType: 'json'})...
@@ -14652,7 +14675,7 @@ showConfirmDelete(user: User) &#123;
     <li>A kimenő, és a bejövő request-eket először nem a másik fél kapja meg (szerver, vagy a kliens), hanem az
       Interceptor
       <ul>
-        <li>Több Interceptort is bevethetünk egy irányba</li>
+        <li>Több Interceptor-t is bevethetünk egy irányba</li>
         <li>A next metódussal tudjuk továbbítani a kérést</li>
       </ul>
     </li>
@@ -14662,7 +14685,12 @@ showConfirmDelete(user: User) &#123;
         <pre>
   export class AuthInterceptorService implements HttpInterceptor &#123;
     intercept(req: HttpRequest&#60;any>, next: HttpHandler): Observable&#60;HttpEvent&#60;any>> &#123;
-        return next.handle(req); // itt csak visszaadjuk a érkező requestet módosítás nélkül
+        // itt férünk hozzá a req-ben a kimenő HTTP kéréshez
+        return next.handle(req);    // itt csak visszaadjuk a érkező request-et módosítás nélkül
+
+        return next.handle(req).pipe(tap((event: HttpEvent&#60;any>) => &#123;
+          console.log('Válasz: ', event);   // itt kapjuk meg a szervertől a választ
+        }))
     }
   }
         </pre>
@@ -14736,17 +14764,17 @@ showConfirmDelete(user: User) &#123;
         <pre>
   export class AuthInterceptorService implements HttpInterceptor &#123;
     intercept(req: HttpRequest&#60;any>, next: HttpHandler): Observable&#60;HttpEvent&#60;any>> &#123;
-        const modifiedRequest = req.clone(&#123; headers: req.headers.append('Auth', 'ok') }); // az eredeti header-öknöz hozzáadunk még egyet
+        const modifiedRequest = req.clone(&#123; headers: req.headers.append('Auth', 'ok') }); // az eredeti header-ökhöz hozzáadunk még egyet
         return next.handle(req);
     }
   }
         </pre>
-        <li>A clone header-höz hozzáadtunk egy auth fejlécet</li>
+        <li>A clone header-höz hozzáadtunk egy 'Auth' fejlécet</li>
       </ul>
     </li>
     <li>A válaszokat szintén manipulálhatjuk
       <ul>
-        <li>Mivel nem használunk más Interceptort, azért a 'next.handle(modifiedRequest)' adja vissza a response-t,
+        <li>Mivel nem használunk más Interceptor-t, azért a 'next.handle(modifiedRequest)' adja vissza a response-t,
           Observable formában</li>
         <li>RxJS segítségével hozzá tudunk férni a HttpEvent Observable-höz (amit deklaráltunk is, mint a függvény
           visszatérési értéke)</li>
@@ -14763,7 +14791,7 @@ showConfirmDelete(user: User) &#123;
         <li>map(), filter(), vagy egyéb operátorokkal manipulálni lehet a kapott adatot</li>
       </ul>
     </li>
-    <li>Hozzunk létre még egy Interceptort, hogy lássuk, miképp működnek, ha többet használunk
+    <li>Hozzunk létre még egy Interceptor-t, hogy lássuk, miképp működnek, ha többet használunk
       <ul>
         <pre>
   @NgModule(&#123;
@@ -14788,8 +14816,8 @@ showConfirmDelete(user: User) &#123;
   <b>// auth-intterceptor.service.ts</b>
   intercept(req: HttpRequest&#60;any>, next: HttpHandler): Observable&#60;HttpEvent&#60;any>> &#123; // a next.handle(modifiedRequest) adja vissza az Observable-t
     // console.log('auth: ', req);
-    // const modifiedRequest = req.clone(&#123; headers: req.headers.append('auth', 'ok') }); // az eredeti header-öknöz hozzáadunk még egyet
-    const modifiedRequest = req.clone(); // az eredeti header-öknöz hozzáadunk még egyet
+    // const modifiedRequest = req.clone(&#123; headers: req.headers.append('auth', 'ok') }); // az eredeti header-ökhöz hozzáadunk még egyet
+    const modifiedRequest = req.clone(); // az eredeti header-ökhöz hozzáadunk még egyet
     return next.handle(modifiedRequest)
         .pipe(
             tap((event) => &#123;
@@ -14979,7 +15007,7 @@ showConfirmDelete(user: User) &#123;
         </pre>
         <li>A válasz vagy sikeres lesz...
           <ul>
-            <li>A válasz .data kulcs tartalmát visszaadja a feliratkozónak (a komponens subscribe callbackje)</li>
+            <li>A válasz .data kulcs tartalmát visszaadja a feliratkozónak (a komponens subscribe callback-je)</li>
           </ul>
         </li>
         <li>...vagy hibaüzenettel tér vissza
@@ -14998,7 +15026,7 @@ showConfirmDelete(user: User) &#123;
         <li>A hibát megkapja a confirmHandler, ami csak akkor foglalkozik vele, ha 409-es, amennyiben nem az, akkor
           továbbadja azt, mivel throwError-ral tér vissza
           <ul>
-            <li>Ezt követően a Subscriber kapja meb a hibát, és - akár - tudja kezelni</li>
+            <li>Ezt követően a Subscriber kapja meg a hibát, és - akár - tudja kezelni</li>
             <pre>
   this._apiService.getPage(5).subscribe(&#123;
     next: (data) => console.log(data),
@@ -15019,18 +15047,18 @@ showConfirmDelete(user: User) &#123;
 <div>
   <h3 #authentication data-anchor="authentication">Authentication</h3>
   <ul>
-    <li>Ahhoz, hogy egy felhasználó authentikálni tudjon, első lépésként regisztrálnia szükséges, aztán pedig
+    <li>Ahhoz, hogy egy felhasználó autentikálni tudjon, első lépésként regisztrálnia szükséges, aztán pedig
       bejelentkeznie
       <ul>
         <li>Utóbbit credetial-ökkel tudja megtenni</li>
       </ul>
     </li>
-    <li>Bejelentkezéskor egy POST requestet küld a user a szerver felé
+    <li>Bejelentkezéskor egy POST request-et küld a user a szerver felé
       <ul>
         <li>A credential-öket a request body-ban küldi el</li>
         <li>A validáció szerver oldalon történik</li>
         <li>Ezt nem lehet megtenni a kliens oldalon, mert az Angular JavaScript-et futtat a böngészőben, és ez a kód
-          bárki számára olvsható a böngésző developer tooljával</li>
+          bárki számára olvasható a böngésző developer tool-jával</li>
       </ul>
     </li>
     <li>A szerver válaszként, ha valid a credetial, token-t küld a kliensek
@@ -15044,7 +15072,7 @@ showConfirmDelete(user: User) &#123;
               <ol>
                 <li>Header: Azonosítja a token típusát és az aláírás algoritmusát
                   <ul>
-                    <li>A token típusát (JWT) és az aláírás algoritmusát (pl. HS256) határozza meg.</li>
+                    <li>A token típusát (JWT) és az aláírás algoritmusát (például HS256) határozza meg</li>
                     <pre>
   &#123;
     "alg": "HS256",
@@ -15053,7 +15081,7 @@ showConfirmDelete(user: User) &#123;
                     </pre>
                   </ul>
                 </li>
-                <li>Payload: Tartalmazza a tokenben tárolt adatokat (pl. felhasználóazonosító, jogosultságok)
+                <li>Payload: Tartalmazza a tokenben tárolt adatokat (például felhasználó azonosító, jogosultságok)
                   <ul>
                     <li>Tartalmazhat lejárati időt, user ID-t, user nevet</li>
                     <pre>
@@ -15070,7 +15098,7 @@ showConfirmDelete(user: User) &#123;
                     <li>Titkos kulcs, a fejléc és a payload kombinációjából készül az aláírás</li>
                     <pre>
   HMACSHA256(
-    base64UrlEncode(header) + "." + base64UrlEncode(payload),
+    base64UrlEncode(header) + "." + base64UrlEncode(payload),   Base64URL formátumok, ponttal elválasztva
     secret
   )
                     </pre>
@@ -15079,6 +15107,8 @@ showConfirmDelete(user: User) &#123;
               </ol>
             </li>
             <pre>
+  [header].[payload].[signature]
+
   eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
             </pre>
           </ul>
@@ -15089,19 +15119,19 @@ showConfirmDelete(user: User) &#123;
         <li>A szerver el tudja dönteni, hogy az érkező token valid, vagy sem</li>
         <li>A kliens eltárolja a token-t
           <ul>
-            <li>Pl. a localStorage-ban</li>
+            <li>Például a localStorage-ban</li>
           </ul>
         </li>
       </ul>
     </li>
-    <li>A kliensnek, ha védett tartalomhoz kíván hozzáférni, el kell küldenie a token-jét a requestben
+    <li>A kliensnek, ha védett tartalomhoz kíván hozzáférni, el kell küldenie a token-jét a request-ben
       <ul>
         <li>Mivel a szerver generálta a token-t, így ellenőrizni is tudja</li>
       </ul>
     </li>
     <li>A Firebase Realtime adatbázisának Rules fülén állítsuk át a hozzáférést
       <ul>
-        <li>Mostantól csak authentikált felhasználók olvashatják, és írhatják az adatbázist</li>
+        <li>Mostantól csak autentikált felhasználók olvashatják, és írhatják az adatbázist</li>
         <pre>
   &#123;
     "rules": &#123;
@@ -15201,8 +15231,8 @@ showConfirmDelete(user: User) &#123;
         <li>A regisztráció/belépés gomb egyelőre csak logol, és kinullázza a form-ot</li>
       </ul>
     </li>
-    <li>A Firebase Authentication részében ebgedélyezésre került az Email/Password</li>
-    <li>A következő lépés, hogy Sign up requestet küldjünk a Firebase felé
+    <li>A Firebase Authentication részében engedélyezésre került az Email/Password</li>
+    <li>A következő lépés, hogy Sign up request-et küldjünk a Firebase felé
       <ul>
         <pre>
   onSignUp(email: string, password: string): Observable&#60;AuthFirebaseResponse> &#123;
@@ -15231,22 +15261,22 @@ showConfirmDelete(user: User) &#123;
         return this._http.post&#60;AuthFirebaseResponse>(
             `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=$&#123;this.firebaseAPIKey}`,
             &#123; email, password, returnSecureToken: true }
-        ).pipe(
-          catchError((err) => &#123;
-            return this.handleError(err.error.error.message);
-          })
-        );
+            ).pipe(
+              catchError((err) => &#123;
+                return this.handleError(err.error.error.message);
+              })
+            );
       }
 
       onSignIn(email: string, password: string): Observable&#60;AuthFirebaseResponse | string> &#123; // error esetén a handleError Observable&#60;string>-et ad vissza
         return this._http.post&#60;AuthFirebaseResponse>(
-          `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=$&#123;this.firebaseAPIKey}`,
-          &#123; email, password, returnSecureToken: true }
-        ).pipe(
-          catchError((err) => &#123;
-            return this.handleError(err.error.error.message);
-          })
-        );
+            `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=$&#123;this.firebaseAPIKey}`,
+            &#123; email, password, returnSecureToken: true }
+            ).pipe(
+              catchError((err) => &#123;
+                return this.handleError(err.error.error.message);
+              })
+            );
       }
 
     handleError(error: string): Observable&#123;any> &#123;  // string lesz az errorMessages[error] is
@@ -15355,7 +15385,7 @@ showConfirmDelete(user: User) &#123;
     <li>A hibakezelés a service-ben történik
       <ul>
         <li>A catchError elkapja a hibát, és throwError-ral Observable-t adunk tovább a komponens felé</li>
-        <li>Mindeközben a hibaüzenetet az 'errorHandler' függvénnyel generáljuk. ami hibát is dob
+        <li>Mindeközben a hibaüzenetet az 'errorHandler' függvénnyel generáljuk, ami hibát is dob
           (Observable&#60;string>)</li>
       </ul>
     </li>
@@ -15417,10 +15447,10 @@ showConfirmDelete(user: User) &#123;
             <li>Ha public lenne a _token, bárhonnan elérhető lehetne alkalmazásszerte</li>
           </ul>
         </li>
-        <li>getter-rel elérhető tesszük a _token-t osztályon kívülről is
+        <li>getter-rel elérhetővé tesszük a _token-t osztályon kívülről is
           <ul>
-            <li>Tulajdonképpen prperty-t hozunk létre a get kulcsszóval</li>
-            <li>get property, elérhető class-on kívül, de nem módosítható</li>
+            <li>Tulajdonképpen property-t hozunk létre a get kulcsszóval</li>
+            <li>A get property elérhető class-on kívül, de nem módosítható</li>
             <li>A token property-vel elérhető a _token privát változó</li>
             <li>Ha az _expiresIn property nem létezik, vagy kisebb, mint a aktuális idő (tehát lejárt), akkor null-lal
               térünk vissza
@@ -15453,28 +15483,28 @@ showConfirmDelete(user: User) &#123;
     return this._http.post&#60;AuthFirebaseResponse>(
         `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=$&#123;this.firebaseAPIKey}`,
         &#123; email, password, returnSecureToken: true }
-    ).pipe(
-        tap((response) => &#123;
-            this.handleUser(response);
-        }),
-        catchError((err) => &#123;
-            return throwError(() => (this.handleError(err.error.error.message)));
-        })
-    );
+        ).pipe(
+            tap((response) => &#123;
+                this.handleUser(response);
+            }),
+            catchError((err) => &#123;
+                return throwError(() => (this.handleError(err.error.error.message)));
+            })
+        );
   }
 
   onSignIn(email: string, password: string): Observable&#60;AuthFirebaseResponse> &#123; // error esetén a handleError Observable&#60;string>-et ad vissza
       return this._http.post&#60;AuthFirebaseResponse>(
           `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=$&#123;this.firebaseAPIKey}`,
           &#123; email, password, returnSecureToken: true }
-      ).pipe(
-          tap((response) => &#123;
-              this.handleUser(response);
-          }),
-          catchError((err) => &#123;
-              return throwError(() => (this.handleError(err.error.error.message)));
-          })
-      );
+          ).pipe(
+              tap((response) => &#123;
+                  this.handleUser(response);
+              }),
+              catchError((err) => &#123;
+                  return throwError(() => (this.handleError(err.error.error.message)));
+              })
+          );
   }
 
   handleUser(resp: AuthFirebaseResponse) &#123;
@@ -15591,15 +15621,15 @@ showConfirmDelete(user: User) &#123;
     }
   }
         </pre>
-        <li>Jelenleg be van állítva az adatbázis szabályai között, hogy csakis kizárólag authentikált felhasználók
+        <li>Jelenleg be van állítva az adatbázis szabályai között, hogy csakis kizárólag autentikált felhasználók
           olvashatják, és írhatják az adatbázist</li>
       </ul>
     </li>
     <li>Annak ellenére, hogy már be tudunk jelentkezni az Angular applikációnkba, a szerver még nem tud róla, hogy
       rendelkezünk tőle származó token-nel
       <ul>
-        <li>A request-ekben meg kell mondanunk, hogy egy authentikált felhasználó küldi a kéréseket</li>
-        <li>Vissza kell küldenünk az access token-t a szervernek minden(!) requestben</li>
+        <li>A request-ekben meg kell mondanunk, hogy egy autentikált felhasználó küldi a kéréseket</li>
+        <li>Vissza kell küldenünk az access token-t a szervernek minden(!) request-ben</li>
       </ul>
     </li>
     <li>Az api szervizben szeretnénk elérni az authfirebase szervizben lévő firebaseUser$ Subject-et
@@ -15641,7 +15671,7 @@ showConfirmDelete(user: User) &#123;
             <li>Márpedig szükségünk van a korábban emit-ált user adatra</li>
             <li>E végett az auth firebase service-ben a Subject helyett használhatunk BehaviorSubject-et</li>
             <pre>
-  <b>// apii.service.ts</b>
+  <b>// api.service.ts</b>
   firebaseUser$: BehaviorSubject&#60;AuthFirebaseUser | null> = new BehaviorSubject&#60;AuthFirebaseUser | null>(null); // kezdetben null-t, majd AuthFirebaseUser típust fog kibocsátani a BehaviorSubject
 
   <b>// dashboard.component.ts</b>
@@ -15702,13 +15732,13 @@ showConfirmDelete(user: User) &#123;
                 </li>
               </ul>
             </li>
-            <li>A firebaseUser$ által adott objektumból a token-t ki kell bonttani
+            <li>A firebaseUser$ által adott objektumból a token-t ki kell bontani
               <ul>
-                <li>A Firebase az 'auth' query paraméterben fogadja a tokeneket</li>
+                <li>A Firebase az 'auth' query paraméterben fogadja a token-eket</li>
               </ul>
             </li>
             <pre>
-  <b>before</b>
+  <b>// before</b>
   getTasks() &#123;
     this._http.get&#60; &#123; [key: string]: Task }>(`$&#123;this.firebaseURL}.json?page=1&item=10`, &#123; observe: 'body', responseType: 'json' })
         .pipe(
@@ -15727,7 +15757,7 @@ showConfirmDelete(user: User) &#123;
         });
   }
 
-  <b>after</b>
+  <b>// after</b>
   getTasks() &#123;
     this._authFirebaseService.firebaseUser$
         .pipe(
@@ -15832,9 +15862,9 @@ showConfirmDelete(user: User) &#123;
         });
     }
         </pre>
-        <li>Minden HTTP kérés, amelyet az alkalmazás küld, átmegy az interceptoron</li>
-        <li>Az interceptorhoz injektálva van a AuthFirebaseService, amely hozzáférést biztosít az firebaseUser$
-          BehaviorSubject-hez, ami a token-t user token-t tartalmazza</li>
+        <li>Minden HTTP kérés, amelyet az alkalmazás küld, átmegy az Interceptor-on</li>
+        <li>Az Interceptor-hoz injektálva van a AuthFirebaseService, amely hozzáférést biztosít az firebaseUser$
+          BehaviorSubject-hez, ami a user token-t tartalmazza</li>
         <li>Az intercept metódus a HTTP kérés előtt fut le
           <ol>
             <li>req: a HTTP kérés, amit módosítani szeretnénk</li>
@@ -15846,31 +15876,30 @@ showConfirmDelete(user: User) &#123;
             <li>A take(1) operátor biztosítja, hogy a stream csak egyszer adjon értéket, és utána leálljon
               <ul>
                 <li>Mivel a BehaviorSubject egy folyamatosan figyelhető Observable, minden token-változást kibocsát, így
-                  explicit limitálni kellett az áramlást (pl. take(1)), hogy csak a legfrissebb értéket használjuk a
+                  explicit limitálni kellett az áramlást (például take(1)), hogy csak a legfrissebb értéket használjuk a
                   kéréshez</li>
                 <li>HTTP kérés előtt le fogja kérni a felhasználót, és nem fogja folyamatosan figyelni</li>
               </ul>
             </li>
             <li>Az exhaustMap operátor segítségével biztosítjuk, hogy ha az firebaseUser$ frissül, az értékét
-              felhasználjuk
-              a HTTP kérés módosításához
+              felhasználjuk a HTTP kérés módosításához
               <ul>
-                <li>Célja, hogy ha egyszer már van egy aktív HTTP kérés (pl. egy előző kérés válaszára várunk), akkor ne
-                  kezdjünk el újabb HTTP kérés indítását</li>
+                <li>Célja, hogy ha egyszer már van egy aktív HTTP kérés (például egy előző kérés válaszára várunk),
+                  akkor ne kezdjünk el újabb HTTP kérést indítani</li>
                 <li>A HTTP kérés csak akkor folytatódik, ha van érvényes user, és token</li>
               </ul>
             </li>
             <li>Az HttpRequest objektumot nem lehet közvetlenül módosítani, mivel az immutábilis
               <ul>
-                <li>A req.clone() metódust használjuk, hogy létrehozzunk egy másolatot a kéréstől, majd hozzáadjuk a
+                <li>A req.clone() metódust használjuk, hogy létrehozzunk egy másolatot a kérésről, majd hozzáadjuk a
                   szükséges auth paramétert</li>
               </ul>
             </li>
-            <li>Az első return az Observable-t adja vissza, amit az interceptornak kell feldolgoznia, a második return
-              az új, módosított HTTP kérést adja vissza, amely szintén egy Observable, amit az HttpHandler kezel</li>
+            <li>Az első return az Observable-t adja vissza, amit az Interceptor-nak kell feldolgoznia, a második return
+              az új, módosított HTTP kérést adja vissza, amely szintén egy Observable, amit a HttpHandler kezel</li>
             <li>Nincs explicit feliratkozás a firebaseUser$ Subject-re
               <ul>
-                <li>Ha már van egy operátor, amely az adatfolyamot feldolgozza (pl. az exhaustMap) az automatikusan
+                <li>Ha már van egy operátor, amely az adatfolyamot feldolgozza (például az exhaustMap), az automatikusan
                   kezeli a feliratkozást az Observable-re</li>
                 <li>A take(1), és az exhaustMap operátorok automatikusan feliratkoznak rá a firebaseUser$
                   BehaviorSubject-re</li>
@@ -15879,11 +15908,11 @@ showConfirmDelete(user: User) &#123;
           </ul>
         </li>
         <li>Az Interceptor hatására az api service-ben nincs szükség sem a take(1), sem az exhhaustMap operátor
-          használatára, mert az Interceptor gondoskodik
+          használatára, mert az Interceptor gondoskodik róla
           <ul>
-            <li>Miután az interceptor elvégezte a feladatát, a getTasks() metódusban az HttpClient.get() hívása már
+            <li>Miután az Interceptor elvégezte a feladatát, a getTasks() metódusban az HttpClient.get() hívása már
               tartalmazza a megfelelő token-t</li>
-            <li>Az api szervizben lévő Observable lánc kizárólag a válasz feldolgozására koncentrál (pl. map,
+            <li>Az api szervizben lévő Observable lánc kizárólag a válasz feldolgozására koncentrál (például map,
               catchError), és nem kell külön foglalkoznia a felhasználói token-nel</li>
           </ul>
         </li>
@@ -15922,16 +15951,16 @@ showConfirmDelete(user: User) &#123;
     <li>Frissítésnél a teljes alkalmazás újraindul
       <ul>
         <li>Minden kód lefut újra</li>
-        <li>Az auth-firebase szeervizben lévő firebaseUser$ Subject felveszi a kezdeti állapotát (null)</li>
+        <li>Az auth-firebase szervizben lévő firebaseUser$ Subject felveszi a kezdeti állapotát (null)</li>
         <li>Az eddigi logika, hogy amennyiben a user = null, kiléptetjük a felhasználót</li>
         <li>Memóriában tároljuk az alkalmazás állapotát, ami újraindításnál törlődik, majd minden változó újra létrejön,
           kezdeti értékkel</li>
         <li>Valamilyen tárba szükséges menteni az adatokat</li>
-        <li>A browser fut a program, így a készülék fájljaihoz nem férünk hozzá</li>
-        <li>Viszont dolgozhatunk cookie-kkal, és a böngésző localStorage-ával</li>
+        <li>A browserben fut a program, így a készülék fájljaihoz nem férünk hozzá</li>
+        <li>Viszont dolgozhatunk cookie-kkal, és a böngésző localStorage-ével</li>
       </ul>
     </li>
-    <li>El fogjuk tárolni a tokenünket a localStorage-ba
+    <li>El fogjuk tárolni a token-ünket a localStorage-ba
       <ul>
         <li>Az auth-firebase service-ben történik meg a bejelentkezés</li>
         <pre>
@@ -15960,7 +15989,7 @@ showConfirmDelete(user: User) &#123;
   autoLogin() &#123;
     const user = JSON.parse(localStorage.getItem('user') || 'null');
     // const user = JSON.parse(localStorage.getItem('user') ?? 'null');
-    // const user = JSON.parse(localStorage.getItem('user')!); // ha biztoosak vagyunk abban, hogy lesz értéke (itt nem)
+    // const user = JSON.parse(localStorage.getItem('user')!); // ha biztosak vagyunk abban, hogy lesz értéke (itt nem)
 
     if (!user) &#123;
         return;
@@ -15979,7 +16008,7 @@ showConfirmDelete(user: User) &#123;
               készít</li>
             <li>Ha pedig null értéket vesz fel a user, csak visszatérünk a függvényből</li>
             <li>Ellenkező esetben létrehozunk egy új AuthFirebaseUser-t</li>
-            <li>Majd megnézzük, hogy a loggedInUser-nek van-e / érvényes-e a tokenje
+            <li>Majd megnézzük, hogy a loggedInUser-nek van-e / érvényes-e a token-je
               <ul>
                 <li>Ha a getter (token) property-ben az _expiresIn változó lejárt, vagy nem is létezik, null értéket
                   fogunk kapni a token meghívására</li>
@@ -16069,7 +16098,7 @@ showConfirmDelete(user: User) &#123;
     this.firebaseUser$.next(user);
 
     localStorage.setItem('user', JSON.stringify(user));
-    this.autoLogout(+resp.expiresIn * 1000); // elindítjuk a timert
+    this.autoLogout(+resp.expiresIn * 1000); // elindítjuk a timer-t
   }
 
   ...
@@ -16107,14 +16136,14 @@ showConfirmDelete(user: User) &#123;
     }
   })
         </pre>
-        <li>A timer-t le szükséges állítani, a a felhasználó maga lépett ki, hogy ne fusson tovább a háttérben
+        <li>A timer-t le szükséges állítani, ha a felhasználó maga lépett ki, hogy ne fusson tovább a háttérben
           feleslegesen
           <ul>
             <li>Amennyiben ezt nem tesszük meg, kétszer léptetjük ki a user-t</li>
           </ul>
         </li>
-        <li>A timert kinullázzuk, amikor a user kilép</li>
-        <li>Ha nem tartalmaz a property timert, nem kell kitörölnünk</li>
+        <li>A timer-t kinullázzuk, amikor a user kilép</li>
+        <li>Ha nem tartalmaz a property timer-t, nem kell kitörölnünk</li>
         <li>Az autoLogout függvényt is meg kell hívnunk
           <ul>
             <li>Minden alkalommal, amikor új felhasználó jelentkezik be az app-ba, vagyis amikor a firebaseUser$
@@ -16122,9 +16151,9 @@ showConfirmDelete(user: User) &#123;
             <li>Amikor bejelentkezünk, vagy regisztrálunk, meghívjuk</li>
           </ul>
         </li>
-        <li>Az időt numberként, milliszekundumban adjuk tovább, mivel a setTimeout függvényt is ebben kell beállítani
+        <li>Az időt number-ként, milliszekundumban adjuk tovább, mivel a setTimeout függvényt is ebben kell beállítani
         </li>
-        <li>Az autoLogin-ben szintén új user-t emit-álunk, így ott is meghívjuk a timert
+        <li>Az autoLogin-ben szintén új user-t emit-álunk, így ott is meghívjuk a timer-t
           <ul>
             <li>Ebben a függvényünkben, amikor kiszedjük a localStorage-ből a user-t, az _expiresIn értékünk DateTime
               típusú</li>
@@ -16132,7 +16161,8 @@ showConfirmDelete(user: User) &#123;
             <li>A jövőbeli időből kivonjuk a jelenlegi időt</li>
           </ul>
         </li>
-        <li>Az expireTime lejárta után a megadott callback (this.onLogout) automatikusan végrehajtódik, amely
+        <li>Az expireTime lejárta után a callback-ben megadott függvény (this.onLogout) automatikusan végrehajtódik,
+          amely
           kijelentkezteti a felhasználót</li>
       </ul>
     </li>
@@ -16148,7 +16178,18 @@ showConfirmDelete(user: User) &#123;
       </ul>
     </li>
     <li>Alapvetően a task listához való hozzáférést kellene blokkolnunk, de az alkalmazás felépítéséből adódóan a
-      Contact oldalhoz vezető route-ra fogjuk rárakni a guard-ot</li>
+      Contact oldalhoz vezető route-ra fogjuk rárakni a guard-ot
+      <ul>
+        <li>Bejelentkezés után ez a menüpont nem is érhető el, így csak annyit észlelheetünk, hogy kijelentkezett
+          állapotban nem tudunk a contact-ba navigálni</li>
+        <li>Illetve sikertelen navigáció miatt a page loading képernyő megszüntetésére létre kellett hozni egy szervizt,
+          ami leállítja a loading-ot
+          <ul>
+            <li>Az app ezen része nem került dokumentálásra</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
     <pre>
   <b>// auth-firebase-guard.ts</b>
   export const AuthFirebaseGuard: CanActivateFn =
@@ -16157,13 +16198,13 @@ showConfirmDelete(user: User) &#123;
       const authFirebaseService: AuthFirebaseService = inject(AuthFirebaseService);
       const router: Router = inject(Router);
 
-      return authFirebaseService.firebaseUser$.pipe( // a kapott / módosított Observable-t adjuk vissza
+      return authFirebaseService.firebaseUser$.pipe(    // a kapott / módosított Observable-t adjuk vissza
           take(1),
-          map((user: AuthFirebaseUser | null): boolean | UrlTree => &#123; // átalakítjuk az Observable-t, és return-nek tovább adjuk 
-              if (!!user) &#123; // ha nincs user, ez az ág lép életbe
-                  return true; // boolean-nel térünk vissza
+          map((user: AuthFirebaseUser | null): boolean | UrlTree => &#123;    // átalakítjuk az Observable-t, és return-nek tovább adjuk 
+              if (!!user) &#123;    // ha nincs user, ez az ág lép életbe
+                  return true;    // boolean-nel térünk vissza
               } else &#123;
-                  return router.createUrlTree(['/angular']); // UrlTree-val térünk vissza
+                  return router.createUrlTree(['/angular']);    // UrlTree-val térünk vissza, avagy átirányítás történik a /angular aloldalra
               }
           })
       )
@@ -16171,7 +16212,7 @@ showConfirmDelete(user: User) &#123;
   <b>// navi-routing.module.ts</b>
   &#123; path: 'dashboard/contact', component: AuthcontactComponent, outlet: 'auth', canActivate: [AuthFirebaseGuard] },
     </pre>
-    <li>A 'AuthFirebaseGuard' függvényünkben feliratkozunk a firebaseUser$ BehaviourSubject-re
+    <li>Az 'AuthFirebaseGuard' függvényünkben feliratkozunk a firebaseUser$ BehaviourSubject-re
       <ul>
         <li>Minden alkalommal, amikor a firebaseUser$ adatot emit-ál, megkapja a guard</li>
         <li>A legutóbb kibocsátott értékre vagyunk kíváncsiak, amit tartalmazott a Subject, a jövőbeliekre nem (memory
@@ -16205,15 +16246,15 @@ showConfirmDelete(user: User) &#123;
 <div>
   <h3 #ajax data-anchor="ajax">AJAX</h3>
   <ul>
-    <li>Az Angular-nak van erre egy dedikált eszköze, a HTTPSClient</li>
+    <li>Az Angular-nak van erre egy dedikált eszköze, a HTTPClient</li>
     <li>Az AJAX kéréseket a vanilla JS fetch függvényével fogjuk megvalósítani
       <ul>
         <li>fetch() function GET method-jával kell kérést küldenünk</li>
-        <li>fetch('https://kodbazis.hu/api/cimek');</li>
+        <li>Példa: fetch('https://kodbazis.hu/api/cimek');</li>
         <li>A komponens indulásakor akarjuk futtatni, amihez az ngOnInit életciklus method-ot kell igénybe
           vennünk
         </li>
-        <li>Implementálni kell a classba az OnInit-et, majd az ngOnInit method-ot használni
+        <li>Implementálni kell a class-ba az OnInit-et, majd az ngOnInit method-ot használni
           <ul>
             <pre>
   export class AppComponent implements OnInit &#123;
@@ -16230,24 +16271,24 @@ showConfirmDelete(user: User) &#123;
           <ul>
             <pre>
   fetch('https://kodbazis.hu/api/cimek')
-    .then(res => res)
-    .then(data => &#123;
-    console.log(data);
-    return data.json();
-    &#125;)
-    .then(content => &#123;
-    console.log(content);
-    &#125;)
-    .catch(error => &#123;
-    console.error('Hiba történt:', error);
-    &#125;);
+      .then(res => res)   // igazából felesleges sor
+      .then(data => &#123;
+          console.log(data);
+          return data.json();
+      &#125;)
+      .then(content => &#123;
+          console.log(content);
+      &#125;)
+      .catch(error => &#123;
+          console.error('Hiba történt:', error);
+      &#125;);
                             </pre>
-            <li>A Promise csak egyszer olvasható, így ahhoz, hogy a Response-t logoljuk, az első then()
-              blokkban tovább kell adnunk a választ, majd a második then() blokkban ki tudjuk logolni a
+            <li>A Promise csak egyszer olvasható, így ahhoz, hogy a Response-t log-oljuk, a második then()
+              blokkban tovább kell adnunk a választ, majd a harmadik then() blokkban ki tudjuk logolni a
               Response objektumot, majd tovább kell adnunk a kiparsolt JSON adatot, hogy hozzájussunk a
               címekhez
             </li>
-            <li>Amennyiben a Response-t nem szeretnénk megtekinteni, az alábbi kód a helyes</li>
+            <li>Amennyiben a Response-t nem szeretnénk "megtekinteni", az alábbi kód rövidebb, és helyes</li>
             <pre>
   fetch("https://kodbazis.hu/api/cimek")
       .then(res => res.json())
@@ -16361,9 +16402,10 @@ showConfirmDelete(user: User) &#123;
 </div>
 
 <div>
-  <h3 #reactive data-anchor="reactive">Reaktive thinking</h3>
+  <h3 #reactive data-anchor="reactive">Reactive thinking</h3>
   <ul>
-    <li>Az operations menüpontban látható az eredeti (procedurális), és az új kód (reaktív)</li>
+    <li>Az <a [routerLink]="['/', 'extras']" [fragment]="'proceduralvsreactivethinking'">Extras</a> menüpontban látható
+      az eredeti (procedurális), és az új kód (reaktív)</li>
     <li>Procedurális
       <ul>
         <li>Jelentése: előrehaladó</li>
@@ -16423,22 +16465,21 @@ showConfirmDelete(user: User) &#123;
                 <li>Amíg nincs Observer-je, addig nem áramlik benne adat</li>
                 <li>A kövegkező lépés, hogy le akarjuk kérni az elemeket szerver oldalról
                   <ul>
-                    <li>
                     <li>Ahelyett, hogy az RxJS beépített ajax() függvényét használnánk, az Angular beépített, dedikált
                       eszközét, a HTTPClient-et vesszük igénybe
                     </li>
-                    <li>Ehhez dependency injectiont kell végeznünk</li>
+                    <li>Ehhez dependency injection-t kell végeznünk</li>
                     <pre>
   constructor(private http: HttpClient) &#123;
                     &#125;
                     </pre>
                     <li>Az osztály contructor-on keresztül kap egy objektumot, amit ő belül tud használni</li>
-                    <li>Más Angularos beépített eszközökhöz is így lehet hozzájutni</li>
+                    <li>Más Angular-os beépített eszközökhöz is így lehet hozzájutni</li>
                     <li>A private kulcsszó egy TypeScript-es rövidítés
                       <ul>
                         <li>Tulajdonképpen egy property (mint a "class-ra globális változók"), ami be-set-elődik
                           futási
-                          időben a dependency injection régén
+                          időben a dependency injection révén
                           <ul>
                             <li>Így nézne ki private nélkül</li>
                             <pre>
@@ -16468,7 +16509,7 @@ showConfirmDelete(user: User) &#123;
                         </li>
                         <li>Csak akkor történik meg, ha mi manuálisan adatot adunk át a next() függvény meghívásával
                         </li>
-                        <li>A Subject visszatér egy Observable-lel, ami egy belső hiba az Observable-ök és a Subjectek
+                        <li>A Subject visszatér egy Observable-lel, ami egy belső hiba az Observable-ök és a Subject-ek
                           belső megvalósításában (típusváltás történik)
                         </li>
                         <li>Így nem tudjuk ráhívni a subscribe() függvényre a next-et, ezért egy kisebb trükköt kell
@@ -16481,7 +16522,7 @@ showConfirmDelete(user: User) &#123;
   this.refresh$.next();
                               </pre>
                             </li>
-                            <li>A // @ts-ignore a TypeScript compilernek szól, figyelmen kívül hagyja a következő sort
+                            <li>A // @ts-ignore a TypeScript compiler-nek szól, figyelmen kívül hagyja a következő sort
                             </li>
                             <li>Közel sem best-practice, de néha elkerülhetetlen</li>
                           </ul>
@@ -16557,7 +16598,7 @@ showConfirmDelete(user: User) &#123;
                             <li>Érdemes olyan Observable-t létrehozni, aminek a típusa egybevág azzal, ami alapból
                               érkezett volna (ami jelen esetünkben egy tömb)
                             </li>
-                            <li>Az of() egy creation operátor, amivel a gyorsan és könnyen lehet Observable-t
+                            <li>Az of() egy creation operátor, amivel gyorsan és könnyen lehet Observable-t
                               létrehozni
                             </li>
                             <li>Amennyiben egy üres tömböt rakunk bele, akkor hibától függetlenül egy tömb érkezik a
@@ -16600,7 +16641,7 @@ showConfirmDelete(user: User) &#123;
               <ul>
                 <li>A delete Observable-re OnInit-ben feliratkozunk, és gombnyomásra next()-elünk rá az index adattal
                 </li>
-                <li>A pipe()-ban ezúttal delete methoddal hívjuk meg a HTTPClient-et</li>
+                <li>A pipe()-ban ezúttal delete method-dal hívjuk meg a HTTPClient-et</li>
                 <li>A végén mellékhatásként next-elünk a refresh$-re</li>
               </ul>
             </li>
@@ -16628,16 +16669,14 @@ showConfirmDelete(user: User) &#123;
     </li>
     <li>async pipe és a BehaviorSubject
       <ul>
-        <li>Az Operationsnél az elems property-t és az isLoading property-t átalakítjuk Subject-ekké</li>
+        <li>Az az elems property-t és az isLoading property-t átalakítjuk Subject-ekké</li>
         <li>Az összes isLoadingReactive értéket át kell írnunk
           <ul>
-            <li>
-              <pre>
+            <pre>
   this.isLoadingReactive$.next(false);
   // OR
   this.isLoadingReactive$.next(true);
-              </pre>
-            </li>
+            </pre>
             <li>Nem ütközünk ezúttal TypeScript errorba (nem kell @ts-ignore-t használni), mivel a Subject-ünk
               megmarad
               Subject, nem vált át Observable-re, mivel nem írtunk a Subject mögé pipe-ot
@@ -16655,9 +16694,8 @@ showConfirmDelete(user: User) &#123;
                 <li>Így közvetlenül a sablonból iratkozunk fel, tehát minden adat, amit az Observable kibocsát, a
                   sablonban fogja végezni a pályafutását
                 </li>
-                <li>Meg kell keresni a legkülső értéket, ahol a scope-ban használva van, körbe burkolni egy
-                  konténerrel
-                  (gyakorlatilag bármilyen elemmel körbe burkolható),
+                <li>Meg kell keresni a legkülső értéket, ahol a scope-ban használva van, és körbe burkolni egy
+                  konténerrel (gyakorlatilag bármilyen elemmel)
                   <ul>
                     <pre>
   ...
@@ -16666,7 +16704,7 @@ showConfirmDelete(user: User) &#123;
   &#60;/ng-container&#62;
                     </pre>
                     <li>A struktúrális direktívában (*ngIf) hivatkozunk az Observable-re, az async pipe-pal
-                      feliratkozunk rá, az as után pedig a változó következik, amit a sablonban ezek után használunk
+                      feliratkozunk rá, az 'as' után pedig a változó következik, amit a sablonban ezek után használunk
                     </li>
                     <li>Ezen a ponton még TypeScript hibára futunk, mert a TypeScript nem tudja, hogy az
                       elemsReactive$
@@ -16675,7 +16713,7 @@ showConfirmDelete(user: User) &#123;
                         <li>Ennek kiküszöbölésére a Subject-et explicit típussal kell ellátni</li>
                         <pre>
   elemsReactive$: Subject&#60;string[]&#60; = new Subject();
-  // Meg kell hagyni a következőt
+  // meg kell hagyni a következőt
   this.elemsReactive$.next(response as string[]);
                         </pre>
                       </ul>
@@ -16735,30 +16773,20 @@ showConfirmDelete(user: User) &#123;
               <ul>
                 <li>Ez az életciklus method a komponens inaktiválódásakor fut le</li>
                 <li>Tipikusan takarító jellegű műveletek végzendők el</li>
-                <li>Implementálni kell a class-ba
-                  <ul>
-                    <li>
-                      <pre>
+                <li>Implementálni kell a class-ba</li>
+                <pre>
   export class OperationsComponent implements OnDestroy &#123;
 
   &#125;
-                      </pre>
-                    </li>
-                  </ul>
-                </li>
-                <li>Végül a komponens inaktiválódásakor leiratkozunk az összes Subscription-ről
-                  <ul>
-                    <li>
-                      <pre>
+                </pre>
+                <li>Végül a komponens inaktiválódásakor leiratkozunk az összes Subscription-ről</li>
+                <pre>
   ngOnDestroy() &#123;
   for (let subscription of this.subscriptions) &#123;
       subscription.unsubscribe();
     &#125;
   &#125;
-                      </pre>
-                    </li>
-                  </ul>
-                </li>
+                </pre>
               </ul>
             </li>
           </ul>
@@ -16886,9 +16914,9 @@ showConfirmDelete(user: User) &#123;
 </div>
 
 <div>
-  <h3 #reactiveform data-anchor="reactiveform">Form (Reactive)</h3>
+  <h3 #reactiveform data-anchor="reactiveform">Reactive Form</h3>
   <ul>
-    <li>Form validációra az Angularban két eszköztár is rendelkezésre áll:
+    <li>Form validációra az Angular-ban két eszköztár is rendelkezésre áll:
       <ol>
         <li>Template driven forms</li>
         <li>Reactive forms
@@ -17782,7 +17810,7 @@ showConfirmDelete(user: User) &#123;
 </div>
 
 <div>
-  <h3 #templatedrivenform data-anchor="templatedrivenform">Form (Template Driven)</h3>
+  <h3 #templatedrivenform data-anchor="templatedrivenform">Template Driven Form</h3>
   <ul>
     <li>Template driven forms:
       <ul>
@@ -17803,7 +17831,7 @@ showConfirmDelete(user: User) &#123;
             <li>A Unit Test kihívásokkal teli</li>
           </ul>
         </li>
-        <li>Ahhoz, hogy formokkal dolgozzunk Angularban, be kell importálni a FormsModule-t</li>
+        <li>Ahhoz, hogy formokkal dolgozzunk Angular-ban, be kell importálni a FormsModule-t</li>
         <li>A kiindulási alapunknak semmi köze sincs az Angularhoz
           <pre>
   &#60;form action="#" method="post" class="form">
@@ -17838,7 +17866,7 @@ showConfirmDelete(user: User) &#123;
             <li>Nem erre lesz szükségünk</li>
           </ul>
         </li>
-        <li>A formot, mint Javascript object-et szeretnénk megkapni
+        <li>A formot, mint JavaScript object-et szeretnénk megkapni
           <pre>
   &#60;form #registrationForm="ngForm" class="form" (ngSubmit)="submit(registrationForm)">
     ...
@@ -17915,7 +17943,7 @@ showConfirmDelete(user: User) &#123;
               </ul>
             </li>
             <li>Tehát a @ViewChild dekorátorral hozzáférünk a Template Reference Variable-höz, ami a form element
-              referenciáját tartalmazza Javascript objektum formában
+              referenciáját tartalmazza JavaScript objektum formában
             </li>
             <li>Ha hozzá szeretnénk férni a FormControl-okhoz:
               <ul>
@@ -18026,7 +18054,7 @@ showConfirmDelete(user: User) &#123;
                       <ul>
                         <li>Mint azt a formnál is láthattuk a #firstname="ngModel"-lel elérjük, hogy az ngModel az
                           input
-                          element referenciáját tartalmazza, Javascript objektum formájában
+                          element referenciáját tartalmazza, JavaScript objektum formájában
                         </li>
                       </ul>
                     </li>
@@ -18420,7 +18448,7 @@ showConfirmDelete(user: User) &#123;
     </li>
     <li>A projekt inicializálása az 'ng new &#60;projektnév&#62;' paranccsal történik
       <ul>
-        <li>Létrejön egy alapok mappa, és az összes Angularos forrásfájl ebbe kerül</li>
+        <li>Létrejön egy alapok mappa, és az összes Angular-os forrásfájl ebbe kerül</li>
         <li>A parancs lefutása előtt meg kell adnunk, hogy akarunk-e kliens oldali útvonalválasztót</li>
         <li>A stíluslapok formátumára is rákérdez</li>
       </ul>
@@ -18488,15 +18516,15 @@ showConfirmDelete(user: User) &#123;
           </ul>
         </li>
         <li>A '--open' megnyitja az appot a böngészőben automatikusan, amikor lebuildelődött</li>
-        <li>A DEV szerverre azért van szükség, mert az Angularos forrásfájlokat nem Javascript, hanem TypeScript
+        <li>A DEV szerverre azért van szükség, mert az Angular-os forrásfájlokat nem JavaScript, hanem TypeScript
           nyelven, és ez utóbbit a böngésző nem tudja értelmezni, ezért szükség van a forrásfájlok
-          átfordítására Typescriptről Javascriptre,
+          átfordítására Typescriptről JavaScript-re,
         </li>
         <li>A DEV szerver azt csinálja, hogy bármikor, amikor változtatunk valamit egy fájlon, akkor az
           átfordítást automatikusan elvégzi
         </li>
         <li>A DEV szerver azt is megcsinálja, hogy az ES6-os modulokat (amik szintén nem futnának alapból a
-          böngészőben) összecsomagolja egyetlen egy Javascript-es bundle-lé, és úgy futtatja a böngészőben
+          böngészőben) összecsomagolja egyetlen egy JavaScript-es bundle-lé, és úgy futtatja a böngészőben
         </li>
         <li>A DEV szerver információkat nyújt az esetlegesen előforduló hibákról is</li>
       </ul>
@@ -18516,7 +18544,7 @@ showConfirmDelete(user: User) &#123;
         <li>Az alkalmazásunk belépési pontjaként szolgál</li>
       </ul>
     </li>
-    <li>Angularban külön fájlt szentelünk a kontrollernek (app.component.ts), és a templatenek (app.component.html)
+    <li>Angular-ban külön fájlt szentelünk a kontrollernek (app.component.ts), és a templatenek (app.component.html)
       is
       <ul>
         <li>Bármelyikre rámentünk, a build folyamat automatikusan le fog futni</li>
@@ -18532,7 +18560,7 @@ showConfirmDelete(user: User) &#123;
   &#125;
         </pre>
         <li>A kontroller részt a deklaráción belül lehet létrehozni</li>
-        <li>A State változók propertyk ebben a classban</li>
+        <li>A State változók propertyk ebben a class-ban</li>
         <li>A következő lépés, hogy a State változót fel akarjuk használni a sablonban, tartalomgeneráláshoz
         </li>
         <li>
@@ -18633,7 +18661,7 @@ showConfirmDelete(user: User) &#123;
             <li>Két kulcs-érték párral kell rendelkezzen (path és component)</li>
             <li>Az üres path megegyezik a root-tal (path: '' = path: '/')
               <ul>
-                <li>A '/'-re sosincs szükség, az Angularban ezt nem kell kiírni (path: '/list')</li>
+                <li>A '/'-re sosincs szükség, az Angular-ban ezt nem kell kiírni (path: '/list')</li>
               </ul>
             </li>
           </ul>
@@ -18819,7 +18847,9 @@ showConfirmDelete(user: User) &#123;
         <li>Amennyiben egy komponens a komponens egy item-jébe szeretnénk navigálni, ahhoz három dolgot kell tennünk
           <ul>
             <li>Létrehozni egy útvonalat az adott item-nek
-              <pre>&#123;path: 'list/:id', component: ItemComponent&#125;</pre>
+              <pre>
+  &#123;path: 'list/:id', component: ItemComponent&#125;
+              </pre>
             </li>
             <li>A template-ben beállítani a routerLink inputot
               <pre>
@@ -18851,7 +18881,7 @@ showConfirmDelete(user: User) &#123;
         .then(res => res.json())
         .then((photos: Photo[]) => &#123; // A Photo-knak létrehoztunk egy interface-t
             if (!photos.length) &#123;
-            this.route.navigate(['..'], &#123;relativeTo: aRoute}); // Amennyiben pl. a user saját maga ír be az url-be nem létező albumID-t, úgy nem kap képeket, és visszadobjuk a listára
+            this.route.navigate(['..'], &#123;relativeTo: aRoute}); // Amennyiben például a user saját maga ír be az url-be nem létező albumID-t, úgy nem kap képeket, és visszadobjuk a listára
           }
           this.photos = photos;
         })
@@ -18883,12 +18913,13 @@ showConfirmDelete(user: User) &#123;
   <br>
   <app-navi [tempSwitcher]="'spa'"></app-navi>
   <br>
+  <br>
 </div>
 
 <div>
   <h3 #unittest data-anchor="unittest">Unit test</h3>
   <ul>
-    <li>Az alkalmazás legkisebb, önállóan tesztelhető egységeinek (pl. komponensek, szolgáltatások, direktívák)
+    <li>Az alkalmazás legkisebb, önállóan tesztelhető egységeinek (például komponensek, szolgáltatások, direktívák)
       tesztelését jelenti</li>
     <li>Az Angular különösen támogatja az egységtesztelést a beépített keretrendszerével, mint például a Karma (teszt
       futtató), és a Jasmine (tesztelési keretrendszer)</li>
@@ -19007,7 +19038,7 @@ showConfirmDelete(user: User) &#123;
                 </pre>
               </ul>
             </li>
-            <li>Matcher: Az expect állítással kombinált függvény, amely ellenőrzést végez (pl. toBe, toEqual)
+            <li>Matcher: Az expect állítással kombinált függvény, amely ellenőrzést végez (például toBe, toEqual)
               <ul>
                 <pre>
   expect(5).toBe(5);       // Ellenőrzi, hogy az érték megegyezik
@@ -19286,7 +19317,7 @@ showConfirmDelete(user: User) &#123;
     </li>
     <li>Fő használati célok
       <ol>
-        <li>Nem akarjuk, hogy az eredeti metódus ténylegesen végrehajtódjon (pl. HTTP requests)</li>
+        <li>Nem akarjuk, hogy az eredeti metódus ténylegesen végrehajtódjon (például HTTP requests)</li>
         <li>Ellenőrizni szeretnénk, hogy a metódus meghívódott-e, és ha igen, hányszor, milyen paraméterekkel</li>
       </ol>
     </li>
@@ -19931,7 +19962,7 @@ showConfirmDelete(user: User) &#123;
       <ul>
         <li>Lehetőséget nyújt a komponenspéldány (componentInstance) elérésére</li>
         <li>Lehetőséget a DOM manipulálására és ellenőrzésére</li>
-        <li>Lehetőséget az Angular életciklus eseményeinek vezérlésére (pl. detectChanges segítségével)</li>
+        <li>Lehetőséget az Angular életciklus eseményeinek vezérlésére (például detectChanges segítségével)</li>
       </ul>
     </li>
     <pre>
@@ -20026,7 +20057,7 @@ showConfirmDelete(user: User) &#123;
         <pre>
   const button = fixture.debugElement.query(By.css('button'));
         </pre>
-        <li>triggerEventHandler()-rel lehetővé teszi események (pl. kattintás) szimulálását</li>
+        <li>triggerEventHandler()-rel lehetővé teszi események (például kattintás) szimulálását</li>
         <pre>
   const element = fixture.debugElement.query(By.css('div'));
   expect(element.attributes['id']).toBe('myId');
@@ -20075,8 +20106,8 @@ showConfirmDelete(user: User) &#123;
         <li>A debugElement segítségével megkeressük a számunkra releváns elemet, vagy elemeket
           <ul>
             <li>QueryAll esetében az eredmény egy tömb lesz</li>
-            <li>Dinamikus elemek esetében (pl. string interpoláció) a komponenst a fixture.componentInstance-en
-              keresztül elérjük, és közvetlen módosíthatjuk a változóit (pl. component.title)
+            <li>Dinamikus elemek esetében (például string interpoláció) a komponenst a fixture.componentInstance-en
+              keresztül elérjük, és közvetlen módosíthatjuk a változóit (például component.title)
               <ul>
                 <li>Viszont az érték csak a change detection mechanizmus manuális lefuttatása után változik meg</li>
                 <li>Lehet, hogy adatbázisból érkezik a dinamikus adat, így fixáljuk, hogy mit szeretnénk látni</li>
@@ -20217,7 +20248,7 @@ showConfirmDelete(user: User) &#123;
   });
       </pre>
     </li>
-    <li>Az Angular tesztelési keretrendszerében a DOM események (pl. kattintás) szimulálásához a triggerEventHandler
+    <li>Az Angular tesztelési keretrendszerében a DOM események (például kattintás) szimulálásához a triggerEventHandler
       metódust kell használni
       <ul>
         <li>A nativeElement.click() is abszolút jók működik</li>
@@ -20335,8 +20366,8 @@ showConfirmDelete(user: User) &#123;
     </pre>
     <li>Ezen a ponton jön képbe a flush() függvény
       <ul>
-        <li>Az Angular tesztkörnyezetében az összes időzített aszinkron eseményt (pl. setTimeout, setInterval) azonnal
-          végrehajtja, függetlenül attól, hogy milyen késleltetés van beállítva
+        <li>Az Angular tesztkörnyezetében az összes időzített aszinkron eseményt (példsául setTimeout, setInterval)
+          azonnal végrehajtja, függetlenül attól, hogy milyen késleltetés van beállítva
           <ul>
             <li>Különbözik a tick()-től, amely csak a megadott időt lépteti előre</li>
           </ul>
@@ -20451,8 +20482,8 @@ showConfirmDelete(user: User) &#123;
         végzi el, ami azt jelenti, hogy a next callback csak 1 másodperccel később fut le</li>
       <li>Az Observable subscribe-ja még azelőtt lefut, hogy az of által kibocsátott érték ténylegesen megérkezne, mert
         a delay(1000) 1 másodperccel késlelteti a next eseményt</li>
-      <li>Az Angular tesztkörnyezetében az időzítéseket (pl. setTimeout, delay, stb...) szimulálhatod a fakeAsync és a
-        tick segítségével</li>
+      <li>Az Angular tesztkörnyezetében az időzítéseket (például setTimeout, delay, stb...) szimulálhatod a fakeAsync és
+        a tick segítségével</li>
       <li>A tick végrehajtása után a subscribe callback fut le, és isSubscribed = true lesz</li>
     </ul>
   </li>
@@ -20795,7 +20826,7 @@ showConfirmDelete(user: User) &#123;
         </li>
         <li>Branch Coverage (Elágazáslefedettség)
           <ul>
-            <li>Méri, hogy a kódban lévő elágazásokat (pl. if, else, switch, stb...) lefedtük-e a tesztjeinkben</li>
+            <li>Méri, hogy a kódban lévő elágazásokat (például if, else, switch, stb...) lefedtük-e a tesztjeinkben</li>
           </ul>
         </li>
         <li>Function Coverage (Függvénylefedettség)
@@ -20805,7 +20836,7 @@ showConfirmDelete(user: User) &#123;
         </li>
         <li>Condition Coverage (Feltétellefedettség)
           <ul>
-            <li>A kód minden egyes feltételének lehetséges kimeneteit (pl. if feltételek) teszteli</li>
+            <li>A kód minden egyes feltételének lehetséges kimeneteit (például if feltételek) teszteli</li>
             <li>Mélyebb szintű tesztelési forma</li>
           </ul>
         </li>
@@ -20875,8 +20906,8 @@ showConfirmDelete(user: User) &#123;
             </tr>
             <tr>
               <td>Böngésző támogatás</td>
-              <td>Valódi böngészőkben fut (pl. Chrome, Firefox)</td>
-              <td>Szimulált DOM környezet (pl. jsdom)</td>
+              <td>Valódi böngészőkben fut (például Chrome, Firefox)</td>
+              <td>Szimulált DOM környezet (például jsdom)</td>
             </tr>
             <tr>
               <td>Konfiguráció</td>
@@ -20928,8 +20959,8 @@ showConfirmDelete(user: User) &#123;
                 <li>Az npm meghívja a jest parancsot azzal az argumentummal, hogy test</li>
                 <li>Az npm elindítja a Jest tesztfuttatót az aktuális projektre</li>
                 <li>A Jest betölti a konfigurációs fájlt (általában jest.config.js, jest.config.ts)</li>
-                <li>A Jest megkeresi az összes tesztfájlt a projektben a konfiguráció alapján (pl. fájlnevek vagy mappák
-                  mintái, mint *.spec.ts vagy *.test.ts)</li>
+                <li>A Jest megkeresi az összes tesztfájlt a projektben a konfiguráció alapján (például fájlnevek vagy
+                  mappák mintái, mint *.spec.ts vagy *.test.ts)</li>
                 <li>A Jest lefuttatja az összes tesztet a megtalált fájlokban, és kiírja az eredményeket a terminálra
                 </li>
                 <li>Az npm visszaadja a Jest által kiadott kilépési kódot</li>
@@ -21778,7 +21809,7 @@ showConfirmDelete(user: User) &#123;
         <li>Ezzel együtt tájékoztatnunk kell az Angular-t ennek a standalone komponensnek a létezéséről</li>
         <li>Amennyiben a deklarációból nem vesszük ki a komponenst, hibát kapunk</li>
         <pre>
-          Component DetailsComponent is standalone, and cannot be declared in an NgModule
+  Component DetailsComponent is standalone, and cannot be declared in an NgModule
         </pre>
         <li>Tehát a deklarációban nem maradhat benne a komponens</li>
         <li>Ha az app-details komponens szelektorát használjuk más komponensben, akkor azon komponens Component
@@ -23563,7 +23594,7 @@ showConfirmDelete(user: User) &#123;
       ])
   ])
   </pre>
-    <li>Az animation() egy újrahasznosítható animációs séma létrehozására szolgál az Angularban
+    <li>Az animation() egy újrahasznosítható animációs séma létrehozására szolgál az Angular-ban
       <ul>
         <li>Megoldja, hogy az animációt külön fájlban tudjuk definiáni, és bármely trigger()-ben meghívni</li>
       </ul>

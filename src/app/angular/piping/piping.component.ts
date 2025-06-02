@@ -36,6 +36,7 @@ export class PipingComponent implements OnInit {
   }
 
   onFilterChange(index = 0) {
+    this.students = this._studentService.students;
     this.filterDropdown.forEach(f => f.active = false);
     this.filterDropdown[index].active = true;
     this.filterLabel = this.filterDropdown[index].label;

@@ -47,7 +47,7 @@ export class ExtrasComponent implements OnInit, AfterViewInit, OnDestroy {
     functioninputoutputtypes,
     ngiffunctioncall,
     ngswitchnote,
-    prtoceduralvsreactivethinking,
+    proceduralvsreactivethinking,
     locale,
     restandspreadoperator,
     shallowanddeepcopy,
@@ -118,6 +118,11 @@ export class ExtrasComponent implements OnInit, AfterViewInit, OnDestroy {
     trackby,
     newdirectives,
     callbackfunction,
+    asynccontrollers,
+    callback,
+    promise,
+    observable,
+    subject,
     fontsizes,
     handlingimages,
     routerinrouter,
@@ -146,7 +151,7 @@ export class ExtrasComponent implements OnInit, AfterViewInit, OnDestroy {
     { title: 'Function input-output types', anchor: 'functioninputoutputtypes', subtitles: [] },
     { title: 'ngIf function call', anchor: 'ngiffunctioncall', subtitles: [] },
     { title: 'ngSwitch note', anchor: 'ngswitchnote', subtitles: [] },
-    { title: 'Procedural vs reactive thinking', anchor: 'prtoceduralvsreactivethinking', subtitles: [] },
+    { title: 'Procedural vs reactive thinking', anchor: 'proceduralvsreactivethinking', subtitles: [] },
     { title: 'Locale', anchor: 'locale', subtitles: [] },
     { title: 'Rest and spread operator', anchor: 'restandspreadoperator', subtitles: [] },
     { title: 'Shallow and deep copy', anchor: 'shallowanddeepcopy', subtitles: [] },
@@ -237,6 +242,14 @@ export class ExtrasComponent implements OnInit, AfterViewInit, OnDestroy {
     { title: 'trackBy', anchor: 'trackby', subtitles: [] },
     { title: 'New directives', anchor: 'newdirectives', subtitles: [] },
     { title: 'Callback function', anchor: 'callbackfunction', subtitles: [] },
+    {
+      title: 'Async controllers', anchor: 'asynccontrollers', subtitles: [
+        { title: 'Callback', anchor: 'callback' },
+        { title: 'Promise', anchor: 'promise' },
+        { title: 'Observable', anchor: 'v' },
+        { title: 'Subject', anchor: 'subject' },
+      ]
+    },
     { title: 'Font sizes', anchor: 'fontsizes', subtitles: [] },
     { title: 'Router in router', anchor: 'routerinrouter', subtitles: [] },
     { title: 'line-height: 1', anchor: 'lineheight1', subtitles: [] },
@@ -552,6 +565,14 @@ export class ExtrasComponent implements OnInit, AfterViewInit, OnDestroy {
     }, { threshold: 0.2 });
 
     this.visibilityObservedElements.forEach(element => observers.observe(element.nativeElement)); // az összes figyelt elem hozzáadása
+
+    setTimeout(() => {
+      this.activeRoute.fragment.subscribe((id: any) => {
+        if (id) {
+          document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    }, 0)
   }
 
   removeElemReactive(index: number) {

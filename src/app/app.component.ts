@@ -5,6 +5,7 @@ import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { ViewportScroller } from '@angular/common';
 import { animate, group, query, style, transition, trigger } from '@angular/animations';
 import { transform } from 'typescript';
+import { DisableLoadingSevice } from 'src/shared/services/disable-loading.service';
 
 @Component({
   selector: 'app-root',
@@ -139,7 +140,8 @@ export class AppComponent {
     private renderer: Renderer2,
     private menuService: MenuService,
     private router: Router,
-    private viewportScroller: ViewportScroller) {
+    private viewportScroller: ViewportScroller,
+    private disableLoading: DisableLoadingSevice) {
     this.menuService.onStateChange().subscribe(state => {
       if (state) {
         this.activateClickOutsideListener();
@@ -160,6 +162,10 @@ export class AppComponent {
         // this.pageIsLoading = false;
       }
     });
+
+    this.disableLoading.disableEvent.subscribe(event => {
+      this.pageIsLoading = false;
+    })
   }
 
   @ViewChild('innerContent', { static: true }) contentRef!: ElementRef;
@@ -194,14 +200,13 @@ export class AppComponent {
   onActivate(event: any) {
     // const content = document.getElementById('content');
     // content?.scrollTo(0, 0);
-    console.log('onActivate');
     this.pageIsLoading = true;
   }
 
   onDeactivate(event: any) {
     // const content = document.getElementById('content');
     // content?.scrollTo(0, 0);
-    console.log('onDeactivate');
+    // console.log('onDeactivate');
   }
 
   scrollToBottom(target: HTMLElement) {
