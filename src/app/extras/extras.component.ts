@@ -141,7 +141,8 @@ export class ExtrasComponent implements OnInit, AfterViewInit, OnDestroy {
     fcp,
     selfclosingsyntax,
     xss,
-    websocketandmqtt
+    websocketandmqtt,
+    todo
     `) sections!: QueryList<ElementRef>;
 
   anchorButtons: any[] = [
@@ -270,7 +271,8 @@ export class ExtrasComponent implements OnInit, AfterViewInit, OnDestroy {
     { title: 'FCP', anchor: 'fcp', subtitles: [] },
     { title: 'Self-closing syntax', anchor: 'selfclosingsyntax', subtitles: [] },
     { title: 'XSS', anchor: 'xss', subtitles: [] },
-    { title: 'Websocket & MQTT', anchor: 'websocketandmqtt', subtitles: [] }
+    { title: 'Websocket & MQTT', anchor: 'websocketandmqtt', subtitles: [] },
+    { title: 'TODO', anchor: 'todo', subtitles: [] }
   ];
 
   elems: string[] = [];
