@@ -40,7 +40,7 @@ const routes: Routes = [
   { path: 'js', component: JsComponent },
   { path: 'typescript', component: TypescriptComponent },
   { path: 'jquery', component: JqueryComponent, canActivate: [YouCantActivate] },
-  { path: 'regex', loadChildren: () => import('./regex/regex.module').then(mod => mod.RegexModule) },
+  { path: 'regex', loadChildren: () => import('./regex/regex.module').then(mod => mod.RegexModule), canLoad: [YouCantActivate] },
   { path: 'extras', loadChildren: () => import('./extras/extras.module').then(mod => mod.ExtrasModule) },
   { path: 'json', component: JsonComponent },
   { path: 'xml', component: XmlComponent },
