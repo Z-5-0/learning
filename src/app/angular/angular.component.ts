@@ -1,4 +1,4 @@
-import { AfterContentInit, Component, ComponentRef, ElementRef, inject, Inject, OnDestroy, QueryList, SimpleChanges, ViewChild, ViewChildren } from '@angular/core';
+import { AfterContentInit, Component, ComponentRef, ElementRef, inject, Inject, OnDestroy, QueryList, signal, SimpleChanges, ViewChild, ViewChildren } from '@angular/core';
 import { ScrollingService } from "../../shared/services/scrolling.service";
 import { MenuService } from "../../shared/services/menu.service";
 import { UserService } from 'src/shared/services/user.service';
@@ -133,6 +133,10 @@ export class AngularComponent implements OnDestroy {
   signal,
   creatingandusingsignals,
   computedvalueandeffect,
+  linkedsignal,
+  tosignal,
+  resourceapi,
+  signalbasedcomponentbindings,
   routingandguards,
   routerlink,
   activerouterlink,
@@ -158,6 +162,7 @@ export class AngularComponent implements OnDestroy {
   dynamiccomponents,
   dynamiccomponentsngif,
   dynamiccomponentsprogramatically,
+  dynamiccomponentsngcomponentoutlet,
   ajax,
   reactive,
   reactiveform,
@@ -373,8 +378,12 @@ export class AngularComponent implements OnDestroy {
     },
     {
       title: 'Signal', anchor: 'signal', subtitles: [
-        { title: 'Creating and using signals', anchor: 'creatingandusingsignals' },
+        { title: 'Creating and using Signals', anchor: 'creatingandusingsignals' },
         { title: 'Computed value and effect', anchor: 'computedvalueandeffect' },
+        { title: 'linkedSignal', anchor: 'linkedsignal' },
+        { title: 'toSignal', anchor: 'tosignal' },
+        { title: 'Resource API', anchor: 'resourceapi' },
+        { title: 'Signal-based component bindings', anchor: 'signalbasedcomponentbindings' },
       ]
     },
     {
@@ -409,6 +418,7 @@ export class AngularComponent implements OnDestroy {
       title: 'Dynamic components', anchor: 'dynamiccomponents', subtitles: [
         { title: 'ngIf', anchor: 'dynamiccomponentsngif' },
         { title: 'Programatically', anchor: 'dynamiccomponentsprogramatically' },
+        { title: 'NgComponentOutlet', anchor: 'dynamiccomponentsngcomponentoutlet' },
       ]
     },
     {

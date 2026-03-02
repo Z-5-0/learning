@@ -58,7 +58,7 @@
             <li>A content betöltése sokkal gyorsabb</li>
             <li>Nincs folyamatos szerver felé kommunikáció</li>
             <li>Reaktívabb oldal hozható így létre</li>
-            <li>Olyan kódstuktúrát építhetünk fel, amit könnyű nyomon követni, és karbantartani</li>
+            <li>Olyan kódstruktúrát építhetünk fel, amit könnyű nyomon követni, és karbantartani</li>
             <li>Újrahasznosítható kódokat hozhatunk létre
               <ul>
                 <li>Akár más projektben</li>
@@ -85,24 +85,29 @@
         <li>Angular projekt build-eléshez tool</li>
       </ul>
     </li>
+    <br>
     <li>Telepítés
       <ul>
         <pre>
   npm install -g @angular/cli
         </pre>
         <li>Globális telepítés, jelen esetben a legfrissebb verzió kerül installálásra</li>
+        <br>
         <pre>
   npx @angular/cli new my-angular-app
         </pre>
         <li>Ugyanaz, csak nem telepíti "tartósan" a CLI-t</li>
+        <br>
         <pre>
   npx @angular/cli@12 new my-angular-app    // a 12 a verziószám, ezt változtathatjuk
         </pre>
         <li>Egy általunk választott CLI verziót telepítünk</li>
+        <br>
         <pre>
   ng new my-angular-app --routing --style=scss
         </pre>
         <li>Az interaktív kérdéseket kihagyhatjuk switch-ekkel</li>
+        <br>
         <pre>
   npx -p @angular-cli@17 ng new angular-testing
         </pre>
@@ -126,7 +131,8 @@
         <li>UI / User Interface
           <ul>
             <li>Az a felület, amivel a felhasználó találkozik, interakcióba lép vele</li>
-            <li>Amikor a felhasználó valamilyen elemre például rákattint, az alkalmazás állapotát manipulálhatja</li>
+            <li>Amikor a felhasználó valamilyen elemre - például - rákattint, az alkalmazás állapotát manipulálhatja
+            </li>
           </ul>
         </li>
         <li>State
@@ -214,11 +220,11 @@
         <img src="assets/imgs/process.png" style="width: 100%;">
         <br>
         <br>
-        <li>A folyamat bővebben
+        <li>A folyamat bővebben (eltérhet a különféle Angular verziókban)
           <ol>
             <li>index.html betöltése
               <ul>
-                <li>A bőngésző betölti az index.html-t</li>
+                <li>A böngésző betölti az index.html-t</li>
                 <li>Az oldalon szerepelnek stílusfájlok, és JS fájlok</li>
               </ul>
             </li>
@@ -238,14 +244,14 @@
                     </pre>
                   </ul>
                 </li>
-                <li>Ez a fájl inicializálja az Angular keretrendszert, és meghívja az alapértelmezett root modul-t
+                <li>Ez a fájl inicializálja az Angular keretrendszert, és meghívja az alapértelmezett root modult
                   (AppModule)
                 </li>
               </ul>
             </li>
             <li>Root modul betöltése (AppModule)
               <ul>
-                <li>Az Angular betölti a root modul-t, ami az alkalmazás legfelsőbb modulja</li>
+                <li>Az Angular betölti a root modult, ami az alkalmazás legfelsőbb modulja</li>
                 <li>Az app.module.ts-ben van meghatározva az AppComponent betöltése
                   <pre>
   ...
@@ -273,9 +279,8 @@
             </li>
             <li>Routing, interakció, adatkezelés
               <ul>
-                <li>Route váltáskor, felhasználói interakciókat követően, vagy szerverről való adatbetöltés után az
-                  Angular
-                  (tehát változásokkor a Change Detection) újrarendereli a DOM-ot
+                <li>Route váltáskor, felhasználói interakciókat követően, vagy szerverről való adatbetöltés után, tehát
+                  változásokkor, a change detection (Angular) újrarendereli a DOM-ot
                 </li>
               </ul>
             </li>
@@ -295,7 +300,7 @@
         <li>A felhasználói felület külön részegységekre bontható a segítségükkel
           <ul>
             <li>Egy interaktív részleg helyett létre lehet hozni többet</li>
-            <li>Mindegyikért a saját, dedikált kontrollere és template-je, azaz komponense lesz felelőt</li>
+            <li>Mindegyikért a saját, dedikált kontrollere és template-je, azaz komponense lesz felelős</li>
             <li>Az összes komponensnek meg van a saját állapota, template-je, és action-jei
               <ul>
                 <li>Ilyen módon két komponens egymástól teljesen függetlenül tud működni</li>
@@ -327,7 +332,7 @@
             <li>A komponensek más irányba is tud(hat)nak kommunikálni, például AJAX kérést küldhetnek,
               adatot tölthetnek fel, vagy szerezhetnek
             </li>
-            <li>A komponensek a localStorage-dzsal is kapcsolatot teremthetnek (írás, olvasás)</li>
+            <li>A komponensek a localStorage-al is kapcsolatot teremthetnek (írás, olvasás)</li>
             <li>Az alkalmazások engedik, hogy létrehozzunk kliens oldali útvonal választót
               <ul>
                 <li>Ez csak az SPA kapcsán releváns
@@ -386,6 +391,7 @@
                   <li>Amikor az index.html fájl betöltődik, a bundle-ök inicializálása már végbement, azaz betöltődött a
                     böngészőbe
                   </li>
+                  <li>(Angular 17-től a Vite az alapértelmezett, de Webpack-et is lehet használni)</li>
                 </ul>
               </li>
             </ul>
@@ -880,7 +886,7 @@
   <br>
   <h5 #featuremodule data-anchor="featuremodule">Feature module</h5>
   <ul>
-    <li>A fő modul-t (app) feloszthatjuk kisebb (feature) modulokra</li>
+    <li>A fő modult (app) feloszthatjuk kisebb (feature) modulokra</li>
     <li>Az alkalmazás egy adott funkcionalitását vagy területét kezeli és modularizálja</li>
     <li>A feature modulban használhatók
       <ol>
@@ -9259,7 +9265,7 @@
     <app-signals [tempSwitcher]="'default'"></app-signals>
   </ul>
   <br>
-  <h5 #creatingandusingsignals data-anchor="creatingandusingsignals">Creating and using signals</h5>
+  <h5 #creatingandusingsignals data-anchor="creatingandusingsignals">Creating and using Signals</h5>
   <ul>
     <li>A signal objektumot fog visszaadni, aminek van néhány metódusa
       <ul>
@@ -9518,6 +9524,383 @@
       </ul>
     </li>
   </ul>
+  <h5 #linkedsignal data-anchor="linkedsignal">linkedSignal</h5>
+  <ul>
+    <li>A computedSignal csak olvashatóságával ellentétben a linkedSignal a forrás signal-okkal reaktív módon viselkedik
+      <ul>
+        <li>Rendelkezik set és update metódusokkal</li>
+        <li>Viszont pont úgy, mint a computedSignal, a forrásokból számolódik az értéke</li>
+      </ul>
+    </li>
+    <pre>
+  import &#123; Component, signal, linkedSignal } from '@angular/core';
+  import &#123; CommonModule } from '@angular/common';
+
+  import &#123; bootstrapApplication } from '@angular/platform-browser';
+  import &#123; provideRouter } from '@angular/router';
+  import &#123; AboutComponent } from './app/about.component';
+  import &#123; HomeComponent } from './app/home.component';
+
+  const routes = [
+    &#123; path: '', component: HomeComponent },
+    &#123; path: 'about', component: AboutComponent },
+    &#123; path: '**', redirectTo: '' },
+  ];
+
+  interface Course &#123;
+    code: string;
+    name: string;
+    defaultQuantity: number;
+  }
+
+  @Component(&#123;
+    selector: 'app-root',
+    imports: [CommonModule],
+    template: `
+      &#60;div>
+        courses array:&#60;pre>&#123; &#123;courses | json}}&#60;/pre>
+      &#60;/div>
+      &#60;br>
+      &#60;div>this.courses[1].code: &#123; &#123;selectedCourse()}}&#60;/div>
+      &#60;br>
+      &#60;div>quantity: &#123; &#123;quantity()}}&#60;/div>
+    `,
+    standalone: true,
+  })
+  export class App &#123;
+
+    courses: Course[] = [
+      &#123; code: 'MATHB',  name: 'Math Basics',     defaultQuantity: 2 },
+      &#123; code: 'WEBDEV', name: 'Web Developing',  defaultQuantity: 1 },
+      &#123; code: 'DBASE',  name: 'Databases',       defaultQuantity: 3 },
+    ];
+
+    selectedCourse = signal&#60;string>(this.courses[1].code);
+
+    quantity = linkedSignal&#60;string, number>(&#123;
+      source: () => this.selectedCourse(),
+      computation: (courseCode, previous) => &#123;
+        const course = this.courses.find(c => c.code === courseCode);
+        return course ? course.defaultQuantity : previous?.value ?? 1;
+      }
+    });
+  }
+
+  bootstrapApplication(App, &#123;
+    providers: [provideRouter(routes)],
+  });
+
+  ↓↓↓↓↓
+
+  courses array:
+  [
+    &#123;
+      "code": "MATHB",
+      "name": "Math Basics",
+      "defaultQuantity": 2
+    },
+    &#123;
+      "code": "WEBDEV",
+      "name": "Web Developing",
+      "defaultQuantity": 1
+    },
+    &#123;
+      "code": "DBASE",
+      "name": "Databases",
+      "defaultQuantity": 3
+    }
+  ]
+
+  this.courses[1].code:
+  WEBDEV
+
+  quantity:
+  1
+    </pre>
+    <li>Ha frissül a selectedCourse, vele tart a quantity linkedSignal is</li>
+    <li>A setSignal függvény hatására egészen egyszerűen beállítjuk a linkedSignal értékét 20-ra, anélkül, hogy bármi
+      más módosulna</li>
+    <li>Az updateSignal() pedig mindig az aktuális értéket növeli meg eggyel, és szintén nem módosít máson</li>
+    <li>Érdemes használni, ha valamilyen újraszámlálásra van szükségünk, de csak akkor (éa csak akkor), ha a source
+      Signal, vagy Signal-ok változnak, és meg kívánjuk tartani a lehetőséget, hogy mi magunk is átírhassuk a
+      linkedSignal értékét</li>
+  </ul>
+  <h5 #tosignal data-anchor="tosignal">toSignal</h5>
+  <ul>
+    <li>Observable-t alakít át Signal-á</li>
+    <pre>
+  import &#123; toSignal } from '@angular/core/rxjs-interop';
+  ...
+
+  @Component(&#123;
+    selector: 'app-root',
+    imports: [CommonModule],
+    template: `
+      &#60;div>&#123; &#123;array$ | async}}&#60;/div>
+      &#60;br>
+      &#60;div>&#123; &#123;signalArray()}}&#60;/div>
+    `,
+    standalone: true,
+  })
+
+  array$ = from([1, 2, 3]).pipe(
+    concatMap(x => of(x).pipe(delay(2000)))
+  )
+
+  signalArray = toSignal(this.array$);
+    </pre>
+    <li>A signalArray automatikusan követi az Observable kibocsátásait</li>
+    <li>Ha az Observable több értéket ad ki, a Signal mindig az aktuális (legfrissebb) értéket mutatja</li>
+  </ul>
+  <h5 #resourceapi data-anchor="resourceapi">Resource API</h5>
+  <ul>
+    <li>Tartalmazza httpResponse-t, és a resource() signal is
+      <ul>
+        <li>resource()
+          <ul>
+            <li>Aszinkron, Signal-alapú, reaktív adatbetöltő eszköz</li>
+            <pre>
+    const userId: Signal&#60;string> = getUserId();
+    const userResource = resource(&#123;
+      params: () => (&#123;id: userId()}),
+      loader: (&#123;request, abortSignal}): Promise&#60;User> => &#123;
+        // fetch cancels any outstanding HTTP requests when the given `AbortSignal`
+        // indicates that the request has been aborted.
+        return fetch(`users/$&#123;request.id}`, &#123;signal: abortSignal});
+      },
+    });
+  </pre>
+            <li>Ha a Signal értéke megváltozik (userId.set(newId)), minden tőle függő reactive logika automatikusan újra
+              fut</li>
+            <li>Adatot tölt be, amikor a params megváltozik</li>
+            <li>Az abortSignal lehetővé teszi, hogy megszakítsuk a hívást</li>
+            <li>A loader Promise-szal tér vissza, de a userResource egy Signal</li>
+          </ul>
+        </li>
+        <li>httpResource
+          <ul>
+            <pre>
+  @Component(&#123;
+    template: `&#60;div>&#60;pre>&#123; &#123; episodeResource.value() | json }}&#60;/pre>&#60;/div>`
+  })
+  class UserProfile &#123;
+    episodeId = signal(1);
+    episodeResource = httpResource&#60;any>(() => 
+      `https://api.sampleapis.com/futurama/episodes/&#123;$this.episodeId()}`
+    );
+  }
+
+  ↓↓↓↓↓
+
+  &#123;
+    "number": "1 - 1",
+    "title": "Space Pilot 3000",
+    "writers": "D.X. Cohen, M. Groening",
+    "originalAirDate": "March 28, 1999",
+    "desc": "A pizza delivery boy named Philip J. Fry accidentally stumbles into a cryogenic tube on Dеcember 31, 1999 and awakens on New Year's Eve in the year 2999, where he meets a mutant career counselor named Leela, an alcoholic robot named Bender, and his distant nephew Professor Farnsworth.",
+    "id": 1
+  }
+</pre>
+            <li>HTTP GET request-et küld a megadot URL-re minden alkalommal, amikor a episodeId változik</li>
+            <li>A válasz Signal típusú, amihez a template-ben azonnal hozzáférhetünk</li>
+            <li>A motorháztető alattt HttpClient-et alkalmaz</li>
+            <br>
+            <table style="width: 100%; table-layout: fixed">
+              <thead>
+                <tr>
+                  <th>Név</th>
+                  <th>Típus</th>
+                  <th>Leírás</th>
+                  <th>Használat</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>value()</td>
+                  <td>Függvény</td>
+                  <td>Visszaadja a resource aktuális értékét (data + metaadatok)</td>
+                  <td>const res = episodeResource.value();</td>
+                </tr>
+                <tr>
+                  <td>isLoading()</td>
+                  <td>Függvény / property</td>
+                  <td>Igaz, ha a resource éppen betölt</td>
+                  <td>episodeResource.isLoading() vagy episodeResource.value().isLoading</td>
+                </tr>
+                <tr>
+                  <td>error()</td>
+                  <td>Függvény / property</td>
+                  <td>Az utolsó hiba, ha a fetch Promise elbukott</td>
+                  <td>episodeResource.error() vagy episodeResource.value().error</td>
+                </tr>
+                <tr>
+                  <td>status()</td>
+                  <td>Property (httpResource esetén)</td>
+                  <td>HTTP státuszkód a legutóbbi válaszból</td>
+                  <td>episodeResource.value().status</td>
+                </tr>
+                <tr>
+                  <td>headers()</td>
+                  <td>Property (httpResource esetén)</td>
+                  <td>HTTP response header-ek a legutóbbi válaszból</td>
+                  <td>episodeResource.value().headers.get('Content-Type')</td>
+                </tr>
+              </tbody>
+            </table>
+            <pre>
+  // betöltés utáni állapot
+
+  &#123; &#123; episodeResource.value() | json }}
+
+  ↓↓↓↓↓
+
+  &#123;
+    "number": "1 - 1",
+    "title": "Space Pilot 3000",
+    "writers": "D.X. Cohen, M. Groening",
+    "originalAirDate": "March 28, 1999",
+    "desc": "A pizza delivery boy named Philip J. Fry accidentally stumbles into a cryogenic tube on Dеcember 31, 1999 and awakens on New Year's Eve in the year 2999, where he meets a mutant career counselor named Leela, an alcoholic robot named Bender, and his distant nephew Professor Farnsworth.",
+    "id": 1
+  }
+
+  &#123; &#123; episodeResource.isLoading() }}
+
+  ↓↓↓↓↓
+
+  false
+
+  &#123; &#123; episodeResource.error() }}
+
+  ↓↓↓↓↓
+
+
+  &#123; &#123; episodeResource.status() }}
+
+  ↓↓↓↓↓
+
+  resolved
+
+  &#123; &#123; episodeResource.headers() | json }}
+
+  ↓↓↓↓↓
+
+  &#123;
+    "normalizedNames": &#123;},
+    "lazyUpdate": null
+  }
+            </pre>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <h5 #signalbasedcomponentbindings data-anchor="signalbasedcomponentbindings">Signal-based component bindings</h5>
+  <li>input()
+    <ul>
+      <li>Használata a gyerek komponensben történhet</li>
+      <li>Szülőből jövő értéket fogad, read-only a gyerekből, tehát közvetlenül nem módosítja az értéket</li>
+      <pre>
+  <b>// child.component.ts</b>
+
+  import &#123; Component, input } from '@angular/core';
+  @Component(&#123;
+    selector: 'app-child',
+    template: `&#60;p>Received: &#123; &#123; value() }}&#60;/p>`
+  })
+  export class ChildComponent &#123;
+    value = input&#60;string>();
+  }
+  <b>// parent.component.html</b>
+  
+  &#60;app-child [value]="'I am your parent'">&#60;/app-child>
+      </pre>
+    </ul>
+  </li>
+  <li>output()
+    <ul>
+      <li>Szintén a gyerekben használhatja, mint event emitter</li>
+      <li>Lehetővé teszi, hogy a gyerek eseményeket küldjön a szülőnek</li>
+      <pre>
+  <b>// child.component.ts</b>
+
+  import &#123; Component, output } from '@angular/core';
+  @Component(&#123;
+    selector: 'app-child',
+    template: `&#60;button (click)="clicked.emit()">Click here&#60;/button>`
+  })
+  export class ChildComponent &#123;
+    clicked = output&#60;void>();
+  }
+
+  <b>// parent.component.ts</b>
+
+  &#60;app-child (clicked)="onChildClick()">&#60;/app-child>
+      </pre>
+    </ul>
+  </li>
+  <li>model()
+    <ul>
+      <li>Kétirányú binding signal</li>
+      <li>Minden model() egy Signal, de nem minden Signal model()</li>
+      <pre>
+  <b>// child.component.ts</b>
+
+  import &#123; Component, model } from '@angular/core';
+  @Component(&#123;
+    selector: 'app-child',
+    template: `&#60;input [value]="value()" (input)="value.set($any($event.target).value)">`
+  })
+  export class ChildComponent &#123;
+    value = model&#60;string>(''); // kétirányú binding
+  }
+
+  <b>// parent.component.ts</b>
+
+  &#60;app-child [(value)]="parentValue">&#60;/app-child>
+
+  ----- ----- ----- ----- -----
+
+  <b> // parent.component.html</b>
+  &#60;app-child [(userName)]="name" [(userAge)]="age">&#60;/app-child>
+
+  <b> // child.component.ts</b>
+
+  userName = model('');
+  userAge = model(0);
+
+  <b> // child.component.html</b>
+
+  &#60;app-grandchild [(childName)]="userName" [(childAge)]="userAge">&#60;/app-grandchild>
+      </pre>
+    </ul>
+    <table style="width: 100%; table-layout: fixed">
+      <thead>
+        <tr>
+          <th>Újabb Angular</th>
+          <th>Régebbi Angular</th>
+          <th>Leírás</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>input()</td>
+          <td>@Input()</td>
+          <td>Gyerekbe érkező érték, read-only. Szülőből jön az adat</td>
+        </tr>
+        <tr>
+          <td>output()</td>
+          <td>@Output() + EventEmitter</td>
+          <td>Gyerekből szülőbe esemény továbbítása. Például gombnyomás, változás</td>
+        </tr>
+        <tr>
+          <td>model()</td>
+          <td>[(ngModel)] vagy input + output kombináció</td>
+          <td>Kétirányú binding signal, reaktív. Gyerek és szülő mindkét irányban látja a változásokat</td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+  </li>
 </div>
 
 <div>
@@ -12743,6 +13126,54 @@
   <br>
   <app-users></app-users>
   <br>
+  <h5 #dynamiccomponentsngcomponentoutlet data-anchor="dynamiccomponentsngcomponentoutlet">NgComponentOutlet</h5>
+  <ul>
+    <li>Deklaratív megközelítést használ</li>
+    <li>A direktíva Angular 20-tól elérhető</li>
+    <li>Több bemeneti paramétert meg kell adnom a komponens létrejötte érdekében</li>
+    <li>A createComponent API valósítja meg</li>
+    <pre>
+  import &#123; inputBinding, outputBinding, twoWayBinding } from '@angular/core';
+
+  @Component (&#123;
+    selector: 'app-root',
+    template:
+    `
+    &#60;div>
+      &#60;ng-container #userContainer>&#60;/ng-container>
+      &#60;button (click)="addUser()">Add User&#60;/button>
+    &#60;/div>
+    `
+  })
+
+  protected userContainer = viewChild.required&#60;ElementRef, ViewContainerRef>(
+    'userContainer'
+    &#123; read: ViewContainerRef },
+    protected addUser)
+  );
+
+  protected addUser) &#123;
+    this. userContainer().createComponent(User, &#123;
+    [
+      inputBinding( 'name', this. userName),
+      twoWayBinding('age', this.userAge),
+      outputBinding ('saveChanges', () => this. updateUser ()),
+    ],
+  });
+    </pre>
+    <li>Dinamikusan létrehoz egy User komponenst egy konténerben
+      <ul>
+        <li>Input, output, és two-way binding-et lehet hozzárendelni</li>
+      </ul>
+    </li>
+    <li>A #userContainer referenciát ad a konténernek</li>
+    <li>A .required biztosítja, hogy a referencia soha ne legyen null
+      <ul>
+        <li>A ! (non-null assertion) csak jelzés a TypeScript-nek, de nem garantálja futásidőben, hogy valóban nem lesz
+          null</li>
+      </ul>
+    </li>
+  </ul>
 </div>
 
 <div>
@@ -17928,6 +18359,61 @@
                       <ul>
                         <li>Ezzel lehet jelezni a TypeScript-nek, hogy biztosan értéket fog kapni, nem lesz null vagy
                           undefined
+                        </li>
+                        <li>Nem ad runtime "garanciát", ha a template-ben nincs #registrationForm, runtime error lehet
+                        </li>
+                        <li>Angular 20-tól a required használható a következő formában
+                          <ul>
+                            <pre>
+  form = viewChild.required&#60;NgForm>('registrationForm');
+                            </pre>
+                            <li>Biztosítja, hogy a ViewChild soha ne legyen null</li>
+                            <li>Típusbiztos</li>
+                            <li>Ha hiányzik a referenciánk a template-ben, azonnal hibát kapunk, nem runtime alatt derül
+                              ki</li>
+                            <br>
+                            <table style="width: 100%; table-layout: fixed">
+                              <thead>
+                                <tr>
+                                  <th>Jellemző</th>
+                                  <th>Non-null assertion (!)</th>
+                                  <th>viewChild.required()</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td>Null lehet futásidőben?</td>
+                                  <td>Igen, runtime-ban hibát okozhat, ha nincs a template-ben a referencia</td>
+                                  <td>Nem, azonnal hibát dob, ha hiányzik a referencia</td>
+                                </tr>
+                                <tr>
+                                  <td>Compile-time típusbiztonság</td>
+                                  <td>Igen, a TypeScript biztosan nem null-ként kezeli</td>
+                                  <td>Igen, típusbiztos, nem kell `!`</td>
+                                </tr>
+                                <tr>
+                                  <td>Használat</td>
+                                  <td>
+                                    @ViewChild ('registrationForm') form!: NgForm;
+                                  </td>
+                                  <td>
+                                    protected form = viewChild .required &#60;NgForm> ('registrationForm');
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>Runtime garancia</td>
+                                  <td>Nincs</td>
+                                  <td>Van: nem lehet null</td>
+                                </tr>
+                                <tr>
+                                  <td>Kényelmi szempont</td>
+                                  <td>Egyszerű, régebbi Angular verziókhoz</td>
+                                  <td>Modern Angular 20+, típusbiztos és biztonságos</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <br>
+                          </ul>
                         </li>
                       </ul>
                     </li>
@@ -23488,7 +23974,7 @@
             <li>enterStart (új kép érkezési iránya)</li>
           </ul>
         </li>
-        <li>2) Az @slideToggle trigger aktiválódik, ha a selectedImage() signal értéke megváltozik</li>
+        <li>2) Az @slideToggle trigger aktiválódik, ha a selectedImage() Signal értéke megváltozik</li>
 
         <li>3) Az Angular behelyettesíti az &#123; &#123; enterStart }} és az &#123; 0&#123; leaveEnd }} értékeket</li>
 

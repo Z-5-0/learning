@@ -142,6 +142,8 @@ export class ExtrasComponent implements OnInit, AfterViewInit, OnDestroy {
     selfclosingsyntax,
     xss,
     websocketandmqtt,
+    callbackreference,
+    typevsinterface,
     todo
     `) sections!: QueryList<ElementRef>;
 
@@ -272,6 +274,8 @@ export class ExtrasComponent implements OnInit, AfterViewInit, OnDestroy {
     { title: 'Self-closing syntax', anchor: 'selfclosingsyntax', subtitles: [] },
     { title: 'XSS', anchor: 'xss', subtitles: [] },
     { title: 'Websocket & MQTT', anchor: 'websocketandmqtt', subtitles: [] },
+    { title: 'Callback reference', anchor: 'callbackreference', subtitles: [] },
+    { title: 'Type vs interface', anchor: 'typevsinterface', subtitles: [] },
     { title: 'TODO', anchor: 'todo', subtitles: [] }
   ];
 

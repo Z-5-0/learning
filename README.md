@@ -14,7 +14,7 @@ The project is built in Angular (16.2.16) and includes example codes, explanatio
 
 ## Content
 
-| Topic             | Status           | Link / Description                                                          |
+| Topic             | Status           |  Description                                                                |
 |-------------------|------------------|-----------------------------------------------------------------------------|
 | [JavaScript](https://learning.avalonium.hu/js)          | ✅ Available       |                                     |
 | [TypeScript](https://learning.avalonium.hu/typescript)  | ✅ Available       |                                     |

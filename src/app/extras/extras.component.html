@@ -4872,6 +4872,144 @@
         </li>
       </ul>
     </li>
+    <br>
+    <li><strong>Angular 20</strong> (2025 május)
+      <ul>
+        <li>A stabilitásra, és nem az új feature-ökre fókuszál
+          <ul>
+            <li>Stabilak a signal-ok</li>
+            <li>Stabil az SSR hidratációt</li>
+          </ul>
+        </li>
+        <li>A változások Zone.js nélkül is észlelhetők (developer preview)
+          <ul>
+            <li>Alapesetben kikerült a Zone.js</li>
+            <pre>
+  import &#123; provideExperimentalZonelessChangeDetection } from '@angular/core';
+
+  export const appConfig: ApplicationConfig = &#123;
+      providers: [
+          // provideZoneChangeDetection(&#123; eventCoalescing: true }),
+          provideExperimentalZonelessChangeDetection(),   // enable zoneless change detection
+          provideRouter(routes),
+          provideClientHydration(
+          withEventReplay()
+          ),
+      ]
+  };
+            </pre>
+            <li>A Zoneless került developer preview-ba</li>
+          </ul>
+        </li>
+        <li>A YouTube is elkezdte használni a Signal-okat, és javult az input latency
+          <ul>
+            <li>Mennyi idő telik el az akció (pl. a play/pause, hangerőállítás, seek) és a tényleges reakció között a
+              videón</li>
+          </ul>
+        </li>
+        <li>Resource API
+          <ul>
+            <li>Tartalmazza httpResponse-t, és a resource() signal is</li>
+          </ul>
+        </li>
+        <li>A DevTools jobban támogatja az Angular-t, extension telepítése nélkül is láthatjuk például, hogy a
+          Performance tab-on, hogy milyen komponensek töltődnek be</li>
+        <li>Bevezették a dinamikus komponensek létrehozásának lehetőségét
+          <ul>
+            <li>Korábban már elérhető volt, de most egyszerűbb lett a folyamat</li>
+            <li>A mostani egy új módszer</li>
+            <li>NgComponentOutlet</li>
+          </ul>
+        </li>
+        <li>Kapunk új használható template syntax-okat is
+          <ul>
+            <li>** operátor<ul>
+                <li>Hatványra emelés</li>
+                <pre>
+  &#123; &#123; 2 ** 3 }}
+
+  ↓↓↓↓↓
+
+  2 a köbön, ami 8
+                </pre>
+              </ul>
+            </li>
+            <li>in operátor
+              <ul>
+                <li>Megnézhetjük vele, hogy egy property-t (a példában most ez string) tartalmaz-e az object</li>
+                <li>Csak objektum kulcsaira igaz, nem tömb elemekre</li>
+                <li>Boolean értéket kapunk</li>
+                <pre>
+  &#123; &#123; 'Bob Peterson' in users }}
+
+  ↓↓↓↓↓
+
+  true = false
+                </pre>
+              </ul>
+            </li>
+            <li>instanceof
+              <ul>
+                <li>Azt vizsgálja, hogy egy objektum egy adott osztály / konstruktor prototípusából származik-e</li>
+                <pre>
+                  <b>// class</b>
+  class Person &#123;
+    constructor(public name: string) &#123;}
+  }
+
+  class Employee extends Person &#123;
+    constructor(name: string, public role: string) &#123;
+      super(name);
+    }
+  }
+
+  const bob = new Employee('Bob', 'Developer');
+
+  user: Person = new Employee('Bob', 'Developer');
+
+  <b>// template</b>
+
+  &#123; &#123; user instanceof Person }}
+
+  ↓↓↓↓↓
+
+  true
+
+  &#123; &#123; user instanceof Employee }}
+
+  ↓↓↓↓↓
+
+  true
+                </pre>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>Megváltozott továbbá az alapértelmezett névkonvenció a komponens fájlok esetében
+          <ul>
+            <li>Eltűnnek a suffix-ek, de egyébként továbbra is használhatók</li>
+            <li>Javasolt fájlstuktúra</li>
+            <pre>
+  src/app/features/users/user.ts    //  egy felhasználói komponens
+  src/app/core/services/user.ts   // egy szolgáltatás
+            </pre>
+          </ul>
+        </li>
+        <li>Kapunk továbbra egy experimental Vitest támogatást, aminek van watch mode-ja, és böngésző tesztje</li>
+        <li>Deprecated lett az *ngIf, *ngFor, *ngSwitch
+          <ul>
+            <li>Működnek továbbra is, csak warning-ot kapunk</li>
+            <pre>
+              *ngIf --> @if () &#123; }
+
+              *ngFor --> @for (item of collection; track uniqueKey) &#123; }
+
+              [ngSwitch] --> @switch (user.role) &#123; }
+            </pre>
+          </ul>
+        </li>
+      </ul>
+    </li>
   </ul>
 </div>
 
@@ -6317,9 +6455,20 @@
   function isString(value: unknown): value is string &#123; // a value is string type predicate
       return typeof value === "string";
   }          
-        </pre>
+    </pre>
     <li>A Typescript-nek ugyancsak megmondjuk, hogy ha a függvény visszatérési értéke true, akkor a value biztosan
       string</li>
+    <pre>
+  exampleArray.filter((t): t is SomeInterface => t !== null);
+    </pre>
+    <li>A t is SomeInterface a type predicate
+      <ul>
+        <li>Ha t nem null, a predicate true → t típusa a TypeScript szemszögéből SomeInterface lesz a visszaadott
+          tömbben</li>
+        <li>Függvény argomentumban használtuk itt a type predicate-et</li>
+        <li>Lényegében kiszűrjük a null értékeket, és a megmaradt elemek mindegyike SomeInterface típusú</li>
+      </ul>
+    </li>
   </ul>
   <br>
   <h5 #unknown data-anchor="unknown">Unknown</h5>
@@ -8450,6 +8599,226 @@
         </tr>
       </tbody>
     </table>
+  </ul>
+</div>
+
+<div>
+  <h3 #callbackreference data-anchor="callbackreference">Callback reference</h3>
+  <ul>
+    <li>Amikor egy komponens egy metódusát függvényreferenciaként (callback-ként) adjuk át egy másik komponensnek, akkor
+      a JavaScript hívási kontextusa miatt a this értéke elveszhet, ezért a metódust bind(this)-szel, vagy egy arrow
+      function segítségével kell átadnunk, hogy a híváskor is megőrizze az eredeti objektum kontextusát</li>
+    <pre>
+  <b>// parent.component.html</b>
+
+  &#60;app-child
+    [varName]="'variable1'"
+    [inputFunction]="logVariables"
+    (valueChanged)="onVariableSelect($event)">
+  &#60;/app-child>
+
+  &#60;app-child
+    [varName]="'variable2'"
+    [inputFunction]="logVariables"
+    (valueChanged)="onVariableSelect($event)">
+  &#60;/app-child>
+
+  <b>// parent.component.ts</b>
+
+  export class ParentComponent &#123;
+    public variable1: string | undefined = undefined;
+    public variable2: string | undefined = undefined;
+
+    onVariableSelect(event: &#123; name: 'variable1' | 'variable2'; value: string }) &#123;
+      this[event.name] = event.value;
+    }
+
+    logVariables() &#123;
+      console.log('variable1:', this.variable1);
+      console.log('variable2:', this.variable2);
+    }
+  }
+
+  <b>// child.component.html</b>
+
+  &#60;p>&#123; &#123; varName }}&#60;/p>
+  &#60;button (click)="sendValueToParent()">Send value to parent&#60;/button>
+  &#60;button (click)="invokeCallback()">Call parent function&#60;/button>
+
+  <b>// child.component.ts</b>
+
+  export class ChildComponent &#123;
+    @Input() varName!: 'variable1' | 'variable2';
+    @Input() inputFunction!: () => void;
+    @Output() valueChanged = new EventEmitter&#60;&#123; name: string; value: string }>();
+
+    sendValueToParent() &#123;
+      this.valueChanged.emit(&#123; name: this.varName, value: 'new value from child' });
+    }
+
+    invokeCallback() &#123;
+      this.inputFunction();
+    }
+  }
+    </pre>
+    <li>Ebben az esetben a két változó értéke mindig undefined lesz</li>
+    <li>A bind függvény nélkül a this undefined lesz, mert a függvényt simán, kontextus nélkül hívjuk meg</li>
+    <pre>
+  &#60;app-child
+    [varName]="'variable1'"
+    [inputFunction]="logVariables.bind(this)"
+    (valueChanged)="onVariableSelect($event)">
+  &#60;/app-child>
+
+  &#60;app-child
+    [varName]="'variable2'"
+    [inputFunction]="logVariables.bind(this)"
+    (valueChanged)="onVariableSelect($event)">
+  &#60;/app-child>
+    </pre>
+    <li>Vagy arrow function-t használunk, ami automatikusan megörökli a this-t</li>
+    <pre>
+  &#60;app-child
+    [varName]="'variable1'"
+    [inputFunction]="() => logVariables"
+    (valueChanged)="onVariableSelect($event)">
+  &#60;/app-child>
+
+  &#60;app-child
+    [varName]="'variable2'"
+    [inputFunction]="() => logVariables"
+    (valueChanged)="onVariableSelect($event)">
+  &#60;/app-child>
+    </pre>
+  </ul>
+</div>
+
+<div>
+  <h3 #typevsinterface data-anchor="typevsinterface">Type vs interface</h3>
+  <ul>
+    <li>Interface
+      <ul>
+        <li>Objektum alakú</li>
+        <li>Strukturált objektumok leírásakor használandó</li>
+        <li>Könnyű bővíteni</li>
+        <pre>
+  type CharacterCategory = 'NUMERIC' | 'ALPHABETIC' | 'SPECIAL';
+
+  interface CharacterOptions &#123;
+    label: string;
+    allowed: boolean;
+  }
+
+  export const CHARACTERS = &#123;
+    NUMERIC: &#123; label: ..., allowed: true },
+    ALPHABETIC: &#123; label: ..., allowed: true },
+    SPECIAL: &#123; label: ..., allowed: false }
+  } satisfies Record&#60;CharacterCategory, CharacterOptions>;
+        </pre>
+        <li>A satisfies ellenőrzi, hogy egy érték megfelel egy típusnak anélkül, hogy megváltoztatná az érték saját
+          típusát
+          <ul>
+            <li>Az 'as' felülírja a típust, míg a 'satisfies' ellenőrzi a megfelelést anélkül, hogy megváltoztatná az
+              eredeti típust</li>
+            <li>Hibás kulcs esetében compiler error lesz, de a típus attól még nem változik meg</li>
+          </ul>
+        </li>
+        <li>Amennyiben több interface-t hozunk létre ugyanazzal a névvel, a TypeScript összevonja őket</li>
+        <pre>
+  interface Character &#123;
+    id: string;
+  }
+
+  interface Character &#123;
+    type: 'NUMERIC' | 'ALPHABETIC' | 'SPECIAL';
+  }
+
+  // végeredményben:
+
+  interface Character &#123;
+    id: string;
+    type: 'NUMERIC' | 'ALPHABETIC' | 'SPECIAL';
+  }
+        </pre>
+        <li>Az extends kifejezéssel átörökítjük egy másik interface property-jeit</li>
+        <pre>
+  interface BaseCharacter &#123;
+    id: string;
+  }
+
+  interface NumericCharacter extends BaseCharacter &#123;
+    value: number;
+  }
+
+  // végeredményben:
+
+  interface NumericCharacter &#123;
+     id: string;
+     value: number;
+  }
+        </pre>
+      </ul>
+    </li>
+    <li>Type
+      <ul>
+        <li>Primitive alias típus ( = )
+          <ul>
+            <li>Rövid, új nevet adhat egy meglévő típusnak</li>
+            <li>Nem hoz létre új struktúrát, csak új nevet ad egy meglévő típusnak</li>
+            <pre>
+  type UserId = string;
+            </pre>
+          </ul>
+        </li>
+        <li>Union típus ( | )
+          <ul>
+            <li>Több lehetséges típus közül egyet enged meg</li>
+            <pre>
+  type numbers = 'one' | 'two' | 'three';
+                </pre>
+          </ul>
+        </li>
+        <li>Generic típus ( T )
+          <ul>
+            <li>A generic típus paraméterezhető típust jelent, amely különböző típusokkal újrahasználható</li>
+            <pre>
+  type ApiResponse&#60;T> = T;
+                </pre>
+          </ul>
+        </li>
+        <li>Generic union típus ( | )
+          <ul>
+            <li>Egy generikus típust vagy null-t enged meg</li>
+            <pre>
+  type ApiResponse&#60;T> = T | null;
+                </pre>
+          </ul>
+        </li>
+        <li>Partial típus ( Partial&#60;T> )
+          <ul>
+            <li>Olyan típus, ahol az eredeti típus összes property-je opcionálissá válik</li>
+            <pre>
+  type PartialNumberOptions = Partial&#60;NumberOptions>;
+                </pre>
+          </ul>
+        </li>
+        <li>Intersection típus ( & )
+          <ul>
+            <li>Két vagy több típus egyesítése úgy, hogy az eredmény mindegyik tulajdonságát tartalmazza</li>
+            <pre>
+  type extendedNumbers = NumberOptions & &#123;
+    alphabetical: string;
+  };
+
+  type A = &#123; name: string };
+  type B = &#123; age: number };
+
+  type C = A & B; // name + age
+                </pre>
+          </ul>
+        </li>
+      </ul>
+    </li>
   </ul>
 </div>
 

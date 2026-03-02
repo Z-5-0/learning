@@ -118,63 +118,47 @@
         <img src="assets/imgs/process.png" style="width: 100%;">
         <br>
         <br>
-        <li>A folyamat bővebben
+        <li>A folyamat bővebben (általános leírás)
           <ol>
             <li>index.html betöltése
               <ul>
-                <li>A bőngésző betölti az index.html</li>
-                <li>Az oldalon szerepelnek stílusfájlok, és JS fájlok</li>
+                <li>A böngésző betölti az index.html-t</li>
+                <li>Az oldalon található egy &#60;div id="root">&#60;/div> elem, ide fog a React kirenderelni</li>
               </ul>
             </li>
-            <li>JavaScript fájlok letöltése és futtatása
+            <li>JS fájlok letöltése és futtatása
               <ul>
-                <li>A hivatlkozott JS fájlokat letölti a böngésző, és futtatja</li>
-              </ul>
-            </li>
-            <li>Angular indítása (Bootstrap)
-              <ul>
-                <li>Az Angular alkalmazás belépési pontja az main.ts fájl (az angular.json fájlban van meghatározva -->
-                  'main'), amely bootstrappel elindítja az Angular alkalmazást
-                </li>
-                <li>Ez a fájl inicializálja az Angular keretrendszert, és meghívja az alapértelmezett root modul-t
-                  (AppModule)
+                <li>A böngésző letölti a build során előállított bundle.js fájlt, amely a React kódot is tartalmazza
                 </li>
               </ul>
             </li>
-            <li>Root modul betöltése (AppModule)
+            <li>React alkalmazás indítása
               <ul>
-                <li>Az Angular betölti a root modul-t, ami az alkalmazás legfelsőbb modulja</li>
-                <li>Az app.module.ts-ben van meghatározva az AppComponent betöltése
-                  <pre>
-  ...
-  bootstrap: [AppComponent]
-  ...
-                  </pre>
-                </li>
+                <li>A belépési pont az index.js vagy main.jsx</li>
+                <li>Itt történik a React DOM inicializálása</li>
+                <pre>
+  import &#123; createRoot } from 'react-dom/client';
+  import App from './App';
+
+  createRoot(document.getElementById('root')).render(&#60;App />);
+                </pre>
               </ul>
             </li>
             <li>Komponensek inicializálása
               <ul>
-                <li>Miután az AppModule betöltődött, az Angular elindítja az AppComponent-et, amely az alkalmazás
-                  elsődleges
-                  komponense
-                </li>
-                <li>Az Angular létrehozza a komponens template-jét</li>
+                <li>A App komponens betöltődik, és onnan épül a komponensfa</li>
               </ul>
             </li>
-            <li>DOM renderelés
+            <li>Renderelés
               <ul>
-                <li>Az Angular change detection rendszere gondoskodik a megfelelő HTML elemek megjelenítéséről</li>
-                <li>A DOM struktúra frissül az adatok alapján, és az Angular kirendereli az alkalmazást a böngészőben
-                </li>
+                <li>A React Virtual DOM diff algoritmust használ, és a változásokat optimalizáltan frissíti a valódi
+                  DOM-ban</li>
               </ul>
             </li>
-            <li>Routing, interakció, adatkezelés
+            <li>Interakciók, state frissülések
               <ul>
-                <li>Route váltáskor, felhasználói interakciókat követően, vagy szerverről való adatbetöltés után az
-                  Angular
-                  (tehát változásokkor a Change Detection) újrarendereli a DOM-ot
-                </li>
+                <li>Felhasználói interakciók (onClick, onChange, stb.) után a komponens újrarenderelődik, de csak a
+                  változott elemek frissülnek</li>
               </ul>
             </li>
           </ol>
@@ -192,7 +176,7 @@
         <li>A felhasználói felület külön részegységekre bontható a segítségükkel
           <ul>
             <li>Egy interaktív részleg helyett létre lehet hozni többet</li>
-            <li>Mindegyikért a saját, dedikált kontrollere és template-je, azaz komponense lesz felelőt</li>
+            <li>Mindegyikért a saját, dedikált kontrollere és template-je, azaz komponense lesz felelős</li>
             <li>Az összes komponensnek meg van a saját állapota, template-je, és action-jei
               <ul>
                 <li>Ilyen módon két komponens egymástól teljesen függetlenül tud működni</li>
@@ -221,7 +205,7 @@
             <li>A komponensek más irányba is tud(hat)nak kommunikálni, például AJAX kérést küldhetnek,
               adatot tölthet fel, vagy szerezhet
             </li>
-            <li>A komponensek a localstorage-dzsal is kapcsolatot teremthetnek (írás, olvasás)</li>
+            <li>A komponensek a localstorage-al is kapcsolatot teremthetnek (írás, olvasás)</li>
             <li>Az alkalmazások engedik, hogy létrehozzunk kliens oldali útvonal választót
               <ul>
                 <li>Ez csak az SPA (Single Page App) kapcsán releváns
