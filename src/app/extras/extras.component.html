@@ -8715,12 +8715,11 @@
     SPECIAL: &#123; label: ..., allowed: false }
   } satisfies Record&#60;CharacterCategory, CharacterOptions>;
         </pre>
-        <li>A satisfies ellenőrzi, hogy egy érték megfelel egy típusnak anélkül, hogy megváltoztatná az érték saját
-          típusát
+        <li>A 'satisfies' fordításkor ellenőrzi, hogy egy érték megfelel egy típusnak
           <ul>
-            <li>Az 'as' felülírja a típust, míg a 'satisfies' ellenőrzi a megfelelést anélkül, hogy megváltoztatná az
-              eredeti típust</li>
-            <li>Hibás kulcs esetében compiler error lesz, de a típus attól még nem változik meg</li>
+            <li>Hibás kulcs esetében compiler error lesz</li>
+            <li>Az 'as' nem végez valódi strukturális ellenőrzést, azt mondja a fordítónak, hogy "kezeld így", tehát
+              ezzel átverhető a fordító</li>
           </ul>
         </li>
         <li>Amennyiben több interface-t hozunk létre ugyanazzal a névvel, a TypeScript összevonja őket</li>
