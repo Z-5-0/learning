@@ -7,7 +7,11 @@ The project is built in Angular (16.2.16) and includes example codes, explanatio
 <br>
 
 <p align="center">
-  <img src="https://learning.avalonium.hu/assets/imgs/app/app.png" alt="Screenshot" style="height: 500px;">
+  <img 
+    src="https://learning.avalonium.hu/assets/imgs/app/app.png" 
+    alt="Screenshot"
+    style="max-width: 100%; height: auto;"
+  >
 </p>
 
 <br>
