@@ -58,6 +58,8 @@ export class ExtrasComponent implements OnInit, AfterViewInit, OnDestroy {
     angularperformanceincrease,
     mutablevsimmutable,
     arrayobjectdestructuring,
+    arraydestructuring,
+    objectdestructuring,
     consolecoloring,
     nullishcoalescing,
     nullishcoalescingvsor,

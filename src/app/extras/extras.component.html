@@ -1290,6 +1290,26 @@
   console.log(second);  // 2
   console.log(third);   // 3
   console.log(fourth);  // 4
+
+  // Elem figyelmen kívül hagyása
+
+  const fruits = ["apple", "banana", "cherry"];
+  const fruits = ["apple", "banana", "cherry"];
+  const [, second] = fruits;  // Az első elemet semmilyen változóban sem tároljuk, és ezzel a változóval el is érhető ez az elem
+  OR
+  const [_, second] = fruits;   // Az első elemet eltároljuk a _ változóba
+  console.log(second);    // "banana"
+
+  const numbers = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+  const [,,,, fifth] = numbers;   // Optimálisabb: const fifth = numbers[4];
+  console.log(fifth); // 50
+
+  const [,,,, ...rest] = numbers;
+  console.log(rest);    // [50, 60, 70, 80, 90, 100]
+
+  const [,,,, fifth, ...after] = numbers;
+  console.log(fifth);   // 50
+  console.log(after);   // [60, 70, 80, 90, 100]
     </pre>
   </ul>
   <br>
