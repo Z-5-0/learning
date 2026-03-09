@@ -146,6 +146,10 @@ export class ExtrasComponent implements OnInit, AfterViewInit, OnDestroy {
     websocketandmqtt,
     callbackreference,
     typevsinterface,
+    mapvsset,
+    mapclass,
+    setclass,
+    mapsetconversion,
     todo
     `) sections!: QueryList<ElementRef>;
 
@@ -278,6 +282,13 @@ export class ExtrasComponent implements OnInit, AfterViewInit, OnDestroy {
     { title: 'Websocket & MQTT', anchor: 'websocketandmqtt', subtitles: [] },
     { title: 'Callback reference', anchor: 'callbackreference', subtitles: [] },
     { title: 'Type vs interface', anchor: 'typevsinterface', subtitles: [] },
+    {
+      title: 'Map vs Set', anchor: 'mapvsset', subtitles: [
+        { title: 'Map', anchor: 'mapclass' },
+        { title: 'Set', anchor: 'setclass' },
+        { title: 'Conversions', anchor: 'mapsetconversion' },
+      ]
+    },
     { title: 'TODO', anchor: 'todo', subtitles: [] }
   ];
 
